@@ -27,7 +27,9 @@ Scene_Stage04::Scene_Stage04(const Player* player)
 	obj_floor[0] = new Floor(0, 700, 1280, 20);        //床
 	obj_floor[1] = new Floor(0, 0, 20, 1720);           //壁（左）
 	obj_floor[2] = new Floor(1260, 0, 20, 1720);           //壁（右）
-	obj_floor[3] = new Floor(1000, 100, 120, 50);      //足場
+	obj_floor[3] = new Floor(300, 500, 150, 20);      //足場
+	obj_floor[4] = new Floor(500, 350, 150, 20);      //足場
+	obj_floor[5] = new Floor(300, 200, 150, 20);      //足場
 }
 
 //デストラクタ
