@@ -6,7 +6,7 @@
 //コンストラクタ
 TitleScene::TitleScene()
 {
-
+	TitleImage = LoadGraph("images/JankenWorldTitle.png");
 }
 
 //デストラクタ
@@ -25,7 +25,9 @@ void TitleScene::Update()
 void TitleScene::Draw() const
 {
 	SetFontSize(50);
-	DrawString(100, 100, "タイトルシーン Aボタンでスタート", 0xffffff);
+	
+	DrawGraph(0,0,TitleImage,TRUE);
+	DrawString(100, 640, "タイトルシーン Aボタンでスタート", GetColor(255,0,0));
 }
 
 //シーンの変更

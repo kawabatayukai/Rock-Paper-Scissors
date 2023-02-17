@@ -4,7 +4,12 @@
 //タイトルシーン
 class TitleScene : public AbstractScene
 {
+private:
+
+	int TitleImage = 0;
+
 public:
+
 	//コンストラクタ
 	TitleScene();
 
