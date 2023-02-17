@@ -1,0 +1,65 @@
+#include "Stage_Base.h"
+
+Stage_Base::Stage_Base()
+{
+
+}
+
+Stage_Base::~Stage_Base()
+{
+
+}
+
+//床・壁の準備　　STAGE_XX_FLOOR を引数に
+void Stage_Base::Init_Floor(const int floor_MAX)
+{
+	//床・壁 * floor_MAX個　分のメモリを確保
+	obj_floor = new Floor * [floor_MAX];
+	for (int i = 0; i < floor_MAX; i++) obj_floor[i] = nullptr;   //nullptrで全て初期化
+}
+
+
+//床・壁とのあたり判定
+void Stage_Base::HitCtrl_Floor(CharaBase* character, const int floor_MAX)
+{
+	for (int i = 0; i < floor_MAX; i++)
+	{
+		character->Hit_Floor(obj_floor[i]);
+	}
+}
+
+
+//"接触時じゃんけん"処理   player(引数１番目　の勝敗結果を返す)
+Jan_Result Stage_Base::Get_JankenResult(Jan_Type player, Jan_Type enemy)
+{
+	// player（引数１番目）が
+	switch (player)
+	{
+	case Jan_Type::ROCK:         //グーの時
+
+		if (enemy == Jan_Type::PAPER)    return Jan_Result::LOSE;    //enemy（引数２番目）がパーの時
+		if (enemy == Jan_Type::SCISSORS) return Jan_Result::WIN;     //enemy（引数２番目）がチョキの時
+		if (enemy == Jan_Type::ROCK)     return Jan_Result::ONEMORE; //enemy（引数２番目）がグーの時
+		break;
+
+	case Jan_Type::SCISSORS:     //チョキの時
+
+		if (enemy == Jan_Type::ROCK)     return Jan_Result::LOSE;    //enemy（引数２番目）がグーの時
+		if (enemy == Jan_Type::PAPER)    return Jan_Result::WIN;     //enemy（引数２番目）がパーの時
+		if (enemy == Jan_Type::SCISSORS) return Jan_Result::ONEMORE; //enemy（引数２番目）がチョキの時
+		break;
+
+	case Jan_Type::PAPER:        //パーの時
+
+		if (enemy == Jan_Type::SCISSORS) return Jan_Result::LOSE;    //enemy（引数２番目）がチョキの時
+		if (enemy == Jan_Type::ROCK)     return Jan_Result::WIN;     //enemy（引数２番目）がグーの時
+		if (enemy == Jan_Type::PAPER)    return Jan_Result::ONEMORE; //enemy（引数２番目）がパーの時
+		break;
+
+	default:
+		break;
+	}
+
+	//それ以外はエラー
+	return Jan_Result::_ERROR;
+}

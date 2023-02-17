@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene">
+      <UniqueIdentifier>{9a15ed6f-2754-473d-880a-4f62e74c1d5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Key">
+      <UniqueIdentifier>{c97da908-dd36-4c76-be07-10c49d12d39e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameMainScene">
+      <UniqueIdentifier>{09f65302-5512-4fde-8126-2d745f76e28c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\CharaBase">
+      <UniqueIdentifier>{69d52d54-be0e-45b2-a843-52ce30cee56e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Player">
+      <UniqueIdentifier>{4eb6eef7-3fd4-4582-9ff1-b58f37db29b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Floor">
+      <UniqueIdentifier>{f5e62cb1-a694-411f-b6ef-0b7da5580e14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\EnemyBase">
+      <UniqueIdentifier>{b367165f-28a1-4bf8-9df7-5802cb170407}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameMainScene\Stage_00">
+      <UniqueIdentifier>{1b17ee25-e4f2-4077-ad32-39ff0bfea810}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameMainScene\Stage_01">
+      <UniqueIdentifier>{a534c95d-7387-4fae-a64e-553ea4514239}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameMainScene\Stage_02">
+      <UniqueIdentifier>{253dbd13-cbee-4939-adec-881fbe7f3f51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameMainScene\Stage_03">
+      <UniqueIdentifier>{541f08c4-6dfa-4a35-a86b-63667d913571}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameMainScene\Stage_04">
+      <UniqueIdentifier>{cc7cc45b-dd40-451e-938b-c11c8647b765}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameMainScene\Stage_05">
+      <UniqueIdentifier>{e189241b-cc26-45ef-87cb-e0cdfd8ac7f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameMainScene\Stage_06">
+      <UniqueIdentifier>{3b709c62-738e-4ca6-8654-ff44d49ab41e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameMainScene\Stage_07">
+      <UniqueIdentifier>{81b2d11b-b279-446c-8373-bb1b24a5e8ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameMainScene\Stage_08">
+      <UniqueIdentifier>{0320f16f-8190-4223-b410-1d0f886ae97c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameMainScene\Stage_09">
+      <UniqueIdentifier>{7ef79df2-836f-4819-ae65-ab302c52ec6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameMainScene\Stage_10">
+      <UniqueIdentifier>{ed7cc0a4-1181-43d9-80a4-cebc98f76936}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Jangeki">
+      <UniqueIdentifier>{73455370-2100-48e6-8300-1335b8ef7b6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Rock-Paper-Scissors %28RPS%29">
+      <UniqueIdentifier>{1ca09903-fbce-4164-a662-59d15c479cc8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyManager.cpp">
+      <Filter>ソース ファイル\Key</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_GameMain.cpp">
+      <Filter>ソース ファイル\GameMainScene</Filter>
+    </ClCompile>
+    <ClCompile Include="CharaBase.cpp">
+      <Filter>ソース ファイル\CharaBase</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Floor.cpp">
+      <Filter>ソース ファイル\Floor</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBase.cpp">
+      <Filter>ソース ファイル\EnemyBase</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_00.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_00</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_01.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_01</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_02.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_02</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_10.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_10</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_03.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_03</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_04.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_04</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_05.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_05</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_06.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_06</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_07.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_07</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_08.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_08</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_09.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_09</Filter>
+    </ClCompile>
+    <ClCompile Include="Jangeki_Base.cpp">
+      <Filter>ソース ファイル\Jangeki</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Stage00.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_00</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage_Base.cpp">
+      <Filter>ソース ファイル\GameMainScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Stage01.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_01</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_GameClear.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_GameOver.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Janken.cpp">
+      <Filter>ソース ファイル\Rock-Paper-Scissors %28RPS%29</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Stage10.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_10</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Stage09.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_09</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Stage08.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_08</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Stage07.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_07</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Stage06.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_06</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Stage05.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_05</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Stage04.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_04</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Stage03.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_03</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Stage02.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_02</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AbstractScene.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyManager.h">
+      <Filter>ソース ファイル\Key</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_GameMain.h">
+      <Filter>ソース ファイル\GameMainScene</Filter>
+    </ClInclude>
+    <ClInclude Include="CharaBase.h">
+      <Filter>ソース ファイル\CharaBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Floor.h">
+      <Filter>ソース ファイル\Floor</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBase.h">
+      <Filter>ソース ファイル\EnemyBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_00.h">
+      <Filter>ソース ファイル\GameMainScene\Stage_00</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_01.h">
+      <Filter>ソース ファイル\GameMainScene\Stage_01</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_02.h">
+      <Filter>ソース ファイル\GameMainScene\Stage_02</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_10.h">
+      <Filter>ソース ファイル\GameMainScene\Stage_10</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_03.h">
+      <Filter>ソース ファイル\GameMainScene\Stage_03</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_04.h">
+      <Filter>ソース ファイル\GameMainScene\Stage_04</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_05.h">
+      <Filter>ソース ファイル\GameMainScene\Stage_05</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_06.h">
+      <Filter>ソース ファイル\GameMainScene\Stage_06</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_07.h">
+      <Filter>ソース ファイル\GameMainScene\Stage_07</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_08.h">
+      <Filter>ソース ファイル\GameMainScene\Stage_08</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_09.h">
+      <Filter>ソース ファイル\GameMainScene\Stage_09</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_Base.h">
+      <Filter>ソース ファイル\Jangeki</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Stage00.h">
+      <Filter>ソース ファイル\GameMainScene\Stage_00</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage_Base.h">
+      <Filter>ソース ファイル\GameMainScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Stage01.h">
+      <Filter>ソース ファイル\GameMainScene\Stage_01</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_GameClear.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_GameOver.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Janken.h">
+      <Filter>ソース ファイル\Rock-Paper-Scissors %28RPS%29</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Stage10.h">
+      <Filter>ソース ファイル\GameMainScene\Stage_10</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Stage09.h">
+      <Filter>ソース ファイル\GameMainScene\Stage_09</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Stage08.h">
+      <Filter>ソース ファイル\GameMainScene\Stage_08</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Stage07.h">
+      <Filter>ソース ファイル\GameMainScene\Stage_07</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Stage06.h">
+      <Filter>ソース ファイル\GameMainScene\Stage_06</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Stage05.h">
+      <Filter>ソース ファイル\GameMainScene\Stage_05</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Stage04.h">
+      <Filter>ソース ファイル\GameMainScene\Stage_04</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Stage03.h">
+      <Filter>ソース ファイル\GameMainScene\Stage_03</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Stage02.h">
+      <Filter>ソース ファイル\GameMainScene\Stage_02</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
