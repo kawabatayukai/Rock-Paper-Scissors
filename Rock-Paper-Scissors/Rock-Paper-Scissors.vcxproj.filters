@@ -180,6 +180,15 @@
     <ClCompile Include="Scene_Stage02.cpp">
       <Filter>ソース ファイル\GameMainScene\Stage_02</Filter>
     </ClCompile>
+    <ClCompile Include="Scene_Title.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Help.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_End.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -286,6 +295,15 @@
     </ClInclude>
     <ClInclude Include="Scene_Stage02.h">
       <Filter>ソース ファイル\GameMainScene\Stage_02</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Title.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Help.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_End.h">
+      <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

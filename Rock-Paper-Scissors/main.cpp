@@ -1,6 +1,7 @@
 #include"DxLib.h"
 #include"SceneManager.h"
 #include"Scene_GameMain.h"
+#include"Scene_Title.h"
 
 /*　　変数　　*/
 int g_OldKey;      // 前回の入力キー 
@@ -21,7 +22,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     
 
     //シーンマネージャー     　　　　　　　　　　　　　　　タイトルを設定
-    SceneManager sceneMng(dynamic_cast<AbstractScene*>(new GameMainScene()));
+    SceneManager sceneMng(dynamic_cast<AbstractScene*>(new TitleScene()));
 
     //ESCキーまたはコントローラーBackボタンで終了
     while (ProcessMessage() == 0 && !(g_NowKey & PAD_INPUT_9) && !(g_NowKey & PAD_INPUT_7))

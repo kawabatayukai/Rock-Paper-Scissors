@@ -1,0 +1,40 @@
+#include"DxLib.h"
+#include"KeyManager.h"
+#include"Scene_Title.h"
+#include"Scene_GameMain.h"
+
+//コンストラクタ
+TitleScene::TitleScene()
+{
+
+}
+
+//デストラクタ
+TitleScene::~TitleScene()
+{
+
+}
+
+//更新
+void TitleScene::Update()
+{
+
+}
+
+//描画
+void TitleScene::Draw() const
+{
+	SetFontSize(50);
+	DrawString(100, 100, "タイトルシーン Aボタンでスタート", 0xffffff);
+}
+
+//シーンの変更
+AbstractScene* TitleScene::ChangeScene()
+{
+	if (KeyManager::OnPadClicked(PAD_INPUT_A))
+	{
+		return dynamic_cast<AbstractScene*> (new GameMainScene());
+	}
+
+	return this;  //更新なし
+}
