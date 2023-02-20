@@ -5,7 +5,7 @@
 #include"Player.h"
 #include"Floor.h"
 
-#define STAGE_00_FLOOR 4         //床・壁の合計数　　　床、壁を追加するときに増やす
+#define STAGE_00_FLOOR 7         //床・壁の合計数　　　床、壁を追加するときに増やす
 
 //0ステージ
 class Scene_Stage00 : public Stage_Base

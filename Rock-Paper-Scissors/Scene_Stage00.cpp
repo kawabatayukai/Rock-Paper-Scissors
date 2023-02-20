@@ -35,7 +35,9 @@ Scene_Stage00::Scene_Stage00(const Player* player)
 	obj_floor[1] = new Floor(0, 0, 20, 1720);          //壁（左）
 	obj_floor[2] = new Floor(1260,0,20,1720);          //壁（右）
 	obj_floor[3] = new Floor(1000, 100, 120, 50);      //足場
-	//obj_floor[4] = new Floor(40, 500, 500, 20);      //足場
+	obj_floor[4] = new Floor(40, 500, 500, 60);      //足場
+	obj_floor[5] = new Floor(100, 300, 100, 50);
+	obj_floor[6] = new Floor(200, 200, 100, 50);
 
 	//テスト
 	setumei = LoadGraph("images/Setumei.png");
