@@ -152,9 +152,9 @@ void Player::Draw() const
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
 
 	//テスト 選択じゃん撃
-	DrawString(400, 100, "SELECT : ", 0xffffff);
-	DrawRotaGraph(550, 100, 1, 0, image_JanType[static_cast<int>(select_JanType)], TRUE);
-	DrawString(400, 200, "RB : 発射", 0xffffff);
+	DrawString(30, 100, "SELECT : ", 0xffffff);
+	DrawRotaGraph(160, 100, 0.5, 0, image_JanType[static_cast<int>(select_JanType)], TRUE);
+	DrawString(30, 150, "RB : 発射", 0xffffff);
 
 
 }
