@@ -37,13 +37,13 @@ Scene_Stage00::Scene_Stage00(const Player* player)
 	//
 	// (画像使用の例) new Floor("images/Jangeki_Test.png",200, 200, 100, 50);
 
-	obj_floor[0] = new Floor(0, 700, 1280, 20);        //床
+	obj_floor[0] = new Floor(50, 700, 1280, 20);        //床
 	obj_floor[1] = new Floor(0, 0, 20, 1720);          //壁（左）
 	obj_floor[2] = new Floor(1260,0,20,1720);          //壁（右）
 	obj_floor[3] = new Floor(1000, 100, 120, 50);      //足場
 	obj_floor[4] = new Floor(40, 500, 500, 60);        //足場
 	obj_floor[5] = new Floor(100, 300, 100, 50);
-	obj_floor[6] = new Floor(200, 200, 100, 50, 0xffff00);
+	obj_floor[6] = new Floor("images/Setumei.png", 200, 100, 50, 0xffff00);//イメージ追加
 
 	//テスト
 	setumei = LoadGraph("images/Setumei.png");

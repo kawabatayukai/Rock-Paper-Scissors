@@ -29,7 +29,7 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	obj_floor[2] = new Floor(1260, 0, 20, 1720);           //•Çi‰Ej
 	obj_floor[3] = new Floor(1000, 150, 120, 20);      //‘«ê
 
-	obj_floor[4] = new Floor(800, 180, 120, 20);      //‘«ê2//130
+	obj_floor[4] = new Floor(800, 180, 120, 20,0xffff00);      //‘«ê2//130
 	obj_floor[5] = new Floor(600, 260, 120, 20);      //‘«ê3//100
 	obj_floor[6] = new Floor(400, 230, 120, 20);      //‘«ê4//130
 	obj_floor[7] = new Floor(220, 290, 120, 20);      //‘«ê5//130
