@@ -10,7 +10,8 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = 1;
 	hp = 100;
 
-	image = LoadGraph("images/tyokitest.png");
+	//image = LoadGraph("images/ステージ3攻撃.png");
+	image = LoadGraph("images/ステージ3防御.png");
 
 	Init_Jangeki();       //じゃん撃を用意
 
@@ -66,6 +67,7 @@ void Enemy_03::Draw() const
 {
 	//中心から描画
 	DrawRotaGraphF(x, y, 1, 0, image, TRUE);
+
 
 	//じゃん撃描画
 	Draw_Jangeki();

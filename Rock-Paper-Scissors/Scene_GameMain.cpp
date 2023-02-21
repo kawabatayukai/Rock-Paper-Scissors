@@ -154,7 +154,7 @@ AbstractScene* GameMainScene::ChangeScene()
 			break;
 
 		case 14:
-			return dynamic_cast<AbstractScene*> (new GameClearScene());
+			return dynamic_cast<AbstractScene*> (new GameClearScene(1));
 			break;
 
 
