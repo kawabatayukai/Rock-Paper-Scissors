@@ -323,7 +323,7 @@ AbstractScene* Scene_Stage00::ChangeScene()
 	if (obj_enemy->GetHP() < 0)
 	{
 		//ゲームクリアシーンへ切り替え
-		return dynamic_cast<AbstractScene*> (new GameClearScene());
+		return dynamic_cast<AbstractScene*> (new GameClearScene(1));
 	}
 
 	//プレイヤーのHPが0以下
