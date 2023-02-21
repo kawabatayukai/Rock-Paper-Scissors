@@ -27,7 +27,24 @@ Scene_Stage06::Scene_Stage06(const Player* player)
 	obj_floor[0] = new Floor(0, 700, 1280, 20);        //床
 	obj_floor[1] = new Floor(0, 0, 20, 1720);           //壁（左）
 	obj_floor[2] = new Floor(1260, 0, 20, 1720);           //壁（右）
-	obj_floor[3] = new Floor(1000, 100, 120, 50);      //足場
+
+	obj_floor[3] = new Floor(100, 100, 120, 10);          //足場
+	obj_floor[4] = new Floor(100, 300, 120, 10);      
+	obj_floor[5] = new Floor(100, 500, 120, 10);
+
+	obj_floor[6] = new Floor(350, 200, 120, 10);
+	obj_floor[7] = new Floor(350, 400, 120, 10);
+
+	obj_floor[8] = new Floor(600, 100, 120, 10);
+	obj_floor[9] = new Floor(600, 300, 120, 10);      
+	obj_floor[10] = new Floor(600, 500, 120, 10);
+
+	obj_floor[11] = new Floor(850, 200, 120, 10);      
+	obj_floor[12] = new Floor(850, 400, 120, 10);
+
+	obj_floor[13] = new Floor(1100, 100, 120, 10);      
+	obj_floor[14] = new Floor(1100, 300, 120, 10);
+	obj_floor[15] = new Floor(1100, 500, 120, 10);      
 }
 
 //デストラクタ
