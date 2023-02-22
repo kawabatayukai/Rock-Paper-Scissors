@@ -76,43 +76,96 @@ void CharaBase::Hit_Floor(const Floor* floor)
 	int box_w = floor->GetW();   //floorの幅
 	int box_h = floor->GetH();   //floorの高さ
 
-	//矩形と矩形の当たり判定
-	if ( CheckHitBox_Box(box_x, box_y, box_w, box_h) == true )
-	{
+	////矩形と矩形の当たり判定
+	//if ( CheckHitBox_Box(box_x, box_y, box_w, box_h) == true )
+	//{
 
-		//キャラクター側　（キャラクターの座標は中心基準）
-		int cX_Min = static_cast<int>(x - (w / 2));     //最小ｘ（左）
-		int cX_Max = static_cast<int>(x + (w / 2)) - 1; //最大ｘ（右）
-		int cY_Min = static_cast<int>(y - (h / 2));     //最小ｙ（上）
-		int cY_Max = static_cast<int>(y + (h / 2)) - 1; //最大ｙ（下）
+	//	//キャラクター側　（キャラクターの座標は中心基準）
+	//	int cX_Min = static_cast<int>(x - (w / 2));     //最小ｘ（左）
+	//	int cX_Max = static_cast<int>(x + (w / 2)) - 1; //最大ｘ（右）
+	//	int cY_Min = static_cast<int>(y - (h / 2));     //最小ｙ（上）
+	//	int cY_Max = static_cast<int>(y + (h / 2)) - 1; //最大ｙ（下）
+
+	//	//floor側 　　　　（floorの座標は左上基準）
+	//	int fX_Min = box_x;                //最小ｘ（左）
+	//	int fX_Max = box_x + box_w;        //最大ｘ（右）
+	//	int fY_Min = box_y;                //最小ｙ（上）
+	//	int fY_Max = box_y + box_h;        //最大ｙ（下）
+
+
+	//	////キャラクター下方向    床にめりこまない
+	//	//if (cY_Max - fY_Min < MAX_LENGTH)  //キャラクターの下端とfloorの上端を比較
+	//	//{
+	//	//	y = static_cast<float>(fY_Min) - (h / 2);
+	//	//	land_flg = true;   //接地
+	//	//}
+
+	//	////キャラクター上方向　　天井にめり込まない
+	//	//if (fY_Max - cY_Min < MAX_LENGTH)
+	//	//{
+	//	//	y = static_cast<float>(fY_Max) + (h / 2);
+	//	//}
+	//	//
+	//	////キャラクター右方向
+	//	//if (cY_Max - fX_Min < MAX_LENGTH)
+	//	//{
+	//	//	x = static_cast<float>(fX_Min) - (w / 2);
+	//	//}
+
+	//	////キャラクター左方向
+	//	//if (fX_Max - cY_Min < MAX_LENGTH)
+	//	//{
+	//	//	x = static_cast<float>(fX_Max) + (w / 2);
+	//	//}
+
+	//	
+	//}
+
+		//矩形と矩形の当たり判定
+	if (CheckHitBox_Box(box_x, box_y, box_w, box_h) == true)
+	{
+		//character側　（キャラクターの座標は中心基準）
+		float cX_Min = (x - (w / 2)); //最小ｘ（左）
+		float cX_Max = (x + (w / 2)); //最大ｘ（右）
+		float cY_Min = (y - (h / 2)); //最小ｙ（上）
+		float cY_Max = (y + (h / 2)); //最大ｙ（下）
 
 		//floor側 　　　　（floorの座標は左上基準）
-		int fX_Min = box_x;                //最小ｘ（左）
-		int fX_Max = box_x + box_w;        //最大ｘ（右）
-		int fY_Min = box_y;                //最小ｙ（上）
-		int fY_Max = box_y + box_h;        //最大ｙ（下）
+		float fX_Min = static_cast<float> (box_x);         //最小ｘ（左）
+		float fX_Max = static_cast<float> (box_x + box_w); //最大ｘ（右）
+		float fY_Min = static_cast<float> (box_y);         //最小ｙ（上）
+		float fY_Max = static_cast<float> (box_y + box_h); //最大ｙ（下）
 
 
-		//キャラクター下方向    床にめりこまない
-		if (cY_Max - fY_Min < MAX_LENGTH)  //キャラクターの下端とfloorの上端を比較
+		// 4辺のうち、最小の重なりがある辺を探す   d = difference（差）
+		float dx1 = fX_Min - cX_Max;
+		float dx2 = fX_Max - cX_Min;
+		float dy1 = fY_Min - cY_Max;
+		float dy2 = fY_Max - cY_Min;
+
+		float dx;   //ｘ軸
+		float dy;   //ｙ軸
+
+		// dx(左辺or右辺)　dx1/dx2 のうち絶対値が小さい方
+		if (fabsf(dx1) < fabsf(dx2)) dx = dx1;
+		else dx = dx2;
+
+		// dy(上辺or下辺)　dy1/dy2 のうち絶対値が小さい方
+		if (fabsf(dy1) < fabsf(dy2)) dy = dy1;
+		else dy = dy2;
+
+		// x軸 or y軸のうち、差が最も小さい方を優先して補正
+		if (fabsf(dy) <= fabsf(dx))
 		{
-			y = static_cast<float>(fY_Min) - (h / 2);
-			land_flg = true;   //接地
+			
+			y += dy;
+			if (dy < 0 && dy > -1.5f) land_flg = true;  //character下方向に判定がある時、接地
+			
 		}
-		
-		//キャラクター右方向
-		if (cY_Max - fX_Min < MAX_LENGTH)
+		else
 		{
-			x = static_cast<float>(fX_Min) - (w / 2);
+			x += dx;
 		}
-
-		//キャラクター左方向
-		if (fX_Max - cY_Min < MAX_LENGTH)
-		{
-			x = static_cast<float>(fX_Max) + (w / 2);
-		}
-
-		
 	}
 }
 
@@ -120,10 +173,10 @@ void CharaBase::Hit_Floor(const Floor* floor)
 bool CharaBase::Hit_Character(const CharaBase* character)
 {
 	//（int型に変換）
-	int c_w = static_cast<int> ( character->GetW() );   //幅　
-	int c_h = static_cast<int> ( character->GetH() );   //高さ
-	int c_x = static_cast<int> ( character->GetX() ) - ( c_w / 2 );  //ｘ座標を左上基準に
-	int c_y = static_cast<int> ( character->GetY() ) - ( c_h / 2 );  //ｙ座標を左上基準に
+	int c_w = static_cast<int> (character->GetW());   //幅　
+	int c_h = static_cast<int> (character->GetH());   //高さ
+	int c_x = static_cast<int> (character->GetX()) - (c_w / 2);  //ｘ座標を左上基準に
+	int c_y = static_cast<int> (character->GetY()) - (c_h / 2);  //ｙ座標を左上基準に
 
 	//矩形同士の当たり判定
 	if (CheckHitBox_Box(c_x, c_y, c_w, c_h) == true) return true;  //当たり
