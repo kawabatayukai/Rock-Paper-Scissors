@@ -12,6 +12,7 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	//image = LoadGraph("images/ステージ3攻撃.png");
 	image = LoadGraph("images/ステージ3防御.png");
+	//stage = LoadGraph("images/背景画像通話用.jpg");
 
 	Init_Jangeki();       //じゃん撃を用意
 
@@ -64,13 +65,18 @@ void Enemy_03::Update()
 
 //描画
 void Enemy_03::Draw() const
+
 {
+	//ステージ描画
+	DrawGraph(0, 0, stage, FALSE);
 	//中心から描画
 	DrawRotaGraphF(x, y, 1, 0, image, TRUE);
 
 
 	//じゃん撃描画
 	Draw_Jangeki();
+
+	
 
 	//テスト
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);

@@ -43,7 +43,7 @@ Scene_Stage00::Scene_Stage00(const Player* player)
 	obj_floor[3] = new Floor(1000, 100, 120, 50);      //足場
 	obj_floor[4] = new Floor(40, 500, 500, 60);        //足場
 	obj_floor[5] = new Floor(100, 300, 100, 50);
-	obj_floor[6] = new Floor("images/Setumei.png", 200, 100, 50, 0xffff00);//イメージ追加
+	obj_floor[6] = new Floor(200, 100, 50,50);//イメージ追加
 
 	//テスト
 	setumei = LoadGraph("images/Setumei.png");

@@ -62,6 +62,7 @@ void Scene_Stage03::Update()
 		{
 			//敵が出す手をランダムに決める　　　（ランダムなint型の値(0～2)を Jan_Type型に変換）
 			Jan_Type enemy_janken = static_cast<Jan_Type> (GetRand(2));
+			
 
 			//じゃんけん用オブジェクト生成
 			obj_janken = new Janken(enemy_janken);
