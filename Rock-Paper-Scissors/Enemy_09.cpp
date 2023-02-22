@@ -49,14 +49,14 @@ void Enemy_09::Update()
 	//	land_flg = false;  //地面についていない
 	//}
 
-	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
+	//y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
-	//落下速度の制限
-	if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
+	////落下速度の制限
+	//if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
 
-	old_y = y;                    //1フレーム前のｙ座標
-	y += y_add;                   //落下距離をｙ座標に加算する
-	g_add = _GRAVITY;              //重力加速度を初期化する
+	//old_y = y;                    //1フレーム前のｙ座標
+	//y += y_add;                   //落下距離をｙ座標に加算する
+	//g_add = _GRAVITY;              //重力加速度を初期化する
 
 	/**********************************************************/
 
@@ -117,7 +117,7 @@ void Enemy_09::Update_Jangeki()
 }
 void Enemy_09::MoveEnmey_09() {
 	interval++;
-	if (land_flg == true && /*GetRand(100) == 5 &&*/ interval % 120 == 0) {
+	if (/*land_flg == true && *//*GetRand(100) == 5 &&*/ interval % 120 == 0) {
 		switch (GetRand(7))
 		{
 		case 0:
