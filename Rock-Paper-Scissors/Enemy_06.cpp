@@ -114,3 +114,15 @@ void Enemy_06::Update_Jangeki()
 		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
 	}
 }
+
+//old_y‚Ìæ“¾ŠÖ”
+int Enemy_06::Get_OldY()
+{
+	return old_y;
+}
+
+//y‚Ìæ“¾ŠÖ”
+int Enemy_06::Get_Y()
+{
+	return y;
+}
