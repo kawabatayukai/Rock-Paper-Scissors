@@ -3,6 +3,7 @@
 #include"DxLib.h"
 #include "Scene_GameClear.h"
 #include "Scene_GameOver.h"
+
 //コンストラクタ
 Scene_Stage03::Scene_Stage03(const Player* player)
 {
@@ -25,22 +26,18 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	Init_Floor(STAGE_03_FLOOR);
 
 	//一つずつ生成  STAGE_03_FLOOR 個分
-	obj_floor[0] = new Floor(0, 700, 1280, 20);        //床
-	obj_floor[1] = new Floor(0, 0, 20, 1720);           //壁（左）
-	obj_floor[2] = new Floor(1260, 0, 20, 1720);           //壁（右）
-	obj_floor[3] = new Floor(1000, 150, 120, 20);      //足場
+	obj_floor[0] = new Floor(0, 700, 1280, 20, GetColor(68, 71, 193));      //床
+	obj_floor[1] = new Floor(0, 0, 20, 1720);        //壁（左）
+	obj_floor[2] = new Floor(1260, 0, 20, 1720);     //壁（右）
 
-	obj_floor[4] = new Floor(800, 180, 120, 20);      //足場2//130
-	obj_floor[5] = new Floor(600, 260, 120, 20);      //足場3//100
-	obj_floor[6] = new Floor(400, 230, 120, 20);      //足場4//130
-	obj_floor[7] = new Floor(220, 290, 120, 20);      //足場5//130
-	obj_floor[8] = new Floor(120, 550, 120, 20);      //足場6//100
-	obj_floor[9] = new Floor(20, 450, 120, 20);      //足場7//130
-	//obj_floor[10] = new Floor(15, 250, 120, 20);      //足場8//130
-
-
-
-
+	obj_floor[3] = new Floor(970, 300, 130, 40, GetColor(193, 107, 68));//足場
+	obj_floor[4] = new Floor(780, 230, 130, 40, GetColor(193, 107, 68));//足場2//130
+	obj_floor[5] = new Floor(585, 300, 130, 40, GetColor(193, 107, 68));//足場3//100
+	obj_floor[6] = new Floor(400, 230, 130, 40, GetColor(193, 107, 68));//足場4//130
+	obj_floor[7] = new Floor(220, 300, 130, 40, GetColor(193, 107, 68));//足場5//130
+	obj_floor[8] = new Floor(20,  400, 90, 40, GetColor(193, 107, 68));//足場6//100
+	obj_floor[9] = new Floor(120, 550, 90, 40, GetColor(193, 107, 68));//足場7//130
+	//obj_floor[10] = new Floor(15, 250, 120, 20);//足場8//130
 
 }
 
