@@ -15,6 +15,7 @@ public:
 
 	void Update_Jangeki() override;  //じゃん撃生成・更新
 
+	int back_image;
 private:
 	/********************   ジャンプ関係   ********************/
 
