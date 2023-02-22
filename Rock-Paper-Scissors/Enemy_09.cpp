@@ -28,6 +28,7 @@ void Enemy_09::Update()
 {
 	//じゃん撃更新・生成
 	Update_Jangeki();
+	MoveEnmey_09();
 
 	//if (x + (w / 2) == (1280 - 20))
 	//{
@@ -42,11 +43,11 @@ void Enemy_09::Update()
 
 	/********************   ジャンプ関係   ********************/
 
-	if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
-	{
-		g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-		land_flg = false;  //地面についていない
-	}
+	//if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
+	//{
+    //	g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+	//	land_flg = false;  //地面についていない
+	//}
 
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
@@ -111,6 +112,47 @@ void Enemy_09::Update_Jangeki()
 
 
 		//生成
-		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+		if (frame_count % 120 == 0 /*|| Hit_Jangeki()==true*/) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
 	}
+}
+void Enemy_09::MoveEnmey_09() {
+	interval++;
+	if (land_flg == true && /*GetRand(100) == 5 &&*/ interval % 120 == 0) {
+		switch (GetRand(7))
+		{
+		case 0:
+			x = 160;
+			y = 480;
+			break;
+		case 1:
+			x = 360;
+			y = 305;
+			break;
+		case 2:
+			x = 160;
+			y = 130;
+			break;
+		case 3:
+			x = 1110;
+			y = 480;
+			break;
+		case 4:
+			x = 910;
+			y = 305;
+			break;
+		case 5:
+			x = 1110;
+			y = 130;
+			break;
+		case 6:
+			x = 620;
+			y = 400;
+			break;
+		case 7:
+			x = 620;
+			y = 80;
+			break;
+		}
+	}
+
 }

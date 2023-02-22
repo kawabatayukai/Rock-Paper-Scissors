@@ -15,6 +15,8 @@ public:
 
 	void Update_Jangeki() override;  //じゃん撃生成・更新
 
+	void MoveEnmey_09();
+
 private:
 	/********************   ジャンプ関係   ********************/
 
@@ -25,7 +27,9 @@ private:
 
 	/**********************************************************/
 
+	int teleport = 0;
 	int frame_count = 0;       //じゃん撃発射用
+	int interval = 0;
 };
 
 
