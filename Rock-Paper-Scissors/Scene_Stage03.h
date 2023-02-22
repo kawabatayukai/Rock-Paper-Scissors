@@ -29,5 +29,7 @@ private:
 	Enemy_03* obj_enemy;            //“G
 
 	bool janken_flag = false;       //ÚG‚¶‚á‚ñ‚¯‚ñƒtƒ‰ƒO
+	
+	int stage = 0;//”wŒi
 };
 
