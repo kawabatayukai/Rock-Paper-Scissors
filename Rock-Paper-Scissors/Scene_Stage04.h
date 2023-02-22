@@ -25,6 +25,8 @@ public:
 
 	AbstractScene* ChangeScene() override; //ƒV[ƒ“‚Ì•ÏX
 
+	int back_image;
+
 private:
 	Enemy_04* obj_enemy;            //“G
 

@@ -1,10 +1,14 @@
 #include "Scene_Stage04.h"
 #include"KeyManager.h"
 #include"DxLib.h"
+#include"Scene_GameOver.h"
+#include"Scene_GameClear.h"
 
 //ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 Scene_Stage04::Scene_Stage04(const Player* player)
 {
+	back_image = LoadGraph("images/Stage4/Stage_Image2.png");
+
 	//ƒvƒŒƒCƒ„[î•ñ‚ª“n‚³‚ê‚Ä‚¢‚ê‚Î
 	if (player != nullptr)
 	{
@@ -24,25 +28,25 @@ Scene_Stage04::Scene_Stage04(const Player* player)
 	Init_Floor(STAGE_04_FLOOR);
 
 	//ˆê‚Â‚¸‚Â¶¬  STAGE_04_FLOOR ŒÂ•ª
-	obj_floor[0] = new Floor(0, 700, 1280, 20);			//°
-	obj_floor[1] = new Floor(0, 0, 1280, 1);			//“Vˆä
-	obj_floor[2] = new Floor(0, 0, 20, 1720);			//•Çi¶j
-	obj_floor[3] = new Floor(1260, 0, 20, 1720);		//•Çi‰Ej
-	obj_floor[4] = new Floor(300, 500, 200, 15);		//‘«ê(‰º‰¡)
-	obj_floor[5] = new Floor(600, 350, 150, 15);		//‘«ê(^‚ñ’†‰¡)
-	obj_floor[6] = new Floor(400, 180, 150, 15);		//‘«ê(ã‰¡)
-	obj_floor[7] = new Floor(390, 425, 15, 170);		//‘«ê(‰ºc)
-	obj_floor[8] = new Floor(667, 295, 15, 130);		//‘«ê(^‚ñ’†c)
-	obj_floor[9] = new Floor(467, 125, 15, 130);		//‘«ê(ãc)
-	obj_floor[10] = new Floor(0, 320, 100, 10);			//ž™‡@
-	obj_floor[11] = new Floor(0, 540, 70, 10);			//ž™‡A
-	obj_floor[12] = new Floor(300, 0, 10, 80);			//ž™‡B
-	obj_floor[13] = new Floor(900, 0, 10, 130);			//ž™‡C
-	obj_floor[14] = new Floor(1100, 0, 10, 40);			//ž™‡D
-	obj_floor[15] = new Floor(1180, 150, 100, 10);		//ž™‡E
-	obj_floor[16] = new Floor(1230, 400, 30, 10);		//ž™‡F
-	obj_floor[17] = new Floor(1000, 650, 10, 70);		//ž™‡G
-	obj_floor[18] = new Floor(700, 680, 10, 40);		//ž™‡H
+	obj_floor[0] = new Floor(0, 700, 1280, 20, 0x493759);		//°
+	obj_floor[1] = new Floor(0, 0, 1280, 1, 0x493759);			//“Vˆä
+	obj_floor[2] = new Floor(0, 0, 20, 1720, 0x493759);			//•Çi¶j
+	obj_floor[3] = new Floor(1260, 0, 20, 1720, 0x493759);		//•Çi‰Ej
+	obj_floor[4] = new Floor(300, 500, 200, 15, 0x493759);		//‘«ê(‰º‰¡)
+	obj_floor[5] = new Floor(600, 350, 150, 15, 0x493759);		//‘«ê(^‚ñ’†‰¡)
+	obj_floor[6] = new Floor(400, 180, 150, 15, 0x493759);		//‘«ê(ã‰¡)
+	obj_floor[7] = new Floor(390, 425, 15, 170, 0x493759);		//‘«ê(‰ºc)
+	obj_floor[8] = new Floor(667, 295, 15, 130, 0x493759);		//‘«ê(^‚ñ’†c)
+	obj_floor[9] = new Floor(467, 125, 15, 130, 0x493759);		//‘«ê(ãc)
+	obj_floor[10] = new Floor(0, 320, 100, 10, 0x493759);		//ž™‡@
+	obj_floor[11] = new Floor(0, 540, 70, 10, 0x493759);		//ž™‡A
+	obj_floor[12] = new Floor(300, 0, 10, 80, 0x493759);		//ž™‡B
+	obj_floor[13] = new Floor(900, 0, 10, 130, 0x493759);		//ž™‡C
+	obj_floor[14] = new Floor(1100, 0, 10, 40, 0x493759);		//ž™‡D
+	obj_floor[15] = new Floor(1180, 150, 100, 10, 0x493759);	//ž™‡E
+	obj_floor[16] = new Floor(1230, 400, 30, 10, 0x493759);		//ž™‡F
+	obj_floor[17] = new Floor(1000, 650, 10, 70, 0x493759);		//ž™‡G
+	obj_floor[18] = new Floor(700, 680, 10, 40, 0x493759);		//ž™‡H
 }
 
 //ƒfƒXƒgƒ‰ƒNƒ^
@@ -236,6 +240,9 @@ void Scene_Stage04::Update()
 //•`‰æ
 void Scene_Stage04::Draw() const
 {
+	//ƒXƒe[ƒW”wŒi•`‰æ
+	DrawRotaGraph(640, 360, 1, 0, back_image, FALSE);
+
 	//ÚG‚¶‚á‚ñ‚¯‚ñ‚Å‚È‚¢Žž
 	if (janken_flag == false)
 	{
@@ -257,7 +264,7 @@ void Scene_Stage04::Draw() const
 		Draw_Janken();
 	}
 
-	DrawString(640, 360, "Stage04", 0xffffff);
+	//DrawString(640, 360, "Stage04", 0xffffff);
 }
 
 //‚¶‚á‚ñ‚¯‚ñXVE“à•”ˆ—
@@ -321,5 +328,19 @@ void Scene_Stage04::Draw_Janken() const
 //ƒV[ƒ“‚Ì•ÏX
 AbstractScene* Scene_Stage04::ChangeScene()
 {
+	//“G‚ÌHP‚ª0ˆÈ‰º
+	if (obj_enemy->GetHP() < 0)
+	{
+		//ƒQ[ƒ€ƒNƒŠƒAƒV[ƒ“‚ÖØ‚è‘Ö‚¦
+		return dynamic_cast<AbstractScene*> (new GameClearScene(5));
+	}
+
+	//ƒvƒŒƒCƒ„[‚ÌHP‚ª0ˆÈ‰º
+	if (obj_player->GetHP() < 0)
+	{
+		//ƒQ[ƒ€ƒI[ƒo[ƒV[ƒ“‚ÖØ‚è‘Ö‚¦
+		return dynamic_cast<AbstractScene*> (new GameOverScene());
+	}
+
 	return this;
 }
