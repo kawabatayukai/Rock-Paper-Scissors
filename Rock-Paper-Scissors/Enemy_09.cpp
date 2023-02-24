@@ -10,7 +10,7 @@ Enemy_09::Enemy_09(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = 1;
 	hp = 100;
 
-	image = LoadGraph("images/tyokitest.png");
+	image = LoadGraph("images/Stage9.png");
 
 	Init_Jangeki();       //じゃん撃を用意
 
@@ -65,6 +65,7 @@ void Enemy_09::Update()
 //描画
 void Enemy_09::Draw() const
 {
+	
 	//中心から描画
 	DrawRotaGraphF(x, y, 1, 0, image, TRUE);
 
@@ -117,40 +118,63 @@ void Enemy_09::Update_Jangeki()
 }
 void Enemy_09::MoveEnmey_09() {
 	interval++;
-	if (/*land_flg == true && *//*GetRand(100) == 5 &&*/ interval % 120 == 0) {
-		switch (GetRand(7))
+	if (/*land_flg == true && *//*GetRand(100) == 5 &&*/ interval % 300 == 0) {
+		switch (GetRand(12))
 		{
+		//左側
 		case 0:
 			x = 160;
 			y = 480;
 			break;
 		case 1:
+			x = 160;
+			y = 700;
+			break;
+		case 2:
 			x = 360;
 			y = 305;
 			break;
-		case 2:
+		case 3:
+			x = 360;
+			y = 700;
+			break;
+		case 4:
 			x = 160;
 			y = 130;
 			break;
-		case 3:
+		//右側
+		case 5:
 			x = 1110;
 			y = 480;
 			break;
-		case 4:
+		case 6:
+			x = 1110;
+			y = 700;
+			break;
+		case 7:
 			x = 910;
 			y = 305;
 			break;
-		case 5:
+		case 8:
+			x = 910;
+			y = 700;
+			break;
+		case 9:
 			x = 1110;
 			y = 130;
 			break;
-		case 6:
+		//真ん中
+		case 10:
 			x = 620;
 			y = 400;
 			break;
-		case 7:
+		case 11:
 			x = 620;
 			y = 80;
+			break;
+		case 12:
+			x = 620;
+			y = 700;
 			break;
 		}
 	}

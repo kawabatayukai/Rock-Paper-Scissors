@@ -1,6 +1,9 @@
 #include "Scene_Stage09.h"
 #include"KeyManager.h"
 #include"DxLib.h"
+#include"Scene_GameOver.h"
+#include "Scene_GameClear.h"
+#include"Scene_Stage10.h"
 
 //コンストラクタ
 Scene_Stage09::Scene_Stage09(const Player* player)
@@ -156,56 +159,56 @@ void Scene_Stage09::Update()
 		//じゃん撃との当たり判定
 		if (obj_enemy->Hit_Jangeki(player_jangeki[i]) == true)
 		{
-			obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
-			i--;
+			//obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
+			//i--;
 			Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 			//じゃん撃描画
 			obj_enemy->Draw_Jangeki();
 			obj_enemy->Update_Jangeki();
 
-		//	Jan_Type enemy_type = obj_enemy->GetType();            //敵の属性
-		//	Jan_Type jangeki_type = player_jangeki[i]->GetType();  //当たったじゃん撃の属性
+			Jan_Type enemy_type = obj_enemy->GetType();            //敵の属性
+			Jan_Type jangeki_type = player_jangeki[i]->GetType();  //当たったじゃん撃の属性
 
-		//	//不利属性のみダメージが入る
-		//	switch (enemy_type)
-		//	{
-		//	case Jan_Type::ROCK:                           //敵の属性　グー
+			//不利属性のみダメージが入る
+			switch (enemy_type)
+			{
+			case Jan_Type::ROCK:                           //敵の属性　グー
 
-		//		//パーのじゃん撃のみ有効
-		//		if (jangeki_type == Jan_Type::PAPER)
-		//		{
-		//			obj_enemy->ReceiveDamage(30);     //ダメージが入る
-		//			obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
-		//			i--;
-		//		}
+				//パーのじゃん撃のみ有効
+				if (jangeki_type == Jan_Type::PAPER)
+				{
+					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
+					i--;
+				}
 
-		//		break;
+				break;
 
-		//	case Jan_Type::SCISSORS:                       //敵の属性　チョキ
+			case Jan_Type::SCISSORS:                       //敵の属性　チョキ
 
-		//		//グーのじゃん撃のみ有効
-		//		if (jangeki_type == Jan_Type::ROCK)
-		//		{
-		//			obj_enemy->ReceiveDamage(30);     //ダメージが入る
-		//			obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
-		//			i--;
-		//		}
-		//		break;
+				//グーのじゃん撃のみ有効
+				if (jangeki_type == Jan_Type::ROCK)
+				{
+					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
+					i--;
+				}
+				break;
 
-		//	case Jan_Type::PAPER:                          //敵の属性　パー
+			case Jan_Type::PAPER:                          //敵の属性　パー
 
-		//		//チョキのじゃん撃のみ有効
-		//		if (jangeki_type == Jan_Type::SCISSORS)
-		//		{
-		//			obj_enemy->ReceiveDamage(30);     //ダメージが入る
-		//			obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
-		//			i--;
-		//		}
-		//		break;
+				//チョキのじゃん撃のみ有効
+				if (jangeki_type == Jan_Type::SCISSORS)
+				{
+					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
+					i--;
+				}
+				break;
 
-		//	default:
-		//		break;
-		//	}
+			default:
+				break;
+			}
 		}
 	}
 
@@ -324,5 +327,18 @@ void Scene_Stage09::Draw_Janken() const
 //シーンの変更
 AbstractScene* Scene_Stage09::ChangeScene()
 {
+	//敵のHPが0以下
+	if (obj_enemy->GetHP() < 0)
+	{
+		//ゲームクリアシーンへ切り替え
+		return dynamic_cast<AbstractScene*> (new GameClearScene(10));
+	}
+
+	//プレイヤーのHPが0以下
+	if (obj_player->GetHP() < 0)
+	{
+		//ゲームオーバーシーンへ切り替え
+		return dynamic_cast<AbstractScene*> (new GameOverScene());
+	}
 	return this;
 }
