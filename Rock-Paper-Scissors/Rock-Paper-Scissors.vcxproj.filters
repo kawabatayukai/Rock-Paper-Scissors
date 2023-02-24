@@ -192,6 +192,9 @@
     <ClCompile Include="Scene_End.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Jangeki_Homing.cpp">
+      <Filter>ソース ファイル\Jangeki\kawabata</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -307,6 +310,9 @@
     </ClInclude>
     <ClInclude Include="Scene_End.h">
       <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_Homing.h">
+      <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
