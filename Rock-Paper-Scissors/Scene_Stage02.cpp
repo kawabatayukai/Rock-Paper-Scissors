@@ -26,10 +26,12 @@ Scene_Stage02::Scene_Stage02(const Player* player)
 	Init_Floor(STAGE_02_FLOOR);
 
 	//一つずつ生成  STAGE_02_FLOOR 個分
-	obj_floor[0] = new Floor(0, 700, 1280, 20);        //床
+	obj_floor[0] = new Floor(0, 700, 1280, 20, 0x006400);        //床
 	obj_floor[1] = new Floor(0, 0, 20, 1720);           //壁（左）
 	obj_floor[2] = new Floor(1260, 0, 20, 1720);           //壁（右）
 	obj_floor[3] = new Floor(1000, 100, 120, 50);      //足場
+
+	image_back = LoadGraph("images/stage02/mizuumi01.png");
 }
 
 //デストラクタ
@@ -223,6 +225,9 @@ void Scene_Stage02::Update()
 //描画
 void Scene_Stage02::Draw() const
 {
+	//背景
+	DrawGraph(0, 0, image_back, TRUE);
+
 	//接触じゃんけんでない時
 	if (janken_flag == false)
 	{
