@@ -10,7 +10,7 @@ Enemy_04::Enemy_04(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = 1;
 	hp = 100;
 
-	image = LoadGraph("images/tyokitest.png");
+	image = LoadGraph("images/Stage4/ステージ4_ボス.png");
 
 	Init_Jangeki();       //じゃん撃を用意
 
@@ -63,12 +63,14 @@ void Enemy_04::Update()
 
 //描画
 void Enemy_04::Draw() const
-{
+{	
 	//中心から描画
-	DrawRotaGraphF(x, y, 1, 0, image, TRUE);
+	DrawRotaGraphF(x, y, 3, 0, image, TRUE);
 
 	//じゃん撃描画
 	Draw_Jangeki();
+
+
 
 	//テスト
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
