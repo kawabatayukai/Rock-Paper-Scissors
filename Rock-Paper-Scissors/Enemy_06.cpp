@@ -8,7 +8,7 @@ Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 {
 	speed = 7.0f;
 	dir = 1;
-	hp = 100;
+	hp = 200;
 
 	image = LoadGraph("images/tyokitest.png");
 
@@ -42,10 +42,16 @@ void Enemy_06::Update()
 
 	/********************   ジャンプ関係   ********************/
 
-	if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
+	if (GetRand(100) == 3)  //乱数でjump_flgをtrueにする
+	{
+		jump_flg = true;
+	}
+
+	if (land_flg == true && jump_flg == true)    //jump_flgがジャンプの条件
 	{
 		g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 		land_flg = false;  //地面についていない
+		jump_flg = false;  //ジャンプ用フラグのリセット
 	}
 
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
@@ -79,40 +85,40 @@ void Enemy_06::Draw() const
 //じゃん撃生成・更新
 void Enemy_06::Update_Jangeki()
 {
-	int jan_count;
+	//int jan_count;
 
-	//じゃん撃配列をひとつずつ
-	for (jan_count = 0; jan_count < JANGEKI_MAX; jan_count++)
-	{
-		//配列の jan_count 番目がnullptr（空要素）ならそれ以上処理しない
-		if (obj_jangeki[jan_count] == nullptr) break;
+	////じゃん撃配列をひとつずつ
+	//for (jan_count = 0; jan_count < JANGEKI_MAX; jan_count++)
+	//{
+	//	//配列の jan_count 番目がnullptr（空要素）ならそれ以上処理しない
+	//	if (obj_jangeki[jan_count] == nullptr) break;
 
-		obj_jangeki[jan_count]->Update();
+	//	obj_jangeki[jan_count]->Update();
 
-		//画面外で削除する
-		if (obj_jangeki[jan_count]->CheckScreenOut() == true)
-		{
-			DeleteJangeki(jan_count);
-			jan_count--;
-		}
-	}
+	//	//画面外で削除する
+	//	if (obj_jangeki[jan_count]->CheckScreenOut() == true)
+	//	{
+	//		DeleteJangeki(jan_count);
+	//		jan_count--;
+	//	}
+	//}
 
-	/*********************** ↓↓ 発射・生成 ↓↓ ***********************/
-	frame_count++;
+	///*********************** ↓↓ 発射・生成 ↓↓ ***********************/
+	//frame_count++;
 
-	//配列の空要素
-	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
-	{
-		float radius = 35.5f;   //半径
-		float speed = -3.0f;     //スピード
+	////配列の空要素
+	//if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
+	//{
+	//	float radius = 35.5f;   //半径
+	//	float speed = -3.0f;     //スピード
 
-		//ランダムな属性を生成
-		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
+	//	//ランダムな属性を生成
+	//	Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
 
-		//生成
-		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
-	}
+	//	//生成
+	//	if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+	//}
 }
 
 //old_yの取得関数
