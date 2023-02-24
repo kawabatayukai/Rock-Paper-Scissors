@@ -22,7 +22,7 @@ Scene_Stage04::Scene_Stage04(const Player* player)
 	}
 
 	//ìGÇê∂ê¨
-	obj_enemy = new Enemy_04(1200, 360, Jan_Type::SCISSORS);
+	obj_enemy = new Enemy_04(1100, 550, Jan_Type::SCISSORS);
 
 	//è∞ÅEï«ÇÃópà”
 	Init_Floor(STAGE_04_FLOOR);
