@@ -2,6 +2,7 @@
 #include"KeyManager.h"
 #include"DxLib.h"
 
+
 //コンストラクタ
 Scene_Stage07::Scene_Stage07(const Player* player)
 {
@@ -54,6 +55,8 @@ void Scene_Stage07::Update()
 		obj_player->Update();    // プレイヤー更新・操作可能
 		obj_enemy->Update();     //敵キャラ更新・内部処理
 
+		//プレイヤーの座標を取得
+		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
 
 
 		//敵とプレイヤーの当たり判定  　ここで"接触じゃんけん"
