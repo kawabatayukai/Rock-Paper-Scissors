@@ -159,56 +159,57 @@ void Scene_Stage09::Update()
 		//じゃん撃との当たり判定
 		if (obj_enemy->Hit_Jangeki(player_jangeki[i]) == true)
 		{
-			//obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
-			//i--;
-			Jan_Type type = static_cast<Jan_Type>(GetRand(2));
-			//じゃん撃描画
-			obj_enemy->Draw_Jangeki();
-			obj_enemy->Update_Jangeki();
+			obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
+			i--;
 
-			Jan_Type enemy_type = obj_enemy->GetType();            //敵の属性
-			Jan_Type jangeki_type = player_jangeki[i]->GetType();  //当たったじゃん撃の属性
+		//	Jan_Type type = static_cast<Jan_Type>(GetRand(2));
+		//	//じゃん撃描画
+		//	obj_enemy->Draw_Jangeki();
+		//	obj_enemy->Update_Jangeki();
 
-			//不利属性のみダメージが入る
-			switch (enemy_type)
-			{
-			case Jan_Type::ROCK:                           //敵の属性　グー
+		//	Jan_Type enemy_type = obj_enemy->GetType();            //敵の属性
+		//	Jan_Type jangeki_type = player_jangeki[i]->GetType();  //当たったじゃん撃の属性
 
-				//パーのじゃん撃のみ有効
-				if (jangeki_type == Jan_Type::PAPER)
-				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
-					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
-					i--;
-				}
+		//	//不利属性のみダメージが入る
+		//	switch (enemy_type)
+		//	{
+		//	case Jan_Type::ROCK:                           //敵の属性　グー
 
-				break;
+		//		//パーのじゃん撃のみ有効
+		//		if (jangeki_type == Jan_Type::PAPER)
+		//		{
+		//			obj_enemy->ReceiveDamage(30);     //ダメージが入る
+		//			obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
+		//			i--;
+		//		}
 
-			case Jan_Type::SCISSORS:                       //敵の属性　チョキ
+		//		break;
 
-				//グーのじゃん撃のみ有効
-				if (jangeki_type == Jan_Type::ROCK)
-				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
-					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
-					i--;
-				}
-				break;
+		//	case Jan_Type::SCISSORS:                       //敵の属性　チョキ
 
-			case Jan_Type::PAPER:                          //敵の属性　パー
+		//		//グーのじゃん撃のみ有効
+		//		if (jangeki_type == Jan_Type::ROCK)
+		//		{
+		//			obj_enemy->ReceiveDamage(30);     //ダメージが入る
+		//			obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
+		//			i--;
+		//		}
+		//		break;
 
-				//チョキのじゃん撃のみ有効
-				if (jangeki_type == Jan_Type::SCISSORS)
-				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
-					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
-					i--;
-				}
-				break;
+		//	case Jan_Type::PAPER:                          //敵の属性　パー
 
-			default:
-				break;
-			}
+		//		//チョキのじゃん撃のみ有効
+		//		if (jangeki_type == Jan_Type::SCISSORS)
+		//		{
+		//			obj_enemy->ReceiveDamage(30);     //ダメージが入る
+		//			obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
+		//			i--;
+		//		}
+		//		break;
+
+		//	default:
+		//		break;
+		//	}
 		}
 	}
 
