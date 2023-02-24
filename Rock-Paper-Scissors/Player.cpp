@@ -218,23 +218,23 @@ void Player::Update_Jangeki()
 //old_y‚Ìæ“¾ŠÖ”
 int Player::Get_OldX()
 {
-	return old_x;
+	return static_cast<int>(old_x);
 }
 
 //y‚Ìæ“¾ŠÖ”
 int Player::Get_X()
 {
-	return x;
+	return static_cast<int>(x);
 }
 
 //old_y‚Ìæ“¾ŠÖ”
 int Player::Get_OldY()
 {
-	return old_y;
+	return static_cast<int>(old_y);
 }
 
 //y‚Ìæ“¾ŠÖ”
 int Player::Get_Y()
 {
-	return y;
+	return static_cast<int>(y);
 }

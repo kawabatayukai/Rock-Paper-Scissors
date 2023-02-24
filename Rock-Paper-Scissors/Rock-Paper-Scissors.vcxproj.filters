@@ -73,6 +73,9 @@
     <Filter Include="ソース ファイル\Rock-Paper-Scissors %28RPS%29">
       <UniqueIdentifier>{1ca09903-fbce-4164-a662-59d15c479cc8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Jangeki\kawabata">
+      <UniqueIdentifier>{32b49806-6f27-4d6d-9c72-c0dfb3c9ad29}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
