@@ -14,6 +14,7 @@ Enemy_05::Enemy_05(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	Init_Jangeki();       //じゃん撃を用意
 
+	Enemy_image = LoadGraph("images/Stage5_Enemy_NoMove_Left.png", TRUE);
 }
 
 //デストラクタ
@@ -65,7 +66,7 @@ void Enemy_05::Update()
 void Enemy_05::Draw() const
 {
 	//中心から描画
-	DrawRotaGraphF(x, y, 1, 0, image, TRUE);
+	DrawRotaGraphF(x, y, 5, 0, Enemy_image, TRUE);
 
 	//じゃん撃描画
 	Draw_Jangeki();
@@ -112,5 +113,6 @@ void Enemy_05::Update_Jangeki()
 
 		//生成
 		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+		
 	}
 }
