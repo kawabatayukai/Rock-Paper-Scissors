@@ -72,7 +72,6 @@ void Enemy_03::Update()
 	}
 
 	old_x = (x - old_x) + enemy_x;  //¡‰ñ‚Ì—Ž‰º‹——£‚ðÝ’è
-	old_x = (x + enemy_x);  //¡‰ñ‚Ì—Ž‰º‹——£‚ðÝ’è
 
 	//—Ž‰º‘¬“x‚Ì§ŒÀ
 	if (enemy_x > static_cast<float>(MAX_LENGTH)) enemy_x = static_cast<float>(MAX_LENGTH);
