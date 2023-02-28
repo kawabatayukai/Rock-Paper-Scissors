@@ -10,7 +10,7 @@ Enemy_02::Enemy_02(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = 1;
 	hp = 100;
 
-	image = LoadGraph("images/tyokitest.png");
+	image = LoadGraph("images/stage02/ex.png");
 
 	Init_Jangeki();       //じゃん撃を用意
 
@@ -57,8 +57,7 @@ void Enemy_02::Update()
 	y += y_add;                   //落下距離をｙ座標に加算する
 	g_add = _GRAVITY;              //重力加速度を初期化する
 
-	/**********************************************************/
-
+	/************************************************************/
 }
 
 //描画
