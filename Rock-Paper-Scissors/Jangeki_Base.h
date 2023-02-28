@@ -30,8 +30,8 @@ public:
 	//デストラクタ
 	~Jangeki_Base();
 
-	void Update();                    //更新
-	void Draw() const;                //描画
+	virtual void Update();                    //更新
+	virtual void Draw() const;                //描画
 	bool CheckScreenOut();            //画面外にいるか　true:画面外　false:画面内
 
 	/* 
@@ -42,13 +42,18 @@ public:
 	*/
 	int CheckAdvantage(const Jangeki_Base* jangeki);
 
-	float GetX() const { return x; }  //ｘ座標取得
-	float GetY() const { return y; }  //ｙ座標取得
-	float GetR() const { return r; }  //半径取得
+	float GetX() const { return x; }           //ｘ座標取得
+	float GetY() const { return y; }           //ｙ座標取得
+	float GetR() const { return r; }           //半径取得
 	Jan_Type GetType() const { return type; }  //属性取得
 
 	//タイプ取得（グー,チョキ,パー）
 	Jan_Type GeteEnemyType() const { return type; }
+
+	//追跡対象の座標をセット　プレイヤーの座標を取りたいときに使えます
+	void SetTargetLocation(const float target_x, const float target_y);
+
+
 
 	//じゃん撃同士の当たり判定
 	bool Hit_Jangeki(const Jangeki_Base* jangeki);
@@ -67,4 +72,8 @@ protected:
 	int image[3];
 
 	Jan_Type type;   //タイプ　グーorチョキorパー
+
+
+	float target_x = 0;       //対象のｘ座標
+	float target_y = 0;       //対象のｙ座標
 };
