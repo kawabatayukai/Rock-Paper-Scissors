@@ -47,16 +47,24 @@ void Enemy_02::Update()
 		g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 		land_flg = false;  //地面についていない
 	}
+	
 
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
+	
 	//落下速度の制限
 	if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
 
+	if (x_add > static_cast<float>(MAX_LENGTH)) x_add = static_cast<float>(MAX_LENGTH);
 	old_y = y;                    //1フレーム前のｙ座標
 	y += y_add;                   //落下距離をｙ座標に加算する
 	g_add = _GRAVITY;              //重力加速度を初期化する
 
+	old_x = x;                    //1フレーム前のｙ座標
+	x -= x_add;                   //落下距離をｙ座標に加算する
+	
+	//x = old_x;                    //1フレーム前のｙ座標
+	//x += x_add;                   //落下距離をｙ座標に加算する
 	/************************************************************/
 }
 
