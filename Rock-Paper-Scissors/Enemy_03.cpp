@@ -10,8 +10,8 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = 1;
 	hp = 100;
 
-	//image = LoadGraph("images/ステージ3攻撃.png");
-	image = LoadGraph("images/ステージ3防御.png");
+	//image = LoadGraph("images/stage03/stage03attack.png");
+	image = LoadGraph("images/stage03/stage03gard.png");
 	
 
 	Init_Jangeki();       //じゃん撃を用意

@@ -7,7 +7,7 @@
 //コンストラクタ
 Scene_Stage03::Scene_Stage03(const Player* player)
 {
-	stage = LoadGraph("images/stage3.png");
+	stage = LoadGraph("images/stage03/stage03back.png");
 
 
 	//プレイヤー情報が渡されていれば
