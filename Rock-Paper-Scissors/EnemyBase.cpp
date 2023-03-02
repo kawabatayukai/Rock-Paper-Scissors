@@ -20,3 +20,14 @@ void EnemyBase::SetHP(int damage)
 		hp -= damage;
 	}
 }
+
+
+/*                   こんな感じで使えます                                  */
+/*   obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY()); */
+
+//追跡対象の座標をセット　 基本プレイヤー
+void EnemyBase::SetPlayerLocation(const float player_x, const float player_y)
+{
+	this->player_x = player_x;
+	this->player_y = player_y;
+}

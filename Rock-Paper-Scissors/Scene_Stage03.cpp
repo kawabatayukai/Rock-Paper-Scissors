@@ -7,7 +7,7 @@
 //コンストラクタ
 Scene_Stage03::Scene_Stage03(const Player* player)
 {
-	stage = LoadGraph("images/stage3.png");
+	stage = LoadGraph("images/stage03/stage03back.png");
 
 
 	//プレイヤー情報が渡されていれば
@@ -23,7 +23,7 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	}
 
 	//敵を生成
-	obj_enemy = new Enemy_03(1200, 360, Jan_Type::SCISSORS);
+	obj_enemy = new Enemy_03(950, 680, Jan_Type::SCISSORS);//敵の位置
 
 	//床・壁の用意
 	Init_Floor(STAGE_03_FLOOR);
