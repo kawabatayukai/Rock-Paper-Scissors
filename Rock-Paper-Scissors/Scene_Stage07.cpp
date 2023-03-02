@@ -2,6 +2,7 @@
 #include"KeyManager.h"
 #include"DxLib.h"
 
+
 //コンストラクタ
 Scene_Stage07::Scene_Stage07(const Player* player)
 {
@@ -48,34 +49,44 @@ Scene_Stage07::~Scene_Stage07()
 //更新
 void Scene_Stage07::Update()
 {
-	//接触じゃんけんでない時
-	if (janken_flag == false)
-	{
-		obj_player->Update();    // プレイヤー更新・操作可能
-		obj_enemy->Update();     //敵キャラ更新・内部処理
+	////接触じゃんけんでない時
+	//if (janken_flag == false)
+	//{
+	//	obj_player->Update();    // プレイヤー更新・操作可能
+	//	obj_enemy->Update();     //敵キャラ更新・内部処理
+
+	//	//プレイヤーの座標を取得
+	//	obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
 
 
+	//	//敵とプレイヤーの当たり判定  　ここで"接触じゃんけん"
+	//	if (obj_enemy->Hit_Character(obj_player) == true)
+	//	{
+	//		//敵が出す手をランダムに決める　　　（ランダムなint型の値(0～2)を Jan_Type型に変換）
+	//		Jan_Type enemy_janken = static_cast<Jan_Type> (GetRand(2));
 
-		//敵とプレイヤーの当たり判定  　ここで"接触じゃんけん"
-		if (obj_enemy->Hit_Character(obj_player) == true)
-		{
-			//敵が出す手をランダムに決める　　　（ランダムなint型の値(0～2)を Jan_Type型に変換）
-			Jan_Type enemy_janken = static_cast<Jan_Type> (GetRand(2));
-
-			//じゃんけん用オブジェクト生成
-			obj_janken = new Janken(enemy_janken);
+	//		//じゃんけん用オブジェクト生成
+	//		obj_janken = new Janken(enemy_janken);
 
 
-			//接触じゃんけん開始
-			janken_flag = true;
+	//		//接触じゃんけん開始
+	//		janken_flag = true;
 
-		}
-	}
-	else
-	{
-		//接触時じゃんけんの処理を実行
-		Update_Janken();
-	}
+	//	}
+	//}
+	//else
+	//{
+	//	//接触時じゃんけんの処理を実行
+	//	Update_Janken();
+	//}
+
+
+	//テスト　じゃんけん無視
+	obj_player->Update();    // プレイヤー更新・操作可能
+	obj_enemy->Update();     //敵キャラ更新・内部処理
+
+	//プレイヤーの座標を取得
+	obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
 
 
 	//playerのじゃん撃をとってくる

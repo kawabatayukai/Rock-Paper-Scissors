@@ -27,7 +27,9 @@ public:
 
 private:
 	Enemy_02* obj_enemy;            //“G
-
 	bool janken_flag = false;       //ÚG‚¶‚á‚ñ‚¯‚ñƒtƒ‰ƒO
+
+private:      //‰æ‘œ‚È‚Ç
+	int image_back;        //”wŒi
 };
 
