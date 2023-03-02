@@ -9,7 +9,7 @@
 Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
 
-	speed = 7.0f;
+	speed = 1.0f;
 	dir = 1;
 	hp = 100;
 
@@ -20,7 +20,7 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	//動きパターン
 	moveinfo[0] = { 1,680.f,0.f,1 };
-	moveinfo[1] = { 1,950.f,0.f,0 };
+	moveinfo[1] = { 1,1200.f,0.f,0 };
 
 }
 
@@ -36,6 +36,9 @@ void Enemy_03::Update()
 {
 	//じゃん撃更新・生成
 	Update_Jangeki();
+
+	//ステ03パターン用関数
+	Move_Pattern();
 
 	//if (x + (w / 2) == (1280 - 20))
 	//{
@@ -95,7 +98,6 @@ void Enemy_03::Draw() const
 
 {
 
-
 	//中心から描画
 	DrawRotaGraphF(x, y, 1, 0, image, TRUE);
 
@@ -103,9 +105,9 @@ void Enemy_03::Draw() const
 	Draw_Jangeki();
 
 
-	//テスト
-	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
-	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
+	//テスト                                                      //赤色
+	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xff0000, "HP : %d", hp);
+	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xff0000);
 
 }
 
