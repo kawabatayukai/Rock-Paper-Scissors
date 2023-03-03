@@ -2,6 +2,8 @@
 #include"KeyManager.h"
 #include"DxLib.h"
 
+#include"Scene_GameOver.h"
+#include"Scene_GameClear.h"
 
 //コンストラクタ
 Scene_Stage07::Scene_Stage07(const Player* player)
@@ -346,5 +348,19 @@ void Scene_Stage07::Draw_Janken() const
 //シーンの変更
 AbstractScene* Scene_Stage07::ChangeScene()
 {
+	//敵のHPが0以下
+	if (obj_enemy->GetHP() < 0)
+	{
+		//ゲームクリアシーンへ切り替え
+		return dynamic_cast<AbstractScene*> (new GameClearScene(8));
+	}
+
+	//プレイヤーのHPが0以下
+	if (obj_player->GetHP() < 0)
+	{
+		//ゲームオーバーシーンへ切り替え
+		return dynamic_cast<AbstractScene*> (new GameOverScene());
+	}
+
 	return this;
 }
