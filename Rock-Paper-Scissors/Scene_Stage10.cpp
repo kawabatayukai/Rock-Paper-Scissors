@@ -30,7 +30,8 @@ Scene_Stage10::Scene_Stage10(const Player* player)
 
 	//obj_floor[3] = new Floor(1000, 100, 120, 50);      //足場	
 	//
-	obj_floor[3] = new Floor(100, 400, 120, 50);      //足場
+	obj_floor[3] = new Floor(100, 200, 120, 50);      //足場
+	obj_floor[4] = new Floor(1000, 200, 120, 50);      //足場
 }
 
 //デストラクタ
@@ -309,5 +310,6 @@ void Scene_Stage10::Draw_Janken() const
 //シーンの変更
 AbstractScene* Scene_Stage10::ChangeScene()
 {
+
 	return this;
 }
