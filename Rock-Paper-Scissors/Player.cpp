@@ -214,3 +214,27 @@ void Player::Update_Jangeki()
 		}
 	}
 }
+
+//old_y‚Ìæ“¾ŠÖ”
+int Player::Get_OldX()
+{
+	return static_cast<int>(old_x);
+}
+
+//y‚Ìæ“¾ŠÖ”
+int Player::Get_X()
+{
+	return static_cast<int>(x);
+}
+
+//old_y‚Ìæ“¾ŠÖ”
+int Player::Get_OldY()
+{
+	return static_cast<int>(old_y);
+}
+
+//y‚Ìæ“¾ŠÖ”
+int Player::Get_Y()
+{
+	return static_cast<int>(y);
+}

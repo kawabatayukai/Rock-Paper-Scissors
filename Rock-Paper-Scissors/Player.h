@@ -16,6 +16,11 @@ public:
 
 	void Update_Jangeki() override;  //じゃん撃生成・更新
 
+	int Get_OldX();                   //old_xの取得関数
+	int Get_X();                      //xの取得
+	int Get_OldY();                   //old_yの取得関数
+	int Get_Y();                      //yの取得
+
 private:
 	/********************   ジャンプ関係   ********************/
 
