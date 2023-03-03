@@ -8,6 +8,7 @@ struct Pattern_03 {
 	float location_x; //目指している座標x
 	float location_y; //目指している座標y
 	int next_index; //次配列のパターンの番号
+	int enemywaitTime;//エネミーの待ち時間
 
 };
 
@@ -40,6 +41,7 @@ private:
 
 	/**********************************************************/
 	int frame_count = 0;       //じゃん撃発射用
+
 	Pattern_03 moveinfo[20]; //行動パターン20種
 	short current = 0; //現在のパターン配列添字
 	

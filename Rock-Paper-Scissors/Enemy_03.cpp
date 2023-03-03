@@ -9,19 +9,21 @@
 Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
 
-	speed = 1.0f;
+	speed = 1.5f;
 	dir = 1;
 	hp = 100;
 
-	//image = LoadGraph("images/stage03/stage03attack.png");
-	image = LoadGraph("images/stage03/stage03gard.png");
+	image = LoadGraph("images/stage03/stage03attack.png");
+	//enemyimage[1] = LoadGraph("images/stage03/stage03gard.png");
 	
 	Init_Jangeki();       //じゃん撃を用意
 
-	//動きパターン
-	moveinfo[0] = { 1,680.f,0.f,1 };
-	moveinfo[1] = { 1,1200.f,0.f,0 };
-
+	//動きパターン 
+	moveinfo[0] = { 1,680.f,0.f,1,0};
+	moveinfo[1] = { 0,1200.f,0.f,0,0};
+	moveinfo[2] = { 0, 0 ,  0.f,1,100 };
+	moveinfo[3] = { 1,680.f,0.f,0,0 };
+	moveinfo[4] = { 0, 0 ,  0.f,1,100 };
 }
 
 //デストラクタ
@@ -101,6 +103,8 @@ void Enemy_03::Draw() const
 	//中心から描画
 	DrawRotaGraphF(x, y, 1, 0, image, TRUE);
 
+	//DrawRotaGraphF(x, y, 1, 0, enemyimage[1], TRUE);
+
 	//じゃん撃描画
 	Draw_Jangeki();
 
@@ -166,6 +170,7 @@ void Enemy_03::Move_Pattern() {
 
 		//目指しているx座標の右方が大きい
 		if (x < moveinfo[current].location_x) {
+
 			move_x += speed; //右移動にプラスする
 
 			//目指していた座標を超えたとき

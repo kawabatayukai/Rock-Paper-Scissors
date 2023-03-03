@@ -23,6 +23,7 @@ public:
 protected:
 	Jan_Type e_type;         //属性（グー　チョキ　パー　のいずれか）
 	int image = 0;           //画像
+	//int enemyimage[1];      //敵画像配列
 
 	float player_x = 0.0f;   //プレイヤーの座標
 	float player_y = 0.0f;   //プレイヤーの座標
