@@ -36,6 +36,7 @@ private:
 	Jan_Type select_JanType;  //‘I‘ð‚µ‚½"Žè"
 
 	double jan_angle = 0;     //‚¶‚á‚ñŒ‚‚ÌŠp“x
+	int jan_interval = 0;     //‚¶‚á‚ñŒ‚”­ŽËŠÔŠu
 
 	int image_JanType[3];     //‘I‘ð‚¶‚á‚ñŒ‚‰æ‘œ
 };
