@@ -20,7 +20,7 @@ Scene_Stage02::Scene_Stage02(const Player* player)
 	}
 
 	//敵を生成
-	obj_enemy = new Enemy_02(1200, 360, Jan_Type::SCISSORS);
+	obj_enemy = new Enemy_02(1200, 680, Jan_Type::SCISSORS);
 
 	//床・壁の用意
 	Init_Floor(STAGE_02_FLOOR);
@@ -324,7 +324,7 @@ AbstractScene* Scene_Stage02::ChangeScene()
 	if (obj_player->GetHP() < 0)
 	{
 		//ゲームオーバーシーンへ切り替え
-		return dynamic_cast<AbstractScene*> (new GameOverScene());
+		return dynamic_cast<AbstractScene*> (new GameOverScene(2));
 	}
 	return this;
 }
