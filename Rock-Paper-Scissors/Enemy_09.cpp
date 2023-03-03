@@ -118,7 +118,7 @@ void Enemy_09::Update_Jangeki()
 	
 		//ê∂ê¨
 		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
-		if (reflectionFlg == true) /*reflection_jangeki[jan_count]*/ = new Jangeki_Base(x, y, radius, speed, type);
+		if (reflectionFlg == true) /*reflection_jangeki[jan_count] =*/ new Jangeki_Base(x, y, radius, speed, type);
 	}
 }
 void Enemy_09::MoveEnmey_09() {

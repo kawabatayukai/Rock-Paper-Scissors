@@ -37,6 +37,7 @@ private:
 	int frame_count = 0;       //‚¶‚á‚ñŒ‚”­ŽË—p
 	int interval = 0;
 	bool reflectionFlg;
+	int image;
 	Jangeki_Base** reflection_jangeki;
 };
 
