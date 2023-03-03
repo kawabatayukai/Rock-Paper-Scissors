@@ -152,9 +152,9 @@ void Player::Draw() const
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
 
 	//テスト 選択じゃん撃
-	DrawString(400, 100, "SELECT : ", 0xffffff);
-	DrawRotaGraph(550, 100, 1, 0, image_JanType[static_cast<int>(select_JanType)], TRUE);
-	DrawString(400, 200, "RB : 発射", 0xffffff);
+	DrawString(30, 100, "SELECT : ", 0xffffff);
+	DrawRotaGraph(160, 100, 0.5, 0, image_JanType[static_cast<int>(select_JanType)], TRUE);
+	DrawString(30, 150, "RB : 発射", 0xffffff);
 
 
 }
@@ -213,4 +213,28 @@ void Player::Update_Jangeki()
 			obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, select_JanType);
 		}
 	}
+}
+
+//old_yの取得関数
+int Player::Get_OldX()
+{
+	return static_cast<int>(old_x);
+}
+
+//yの取得関数
+int Player::Get_X()
+{
+	return static_cast<int>(x);
+}
+
+//old_yの取得関数
+int Player::Get_OldY()
+{
+	return static_cast<int>(old_y);
+}
+
+//yの取得関数
+int Player::Get_Y()
+{
+	return static_cast<int>(y);
 }

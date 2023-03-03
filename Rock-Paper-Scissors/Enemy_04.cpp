@@ -10,7 +10,7 @@ Enemy_04::Enemy_04(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = 1;
 	hp = 100;
 
-	image = LoadGraph("images/tyokitest.png");
+	image = LoadGraph("images/Stage4/ステージ4_ボス.png");
 
 	Init_Jangeki();       //じゃん撃を用意
 
@@ -44,7 +44,7 @@ void Enemy_04::Update()
 
 	if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
 	{
-		g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+		g_add = -31.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 		land_flg = false;  //地面についていない
 	}
 
@@ -63,12 +63,14 @@ void Enemy_04::Update()
 
 //描画
 void Enemy_04::Draw() const
-{
+{	
 	//中心から描画
-	DrawRotaGraphF(x, y, 1, 0, image, TRUE);
+	DrawRotaGraphF(x, y, 3, 0, image, TRUE);
 
 	//じゃん撃描画
 	Draw_Jangeki();
+
+
 
 	//テスト
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);

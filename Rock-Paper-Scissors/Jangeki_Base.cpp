@@ -69,6 +69,10 @@ void Jangeki_Base::Draw() const
 		//拡大率
 		double rate = (static_cast<double>(r) * 2) / 100;
 
+		//座標をint型に変換　（警告減らす）
+		int x = static_cast<int>(this->x);
+		int y = static_cast<int>(this->y);
+
 		switch (type)
 		{
 		case Jan_Type::ROCK:         //グー
@@ -96,6 +100,7 @@ void Jangeki_Base::Draw() const
 bool Jangeki_Base::CheckScreenOut()
 {
 	if (x > 1280 || x < 0) return true;
+	if (y > 720 || y < 0) return true;
 
 	return false;
 }
@@ -137,6 +142,14 @@ int Jangeki_Base::CheckAdvantage(const Jangeki_Base* jangeki)
 	}
 
 	return false;
+}
+
+
+//追跡対象の座標をセット　　プレイヤーの座標を取りたいときに使えます
+void Jangeki_Base::SetTargetLocation(const float target_x, const float target_y)
+{
+	this->target_x = target_x;
+	this->target_y = target_y;
 }
 
 

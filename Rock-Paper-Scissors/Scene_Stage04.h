@@ -5,7 +5,7 @@
 #include"Player.h"
 #include"Floor.h"
 
-#define STAGE_04_FLOOR 4         //床・壁の合計数
+#define STAGE_04_FLOOR 19         //床・壁の合計数
 
 //0ステージ
 class Scene_Stage04 : public Stage_Base
@@ -24,6 +24,8 @@ public:
 	void Draw_Janken() const;              //じゃんけん描画
 
 	AbstractScene* ChangeScene() override; //シーンの変更
+
+	int back_image;
 
 private:
 	Enemy_04* obj_enemy;            //敵
