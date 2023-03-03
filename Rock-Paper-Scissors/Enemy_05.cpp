@@ -2,6 +2,7 @@
 #include"DxLib.h"
 #include"Player.h"
 #include"Jangeki_Base.h"
+#include"Jangeki_Changespeed.h"
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_05::Enemy_05(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
@@ -112,7 +113,7 @@ void Enemy_05::Update_Jangeki()
 
 
 		//生成
-		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Changespeed(x, y, radius, speed, type);
 		
 	}
 }

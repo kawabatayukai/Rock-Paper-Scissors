@@ -76,6 +76,9 @@
     <Filter Include="ソース ファイル\Jangeki\kawabata">
       <UniqueIdentifier>{32b49806-6f27-4d6d-9c72-c0dfb3c9ad29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Jangeki\bise">
+      <UniqueIdentifier>{0225705f-57ca-4278-af2c-b05082ba30c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -195,6 +198,9 @@
     <ClCompile Include="Jangeki_Homing.cpp">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClCompile>
+    <ClCompile Include="Jangeki_Changespeed.cpp">
+      <Filter>ソース ファイル\Jangeki\bise</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -313,6 +319,9 @@
     </ClInclude>
     <ClInclude Include="Jangeki_Homing.h">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_Changespeed.h">
+      <Filter>ソース ファイル\Jangeki\bise</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
