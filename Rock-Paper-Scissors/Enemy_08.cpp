@@ -16,7 +16,7 @@ Enemy_08::Enemy_08(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 }
 
-//デストラクタ
+//デストラクタ2
 Enemy_08::~Enemy_08()
 {
 
