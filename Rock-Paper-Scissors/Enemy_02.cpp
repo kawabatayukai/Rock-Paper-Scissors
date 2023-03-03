@@ -42,34 +42,86 @@ void Enemy_02::Update()
 
 	/********************   ジャンプ関係   ********************/
 
-	if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
+	if (jump_cnt < 1)
 	{
-		g_add = -31.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-		land_flg = false;  //地面についていない
+		if (GetRand(30) == 1)  //乱数でjump_flgをtrueにする
+		{
+			jump_flg = true;
+		}
+
+		if (land_flg == true && jump_flg == true)    //jump_flgがジャンプの条件
+		{
+			g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+			land_flg = false;  //地面についていない
+			jump_flg = false;  //ジャンプ用フラグのリセット
+			jump_cnt++;
+		}
 	}
-	
+
+	if (jump_cnt >= 1 && direction_flg == false)
+	{
+
+		x = x - 5;
+		if (x < 100)
+		{
+			
+			jump_cnt = 0;
+			direction_flg = true;
+		}
+		
+		if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
+		{
+			g_add = -31.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+			land_flg = false;  //地面についていない
+		}
+	}
+
+	else if (jump_cnt >= 1 && direction_flg == true)
+	{
+		x = x + 5;
+		if (x > 1180)
+		{
+			jump_cnt = 0;
+			direction_flg = false;
+		}
+		if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
+		{
+			g_add = -31.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+			land_flg = false;  //地面についていない
+		}
+	}
+
+	//if (GetRand(100) == 3)  //乱数でjump_flgをtrueにする
+	//{
+	//	jump_flg = true;
+	//}
+
+	//if (land_flg == true && jump_flg == true)    //jump_flgがジャンプの条件
+	//{
+	//	g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+	//	land_flg = false;  //地面についていない
+	//	jump_flg = false;  //ジャンプ用フラグのリセット
+	//	jump_cnt++;
+	//}
 
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
-	x_add = (x + old_x) - g_add;
-	x_add = (x - old_x) + g_add;
+	x_sdd = (x - old_x) + g_add;  //今回の落下距離を設定
+	x_zdd = (x - old_x) + g_zdd;  //今回の落下距離を設定
+	
 	//落下速度の制限
 	if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
+    if (x_sdd > static_cast<float>(MAX_LENGTH)) x_sdd = static_cast<float>(MAX_LENGTH);
+    if (x_zdd > static_cast<float>(MAX_LENGTH)) x_zdd = static_cast<float>(MAX_LENGTH);
 
-	if (x_add > static_cast<float>(MAX_LENGTH)) x_add = static_cast<float>(MAX_LENGTH);
-	//if (x_sdd > static_cast<float>(MAX_LENGTH)) x_sdd = static_cast<float>(MAX_LENGTH);
 	old_y = y;                    //1フレーム前のｙ座標
 	y += y_add;                   //落下距離をｙ座標に加算する
 	g_add = _GRAVITY;              //重力加速度を初期化する
-	
+
 	old_x = x;                    //1フレーム前のｙ座標
-	x -= x_add;                   //落下距離をｙ座標に加算する
-	
+	x -= x_sdd;                   //落下距離をｙ座標に加算する
+
 	old_x = x;                    //1フレーム前のｙ座標
-	x += x_add;                   //落下距離をｙ座標に加算する
-	
-	
-	//x = old_x;                    //1フレーム前のｙ座標
-	//x += x_add;                   //落下距離をｙ座標に加算する
+	x += x_zdd;                   //落下距離をｙ座標に加算する
 	/************************************************************/
 }
 
@@ -125,4 +177,15 @@ void Enemy_02::Update_Jangeki()
 		//生成
 		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
 	}
+}
+//old_yの取得関数
+int Enemy_02::Get_OldY()
+{
+	return old_y;
+}
+
+//yの取得関数
+int Enemy_02::Get_Y()
+{
+	return y;
 }
