@@ -346,7 +346,7 @@ AbstractScene* Scene_Stage06::ChangeScene()
 	if (obj_player->GetHP() < 0)
 	{
 		//ゲームオーバーシーンへ切り替え
-		return dynamic_cast<AbstractScene*> (new GameOverScene());
+		return dynamic_cast<AbstractScene*> (new GameOverScene(6));
 	}
 	return this;
 }

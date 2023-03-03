@@ -15,5 +15,6 @@ public:
 
 private:
 	int Next;
+
 };
 
