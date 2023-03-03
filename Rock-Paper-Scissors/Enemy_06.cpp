@@ -58,9 +58,24 @@ void Enemy_06::Update()
 		}
 	}
 	
-	if(jump_cnt >= 3)
+	if(jump_cnt >= 3 && direction_flg == false)
 	{
+		
 		x = x - 5;
+		if (x < 100)
+		{
+			jump_cnt = 0;
+			direction_flg = true;
+		}
+	}
+	else if(jump_cnt >= 3 && direction_flg == true)
+	{
+		x = x + 5;
+		if (x > 1180)
+		{
+			jump_cnt = 0;
+			direction_flg = false;
+		}
 	}
 	
 	//if (GetRand(100) == 3)  //—”‚Åjump_flg‚ğtrue‚É‚·‚é
