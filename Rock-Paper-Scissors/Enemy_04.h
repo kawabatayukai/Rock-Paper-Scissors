@@ -1,6 +1,16 @@
 #pragma once
 #include"EnemyBase.h"
 
+//行動パターン04用
+struct Pattern_04 {
+
+	int moveflg; //0:動かない,1:動く
+	float location_x; //目指している座標x
+	float location_y; //目指している座標y
+	int next_index; //次配列のパターンの番号
+
+};
+
 //4ステージ　敵キャラ
 class Enemy_04 : public EnemyBase
 {
@@ -15,17 +25,21 @@ public:
 
 	void Update_Jangeki() override;  //じゃん撃生成・更新
 
+	void Move_Pattern();
+
 private:
 	/********************   ジャンプ関係   ********************/
 
-	float old_x = 0;          //前回の位置X
-	float old_y = 0;          //前回の位置Y
-	float y_add = 0;          //落下距離
-	float g_add = 1.0f;       //重力加速度
+	//float old_x = 0;          //前回の位置X
+	//float old_y = 0;          //前回の位置Y
+	//float y_add = 0;          //落下距離
+	//float g_add = 1.0f;       //重力加速度
 
 	/**********************************************************/
 
 	int frame_count = 0;       //じゃん撃発射用
+	Pattern_04 moveinfo[20]; //行動パターン20種
+	short current = 0; //現在のパターン配列添字
 };
 
 
