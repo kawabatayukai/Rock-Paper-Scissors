@@ -2,6 +2,7 @@
 #include"DxLib.h"
 #include"Player.h"
 #include"Jangeki_Base.h"
+#include"Scene_Stage09.h"
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_09::Enemy_09(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
@@ -13,6 +14,7 @@ Enemy_09::Enemy_09(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	image = LoadGraph("images/Stage9.png");
 
 	Init_Jangeki();       //じゃん撃を用意
+	reflectionFlg = false;
 
 }
 
@@ -88,8 +90,10 @@ void Enemy_09::Update_Jangeki()
 	{
 		//配列の jan_count 番目がnullptr（空要素）ならそれ以上処理しない
 		if (obj_jangeki[jan_count] == nullptr) break;
+		if (reflection_jangeki[jan_count] == nullptr) break;
 
 		obj_jangeki[jan_count]->Update();
+		reflection_jangeki[jan_count]->Update();
 
 		//画面外で削除する
 		if (obj_jangeki[jan_count]->CheckScreenOut() == true)
@@ -111,9 +115,10 @@ void Enemy_09::Update_Jangeki()
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
-
+	
 		//生成
-		if (frame_count % 120 == 0 /*|| Hit_Jangeki()==true*/) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+		if (reflectionFlg == true) /*reflection_jangeki[jan_count]*/ = new Jangeki_Base(x, y, radius, speed, type);
 	}
 }
 void Enemy_09::MoveEnmey_09() {
@@ -179,4 +184,11 @@ void Enemy_09::MoveEnmey_09() {
 		}
 	}
 
+}
+void Enemy_09::trueFlg() {
+	reflectionFlg = true;
+
+}
+void Enemy_09::falseFlg() {
+	reflectionFlg = false;
 }

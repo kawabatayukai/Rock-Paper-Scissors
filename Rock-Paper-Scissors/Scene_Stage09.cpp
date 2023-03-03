@@ -159,8 +159,11 @@ void Scene_Stage09::Update()
 		//‚¶‚á‚ñŒ‚‚Æ‚Ì“–‚½‚è”»’è
 		if (obj_enemy->Hit_Jangeki(player_jangeki[i]) == true)
 		{
+			obj_enemy->trueFlg();
 			obj_player->DeleteJangeki(i);     //“–‚½‚Á‚½‚¶‚á‚ñŒ‚‚ðíœ
 			i--;
+			obj_enemy->Draw_Jangeki();
+			obj_enemy->Update_Jangeki();
 
 		//	Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 		//	//‚¶‚á‚ñŒ‚•`‰æ
@@ -211,6 +214,7 @@ void Scene_Stage09::Update()
 		//		break;
 		//	}
 		}
+		obj_enemy->falseFlg();
 	}
 
 
