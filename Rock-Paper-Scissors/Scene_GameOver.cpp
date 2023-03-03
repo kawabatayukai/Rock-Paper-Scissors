@@ -22,6 +22,12 @@ GameOverScene::GameOverScene(int again):again(again)
 	image_back = LoadGraph("images/GameOver.png");
 }
 
+GameOverScene::GameOverScene() :again(11)
+{
+	SetFontSize(50);
+	image_back = LoadGraph("images/GameOver.png");
+}
+
 //デストラクタ
 GameOverScene::~GameOverScene()
 {

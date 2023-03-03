@@ -6,6 +6,8 @@ class GameOverScene : public AbstractScene
 {
 public:
 	GameOverScene(int again);                      //コンストラクタ
+	GameOverScene();
+
 	~GameOverScene();                     //デストラクタ
 
 	void Update() override;                //更新

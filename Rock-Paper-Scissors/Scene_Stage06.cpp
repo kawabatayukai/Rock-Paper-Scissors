@@ -230,19 +230,22 @@ void Scene_Stage06::Update()
 		}
 	}
 
+	//壁との当たり判定
 	if (obj_player->Get_X() <= 50 || obj_player->Get_X() >= 1200)
 	{
 		HitCtrl_Floor(obj_player, STAGE_06_FLOOR);     // player　床・壁判定
 	}
 
-	if (obj_enemy->Get_Y() >= obj_enemy->Get_OldY())
-	{
-		HitCtrl_Floor(obj_enemy, STAGE_06_FLOOR);      // 敵　　　床・壁判定
-	}
-	
+	//プレイヤーのy座標が減少しない時のみ当たり判定を取得
 	if (obj_player->Get_Y() >= obj_player->Get_OldY())
 	{
 		HitCtrl_Floor(obj_player, STAGE_06_FLOOR);     // player　床・壁判定
+	}
+
+	//敵のy座標が減少しない時のみ当たり判定を取得
+	if (obj_enemy->Get_Y() >= obj_enemy->Get_OldY())
+	{
+		HitCtrl_Floor(obj_enemy, STAGE_06_FLOOR);      // 敵　　　床・壁判定
 	}
 }
 
@@ -348,5 +351,6 @@ AbstractScene* Scene_Stage06::ChangeScene()
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(6));
 	}
+
 	return this;
 }
