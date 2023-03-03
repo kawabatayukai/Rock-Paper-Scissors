@@ -20,7 +20,7 @@ Scene_Stage10::Scene_Stage10(const Player* player)
 	}
 
 	//敵を生成
-	obj_enemy = new Enemy_10(1200, 360, Jan_Type::SCISSORS);
+	obj_enemy = new Enemy_10(1050, 220, Jan_Type::SCISSORS);
 
 	//床・壁の用意
 	Init_Floor(STAGE_10_FLOOR);
@@ -32,8 +32,8 @@ Scene_Stage10::Scene_Stage10(const Player* player)
 
 	//obj_floor[3] = new Floor(1000, 100, 120, 50);      //足場	
 	//
-	obj_floor[3] = new Floor(100, 200, 120, 50);      //足場
-	obj_floor[4] = new Floor(1000, 200, 120, 50);      //足場
+	obj_floor[3] = new Floor(100, 350, 120, 50);      //足場
+	obj_floor[4] = new Floor(1000, 350, 120, 50);      //足場
 }
 
 //デストラクタ

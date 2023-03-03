@@ -22,15 +22,74 @@ Enemy_10::~Enemy_10()
 
 }
 
+int switchMove = 0; //作業用変数
+
+/*敵の動き*/
 void  Enemy_10::Move()
 {
+	/*左右の足場にジャンプ移動の処理*/
+	switch (switchMove)
+	{
+	case 0:
+		if (x > 120) //左へ移動
+		{
+			x--;
+
+			if (land_flg == true && x < 990 && x > 200) //ジャンプ
+			{
+				g_add = -25.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+				land_flg = false;  //地面についていない
+			}
+
+			if (land_flg == false) //ジャンプ中の加速
+			{
+				if (v < 15) //加速上限
+				{
+					v += a;
+				}
+				x -= v;
+			}
+		}
+		else
+		{
+			switchMove = 1; //次の処理へ
+		}
+		break;
+
+	case 1:
+		if (x < 1100) //右へ移動
+		{
+			x++;
+
+			if (land_flg == true && x > 200 && x < 1000) //ジャンプ
+			{
+				g_add = -25.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+				land_flg = false;  //地面についていない
+			}
+
+			if (land_flg == false) //ジャンプ中の加速
+			{
+				if (v < 15) //加速上限
+				{
+					v += a;
+				}
+				x += v;
+			}
+		}
+		else
+		{
+			switchMove = 0; //次の処理へ
+		}
+		break;
+	}
+
 	/********************   ジャンプ関係   ********************/
 
-	if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
-	{
-		g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-		land_flg = false;  //地面についていない
-	}
+	//if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
+	//{
+		//g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+		//land_flg = false;  //地面についていない
+	//}
 
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
@@ -96,6 +155,7 @@ void Enemy_10::Draw() const
 	//テスト
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
 	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
+	DrawFormatString(500, 200, 0xffffffff, "%f", x);
 
 }
 
