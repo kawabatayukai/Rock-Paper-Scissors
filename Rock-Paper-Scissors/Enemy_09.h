@@ -1,5 +1,6 @@
 #pragma once
 #include"EnemyBase.h"
+#include"Jangeki_Base.h"
 
 //9ステージ　敵キャラ
 class Enemy_09 : public EnemyBase
@@ -15,6 +16,13 @@ public:
 
 	void Update_Jangeki() override;  //じゃん撃生成・更新
 
+	void MoveEnmey_09();
+
+	void trueFlg();
+	void falseFlg();
+	
+
+
 private:
 	/********************   ジャンプ関係   ********************/
 
@@ -25,7 +33,12 @@ private:
 
 	/**********************************************************/
 
+	int teleport = 0;
 	int frame_count = 0;       //じゃん撃発射用
+	int interval = 0;
+	bool reflectionFlg;
+	int image;
+	Jangeki_Base** reflection_jangeki;
 };
 
 
