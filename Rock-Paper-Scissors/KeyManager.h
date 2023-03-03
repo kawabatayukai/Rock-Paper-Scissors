@@ -1,6 +1,19 @@
 #pragma once
 #include"DxLib.h"
 
+//コントローラースティックの識別番号
+namespace Stick_Code
+{
+	const int LEFT_STICK_X = 0;            //左スティックｘ方向
+	const int LEFT_STICK_Y = 1;            //左スティックｙ方向
+	const int RIGHT_STICK_X = 2;           //右スティックｘ方向
+	const int RIGHT_STICK_Y = 3;           //右スティックｙ方向
+
+	const int STICK_MAX_VALUE = 32767;     //スティック入力最大値
+	const int STICK_MIN_VALUE = -32768;    //スティック入力最小値
+};
+
+
 class KeyManager
 {
 public:
@@ -21,7 +34,8 @@ public:
 	static bool OnPadReleased(int key);      //離した瞬間
 	static bool OnPadPressed(int key);       //押している間
 
-	static XINPUT_STATE GetPadInputState();  //pad入力情報取得
+	static XINPUT_STATE GetPadInputState();             //pad入力情報取得
+	static int  Get_StickValue(const int& stick_code);  //スティック入力値取得
 
 private:
 	//privateにコンストラクタ→アクセスできない（オブジェクトが作れない）
@@ -36,21 +50,26 @@ private:
 
 	static int oldKey_Pad;       //前回の入力（コントローラー
 	static int nowKey_Pad;       //今回の入力（コントローラー
+
+	//---------   コントローラー（スティック入力値） ------------------------
+
 	static XINPUT_STATE input_Pad;      //コントローラーの入力情報
+	static int stick_value[4];          //入力値   0:左ｘ　1:左ｙ　2:右ｘ　3:右ｙ
+
+
+	//無効範囲(デッドゾーン)・・・入力を受け付けない値
+	
+	//左スティック
+	static short stickLX_DeadZoneMAX;   //無効範囲最大値　x方向
+	static short stickLX_DeadZoneMIN;   //無効範囲最小値　x方向
+	static short stickLY_DeadZoneMAX;   //無効範囲最大値　y方向
+	static short stickLY_DeadZoneMIN;   //無効範囲最小値　y方向
+
+	//右スティック
+	static short stickRX_DeadZoneMAX;   //無効範囲最大値　x方向
+	static short stickRX_DeadZoneMIN;   //無効範囲最小値　x方向
+	static short stickRY_DeadZoneMAX;   //無効範囲最大値　y方向
+	static short stickRY_DeadZoneMIN;   //無効範囲最小値　y方向
+
+	//-----------------------------------------------------------------------
 };
-
-
-//PAD_INPUT_DOWN　	// ↓チェックマスク(下キー or テンキーの２キー)
-//PAD_INPUT_LEFT　	// ←チェックマスク(左キー or テンキーの４キー)
-//PAD_INPUT_RIGHT　	// →チェックマスク(右キー or テンキーの６キー)
-//PAD_INPUT_UP　	// ↑チェックマスク(上キー or テンキーの８キー)
-//PAD_INPUT_1　	// 1ボタンチェックマスク(Ｚキー)
-//PAD_INPUT_2　	// 2ボタンチェックマスク(Ｘキー)
-//PAD_INPUT_3　	// 3ボタンチェックマスク(Ｃキー)
-//PAD_INPUT_4　	// 4ボタンチェックマスク(Ａキー)
-//PAD_INPUT_5　	// 5ボタンチェックマスク(Ｓキー)
-//PAD_INPUT_6　	// 6ボタンチェックマスク(Ｄキー)
-//PAD_INPUT_7　	// 7ボタンチェックマスク(Ｑキー)
-//PAD_INPUT_8　	// 8ボタンチェックマスク(Ｗキー)
-//PAD_INPUT_9　	// 9ボタンチェックマスク(ＥＳＣキー)
-//PAD_INPUT_10　	// 10ボタンチェックマスク(スペースキー)

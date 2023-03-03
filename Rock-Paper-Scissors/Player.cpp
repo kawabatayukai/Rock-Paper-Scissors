@@ -97,47 +97,49 @@ void Player::Update()
 
 	//Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`
 
-	////âEÉXÉeÉBÉbÉNÇÃÉAÉiÉçÉOì¸óÕÇéÊìæ
+	//âEÉXÉeÉBÉbÉNÇÃÉAÉiÉçÉOì¸óÕÇéÊìæ
 	//double right_x = static_cast<double>(KeyManager::GetPadInputState().ThumbRX);   //Çò
 	//double right_y = static_cast<double>(KeyManager::GetPadInputState().ThumbRY);   //Çô
+	double right_x = static_cast<double>(KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X));   //Çò
+	double right_y = static_cast<double>(KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y));   //Çô
 
-	//jan_angle = atan2(static_cast<double>(right_y - y), static_cast<double>(right_x - x));
+	jan_angle = atan2(static_cast<double>(right_y - y), static_cast<double>(right_x - x));
 
-	////if (right_x <= 128&&right_x>=0) right_x = 0;
-	////if (right_y <= 128 && right_y >= 0) right_y = 0;
+	//if (right_x <= 128&&right_x>=0) right_x = 0;
+	//if (right_y <= 128 && right_y >= 0) right_y = 0;
 
-	////if (right_y < 0) right_y = 0;
+	//if (right_y < 0) right_y = 0;
 
-	////ÉvÉåÉCÉÑÅ[ç¿ïW
-	//DrawFormatString(300, 200, 0xffffff, "Player_X : %f", x);
-	//DrawFormatString(300, 230, 0xffffff, "Player_Y : %f", y);
+	//ÉvÉåÉCÉÑÅ[ç¿ïW
+	DrawFormatString(300, 200, 0xffffff, "Player_X : %f", x);
+	DrawFormatString(300, 230, 0xffffff, "Player_Y : %f", y);
 
-	////âEÉXÉeÉBÉbÉNÉAÉiÉçÉOì¸óÕíl
-	//DrawFormatString(500, 300, 0xffffff, "Right_X : %d", static_cast<int>(right_x));
-	//DrawFormatString(500, 330, 0xffffff, "Right_Y : %d", static_cast<int>(right_y));
-	//DrawFormatString(500, 390, 0xffffff, "DeadZone : %lf", static_cast<double>(GetJoypadDeadZone(DX_INPUT_KEY_PAD1)));
+	//âEÉXÉeÉBÉbÉNÉAÉiÉçÉOì¸óÕíl
+	DrawFormatString(500, 300, 0xffffff, "Right_X : %d", static_cast<int>(right_x));
+	DrawFormatString(500, 330, 0xffffff, "Right_Y : %d", static_cast<int>(right_y));
+	
 
-	////äpìx
-	////double angle = atan2(static_cast<double>(y - right_y), static_cast<double>(x - right_x));
+	//äpìx
+	//double angle = atan2(static_cast<double>(y - right_y), static_cast<double>(x - right_x));
 
 
-	//DrawFormatString(500, 430, 0xffffff, "ãtê≥ê⁄ç¿ïW_X : %lf", static_cast<double>(right_x - x));
-	//DrawFormatString(500, 460, 0xffffff, "ãtê≥ê⁄ç¿ïW_Y : %lf", static_cast<double>(right_y - y));
-	//DrawFormatString(500, 490, 0xffffff, "ãtê≥ê⁄(å ìxñ@) : %lf", jan_angle * 180 / M_PI);
+	DrawFormatString(500, 430, 0xffffff, "ãtê≥ê⁄ç¿ïW_X : %lf", static_cast<double>(right_x - x));
+	DrawFormatString(500, 460, 0xffffff, "ãtê≥ê⁄ç¿ïW_Y : %lf", static_cast<double>(right_y - y));
+	DrawFormatString(500, 490, 0xffffff, "ãtê≥ê⁄(å ìxñ@) : %lf", jan_angle * 180 / M_PI);
 
-	////if (angle < 0) angle = 0;
-	////if (angle > M_PI - 0.01) angle = M_PI - 0.01;
-	////
+	//if (angle < 0) angle = 0;
+	//if (angle > M_PI - 0.01) angle = M_PI - 0.01;
+	//
 
-	//int vx = static_cast<int>(550 * cos(jan_angle));
-	//int vy = static_cast<int>(550 * sin(jan_angle));
+	int vx = static_cast<int>(550 * cos(jan_angle));
+	int vy = static_cast<int>(550 * sin(jan_angle));
 	//if (right_x <= 128 && right_x >= 0) vx = 0;
 	//if (right_y <= 128 && right_y >= 0) vy = 0;
 
-	////DrawLine(x, y, x - vx, y + vy, 0xffff00, 5);
-	//DrawLine(x, y, x + vx, y - vy, 0xffff00, 5);
+	//DrawLine(x, y, x - vx, y + vy, 0xffff00, 5);
+	DrawLine(x, y, x + vx, y - vy, 0xffff00, 5);
 
-	//DrawFormatString(500, 360, 0xffffff, "Angle : %lf", jan_angle);
+	DrawFormatString(500, 360, 0xffffff, "Angle : %lf", jan_angle);
 
 	////Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`
 }
@@ -214,7 +216,8 @@ void Player::Update_Jangeki()
 		if (KeyManager::OnPadClicked(PAD_INPUT_6) == true && jan_interval == 0)
 		{
 			//Ç∂Ç·ÇÒåÇê∂ê¨
-			obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, select_JanType);
+			//obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, select_JanType);
+			obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, jan_angle, select_JanType);
 
 			//ä‘äuê›íË
 			jan_interval = PLAYER_JAN_INTERVAL;
