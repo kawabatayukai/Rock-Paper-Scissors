@@ -7,9 +7,13 @@
 //ステージのベース
 class Stage_Base : public AbstractScene
 {
+private:
+	int typeImage[3];
 public:
 	Stage_Base();
 	~Stage_Base();
+
+	void DrawUI(Jan_Type type ,int hp) const;
 
 	//床・壁の準備　　STAGE_XX_FLOOR を引数に
 	void Init_Floor(const int floor_MAX);

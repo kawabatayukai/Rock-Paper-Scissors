@@ -1,13 +1,35 @@
 #include "Stage_Base.h"
+#include"DxLib.h"
 
 Stage_Base::Stage_Base()
 {
-
+	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, typeImage);
 }
 
 Stage_Base::~Stage_Base()
 {
 
+}
+
+void Stage_Base::DrawUI(Jan_Type type ,int hp) const
+{
+	switch (type)
+	{
+	case Jan_Type::ROCK:
+		DrawRotaGraph(950, 60, 0.5, 0, typeImage[0], TRUE);
+		break;
+	case Jan_Type::SCISSORS:
+		DrawRotaGraph(950, 60, 0.5, 0, typeImage[1], TRUE);
+		break;
+	case Jan_Type::PAPER:
+		DrawRotaGraph(950, 60, 0.5, 0, typeImage[2], TRUE);
+		break;
+	default:
+		break;
+	}
+
+	if (hp > 0) DrawFormatString(1000, 50, 0xffffff, "HP : %d", hp);
+	else DrawString(1100, 50, "death!", 0xffffff);
 }
 
 //°E•Ç‚Ì€”õ@@STAGE_XX_FLOOR ‚ğˆø”‚É
