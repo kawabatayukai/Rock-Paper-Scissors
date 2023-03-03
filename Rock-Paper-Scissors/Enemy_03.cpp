@@ -19,11 +19,18 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	Init_Jangeki();       //じゃん撃を用意
 
 	//動きパターン 
-	moveinfo[0] = { 1,680.f,0.f,1,0};
-	moveinfo[1] = { 0,1200.f,0.f,0,0};
-	moveinfo[2] = { 0, 0 ,  0.f,1,100 };
-	moveinfo[3] = { 1,680.f,0.f,0,0 };
-	moveinfo[4] = { 0, 0 ,  0.f,1,100 };
+	moveinfo[0] = { 0, 950.f, 0.f , 1,  0};
+
+	moveinfo[1] = { 1,  0,    0.f , 2,  0};
+
+	moveinfo[2] = { 1,  0 ,   0.f , 3, 125};
+
+	moveinfo[3] = { 0, 450.f, 0.f , 4,  0};
+
+	moveinfo[4] = { 1,  0 ,   0.f , 0, 125};
+
+
+
 }
 
 //デストラクタ
@@ -40,8 +47,24 @@ void Enemy_03::Update()
 	Update_Jangeki();
 
 	//ステ03パターン用関数
-	Move_Pattern();
+	switch (moveinfo[current].moveflg)
+	{
+	case 0:
+		Move_Pattern();
+		break;
+	case 1:
+		waitcount++;
+		if (moveinfo[current].enemywaitTime <= waitcount) {
 
+			waitcount = 0;
+			current = moveinfo[current].next_index;
+
+		}
+		break;
+	default:
+		break;
+	}
+	
 	//if (x + (w / 2) == (1280 - 20))
 	//{
 	//	dir = -1;
