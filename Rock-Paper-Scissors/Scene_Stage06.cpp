@@ -338,19 +338,19 @@ void Scene_Stage06::Draw_Janken() const
 //シーンの変更
 AbstractScene* Scene_Stage06::ChangeScene()
 {
-	//敵のHPが0以下
-	if (obj_enemy->GetHP() < 0)
-	{
-		//ゲームクリアシーンへ切り替え
-		return dynamic_cast<AbstractScene*> (new GameClearScene(7));
-	}
+	////敵のHPが0以下
+	//if (obj_enemy->GetHP() < 0)
+	//{
+	//	//ゲームクリアシーンへ切り替え
+	//	return dynamic_cast<AbstractScene*> (new GameClearScene(7));
+	//}
 
-	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() < 0)
-	{
-		//ゲームオーバーシーンへ切り替え
-		return dynamic_cast<AbstractScene*> (new GameOverScene());
-	}
+	////プレイヤーのHPが0以下
+	//if (obj_player->GetHP() < 0)
+	//{
+	//	//ゲームオーバーシーンへ切り替え
+	//	return dynamic_cast<AbstractScene*> (new GameOverScene());
+	//}
 
 	return this;
 }

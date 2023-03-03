@@ -42,17 +42,39 @@ void Enemy_06::Update()
 
 	/********************   ジャンプ関係   ********************/
 
-	if (GetRand(100) == 3)  //乱数でjump_flgをtrueにする
+	if (jump_cnt < 3)
 	{
-		jump_flg = true;
-	}
+		if (GetRand(100) == 3)  //乱数でjump_flgをtrueにする
+		{
+			jump_flg = true;
+		}
 
-	if (land_flg == true && jump_flg == true)    //jump_flgがジャンプの条件
-	{
-		g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-		land_flg = false;  //地面についていない
-		jump_flg = false;  //ジャンプ用フラグのリセット
+		if (land_flg == true && jump_flg == true)    //jump_flgがジャンプの条件
+		{
+			g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+			land_flg = false;  //地面についていない
+			jump_flg = false;  //ジャンプ用フラグのリセット
+			jump_cnt++;
+		}
 	}
+	
+	if(jump_cnt >= 3)
+	{
+		x = x - 5;
+	}
+	
+	//if (GetRand(100) == 3)  //乱数でjump_flgをtrueにする
+	//{
+	//	jump_flg = true;
+	//}
+
+	//if (land_flg == true && jump_flg == true)    //jump_flgがジャンプの条件
+	//{
+	//	g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+	//	land_flg = false;  //地面についていない
+	//	jump_flg = false;  //ジャンプ用フラグのリセット
+	//	jump_cnt++;
+	//}
 
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
