@@ -15,6 +15,6 @@ public:
 
 private:
 	int Next;
-
+	int clearImage;
 };
 
