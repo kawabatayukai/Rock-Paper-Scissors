@@ -30,7 +30,7 @@ void Stage_Base::DrawUI(Jan_Type type ,int hp) const
 	}
 
 	DrawRotaGraph(1030, 60, 0.5, 0, hpImage, TRUE);			//体力ゲージ枠
-	DrawBox(948, 45, 960 + hp * 2.42, 75, 0x00ff00, TRUE);	//体力ゲージ
+	DrawBox(948, 45, 948 + hp * 2.54, 75, 0x00ff00, TRUE);	//体力ゲージ
 	DrawFormatString(1120, 85, 0x00ff00, "残り:%d", hp);	//残り体力(数値)
 
 	/*if (hp > 0) DrawFormatString(1000, 50, 0xffffff, "HP : %d", hp);
