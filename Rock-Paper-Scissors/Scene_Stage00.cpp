@@ -5,6 +5,9 @@
 #include"Scene_GameClear.h"
 #include"Janken.h"
 
+//デバッグモード
+//#define _DEBUG_MODE_00
+
 //コンストラクタ
 Scene_Stage00::Scene_Stage00(const Player* player)
 {
@@ -325,6 +328,8 @@ void Scene_Stage00::Draw_Janken() const
 //シーンの変更
 AbstractScene* Scene_Stage00::ChangeScene()
 {
+#ifdef _DEBUG_MODE_00
+
 	//敵のHPが0以下
 	if (obj_enemy->GetHP() < 0)
 	{
@@ -338,6 +343,11 @@ AbstractScene* Scene_Stage00::ChangeScene()
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(0));
 	}
+
+#endif // _DEBUG_MODE_00
+
+
+
 
 	return this;   //更新なし
 }
