@@ -62,6 +62,8 @@ void Enemy_04::Update()
 		speed = 5.0f;
 	}
 
+	if (hp <= 0)hp = 0;
+
 	//if (x + (w / 2) == (1280 - 20))
 	//{
 	//	dir = -1;
