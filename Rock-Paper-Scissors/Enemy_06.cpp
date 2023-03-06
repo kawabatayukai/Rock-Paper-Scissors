@@ -29,6 +29,8 @@ void Enemy_06::Update()
 	//じゃん撃更新・生成
 	Update_Jangeki();
 
+	if (hp <= 0)hp = 0;
+
 	//if (x + (w / 2) == (1280 - 20))
 	//{
 	//	dir = -1;
@@ -42,40 +44,88 @@ void Enemy_06::Update()
 
 	/********************   ジャンプ関係   ********************/
 
-	if (jump_cnt < 3)
+	if (attack_pattern == 0)      //攻撃パターン1
 	{
-		if (GetRand(3) == 3)  //乱数でjump_flgをtrueにする
+		if (jump_cnt < 3)         //4回ジャンプするまでの間以下の処理を繰り返す
+		{
+			if (GetRand(3) == 3)  //乱数でjump_flgをtrueにする
+			{
+				jump_flg = true;
+			}
+
+			if (land_flg == true && jump_flg == true)    //jump_flgがジャンプの条件
+			{
+				g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+				land_flg = false;  //地面についていない
+				jump_flg = false;  //ジャンプ用フラグのリセット
+				jump_cnt++;        //ジャンプ回数のカウント
+			}
+		}
+
+		//4回以上ジャンプした際の処理
+		if (jump_cnt >= 3 && direction_flg == false)        //左を向いている時の処理
+		{
+
+			x = x - 4;      //1フレームの間に左へ進む距離
+			if (x < 100)    //目標座標に到着したかのチェック
+			{
+				jump_cnt = 0;          //ジャンプ回数のリセット
+				direction_flg = true;  //向いている向きの反転
+			}
+		}
+		else if (jump_cnt >= 3 && direction_flg == true)    //右を向いている時の処理
+		{
+			x = x + 4;      //1フレームの間に右へ進む距離
+			if (x > 1180)   //目標座標に到着したかのチェック
+			{
+				jump_cnt = 0;           //ジャンプ回数のリセット
+				direction_flg = false;  //向いている向きの反転
+			}
+		}
+
+		if (hp <= 150)
+		{
+			attack_pattern = 1;
+		}
+	}
+	
+	if (attack_pattern == 1)
+	{
+		if (GetRand(30) == 3)  //乱数でjump_flgをtrueにする
 		{
 			jump_flg = true;
 		}
 
-		if (land_flg == true && jump_flg == true)    //jump_flgがジャンプの条件
+		if (jump_flg == true && land_flg == true)    //jump_flgがジャンプの条件
 		{
 			g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 			land_flg = false;  //地面についていない
 			jump_flg = false;  //ジャンプ用フラグのリセット
-			jump_cnt++;
 		}
-	}
-	
-	if(jump_cnt >= 3 && direction_flg == false)
-	{
-		
-		x = x - 4;
-		if (x < 100)
+				
+		//4回以上ジャンプした際の処理
+		if (direction_flg == false)        //左を向いている時の処理
 		{
-			jump_cnt = 0;
-			direction_flg = true;
+			x = x - 20;      //1フレームの間に左へ進む距離
+			if (x < 100)    //目標座標に到着したかのチェック
+			{
+				direction_flg = true;  //向いている向きの反転
+			}
 		}
-	}
-	else if(jump_cnt >= 3 && direction_flg == true)
-	{
-		x = x + 4;
-		if (x > 1180)
+		else if (direction_flg == true)    //右を向いている時の処理
 		{
-			jump_cnt = 0;
-			direction_flg = false;
+			x = x + 20;      //1フレームの間に右へ進む距離
+			if (x > 1180)   //目標座標に到着したかのチェック
+			{
+				direction_flg = false;  //向いている向きの反転
+			}
 		}
+
+
+		/*if (hp <= 100)
+		{
+			attack_pattern = 2;
+		}*/
 	}
 
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定

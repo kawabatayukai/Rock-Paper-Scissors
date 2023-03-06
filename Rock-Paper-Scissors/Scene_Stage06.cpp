@@ -66,20 +66,20 @@ void Scene_Stage06::Update()
 
 
 
-		//敵とプレイヤーの当たり判定  　ここで"接触じゃんけん"
-		if (obj_enemy->Hit_Character(obj_player) == true)
-		{
-			//敵が出す手をランダムに決める　　　（ランダムなint型の値(0～2)を Jan_Type型に変換）
-			Jan_Type enemy_janken = static_cast<Jan_Type> (GetRand(2));
+		////敵とプレイヤーの当たり判定  　ここで"接触じゃんけん"
+		//if (obj_enemy->Hit_Character(obj_player) == true)
+		//{
+		//	//敵が出す手をランダムに決める　　　（ランダムなint型の値(0～2)を Jan_Type型に変換）
+		//	Jan_Type enemy_janken = static_cast<Jan_Type> (GetRand(2));
 
-			//じゃんけん用オブジェクト生成
-			obj_janken = new Janken(enemy_janken);
+		//	//じゃんけん用オブジェクト生成
+		//	obj_janken = new Janken(enemy_janken);
 
 
-			//接触じゃんけん開始
-			janken_flag = true;
+		//	//接触じゃんけん開始
+		//	janken_flag = true;
 
-		}
+		//}
 	}
 	else
 	{
@@ -340,19 +340,19 @@ void Scene_Stage06::Draw_Janken() const
 //シーンの変更
 AbstractScene* Scene_Stage06::ChangeScene()
 {
-	//敵のHPが0以下
-	if (obj_enemy->GetHP() < 0)
-	{
-		//ゲームクリアシーンへ切り替え
-		return dynamic_cast<AbstractScene*> (new GameClearScene(7));
-	}
+	////敵のHPが0以下
+	//if (obj_enemy->GetHP() < 0)
+	//{
+	//	//ゲームクリアシーンへ切り替え
+	//	return dynamic_cast<AbstractScene*> (new GameClearScene(7));
+	//}
 
-	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() < 0)
-	{
-		//ゲームオーバーシーンへ切り替え
-		return dynamic_cast<AbstractScene*> (new GameOverScene(6));
-	}
+	////プレイヤーのHPが0以下
+	//if (obj_player->GetHP() < 0)
+	//{
+	//	//ゲームオーバーシーンへ切り替え
+	//	return dynamic_cast<AbstractScene*> (new GameOverScene(6));
+	//}
 
 	return this;
 }
