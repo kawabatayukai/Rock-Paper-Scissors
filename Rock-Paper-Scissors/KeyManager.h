@@ -34,7 +34,6 @@ public:
 	static bool OnPadReleased(int key);      //離した瞬間
 	static bool OnPadPressed(int key);       //押している間
 
-	static XINPUT_STATE GetPadInputState();             //pad入力情報取得
 	static int  Get_StickValue(const int& stick_code);  //スティック入力値取得
 
 private:

@@ -12,20 +12,22 @@ int KeyManager::nowKey_Pad;       //今回の入力（コントローラー
 
 //---------   コントローラー（スティック入力値） ------------------------
 
+#define _DEAD_ZONE  2000              //デッドゾーン
+
 XINPUT_STATE KeyManager::input_Pad;    //コントローラーの入力情報
 int KeyManager::stick_value[4];        //入力値   0:左ｘ　1:左ｙ　2:右ｘ　3:右ｙ
 
 //左スティック
-short KeyManager::stickLX_DeadZoneMAX = 20000;       //無効範囲最大値　x方向
-short KeyManager::stickLX_DeadZoneMIN = -20000;      //無効範囲最小値　x方向
-short KeyManager::stickLY_DeadZoneMAX = 20000;       //無効範囲最大値　y方向
-short KeyManager::stickLY_DeadZoneMIN = -20000;      //無効範囲最小値　y方向
+short KeyManager::stickLX_DeadZoneMAX = _DEAD_ZONE;       //無効範囲最大値　x方向
+short KeyManager::stickLX_DeadZoneMIN = -_DEAD_ZONE;      //無効範囲最小値　x方向
+short KeyManager::stickLY_DeadZoneMAX = _DEAD_ZONE;       //無効範囲最大値　y方向
+short KeyManager::stickLY_DeadZoneMIN = -_DEAD_ZONE;      //無効範囲最小値　y方向
 
 //右スティック
-short KeyManager::stickRX_DeadZoneMAX = 20000;       //無効範囲最大値　x方向
-short KeyManager::stickRX_DeadZoneMIN = -20000;      //無効範囲最小値　x方向
-short KeyManager::stickRY_DeadZoneMAX = 20000;       //無効範囲最大値　y方向
-short KeyManager::stickRY_DeadZoneMIN = -20000;      //無効範囲最小値　y方向
+short KeyManager::stickRX_DeadZoneMAX = _DEAD_ZONE;       //無効範囲最大値　x方向
+short KeyManager::stickRX_DeadZoneMIN = -_DEAD_ZONE;      //無効範囲最小値　x方向
+short KeyManager::stickRY_DeadZoneMAX = _DEAD_ZONE;       //無効範囲最大値　y方向
+short KeyManager::stickRY_DeadZoneMIN = -_DEAD_ZONE;      //無効範囲最小値　y方向
 
 //-----------------------------------------------------------------------
 
@@ -192,13 +194,6 @@ bool KeyManager::OnPadPressed(int key)
 	return ret;
 }
 
-
-//padの入力情報取得
-XINPUT_STATE KeyManager::GetPadInputState()
-{
-	return input_Pad;//.ThumbRX;
-	
-}
 
 //スティック入力値取得
 int  KeyManager::Get_StickValue(const int& stick_code)
