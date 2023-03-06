@@ -28,6 +28,8 @@ public:
 
 	void Move_Pattern();
 
+	int GetWaitTime()const;
+
 private:
 	/********************   ƒWƒƒƒ“ƒvŠÖŒW   ********************/
 

@@ -171,7 +171,17 @@ void Scene_Stage03::Update()
 				//パーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::PAPER)
 				{
+
+					//停止時ダメージ軽減
+					if (obj_enemy-> GetWaitTime() > 0) {
+
+						obj_enemy->ReceiveDamage(15);     //軽減ダメージが入る
+
+					}
+					else{
 					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+
+					}
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -183,7 +193,14 @@ void Scene_Stage03::Update()
 				//グーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::ROCK)
 				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+
+					if(obj_enemy->GetWaitTime() > 0){
+
+						obj_enemy->ReceiveDamage(15);     //軽減ダメージが入る
+					}
+					else {
+						obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					}
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -194,7 +211,16 @@ void Scene_Stage03::Update()
 				//チョキのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::SCISSORS)
 				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					if (obj_enemy->GetWaitTime() > 0) {
+
+						obj_enemy->ReceiveDamage(15); //ダメージが入る
+
+					}
+					else {
+
+						obj_enemy->ReceiveDamage(30); //ダメージが入る
+
+					}
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}

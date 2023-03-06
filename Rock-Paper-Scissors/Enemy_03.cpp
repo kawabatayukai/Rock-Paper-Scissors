@@ -4,7 +4,6 @@
 #include"Jangeki_Base.h"
 #include <typeinfo>
 
-
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
@@ -60,6 +59,8 @@ void Enemy_03::Update()
 		break;
 	}
 
+
+}
 	//if (x + (w / 2) == (1280 - 20))
 	//{
 	//	dir = -1;
@@ -111,7 +112,7 @@ void Enemy_03::Update()
 
 /**********************************************************/
 
-}
+
 
 //描画
 void Enemy_03::Draw() const
@@ -229,4 +230,10 @@ void Enemy_03::Move_Pattern() {
 	x = move_x;
 	y = move_y;
 
+}
+
+//enemywaitTime継承
+int Enemy_03::GetWaitTime()const {
+
+	return moveinfo[current].enemywaitTime;
 }
