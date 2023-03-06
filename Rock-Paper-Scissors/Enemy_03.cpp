@@ -13,21 +13,19 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = 1;
 	hp = 100;
 
-	image = LoadGraph("images/stage03/stage03attack.png");
-	//enemyimage[1] = LoadGraph("images/stage03/stage03gard.png");
-	
+	enemyimage[0] = LoadGraph("images/stage03/stage03attack.png");
+	enemyimage[1] = LoadGraph("images/stage03/stage03gard.png");
+
 	Init_Jangeki();       //じゃん撃を用意
 
 	//動きパターン 
-	moveinfo[0] = { 0, 950.f, 0.f , 1,  0};
+	moveinfo[0] = { 0, 950.f, 0.f , 1,  0 };
 
-	moveinfo[1] = { 1,  0 ,   0.f , 2, 125};
+	moveinfo[1] = { 1,  0 ,   0.f , 2, 125 };
 
-	moveinfo[2] = { 0, 450.f, 0.f , 3,  0};
+	moveinfo[2] = { 0, 450.f, 0.f , 3,  0 };
 
-	moveinfo[3] = { 1,  0 ,   0.f , 0, 125};
-
-
+	moveinfo[3] = { 1,  0 ,   0.f , 0, 125 };
 
 }
 
@@ -36,7 +34,6 @@ Enemy_03::~Enemy_03()
 {
 
 }
-
 
 //更新
 void Enemy_03::Update()
@@ -62,7 +59,7 @@ void Enemy_03::Update()
 	default:
 		break;
 	}
-	
+
 	//if (x + (w / 2) == (1280 - 20))
 	//{
 	//	dir = -1;
@@ -120,11 +117,18 @@ void Enemy_03::Update()
 void Enemy_03::Draw() const
 
 {
+	//エネミー停止時
+	if (moveinfo[current].enemywaitTime > 0) {
 
-	//中心から描画
-	DrawRotaGraphF(x, y, 1, 0, image, TRUE);
+		//ガード時の画像描画
+		DrawRotaGraphF(x, y, 1, 0, enemyimage[1], TRUE);
 
-	//DrawRotaGraphF(x, y, 1, 0, enemyimage[1], TRUE);
+	}
+	//そうじゃないとき
+	else {
+		//攻撃時の画像描画
+		DrawRotaGraphF(x, y, 1, 0, enemyimage[0], TRUE);
+	}
 
 	//じゃん撃描画
 	Draw_Jangeki();
@@ -203,7 +207,7 @@ void Enemy_03::Move_Pattern() {
 			}
 
 		}
-		else 
+		else
 		{
 			move_x -= speed; //左移動にマイナスする
 
@@ -214,7 +218,7 @@ void Enemy_03::Move_Pattern() {
 				move_x = moveinfo[current].location_x; //目指していた座標で固定
 
 			}
-			
+
 
 		}
 
