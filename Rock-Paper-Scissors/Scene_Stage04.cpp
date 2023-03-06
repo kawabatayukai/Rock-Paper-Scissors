@@ -243,6 +243,8 @@ void Scene_Stage04::Draw() const
 	//ƒXƒe[ƒW”wŒi•`‰æ
 	DrawRotaGraph(640, 360, 1, 0, back_image, FALSE);
 
+	DrawUI(obj_enemy->GetType(),obj_enemy->GetHP());
+
 	//ÚG‚¶‚á‚ñ‚¯‚ñ‚Å‚È‚¢
 	if (janken_flag == false)
 	{
