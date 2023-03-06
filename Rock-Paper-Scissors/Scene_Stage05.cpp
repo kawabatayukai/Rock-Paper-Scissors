@@ -1,6 +1,10 @@
 #include "Scene_Stage05.h"
-#include"KeyManager.h"
-#include"DxLib.h"
+#include "KeyManager.h"
+#include "DxLib.h"
+#include"Scene_GameOver.h"
+#include "Scene_GameClear.h"
+#include"Scene_Stage06.h"
+#define PI    3.1415926535897932384626433832795f
 
 //コンストラクタ
 Scene_Stage05::Scene_Stage05(const Player* player)
@@ -18,7 +22,7 @@ Scene_Stage05::Scene_Stage05(const Player* player)
 	}
 
 	//敵を生成
-	obj_enemy = new Enemy_05(1200, 360, Jan_Type::SCISSORS);
+	obj_enemy = new Enemy_05(1000, 360, Jan_Type::SCISSORS);
 
 	//床・壁の用意
 	Init_Floor(STAGE_05_FLOOR);
@@ -27,11 +31,13 @@ Scene_Stage05::Scene_Stage05(const Player* player)
 	obj_floor[0] = new Floor(0, 700, 1280, 20);        //床
 	obj_floor[1] = new Floor(0, 0, 20, 1720);           //壁（左）
 	obj_floor[2] = new Floor(1260, 0, 20, 1720);           //壁（右）
-	obj_floor[3] = new Floor(260, 300, 120, 5);      //足場　(左上)
-	obj_floor[4] = new Floor(260, 540, 120, 5);      //足場　(左下)
-	obj_floor[5] = new Floor(590, 420, 120, 5);      //足場　(真ん中)
-	obj_floor[6] = new Floor(900, 540, 120, 5);      //足場　(右上)
-	obj_floor[7] = new Floor(900, 300, 120, 5);      //足場　(右下)
+	obj_floor[3] = new Floor(260, 300, 120, 15);      //足場　(左上)
+	obj_floor[4] = new Floor(260, 540, 120, 15);      //足場　(左下)
+	obj_floor[5] = new Floor(590, 420, 120, 15);      //足場　(真ん中)
+	obj_floor[6] = new Floor(900, 540, 120, 15);      //足場　(右上)
+	obj_floor[7] = new Floor(900, 300, 120, 15);      //足場　(右下)
+
+	Back_image = LoadGraph("images/stage05/Stage5_Stageimage.png", TRUE);
 }
 
 //デストラクタ
@@ -48,6 +54,8 @@ void Scene_Stage05::Update()
 		obj_player->Update();    // プレイヤー更新・操作可能
 		obj_enemy->Update();     //敵キャラ更新・内部処理
 
+		//プレイヤーの座標を取得
+		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
 
 
 		//敵とプレイヤーの当たり判定  　ここで"接触じゃんけん"
@@ -77,6 +85,8 @@ void Scene_Stage05::Update()
 
 	//enemyのじゃん撃をとってくる
 	Jangeki_Base** enemy_jangeki = obj_enemy->GetJangeki();
+
+
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -225,6 +235,8 @@ void Scene_Stage05::Update()
 //描画
 void Scene_Stage05::Draw() const
 {
+	DrawRotaGraph(640, 240, 2.0f, 0, Back_image, TRUE);
+
 	//接触じゃんけんでない時
 	if (janken_flag == false)
 	{
@@ -310,5 +322,18 @@ void Scene_Stage05::Draw_Janken() const
 //シーンの変更
 AbstractScene* Scene_Stage05::ChangeScene()
 {
+	//敵のHPが0以下
+	if (obj_enemy->GetHP() < 0)
+	{
+		//ゲームクリアシーンへ切り替え
+		return dynamic_cast<AbstractScene*> (new GameClearScene(6));
+	}
+
+	//プレイヤーのHPが0以下
+	if (obj_player->GetHP() < 0)
+	{
+		//ゲームオーバーシーンへ切り替え
+		return dynamic_cast<AbstractScene*> (new GameOverScene());
+	}
 	return this;
 }

@@ -201,6 +201,12 @@
     <ClCompile Include="Jangeki_Changespeed.cpp">
       <Filter>ソース ファイル\Jangeki\bise</Filter>
     </ClCompile>
+    <ClCompile Include="Jangeki_Zigzag.cpp">
+      <Filter>ソース ファイル\Jangeki\bise</Filter>
+    </ClCompile>
+    <ClCompile Include="Jangeki_Spin.cpp">
+      <Filter>ソース ファイル\Jangeki\bise</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -321,6 +327,12 @@
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClInclude>
     <ClInclude Include="Jangeki_Changespeed.h">
+      <Filter>ソース ファイル\Jangeki\bise</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_Zigzag.h">
+      <Filter>ソース ファイル\Jangeki\bise</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_Spin.h">
       <Filter>ソース ファイル\Jangeki\bise</Filter>
     </ClInclude>
   </ItemGroup>
