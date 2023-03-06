@@ -44,7 +44,7 @@ void Enemy_02::Update()
 
 	if (jump_cnt < 1)
 	{
-		if (GetRand(30) == 1)  //乱数でjump_flgをtrueにする
+		if (GetRand(1) == 1)  //乱数でjump_flgをtrueにする
 		{
 			jump_flg = true;
 		}
@@ -69,10 +69,11 @@ void Enemy_02::Update()
 			direction_flg = true;
 		}
 		
-		if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
+		if (land_flg == true && GetRand(1) == 1)    //GetRand(30) == 3　のところがジャンプの条件
 		{
 			g_add = -31.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 			land_flg = false;  //地面についていない
+			
 		}
 	}
 
@@ -84,25 +85,15 @@ void Enemy_02::Update()
 			jump_cnt = 0;
 			direction_flg = false;
 		}
-		if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
+		if (land_flg == true && GetRand(1) == 1)    //GetRand(30) == 3　のところがジャンプの条件
 		{
 			g_add = -31.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 			land_flg = false;  //地面についていない
+
 		}
 	}
 
-	//if (GetRand(100) == 3)  //乱数でjump_flgをtrueにする
-	//{
-	//	jump_flg = true;
-	//}
-
-	//if (land_flg == true && jump_flg == true)    //jump_flgがジャンプの条件
-	//{
-	//	g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-	//	land_flg = false;  //地面についていない
-	//	jump_flg = false;  //ジャンプ用フラグのリセット
-	//	jump_cnt++;
-	//}
+	
 
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 	x_sdd = (x - old_x) + g_add;  //今回の落下距離を設定
