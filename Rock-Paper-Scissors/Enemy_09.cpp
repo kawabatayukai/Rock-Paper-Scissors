@@ -3,6 +3,7 @@
 #include"Player.h"
 #include"Jangeki_Base.h"
 #include"Scene_Stage09.h"
+#include"Jangeki_reflection.h"
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_09::Enemy_09(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
@@ -12,9 +13,12 @@ Enemy_09::Enemy_09(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	hp = 100;
 
 	image = LoadGraph("images/Stage9.png");
-
-	Init_Jangeki();       //じゃん撃を用意
-	reflectionFlg = false;
+	
+	//じゃん撃を用意
+	Init_Jangeki();       
+	reflection = new Jangeki_Reflection(x, y, w, h, Jan_Type::ROCK);
+	reflection->Init_reflectionJangeki();
+	
 
 }
 
@@ -30,7 +34,8 @@ void Enemy_09::Update()
 {
 	//じゃん撃更新・生成
 	Update_Jangeki();
-	MoveEnmey_09();
+	reflection->Update_reflection();
+	//MoveEnmey_09();
 
 	//if (x + (w / 2) == (1280 - 20))
 	//{
@@ -73,6 +78,7 @@ void Enemy_09::Draw() const
 
 	//じゃん撃描画
 	Draw_Jangeki();
+	reflection->Draw_reflectionJangeki();
 
 	//テスト
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
@@ -90,10 +96,8 @@ void Enemy_09::Update_Jangeki()
 	{
 		//配列の jan_count 番目がnullptr（空要素）ならそれ以上処理しない
 		if (obj_jangeki[jan_count] == nullptr) break;
-		if (reflection_jangeki[jan_count] == nullptr) break;
 
 		obj_jangeki[jan_count]->Update();
-		reflection_jangeki[jan_count]->Update();
 
 		//画面外で削除する
 		if (obj_jangeki[jan_count]->CheckScreenOut() == true)
@@ -108,6 +112,7 @@ void Enemy_09::Update_Jangeki()
 
 	//配列の空要素
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
+		
 	{
 		float radius = 35.5f;   //半径
 		float speed = -3.0f;     //スピード
@@ -117,8 +122,7 @@ void Enemy_09::Update_Jangeki()
 
 	
 		//生成
-		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
-		if (reflectionFlg == true) /*reflection_jangeki[jan_count] =*/ new Jangeki_Base(x, y, radius, speed, type);
+		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
 	}
 }
 void Enemy_09::MoveEnmey_09() {
@@ -184,11 +188,4 @@ void Enemy_09::MoveEnmey_09() {
 		}
 	}
 
-}
-void Enemy_09::trueFlg() {
-	reflectionFlg = true;
-
-}
-void Enemy_09::falseFlg() {
-	reflectionFlg = false;
 }
