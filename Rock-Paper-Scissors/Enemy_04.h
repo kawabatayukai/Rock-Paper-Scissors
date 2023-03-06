@@ -7,7 +7,7 @@ struct Pattern_04 {
 	int moveflg; //0:動かない,1:動く
 	float location_x; //目指している座標x
 	float location_y; //目指している座標y
-	//float wait_time; //待ち時間
+	float waitFlameTime; //待ち時間
 	int next_index; //次配列のパターンの番号
 
 };
@@ -38,6 +38,7 @@ private:
 
 	/**********************************************************/
 
+	int waitTime = 0;			//待ち時間用変数
 	int frame_count = 0;       //じゃん撃発射用
 	Pattern_04 moveinfo[20]; //行動パターン20種
 	short current = 0; //現在のパターン配列添字
