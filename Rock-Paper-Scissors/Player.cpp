@@ -127,13 +127,21 @@ void Player::Update()
 		if (dir == static_cast<int>(DIRECTION::RIGHT))
 		{
 			if (jan_angle < 0) jan_angle = 0;
-			if (jan_angle > (M_PI / 2)) jan_angle = (M_PI / 2);
+			if (jan_angle > (M_PI / 2))
+			{
+				//jan_angle = (M_PI / 2);
+				dir = static_cast<int>(DIRECTION::LEFT);
+			}
 		}
 		//ç∂å¸Ç´ÇÃéû
 		if (dir == static_cast<int>(DIRECTION::LEFT))
 		{
 			if (jan_angle < 0) jan_angle = M_PI;
-			if (jan_angle < (M_PI / 2)) jan_angle = (M_PI / 2);
+			if (jan_angle < (M_PI / 2))
+			{
+				//jan_angle = (M_PI / 2);
+				dir = static_cast<int>(DIRECTION::RIGHT);
+			}
 		}
 	}
 
@@ -174,7 +182,7 @@ void Player::Draw() const
 		int vx = static_cast<int>(550 * cos(jan_angle));
 		int vy = static_cast<int>(550 * sin(jan_angle));
 
-		DrawLineAA(x, y, x + vx, y - vy, 0xffff00, 5);
+		DrawLineAA(x, y, x + vx, y - vy, 0xffff00, 3);
 	}
 
 
