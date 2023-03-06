@@ -3,6 +3,7 @@
 #include"DxLib.h"
 #include "Scene_GameClear.h"
 #include "Scene_GameOver.h"
+#include "Stage_Base.h"
 
 //コンストラクタ
 Scene_Stage03::Scene_Stage03(const Player* player)
@@ -264,6 +265,9 @@ void Scene_Stage03::Draw() const
 {
 	//ステージ描画
 	DrawGraph(0, 0, stage, FALSE);
+
+	//HP描画
+	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
 
 	//接触じゃんけんでない時
 	if (janken_flag == false)
