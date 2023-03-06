@@ -5,6 +5,9 @@
 #include "Player.h"
 #include"KeyManager.h"
 
+//じゃん撃発射間隔　（1秒）
+#define PLAYER_JAN_INTERVAL 60
+
 
 //コンストラクタ　　　　　　　　　　　　　  ｘ　ｙ　幅　　　高さ
 Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //基底クラスのコンストラクタを呼ぶ
@@ -208,9 +211,41 @@ void Player::Update_Jangeki()
 		float speed = 8.0f;     //スピード
 
 		//RBボタンで選択した属性のじゃん撃を発射
-		if (KeyManager::OnPadClicked(PAD_INPUT_6))
+		if (KeyManager::OnPadClicked(PAD_INPUT_6) == true && jan_interval == 0)
 		{
+			//じゃん撃生成
 			obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, select_JanType);
+
+			//間隔設定
+			jan_interval = PLAYER_JAN_INTERVAL;
 		}
 	}
+
+	//間隔
+	jan_interval--;
+	if (jan_interval < 0) jan_interval = 0;
+}
+
+//old_yの取得関数
+int Player::Get_OldX()
+{
+	return static_cast<int>(old_x);
+}
+
+//yの取得関数
+int Player::Get_X()
+{
+	return static_cast<int>(x);
+}
+
+//old_yの取得関数
+int Player::Get_OldY()
+{
+	return static_cast<int>(old_y);
+}
+
+//yの取得関数
+int Player::Get_Y()
+{
+	return static_cast<int>(y);
 }

@@ -2,6 +2,7 @@
 #include"KeyManager.h"
 #include"DxLib.h"
 
+
 //コンストラクタ
 Scene_Stage07::Scene_Stage07(const Player* player)
 {
@@ -18,16 +19,26 @@ Scene_Stage07::Scene_Stage07(const Player* player)
 	}
 
 	//敵を生成
-	obj_enemy = new Enemy_07(1200, 360, Jan_Type::SCISSORS);
+	obj_enemy = new Enemy_07(900, 360, Jan_Type::SCISSORS);
 
 	//床・壁の用意
 	Init_Floor(STAGE_07_FLOOR);
 
 	//一つずつ生成  STAGE_07_FLOOR 個分
 	obj_floor[0] = new Floor(0, 700, 1280, 20);        //床
-	obj_floor[1] = new Floor(0, 0, 20, 1720);           //壁（左）
-	obj_floor[2] = new Floor(1260, 0, 20, 1720);           //壁（右）
-	obj_floor[3] = new Floor(1000, 100, 120, 50);      //足場
+	obj_floor[1] = new Floor(0, 0, 20, 1720);          //壁（左）
+	obj_floor[2] = new Floor(1260, 0, 20, 1720);       //壁（右）
+	obj_floor[3] = new Floor("images/stage07/Ring.png", 220, 590, 840, 110);   //リング
+	obj_floor[4] = new Floor(220, 440, 30, 10, 0x007cfe);        //コーナーポスト（当たり判定は少し　　DrawBoxで表現）
+	obj_floor[5] = new Floor(1030, 440, 30, 10, 0x007cfe);       //コーナーポスト（当たり判定は少し　　DrawBoxで表現）
+	obj_floor[6] = new Floor(20, 230, 150, 20);        //足場      
+	obj_floor[7] = new Floor(1110, 230, 150, 20);      //足場
+	obj_floor[8] = new Floor(410, 110, 160, 20);       //足場
+	obj_floor[9] = new Floor(710, 110, 160, 20);       //足場
+
+	//画像読み込み
+	image_back = LoadGraph("images/stage07/back02.png");
+	image_spotlight = LoadGraph("images/stage07/soptlight.png");
 }
 
 //デストラクタ
@@ -38,34 +49,44 @@ Scene_Stage07::~Scene_Stage07()
 //更新
 void Scene_Stage07::Update()
 {
-	//接触じゃんけんでない時
-	if (janken_flag == false)
-	{
-		obj_player->Update();    // プレイヤー更新・操作可能
-		obj_enemy->Update();     //敵キャラ更新・内部処理
+	////接触じゃんけんでない時
+	//if (janken_flag == false)
+	//{
+	//	obj_player->Update();    // プレイヤー更新・操作可能
+	//	obj_enemy->Update();     //敵キャラ更新・内部処理
+
+	//	//プレイヤーの座標を取得
+	//	obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
 
 
+	//	//敵とプレイヤーの当たり判定  　ここで"接触じゃんけん"
+	//	if (obj_enemy->Hit_Character(obj_player) == true)
+	//	{
+	//		//敵が出す手をランダムに決める　　　（ランダムなint型の値(0～2)を Jan_Type型に変換）
+	//		Jan_Type enemy_janken = static_cast<Jan_Type> (GetRand(2));
 
-		//敵とプレイヤーの当たり判定  　ここで"接触じゃんけん"
-		if (obj_enemy->Hit_Character(obj_player) == true)
-		{
-			//敵が出す手をランダムに決める　　　（ランダムなint型の値(0～2)を Jan_Type型に変換）
-			Jan_Type enemy_janken = static_cast<Jan_Type> (GetRand(2));
-
-			//じゃんけん用オブジェクト生成
-			obj_janken = new Janken(enemy_janken);
+	//		//じゃんけん用オブジェクト生成
+	//		obj_janken = new Janken(enemy_janken);
 
 
-			//接触じゃんけん開始
-			janken_flag = true;
+	//		//接触じゃんけん開始
+	//		janken_flag = true;
 
-		}
-	}
-	else
-	{
-		//接触時じゃんけんの処理を実行
-		Update_Janken();
-	}
+	//	}
+	//}
+	//else
+	//{
+	//	//接触時じゃんけんの処理を実行
+	//	Update_Janken();
+	//}
+
+
+	//テスト　じゃんけん無視
+	obj_player->Update();    // プレイヤー更新・操作可能
+	obj_enemy->Update();     //敵キャラ更新・内部処理
+
+	//プレイヤーの座標を取得
+	obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
 
 
 	//playerのじゃん撃をとってくる
@@ -221,6 +242,9 @@ void Scene_Stage07::Update()
 //描画
 void Scene_Stage07::Draw() const
 {
+	//背景
+	DrawGraph(0, 0, image_back, TRUE);
+
 	//接触じゃんけんでない時
 	if (janken_flag == false)
 	{
@@ -235,6 +259,21 @@ void Scene_Stage07::Draw() const
 			obj_floor[i]->Draw();
 		}
 
+		//コーナーポスト
+		DrawBox(220, 440, (220 + 30), (440 + 150), 0x007cfe, TRUE);
+		DrawBox(1030, 440, (1030 + 30), (440 + 150), 0x007cfe, TRUE);
+
+
+		//ロープ
+		DrawBox(250, 450, (250 + 780), (450 + 5), 0x000000, TRUE);     //トップロープ
+		DrawBox(250, 500, (250 + 780), (500 + 5), 0x000000, TRUE);     //セカンドロープ
+		DrawBox(250, 550, (250 + 780), (550 + 5), 0x000000, TRUE);     //サードロープ
+
+		//スポットライト描画
+		SetDrawBlendMode(DX_BLENDMODE_ADD_X4, 150);
+		DrawGraph(0, 0, image_spotlight, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
 	}
 	else
 	{
@@ -242,7 +281,8 @@ void Scene_Stage07::Draw() const
 		Draw_Janken();
 	}
 
-	DrawString(640, 360, "Stage07", 0xffffff);
+	
+
 }
 
 //じゃんけん更新・内部処理

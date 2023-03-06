@@ -2,17 +2,23 @@
 #include"DxLib.h"
 #include"Player.h"
 #include"Jangeki_Base.h"
+#include"Jangeki_Homing.h"
+#include<typeinfo>
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_07::Enemy_07(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
-	speed = 7.0f;
+	speed = 3.0f;
 	dir = 1;
 	hp = 100;
 
 	image = LoadGraph("images/tyokitest.png");
 
 	Init_Jangeki();       //じゃん撃を用意
+
+	//パターン（csvに）
+	moveinfo[0] = { 1,620.f,0.f,1 };
+	moveinfo[1] = { 1,1030.f,0.f,0 };
 
 }
 
@@ -26,19 +32,11 @@ Enemy_07::~Enemy_07()
 //更新
 void Enemy_07::Update()
 {
+	Move_Pattern();
+
 	//じゃん撃更新・生成
 	Update_Jangeki();
 
-	//if (x + (w / 2) == (1280 - 20))
-	//{
-	//	dir = -1;
-	//}
-	//else if (x - (w / 2) == (20))
-	//{
-	//	dir = 1;
-	//}
-
-	//x += dir * speed;
 
 	/********************   ジャンプ関係   ********************/
 
@@ -55,7 +53,7 @@ void Enemy_07::Update()
 
 	old_y = y;                    //1フレーム前のｙ座標
 	y += y_add;                   //落下距離をｙ座標に加算する
-	g_add = _GRAVITY;              //重力加速度を初期化する
+	g_add = _GRAVITY;             //重力加速度を初期化する
 
 	/**********************************************************/
 
@@ -89,6 +87,9 @@ void Enemy_07::Update_Jangeki()
 
 		obj_jangeki[jan_count]->Update();
 
+		//ホーミングじゃん撃であればプレイヤーの座標をセットする
+		obj_jangeki[jan_count]->SetTargetLocation(player_x, player_y);
+
 		//画面外で削除する
 		if (obj_jangeki[jan_count]->CheckScreenOut() == true)
 		{
@@ -103,14 +104,59 @@ void Enemy_07::Update_Jangeki()
 	//配列の空要素
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
-		float radius = 35.5f;   //半径
-		float speed = -3.0f;     //スピード
+		float radius = 25.5f;   //半径
+		float speed = 6.0f;     //スピード
 
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
+		
 
 		//生成
-		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
 	}
+}
+
+//行動パターンに沿った行動
+void Enemy_07::Move_Pattern()
+{
+	//移動量
+	float move_x = x;
+	float move_y = y;
+
+	//目標座標と完全一致（x座標だけ）
+	if (x == moveinfo[current].location_x)
+	{
+		current = moveinfo[current].next_index;   //次のパターンへ
+	}
+
+	//x座標が目標と不一致
+	if (x != moveinfo[current].location_x)
+	{
+		//目標の方が大きい（目標は右方向）
+		if (x < moveinfo[current].location_x)
+		{
+			move_x += speed;      //右移動（正の値）
+
+			//目標を超えた場合
+			if (x <= moveinfo[current].location_x && moveinfo[current].location_x <= move_x)
+			{
+				move_x = moveinfo[current].location_x;     //目標座標で固定
+			}
+		}
+		else
+		{
+			move_x -= speed; //左移動（負の値）
+
+			//目標を超えた場合
+			if (move_x <= moveinfo[current].location_x && moveinfo[current].location_x <= x)
+			{
+				move_x =  moveinfo[current].location_x;     //目標座標で固定
+			}
+		}
+	}
+
+	//移動を反映
+	x = move_x;
+	y = move_y;
 }

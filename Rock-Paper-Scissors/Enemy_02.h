@@ -18,11 +18,13 @@ public:
 private:
 	/********************   ジャンプ関係   ********************/
 
-	float old_x = 0;          //前回の位置X
+	float old_x = 1;          //前回の位置X
 	float old_y = 0;          //前回の位置Y
 	float y_add = 0;          //落下距離
+	float x_add = 1;
+	float x_sdd = 1;
 	float g_add = 1.0f;       //重力加速度
-
+	float g_sdd = 0.1f;
 	/**********************************************************/
 
 	int frame_count = 0;       //じゃん撃発射用
