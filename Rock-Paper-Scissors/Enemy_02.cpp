@@ -10,7 +10,7 @@ Enemy_02::Enemy_02(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = 1;
 	hp = 100;
 
-	image = LoadGraph("images/stage02/ex.png");
+	image = LoadGraph("images/stage02/junp4.png");
 
 	Init_Jangeki();       //‚¶‚á‚ñŒ‚‚ð—pˆÓ
 
@@ -64,7 +64,7 @@ void Enemy_02::Update()
 		x = x - 5;
 		if (x < 100)
 		{
-			
+			image = LoadGraph("images/stage02/junp2.png");
 			jump_cnt = 0;
 			direction_flg = true;
 		}
@@ -75,6 +75,7 @@ void Enemy_02::Update()
 			land_flg = false;  //’n–Ê‚É‚Â‚¢‚Ä‚¢‚È‚¢
 			
 		}
+		
 	}
 
 	else if (jump_cnt >= 1 && direction_flg == true)
@@ -82,6 +83,7 @@ void Enemy_02::Update()
 		x = x + 5;
 		if (x > 1180)
 		{
+			image = LoadGraph("images/stage02/junp4.png");
 			jump_cnt = 0;
 			direction_flg = false;
 		}
@@ -91,6 +93,7 @@ void Enemy_02::Update()
 			land_flg = false;  //’n–Ê‚É‚Â‚¢‚Ä‚¢‚È‚¢
 
 		}
+		
 	}
 
 	
