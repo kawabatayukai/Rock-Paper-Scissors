@@ -243,6 +243,8 @@ void Scene_Stage04::Draw() const
 	//ステージ背景描画
 	DrawRotaGraph(640, 360, 1, 0, back_image, FALSE);
 
+	DrawUI(obj_enemy->GetType(),obj_enemy->GetHP());
+
 	//接触じゃんけんでない時
 	if (janken_flag == false)
 	{
@@ -339,7 +341,7 @@ AbstractScene* Scene_Stage04::ChangeScene()
 	if (obj_player->GetHP() < 0)
 	{
 		//ゲームオーバーシーンへ切り替え
-		return dynamic_cast<AbstractScene*> (new GameOverScene());
+		return dynamic_cast<AbstractScene*> (new GameOverScene(4));
 	}
 
 	return this;

@@ -2,11 +2,12 @@
 #include"DxLib.h"
 #include"Player.h"
 #include"Jangeki_Base.h"
+#include <typeinfo>
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_04::Enemy_04(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
-	speed = 7.0f;
+	speed = 2.5f;
 	dir = 1;
 	hp = 100;
 
@@ -14,6 +15,11 @@ Enemy_04::Enemy_04(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	Init_Jangeki();       //じゃん撃を用意
 
+		//動きパターン
+	moveinfo[0] = { 1,0.f,150.f, 0,1 };
+	moveinfo[1] = { 0,0.f,  0.f,50,2 };
+	moveinfo[2] = { 1,0.f,600.f, 0,3 };
+	moveinfo[3] = { 0,0.f,  0.f,50,0 };
 }
 
 //デストラクタ
@@ -29,6 +35,33 @@ void Enemy_04::Update()
 	//じゃん撃更新・生成
 	Update_Jangeki();
 
+	//ステ04パターン用関数
+	//Move_Pattern();
+
+	switch (moveinfo[current].moveflg)
+	{
+	case 0:
+		waitTime++;
+		if (moveinfo[current].waitFlameTime <= waitTime)
+		{
+			waitTime = 0;
+			current = moveinfo[current].next_index;
+		}
+		break;
+
+	case 1:
+		Move_Pattern();
+		break;
+
+	default:
+		break;
+	}
+
+	if (hp <= 50)
+	{
+		speed = 5.0f;
+	}
+
 	//if (x + (w / 2) == (1280 - 20))
 	//{
 	//	dir = -1;
@@ -42,20 +75,20 @@ void Enemy_04::Update()
 
 	/********************   ジャンプ関係   ********************/
 
-	if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
-	{
-		g_add = -31.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-		land_flg = false;  //地面についていない
-	}
+	//if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
+	//{
+	//	g_add = -31.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+	//	land_flg = false;  //地面についていない
+	//}
 
-	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
+	//y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
-	//落下速度の制限
-	if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
+	////落下速度の制限
+	//if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
 
-	old_y = y;                    //1フレーム前のｙ座標
-	y += y_add;                   //落下距離をｙ座標に加算する
-	g_add = _GRAVITY;              //重力加速度を初期化する
+	//old_y = y;                    //1フレーム前のｙ座標
+	//y += y_add;                   //落下距離をｙ座標に加算する
+	//g_add = _GRAVITY;              //重力加速度を初期化する
 
 	/**********************************************************/
 
@@ -73,8 +106,8 @@ void Enemy_04::Draw() const
 
 
 	//テスト
-	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
-	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
+	/*if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
+	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);*/
 
 }
 
@@ -113,6 +146,57 @@ void Enemy_04::Update_Jangeki()
 
 
 		//生成
-		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+		if (frame_count % 80 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
 	}
+}
+
+void Enemy_04::Move_Pattern() {
+
+	//移動する量
+	float move_x = x;
+	float move_y = y;
+
+	//目指している座標とX座標が一致したとき
+	if (y == moveinfo[current].location_y) {
+		current = moveinfo[current].next_index; //次のパターン
+	}
+
+	//x座標が目指している座標と不一致
+	if (y != moveinfo[current].location_y) {
+
+		//目指しているx座標の右方が大きい
+		if (y < moveinfo[current].location_y) {
+			move_y += speed; //右移動にプラスする
+
+			//目指していた座標を超えたとき
+			if (y <= moveinfo[current].location_y && moveinfo[current].location_y <= move_y)
+			{
+
+				move_y = moveinfo[current].location_y; //目指していた座標で固定
+
+			}
+
+		}
+		else
+		{
+			move_y -= speed; //左移動にマイナスする
+
+			//目指していた座標を超えたとき
+			if (move_y <= moveinfo[current].location_y && moveinfo[current].location_y <= y)
+			{
+
+				move_y = moveinfo[current].location_y; //目指していた座標で固定
+
+			}
+
+
+		}
+
+
+	}
+
+	//移動を反映する
+	x = move_x;
+	y = move_y;
+
 }

@@ -21,7 +21,7 @@
 //コンストラクタ
 GameClearScene::GameClearScene(int Next):Next(Next)
 {
-	SetFontSize(50);
+	clearImage = LoadGraph("images/GameClear.png");
 }
 
 //デストラクタ
@@ -39,10 +39,17 @@ void GameClearScene::Update()
 //描画
 void GameClearScene::Draw() const
 {
-	
-	DrawString(100, 360, "ゲームクリア", 0xffffff);
-	DrawString(100, 460, "Aボタンを押してください", 0xffffff);
-	DrawString(100, 560, "Bボタンで次のステージ", 0xffffff);
+	//背景
+	DrawGraph(0, 0, clearImage, TRUE);
+
+	/*SetFontSize(200);
+	DrawString(200, 100, "StageClear", 0xffffff);
+
+	SetFontSize(50);
+	DrawString(450, 425, "B", GetColor(255, 0, 0));
+	DrawString(500, 425, "NextStage...", 0xffffff);
+	DrawString(450, 525, "A", GetColor(0, 255, 0));
+	DrawString(500, 525, "Title", 0xffffff);*/
 }
 
 //シーンの変更
