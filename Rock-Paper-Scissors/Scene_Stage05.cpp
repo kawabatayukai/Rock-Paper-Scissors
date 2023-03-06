@@ -257,7 +257,7 @@ void Scene_Stage05::Draw() const
 		//ÚGŽž‚¶‚á‚ñ‚¯‚ñ•`‰æ
 		Draw_Janken();
 	}
-
+	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
 	DrawString(640, 360, "Stage05", 0xffffff);
 }
 
