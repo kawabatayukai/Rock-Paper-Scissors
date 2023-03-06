@@ -57,7 +57,7 @@ void Enemy_02::Update()
 			jump_cnt++;
 		}
 	}
-
+	//左に行く
 	if (jump_cnt >= 1 && direction_flg == false)
 	{
 
@@ -77,7 +77,7 @@ void Enemy_02::Update()
 		}
 		
 	}
-
+	//右に行く
 	else if (jump_cnt >= 1 && direction_flg == true)
 	{
 		x = x + 5;
@@ -121,8 +121,8 @@ void Enemy_02::Draw() const
 	Draw_Jangeki();
 
 	//テスト
-	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
-	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
+	/*if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
+	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);*/
 
 }
 
