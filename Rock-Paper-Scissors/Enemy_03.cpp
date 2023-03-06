@@ -21,13 +21,11 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	//ìÆÇ´ÉpÉ^Å[Éì 
 	moveinfo[0] = { 0, 950.f, 0.f , 1,  0};
 
-	moveinfo[1] = { 1,  0,    0.f , 2,  0};
+	moveinfo[1] = { 1,  0 ,   0.f , 2, 125};
 
-	moveinfo[2] = { 1,  0 ,   0.f , 3, 125};
+	moveinfo[2] = { 0, 450.f, 0.f , 3,  0};
 
-	moveinfo[3] = { 0, 450.f, 0.f , 4,  0};
-
-	moveinfo[4] = { 1,  0 ,   0.f , 0, 125};
+	moveinfo[3] = { 1,  0 ,   0.f , 0, 125};
 
 
 
