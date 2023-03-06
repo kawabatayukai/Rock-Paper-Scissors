@@ -7,6 +7,7 @@ struct Pattern_04 {
 	int moveflg; //0:動かない,1:動く
 	float location_x; //目指している座標x
 	float location_y; //目指している座標y
+	//float wait_time; //待ち時間
 	int next_index; //次配列のパターンの番号
 
 };
