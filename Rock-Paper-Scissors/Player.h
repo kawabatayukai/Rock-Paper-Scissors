@@ -36,7 +36,16 @@ private:
 	Jan_Type select_JanType;  //選択した"手"
 
 	double jan_angle = 0;     //じゃん撃の角度
+	int jan_interval = 0;     //じゃん撃発射間隔
 
 	int image_JanType[3];     //選択じゃん撃画像
+
+
+	//向き（左右のみ）
+	enum class DIRECTION
+	{
+		LEFT,
+		RIGHT,
+	};
 };
 

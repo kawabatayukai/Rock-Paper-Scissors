@@ -22,7 +22,7 @@ Scene_Stage04::Scene_Stage04(const Player* player)
 	}
 
 	//“G‚ð¶¬
-	obj_enemy = new Enemy_04(1200, 360, Jan_Type::SCISSORS);
+	obj_enemy = new Enemy_04(1100, 550, Jan_Type::SCISSORS);
 
 	//°E•Ç‚Ì—pˆÓ
 	Init_Floor(STAGE_04_FLOOR);
@@ -243,6 +243,8 @@ void Scene_Stage04::Draw() const
 	//ƒXƒe[ƒW”wŒi•`‰æ
 	DrawRotaGraph(640, 360, 1, 0, back_image, FALSE);
 
+	DrawUI(obj_enemy->GetType(),obj_enemy->GetHP());
+
 	//ÚG‚¶‚á‚ñ‚¯‚ñ‚Å‚È‚¢Žž
 	if (janken_flag == false)
 	{
@@ -339,7 +341,7 @@ AbstractScene* Scene_Stage04::ChangeScene()
 	if (obj_player->GetHP() < 0)
 	{
 		//ƒQ[ƒ€ƒI[ƒo[ƒV[ƒ“‚ÖØ‚è‘Ö‚¦
-		return dynamic_cast<AbstractScene*> (new GameOverScene());
+		return dynamic_cast<AbstractScene*> (new GameOverScene(4));
 	}
 
 	return this;
