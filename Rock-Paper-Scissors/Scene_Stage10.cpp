@@ -3,6 +3,7 @@
 #include"DxLib.h"
 #include"Scene_GameClear.h"
 #include"Scene_GameOver.h"
+#include"Jangeki_Homing.h"
 
 //コンストラクタ
 Scene_Stage10::Scene_Stage10(const Player* player)
@@ -50,7 +51,8 @@ void Scene_Stage10::Update()
 		obj_player->Update();    // プレイヤー更新・操作可能
 		obj_enemy->Update();     //敵キャラ更新・内部処理
 
-
+        /*敵がプレイヤーの座標を返す*/
+		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
 
 		//敵とプレイヤーの当たり判定  　ここで"接触じゃんけん"
 		if (obj_enemy->Hit_Character(obj_player) == true)
@@ -60,7 +62,6 @@ void Scene_Stage10::Update()
 
 			//じゃんけん用オブジェクト生成
 			obj_janken = new Janken(enemy_janken);
-
 
 			//接触じゃんけん開始
 			janken_flag = true;
