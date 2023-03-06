@@ -16,8 +16,10 @@ Enemy_04::Enemy_04(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	Init_Jangeki();       //じゃん撃を用意
 
 		//動きパターン
-	moveinfo[0] = { 1,0.f,150.f,1 };
-	moveinfo[1] = { 1,0.f,600.f,0 };
+	moveinfo[0] = { 1,0.f,150.f, 0,1 };
+	moveinfo[1] = { 0,0.f,  0.f,50,2 };
+	moveinfo[2] = { 1,0.f,600.f, 0,3 };
+	moveinfo[3] = { 0,0.f,  0.f,50,0 };
 }
 
 //デストラクタ
@@ -34,12 +36,31 @@ void Enemy_04::Update()
 	Update_Jangeki();
 
 	//ステ04パターン用関数
-	Move_Pattern();
+	//Move_Pattern();
 
-	//if (hp <= 50)
-	//{
-	//	speed = 6.0f;
-	//}
+	switch (moveinfo[current].moveflg)
+	{
+	case 0:
+		waitTime++;
+		if (moveinfo[current].waitFlameTime <= waitTime)
+		{
+			waitTime = 0;
+			current = moveinfo[current].next_index;
+		}
+		break;
+
+	case 1:
+		Move_Pattern();
+		break;
+
+	default:
+		break;
+	}
+
+	if (hp <= 50)
+	{
+		speed = 5.0f;
+	}
 
 	//if (x + (w / 2) == (1280 - 20))
 	//{
@@ -125,7 +146,7 @@ void Enemy_04::Update_Jangeki()
 
 
 		//生成
-		if (frame_count % 70 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+		if (frame_count % 80 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
 	}
 }
 
