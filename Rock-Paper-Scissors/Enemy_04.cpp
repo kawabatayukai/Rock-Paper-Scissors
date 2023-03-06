@@ -16,8 +16,8 @@ Enemy_04::Enemy_04(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	Init_Jangeki();       //じゃん撃を用意
 
 		//動きパターン
-	moveinfo[0] = { 1,0.f,200.f,1 };
-	moveinfo[1] = { 1,0.f,500.f,0 };
+	moveinfo[0] = { 1,0.f,150.f,1 };
+	moveinfo[1] = { 1,0.f,600.f,0 };
 }
 
 //デストラクタ
@@ -85,8 +85,8 @@ void Enemy_04::Draw() const
 
 
 	//テスト
-	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
-	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
+	/*if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
+	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);*/
 
 }
 
@@ -125,7 +125,7 @@ void Enemy_04::Update_Jangeki()
 
 
 		//生成
-		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+		if (frame_count % 70 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
 	}
 }
 
