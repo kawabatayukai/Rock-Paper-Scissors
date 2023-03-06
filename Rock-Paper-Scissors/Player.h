@@ -39,5 +39,13 @@ private:
 	int jan_interval = 0;     //じゃん撃発射間隔
 
 	int image_JanType[3];     //選択じゃん撃画像
+
+
+	//向き（左右のみ）
+	enum class DIRECTION
+	{
+		LEFT,
+		RIGHT,
+	};
 };
 
