@@ -115,8 +115,6 @@ void Enemy_03::Update()
 
 /**********************************************************/
 
-
-
 //描画
 void Enemy_03::Draw() const
 
@@ -126,6 +124,7 @@ void Enemy_03::Draw() const
 
 		//ガード時の画像描画
 		DrawRotaGraphF(x, y, 1, 0, enemyimage[1], TRUE);
+
 
 	}
 	//そうじゃないとき
@@ -139,8 +138,9 @@ void Enemy_03::Draw() const
 
 
 	//テスト                                                      //赤色
-	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xff0000, "HP : %d", hp);
-	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xff0000);
+	if (moveinfo[current].enemywaitTime > 0) DrawFormatString((int)(x - 100), (int)(y - 100), GetColor(0,0,255), "防御力 UP↑", moveinfo[current].enemywaitTime);
+
+	if(hp <= 0)DrawString((int)(x - 100), (int)(y - 100), "death!", 0xff0000);
 
 }
 
