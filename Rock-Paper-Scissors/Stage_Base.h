@@ -9,6 +9,7 @@ class Stage_Base : public AbstractScene
 {
 private:
 	int typeImage[3];
+	int hpImage;
 public:
 	Stage_Base();
 	~Stage_Base();

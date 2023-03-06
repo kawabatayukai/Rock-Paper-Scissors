@@ -4,6 +4,7 @@
 Stage_Base::Stage_Base()
 {
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, typeImage);
+	hpImage = LoadGraph("images/HitPoint.png");
 }
 
 Stage_Base::~Stage_Base()
@@ -19,7 +20,7 @@ void Stage_Base::DrawUI(Jan_Type type ,int hp) const
 		DrawRotaGraph(950, 60, 0.5, 0, typeImage[0], TRUE);
 		break;
 	case Jan_Type::SCISSORS:
-		DrawRotaGraph(950, 60, 0.5, 0, typeImage[1], TRUE);
+		DrawRotaGraph(810, 60, 0.5, 0, typeImage[1], TRUE);
 		break;
 	case Jan_Type::PAPER:
 		DrawRotaGraph(950, 60, 0.5, 0, typeImage[2], TRUE);
@@ -28,8 +29,12 @@ void Stage_Base::DrawUI(Jan_Type type ,int hp) const
 		break;
 	}
 
-	if (hp > 0) DrawFormatString(1000, 50, 0xffffff, "HP : %d", hp);
-	else DrawString(1100, 50, "death!", 0xffffff);
+	DrawRotaGraph(1030, 60, 0.5, 0, hpImage, TRUE);			//体力ゲージ枠
+	DrawBox(948, 45, 960 + hp * 2.42, 75, 0x00ff00, TRUE);	//体力ゲージ
+	DrawFormatString(1120, 85, 0x00ff00, "残り:%d", hp);	//残り体力(数値)
+
+	/*if (hp > 0) DrawFormatString(1000, 50, 0xffffff, "HP : %d", hp);
+	else DrawString(1100, 50, "death!", 0xffffff);*/
 }
 
 //床・壁の準備　　STAGE_XX_FLOOR を引数に
