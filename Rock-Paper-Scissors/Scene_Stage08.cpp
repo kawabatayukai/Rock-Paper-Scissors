@@ -1,6 +1,7 @@
 #include "Scene_Stage08.h"
 #include"KeyManager.h"
 #include"DxLib.h"
+#define PI    3.1415926535897932384626433832795f
 
 //コンストラクタ
 Scene_Stage08::Scene_Stage08(const Player* player)
@@ -53,6 +54,8 @@ Scene_Stage08::Scene_Stage08(const Player* player)
 	obj_floor[25] = new Floor(817, 170, 5, 120);      //足場　右下
 	obj_floor[26] = new Floor(920, 175, 5, 120);      //足場　右下
 	obj_floor[27] = new Floor(665, 175, 5, 120);      //足場　右下
+
+	Back_image = LoadGraph("Stage08_1");
 }
 
 //デストラクタ
@@ -246,6 +249,7 @@ void Scene_Stage08::Update()
 //描画
 void Scene_Stage08::Draw() const
 {
+	DrawRotaGraph(640, 360, 1.f, 0, Back_image,TRUE);
 	//接触じゃんけんでない時
 	if (janken_flag == false)
 	{

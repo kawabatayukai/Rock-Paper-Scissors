@@ -138,9 +138,6 @@
     <ClCompile Include="Jangeki_Base.cpp">
       <Filter>ソース ファイル\Jangeki</Filter>
     </ClCompile>
-    <ClCompile Include="Scene_Stage00.cpp">
-      <Filter>ソース ファイル\GameMainScene\Stage_00</Filter>
-    </ClCompile>
     <ClCompile Include="Stage_Base.cpp">
       <Filter>ソース ファイル\GameMainScene</Filter>
     </ClCompile>
@@ -194,6 +191,9 @@
     </ClCompile>
     <ClCompile Include="Jangeki_Homing.cpp">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Stage00.cpp">
+      <Filter>ソース ファイル\EnemyBase</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

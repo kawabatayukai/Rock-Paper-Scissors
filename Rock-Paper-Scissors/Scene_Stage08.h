@@ -26,6 +26,7 @@ public:
 	AbstractScene* ChangeScene() override; //シーンの変更
 
 private:
+	int Back_image;
 	Enemy_08* obj_enemy;            //敵
 
 	bool janken_flag = false;       //接触時じゃんけんフラグ

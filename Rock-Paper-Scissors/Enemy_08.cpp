@@ -14,6 +14,7 @@ Enemy_08::Enemy_08(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	Init_Jangeki();       //じゃん撃を用意
 
+	Enemy_image = LoadGraph("images/stage08/Stage8_image.png");
 }
 
 //デストラクタ2
@@ -65,7 +66,7 @@ void Enemy_08::Update()
 void Enemy_08::Draw() const
 {
 	//中心から描画
-	DrawRotaGraphF(x, y, 1, 0, image, TRUE);
+	DrawRotaGraphF(x, y, 4.f, 0, Enemy_image, TRUE);
 
 	//じゃん撃描画
 	Draw_Jangeki();
