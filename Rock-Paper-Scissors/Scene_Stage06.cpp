@@ -17,7 +17,7 @@ Scene_Stage06::Scene_Stage06(const Player* player)
 	else
 	{
 		//ƒvƒŒƒCƒ„[‚ğ¶¬
-		obj_player = new Player(640, 360);
+		obj_player = new Player(640, 600);
 	}
 
 	//“G‚ğ¶¬

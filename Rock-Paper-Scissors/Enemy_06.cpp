@@ -44,7 +44,7 @@ void Enemy_06::Update()
 
 	if (jump_cnt < 3)
 	{
-		if (GetRand(100) == 3)  //—”‚Åjump_flg‚ðtrue‚É‚·‚é
+		if (GetRand(3) == 3)  //—”‚Åjump_flg‚ðtrue‚É‚·‚é
 		{
 			jump_flg = true;
 		}
