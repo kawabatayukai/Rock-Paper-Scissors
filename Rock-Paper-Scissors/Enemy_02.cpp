@@ -10,7 +10,7 @@ Enemy_02::Enemy_02(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = 1;
 	hp = 100;
 
-	image = LoadGraph("images/tyokitest.png");
+	image = LoadGraph("images/stage02/ex.png");
 
 	Init_Jangeki();       //じゃん撃を用意
 
@@ -44,21 +44,33 @@ void Enemy_02::Update()
 
 	if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
 	{
-		g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+		g_add = -31.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 		land_flg = false;  //地面についていない
 	}
+	
 
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
-
+	x_add = (x + old_x) - g_add;
+	x_add = (x - old_x) + g_add;
 	//落下速度の制限
 	if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
 
+	if (x_add > static_cast<float>(MAX_LENGTH)) x_add = static_cast<float>(MAX_LENGTH);
+	//if (x_sdd > static_cast<float>(MAX_LENGTH)) x_sdd = static_cast<float>(MAX_LENGTH);
 	old_y = y;                    //1フレーム前のｙ座標
 	y += y_add;                   //落下距離をｙ座標に加算する
 	g_add = _GRAVITY;              //重力加速度を初期化する
-
-	/**********************************************************/
-
+	
+	old_x = x;                    //1フレーム前のｙ座標
+	x -= x_add;                   //落下距離をｙ座標に加算する
+	
+	old_x = x;                    //1フレーム前のｙ座標
+	x += x_add;                   //落下距離をｙ座標に加算する
+	
+	
+	//x = old_x;                    //1フレーム前のｙ座標
+	//x += x_add;                   //落下距離をｙ座標に加算する
+	/************************************************************/
 }
 
 //描画

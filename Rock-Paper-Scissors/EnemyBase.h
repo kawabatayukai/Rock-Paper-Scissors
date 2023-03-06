@@ -15,10 +15,16 @@ public:
 	virtual void Draw() const = 0;  //描画（定義は派生クラス内で）
 
 	Jan_Type GetType() const { return e_type; }  //属性取得
-	void SetHP(int damage);
+	void SetHP(int damage);         //ダメージを受ける
+
+	//追跡対象の座標をセット　 基本プレイヤー
+	void SetPlayerLocation(const float player_x, const float player_y);
 
 protected:
 	Jan_Type e_type;         //属性（グー　チョキ　パー　のいずれか）
-	int image = 0;
+	int image = 0;           //画像
+
+	float player_x = 0.0f;   //プレイヤーの座標
+	float player_y = 0.0f;   //プレイヤーの座標
 };
 
