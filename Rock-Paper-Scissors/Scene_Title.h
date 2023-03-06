@@ -7,7 +7,7 @@ class TitleScene : public AbstractScene
 private:
 
 	int TitleImage = 0;
-
+	int T_selectnum = 0;
 public:
 
 	//コンストラクタ
