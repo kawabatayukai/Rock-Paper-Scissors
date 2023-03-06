@@ -105,7 +105,7 @@ void Player::Update()
 
 
 
-	//```````````````````````````````````````````````````````
+//````````````````````````@Æ€@```````````````````````````
 
 	//‰EƒXƒeƒBƒbƒN‚ÌƒAƒiƒƒO“ü—Í‚ğæ“¾
 	double right_x = static_cast<double>(KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X));   //‚˜
@@ -121,18 +121,23 @@ void Player::Update()
 	jan_angle = atan2(static_cast<double>(right_y - y), static_cast<double>(right_x - x));
 
 
-	//‰EŒü‚«‚Ì
-	if (dir == static_cast<int>(DIRECTION::RIGHT))
+	//Šp“x‚ğ§ŒÀ‚·‚é
 	{
-		if (jan_angle < 0) jan_angle = 0;
-		if (jan_angle > (M_PI / 2)) jan_angle = (M_PI / 2);
+		//‰EŒü‚«‚Ì
+		if (dir == static_cast<int>(DIRECTION::RIGHT))
+		{
+			if (jan_angle < 0) jan_angle = 0;
+			if (jan_angle > (M_PI / 2)) jan_angle = (M_PI / 2);
+		}
+		//¶Œü‚«‚Ì
+		if (dir == static_cast<int>(DIRECTION::LEFT))
+		{
+			if (jan_angle < 0) jan_angle = M_PI;
+			if (jan_angle < (M_PI / 2)) jan_angle = (M_PI / 2);
+		}
 	}
-	//¶Œü‚«‚Ì
-	if (dir == static_cast<int>(DIRECTION::LEFT))
-	{
-		if (jan_angle < 0) jan_angle = M_PI;
-		if (jan_angle < (M_PI / 2)) jan_angle = (M_PI / 2);
-	}
+
+
 
 	////ƒvƒŒƒCƒ„[À•W
 	//DrawFormatString(300, 200, 0xffffff, "Player_X : %f", x);
@@ -145,27 +150,9 @@ void Player::Update()
 	//DrawFormatString(500, 430, 0xffffff, "‹t³ÚÀ•W_X : %lf", static_cast<double>(right_x - x));
 	//DrawFormatString(500, 460, 0xffffff, "‹t³ÚÀ•W_Y : %lf", static_cast<double>(right_y - y));
 	//DrawFormatString(500, 490, 0xffffff, "‹t³Ú(ŒÊ“x–@) : %lf", jan_angle * 180 / M_PI);
+	//DrawFormatString(500, 360, 0xffffff, "Angle : %lf", jan_angle);
 
-
-	int vx = static_cast<int>(550 * cos(jan_angle));
-	int vy = static_cast<int>(550 * sin(jan_angle));
-
-	if (right_x == 0 && right_y == 0)
-	{
-		vx = 0;
-		vx = 0;
-		//jan_angle = 0.0;
-	}
-	else
-	{
-		DrawLine(x, y, x + vx, y - vy, 0xffff00, 5);
-	}
-
-
-
-	DrawFormatString(500, 360, 0xffffff, "Angle : %lf", jan_angle);
-
-	////```````````````````````````````````````````````````````
+//```````````````````````````````````````````````````````
 }
 
 //•`‰æ
@@ -178,7 +165,17 @@ void Player::Draw() const
 	//‚¶‚á‚ñŒ‚•`‰æ
 	Draw_Jangeki();
 
-	//Æ€ü
+	//Æ€ü        ‰EƒXƒeƒBƒbƒN‚É“ü—Í‚ª‚ ‚é
+	if (  KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 &&
+		  KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0 )
+	{}
+	else
+	{
+		int vx = static_cast<int>(550 * cos(jan_angle));
+		int vy = static_cast<int>(550 * sin(jan_angle));
+
+		DrawLineAA(x, y, x + vx, y - vy, 0xffff00, 5);
+	}
 
 
 	//ƒeƒXƒg HP•\¦
@@ -189,8 +186,6 @@ void Player::Draw() const
 	DrawString(30, 100, "SELECT : ", 0xffffff);
 	DrawRotaGraph(160, 100, 0.5, 0, image_JanType[static_cast<int>(select_JanType)], TRUE);
 	DrawString(30, 150, "RB : ”­Ë", 0xffffff);
-
-
 }
 
 //‚¶‚á‚ñŒ‚¶¬EXV
