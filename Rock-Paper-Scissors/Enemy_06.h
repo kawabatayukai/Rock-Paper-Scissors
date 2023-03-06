@@ -26,6 +26,10 @@ private:
 	float y_add = 0;          //落下距離
 	float g_add = 1.0f;       //重力加速度
 
+	bool jump_flg = false;        //ジャンプ用フラグ　　ジャンプさせる:true   ジャンプしない:false
+	int  jump_cnt = 0;            //ジャンプカウント
+	bool direction_flg = false;   //左右反転フラグ      左向き:true           右向き:false
+
 	/**********************************************************/
 
 	int frame_count = 0;       //じゃん撃発射用

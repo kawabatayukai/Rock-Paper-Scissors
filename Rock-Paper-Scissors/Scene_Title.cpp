@@ -18,6 +18,23 @@ TitleScene::~TitleScene()
 //更新
 void TitleScene::Update()
 {
+	//カーソルを合わせてボタンを押すと遷移
+	if (KeyManager::OnPadClicked(PAD_INPUT_UP) == true) {
+
+		//上ボタンで上に
+		T_selectnum++;
+
+		if (T_selectnum > 1) T_selectnum = 0;
+	}
+
+	if (KeyManager::OnPadClicked(PAD_INPUT_DOWN) == true) {
+
+		//下ボタンで下に
+		T_selectnum--;
+
+		if (T_selectnum < 0) T_selectnum = 1;
+
+	}
 
 }
 
@@ -25,17 +42,35 @@ void TitleScene::Update()
 void TitleScene::Draw() const
 {
 	SetFontSize(50);
-	
 	DrawGraph(0,0,TitleImage,TRUE);
-	DrawString(100, 640, "タイトルシーン Aボタンでスタート", GetColor(255,0,0));
+	DrawString(70, 350, "GAMEMAIN", 0xf);
+	DrawString(70, 395, "END", 0xf);
+
+
+	//メニューカーソル
+	DrawTriangle(40, 355 + (T_selectnum * 52), 60, 370 + (T_selectnum * 52), 40, 385 + (T_selectnum * 52), GetColor(255, 0, 0), TRUE);
 }
 
 //シーンの変更
 AbstractScene* TitleScene::ChangeScene()
 {
-	if (KeyManager::OnPadClicked(PAD_INPUT_A))
+	
+	switch (T_selectnum)
 	{
-		return dynamic_cast<AbstractScene*> (new GameMainScene());
+	case 0:
+
+		if (KeyManager::OnPadClicked(PAD_INPUT_A) == true)
+		{
+			return dynamic_cast<AbstractScene*> (new GameMainScene());
+		}
+		/*case 1:
+			if (KeyManager::OnPadClicked(PAD_INPUT_A))
+			{
+				return dynamic_cast<AbstractScene*> (new GameEnd());
+			}*/
+
+	default:
+		break;
 	}
 
 	return this;  //更新なし
