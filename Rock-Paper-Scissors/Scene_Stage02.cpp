@@ -29,7 +29,7 @@ Scene_Stage02::Scene_Stage02(const Player* player)
 	obj_floor[0] = new Floor(0, 700, 1280, 20, 0x006400);        //床
 	obj_floor[1] = new Floor(0, 0, 20, 1720);           //壁（左）
 	obj_floor[2] = new Floor(1260, 0, 20, 1720);           //壁（右）
-	obj_floor[3] = new Floor(1000, 100, 120, 50);      //足場
+	//obj_floor[3] = new Floor(1000, 100, 120, 50);      //足場
 
 	image_back = LoadGraph("images/stage02/mizuumi01.png");
 }

@@ -51,7 +51,7 @@ void Enemy_02::Update()
 
 		if (land_flg == true && jump_flg == true)    //jump_flgがジャンプの条件
 		{
-			g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+			//g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 			land_flg = false;  //地面についていない
 			jump_flg = false;  //ジャンプ用フラグのリセット
 			jump_cnt++;
@@ -71,7 +71,7 @@ void Enemy_02::Update()
 		
 		if (land_flg == true && GetRand(1) == 1)    //GetRand(30) == 3　のところがジャンプの条件
 		{
-			g_add = -31.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+			g_add = -25.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 			land_flg = false;  //地面についていない
 			
 		}
@@ -89,7 +89,7 @@ void Enemy_02::Update()
 		}
 		if (land_flg == true && GetRand(1) == 1)    //GetRand(30) == 3　のところがジャンプの条件
 		{
-			g_add = -31.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+			g_add = -25.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 			land_flg = false;  //地面についていない
 
 		}
@@ -97,25 +97,17 @@ void Enemy_02::Update()
 	}
 
 	
-
+ 
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
-	x_sdd = (x - old_x) + g_add;  //今回の落下距離を設定
-	x_zdd = (x - old_x) + g_zdd;  //今回の落下距離を設定
 	
 	//落下速度の制限
 	if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
-    if (x_sdd > static_cast<float>(MAX_LENGTH)) x_sdd = static_cast<float>(MAX_LENGTH);
-    if (x_zdd > static_cast<float>(MAX_LENGTH)) x_zdd = static_cast<float>(MAX_LENGTH);
+   
 
 	old_y = y;                    //1フレーム前のｙ座標
 	y += y_add;                   //落下距離をｙ座標に加算する
 	g_add = _GRAVITY;              //重力加速度を初期化する
 
-	old_x = x;                    //1フレーム前のｙ座標
-	x -= x_sdd;                   //落下距離をｙ座標に加算する
-
-	old_x = x;                    //1フレーム前のｙ座標
-	x += x_zdd;                   //落下距離をｙ座標に加算する
 	/************************************************************/
 }
 
