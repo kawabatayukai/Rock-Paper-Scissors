@@ -4,6 +4,9 @@
 #include "Scene_GameClear.h"
 #include "Scene_GameOver.h"
 
+//デバッグモード
+#include"Debug_Manager.h"
+
 //コンストラクタ
 Scene_Stage03::Scene_Stage03(const Player* player)
 {
@@ -171,7 +174,17 @@ void Scene_Stage03::Update()
 				//パーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::PAPER)
 				{
+
+					//停止時ダメージ軽減
+					if (obj_enemy-> GetWaitTime() > 0) {
+
+						obj_enemy->ReceiveDamage(15);     //軽減ダメージが入る
+
+					}
+					else{
 					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+
+					}
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -183,7 +196,14 @@ void Scene_Stage03::Update()
 				//グーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::ROCK)
 				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+
+					if(obj_enemy->GetWaitTime() > 0){
+
+						obj_enemy->ReceiveDamage(15);     //軽減ダメージが入る
+					}
+					else {
+						obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					}
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -194,7 +214,16 @@ void Scene_Stage03::Update()
 				//チョキのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::SCISSORS)
 				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					if (obj_enemy->GetWaitTime() > 0) {
+
+						obj_enemy->ReceiveDamage(15); //ダメージが入る
+
+					}
+					else {
+
+						obj_enemy->ReceiveDamage(30); //ダメージが入る
+
+					}
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -324,6 +353,8 @@ void Scene_Stage03::Draw_Janken() const
 //シーンの変更
 AbstractScene* Scene_Stage03::ChangeScene()
 {
+	//"Debug_Manager.h" の #define DEBUG_OFF_03 をコメントアウトすると開発モード
+#ifdef DEBUG_OFF_03
 
 	//敵のHP0
 	if (obj_enemy->GetHP() < 0) {
@@ -339,6 +370,8 @@ AbstractScene* Scene_Stage03::ChangeScene()
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(3));
 	}
+
+#endif // DEBUG_OFF_03
 
 	return this;
 }
