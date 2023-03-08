@@ -1,6 +1,11 @@
 #include "Scene_Stage01.h"
 #include"KeyManager.h"
+#include"Scene_GameOver.h"
+#include"Scene_GameClear.h"
 #include"DxLib.h"
+
+//デバッグモード
+#include"Debug_Manager.h"
 
 //コンストラクタ
 Scene_Stage01::Scene_Stage01(const Player* player)
@@ -303,7 +308,23 @@ void Scene_Stage01::Draw_Janken() const
 //シーンの変更
 AbstractScene* Scene_Stage01::ChangeScene()
 {
+#ifdef DEBUG_OFF_01
 
+	//敵のHPが0以下
+	if (obj_enemy->GetHP() < 0)
+	{
+		//ゲームクリアシーンへ切り替え
+		return dynamic_cast<AbstractScene*> (new GameClearScene(2));
+	}
+
+	//プレイヤーのHPが0以下
+	if (obj_player->GetHP() < 0)
+	{
+		//ゲームオーバーシーンへ切り替え
+		return dynamic_cast<AbstractScene*> (new GameOverScene(1));
+	}
+
+#endif 
 
 	return this;   //更新なし
 }

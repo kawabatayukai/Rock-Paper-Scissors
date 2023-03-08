@@ -5,7 +5,7 @@
 #define MAX_LENGTH 16     //めりこみ許容範囲
 #define _GRAVITY 1.0f     //キャラクターにかかる重力
 
-#define JANGEKI_MAX 5    //じゃん撃最大数
+#define JANGEKI_MAX 60    //じゃん撃最大数
 
 
 //キャラクターの基底クラス　　プレイヤー・敵キャラのベース

@@ -6,6 +6,9 @@
 #include"Scene_Stage06.h"
 #define PI    3.1415926535897932384626433832795f
 
+//デバッグモード
+#include"Debug_Manager.h"
+
 //コンストラクタ
 Scene_Stage05::Scene_Stage05(const Player* player)
 {
@@ -322,6 +325,9 @@ void Scene_Stage05::Draw_Janken() const
 //シーンの変更
 AbstractScene* Scene_Stage05::ChangeScene()
 {
+	//"Debug_Manager.h" の #define DEBUG_OFF_05 をコメントアウトすると開発モード
+#ifdef DEBUG_OFF_05
+
 	//敵のHPが0以下
 	if (obj_enemy->GetHP() < 0)
 	{
@@ -333,7 +339,10 @@ AbstractScene* Scene_Stage05::ChangeScene()
 	if (obj_player->GetHP() < 0)
 	{
 		//ゲームオーバーシーンへ切り替え
-		return dynamic_cast<AbstractScene*> (new GameOverScene());
+		return dynamic_cast<AbstractScene*> (new GameOverScene(5));
 	}
+
+#endif // DEBUG_OFF_05
+
 	return this;
 }
