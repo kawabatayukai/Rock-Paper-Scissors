@@ -2,6 +2,7 @@
 #include"DxLib.h"
 #include"Player.h"
 #include"Jangeki_Base.h"
+#include"Jangeki_Homing.h"
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_10::Enemy_10(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
@@ -22,12 +23,94 @@ Enemy_10::~Enemy_10()
 
 }
 
+int switchMove = 0; //作業用変数
+
+/*敵の動き*/
+void  Enemy_10::Move()
+{
+	/*左右の足場にジャンプ移動の処理*/
+	switch (switchMove)
+	{
+	case 0:
+		if (x > 120) //左へ移動
+		{
+			x--;
+
+			if (land_flg == true && x < 990 && x > 200) //ジャンプ
+			{
+				g_add = -25.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+				land_flg = false;  //地面についていない
+			}
+
+			if (land_flg == false) //ジャンプ中の加速
+			{
+				if (v < 15) //加速上限
+				{
+					v += a;
+				}
+				x -= v;
+			}
+		}
+		else
+		{
+			switchMove = 1; //次の処理へ
+		}
+		break;
+
+	case 1:
+		if (x < 1100) //右へ移動
+		{
+			x++;
+
+			if (land_flg == true && x > 200 && x < 1000) //ジャンプ
+			{
+				g_add = -25.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+				land_flg = false;  //地面についていない
+			}
+
+			if (land_flg == false) //ジャンプ中の加速
+			{
+				if (v < 15) //加速上限
+				{
+					v += a;
+				}
+				x += v;
+			}
+		}
+		else
+		{
+			switchMove = 0; //次の処理へ
+		}
+		break;
+	}
+
+	/********************   ジャンプ関係   ********************/
+
+	//if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
+	//{
+		//g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+		//land_flg = false;  //地面についていない
+	//}
+
+	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
+
+	//落下速度の制限
+	if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
+
+	old_y = y;                    //1フレーム前のｙ座標
+	y += y_add;                   //落下距離をｙ座標に加算する
+	g_add = _GRAVITY;              //重力加速度を初期化する
+
+	/**********************************************************/
+}
 
 //更新
 void Enemy_10::Update()
 {
 	//じゃん撃更新・生成
 	Update_Jangeki();
+
+	Move();
 
 	//if (x + (w / 2) == (1280 - 20))
 	//{
@@ -42,20 +125,20 @@ void Enemy_10::Update()
 
 	/********************   ジャンプ関係   ********************/
 
-	if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
-	{
-		g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-		land_flg = false;  //地面についていない
-	}
-
-	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
-
-	//落下速度の制限
-	if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
-
-	old_y = y;                    //1フレーム前のｙ座標
-	y += y_add;                   //落下距離をｙ座標に加算する
-	g_add = _GRAVITY;              //重力加速度を初期化する
+	//if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
+	//{
+	//	g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+	//	land_flg = false;  //地面についていない
+	//}
+	//
+	//y_add = (y - old_y) + g_add;  //今回の落下距離を設定
+	//
+	////落下速度の制限
+	//if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
+	//
+	//old_y = y;                    //1フレーム前のｙ座標
+	//y += y_add;                   //落下距離をｙ座標に加算する
+	//g_add = _GRAVITY;              //重力加速度を初期化する
 
 	/**********************************************************/
 
@@ -73,6 +156,7 @@ void Enemy_10::Draw() const
 	//テスト
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
 	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
+	DrawFormatString(500, 200, 0xffffffff, "%f", x);
 
 }
 
@@ -89,6 +173,9 @@ void Enemy_10::Update_Jangeki()
 
 		obj_jangeki[jan_count]->Update();
 
+		//ホーミングじゃん撃であればプレイヤーの座標をセットする
+		obj_jangeki[jan_count]->SetTargetLocation(player_x, player_y);
+
 		//画面外で削除する
 		if (obj_jangeki[jan_count]->CheckScreenOut() == true)
 		{
@@ -104,13 +191,23 @@ void Enemy_10::Update_Jangeki()
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
 		float radius = 35.5f;   //半径
-		float speed = -3.0f;     //スピード
+		float speed = /* - */3.0f;     //スピード
 
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
+		/*********************** ↓↓ 生成( 通常弾 ) ↓↓ ***********************/
 
-		//生成
-		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+		//            生成速度
+		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type); //通常弾
+
+		/************************************************************************/
+
+		/*********************** ↓↓ 生成( 追跡弾 ) ↓↓ ***********************/
+
+		//            生成速度
+		if (frame_count % 30 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //追跡弾 
+
+		/************************************************************************/
 	}
 }
