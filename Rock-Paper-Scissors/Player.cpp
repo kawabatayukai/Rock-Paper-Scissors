@@ -4,6 +4,7 @@
 #include<string.h>
 #include "Player.h"
 #include"KeyManager.h"
+#include"Debug_Manager.h"
 
 //Ç∂Ç·ÇÒåÇî≠éÀä‘äuÅ@Åi1ïbÅj
 #define PLAYER_JAN_INTERVAL 60
@@ -21,6 +22,7 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //äÓíÍÉNÉâÉXÇ
 	//âÊëúì«Ç›çûÇ›
 	image = LoadGraph("images/sd_body-1.png");
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image_JanType);  //Ç∂Ç·ÇÒåÇâÊëú
+	image_setsumei = LoadGraph("images/Setumei.png");
 
 	Init_Jangeki();       //Ç∂Ç·ÇÒåÇÇópà”
 
@@ -52,7 +54,7 @@ Player::Player(const Player& player) : CharaBase(player.x, player.y, player.w, p
 	this->image = player.image;             //ÉvÉåÉCÉÑÅ[âÊëú
 	this->select_JanType = player.select_JanType;    //ëIëÇµÇΩ"éË"
 	this->jan_angle = player.jan_angle;              //Ç∂Ç·ÇÒåÇäpìx
-
+	image_setsumei = LoadGraph("images/Setumei.png");
 
 	//ëIëÇ∂Ç·ÇÒåÇâÊëúÉRÉsÅ[ÅiëΩï™Ç¢ÇÁÇ»Ç¢Åj
 	memcpy_s(image_JanType, sizeof(player.image_JanType), player.image_JanType, sizeof(player.image_JanType));
@@ -185,6 +187,7 @@ void Player::Draw() const
 		DrawLineAA(x, y, x + vx, y - vy, 0xffff00, 3);
 	}
 
+#ifdef DEBUG_OFF_PLAYER
 
 	//ÉeÉXÉg HPï\é¶
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
@@ -194,6 +197,13 @@ void Player::Draw() const
 	DrawString(30, 100, "SELECT : ", 0xffffff);
 	DrawRotaGraph(160, 100, 0.5, 0, image_JanType[static_cast<int>(select_JanType)], TRUE);
 	DrawString(30, 150, "RB : î≠éÀ", 0xffffff);
+
+	//ÉeÉXÉg
+	DrawGraph(20, 0, image_setsumei, TRUE);
+
+#endif // DEBUG_OFF_PLAYER
+
+
 }
 
 //Ç∂Ç·ÇÒåÇê∂ê¨ÅEçXêV
