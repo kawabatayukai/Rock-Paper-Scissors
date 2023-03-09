@@ -8,7 +8,7 @@ Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 {
 	speed = 7.0f;
 	dir = 1;
-	hp = 200;
+	hp = 100;
 
 	image = LoadGraph("images/tyokitest.png");
 
@@ -85,7 +85,7 @@ void Enemy_06::Update()
 
 		if (hp <= 150)
 		{
-			attack_pattern = 1;
+			/*attack_pattern = 1;*/
 		}
 	}
 	
