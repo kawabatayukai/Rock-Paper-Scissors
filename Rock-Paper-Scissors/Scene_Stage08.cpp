@@ -1,6 +1,11 @@
 #include "Scene_Stage08.h"
+#include"Scene_GameOver.h"
+#include"Scene_GameClear.h"
 #include"KeyManager.h"
 #include"DxLib.h"
+
+//デバッグモード
+#include"Debug_Manager.h"
 
 //コンストラクタ
 Scene_Stage08::Scene_Stage08(const Player* player)
@@ -306,5 +311,24 @@ void Scene_Stage08::Draw_Janken() const
 //シーンの変更
 AbstractScene* Scene_Stage08::ChangeScene()
 {
+	//"Debug_Manager.h" の #define DEBUG_OFF_08 をコメントアウトすると開発モード
+#ifdef DEBUG_OFF_08
+
+	//敵のHPが0以下
+	if (obj_enemy->GetHP() < 0)
+	{
+		//ゲームクリアシーンへ切り替え
+		return dynamic_cast<AbstractScene*> (new GameClearScene(9));
+	}
+
+	//プレイヤーのHPが0以下
+	if (obj_player->GetHP() < 0)
+	{
+		//ゲームオーバーシーンへ切り替え
+		return dynamic_cast<AbstractScene*> (new GameOverScene(8));
+	}
+
+#endif // DEBUG_OFF_08
+
 	return this;
 }

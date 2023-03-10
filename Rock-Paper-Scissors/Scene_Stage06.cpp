@@ -5,6 +5,9 @@
 #include "Scene_GameClear.h"
 #include "Enemy_02.h"
 
+//デバッグモード
+#include"Debug_Manager.h"
+
 //コンストラクタ
 Scene_Stage06::Scene_Stage06(const Player* player)
 {
@@ -17,7 +20,7 @@ Scene_Stage06::Scene_Stage06(const Player* player)
 	else
 	{
 		//プレイヤーを生成
-		obj_player = new Player(640, 360);
+		obj_player = new Player(640, 600);
 	}
 
 	//敵を生成
@@ -66,20 +69,20 @@ void Scene_Stage06::Update()
 
 
 
-		//敵とプレイヤーの当たり判定  　ここで"接触じゃんけん"
-		if (obj_enemy->Hit_Character(obj_player) == true)
-		{
-			//敵が出す手をランダムに決める　　　（ランダムなint型の値(0～2)を Jan_Type型に変換）
-			Jan_Type enemy_janken = static_cast<Jan_Type> (GetRand(2));
+		////敵とプレイヤーの当たり判定  　ここで"接触じゃんけん"
+		//if (obj_enemy->Hit_Character(obj_player) == true)
+		//{
+		//	//敵が出す手をランダムに決める　　　（ランダムなint型の値(0～2)を Jan_Type型に変換）
+		//	Jan_Type enemy_janken = static_cast<Jan_Type> (GetRand(2));
 
-			//じゃんけん用オブジェクト生成
-			obj_janken = new Janken(enemy_janken);
+		//	//じゃんけん用オブジェクト生成
+		//	obj_janken = new Janken(enemy_janken);
 
 
-			//接触じゃんけん開始
-			janken_flag = true;
+		//	//接触じゃんけん開始
+		//	janken_flag = true;
 
-		}
+		//}
 	}
 	else
 	{
@@ -253,6 +256,8 @@ void Scene_Stage06::Update()
 //描画
 void Scene_Stage06::Draw() const
 {
+	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+
 	//接触じゃんけんでない時
 	if (janken_flag == false)
 	{
@@ -338,6 +343,9 @@ void Scene_Stage06::Draw_Janken() const
 //シーンの変更
 AbstractScene* Scene_Stage06::ChangeScene()
 {
+	//"Debug_Manager.h" の #define DEBUG_OFF_06 をコメントアウトすると開発モード
+#ifdef DEBUG_OFF_06
+
 	//敵のHPが0以下
 	if (obj_enemy->GetHP() < 0)
 	{
@@ -345,12 +353,14 @@ AbstractScene* Scene_Stage06::ChangeScene()
 		return dynamic_cast<AbstractScene*> (new GameClearScene(7));
 	}
 
-	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() < 0)
-	{
-		//ゲームオーバーシーンへ切り替え
-		return dynamic_cast<AbstractScene*> (new GameOverScene(6));
-	}
+	////プレイヤーのHPが0以下
+	//if (obj_player->GetHP() < 0)
+	//{
+	//	//ゲームオーバーシーンへ切り替え
+	//	return dynamic_cast<AbstractScene*> (new GameOverScene(6));
+	//}
+
+#endif // DEBUG_OFF_06
 
 	return this;
 }
