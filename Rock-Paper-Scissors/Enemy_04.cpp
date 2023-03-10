@@ -57,12 +57,8 @@ void Enemy_04::Update()
 		break;
 	}
 
-	if (hp <= 50)
-	{
-		speed = 5.0f;
-	}
-
-	if (hp <= 0)hp = 0;
+	if (hp <= 0) hp = 0; 
+	else if (hp <= 50) speed = 5.0f;
 
 	//if (x + (w / 2) == (1280 - 20))
 	//{
@@ -136,13 +132,13 @@ void Enemy_04::Update_Jangeki()
 
 	/*********************** ↓↓ 発射・生成 ↓↓ ***********************/
 	frame_count++;
-
+	
 	//配列の空要素
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
 		float radius = 35.5f;   //半径
 		float speed = -3.0f;     //スピード
-
+		
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 

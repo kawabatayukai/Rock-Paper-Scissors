@@ -1,6 +1,14 @@
 #include "Scene_Stage10.h"
+#include"Scene_GameOver.h"
+#include"Scene_GameClear.h"
 #include"KeyManager.h"
 #include"DxLib.h"
+#include"Scene_GameClear.h"
+#include"Scene_GameOver.h"
+#include"Jangeki_Homing.h"
+
+//デバッグモード
+#include"Debug_Manager.h"
 
 //コンストラクタ
 Scene_Stage10::Scene_Stage10(const Player* player)
@@ -18,7 +26,7 @@ Scene_Stage10::Scene_Stage10(const Player* player)
 	}
 
 	//敵を生成
-	obj_enemy = new Enemy_10(1200, 360, Jan_Type::SCISSORS);
+	obj_enemy = new Enemy_10(1050, 220, Jan_Type::SCISSORS);
 
 	//床・壁の用意
 	Init_Floor(STAGE_10_FLOOR);
@@ -27,7 +35,11 @@ Scene_Stage10::Scene_Stage10(const Player* player)
 	obj_floor[0] = new Floor(0, 700, 1280, 20);        //床
 	obj_floor[1] = new Floor(0, 0, 20, 1720);           //壁（左）
 	obj_floor[2] = new Floor(1260, 0, 20, 1720);           //壁（右）
-	obj_floor[3] = new Floor(1000, 100, 120, 50);      //足場
+
+	//obj_floor[3] = new Floor(1000, 100, 120, 50);      //足場	
+	//
+	obj_floor[3] = new Floor(100, 350, 120, 50);      //足場
+	obj_floor[4] = new Floor(1000, 350, 120, 50);      //足場
 }
 
 //デストラクタ
@@ -44,7 +56,8 @@ void Scene_Stage10::Update()
 		obj_player->Update();    // プレイヤー更新・操作可能
 		obj_enemy->Update();     //敵キャラ更新・内部処理
 
-
+        /*敵がプレイヤーの座標を返す*/
+		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
 
 		//敵とプレイヤーの当たり判定  　ここで"接触じゃんけん"
 		if (obj_enemy->Hit_Character(obj_player) == true)
@@ -54,7 +67,6 @@ void Scene_Stage10::Update()
 
 			//じゃんけん用オブジェクト生成
 			obj_janken = new Janken(enemy_janken);
-
 
 			//接触じゃんけん開始
 			janken_flag = true;
@@ -306,5 +318,23 @@ void Scene_Stage10::Draw_Janken() const
 //シーンの変更
 AbstractScene* Scene_Stage10::ChangeScene()
 {
+	//"Debug_Manager.h" の #define DEBUG_OFF_10 をコメントアウトすると開発モード
+#ifdef DEBUG_OFF_10
+
+	//敵のHPが0以下
+	if (obj_enemy->GetHP() < 0)
+	{
+		//ゲームクリアシーンへ切り替え
+		return dynamic_cast<AbstractScene*> (new GameClearScene(0));
+	}
+
+	//プレイヤーのHPが0以下
+	if (obj_player->GetHP() < 0)
+	{
+		//ゲームオーバーシーンへ切り替え
+		return dynamic_cast<AbstractScene*> (new GameOverScene(10));
+	}
+
+#endif // DEBUG_OFF_10
 	return this;
 }

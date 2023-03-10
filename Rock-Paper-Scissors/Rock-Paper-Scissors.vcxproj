@@ -194,6 +194,7 @@
   <ItemGroup>
     <ClInclude Include="AbstractScene.h" />
     <ClInclude Include="CharaBase.h" />
+    <ClInclude Include="Debug_Manager.h" />
     <ClInclude Include="EnemyBase.h" />
     <ClInclude Include="Enemy_00.h" />
     <ClInclude Include="Enemy_01.h" />

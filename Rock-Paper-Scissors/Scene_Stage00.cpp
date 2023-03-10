@@ -6,7 +6,7 @@
 #include"Janken.h"
 
 //デバッグモード
-//#define _DEBUG_MODE_00
+#include"Debug_Manager.h"
 
 //コンストラクタ
 Scene_Stage00::Scene_Stage00(const Player* player)
@@ -328,7 +328,7 @@ void Scene_Stage00::Draw_Janken() const
 //シーンの変更
 AbstractScene* Scene_Stage00::ChangeScene()
 {
-#ifdef _DEBUG_MODE_00
+#ifdef DEBUG_OFF_00
 
 	//敵のHPが0以下
 	if (obj_enemy->GetHP() < 0)
