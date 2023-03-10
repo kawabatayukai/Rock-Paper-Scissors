@@ -4,6 +4,10 @@
 #include "Scene_Stage03.h"
 #include"Scene_GameOver.h"
 #include "Scene_GameClear.h"
+
+//デバッグモード
+#include"Debug_Manager.h"
+
 //コンストラクタ
 Scene_Stage02::Scene_Stage02(const Player* player)
 {
@@ -20,7 +24,7 @@ Scene_Stage02::Scene_Stage02(const Player* player)
 	}
 
 	//敵を生成
-	obj_enemy = new Enemy_02(1200, 360, Jan_Type::SCISSORS);
+	obj_enemy = new Enemy_02(1200, 680, Jan_Type::SCISSORS);
 
 	//床・壁の用意
 	Init_Floor(STAGE_02_FLOOR);
@@ -29,7 +33,7 @@ Scene_Stage02::Scene_Stage02(const Player* player)
 	obj_floor[0] = new Floor(0, 700, 1280, 20, 0x006400);        //床
 	obj_floor[1] = new Floor(0, 0, 20, 1720);           //壁（左）
 	obj_floor[2] = new Floor(1260, 0, 20, 1720);           //壁（右）
-	obj_floor[3] = new Floor(1000, 100, 120, 50);      //足場
+	//obj_floor[3] = new Floor(1000, 100, 120, 50);      //足場
 
 	image_back = LoadGraph("images/stage02/mizuumi01.png");
 }
@@ -228,6 +232,8 @@ void Scene_Stage02::Draw() const
 	//背景
 	DrawGraph(0, 0, image_back, TRUE);
 
+	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+
 	//接触じゃんけんでない時
 	if (janken_flag == false)
 	{
@@ -313,6 +319,9 @@ void Scene_Stage02::Draw_Janken() const
 //シーンの変更
 AbstractScene* Scene_Stage02::ChangeScene()
 {
+	//"Debug_Manager.h" の #define DEBUG_OFF_02 をコメントアウトすると開発モード
+#ifdef DEBUG_OFF_02
+
 	//敵のHPが0以下
 	if (obj_enemy->GetHP() < 0)
 	{
@@ -324,7 +333,10 @@ AbstractScene* Scene_Stage02::ChangeScene()
 	if (obj_player->GetHP() < 0)
 	{
 		//ゲームオーバーシーンへ切り替え
-		return dynamic_cast<AbstractScene*> (new GameOverScene());
+		return dynamic_cast<AbstractScene*> (new GameOverScene(2));
 	}
+
+#endif // DEBUG_OFF_02
+
 	return this;
 }

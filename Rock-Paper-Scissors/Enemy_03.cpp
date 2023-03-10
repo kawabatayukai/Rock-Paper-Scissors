@@ -4,23 +4,35 @@
 #include"Jangeki_Base.h"
 #include <typeinfo>
 
-
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
 
-	speed = 1.0f;
+	speed = 1.5f;
 	dir = 1;
 	hp = 100;
 
-	//image = LoadGraph("images/stage03/stage03attack.png");
-	image = LoadGraph("images/stage03/stage03gard.png");
-	
+	enemyimage[0] = LoadGraph("images/stage03/stage03attack.png");
+	enemyimage[1] = LoadGraph("images/stage03/stage03gard.png");
+
 	Init_Jangeki();       //じゃん撃を用意
 
-	//動きパターン
-	moveinfo[0] = { 1,680.f,0.f,1 };
-	moveinfo[1] = { 1,1200.f,0.f,0 };
+	//動きパターン 繰り返し　//0で動き,1で止まる
+	moveinfo[0] = { 0, 950.f, 0.f , 1,  0 };//初期位置のXが950で停止
+
+	moveinfo[1] = { 1,  0 ,   0.f , 2, 125 };//初期位置のXが950で停止
+	//ここから動く
+	moveinfo[2] = { 0, 650.f, 0.f , 3,  0 };//Xが650まで動く
+
+	moveinfo[3] = { 1,  0 ,   0.f , 4, 125 };//Xが650で停止
+
+	moveinfo[4] = { 0, 325.f, 0.f , 5, 0 };//Xが325まで動く
+
+	moveinfo[5] = { 1,  0 ,   0.f , 6, 125 };//Xが325で停止
+
+	moveinfo[6] = { 0, 650.f, 0.f , 7,  0 };//Xが650まで動く
+
+	moveinfo[7] = { 1,  0 ,   0.f , 0, 125 };//Xが650で停止し配列[0]に戻る
 
 }
 
@@ -30,7 +42,6 @@ Enemy_03::~Enemy_03()
 
 }
 
-
 //更新
 void Enemy_03::Update()
 {
@@ -38,8 +49,29 @@ void Enemy_03::Update()
 	Update_Jangeki();
 
 	//ステ03パターン用関数
-	Move_Pattern();
+	switch (moveinfo[current].moveflg)
+	{
+	case 0:
+		Move_Pattern();
+		break;
+	case 1:
+		waitcount++;
+		if (moveinfo[current].enemywaitTime <= waitcount) {
 
+			waitcount = 0;
+			current = moveinfo[current].next_index;
+
+		}
+		break;
+	default:
+		break;
+	}
+
+
+	//HPが0以下だったらHPに0を代入
+	if (hp <= 0)hp = 0;
+
+}
 	//if (x + (w / 2) == (1280 - 20))
 	//{
 	//	dir = -1;
@@ -91,23 +123,32 @@ void Enemy_03::Update()
 
 /**********************************************************/
 
-}
-
 //描画
 void Enemy_03::Draw() const
 
 {
+	//エネミー停止時
+	if (moveinfo[current].enemywaitTime > 0) {
 
-	//中心から描画
-	DrawRotaGraphF(x, y, 1, 0, image, TRUE);
+		//ガード時の画像描画
+		DrawRotaGraphF(x, y, 1, 0, enemyimage[1], TRUE);
+
+
+	}
+	//そうじゃないとき
+	else {
+		//攻撃時の画像描画
+		DrawRotaGraphF(x, y, 1, 0, enemyimage[0], TRUE);
+	}
 
 	//じゃん撃描画
 	Draw_Jangeki();
 
 
 	//テスト                                                      //赤色
-	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xff0000, "HP : %d", hp);
-	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xff0000);
+	if (moveinfo[current].enemywaitTime > 0) DrawFormatString((int)(x - 100), (int)(y - 100), GetColor(0,0,255), "防御力 UP↑", moveinfo[current].enemywaitTime);
+
+	if(hp <= 0)DrawString((int)(x - 100), (int)(y - 100), "death!", 0xff0000);
 
 }
 
@@ -166,6 +207,7 @@ void Enemy_03::Move_Pattern() {
 
 		//目指しているx座標の右方が大きい
 		if (x < moveinfo[current].location_x) {
+
 			move_x += speed; //右移動にプラスする
 
 			//目指していた座標を超えたとき
@@ -177,7 +219,7 @@ void Enemy_03::Move_Pattern() {
 			}
 
 		}
-		else 
+		else
 		{
 			move_x -= speed; //左移動にマイナスする
 
@@ -188,7 +230,7 @@ void Enemy_03::Move_Pattern() {
 				move_x = moveinfo[current].location_x; //目指していた座標で固定
 
 			}
-			
+
 
 		}
 
@@ -199,4 +241,10 @@ void Enemy_03::Move_Pattern() {
 	x = move_x;
 	y = move_y;
 
+}
+
+//enemywaitTime継承
+int Enemy_03::GetWaitTime()const {
+
+	return moveinfo[current].enemywaitTime;
 }

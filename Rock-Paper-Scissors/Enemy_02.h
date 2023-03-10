@@ -15,15 +15,26 @@ public:
 
 	void Update_Jangeki() override;  //じゃん撃生成・更新
 
+	int Get_OldY();                   //old_yの取得関数
+	int Get_Y();                      //yの取得
 private:
 	/********************   ジャンプ関係   ********************/
 
-	float old_x = 1;          //前回の位置X
+	float old_x = 0;          //前回の位置X
 	float old_y = 0;          //前回の位置Y
+
 	float y_add = 0;          //落下距離
 	float x_add = 1;
+	float x_sdd = 1;
+	float x_zdd = 1;
+
 	float g_add = 1.0f;       //重力加速度
-	float g_sdd = 0.1f;
+	float g_sdd = 1.0f;
+	float g_zdd = 1.0f;
+
+	bool jump_flg = false;        //ジャンプ用フラグ　　ジャンプさせる:true   ジャンプしない:false
+	int  jump_cnt =0;            //ジャンプカウント
+	bool direction_flg = false;   //左右反転フラグ      左向き:true   
 	/**********************************************************/
 
 	int frame_count = 0;       //じゃん撃発射用

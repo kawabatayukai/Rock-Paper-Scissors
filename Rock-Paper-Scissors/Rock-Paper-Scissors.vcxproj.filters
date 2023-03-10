@@ -314,5 +314,8 @@
     <ClInclude Include="Jangeki_Homing.h">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClInclude>
+    <ClInclude Include="Debug_Manager.h">
+      <Filter>ソース ファイル\GameMainScene</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

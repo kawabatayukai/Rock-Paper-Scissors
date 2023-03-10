@@ -3,6 +3,10 @@
 #include"DxLib.h"
 #include "Scene_GameClear.h"
 #include "Scene_GameOver.h"
+#include "Stage_Base.h"
+
+//デバッグモード
+#include"Debug_Manager.h"
 
 //コンストラクタ
 Scene_Stage03::Scene_Stage03(const Player* player)
@@ -33,7 +37,8 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	obj_floor[1] = new Floor(0, 0, 20, 1720,GetColor(240, 230, 140));        //壁（左）
 	obj_floor[2] = new Floor(1260, 0, 20, 1720,GetColor(240, 230, 140));     //壁（右）
 
-	obj_floor[3] = new Floor(970, 300, 130, 40, GetColor(193, 107, 68));//足場
+	//右から順に
+	obj_floor[3] = new Floor(970, 300, 130, 40, GetColor(193, 107, 68));//足場1
 	obj_floor[4] = new Floor(780, 230, 130, 40, GetColor(193, 107, 68));//足場2//130
 	obj_floor[5] = new Floor(585, 300, 130, 40, GetColor(193, 107, 68));//足場3//100
 	obj_floor[6] = new Floor(400, 230, 130, 40, GetColor(193, 107, 68));//足場4//130
@@ -171,7 +176,17 @@ void Scene_Stage03::Update()
 				//パーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::PAPER)
 				{
+
+					//停止時ダメージ軽減
+					if (obj_enemy-> GetWaitTime() > 0) {
+
+						obj_enemy->ReceiveDamage(15);     //軽減ダメージが入る
+
+					}
+					else{
 					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+
+					}
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -183,7 +198,14 @@ void Scene_Stage03::Update()
 				//グーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::ROCK)
 				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+
+					if(obj_enemy->GetWaitTime() > 0){
+
+						obj_enemy->ReceiveDamage(15);     //軽減ダメージが入る
+					}
+					else {
+						obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					}
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -194,7 +216,16 @@ void Scene_Stage03::Update()
 				//チョキのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::SCISSORS)
 				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					if (obj_enemy->GetWaitTime() > 0) {
+
+						obj_enemy->ReceiveDamage(15); //軽減ダメージが入る
+
+					}
+					else {
+
+						obj_enemy->ReceiveDamage(30); //ダメージが入る
+
+					}
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -239,6 +270,9 @@ void Scene_Stage03::Draw() const
 	//ステージ描画
 	DrawGraph(0, 0, stage, FALSE);
 
+	//HP描画
+	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+
 	//接触じゃんけんでない時
 	if (janken_flag == false)
 	{
@@ -260,7 +294,7 @@ void Scene_Stage03::Draw() const
 		Draw_Janken();
 	}
 
-	DrawString(640, 360, "Stage03", 0xffff);
+	//DrawString(640, 360, "Stage03", 0xffff);
 }
 
 //じゃんけん更新・内部処理
@@ -324,21 +358,25 @@ void Scene_Stage03::Draw_Janken() const
 //シーンの変更
 AbstractScene* Scene_Stage03::ChangeScene()
 {
+	//"Debug_Manager.h" の #define DEBUG_OFF_03 をコメントアウトすると開発モード
+#ifdef DEBUG_OFF_03
 
 	//敵のHP0
-	if (obj_enemy->GetHP() < 0) {
+	//if (obj_enemy->GetHP() < 0) {
 
-		//ゲームクリアシーンへ切り替え
-		return dynamic_cast<AbstractScene*> (new GameClearScene(4));
+	//	//ゲームクリアシーンへ切り替え
+	//	return dynamic_cast<AbstractScene*> (new GameClearScene(4));
 
-	}
+	//}
 
 	//プレイヤーのHPが0
 	if (obj_player->GetHP() < 0) {
 
 		//ゲームオーバーシーンへ切り替え
-		return dynamic_cast<AbstractScene*> (new GameOverScene());
+		return dynamic_cast<AbstractScene*> (new GameOverScene(3));
 	}
+
+#endif // DEBUG_OFF_03
 
 	return this;
 }

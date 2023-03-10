@@ -29,6 +29,8 @@ void Enemy_06::Update()
 	//じゃん撃更新・生成
 	Update_Jangeki();
 
+	if (hp <= 0)hp = 0;
+
 	//if (x + (w / 2) == (1280 - 20))
 	//{
 	//	dir = -1;
@@ -42,10 +44,88 @@ void Enemy_06::Update()
 
 	/********************   ジャンプ関係   ********************/
 
-	if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
+	if (attack_pattern == 0)      //攻撃パターン1
 	{
-		g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-		land_flg = false;  //地面についていない
+		if (jump_cnt < 3)         //4回ジャンプするまでの間以下の処理を繰り返す
+		{
+			if (GetRand(3) == 3)  //乱数でjump_flgをtrueにする
+			{
+				jump_flg = true;
+			}
+
+			if (land_flg == true && jump_flg == true)    //jump_flgがジャンプの条件
+			{
+				g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+				land_flg = false;  //地面についていない
+				jump_flg = false;  //ジャンプ用フラグのリセット
+				jump_cnt++;        //ジャンプ回数のカウント
+			}
+		}
+
+		//4回以上ジャンプした際の処理
+		if (jump_cnt >= 3 && direction_flg == false)        //左を向いている時の処理
+		{
+
+			x = x - 4;      //1フレームの間に左へ進む距離
+			if (x < 100)    //目標座標に到着したかのチェック
+			{
+				jump_cnt = 0;          //ジャンプ回数のリセット
+				direction_flg = true;  //向いている向きの反転
+			}
+		}
+		else if (jump_cnt >= 3 && direction_flg == true)    //右を向いている時の処理
+		{
+			x = x + 4;      //1フレームの間に右へ進む距離
+			if (x > 1180)   //目標座標に到着したかのチェック
+			{
+				jump_cnt = 0;           //ジャンプ回数のリセット
+				direction_flg = false;  //向いている向きの反転
+			}
+		}
+
+		if (hp <= 150)
+		{
+			/*attack_pattern = 1;*/
+		}
+	}
+	
+	if (attack_pattern == 1)
+	{
+		if (GetRand(30) == 3)  //乱数でjump_flgをtrueにする
+		{
+			jump_flg = true;
+		}
+
+		if (jump_flg == true && land_flg == true)    //jump_flgがジャンプの条件
+		{
+			g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+			land_flg = false;  //地面についていない
+			jump_flg = false;  //ジャンプ用フラグのリセット
+		}
+				
+		//4回以上ジャンプした際の処理
+		if (direction_flg == false)        //左を向いている時の処理
+		{
+			x = x - 20;      //1フレームの間に左へ進む距離
+			if (x < 100)    //目標座標に到着したかのチェック
+			{
+				direction_flg = true;  //向いている向きの反転
+			}
+		}
+		else if (direction_flg == true)    //右を向いている時の処理
+		{
+			x = x + 20;      //1フレームの間に右へ進む距離
+			if (x > 1180)   //目標座標に到着したかのチェック
+			{
+				direction_flg = false;  //向いている向きの反転
+			}
+		}
+
+
+		/*if (hp <= 100)
+		{
+			attack_pattern = 2;
+		}*/
 	}
 
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
@@ -104,7 +184,7 @@ void Enemy_06::Update_Jangeki()
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
 		float radius = 35.5f;   //半径
-		float speed = -3.0f;     //スピード
+		float speed = -8.0f;     //スピード
 
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));

@@ -10,7 +10,7 @@ Enemy_02::Enemy_02(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = 1;
 	hp = 100;
 
-	image = LoadGraph("images/stage02/ex.png");
+	image = LoadGraph("images/stage02/junp4.png");
 
 	Init_Jangeki();       //じゃん撃を用意
 
@@ -42,29 +42,74 @@ void Enemy_02::Update()
 
 	/********************   ジャンプ関係   ********************/
 
-	if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
+	if (jump_cnt < 1)
 	{
-		g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-		land_flg = false;  //地面についていない
+		if (GetRand(1) == 1)  //乱数でjump_flgをtrueにする
+		{
+			jump_flg = true;
+		}
+
+		if (land_flg == true && jump_flg == true)    //jump_flgがジャンプの条件
+		{
+			//g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+			land_flg = false;  //地面についていない
+			jump_flg = false;  //ジャンプ用フラグのリセット
+			jump_cnt++;
+		}
 	}
+	//左に行く
+	if (jump_cnt >= 1 && direction_flg == false)
+	{
+
+		x = x - 5;
+		if (x < 100)
+		{
+			image = LoadGraph("images/stage02/junp2.png");
+			jump_cnt = 0;
+			direction_flg = true;
+		}
+		
+		if (land_flg == true && GetRand(1) == 1)    //GetRand(30) == 3　のところがジャンプの条件
+		{
+			g_add = -25.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+			land_flg = false;  //地面についていない
+			
+		}
+		
+	}
+	//右に行く
+	else if (jump_cnt >= 1 && direction_flg == true)
+	{
+		x = x + 5;
+		if (x > 1180)
+		{
+			image = LoadGraph("images/stage02/junp4.png");
+			jump_cnt = 0;
+			direction_flg = false;
+		}
+		if (land_flg == true && GetRand(1) == 1)    //GetRand(30) == 3　のところがジャンプの条件
+		{
+			g_add = -25.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+			land_flg = false;  //地面についていない
+
+		}
+		
+	}
+
 	
-
+ 
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
-
 	
 	//落下速度の制限
 	if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
+   
 
-	if (x_add > static_cast<float>(MAX_LENGTH)) x_add = static_cast<float>(MAX_LENGTH);
 	old_y = y;                    //1フレーム前のｙ座標
 	y += y_add;                   //落下距離をｙ座標に加算する
 	g_add = _GRAVITY;              //重力加速度を初期化する
 
-	old_x = x;                    //1フレーム前のｙ座標
-	x -= x_add;                   //落下距離をｙ座標に加算する
-	
-	//x = old_x;                    //1フレーム前のｙ座標
-	//x += x_add;                   //落下距離をｙ座標に加算する
+
+	if (hp <= 0)hp = 0;
 	/************************************************************/
 }
 
@@ -78,8 +123,8 @@ void Enemy_02::Draw() const
 	Draw_Jangeki();
 
 	//テスト
-	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
-	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
+	/*if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
+	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);*/
 
 }
 
@@ -120,4 +165,15 @@ void Enemy_02::Update_Jangeki()
 		//生成
 		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
 	}
+}
+//old_yの取得関数
+int Enemy_02::Get_OldY()
+{
+	return old_y;
+}
+
+//yの取得関数
+int Enemy_02::Get_Y()
+{
+	return y;
 }
