@@ -123,17 +123,32 @@ void Player::Update()
 
 	//角度を制限する
 	{
-		//右向きの時
-		if (dir == static_cast<int>(DIRECTION::RIGHT))
+		if (land_flg == true)
 		{
-			if (jan_angle < 0) jan_angle = 0;
-			if (jan_angle > (M_PI / 2)) jan_angle = (M_PI / 2);
+			//右向きの時
+			if (dir == static_cast<int>(DIRECTION::RIGHT))
+			{
+				if (jan_angle < 0) jan_angle = 0;
+				//if (jan_angle > (M_PI / 2)) jan_angle = (M_PI / 2);
+			}
 		}
-		//左向きの時
-		if (dir == static_cast<int>(DIRECTION::LEFT))
+		if (jan_angle > (M_PI / 2)) //左向きに
 		{
-			if (jan_angle < 0) jan_angle = M_PI;
-			if (jan_angle < (M_PI / 2)) jan_angle = (M_PI / 2);
+			dir = static_cast<int>(DIRECTION::LEFT);
+		}
+
+		if (land_flg == true)
+		{
+			 //左向きの時
+			 if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true)
+			 {
+				 if (jan_angle < 0) jan_angle = M_PI;
+				 //if (jan_angle < (M_PI / 2)) jan_angle = (M_PI / 2);
+			 }
+		}
+		if (jan_angle < (M_PI / 2)) //右向きに
+		{
+			dir = static_cast<int>(DIRECTION::RIGHT);
 		}
 	}
 
