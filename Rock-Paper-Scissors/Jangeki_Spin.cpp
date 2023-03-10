@@ -1,9 +1,7 @@
 #include "Jangeki_Spin.h"
 #include "DxLib.h"
-
 #define _USE_MATH_DEFINES      //数学系マクロの使用
 #include<math.h>
-
 #define HOMING_TIME 100        //追跡時間
 
 
@@ -23,7 +21,7 @@ Jangeki_Spin::~Jangeki_Spin()
 
 void Jangeki_Spin::Update()
 {
-	/*if (UDflg == FALSE)
+	if (UDflg == FALSE)
 	{
 		UD += 3.f;
 
@@ -67,9 +65,7 @@ void Jangeki_Spin::Update()
 	}
 
 	x -= 3.f;
-	x += LR;*/
-
-	/*DrawFormatString(0, 60, 0xff00ff, "%d", LR);*/
+	x += LR;
 
 	
 		//追跡時間内

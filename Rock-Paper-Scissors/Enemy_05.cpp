@@ -118,7 +118,7 @@ void Enemy_05::Update_Jangeki()
 
 
 		//ê∂ê¨
-		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Spin(x, y, radius, speed, type);
+		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Zigzag(x, y, radius, speed, type);
 		
 	}
 }
