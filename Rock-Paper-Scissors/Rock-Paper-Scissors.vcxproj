@@ -167,6 +167,7 @@
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Jangeki_Homing.cpp" />
     <ClCompile Include="Jangeki_tamayose.cpp" />
+    <ClCompile Include="Jangeki_Zigzag.cpp" />
     <ClCompile Include="Scene_End.cpp" />
     <ClCompile Include="Scene_Help.cpp" />
     <ClCompile Include="Jangeki_Base.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="Floor.h" />
     <ClInclude Include="Jangeki_Homing.h" />
     <ClInclude Include="Jangeki_tamayose.h" />
+    <ClInclude Include="Jangeki_Zigzag.h" />
     <ClInclude Include="Scene_End.h" />
     <ClInclude Include="Scene_Help.h" />
     <ClInclude Include="Jangeki_Base.h" />
