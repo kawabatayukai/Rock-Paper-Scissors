@@ -88,7 +88,6 @@ void Scene_Stage04::Update()
 		Update_Janken();
 	}
 
-
 	//player‚Ì‚¶‚á‚ñŒ‚‚ð‚Æ‚Á‚Ä‚­‚é
 	Jangeki_Base** player_jangeki = obj_player->GetJangeki();
 

@@ -195,6 +195,9 @@
     <ClCompile Include="Scene_Stage00.cpp">
       <Filter>ソース ファイル\EnemyBase</Filter>
     </ClCompile>
+    <ClCompile Include="Jangeki_tamayose.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -316,6 +319,9 @@
     </ClInclude>
     <ClInclude Include="Debug_Manager.h">
       <Filter>ソース ファイル\GameMainScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_tamayose.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

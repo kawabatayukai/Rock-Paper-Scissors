@@ -58,7 +58,7 @@ void Enemy_04::Update()
 	}
 
 	if (hp <= 0) hp = 0; 
-	else if (hp <= 50) speed = 5.0f;
+	else if (hp <= 50) speed = 8.0f;
 
 	//if (x + (w / 2) == (1280 - 20))
 	//{
