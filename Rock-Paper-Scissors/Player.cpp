@@ -4,6 +4,7 @@
 #include<string.h>
 #include "Player.h"
 #include"KeyManager.h"
+#include"Debug_Manager.h"
 
 //‚¶‚á‚ñŒ‚”­ËŠÔŠu@i1•bj
 #define PLAYER_JAN_INTERVAL 60
@@ -21,6 +22,7 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 	//‰æ‘œ“Ç‚İ‚İ
 	image = LoadGraph("images/sd_body-1.png");
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image_JanType);  //‚¶‚á‚ñŒ‚‰æ‘œ
+	image_setsumei = LoadGraph("images/Setumei.png");
 
 	Init_Jangeki();       //‚¶‚á‚ñŒ‚‚ğ—pˆÓ
 
@@ -52,7 +54,7 @@ Player::Player(const Player& player) : CharaBase(player.x, player.y, player.w, p
 	this->image = player.image;             //ƒvƒŒƒCƒ„[‰æ‘œ
 	this->select_JanType = player.select_JanType;    //‘I‘ğ‚µ‚½"è"
 	this->jan_angle = player.jan_angle;              //‚¶‚á‚ñŒ‚Šp“x
-
+	image_setsumei = LoadGraph("images/Setumei.png");
 
 	//‘I‘ğ‚¶‚á‚ñŒ‚‰æ‘œƒRƒs[i‘½•ª‚¢‚ç‚È‚¢j
 	memcpy_s(image_JanType, sizeof(player.image_JanType), player.image_JanType, sizeof(player.image_JanType));
@@ -127,13 +129,21 @@ void Player::Update()
 		if (dir == static_cast<int>(DIRECTION::RIGHT))
 		{
 			if (jan_angle < 0) jan_angle = 0;
-			if (jan_angle > (M_PI / 2)) jan_angle = (M_PI / 2);
+			if (jan_angle > (M_PI / 2))
+			{
+				//jan_angle = (M_PI / 2);
+				dir = static_cast<int>(DIRECTION::LEFT);
+			}
 		}
 		//¶Œü‚«‚Ì
 		if (dir == static_cast<int>(DIRECTION::LEFT))
 		{
 			if (jan_angle < 0) jan_angle = M_PI;
-			if (jan_angle < (M_PI / 2)) jan_angle = (M_PI / 2);
+			if (jan_angle < (M_PI / 2))
+			{
+				//jan_angle = (M_PI / 2);
+				dir = static_cast<int>(DIRECTION::RIGHT);
+			}
 		}
 	}
 
@@ -174,9 +184,10 @@ void Player::Draw() const
 		int vx = static_cast<int>(550 * cos(jan_angle));
 		int vy = static_cast<int>(550 * sin(jan_angle));
 
-		DrawLineAA(x, y, x + vx, y - vy, 0xffff00, 5);
+		DrawLineAA(x, y, x + vx, y - vy, 0xffff00, 3);
 	}
 
+#ifdef DEBUG_OFF_PLAYER
 
 	//ƒeƒXƒg HP•\¦
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
@@ -186,6 +197,13 @@ void Player::Draw() const
 	DrawString(30, 100, "SELECT : ", 0xffffff);
 	DrawRotaGraph(160, 100, 0.5, 0, image_JanType[static_cast<int>(select_JanType)], TRUE);
 	DrawString(30, 150, "RB : ”­Ë", 0xffffff);
+
+	//ƒeƒXƒg
+	DrawGraph(20, 0, image_setsumei, TRUE);
+
+#endif // DEBUG_OFF_PLAYER
+
+
 }
 
 //‚¶‚á‚ñŒ‚¶¬EXV
