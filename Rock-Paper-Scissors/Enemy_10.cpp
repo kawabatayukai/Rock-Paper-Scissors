@@ -206,7 +206,7 @@ void Enemy_10::Update_Jangeki()
 		/*********************** «« ¶¬( ’ÇÕ’e ) «« ***********************/
 
 		//            ¶¬‘¬“x
-		if (frame_count % 30 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //’ÇÕ’e 
+		if (frame_count % 50 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //’ÇÕ’e 
 
 		/************************************************************************/
 	}
