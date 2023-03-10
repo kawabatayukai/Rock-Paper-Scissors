@@ -30,6 +30,8 @@ public:
 
 	int GetWaitTime()const;
 
+	void ChangeDir(float x);
+
 private:
 	/********************   ジャンプ関係   ********************/
 
@@ -48,7 +50,8 @@ private:
 
 	Pattern_03 moveinfo[20]; //行動パターン20種
 	short current = 0; //現在のパターン配列添字
-	
+
+	int enemyimage[2];      //敵画像配列
 };
 
 
