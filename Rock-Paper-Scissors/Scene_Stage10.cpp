@@ -1,9 +1,14 @@
 #include "Scene_Stage10.h"
+#include"Scene_GameOver.h"
+#include"Scene_GameClear.h"
 #include"KeyManager.h"
 #include"DxLib.h"
 #include"Scene_GameClear.h"
 #include"Scene_GameOver.h"
 #include"Jangeki_Homing.h"
+
+//デバッグモード
+#include"Debug_Manager.h"
 
 //コンストラクタ
 Scene_Stage10::Scene_Stage10(const Player* player)
@@ -313,18 +318,23 @@ void Scene_Stage10::Draw_Janken() const
 //シーンの変更
 AbstractScene* Scene_Stage10::ChangeScene()
 {
+	//"Debug_Manager.h" の #define DEBUG_OFF_10 をコメントアウトすると開発モード
+#ifdef DEBUG_OFF_10
+
 	//敵のHPが0以下
 	if (obj_enemy->GetHP() < 0)
 	{
 		//ゲームクリアシーンへ切り替え
-		return dynamic_cast<AbstractScene*> (new GameClearScene(1));
+		return dynamic_cast<AbstractScene*> (new GameClearScene(0));
 	}
 
 	//プレイヤーのHPが0以下
 	if (obj_player->GetHP() < 0)
 	{
 		//ゲームオーバーシーンへ切り替え
-		return dynamic_cast<AbstractScene*> (new GameOverScene());
+		return dynamic_cast<AbstractScene*> (new GameOverScene(10));
 	}
+
+#endif // DEBUG_OFF_10
 	return this;
 }
