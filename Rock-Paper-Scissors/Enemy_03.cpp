@@ -17,14 +17,22 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	Init_Jangeki();       //じゃん撃を用意
 
-	//動きパターン 
-	moveinfo[0] = { 0, 950.f, 0.f , 1,  0 };
+	//動きパターン 繰り返し　//0で動き,1で止まる
+	moveinfo[0] = { 0, 950.f, 0.f , 1,  0 };//初期位置のXが950で停止
 
-	moveinfo[1] = { 1,  0 ,   0.f , 2, 125 };
+	moveinfo[1] = { 1,  0 ,   0.f , 2, 125 };//初期位置のXが950で停止
+	//ここから動く
+	moveinfo[2] = { 0, 650.f, 0.f , 3,  0 };//Xが650まで動く
 
-	moveinfo[2] = { 0, 450.f, 0.f , 3,  0 };
+	moveinfo[3] = { 1,  0 ,   0.f , 4, 125 };//Xが650で停止
 
-	moveinfo[3] = { 1,  0 ,   0.f , 0, 125 };
+	moveinfo[4] = { 0, 325.f, 0.f , 5, 0 };//Xが325まで動く
+
+	moveinfo[5] = { 1,  0 ,   0.f , 6, 125 };//Xが325で停止
+
+	moveinfo[6] = { 0, 650.f, 0.f , 7,  0 };//Xが650まで動く
+
+	moveinfo[7] = { 1,  0 ,   0.f , 0, 125 };//Xが650で停止し配列[0]に戻る
 
 }
 
@@ -59,6 +67,9 @@ void Enemy_03::Update()
 		break;
 	}
 
+
+	//HPが0以下だったらHPに0を代入
+	if (hp <= 0)hp = 0;
 
 }
 	//if (x + (w / 2) == (1280 - 20))
@@ -112,8 +123,6 @@ void Enemy_03::Update()
 
 /**********************************************************/
 
-
-
 //描画
 void Enemy_03::Draw() const
 
@@ -123,6 +132,7 @@ void Enemy_03::Draw() const
 
 		//ガード時の画像描画
 		DrawRotaGraphF(x, y, 1, 0, enemyimage[1], TRUE);
+
 
 	}
 	//そうじゃないとき
@@ -136,8 +146,9 @@ void Enemy_03::Draw() const
 
 
 	//テスト                                                      //赤色
-	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xff0000, "HP : %d", hp);
-	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xff0000);
+	if (moveinfo[current].enemywaitTime > 0) DrawFormatString((int)(x - 100), (int)(y - 100), GetColor(0,0,255), "防御力 UP↑", moveinfo[current].enemywaitTime);
+
+	if(hp <= 0)DrawString((int)(x - 100), (int)(y - 100), "death!", 0xff0000);
 
 }
 
