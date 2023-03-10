@@ -181,11 +181,11 @@ void Scene_Stage03::Update()
 					//停止時ダメージ軽減
 					if (obj_enemy-> GetWaitTime() > 0) {
 
-						obj_enemy->ReceiveDamage(5);     //軽減ダメージが入る
+						obj_enemy->ReceiveDamage(10);     //軽減ダメージが入る
 
 					}
 					else{
-					obj_enemy->ReceiveDamage(10);     //ダメージが入る
+					obj_enemy->ReceiveDamage(30);     //ダメージが入る
 
 					}
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
@@ -202,10 +202,10 @@ void Scene_Stage03::Update()
 
 					if(obj_enemy->GetWaitTime() > 0){
 
-						obj_enemy->ReceiveDamage(5);     //軽減ダメージが入る
+						obj_enemy->ReceiveDamage(10);     //軽減ダメージが入る
 					}
 					else {
-						obj_enemy->ReceiveDamage(10);     //ダメージが入る
+						obj_enemy->ReceiveDamage(30);     //ダメージが入る
 					}
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
@@ -219,12 +219,12 @@ void Scene_Stage03::Update()
 				{
 					if (obj_enemy->GetWaitTime() > 0) {
 
-						obj_enemy->ReceiveDamage(5); //軽減ダメージが入る
+						obj_enemy->ReceiveDamage(10); //軽減ダメージが入る
 
 					}
 					else {
 
-						obj_enemy->ReceiveDamage(10); //ダメージが入る
+						obj_enemy->ReceiveDamage(30); //ダメージが入る
 
 					}
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
