@@ -76,6 +76,9 @@
     <Filter Include="ソース ファイル\Jangeki\kawabata">
       <UniqueIdentifier>{32b49806-6f27-4d6d-9c72-c0dfb3c9ad29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Jangeki\bise">
+      <UniqueIdentifier>{0225705f-57ca-4278-af2c-b05082ba30c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -138,6 +141,9 @@
     <ClCompile Include="Jangeki_Base.cpp">
       <Filter>ソース ファイル\Jangeki</Filter>
     </ClCompile>
+    <ClCompile Include="Scene_Stage00.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_00</Filter>
+    </ClCompile>
     <ClCompile Include="Stage_Base.cpp">
       <Filter>ソース ファイル\GameMainScene</Filter>
     </ClCompile>
@@ -192,8 +198,14 @@
     <ClCompile Include="Jangeki_Homing.cpp">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClCompile>
-    <ClCompile Include="Scene_Stage00.cpp">
-      <Filter>ソース ファイル\EnemyBase</Filter>
+    <ClCompile Include="Jangeki_Changespeed.cpp">
+      <Filter>ソース ファイル\Jangeki\bise</Filter>
+    </ClCompile>
+    <ClCompile Include="Jangeki_Zigzag.cpp">
+      <Filter>ソース ファイル\Jangeki\bise</Filter>
+    </ClCompile>
+    <ClCompile Include="Jangeki_Spin.cpp">
+      <Filter>ソース ファイル\Jangeki\bise</Filter>
     </ClCompile>
     <ClCompile Include="Jangeki_tamayose.cpp">
       <Filter>ソース ファイル</Filter>
@@ -317,8 +329,14 @@
     <ClInclude Include="Jangeki_Homing.h">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClInclude>
-    <ClInclude Include="Debug_Manager.h">
-      <Filter>ソース ファイル\GameMainScene</Filter>
+    <ClInclude Include="Jangeki_Changespeed.h">
+      <Filter>ソース ファイル\Jangeki\bise</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_Zigzag.h">
+      <Filter>ソース ファイル\Jangeki\bise</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_Spin.h">
+      <Filter>ソース ファイル\Jangeki\bise</Filter>
     </ClInclude>
     <ClInclude Include="Jangeki_tamayose.h">
       <Filter>ヘッダー ファイル</Filter>
