@@ -3,6 +3,7 @@
 #include"Floor.h"
 #include"Player.h"
 #include"Janken.h"
+#include"EnemyBase.h"
 
 //ステージのベース
 class Stage_Base : public AbstractScene
@@ -14,6 +15,7 @@ public:
 	Stage_Base();
 	~Stage_Base();
 
+	//UI描画
 	void DrawUI(Jan_Type type ,int hp) const;
 
 	//床・壁の準備　　STAGE_XX_FLOOR を引数に
@@ -26,10 +28,19 @@ public:
 	//"接触時じゃんけん"処理   player(引数１番目　の勝敗結果を返す)
 	Jan_Result Get_JankenResult(Jan_Type player, Jan_Type enemy);
 
+	//敵とプレイヤーの当たり判定→接触じゃんけん処理
+	void Touch_Janken(const EnemyBase* enemy);
+	//じゃんけん開始フラグ取得
+	bool GetJanStartFlag() const { return j_start_flag; }
+
 protected:
 	Player* obj_player = nullptr;             //プレイヤー
 	Floor** obj_floor = nullptr;              //床・壁
 
 	Janken* obj_janken = nullptr;             //じゃんけん用
+
+private:
+	short nhit_time = 0;                      //衝突判定なし時間
+	bool j_start_flag = false;                //じゃんけん開始フラグ
 };
 

@@ -170,7 +170,7 @@ void CharaBase::Hit_Floor(const Floor* floor)
 }
 
 //キャラクター同士の当たり判定  Hit:true
-bool CharaBase::Hit_Character(const CharaBase* character)
+bool CharaBase::Hit_Character(const CharaBase* character) const
 {
 	//（int型に変換）
 	int c_w = static_cast<int> (character->GetW());   //幅　
@@ -200,7 +200,7 @@ bool CharaBase::Hit_Jangeki(const Jangeki_Base* jangeki)
 
 
 //矩形と矩形の当たり判定
-bool CharaBase::CheckHitBox_Box(int box_x, int box_y, int box_w, int box_h)
+bool CharaBase::CheckHitBox_Box(int box_x, int box_y, int box_w, int box_h) const
 {
 	//キャラクター側　（キャラクターの座標は中心基準）
 	int pX_Min = static_cast<int>(x - (w / 2));     //最小ｘ（左）

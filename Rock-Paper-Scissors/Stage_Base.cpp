@@ -1,6 +1,9 @@
 #include "Stage_Base.h"
 #include"DxLib.h"
 
+//衝突判定なし時間   5秒
+#define NOT_COLLISION_TIME  300
+
 Stage_Base::Stage_Base()
 {
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, typeImage);
@@ -12,6 +15,7 @@ Stage_Base::~Stage_Base()
 
 }
 
+//UI描画
 void Stage_Base::DrawUI(Jan_Type type ,int hp) const
 {
 	switch (type)
@@ -30,7 +34,7 @@ void Stage_Base::DrawUI(Jan_Type type ,int hp) const
 	}
 
 	DrawRotaGraph(1030, 60, 0.5, 0, hpImage, TRUE);			//体力ゲージ枠
-	DrawBox(948, 45, 948 + hp * 2.54, 75, 0x00ff00, TRUE);	//体力ゲージ
+	DrawBox(948, 45, 948 + static_cast<int>(hp * 2.54), 75, 0x00ff00, TRUE);	//体力ゲージ
 	DrawFormatString(1120, 85, 0x00ff00, "残り:%d", hp);	//残り体力(数値)
 
 	/*if (hp > 0) DrawFormatString(1000, 50, 0xffffff, "HP : %d", hp);
@@ -89,4 +93,31 @@ Jan_Result Stage_Base::Get_JankenResult(Jan_Type player, Jan_Type enemy)
 
 	//それ以外はエラー
 	return Jan_Result::_ERROR;
+}
+
+
+
+//敵とプレイヤーの当たり判定→接触じゃんけん処理
+void Stage_Base::Touch_Janken(const EnemyBase* enemy)
+{
+	if (j_start_flag == false)
+	{
+		//敵とプレイヤーが接触
+
+		if (enemy->Hit_Character(obj_player) == true)
+		{
+
+			//じゃんけん開始
+			j_start_flag = true;
+		}
+
+
+		//衝突判定なし時間
+		if (--nhit_time < 0) nhit_time = 0;
+	}
+	else
+	{
+
+	}
+
 }

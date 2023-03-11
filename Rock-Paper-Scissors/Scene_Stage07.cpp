@@ -85,6 +85,15 @@ void Scene_Stage07::Update()
 	//	Update_Janken();
 	//}
 
+	//if (GetJanStartFlag() == false)
+	//{
+	//	obj_player->Update();    // プレイヤー更新・操作可能
+	//	obj_enemy->Update();     //敵キャラ更新・内部処理
+
+	//	//プレイヤーの座標を取得
+	//	obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
+	//}
+
 
 	//テスト　じゃんけん無視
 	obj_player->Update();    // プレイヤー更新・操作可能
@@ -286,7 +295,33 @@ void Scene_Stage07::Draw() const
 		Draw_Janken();
 	}
 
-	
+	//if (GetJanStartFlag() == false)
+	//{
+	//	obj_player->Draw();  //プレイヤー描画
+	//	obj_enemy->Draw();   //敵キャラ描画
+
+	//	//床・壁描画
+	//	for (int i = 0; i < STAGE_07_FLOOR; i++)
+	//	{
+	//		if (obj_floor[i] == nullptr) break;
+	//		obj_floor[i]->Draw();
+	//	}
+
+	//	//コーナーポスト
+	//	DrawBox(220, 440, (220 + 30), (440 + 150), 0x007cfe, TRUE);
+	//	DrawBox(1030, 440, (1030 + 30), (440 + 150), 0x007cfe, TRUE);
+
+
+	//	//ロープ
+	//	DrawBox(250, 450, (250 + 780), (450 + 5), 0x000000, TRUE);     //トップロープ
+	//	DrawBox(250, 500, (250 + 780), (500 + 5), 0x000000, TRUE);     //セカンドロープ
+	//	DrawBox(250, 550, (250 + 780), (550 + 5), 0x000000, TRUE);     //サードロープ
+
+	//	//スポットライト描画
+	//	SetDrawBlendMode(DX_BLENDMODE_ADD_X4, 150);
+	//	DrawGraph(0, 0, image_spotlight, TRUE);
+	//	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	//}
 
 }
 
