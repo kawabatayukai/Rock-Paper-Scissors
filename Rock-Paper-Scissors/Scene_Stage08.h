@@ -5,7 +5,7 @@
 #include"Player.h"
 #include"Floor.h"
 
-#define STAGE_08_FLOOR 4         //床・壁の合計数
+#define STAGE_08_FLOOR  28        //床・壁の合計数
 
 //0ステージ
 class Scene_Stage08 : public Stage_Base
@@ -26,6 +26,7 @@ public:
 	AbstractScene* ChangeScene() override; //シーンの変更
 
 private:
+	int Back_image;
 	Enemy_08* obj_enemy;            //敵
 
 	bool janken_flag = false;       //接触時じゃんけんフラグ
