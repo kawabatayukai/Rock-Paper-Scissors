@@ -25,7 +25,7 @@ public:
 	
 	Jangeki_Base** obj_reflection;//反射ジャン撃用配列
 	Jangeki_Base** GetJangeki() const { return obj_reflection; } //反射されたジャン撃取得
-	Jan_Type GetRType() const { return type; }  //属性取得
+	
 	
 
 protected:

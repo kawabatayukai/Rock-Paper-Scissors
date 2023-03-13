@@ -177,7 +177,6 @@ void Scene_Stage09::Update()
 
 			obj_enemy->reflection->trueFlg();
 
-			//	Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 			//	//‚¶‚á‚ñŒ‚•`‰æ
 			//	obj_enemy->Draw_Jangeki();
 			//	obj_enemy->Update_Jangeki();
