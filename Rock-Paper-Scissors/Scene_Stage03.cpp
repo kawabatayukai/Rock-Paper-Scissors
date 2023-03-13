@@ -3,6 +3,7 @@
 #include"DxLib.h"
 #include "Scene_GameClear.h"
 #include "Scene_GameOver.h"
+#include "Stage_Base.h"
 
 //デバッグモード
 #include"Debug_Manager.h"
@@ -22,7 +23,7 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	else
 	{
 		//プレイヤーを生成
-		obj_player = new Player(640, 360);
+		obj_player = new Player(10, 640);
 	}
 
 	//敵を生成
@@ -36,7 +37,8 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	obj_floor[1] = new Floor(0, 0, 20, 1720,GetColor(240, 230, 140));        //壁（左）
 	obj_floor[2] = new Floor(1260, 0, 20, 1720,GetColor(240, 230, 140));     //壁（右）
 
-	obj_floor[3] = new Floor(970, 300, 130, 40, GetColor(193, 107, 68));//足場
+	//右から順に
+	obj_floor[3] = new Floor(970, 300, 130, 40, GetColor(193, 107, 68));//足場1
 	obj_floor[4] = new Floor(780, 230, 130, 40, GetColor(193, 107, 68));//足場2//130
 	obj_floor[5] = new Floor(585, 300, 130, 40, GetColor(193, 107, 68));//足場3//100
 	obj_floor[6] = new Floor(400, 230, 130, 40, GetColor(193, 107, 68));//足場4//130
@@ -60,6 +62,7 @@ void Scene_Stage03::Update()
 	{
 		obj_player->Update();    // プレイヤー更新・操作可能
 		obj_enemy->Update();     //敵キャラ更新・内部処理
+		obj_enemy->ChangeDir(obj_player->GetX());//プレイヤーがx < 640だったらエネミーの弾の向きを変える
 
 
 
@@ -178,7 +181,7 @@ void Scene_Stage03::Update()
 					//停止時ダメージ軽減
 					if (obj_enemy-> GetWaitTime() > 0) {
 
-						obj_enemy->ReceiveDamage(15);     //軽減ダメージが入る
+						obj_enemy->ReceiveDamage(10);     //軽減ダメージが入る
 
 					}
 					else{
@@ -199,7 +202,7 @@ void Scene_Stage03::Update()
 
 					if(obj_enemy->GetWaitTime() > 0){
 
-						obj_enemy->ReceiveDamage(15);     //軽減ダメージが入る
+						obj_enemy->ReceiveDamage(10);     //軽減ダメージが入る
 					}
 					else {
 						obj_enemy->ReceiveDamage(30);     //ダメージが入る
@@ -216,7 +219,7 @@ void Scene_Stage03::Update()
 				{
 					if (obj_enemy->GetWaitTime() > 0) {
 
-						obj_enemy->ReceiveDamage(15); //ダメージが入る
+						obj_enemy->ReceiveDamage(10); //軽減ダメージが入る
 
 					}
 					else {
@@ -268,6 +271,9 @@ void Scene_Stage03::Draw() const
 	//ステージ描画
 	DrawGraph(0, 0, stage, FALSE);
 
+	//HP描画
+	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+
 	//接触じゃんけんでない時
 	if (janken_flag == false)
 	{
@@ -289,7 +295,7 @@ void Scene_Stage03::Draw() const
 		Draw_Janken();
 	}
 
-	DrawString(640, 360, "Stage03", 0xffff);
+	//DrawString(640, 360, "Stage03", 0xffff);
 }
 
 //じゃんけん更新・内部処理
@@ -357,12 +363,12 @@ AbstractScene* Scene_Stage03::ChangeScene()
 #ifdef DEBUG_OFF_03
 
 	//敵のHP0
-	if (obj_enemy->GetHP() < 0) {
+	//if (obj_enemy->GetHP() < 0) {
 
-		//ゲームクリアシーンへ切り替え
-		return dynamic_cast<AbstractScene*> (new GameClearScene(4));
+	//	//ゲームクリアシーンへ切り替え
+	//	return dynamic_cast<AbstractScene*> (new GameClearScene(4));
 
-	}
+	//}
 
 	//プレイヤーのHPが0
 	if (obj_player->GetHP() < 0) {

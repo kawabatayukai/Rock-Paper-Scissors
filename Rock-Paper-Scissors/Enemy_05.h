@@ -26,6 +26,9 @@ private:
 	/**********************************************************/
 
 	int frame_count = 0;       //じゃん撃発射用
+
+	int Enemy_image;		   //敵画像用
+	int Enemy_jamp_image;	   //敵ジャンプ時画像用
 };
 
 
