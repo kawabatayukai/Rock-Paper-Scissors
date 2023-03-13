@@ -198,6 +198,15 @@
     <ClCompile Include="Jangeki_Base.cpp">
       <Filter>ソース ファイル\Jangeki</Filter>
     </ClCompile>
+    <ClCompile Include="Jangeki_Changespeed.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Jangeki_Spin.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Jangeki_Zigzag.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
     <ClCompile Include="Jangeki_reflection.cpp">
       <Filter>ソース ファイル\Jangeki\nakayoshi</Filter>
     </ClCompile>
@@ -319,6 +328,18 @@
     </ClInclude>
     <ClInclude Include="Jangeki_Base.h">
       <Filter>ソース ファイル\Jangeki</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug_Manager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_Changespeed.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_Spin.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_Zigzag.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Jangeki_reflection.h">
       <Filter>ソース ファイル\Jangeki\nakayoshi</Filter>
