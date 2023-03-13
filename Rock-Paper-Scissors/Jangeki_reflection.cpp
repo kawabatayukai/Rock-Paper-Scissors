@@ -14,7 +14,7 @@ Jangeki_Reflection::~Jangeki_Reflection()
 
 }
 
-void Jangeki_Reflection::Update_reflection() {
+void Jangeki_Reflection::Update_reflection()  {
 	int jan_count_reflection;
 
 	//じゃん撃配列をひとつずつ
@@ -40,14 +40,16 @@ void Jangeki_Reflection::Update_reflection() {
 	if (jan_count_reflection < JANGEKI_MAX && obj_reflection[jan_count_reflection] == nullptr)
 
 	{
+
+		
 		float radius = 35.5f;   //半径
 		float speed = -3.0f;     //スピード
 
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
-
-		if (reflectionFlg == true) obj_reflection[jan_count_reflection] = new Jangeki_Base(x, y, radius, speed, type);
-		reflectionFlg = false;
+		
+		/*if (reflectionFlg == true) obj_reflection[jan_count_reflection] = new Jangeki_Base(chara->GetX(), chara->GetY(), radius, speed, type);
+		reflectionFlg = false;*/
 	}
 	
 }
@@ -93,11 +95,13 @@ void Jangeki_Reflection::Delete_reflectionJangeki(int jan_count_reflection)
 	}
 }
 
-
+bool Jangeki_Reflection::GetFlg() {
+	return reflectionFlg;
+}
 
 void Jangeki_Reflection::trueFlg() {
 	reflectionFlg = true;
 }
-//void Jangeki_Reflection::falseFlg() {
-//	reflectionFlg = false;
-//}
+void Jangeki_Reflection::falseFlg() {
+	reflectionFlg = false;
+}

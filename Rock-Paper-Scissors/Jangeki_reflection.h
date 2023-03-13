@@ -2,7 +2,6 @@
 #include "Jangeki_Base.h"
 #include"DxLib.h"
 #include"CharaBase.h"
-
 class Jangeki_Reflection : public Jangeki_Base{
 
 public:
@@ -19,7 +18,9 @@ public:
 	void Init_reflectionJangeki();
 	void Delete_reflectionJangeki(int jan_count_reflection);
 
+	bool GetFlg();
 	void trueFlg();
+	void falseFlg();
 	
 
 	

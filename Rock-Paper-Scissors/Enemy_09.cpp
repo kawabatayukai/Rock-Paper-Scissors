@@ -125,6 +125,8 @@ void Enemy_09::Update_Jangeki()
 	
 		//¶¬
 		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+		if(reflection->GetFlg()==true)reflection->obj_reflection[jan_count]= new Jangeki_Base(x, y, radius, speed, type);
+		reflection->falseFlg();
 	}
 }
 void Enemy_09::MoveEnmey_09() {
@@ -190,4 +192,10 @@ void Enemy_09::MoveEnmey_09() {
 		}
 	}
 
+}
+int Enemy_09::GetX() {
+	return x;
+}
+int Enemy_09::GetY() {
+	return y;
 }
