@@ -346,12 +346,12 @@ AbstractScene* Scene_Stage06::ChangeScene()
 	//"Debug_Manager.h" の #define DEBUG_OFF_06 をコメントアウトすると開発モード
 #ifdef DEBUG_OFF_06
 
-	//敵のHPが0以下
-	if (obj_enemy->GetHP() < 0)
-	{
-		//ゲームクリアシーンへ切り替え
-		return dynamic_cast<AbstractScene*> (new GameClearScene(7));
-	}
+	////敵のHPが0以下
+	//if (obj_enemy->GetHP() < 0)
+	//{
+	//	//ゲームクリアシーンへ切り替え
+	//	return dynamic_cast<AbstractScene*> (new GameClearScene(7));
+	//}
 
 	////プレイヤーのHPが0以下
 	//if (obj_player->GetHP() < 0)

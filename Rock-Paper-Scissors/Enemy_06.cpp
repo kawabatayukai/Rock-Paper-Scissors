@@ -8,7 +8,7 @@ Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 {
 	speed = 7.0f;
 	dir = 1;
-	hp = 100;
+	hp = 200;
 
 	image = LoadGraph("images/tyokitest.png");
 
@@ -66,7 +66,7 @@ void Enemy_06::Update()
 		if (jump_cnt >= 3 && direction_flg == false)        //左を向いている時の処理
 		{
 
-			x = x - 4;      //1フレームの間に左へ進む距離
+			x = x - 7;      //1フレームの間に左へ進む距離
 			if (x < 100)    //目標座標に到着したかのチェック
 			{
 				jump_cnt = 0;          //ジャンプ回数のリセット
@@ -75,7 +75,7 @@ void Enemy_06::Update()
 		}
 		else if (jump_cnt >= 3 && direction_flg == true)    //右を向いている時の処理
 		{
-			x = x + 4;      //1フレームの間に右へ進む距離
+			x = x + 7;      //1フレームの間に右へ進む距離
 			if (x > 1180)   //目標座標に到着したかのチェック
 			{
 				jump_cnt = 0;           //ジャンプ回数のリセット
@@ -85,47 +85,100 @@ void Enemy_06::Update()
 
 		if (hp <= 150)
 		{
-			/*attack_pattern = 1;*/
+			attack_pattern = 1;
+			jump_cnt = 0;
+			jump_flg = false;
 		}
 	}
 	
 	if (attack_pattern == 1)
 	{
-		if (GetRand(30) == 3)  //乱数でjump_flgをtrueにする
+		if (teleport_Flg == true && direction_flg == false)
 		{
-			jump_flg = true;
+			x = 1180;
+			y = 450;
+			direction_flg = true;
+			teleport_Flg = false;
+		}
+		else if (teleport_Flg == true && direction_flg == true)
+		{
+			x = 100;
+			y = 450;
+			direction_flg = false;
+			teleport_Flg = false;
 		}
 
-		if (jump_flg == true && land_flg == true)    //jump_flgがジャンプの条件
+		if (direction_flg == true)
 		{
-			g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-			land_flg = false;  //地面についていない
-			jump_flg = false;  //ジャンプ用フラグのリセット
-		}
-				
-		//4回以上ジャンプした際の処理
-		if (direction_flg == false)        //左を向いている時の処理
-		{
-			x = x - 20;      //1フレームの間に左へ進む距離
-			if (x < 100)    //目標座標に到着したかのチェック
+			x = x - 5;
+
+			if (GetRand(1) == 1)  //乱数でjump_flgをtrueにする
 			{
-				direction_flg = true;  //向いている向きの反転
+				jump_flg = true;
+			}
+
+			if (jump_flg == true && land_flg == true)
+			{
+				g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+				land_flg = false;  //地面についていない
+				jump_flg = false;  //ジャンプ用フラグのリセット
 			}
 		}
-		else if (direction_flg == true)    //右を向いている時の処理
+		else if (direction_flg == false)
 		{
-			x = x + 20;      //1フレームの間に右へ進む距離
-			if (x > 1180)   //目標座標に到着したかのチェック
+			if (x <= 300)
 			{
-				direction_flg = false;  //向いている向きの反転
+				x = x + 5;
+			}
+
+			if (GetRand(1) == 1)  //乱数でjump_flgをtrueにする
+			{
+				jump_flg = true;
+			}
+
+			if (jump_flg == true && land_flg == true)
+			{
+				g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+				land_flg = false;  //地面についていない
+				jump_flg = false;  //ジャンプ用フラグのリセット
 			}
 		}
+		
+		//if (GetRand(30) == 3)  //乱数でjump_flgをtrueにする
+		//{
+		//	jump_flg = true;
+		//}
+
+		//if (jump_flg == true && land_flg == true)    //jump_flgがジャンプの条件
+		//{
+		//	g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+		//	land_flg = false;  //地面についていない
+		//	jump_flg = false;  //ジャンプ用フラグのリセット
+		//}
+		//		
+		////4回以上ジャンプした際の処理
+		//if (direction_flg == false)        //左を向いている時の処理
+		//{
+		//	x = x - 20;      //1フレームの間に左へ進む距離
+		//	if (x < 100)    //目標座標に到着したかのチェック
+		//	{
+		//		direction_flg = true;  //向いている向きの反転
+		//	}
+		//}
+		//else if (direction_flg == true)    //右を向いている時の処理
+		//{
+		//	x = x + 20;      //1フレームの間に右へ進む距離
+		//	if (x > 1180)   //目標座標に到着したかのチェック
+		//	{
+		//		direction_flg = false;  //向いている向きの反転
+		//	}
+		//}
 
 
-		/*if (hp <= 100)
+		if (hp <= 100)
 		{
-			attack_pattern = 2;
-		}*/
+			/*attack_pattern = 2;*/
+		}
 	}
 
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
