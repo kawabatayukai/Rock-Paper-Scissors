@@ -16,8 +16,8 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 	speed = 7.0f;
 	hp = 100;
 
-	//Œü‚«‚ğİ’èi¶j
-	dir = static_cast<int>(DIRECTION::LEFT);
+	//Œü‚«‚ğİ’èi‰Ej
+	dir = static_cast<int>(DIRECTION::RIGHT);//LEFT
 
 	//‰æ‘œ“Ç‚İ‚İ
 	image = LoadGraph("images/sd_body-1.png");
