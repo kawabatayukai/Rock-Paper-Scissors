@@ -79,6 +79,9 @@
     <Filter Include="ソース ファイル\Jangeki\bise">
       <UniqueIdentifier>{0225705f-57ca-4278-af2c-b05082ba30c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Jangeki\tamayose">
+      <UniqueIdentifier>{d315c432-ea81-43c0-91d3-c6daa18af80b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -198,11 +201,11 @@
     <ClCompile Include="Jangeki_Homing.cpp">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClCompile>
-    <ClCompile Include="Jangeki_tamayose.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Jangeki_Zigzag.cpp">
       <Filter>ソース ファイル\Jangeki\bise</Filter>
+    </ClCompile>
+    <ClCompile Include="Jangeki_Coming.cpp">
+      <Filter>ソース ファイル\Jangeki\tamayose</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -323,14 +326,14 @@
     <ClInclude Include="Jangeki_Homing.h">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClInclude>
-    <ClInclude Include="Jangeki_tamayose.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Debug_Manager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Jangeki_Zigzag.h">
       <Filter>ソース ファイル\Jangeki\bise</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_Coming.h">
+      <Filter>ソース ファイル\Jangeki\tamayose</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

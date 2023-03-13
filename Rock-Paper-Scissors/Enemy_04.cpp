@@ -2,6 +2,7 @@
 #include"DxLib.h"
 #include"Player.h"
 #include"Jangeki_Base.h"
+#include"Jangeki_Coming.h"
 #include <typeinfo>
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
@@ -122,6 +123,9 @@ void Enemy_04::Update_Jangeki()
 
 		obj_jangeki[jan_count]->Update();
 
+		//プレイヤーの座標をセットする
+		obj_jangeki[jan_count]->SetTargetLocation(player_x, player_y);
+
 		//画面外で削除する
 		if (obj_jangeki[jan_count]->CheckScreenOut() == true)
 		{
@@ -136,15 +140,16 @@ void Enemy_04::Update_Jangeki()
 	//配列の空要素
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
-		float radius = 50.0f;   //半径
-		float speed = -2.0f;     //スピード
+		float radius = 35.5f;   //半径
+		float speed = 5.0f;     //スピード
 		
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
 
 		//生成
-		if (frame_count % 60 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+		//if (frame_count % 60 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+		if (frame_count % 60 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 	}
 }
 
