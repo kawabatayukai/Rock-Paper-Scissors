@@ -9,7 +9,7 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 {
 
 	speed = 1.5f;
-	dir = 1;
+	dir = 1;//エネミーの向き
 	hp = 100;
 
 	enemyimage[0] = LoadGraph("images/stage03/stage03attack.png");
@@ -71,6 +71,8 @@ void Enemy_03::Update()
 	//HPが0以下だったらHPに0を代入
 	if (hp <= 0)hp = 0;
 
+	
+
 }
 	//if (x + (w / 2) == (1280 - 20))
 	//{
@@ -131,19 +133,44 @@ void Enemy_03::Draw() const
 	if (moveinfo[current].enemywaitTime > 0) {
 
 		//ガード時の画像描画
-		DrawRotaGraphF(x, y, 1, 0, enemyimage[1], TRUE);
+		DrawRotaGraphF(x, y, 1, 0, enemyimage[1], TRUE, dir == -1 ? 0 : 1);
 
 
 	}
 	//そうじゃないとき
 	else {
 		//攻撃時の画像描画
-		DrawRotaGraphF(x, y, 1, 0, enemyimage[0], TRUE);
+		DrawRotaGraphF(x, y, 1, 0, enemyimage[0], TRUE, dir == -1 ? 0 : 1);
 	}
 
 	//じゃん撃描画
 	Draw_Jangeki();
 
+
+	//プレイヤーがx < 640だったらエネミーの画像を反転させる
+
+	//if (x < 640) { //
+	//		
+
+	//	//エネミー停止時
+	//	if (moveinfo[current].enemywaitTime <= 0) {
+
+	//		//ガード時の画像描画
+	//		DrawTurnGraph(x, y, enemyimage[0], TRUE);
+
+
+	//	}
+
+	//	//エネミー停止時
+	//	if (moveinfo[current].enemywaitTime > 0) {
+
+	//		//ガード時の画像描画
+	//		DrawTurnGraph(x,y, enemyimage[1], TRUE);
+
+
+	//	}
+
+	//}
 
 	//テスト                                                      //赤色
 	if (moveinfo[current].enemywaitTime > 0) DrawFormatString((int)(x - 100), (int)(y - 100), GetColor(0,0,255), "防御力 UP↑", moveinfo[current].enemywaitTime);
@@ -180,7 +207,7 @@ void Enemy_03::Update_Jangeki()
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
 		float radius = 35.5f;   //半径
-		float speed = -3.0f;     //スピード
+		float speed = 3.0f * dir;     //スピード
 
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
@@ -247,4 +274,11 @@ void Enemy_03::Move_Pattern() {
 int Enemy_03::GetWaitTime()const {
 
 	return moveinfo[current].enemywaitTime;
+}
+
+//プレイヤーの座標を継承
+void Enemy_03::ChangeDir(float x)
+{
+	if (x < 640) dir = -1;
+	else dir = 1;
 }
