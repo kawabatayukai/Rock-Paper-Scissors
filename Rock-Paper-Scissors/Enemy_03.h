@@ -22,7 +22,7 @@ public:
 	~Enemy_03();                     //デストラクタ
 
 	void Update() override;          //更新
-	void Draw() const override;      //描画
+	void Draw() const override;    //描画
 
 	void Update_Jangeki() override;  //じゃん撃生成・更新
 
@@ -31,6 +31,8 @@ public:
 	int GetWaitTime()const;
 
 	void ChangeDir(float x);
+
+	void ChangeType(Jan_Type type);
 
 private:
 	/********************   ジャンプ関係   ********************/

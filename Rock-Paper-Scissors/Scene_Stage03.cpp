@@ -26,8 +26,8 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 		obj_player = new Player(10, 640);
 	}
 
-	//敵を生成
-	obj_enemy = new Enemy_03(950, 680, Jan_Type::SCISSORS);//敵の位置
+	//敵を生成							//敵の属性チョキ
+	obj_enemy = new Enemy_03(950, 680, Jan_Type::ROCK);//敵の位置
 
 	//床・壁の用意
 	Init_Floor(STAGE_03_FLOOR);
@@ -63,7 +63,8 @@ void Scene_Stage03::Update()
 		obj_player->Update();    // プレイヤー更新・操作可能
 		obj_enemy->Update();     //敵キャラ更新・内部処理
 		obj_enemy->ChangeDir(obj_player->GetX());//プレイヤーがx < 640だったらエネミーの弾の向きを変える
-
+		obj_enemy->ChangeType(obj_enemy->GetType());
+	
 
 
 		//敵とプレイヤーの当たり判定  　ここで"接触じゃんけん"
@@ -81,6 +82,7 @@ void Scene_Stage03::Update()
 			janken_flag = true;
 
 		}
+
 	}
 	else
 	{
@@ -281,6 +283,7 @@ void Scene_Stage03::Draw() const
 		obj_player->Draw();  //プレイヤー描画
 		obj_enemy->Draw();   //敵キャラ描画
 
+	
 		//床・壁描画
 		for (int i = 0; i < STAGE_03_FLOOR; i++)
 		{

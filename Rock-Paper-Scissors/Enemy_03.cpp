@@ -143,6 +143,23 @@ void Enemy_03::Draw() const
 		DrawRotaGraphF(x, y, 1, 0, enemyimage[0], TRUE, dir == -1 ? 0 : 1);
 	}
 
+	//////属性変更///////
+	//エネミー停止時
+	if (moveinfo[current].enemywaitTime > 0) {
+
+		//ガード時の属性描画
+		DrawRotaGraph(810, 60, 0.5, 0, typeImage[1], TRUE);
+
+
+	}
+	//そうじゃないとき
+	else {
+		//攻撃時の属性描画
+		DrawRotaGraph(950, 60, 0.5, 0, typeImage[0], TRUE);
+	}
+
+
+
 	//じゃん撃描画
 	Draw_Jangeki();
 
@@ -206,11 +223,11 @@ void Enemy_03::Update_Jangeki()
 	//配列の空要素
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
-		float radius = 35.5f;   //半径
-		float speed = 3.0f * dir;     //スピード
+		float radius = 40.0f;   //半径 //35.5f
+		float speed = 5.0f * dir;     //スピード//3.0
 
 		//ランダムな属性を生成
-		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
+		Jan_Type type = static_cast<Jan_Type>(GetRand(2));//2
 
 
 		//生成
@@ -281,4 +298,17 @@ void Enemy_03::ChangeDir(float x)
 {
 	if (x < 640) dir = -1;
 	else dir = 1;
+}
+
+//プレイヤーの属性変更
+void Enemy_03::ChangeType(Jan_Type type) {
+
+	if (moveinfo[current].enemywaitTime > 0) {
+
+		Jan_Type::ROCK;
+		
+	}
+
+	else Jan_Type::SCISSORS;
+
 }
