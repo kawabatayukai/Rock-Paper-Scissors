@@ -1,6 +1,18 @@
 #pragma once
 #include"EnemyBase.h"
 
+//行動パターン02用
+struct Pattern_02 {
+
+	int moveflg; //0:動かない,1:動く
+	float location_x; //目指している座標x
+	float location_y; //目指している座標y
+	float waitFlameTime; //待ち時間
+	int next_index; //次配列のパターンの番号
+
+};
+
+
 //2ステージ　敵キャラ
 class Enemy_02 : public EnemyBase
 {
@@ -17,6 +29,8 @@ public:
 
 	int Get_OldY();                   //old_yの取得関数
 	int Get_Y();                      //yの取得
+
+	void Move_Pattern();
 private:
 	/********************   ジャンプ関係   ********************/
 
@@ -36,8 +50,11 @@ private:
 	int  jump_cnt =0;            //ジャンプカウント
 	bool direction_flg = false;   //左右反転フラグ      左向き:true   
 	/**********************************************************/
-
+	int waitTime = 0;			//待ち時間用変数
 	int frame_count = 0;       //じゃん撃発射用
+	Pattern_02 moveinfo[20]; //行動パターン20種
+	short current = 0; //現在のパターン配列添字
+	
 };
 
 
