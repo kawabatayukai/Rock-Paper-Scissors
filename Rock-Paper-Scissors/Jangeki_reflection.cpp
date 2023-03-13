@@ -1,8 +1,8 @@
 #include "Jangeki_Reflection.h"
-
+#include<math.h>
 //コンストラクタ
 Jangeki_Reflection::Jangeki_Reflection(float x, float y, float r, float speed, Jan_Type type)
-	:Jangeki_Base(x, y, r, speed, type)       // ←基底クラスのコンストラクタを呼ぶ
+	:Jangeki_Base(x, y, r, speed, type)    // ←基底クラスのコンストラクタを呼ぶ
 {
 	obj_reflection = nullptr;
 	
@@ -93,10 +93,11 @@ void Jangeki_Reflection::Delete_reflectionJangeki(int jan_count_reflection)
 	}
 }
 
+
+
 void Jangeki_Reflection::trueFlg() {
 	reflectionFlg = true;
-
 }
-void Jangeki_Reflection::falseFlg() {
-	reflectionFlg = false;
-}
+//void Jangeki_Reflection::falseFlg() {
+//	reflectionFlg = false;
+//}

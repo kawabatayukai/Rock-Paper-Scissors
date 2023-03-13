@@ -30,7 +30,10 @@ private:
 	Enemy_09* obj_enemy;            //“G
 	Jangeki_Reflection* reflection;
 
+
 	bool janken_flag = false;       //ÚG‚¶‚á‚ñ‚¯‚ñƒtƒ‰ƒO
+
+	bool Rflg = false; //”½Ë‚¶‚á‚ñŒ‚”»•Ê—p
 
 
 

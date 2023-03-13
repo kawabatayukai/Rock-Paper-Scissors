@@ -3,7 +3,7 @@
 #include"Player.h"
 #include"Jangeki_Base.h"
 #include"Scene_Stage09.h"
-#include"Jangeki_reflection.h"
+
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_09::Enemy_09(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
@@ -11,6 +11,8 @@ Enemy_09::Enemy_09(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	speed = 7.0f;
 	dir = 1;
 	hp = 100;
+
+	if (hp <= 0)hp = 0;
 
 	image = LoadGraph("images/Stage9.png");
 	
