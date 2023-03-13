@@ -21,8 +21,9 @@ Jangeki_Base::Jangeki_Base(float x, float y, float r, float speed, double angle,
 	//画像読み込み
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image);
 
-	this->speed = speed * cosf(static_cast<float>(angle));
-	speed_y = speed * sinf(static_cast<float>(angle));
+	//x,y方向のスピードを決める
+	this->speed = fabsf(speed) * cosf(static_cast<float>(angle));
+	speed_y     = fabsf(speed) * sinf(static_cast<float>(angle));
 }
 
 //デストラクタ

@@ -4,6 +4,9 @@
 #include"Scene_GameOver.h"
 #include"Scene_GameClear.h"
 
+//デバッグモード
+#include"Debug_Manager.h"
+
 //コンストラクタ
 Scene_Stage04::Scene_Stage04(const Player* player)
 {
@@ -330,6 +333,9 @@ void Scene_Stage04::Draw_Janken() const
 //シーンの変更
 AbstractScene* Scene_Stage04::ChangeScene()
 {
+	//"Debug_Manager.h" の #define DEBUG_OFF_04 をコメントアウトすると開発モード
+#ifdef DEBUG_OFF_04
+
 	//敵のHPが0以下
 	if (obj_enemy->GetHP() < 0)
 	{
@@ -343,6 +349,8 @@ AbstractScene* Scene_Stage04::ChangeScene()
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(4));
 	}
+
+#endif // DEBUG_OFF_04
 
 	return this;
 }
