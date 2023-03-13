@@ -59,7 +59,7 @@ void Enemy_02::Update()
 	}
 	
 	//左に行く
-	if (jump_cnt >= 1 && direction_flg == false)
+	if (jump_cnt >= 0 && direction_flg == false)
 	{
 
 		x = x - 5;
@@ -73,7 +73,7 @@ void Enemy_02::Update()
 		
 		if (land_flg == true && GetRand(1) == 1)    //GetRand(30) == 3　のところがジャンプの条件
 		{
-			g_add = -25.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+			g_add = -30.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 			land_flg = false;  //地面についていない
 			
 		}
@@ -81,7 +81,7 @@ void Enemy_02::Update()
 		
 	}
 	//右に行く
-	else if (jump_cnt >= 1 && direction_flg == true)
+	else if (jump_cnt >= 0 && direction_flg == true)
 	{
 		x = x + 5;
 		if (x > 1180)
@@ -92,16 +92,16 @@ void Enemy_02::Update()
 		}
 		if (land_flg == true && GetRand(1) == 1)    //GetRand(30) == 3　のところがジャンプの条件
 		{
-			g_add = -25.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+			g_add = -30.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 			land_flg = false;  //地面についていない
 
 		}
-		waitTime++;
-		if (moveinfo[current].waitFlameTime <= waitTime)
+		//waitTime++;
+		/*if (moveinfo[current].waitFlameTime <= waitTime)
 		{
 			waitTime = 0;
 			current = moveinfo[current].next_index;
-		}
+		}*/
 	/*switch (moveinfo[current].moveflg)
 		{
 		case 0:
