@@ -5,6 +5,7 @@
 #include "Scene_GameOver.h"
 #include "Stage_Base.h"
 
+
 //デバッグモード
 #include"Debug_Manager.h"
 
@@ -33,9 +34,9 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	Init_Floor(STAGE_03_FLOOR);
 
 	//一つずつ生成  STAGE_03_FLOOR 個分
-	obj_floor[0] = new Floor(0, 700, 1280, 20, GetColor(240,230,140));      //床
-	obj_floor[1] = new Floor(0, 0, 20, 1720,GetColor(240, 230, 140));        //壁（左）
-	obj_floor[2] = new Floor(1260, 0, 20, 1720,GetColor(240, 230, 140));     //壁（右）
+	obj_floor[0] = new Floor(0, 700, 1280, 20, GetColor(240, 230, 140));      //床
+	obj_floor[1] = new Floor(0, 0, 20, 1720, GetColor(240, 230, 140));        //壁（左）
+	obj_floor[2] = new Floor(1260, 0, 20, 1720, GetColor(240, 230, 140));     //壁（右）
 
 	//右から順に
 	obj_floor[3] = new Floor(970, 300, 130, 40, GetColor(193, 107, 68));//足場1
@@ -43,7 +44,7 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	obj_floor[5] = new Floor(585, 300, 130, 40, GetColor(193, 107, 68));//足場3//100
 	obj_floor[6] = new Floor(400, 230, 130, 40, GetColor(193, 107, 68));//足場4//130
 	obj_floor[7] = new Floor(220, 300, 130, 40, GetColor(193, 107, 68));//足場5//130
-	obj_floor[8] = new Floor(20,  400, 90, 40, GetColor(193, 107, 68));//足場6//100
+	obj_floor[8] = new Floor(20, 400, 90, 40, GetColor(193, 107, 68));//足場6//100
 	obj_floor[9] = new Floor(120, 550, 90, 40, GetColor(193, 107, 68));//足場7//130
 	//obj_floor[10] = new Floor(15, 250, 120, 20);//足場8//130
 
@@ -64,7 +65,7 @@ void Scene_Stage03::Update()
 		obj_enemy->Update();     //敵キャラ更新・内部処理
 		obj_enemy->ChangeDir(obj_player->GetX());//プレイヤーがx < 640だったらエネミーの弾の向きを変える
 		obj_enemy->ChangeType(obj_enemy->GetType());
-	
+
 
 
 		//敵とプレイヤーの当たり判定  　ここで"接触じゃんけん"
@@ -72,7 +73,7 @@ void Scene_Stage03::Update()
 		{
 			//敵が出す手をランダムに決める　　　（ランダムなint型の値(0～2)を Jan_Type型に変換）
 			Jan_Type enemy_janken = static_cast<Jan_Type> (GetRand(2));
-			
+
 
 			//じゃんけん用オブジェクト生成
 			obj_janken = new Janken(enemy_janken);
@@ -181,13 +182,13 @@ void Scene_Stage03::Update()
 				{
 
 					//停止時ダメージ軽減
-					if (obj_enemy-> GetWaitTime() > 0) {
+					if (obj_enemy->GetWaitTime() > 0) {
 
 						obj_enemy->ReceiveDamage(10);     //軽減ダメージが入る
 
 					}
-					else{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					else {
+						obj_enemy->ReceiveDamage(30);     //ダメージが入る
 
 					}
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
@@ -202,7 +203,7 @@ void Scene_Stage03::Update()
 				if (jangeki_type == Jan_Type::ROCK)
 				{
 
-					if(obj_enemy->GetWaitTime() > 0){
+					if (obj_enemy->GetWaitTime() > 0) {
 
 						obj_enemy->ReceiveDamage(10);     //軽減ダメージが入る
 					}
@@ -229,6 +230,7 @@ void Scene_Stage03::Update()
 						obj_enemy->ReceiveDamage(30); //ダメージが入る
 
 					}
+					
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -250,8 +252,15 @@ void Scene_Stage03::Update()
 		//じゃん撃との当たり判定
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
+			//えねみーのHPが30以下の場合40ダメージ食らう
+			if (obj_enemy->GetHP() <= 50) {
+
+				obj_player->ReceiveDamage(40);
+			}
+
+			//それ以外
 			//ダメージを受ける（プレイヤー）
-			obj_player->ReceiveDamage(30);
+			else obj_player->ReceiveDamage(30);
 
 			//あたったじゃん撃を削除
 			obj_enemy->DeleteJangeki(i);
@@ -283,7 +292,7 @@ void Scene_Stage03::Draw() const
 		obj_player->Draw();  //プレイヤー描画
 		obj_enemy->Draw();   //敵キャラ描画
 
-	
+
 		//床・壁描画
 		for (int i = 0; i < STAGE_03_FLOOR; i++)
 		{
@@ -384,3 +393,4 @@ AbstractScene* Scene_Stage03::ChangeScene()
 
 	return this;
 }
+

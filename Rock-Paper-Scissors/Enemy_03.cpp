@@ -4,11 +4,12 @@
 #include"Jangeki_Base.h"
 #include <typeinfo>
 
+
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
 
-	speed = 1.5f;
+	speed = 2.5f;//1.5f
 	dir = 1;//エネミーの向き
 	hp = 100;
 
@@ -71,7 +72,6 @@ void Enemy_03::Update()
 	//HPが0以下だったらHPに0を代入
 	if (hp <= 0)hp = 0;
 
-	
 
 }
 	//if (x + (w / 2) == (1280 - 20))
@@ -145,18 +145,18 @@ void Enemy_03::Draw() const
 
 	//////属性変更///////
 	//エネミー停止時
-	if (moveinfo[current].enemywaitTime > 0) {
+	//if (moveinfo[current].enemywaitTime > 0) {
 
-		//ガード時の属性描画
-		DrawRotaGraph(810, 60, 0.5, 0, typeImage[1], TRUE);
+	//	//ガード時の属性描画
+	//	DrawRotaGraph(810, 60, 0.5, 0, typeImage[1], TRUE);
 
 
-	}
-	//そうじゃないとき
-	else {
-		//攻撃時の属性描画
-		DrawRotaGraph(950, 60, 0.5, 0, typeImage[0], TRUE);
-	}
+	//}
+	////そうじゃないとき
+	//else {
+	//	//攻撃時の属性描画
+	//	DrawRotaGraph(950, 60, 0.5, 0, typeImage[0], TRUE);
+	//}
 
 
 
@@ -191,8 +191,10 @@ void Enemy_03::Draw() const
 
 	//テスト                                                      //赤色
 	if (moveinfo[current].enemywaitTime > 0) DrawFormatString((int)(x - 100), (int)(y - 100), GetColor(0,0,255), "防御力 UP↑", moveinfo[current].enemywaitTime);
+	
+	if (hp <= 50) DrawFormatString((int)(x - 100), (int)(y - 80), GetColor(255, 0, 0), "攻撃力 UP↑", hp);
 
-	if(hp <= 0)DrawString((int)(x - 100), (int)(y - 100), "death!", 0xff0000);
+	if(hp <= 0)DrawString((int)(x - 100), (int)(y - 120), "death!", 0xff0000);
 
 }
 
@@ -224,7 +226,7 @@ void Enemy_03::Update_Jangeki()
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
 		float radius = 40.0f;   //半径 //35.5f
-		float speed = 5.0f * dir;     //スピード//3.0
+		float speed = 6.0f * dir;     //スピード//3.0
 
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));//2
@@ -292,6 +294,8 @@ int Enemy_03::GetWaitTime()const {
 
 	return moveinfo[current].enemywaitTime;
 }
+
+
 
 //プレイヤーの座標を継承
 void Enemy_03::ChangeDir(float x)
