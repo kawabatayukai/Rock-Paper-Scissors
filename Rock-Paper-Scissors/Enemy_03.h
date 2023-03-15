@@ -32,7 +32,7 @@ public:
 
 	void ChangeDir(float x);
 
-	void ChangeType(Jan_Type type);
+	void ChangeType();
 
 private:
 	/********************   ƒWƒƒƒ“ƒvŠÖŒW   ********************/

@@ -305,7 +305,7 @@ void Enemy_03::ChangeDir(float x)
 }
 
 //プレイヤーの属性変更
-void Enemy_03::ChangeType(Jan_Type type) {
+void Enemy_03::ChangeType() {
 
 	if (moveinfo[current].enemywaitTime > 0) {
 
