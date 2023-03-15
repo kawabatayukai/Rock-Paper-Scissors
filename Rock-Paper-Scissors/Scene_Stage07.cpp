@@ -54,53 +54,18 @@ Scene_Stage07::~Scene_Stage07()
 //更新
 void Scene_Stage07::Update()
 {
-	////接触じゃんけんでない時
-	//if (janken_flag == false)
-	//{
-	//	obj_player->Update();    // プレイヤー更新・操作可能
-	//	obj_enemy->Update();     //敵キャラ更新・内部処理
+	//接触じゃんけん開始前
+	if (GetJanState() == Jan_State::BEFORE)
+	{
+		obj_player->Update();    // プレイヤー更新・操作可能
+		obj_enemy->Update();     //敵キャラ更新・内部処理
 
-	//	//プレイヤーの座標を取得
-	//	obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
-
-
-	//	//敵とプレイヤーの当たり判定  　ここで"接触じゃんけん"
-	//	if (obj_enemy->Hit_Character(obj_player) == true)
-	//	{
-	//		//敵が出す手をランダムに決める　　　（ランダムなint型の値(0～2)を Jan_Type型に変換）
-	//		Jan_Type enemy_janken = static_cast<Jan_Type> (GetRand(2));
-
-	//		//じゃんけん用オブジェクト生成
-	//		obj_janken = new Janken(enemy_janken);
-
-
-	//		//接触じゃんけん開始
-	//		janken_flag = true;
-
-	//	}
-	//}
-	//else
-	//{
-	//	//接触時じゃんけんの処理を実行
-	//	Update_Janken();
-	//}
-
-	//if (GetJanStartFlag() == false)
-	//{
-	//	obj_player->Update();    // プレイヤー更新・操作可能
-	//	obj_enemy->Update();     //敵キャラ更新・内部処理
-
-	//	//プレイヤーの座標を取得
-	//	obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
-	//}
-
-
-	//テスト　じゃんけん無視
-	obj_player->Update();    // プレイヤー更新・操作可能
-	obj_enemy->Update();     //敵キャラ更新・内部処理
-
-	//プレイヤーの座標を取得
-	obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
+		//プレイヤーの座標を取得
+		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
+	}
+	
+	//接触じゃんけん処理
+	Touch_Janken(obj_enemy, this);
 
 
 	//playerのじゃん撃をとってくる
@@ -259,8 +224,8 @@ void Scene_Stage07::Draw() const
 	//背景
 	DrawGraph(0, 0, image_back, TRUE);
 
-	//接触じゃんけんでない時
-	if (janken_flag == false)
+	//接触じゃんけん開始前
+	if (GetJanState() == Jan_State::BEFORE)
 	{
 
 		obj_player->Draw();  //プレイヤー描画
@@ -287,93 +252,11 @@ void Scene_Stage07::Draw() const
 		SetDrawBlendMode(DX_BLENDMODE_ADD_X4, 150);
 		DrawGraph(0, 0, image_spotlight, TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-
 	}
 	else
 	{
 		//接触時じゃんけん描画
 		Draw_Janken();
-	}
-
-	//if (GetJanStartFlag() == false)
-	//{
-	//	obj_player->Draw();  //プレイヤー描画
-	//	obj_enemy->Draw();   //敵キャラ描画
-
-	//	//床・壁描画
-	//	for (int i = 0; i < STAGE_07_FLOOR; i++)
-	//	{
-	//		if (obj_floor[i] == nullptr) break;
-	//		obj_floor[i]->Draw();
-	//	}
-
-	//	//コーナーポスト
-	//	DrawBox(220, 440, (220 + 30), (440 + 150), 0x007cfe, TRUE);
-	//	DrawBox(1030, 440, (1030 + 30), (440 + 150), 0x007cfe, TRUE);
-
-
-	//	//ロープ
-	//	DrawBox(250, 450, (250 + 780), (450 + 5), 0x000000, TRUE);     //トップロープ
-	//	DrawBox(250, 500, (250 + 780), (500 + 5), 0x000000, TRUE);     //セカンドロープ
-	//	DrawBox(250, 550, (250 + 780), (550 + 5), 0x000000, TRUE);     //サードロープ
-
-	//	//スポットライト描画
-	//	SetDrawBlendMode(DX_BLENDMODE_ADD_X4, 150);
-	//	DrawGraph(0, 0, image_spotlight, TRUE);
-	//	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	//}
-
-}
-
-//じゃんけん更新・内部処理
-void Scene_Stage07::Update_Janken()
-{
-	//　ここは改良したほうがいい
-
-
-	obj_janken->Update();
-
-	//Aボタンが押されたとき 
-	if (KeyManager::OnPadClicked(PAD_INPUT_A) == true)
-	{
-		//結果を取得
-		switch (obj_janken->GetResult())
-		{
-		case Jan_Result::LOSE:    //負け
-
-			obj_player->SetX(640);   //ずらす
-			janken_flag = false;
-
-			obj_enemy->Init_Jangeki();
-
-			delete obj_janken;
-			break;
-
-		case Jan_Result::WIN:     //勝ち
-
-			obj_player->SetX(640);   //ずらす
-			janken_flag = false;
-
-			obj_enemy->Init_Jangeki();
-
-			delete obj_janken;
-			break;
-
-		case Jan_Result::ONEMORE: //あいこ
-
-			janken_flag = false;
-
-			obj_enemy->Init_Jangeki();
-
-			delete obj_janken;
-			break;
-
-		case Jan_Result::_ERROR:  //まだじゃんけん中
-			break;
-
-		default:
-			break;
-		}
 	}
 }
 
@@ -382,6 +265,22 @@ void Scene_Stage07::Draw_Janken() const
 {
 	obj_janken->Draw();
 }
+
+
+//じゃんけん終了後の挙動（プレイヤー勝ち）
+void Scene_Stage07::AfterJanken_WIN()
+{
+	obj_player->SetX(100);
+	obj_enemy->SetX(1100);
+}
+
+//じゃんけん終了後の挙動（プレイヤー負け）
+void Scene_Stage07::AfterJanken_LOSE()
+{
+	obj_player->SetX(100);
+	obj_enemy->SetX(1100);
+}
+
 
 //シーンの変更
 AbstractScene* Scene_Stage07::ChangeScene()
@@ -399,7 +298,7 @@ AbstractScene* Scene_Stage07::ChangeScene()
 	if (obj_player->GetHP() < 0)
 	{
 		//ゲームオーバーシーンへ切り替え
-		return dynamic_cast<AbstractScene*> (new GameOverScene());
+		return dynamic_cast<AbstractScene*> (new GameOverScene(7));
 	}
 
 #endif // DEBUG_OFF_07

@@ -1,4 +1,5 @@
 #include "Stage_Base.h"
+#include"KeyManager.h"
 #include"DxLib.h"
 
 //衝突判定なし時間   5秒
@@ -16,7 +17,7 @@ Stage_Base::~Stage_Base()
 }
 
 //UI描画
-void Stage_Base::DrawUI(Jan_Type type ,int hp) const
+void Stage_Base::DrawUI(Jan_Type type, int hp) const
 {
 	switch (type)
 	{
@@ -97,27 +98,123 @@ Jan_Result Stage_Base::Get_JankenResult(Jan_Type player, Jan_Type enemy)
 
 
 
-//敵とプレイヤーの当たり判定→接触じゃんけん処理
-void Stage_Base::Touch_Janken(const EnemyBase* enemy)
+//敵とプレイヤーの当たり判定→接触じゃんけん処理    敵へのポインタ、"this" を引数に
+void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr)
 {
-	if (j_start_flag == false)
+	//じゃんけん開始前 
+	if (j_state == Jan_State::BEFORE)
 	{
 		//敵とプレイヤーが接触
-
-		if (enemy->Hit_Character(obj_player) == true)
+		if (enemy->Hit_Character(obj_player) == true && nhit_time == 0)
 		{
-
 			//じゃんけん開始
-			j_start_flag = true;
+			j_state = Jan_State::PROGRESS;
+
+			//敵が出す手をランダムに決める　　　（ランダムなint型の値(0～2)を Jan_Type型に変換）
+			Jan_Type enemy_janken = static_cast<Jan_Type> (GetRand(2));
+
+			//じゃんけんオブジェクト生成
+			obj_janken = new Janken(enemy_janken);
 		}
 
-
-		//衝突判定なし時間
-		if (--nhit_time < 0) nhit_time = 0;
 	}
-	else
+	else if (j_state == Jan_State::PROGRESS)
 	{
+		//じゃんけん中
+		obj_janken->Update();
 
+		// 結果が _ERROR(じゃんけん中)でないとき、じゃんけん終了
+		if (obj_janken->GetResult() != Jan_Result::_ERROR)
+		{
+			j_state = Jan_State::AFTER;
+		}
 	}
+	else if (j_state == Jan_State::AFTER)
+	{
+		//Aボタンが押されたとき 
+		if (KeyManager::OnPadClicked(PAD_INPUT_A) == true)
+		{
+
+			//プレイヤーの座標を初期値に
+			obj_player->SetX(640);
+
+			//じゃんけん終了
+			switch (obj_janken->GetResult())
+			{
+
+			case Jan_Result::LOSE:    //負け
+
+				//オーバーライドされたAfterJanken_LOSE()を呼び出す
+				stage_ptr->AfterJanken_LOSE();
+
+				//じゃん撃を初期化する
+				enemy->Init_Jangeki();
+
+				delete obj_janken;
+				//あたり判定なし時間をセット
+				nhit_time = NOT_COLLISION_TIME;
+
+				//開始前にリセット
+				j_state = Jan_State::BEFORE;
+				break;
+
+
+			case Jan_Result::WIN:     //勝ち
+
+				//オーバーライドされたAfterJanken_WIN()を呼び出す
+				stage_ptr->AfterJanken_WIN();
+
+				//じゃん撃を初期化する
+				enemy->Init_Jangeki();
+
+				delete obj_janken;
+				//あたり判定なし時間をセット
+				nhit_time = NOT_COLLISION_TIME;
+
+				//開始前にリセット
+				j_state = Jan_State::BEFORE;
+
+				break;
+
+
+			case Jan_Result::ONEMORE: //あいこ
+
+				//じゃん撃を初期化する
+				enemy->Init_Jangeki();
+
+				delete obj_janken;
+
+				//じゃんけん開始
+				j_state = Jan_State::PROGRESS;
+
+				//じゃんけんオブジェクト生成
+				obj_janken = new Janken(static_cast<Jan_Type> (GetRand(2)));
+				break;
+
+			default:
+
+				delete obj_janken;
+				break;
+			}
+
+
+
+		}
+	}
+	else {}
+
+	//衝突判定なし時間
+	if (--nhit_time < 0) nhit_time = 0;
+}
+
+//じゃんけん終了後の挙動（プレイヤー勝ち）
+void Stage_Base::AfterJanken_WIN()
+{
+
+}
+
+//じゃんけん終了後の挙動（プレイヤー負け）
+void Stage_Base::AfterJanken_LOSE()
+{
 
 }

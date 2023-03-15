@@ -28,10 +28,14 @@ public:
 	//"接触時じゃんけん"処理   player(引数１番目　の勝敗結果を返す)
 	Jan_Result Get_JankenResult(Jan_Type player, Jan_Type enemy);
 
-	//敵とプレイヤーの当たり判定→接触じゃんけん処理
-	void Touch_Janken(const EnemyBase* enemy);
-	//じゃんけん開始フラグ取得
-	bool GetJanStartFlag() const { return j_start_flag; }
+	//敵とプレイヤーの当たり判定→接触じゃんけん処理    敵へのポインタ、"this" を引数に
+	void Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr);
+
+	virtual void AfterJanken_WIN();        //じゃんけん終了後の挙動（プレイヤー勝ち）
+	virtual void AfterJanken_LOSE();       //じゃんけん終了後の挙動（プレイヤー負け）
+
+	//じゃんけんの状態取得
+	Jan_State GetJanState() const { return j_state; }
 
 protected:
 	Player* obj_player = nullptr;             //プレイヤー
@@ -41,6 +45,7 @@ protected:
 
 private:
 	short nhit_time = 0;                      //衝突判定なし時間
-	bool j_start_flag = false;                //じゃんけん開始フラグ
+
+	Jan_State j_state = Jan_State::BEFORE;    //じゃんけんの状態
 };
 
