@@ -9,7 +9,7 @@
 Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
 
-	speed = 2.5f;//1.5f
+	speed = 1.85f;//1.5f
 	dir = 1;//エネミーの向き
 	hp = 100;
 
@@ -48,6 +48,15 @@ void Enemy_03::Update()
 {
 	//じゃん撃更新・生成
 	Update_Jangeki();
+
+	//属性変更
+	if (moveinfo[current].enemywaitTime > 0) {
+
+		e_type = Jan_Type::ROCK;
+
+	}
+	//上記の属性変更以外
+	else e_type = Jan_Type::SCISSORS;
 
 	//ステ03パターン用関数
 	switch (moveinfo[current].moveflg)
@@ -302,17 +311,4 @@ void Enemy_03::ChangeDir(float x)
 {
 	if (x < 640) dir = -1;
 	else dir = 1;
-}
-
-//プレイヤーの属性変更
-void Enemy_03::ChangeType() {
-
-	if (moveinfo[current].enemywaitTime > 0) {
-
-		Jan_Type::ROCK;
-		
-	}
-
-	else Jan_Type::SCISSORS;
-
 }

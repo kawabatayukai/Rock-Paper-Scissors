@@ -64,7 +64,6 @@ void Scene_Stage03::Update()
 		obj_player->Update();    // プレイヤー更新・操作可能
 		obj_enemy->Update();     //敵キャラ更新・内部処理
 		obj_enemy->ChangeDir(obj_player->GetX());//プレイヤーがx < 640だったらエネミーの弾の向きを変える
-		obj_enemy->ChangeType(obj_enemy->GetType ());
 
 
 		//敵とプレイヤーの当たり判定  　ここで"接触じゃんけん"
@@ -183,7 +182,7 @@ void Scene_Stage03::Update()
 					//停止時ダメージ軽減
 					if (obj_enemy->GetWaitTime() > 0) {
 
-						obj_enemy->ReceiveDamage(10);     //軽減ダメージが入る
+						obj_enemy->ReceiveDamage(15);     //軽減ダメージが入る
 
 					}
 					else {
@@ -204,7 +203,7 @@ void Scene_Stage03::Update()
 
 					if (obj_enemy->GetWaitTime() > 0) {
 
-						obj_enemy->ReceiveDamage(10);     //軽減ダメージが入る
+						obj_enemy->ReceiveDamage(15);     //軽減ダメージが入る
 					}
 					else {
 						obj_enemy->ReceiveDamage(30);     //ダメージが入る
@@ -221,7 +220,7 @@ void Scene_Stage03::Update()
 				{
 					if (obj_enemy->GetWaitTime() > 0) {
 
-						obj_enemy->ReceiveDamage(10); //軽減ダメージが入る
+						obj_enemy->ReceiveDamage(15); //軽減ダメージが入る
 
 					}
 					else {
@@ -251,14 +250,14 @@ void Scene_Stage03::Update()
 		//じゃん撃との当たり判定
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
-			//えねみーのHPが30以下の場合40ダメージ食らう
+			//エネミーのHPが30以下の場合40ダメージ食らう
 			if (obj_enemy->GetHP() <= 50) {
 
 				obj_player->ReceiveDamage(40);
 			}
 
 			//それ以外
-			//ダメージを受ける（プレイヤー）
+			//通常時のダメージを受ける（プレイヤー）
 			else obj_player->ReceiveDamage(30);
 
 			//あたったじゃん撃を削除
