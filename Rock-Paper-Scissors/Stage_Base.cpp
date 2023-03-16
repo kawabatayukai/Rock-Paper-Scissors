@@ -211,11 +211,11 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr)
 //じゃんけん終了後の挙動（プレイヤー勝ち）
 void Stage_Base::AfterJanken_WIN()
 {
-
+	obj_player->SetX(100);
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）
 void Stage_Base::AfterJanken_LOSE()
 {
-
+	obj_player->SetX(100);
 }
