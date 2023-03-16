@@ -97,26 +97,57 @@ void Enemy_06::Update()
 		{
 			x = 1180;
 			y = 450;
-			direction_flg = true;
+			direction_flg = false;
 			teleport_Flg = false;
+			P1_side = false;
+			jump_cnt = 0;
 		}
 		else if (teleport_Flg == true && direction_flg == true)
 		{
 			x = 100;
 			y = 450;
-			direction_flg = false;
+			direction_flg = true;
 			teleport_Flg = false;
+			P1_side = true;
+			jump_cnt = 0;
 		}
 
-		if (direction_flg == true)
-		{
-			x = x - 5;
 
-			if (GetRand(1) == 1)  //乱数でjump_flgをtrueにする
+
+		if (P1_side == false)
+		{
+			//左の足場へジャンプ
+			if (x >= 930 && direction_flg == true)
 			{
+				x = x - 6;
+			}
+			else if (x <= 1180 && direction_flg == true)
+			{
+				direction_flg = false;
 				jump_flg = true;
+				jump_cnt++;
 			}
 
+			//右の足場へジャンプ
+			if (x <= 1180 && direction_flg == false)
+			{
+				x = x + 6;
+			}
+			else if (x >= 930 && direction_flg == false)
+			{
+				direction_flg = true;
+				jump_flg = true;
+				jump_cnt++;
+			}
+
+			//瞬間移動
+			if (jump_cnt == 5)
+			{
+				teleport_Flg = true;
+				direction_flg = true;
+			}
+
+			//ジャンプ処理
 			if (jump_flg == true && land_flg == true)
 			{
 				g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
@@ -124,18 +155,43 @@ void Enemy_06::Update()
 				jump_flg = false;  //ジャンプ用フラグのリセット
 			}
 		}
-		else if (direction_flg == false)
+
+
+
+		else if (P1_side == true)
 		{
-			if (x <= 300)
+			//右の足場へジャンプ
+			if (x <= 350 && direction_flg == false)
 			{
-				x = x + 5;
+				x = x + 6;
 			}
-
-			if (GetRand(1) == 1)  //乱数でjump_flgをtrueにする
+			else if(x >= 100 && direction_flg == false)
 			{
+				direction_flg = true;
 				jump_flg = true;
+				jump_cnt++;
 			}
 
+			//左の足場へジャンプ
+			if (x >= 100 && direction_flg == true)
+			{
+				x = x - 5;
+			}
+			else if(x <= 350 && direction_flg == true)
+			{
+				direction_flg = false;
+				jump_flg = true;
+				jump_cnt++;
+			}
+
+			//瞬間移動
+			if (jump_cnt == 5)
+			{
+				teleport_Flg = true;
+				direction_flg = false;
+			}
+
+			//ジャンプ処理
 			if (jump_flg == true && land_flg == true)
 			{
 				g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
@@ -143,36 +199,6 @@ void Enemy_06::Update()
 				jump_flg = false;  //ジャンプ用フラグのリセット
 			}
 		}
-		
-		//if (GetRand(30) == 3)  //乱数でjump_flgをtrueにする
-		//{
-		//	jump_flg = true;
-		//}
-
-		//if (jump_flg == true && land_flg == true)    //jump_flgがジャンプの条件
-		//{
-		//	g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-		//	land_flg = false;  //地面についていない
-		//	jump_flg = false;  //ジャンプ用フラグのリセット
-		//}
-		//		
-		////4回以上ジャンプした際の処理
-		//if (direction_flg == false)        //左を向いている時の処理
-		//{
-		//	x = x - 20;      //1フレームの間に左へ進む距離
-		//	if (x < 100)    //目標座標に到着したかのチェック
-		//	{
-		//		direction_flg = true;  //向いている向きの反転
-		//	}
-		//}
-		//else if (direction_flg == true)    //右を向いている時の処理
-		//{
-		//	x = x + 20;      //1フレームの間に右へ進む距離
-		//	if (x > 1180)   //目標座標に到着したかのチェック
-		//	{
-		//		direction_flg = false;  //向いている向きの反転
-		//	}
-		//}
 
 
 		if (hp <= 100)
