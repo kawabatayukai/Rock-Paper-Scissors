@@ -182,7 +182,7 @@ void Scene_Stage03::Update()
 					//停止時ダメージ軽減
 					if (obj_enemy->GetWaitTime() > 0) {
 
-						obj_enemy->ReceiveDamage(15);     //軽減ダメージが入る
+						obj_enemy->ReceiveDamage(12);     //軽減ダメージが入る
 
 					}
 					else {
@@ -203,7 +203,7 @@ void Scene_Stage03::Update()
 
 					if (obj_enemy->GetWaitTime() > 0) {
 
-						obj_enemy->ReceiveDamage(15);     //軽減ダメージが入る
+						obj_enemy->ReceiveDamage(12);     //軽減ダメージが入る
 					}
 					else {
 						obj_enemy->ReceiveDamage(30);     //ダメージが入る
@@ -220,7 +220,7 @@ void Scene_Stage03::Update()
 				{
 					if (obj_enemy->GetWaitTime() > 0) {
 
-						obj_enemy->ReceiveDamage(15); //軽減ダメージが入る
+						obj_enemy->ReceiveDamage(12); //軽減ダメージが入る
 
 					}
 					else {
