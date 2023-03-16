@@ -82,7 +82,7 @@ void Enemy_03::Update()
 	if (hp <= 0)hp = 0;
 
 
-}
+
 	//if (x + (w / 2) == (1280 - 20))
 	//{
 	//	dir = -1;
@@ -96,22 +96,34 @@ void Enemy_03::Update()
 
 	/********************   ジャンプ関係   ********************/
 
-	//if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
-	//{
-	//	g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-	//	land_flg = false;  //地面についていない
+	if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
+	{
+		g_add = -22.f;    //初期-21.5f,重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+		land_flg = false;  //地面についていない
 
-	//}
+	}
 
-	//y_add = (y - old_y) + g_add;  //今回の落下距離を設定
+	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
 	//落下速度の制限
-	//if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
+	if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
 
-	//old_y = y;                    //1フレーム前のｙ座標
-	//y += y_add;                   //落下距離をｙ座標に加算する
-	//g_add = _GRAVITY;              //重力加速度を初期化する
+	old_y = y;                    //1フレーム前のｙ座標
+	y += y_add;                   //落下距離をｙ座標に加算する
+	g_add = _GRAVITY;              //重力加速度を初期化する
 
+
+	//停止時はジャンプさせない
+	if (moveinfo[current].enemywaitTime > 0) {
+
+		
+			g_add = 25.f;   //ジャンプ制御
+		
+
+	}
+
+
+}
 	/********************   横移動   ********************/
 
 //if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
@@ -152,20 +164,6 @@ void Enemy_03::Draw() const
 		DrawRotaGraphF(x, y, 1, 0, enemyimage[0], TRUE, dir == -1 ? 0 : 1);
 	}
 
-	//////属性変更///////
-	//エネミー停止時
-	//if (moveinfo[current].enemywaitTime > 0) {
-
-	//	//ガード時の属性描画
-	//	DrawRotaGraph(810, 60, 0.5, 0, typeImage[1], TRUE);
-
-
-	//}
-	////そうじゃないとき
-	//else {
-	//	//攻撃時の属性描画
-	//	DrawRotaGraph(950, 60, 0.5, 0, typeImage[0], TRUE);
-	//}
 
 
 
@@ -173,30 +171,7 @@ void Enemy_03::Draw() const
 	Draw_Jangeki();
 
 
-	//プレイヤーがx < 640だったらエネミーの画像を反転させる
-
-	//if (x < 640) { //
-	//		
-
-	//	//エネミー停止時
-	//	if (moveinfo[current].enemywaitTime <= 0) {
-
-	//		//ガード時の画像描画
-	//		DrawTurnGraph(x, y, enemyimage[0], TRUE);
-
-
-	//	}
-
-	//	//エネミー停止時
-	//	if (moveinfo[current].enemywaitTime > 0) {
-
-	//		//ガード時の画像描画
-	//		DrawTurnGraph(x,y, enemyimage[1], TRUE);
-
-
-	//	}
-
-	//}
+	
 
 	//テスト                                                      //赤色
 	if (moveinfo[current].enemywaitTime > 0) DrawFormatString((int)(x - 100), (int)(y - 100), GetColor(0,0,255), "防御力 UP↑", moveinfo[current].enemywaitTime);
