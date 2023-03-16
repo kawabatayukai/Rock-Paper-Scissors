@@ -4,6 +4,7 @@
 #include"Stage_Base.h"
 #include"Player.h"
 #include"Floor.h"
+#include"Jangeki_reflection.h"
 
 #define STAGE_09_FLOOR 11         //床・壁の合計数
 
@@ -22,14 +23,17 @@ public:
 
 	void Update_Janken();                  //じゃんけん更新・内部処理
 	void Draw_Janken() const;              //じゃんけん描画
-	bool reflectionFlg;
 
 	AbstractScene* ChangeScene() override; //シーンの変更
 
 private:
 	Enemy_09* obj_enemy;            //敵
+	Jangeki_Reflection* reflection;
+
 
 	bool janken_flag = false;       //接触時じゃんけんフラグ
+
+	bool Rflg = false; //反射じゃん撃判別用
 
 
 
