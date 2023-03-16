@@ -22,7 +22,7 @@ public:
 	~Enemy_03();                     //デストラクタ
 
 	void Update() override;          //更新
-	void Draw() const override;      //描画
+	void Draw() const override;    //描画
 
 	void Update_Jangeki() override;  //じゃん撃生成・更新
 
@@ -32,16 +32,17 @@ public:
 
 	void ChangeDir(float x);
 
+
 private:
 	/********************   ジャンプ関係   ********************/
 
 	//float old_x = 0; 
 
 	//前回の位置X
-	//float old_y = 0;          //前回の位置Y
-	//float y_add = 0;          //落下距離
-	//float g_add = 1.0f;       //重力加速度
-	//float enemy_x = 0;
+	float old_x = 0;    //前回の位置X
+	float old_y = 0;	//前回の位置Y
+	float y_add = 0;     //落下距離  
+	float g_add = 1.0f;//重力加速度
 
 	/**********************************************************/
 	int frame_count = 0;       //じゃん撃発射用

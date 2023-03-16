@@ -17,9 +17,10 @@ void Stage_Base::DrawUI(Jan_Type type ,int hp) const
 	switch (type)
 	{
 	case Jan_Type::ROCK:
-		DrawRotaGraph(950, 60, 0.5, 0, typeImage[0], TRUE);
+		DrawRotaGraph(810, 60, 0.5, 0, typeImage[0], TRUE);
 		break;
 	case Jan_Type::SCISSORS:
+					
 		DrawRotaGraph(810, 60, 0.5, 0, typeImage[1], TRUE);
 		break;
 	case Jan_Type::PAPER:
