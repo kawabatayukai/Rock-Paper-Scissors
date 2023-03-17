@@ -19,9 +19,6 @@ public:
 
 	void MoveEnmey_09();
 
-	int GetX();						//“G‚ÌÀ•W
-	int GetY();						//“G‚ÌÀ•W
-
 	Jangeki_Reflection* reflection;
 
 private:
