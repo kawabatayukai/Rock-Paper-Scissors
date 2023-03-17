@@ -59,7 +59,7 @@ void Enemy_02::Update()
 	}
 	
 	//左に行く
-	if (jump_cnt >= 0 && direction_flg == false)
+	if (jump_cnt >= 0 && direction_flg == false && Stop_flg == false)
 	{
 
 		x = x - 5;
@@ -68,7 +68,7 @@ void Enemy_02::Update()
 			image = LoadGraph("images/stage02/junp2.png");
 			jump_cnt = 0;
 			direction_flg = true;
-			
+			Stop_flg = true;
 		}
 		
 		if (land_flg == true && GetRand(1) == 1)    //GetRand(30) == 3　のところがジャンプの条件
@@ -81,7 +81,7 @@ void Enemy_02::Update()
 		
 	}
 	//右に行く
-	else if (jump_cnt >= 0 && direction_flg == true)
+	else if (jump_cnt >= 0 && direction_flg == true&&Stop_flg==false)
 	{
 		x = x + 5;
 		if (x > 1180)
@@ -89,7 +89,10 @@ void Enemy_02::Update()
 			image = LoadGraph("images/stage02/junp4.png");
 			jump_cnt = 0;
 			direction_flg = false;
+			Stop_flg = true;
 		}
+
+
 		if (land_flg == true && GetRand(1) == 1)    //GetRand(30) == 3　のところがジャンプの条件
 		{
 			g_add = -30.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
@@ -123,18 +126,28 @@ void Enemy_02::Update()
 		*/
 	}
 
-	
- 
-	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
-	
-	//落下速度の制限
-	if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
-   
 
-	old_y = y;                    //1フレーム前のｙ座標
-	y += y_add;                   //落下距離をｙ座標に加算する
-	g_add = _GRAVITY;              //重力加速度を初期化する
+	if (Stop_flg == true) {
+		waitTime++;
+		if (waitTime > 180) {
+			waitTime = 0;
+			Stop_flg = false;
+		}
+	}
+	if (Stop_flg == false) {
+		y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
+			//落下速度の制限
+		if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
+
+
+		old_y = y;                    //1フレーム前のｙ座標
+		y += y_add;                   //落下距離をｙ座標に加算する
+		g_add = _GRAVITY;              //重力加速度を初期化する
+
+	}
+
+	
 
 	if (hp <= 0) hp = 0;
 	else if (hp <= 50) speed = 5.0f;

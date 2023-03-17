@@ -46,11 +46,14 @@ private:
 	float g_sdd = 1.0f;
 	float g_zdd = 1.0f;
 
+
 	bool jump_flg = false;        //ジャンプ用フラグ　　ジャンプさせる:true   ジャンプしない:false
+	bool Stop_flg = false;        //ジャンプ用フラグ　　ジャンプさせる:true   ジャンプしない:false
 	int  jump_cnt =0;            //ジャンプカウント
+	int  Stop_cnt =0;            //ジャンプカウント
 	bool direction_flg = false;   //左右反転フラグ      左向き:true   
 	/**********************************************************/
-	int waitTime = 0;			//待ち時間用変数
+	int waitTime = 5;			//待ち時間用変数
 	int frame_count = 0;       //じゃん撃発射用
 	Pattern_02 moveinfo[20]; //行動パターン20種
 	short current = 0; //現在のパターン配列添字
