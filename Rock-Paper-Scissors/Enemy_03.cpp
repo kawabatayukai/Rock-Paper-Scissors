@@ -270,7 +270,7 @@ void Enemy_03::Move_Pattern() {
 	if (x == moveinfo[current].location_x) {
 
 		current = moveinfo[current].next_index; //Ÿ‚Ìƒpƒ^[ƒ“
-		jump_flg = true;
+		
 		speed = 2.8f;
 
 	}

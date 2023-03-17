@@ -43,7 +43,7 @@ private:
 	float old_y = 0;	//前回の位置Y
 	float y_add = 0;     //落下距離  
 	float g_add = 1.0f;//重力加速度
-	//bool jump_flg = false;
+	
 
 
 	/**********************************************************/
