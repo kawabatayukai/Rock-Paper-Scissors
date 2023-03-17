@@ -141,15 +141,18 @@ void Enemy_04::Update_Jangeki()
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
 		float radius = 35.5f;   //半径
-		float speed = 5.0f;     //スピード
+		float speed = 3.0f;     //スピード
 		
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
 
 		//生成
-		//if (frame_count % 60 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
-		if (frame_count % 60 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+		if (hp <= 50)
+		{
+			if (frame_count % 60 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+		}
+		if (frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 	}
 }
 
