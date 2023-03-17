@@ -18,6 +18,7 @@ Janken::Janken(Jan_Type enemy_jan) : enemy_jan(enemy_jan)
 //デストラクタ
 Janken::~Janken()
 {
+
 	SetFontSize(20);
 }
 

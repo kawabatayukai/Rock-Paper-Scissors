@@ -20,8 +20,10 @@ public:
 
 	void Draw() const override;            //描画
 
-	void Update_Janken();                  //じゃんけん更新・内部処理
 	void Draw_Janken() const;              //じゃんけん描画
+
+	void AfterJanken_WIN()  override;      //じゃんけん終了後の挙動（プレイヤー勝ち）
+	void AfterJanken_LOSE() override;      //じゃんけん終了後の挙動（プレイヤー負け）
 
 	AbstractScene* ChangeScene() override; //シーンの変更
 

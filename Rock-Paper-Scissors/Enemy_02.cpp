@@ -57,8 +57,9 @@ void Enemy_02::Update()
 			jump_cnt++;
 		}
 	}
+	
 	//左に行く
-	if (jump_cnt >= 1 && direction_flg == false)
+	if (jump_cnt >= 0 && direction_flg == false)
 	{
 
 		x = x - 5;
@@ -67,18 +68,20 @@ void Enemy_02::Update()
 			image = LoadGraph("images/stage02/junp2.png");
 			jump_cnt = 0;
 			direction_flg = true;
+			
 		}
 		
 		if (land_flg == true && GetRand(1) == 1)    //GetRand(30) == 3　のところがジャンプの条件
 		{
-			g_add = -25.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+			g_add = -30.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 			land_flg = false;  //地面についていない
 			
 		}
 		
+		
 	}
 	//右に行く
-	else if (jump_cnt >= 1 && direction_flg == true)
+	else if (jump_cnt >= 0 && direction_flg == true)
 	{
 		x = x + 5;
 		if (x > 1180)
@@ -89,11 +92,35 @@ void Enemy_02::Update()
 		}
 		if (land_flg == true && GetRand(1) == 1)    //GetRand(30) == 3　のところがジャンプの条件
 		{
-			g_add = -25.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+			g_add = -30.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 			land_flg = false;  //地面についていない
 
 		}
-		
+		//waitTime++;
+		/*if (moveinfo[current].waitFlameTime <= waitTime)
+		{
+			waitTime = 0;
+			current = moveinfo[current].next_index;
+		}*/
+	/*switch (moveinfo[current].moveflg)
+		{
+		case 0:
+			waitTime++;
+			if (moveinfo[current].waitFlameTime <= waitTime)
+			{
+				waitTime = 0;
+				current = moveinfo[current].next_index;
+			}
+			break;
+
+		case 1:
+			Move_Pattern();
+			break;
+
+		default:
+			break;
+		}
+		*/
 	}
 
 	
@@ -109,7 +136,8 @@ void Enemy_02::Update()
 	g_add = _GRAVITY;              //重力加速度を初期化する
 
 
-	if (hp <= 0)hp = 0;
+	if (hp <= 0) hp = 0;
+	else if (hp <= 50) speed = 5.0f;
 	/************************************************************/
 }
 
@@ -177,3 +205,4 @@ int Enemy_02::Get_Y()
 {
 	return y;
 }
+
