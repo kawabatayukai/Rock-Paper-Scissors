@@ -1,6 +1,14 @@
 #pragma once
 #include"Jangeki_Base.h"
 
+//じゃんけんの状態
+enum class Jan_State
+{
+	BEFORE,      //じゃんけん前(何もしていない)
+	PROGRESS,    //じゃんけん中・・
+	AFTER,       //じゃんけん終了（結果を取得可能）
+};
+
 // 接触時のじゃんけん  勝敗を決めるクラス
 class Janken
 {
@@ -34,6 +42,6 @@ private:
 	Jan_Type player_jan;     //プレイヤーの出す手  Check_AnyButton()で押されたボタン
 
 	Jan_Result result;       // じゃんけんの結果を格納する
-
+	
 	int image[3];            //画像
 };

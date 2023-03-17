@@ -29,6 +29,8 @@ void Enemy_06::Update()
 	//じゃん撃更新・生成
 	Update_Jangeki();
 
+	if (hp <= 0)hp = 0;
+
 	//if (x + (w / 2) == (1280 - 20))
 	//{
 	//	dir = -1;
@@ -42,54 +44,168 @@ void Enemy_06::Update()
 
 	/********************   ジャンプ関係   ********************/
 
-	if (jump_cnt < 3)
+	if (attack_pattern == 0)      //攻撃パターン1
 	{
-		if (GetRand(100) == 3)  //乱数でjump_flgをtrueにする
+		if (jump_cnt < 3)         //4回ジャンプするまでの間以下の処理を繰り返す
 		{
-			jump_flg = true;
+			if (GetRand(3) == 3)  //乱数でjump_flgをtrueにする
+			{
+				jump_flg = true;
+			}
+
+			if (land_flg == true && jump_flg == true)    //jump_flgがジャンプの条件
+			{
+				g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+				land_flg = false;  //地面についていない
+				jump_flg = false;  //ジャンプ用フラグのリセット
+				jump_cnt++;        //ジャンプ回数のカウント
+			}
 		}
 
-		if (land_flg == true && jump_flg == true)    //jump_flgがジャンプの条件
+		//4回以上ジャンプした際の処理
+		if (jump_cnt >= 3 && direction_flg == false)        //左を向いている時の処理
 		{
-			g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-			land_flg = false;  //地面についていない
-			jump_flg = false;  //ジャンプ用フラグのリセット
-			jump_cnt++;
+
+			x = x - 7;      //1フレームの間に左へ進む距離
+			if (x < 100)    //目標座標に到着したかのチェック
+			{
+				jump_cnt = 0;          //ジャンプ回数のリセット
+				direction_flg = true;  //向いている向きの反転
+			}
+		}
+		else if (jump_cnt >= 3 && direction_flg == true)    //右を向いている時の処理
+		{
+			x = x + 7;      //1フレームの間に右へ進む距離
+			if (x > 1180)   //目標座標に到着したかのチェック
+			{
+				jump_cnt = 0;           //ジャンプ回数のリセット
+				direction_flg = false;  //向いている向きの反転
+			}
+		}
+
+		if (hp <= 150)
+		{
+			attack_pattern = 1;
+			jump_cnt = 0;
+			jump_flg = false;
 		}
 	}
 	
-	if(jump_cnt >= 3 && direction_flg == false)
+	if (attack_pattern == 1)
 	{
-		
-		x = x - 5;
-		if (x < 100)
+		if (teleport_Flg == true && direction_flg == false)
 		{
-			jump_cnt = 0;
-			direction_flg = true;
-		}
-	}
-	else if(jump_cnt >= 3 && direction_flg == true)
-	{
-		x = x + 5;
-		if (x > 1180)
-		{
-			jump_cnt = 0;
+			x = 1180;
+			y = 450;
 			direction_flg = false;
+			teleport_Flg = false;
+			P1_side = false;
+			jump_cnt = 0;
+		}
+		else if (teleport_Flg == true && direction_flg == true)
+		{
+			x = 100;
+			y = 450;
+			direction_flg = true;
+			teleport_Flg = false;
+			P1_side = true;
+			jump_cnt = 0;
+		}
+
+
+
+		if (P1_side == false)
+		{
+			//左の足場へジャンプ
+			if (x >= 930 && direction_flg == true)
+			{
+				x = x - 6;
+			}
+			else if (x <= 1180 && direction_flg == true)
+			{
+				direction_flg = false;
+				jump_flg = true;
+				jump_cnt++;
+			}
+
+			//右の足場へジャンプ
+			if (x <= 1180 && direction_flg == false)
+			{
+				x = x + 6;
+			}
+			else if (x >= 930 && direction_flg == false)
+			{
+				direction_flg = true;
+				jump_flg = true;
+				jump_cnt++;
+			}
+
+			//瞬間移動
+			if (jump_cnt == 5)
+			{
+				teleport_Flg = true;
+				direction_flg = true;
+			}
+
+			//ジャンプ処理
+			if (jump_flg == true && land_flg == true)
+			{
+				g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+				land_flg = false;  //地面についていない
+				jump_flg = false;  //ジャンプ用フラグのリセット
+			}
+		}
+
+
+
+		else if (P1_side == true)
+		{
+			//右の足場へジャンプ
+			if (x <= 350 && direction_flg == false)
+			{
+				x = x + 6;
+			}
+			else if(x >= 100 && direction_flg == false)
+			{
+				direction_flg = true;
+				jump_flg = true;
+				jump_cnt++;
+			}
+
+			//左の足場へジャンプ
+			if (x >= 100 && direction_flg == true)
+			{
+				x = x - 5;
+			}
+			else if(x <= 350 && direction_flg == true)
+			{
+				direction_flg = false;
+				jump_flg = true;
+				jump_cnt++;
+			}
+
+			//瞬間移動
+			if (jump_cnt == 5)
+			{
+				teleport_Flg = true;
+				direction_flg = false;
+			}
+
+			//ジャンプ処理
+			if (jump_flg == true && land_flg == true)
+			{
+				g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+				land_flg = false;  //地面についていない
+				jump_flg = false;  //ジャンプ用フラグのリセット
+			}
+		}
+
+
+		if (hp <= 100)
+		{
+			/*attack_pattern = 2;*/
 		}
 	}
-	
-	//if (GetRand(100) == 3)  //乱数でjump_flgをtrueにする
-	//{
-	//	jump_flg = true;
-	//}
-
-	//if (land_flg == true && jump_flg == true)    //jump_flgがジャンプの条件
-	//{
-	//	g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-	//	land_flg = false;  //地面についていない
-	//	jump_flg = false;  //ジャンプ用フラグのリセット
-	//	jump_cnt++;
-	//}
 
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
@@ -122,40 +238,40 @@ void Enemy_06::Draw() const
 //じゃん撃生成・更新
 void Enemy_06::Update_Jangeki()
 {
-	//int jan_count;
+	int jan_count;
 
-	////じゃん撃配列をひとつずつ
-	//for (jan_count = 0; jan_count < JANGEKI_MAX; jan_count++)
-	//{
-	//	//配列の jan_count 番目がnullptr（空要素）ならそれ以上処理しない
-	//	if (obj_jangeki[jan_count] == nullptr) break;
+	//じゃん撃配列をひとつずつ
+	for (jan_count = 0; jan_count < JANGEKI_MAX; jan_count++)
+	{
+		//配列の jan_count 番目がnullptr（空要素）ならそれ以上処理しない
+		if (obj_jangeki[jan_count] == nullptr) break;
 
-	//	obj_jangeki[jan_count]->Update();
+		obj_jangeki[jan_count]->Update();
 
-	//	//画面外で削除する
-	//	if (obj_jangeki[jan_count]->CheckScreenOut() == true)
-	//	{
-	//		DeleteJangeki(jan_count);
-	//		jan_count--;
-	//	}
-	//}
+		//画面外で削除する
+		if (obj_jangeki[jan_count]->CheckScreenOut() == true)
+		{
+			DeleteJangeki(jan_count);
+			jan_count--;
+		}
+	}
 
-	///*********************** ↓↓ 発射・生成 ↓↓ ***********************/
-	//frame_count++;
+	/*********************** ↓↓ 発射・生成 ↓↓ ***********************/
+	frame_count++;
 
-	////配列の空要素
-	//if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
-	//{
-	//	float radius = 35.5f;   //半径
-	//	float speed = -3.0f;     //スピード
+	//配列の空要素
+	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
+	{
+		float radius = 35.5f;   //半径
+		float speed = -8.0f;     //スピード
 
-	//	//ランダムな属性を生成
-	//	Jan_Type type = static_cast<Jan_Type>(GetRand(2));
+		//ランダムな属性を生成
+		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
 
-	//	//生成
-	//	if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
-	//}
+		//生成
+		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+	}
 }
 
 //old_yの取得関数

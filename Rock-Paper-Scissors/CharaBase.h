@@ -45,14 +45,14 @@ public:
 	void Hit_Floor(const Floor* floor);
 
 	//キャラクター同士の当たり判定  Hit:true
-	bool Hit_Character(const CharaBase* character);
+	bool Hit_Character(const CharaBase* character) const;
 
 	//じゃん撃とキャラクターの当たり判定
 	bool Hit_Jangeki(const Jangeki_Base* jangeki);
 
 private:
 	//矩形と矩形の当たり判定
-	bool CheckHitBox_Box(int box_x, int box_y, int box_w, int box_h);
+	bool CheckHitBox_Box(int box_x, int box_y, int box_w, int box_h) const;
 
 	//矩形と円形の当たり判定
 	bool CheckHitBox_Circle(float c_x, float c_y, float c_r);

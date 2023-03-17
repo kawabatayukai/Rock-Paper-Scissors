@@ -76,6 +76,9 @@
     <Filter Include="ソース ファイル\Jangeki\kawabata">
       <UniqueIdentifier>{32b49806-6f27-4d6d-9c72-c0dfb3c9ad29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Jangeki\nakayoshi">
+      <UniqueIdentifier>{529d5a9c-658b-4cf3-928a-2113071af2af}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -135,9 +138,6 @@
     <ClCompile Include="Enemy_09.cpp">
       <Filter>ソース ファイル\GameMainScene\Stage_09</Filter>
     </ClCompile>
-    <ClCompile Include="Jangeki_Base.cpp">
-      <Filter>ソース ファイル\Jangeki</Filter>
-    </ClCompile>
     <ClCompile Include="Scene_Stage00.cpp">
       <Filter>ソース ファイル\GameMainScene\Stage_00</Filter>
     </ClCompile>
@@ -194,6 +194,21 @@
     </ClCompile>
     <ClCompile Include="Jangeki_Homing.cpp">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
+    </ClCompile>
+    <ClCompile Include="Jangeki_Base.cpp">
+      <Filter>ソース ファイル\Jangeki</Filter>
+    </ClCompile>
+    <ClCompile Include="Jangeki_Changespeed.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Jangeki_Spin.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Jangeki_Zigzag.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Jangeki_reflection.cpp">
+      <Filter>ソース ファイル\Jangeki\nakayoshi</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -254,9 +269,6 @@
     <ClInclude Include="Enemy_09.h">
       <Filter>ソース ファイル\GameMainScene\Stage_09</Filter>
     </ClInclude>
-    <ClInclude Include="Jangeki_Base.h">
-      <Filter>ソース ファイル\Jangeki</Filter>
-    </ClInclude>
     <ClInclude Include="Scene_Stage00.h">
       <Filter>ソース ファイル\GameMainScene\Stage_00</Filter>
     </ClInclude>
@@ -314,8 +326,23 @@
     <ClInclude Include="Jangeki_Homing.h">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClInclude>
+    <ClInclude Include="Jangeki_Base.h">
+      <Filter>ソース ファイル\Jangeki</Filter>
+    </ClInclude>
     <ClInclude Include="Debug_Manager.h">
-      <Filter>ソース ファイル\GameMainScene</Filter>
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_Changespeed.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_Spin.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_Zigzag.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_reflection.h">
+      <Filter>ソース ファイル\Jangeki\nakayoshi</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

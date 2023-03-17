@@ -4,12 +4,13 @@
 #include"Jangeki_Base.h"
 #include <typeinfo>
 
+
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
 
-	speed = 1.5f;
-	dir = 1;
+	speed = 1.85f;//1.5f
+	dir = 1;//エネミーの向き
 	hp = 100;
 
 	enemyimage[0] = LoadGraph("images/stage03/stage03attack.png");
@@ -17,14 +18,22 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	Init_Jangeki();       //じゃん撃を用意
 
-	//動きパターン 
-	moveinfo[0] = { 0, 950.f, 0.f , 1,  0 };
+	//動きパターン 繰り返し　//0で動き,1で止まる
+	moveinfo[0] = { 0, 950.f, 0.f , 1,  0 };//初期位置のXが950で停止
 
-	moveinfo[1] = { 1,  0 ,   0.f , 2, 125 };
+	moveinfo[1] = { 1,  0 ,   0.f , 2, 125 };//初期位置のXが950で停止
+	//ここから動く
+	moveinfo[2] = { 0, 650.f, 0.f , 3,  0 };//Xが650まで動く
 
-	moveinfo[2] = { 0, 450.f, 0.f , 3,  0 };
+	moveinfo[3] = { 1,  0 ,   0.f , 4, 125 };//Xが650で停止
 
-	moveinfo[3] = { 1,  0 ,   0.f , 0, 125 };
+	moveinfo[4] = { 0, 325.f, 0.f , 5, 0 };//Xが325まで動く
+
+	moveinfo[5] = { 1,  0 ,   0.f , 6, 125 };//Xが325で停止
+
+	moveinfo[6] = { 0, 650.f, 0.f , 7,  0 };//Xが650まで動く
+
+	moveinfo[7] = { 1,  0 ,   0.f , 0, 125 };//Xが650で停止し配列[0]に戻る
 
 }
 
@@ -39,6 +48,15 @@ void Enemy_03::Update()
 {
 	//じゃん撃更新・生成
 	Update_Jangeki();
+
+	//属性変更
+	if (moveinfo[current].enemywaitTime > 0) {
+
+		e_type = Jan_Type::ROCK;
+
+	}
+	//上記の属性変更以外
+	else e_type = Jan_Type::SCISSORS;
 
 	//ステ03パターン用関数
 	switch (moveinfo[current].moveflg)
@@ -60,7 +78,11 @@ void Enemy_03::Update()
 	}
 
 
-}
+	//HPが0以下だったらHPに0を代入
+	if (hp <= 0)hp = 0;
+
+
+
 	//if (x + (w / 2) == (1280 - 20))
 	//{
 	//	dir = -1;
@@ -74,22 +96,34 @@ void Enemy_03::Update()
 
 	/********************   ジャンプ関係   ********************/
 
-	//if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
-	//{
-	//	g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-	//	land_flg = false;  //地面についていない
+	if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
+	{
+		g_add = -22.f;    //初期-21.5f,重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+		land_flg = false;  //地面についていない
 
-	//}
+	}
 
-	//y_add = (y - old_y) + g_add;  //今回の落下距離を設定
+	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
 	//落下速度の制限
-	//if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
+	if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
 
-	//old_y = y;                    //1フレーム前のｙ座標
-	//y += y_add;                   //落下距離をｙ座標に加算する
-	//g_add = _GRAVITY;              //重力加速度を初期化する
+	old_y = y;                    //1フレーム前のｙ座標
+	y += y_add;                   //落下距離をｙ座標に加算する
+	g_add = _GRAVITY;              //重力加速度を初期化する
 
+
+	//停止時はジャンプさせない
+	if (moveinfo[current].enemywaitTime > 0) {
+
+		
+			g_add = 25.f;   //ジャンプ制御
+		
+
+	}
+
+
+}
 	/********************   横移動   ********************/
 
 //if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
@@ -112,8 +146,6 @@ void Enemy_03::Update()
 
 /**********************************************************/
 
-
-
 //描画
 void Enemy_03::Draw() const
 
@@ -122,22 +154,31 @@ void Enemy_03::Draw() const
 	if (moveinfo[current].enemywaitTime > 0) {
 
 		//ガード時の画像描画
-		DrawRotaGraphF(x, y, 1, 0, enemyimage[1], TRUE);
+		DrawRotaGraphF(x, y, 1, 0, enemyimage[1], TRUE, dir == -1 ? 0 : 1);
+
 
 	}
 	//そうじゃないとき
 	else {
 		//攻撃時の画像描画
-		DrawRotaGraphF(x, y, 1, 0, enemyimage[0], TRUE);
+		DrawRotaGraphF(x, y, 1, 0, enemyimage[0], TRUE, dir == -1 ? 0 : 1);
 	}
+
+
+
 
 	//じゃん撃描画
 	Draw_Jangeki();
 
 
+	
+
 	//テスト                                                      //赤色
-	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xff0000, "HP : %d", hp);
-	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xff0000);
+	if (moveinfo[current].enemywaitTime > 0) DrawFormatString((int)(x - 100), (int)(y - 100), GetColor(0,0,255), "防御力 UP↑", moveinfo[current].enemywaitTime);
+	
+	if (hp <= 50) DrawFormatString((int)(x - 100), (int)(y - 80), GetColor(255, 0, 0), "攻撃力 UP↑", hp);
+
+	if(hp <= 0)DrawString((int)(x - 100), (int)(y - 120), "death!", 0xff0000);
 
 }
 
@@ -168,11 +209,11 @@ void Enemy_03::Update_Jangeki()
 	//配列の空要素
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
-		float radius = 35.5f;   //半径
-		float speed = -3.0f;     //スピード
+		float radius = 40.0f;   //半径 //35.5f
+		float speed = 6.0f * dir;     //スピード//3.0
 
 		//ランダムな属性を生成
-		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
+		Jan_Type type = static_cast<Jan_Type>(GetRand(2));//2
 
 
 		//生成
@@ -236,4 +277,13 @@ void Enemy_03::Move_Pattern() {
 int Enemy_03::GetWaitTime()const {
 
 	return moveinfo[current].enemywaitTime;
+}
+
+
+
+//プレイヤーの座標を継承
+void Enemy_03::ChangeDir(float x)
+{
+	if (x < 640) dir = -1;
+	else dir = 1;
 }
