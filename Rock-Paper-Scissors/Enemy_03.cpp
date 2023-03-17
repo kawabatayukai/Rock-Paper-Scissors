@@ -19,23 +19,65 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	Init_Jangeki();       //じゃん撃を用意
 
 	//動きパターン 繰り返し　//0で動き,1で止まる
-	moveinfo[0] = { 0, 950.f, 0.f , 1,  0 };//初期位置のXが950で停止
+	moveinfo[0] = { 0, 950.f, 0.f , 1,  0 ,1};//初期位置のXが950で停止
 
-	moveinfo[1] = { 1,  0 ,   0.f , 2, 125 };//初期位置のXが950で停止
+	moveinfo[1] = { 1,  0 ,   0.f , 2, 125 ,1};//初期位置のXが950で停止
 	//ここから動く
-	moveinfo[2] = { 0, 650.f, 0.f , 3,  0 };//Xが650まで動く
+	moveinfo[2] = { 0, 650.f, 0.f , 3,  0 ,1 };//Xが650まで動く
 
-	moveinfo[3] = { 1,  0 ,   0.f , 4, 125 };//Xが650で停止
+	moveinfo[3] = { 1,  0 ,   0.f , 4, 125 ,1 };//Xが650で停止
 
-	moveinfo[4] = { 0, 325.f, 0.f , 5, 0 };//Xが325まで動く
+	moveinfo[4] = { 0, 325.f, 0.f , 5, 0 ,1 };//Xが325まで動く
 
-	moveinfo[5] = { 1,  0 ,   0.f , 6, 125 };//Xが325で停止
+	moveinfo[5] = { 1,  0 ,   0.f , 6, 125 ,1 };//Xが325で停止
 
-	moveinfo[6] = { 0, 650.f, 0.f , 7,  0 };//Xが650まで動く
+	//足場に乗る
+	moveinfo[6] = { 0, 325.f, 550.f , 7, 0 ,0 };//Xが325で停止
 
-	moveinfo[7] = { 1,  0 ,   0.f , 0, 125 };//Xが650で停止し配列[0]に戻る
+	moveinfo[7] = { 1,  0 ,   0.f , 8, 125 ,1 };//Xが325で停止
+
+	moveinfo[8] = { 0,  70.f , 0.f , 9, 0 ,0 };//Xが325で停止
+
+	moveinfo[9] = { 1,  0 ,   0.f , 10, 125 ,1 };//Xが325で停止
+
+	moveinfo[10] = { 0, 280.f, 0.f , 11,  0 ,0 };//Xが650まで動く
+
+	moveinfo[11] = { 1,  0 ,   0.f , 12, 125,1 };//Xが325で停止
+
+	moveinfo[12] = { 0, 465.f, 0.f , 13,  0 ,0 };//Xが650まで動く
+
+	moveinfo[13] = { 1,  0 ,   0.f , 14, 125,1 };//Xが325で停止
+
+	moveinfo[14] = { 0, 585.f,0.f , 15,  0 ,0 };//Xが650まで動く
+
+
+	moveinfo[15] = { 1,  0 ,   0.f , 16, 125,1 };//Xが325で停止
+
+	moveinfo[16] = { 0, 780.f, 0.f , 17,  0 ,0 };//Xが650まで動く
+
+	moveinfo[17] = { 1,  0 ,   0.f , 18, 125,1 };//Xが325で停止
+
+	moveinfo[18] = { 0, 970.f, 0.f , 19,  0 ,0 };//Xが650まで動く
+
+
+
+
+	moveinfo[19] = { 1,  0 ,   0.f , 0, 125 ,1 };//Xが650で停止し配列[0]に戻る
 
 }
+
+
+//obj_floor[3] = new Floor(970, 300, 130, 40, GetColor(193, 107, 68));//足場1
+//obj_floor[4] = new Floor(780, 230, 130, 40, GetColor(193, 107, 68));//足場2//130
+//obj_floor[5] = new Floor(585, 300, 130, 40, GetColor(193, 107, 68));//足場3//100
+//obj_floor[6] = new Floor(400, 230, 130, 40, GetColor(193, 107, 68));//足場4//130
+//obj_floor[7] = new Floor(220, 300, 130, 40, GetColor(193, 107, 68));//足場5//130
+//obj_floor[8] = new Floor(20, 400, 90, 40, GetColor(193, 107, 68));//足場6//100実装
+//obj_floor[9] = new Floor(120, 550, 90, 40, GetColor(193, 107, 68));//足場7//130
+
+
+
+
 
 //デストラクタ
 Enemy_03::~Enemy_03()
@@ -46,6 +88,14 @@ Enemy_03::~Enemy_03()
 //更新
 void Enemy_03::Update()
 {
+	if (land_flg == true && moveinfo[current].enemywaitTime == 0 && moveinfo[current].jumpflg == 0)    //GetRand(30) == 3　のところがジャンプの条件
+	{
+		g_add = -23.f;    //初期-21.5f,重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+		land_flg = false;  //地面についていない
+
+		speed = 2.8f;
+	}
+
 	//じゃん撃更新・生成
 	Update_Jangeki();
 
@@ -63,6 +113,7 @@ void Enemy_03::Update()
 	{
 	case 0:
 		Move_Pattern();
+
 		break;
 	case 1:
 		waitcount++;
@@ -96,35 +147,23 @@ void Enemy_03::Update()
 
 	/********************   ジャンプ関係   ********************/
 
-	if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
-	{
-		g_add = -22.f;    //初期-21.5f,重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-		land_flg = false;  //地面についていない
 
-	}
 
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
 	//落下速度の制限
 	if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
 
-	old_y = y;                    //1フレーム前のｙ座標
-	y += y_add;                   //落下距離をｙ座標に加算する
-	g_add = _GRAVITY;              //重力加速度を初期化する
+	old_y = y;              //1フレーム前のｙ座標
+	y += y_add;            //落下距離をｙ座標に加算する
+	g_add = _GRAVITY;     //重力加速度を初期化する
 
 
 	//停止時はジャンプさせない
-	if (moveinfo[current].enemywaitTime > 0) {
-
-		
-			g_add = 25.f;   //ジャンプ制御
-		
-
-	}
 
 
 }
-	/********************   横移動   ********************/
+/********************   横移動   ********************/
 
 //if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
 //{
@@ -171,14 +210,14 @@ void Enemy_03::Draw() const
 	Draw_Jangeki();
 
 
-	
+
 
 	//テスト                                                      //赤色
-	if (moveinfo[current].enemywaitTime > 0) DrawFormatString((int)(x - 100), (int)(y - 100), GetColor(0,0,255), "防御力 UP↑", moveinfo[current].enemywaitTime);
-	
+	if (moveinfo[current].enemywaitTime > 0) DrawFormatString((int)(x - 100), (int)(y - 100), GetColor(0, 0, 255), "防御力 UP↑", moveinfo[current].enemywaitTime);
+
 	if (hp <= 50) DrawFormatString((int)(x - 100), (int)(y - 80), GetColor(255, 0, 0), "攻撃力 UP↑", hp);
 
-	if(hp <= 0)DrawString((int)(x - 100), (int)(y - 120), "death!", 0xff0000);
+	if (hp <= 0)DrawString((int)(x - 100), (int)(y - 120), "death!", 0xff0000);
 
 }
 
@@ -229,11 +268,22 @@ void Enemy_03::Move_Pattern() {
 
 	//目指している座標とX座標が一致したとき
 	if (x == moveinfo[current].location_x) {
+
 		current = moveinfo[current].next_index; //次のパターン
+		jump_flg = true;
+		speed = 2.8f;
+
 	}
 
 	//x座標が目指している座標と不一致
 	if (x != moveinfo[current].location_x) {
+
+		if (moveinfo[current].jumpflg == 0) {
+
+			speed = 4.0f;
+
+		}
+
 
 		//目指しているx座標の右方が大きい
 		if (x < moveinfo[current].location_x) {

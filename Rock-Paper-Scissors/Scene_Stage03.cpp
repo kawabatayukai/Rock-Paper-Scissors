@@ -39,15 +39,17 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	obj_floor[2] = new Floor(1260, 0, 20, 1720, GetColor(240, 230, 140));     //壁（右）
 
 	//右から順に
-	obj_floor[3] = new Floor(970, 300, 130, 40, GetColor(193, 107, 68));//足場1
-	obj_floor[4] = new Floor(780, 230, 130, 40, GetColor(193, 107, 68));//足場2//130
-	obj_floor[5] = new Floor(585, 300, 130, 40, GetColor(193, 107, 68));//足場3//100
-	obj_floor[6] = new Floor(400, 230, 130, 40, GetColor(193, 107, 68));//足場4//130
-	obj_floor[7] = new Floor(220, 300, 130, 40, GetColor(193, 107, 68));//足場5//130
-	obj_floor[8] = new Floor(20, 400, 90, 40, GetColor(193, 107, 68));//足場6//100
-	obj_floor[9] = new Floor(120, 550, 90, 40, GetColor(193, 107, 68));//足場7//130
-	//obj_floor[10] = new Floor(15, 250, 120, 20);//足場8//130
 
+	obj_floor[3] = new Floor(1140, 480, 120, 30,GetColor(193, 107, 68));//足場8//130
+	obj_floor[4] = new Floor(980, 580, 120, 30,	GetColor(193, 107, 68));//足場8//130
+	obj_floor[5] = new Floor(970, 300, 130, 40, GetColor(193, 107, 68));//足場1
+	obj_floor[6] = new Floor(780, 230, 130, 40, GetColor(193, 107, 68));//足場2//130
+	obj_floor[7] = new Floor(585, 300, 130, 40, GetColor(193, 107, 68));//足場3//100
+	obj_floor[8] = new Floor(400, 230, 130, 40, GetColor(193, 107, 68));//足場4//130
+	obj_floor[9] = new Floor(220, 300, 130, 40, GetColor(193, 107, 68));//足場5//130
+	obj_floor[10] = new Floor(20,  400, 95, 30, GetColor(193, 107, 68));//足場6//100
+	obj_floor[11] = new Floor(120, 550, 95, 30, GetColor(193, 107, 68));//足場7//130
+	
 }
 
 //デストラクタ
