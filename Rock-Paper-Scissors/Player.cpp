@@ -149,24 +149,47 @@ void Player::Update()
 	//角度を制限する
 	{
 		//右向きの時
-		if (dir == static_cast<int>(DIRECTION::RIGHT))
+		if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true)
 		{
 			if (jan_angle < 0) jan_angle = 0;
-			if (jan_angle > (M_PI / 2))
+			if (jan_angle > (M_PI / 2) && jan_angle > (M_PI / -2))
 			{
 				//jan_angle = (M_PI / 2);
 				dir = static_cast<int>(DIRECTION::LEFT);
 			}
 		}
+		else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == false && 
+			    KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0)
+		{
+			jan_angle = 0;
+		}
+
+		if (jan_angle > (M_PI / 2) || jan_angle < (M_PI / -2))
+		{
+			//jan_angle = (M_PI / 2);
+			dir = static_cast<int>(DIRECTION::LEFT);
+		}
+
 		//左向きの時
-		if (dir == static_cast<int>(DIRECTION::LEFT))
+		if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true)
 		{
 			if (jan_angle < 0) jan_angle = M_PI;
-			if (jan_angle < (M_PI / 2))
+			if (jan_angle < (M_PI / 2) && jan_angle > (M_PI / -2))
 			{
 				//jan_angle = (M_PI / 2);
 				dir = static_cast<int>(DIRECTION::RIGHT);
 			}
+		}
+		else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == false && 
+			    KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0)
+		{
+			jan_angle = M_PI;
+		}
+
+		if (jan_angle < (M_PI / 2) && jan_angle > (M_PI / -2))
+		{
+			//jan_angle = (M_PI / 2);
+			dir = static_cast<int>(DIRECTION::RIGHT);
 		}
 	}
 
@@ -342,7 +365,6 @@ void Player::Draw() const
 
 	//中心から描画
 	DrawRotaGraphF(x, y, 1, 0, image[player_Image], TRUE);
-
 }
 
 /*画像の変更取得*/
