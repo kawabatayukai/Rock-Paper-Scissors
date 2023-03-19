@@ -40,15 +40,15 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 
 	//‰E‚©‚ç‡‚É
 
-	obj_floor[3] = new Floor(1140, 480, 120, 30,GetColor(193, 107, 68));//‘«ê8//130
-	obj_floor[4] = new Floor(980, 580, 120, 30,	GetColor(193, 107, 68));//‘«ê8//130
-	obj_floor[5] = new Floor(970, 300, 130, 40, GetColor(193, 107, 68));//‘«ê1
-	obj_floor[6] = new Floor(780, 230, 130, 40, GetColor(193, 107, 68));//‘«ê2//130
-	obj_floor[7] = new Floor(585, 300, 130, 40, GetColor(193, 107, 68));//‘«ê3//100
-	obj_floor[8] = new Floor(400, 230, 130, 40, GetColor(193, 107, 68));//‘«ê4//130
-	obj_floor[9] = new Floor(220, 300, 130, 40, GetColor(193, 107, 68));//‘«ê5//130
-	obj_floor[10] = new Floor(20,  400, 95, 30, GetColor(193, 107, 68));//‘«ê6//100
-	obj_floor[11] = new Floor(120, 550, 95, 30, GetColor(193, 107, 68));//‘«ê7//130
+	obj_floor[3] = new Floor(1120, 400, 95, 30,GetColor(193, 107, 68));//‘«ê8//130
+	obj_floor[4] = new Floor(980, 550, 95, 30,	GetColor(193, 107, 68));//‘«ê8//130
+	obj_floor[5] = new Floor(970, 220, 130, 40, GetColor(193, 107, 68));//‘«ê1
+	obj_floor[6] = new Floor(780, 150, 130, 40, GetColor(193, 107, 68));//‘«ê2//130
+	obj_floor[7] = new Floor(585, 220, 130, 40, GetColor(193, 107, 68));//‘«ê3//100
+	obj_floor[8] = new Floor(400, 150, 130, 40, GetColor(193, 107, 68));//‘«ê4//130
+	obj_floor[9] = new Floor(220, 220, 130, 40, GetColor(193, 107, 68));//‘«ê5//130
+	obj_floor[10] = new Floor(20, 400, 95, 30, GetColor(193, 107, 68));//‘«ê6//100
+	obj_floor[11] = new Floor(120,550, 95, 30, GetColor(193, 107, 68));//‘«ê7//130
 	
 }
 

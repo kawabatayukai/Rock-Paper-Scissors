@@ -51,7 +51,7 @@ private:
 
 	int waitcount = 0;//待ち時間カウント
 
-	Pattern_03 moveinfo[20]; //行動パターン20種
+	Pattern_03 moveinfo[50]; //行動パターン50種
 	short current = 0; //現在のパターン配列添字
 
 	int enemyimage[2];      //敵画像配列
