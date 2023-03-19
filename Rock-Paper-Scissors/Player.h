@@ -21,6 +21,15 @@ public:
 	int Get_OldY();                   //old_yの取得関数
 	int Get_Y();                      //yの取得
 
+	/*画像の変更取得*/
+	void PlayerSwitch();
+
+	/*画像の動作変更*/
+	void PlayerChangeMoveimg();
+
+	/*腕の描画・動き*/
+	void ArmDrawMove() const;
+
 private:
 	/********************   ジャンプ関係   ********************/
 
@@ -31,7 +40,20 @@ private:
 
 	/**********************************************************/
 
-	int image = 0;  //画像用
+	int image[10]; //画像
+
+	int armL_Image[3];
+	int armR_Image[3];
+
+	int player_Image; //画像の配列保持
+
+	int playerGetMove;   //移動保持
+
+	int playerCount; //画像のフレームカウント
+
+	int playerChange_Image; //画像変更
+
+	int pCount; //最後の画像
 
 	Jan_Type select_JanType;  //選択した"手"
 
