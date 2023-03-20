@@ -148,10 +148,10 @@ void Enemy_04::Update_Jangeki()
 
 
 		//ê∂ê¨
-		if (hp <= 50)
+		/*if (hp <= 50)
 		{
-			if (frame_count % 60 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
-		}
+			if (frame_count % 40 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius*0.7, speed*-1.5, type);
+		}*/
 		if (frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 	}
 }
