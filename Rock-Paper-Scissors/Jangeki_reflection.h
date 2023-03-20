@@ -21,19 +21,27 @@ public:
 	bool GetFlg();
 	void trueFlg();
 	void falseFlg();
-	
 
-	
 	Jangeki_Base** obj_reflection;//反射ジャン撃用配列
 	Jangeki_Base** GetJangeki() const { return obj_reflection; } //反射されたジャン撃取得
+
+	int jan_count_reflection;
 	
-	
+	void SetTargetLocation(float x, float y);
+	void SetEnemyLocation(float enemy_x, float enemy_y);
 
 protected:
 	
 private:
 	//反射じゃん撃かどうか
 	bool reflectionFlg = false;
-   
+	
+	float targetX = 0;
+	float targetY = 0;
+	
+	float enemy_x = 0;
+	float enemy_y = 0;
+
+
 };
 

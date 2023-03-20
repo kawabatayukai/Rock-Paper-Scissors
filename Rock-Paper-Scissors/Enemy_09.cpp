@@ -3,6 +3,7 @@
 #include"Player.h"
 #include"Jangeki_Base.h"
 #include"Scene_Stage09.h"
+#include"Jangeki_Homing.h"
 
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
@@ -37,7 +38,7 @@ void Enemy_09::Update()
 	//じゃん撃更新・生成
 	Update_Jangeki();
 	reflection->Update_reflection();
-	MoveEnmey_09();
+	//MoveEnmey_09();
 
 	//if (x + (w / 2) == (1280 - 20))
 	//{
@@ -92,6 +93,7 @@ void Enemy_09::Draw() const
 void Enemy_09::Update_Jangeki()
 {
 	int jan_count;
+	
 
 	//じゃん撃配列をひとつずつ
 	for (jan_count = 0; jan_count < JANGEKI_MAX; jan_count++)
@@ -100,8 +102,11 @@ void Enemy_09::Update_Jangeki()
 		if (obj_jangeki[jan_count] == nullptr) break;
 
 		obj_jangeki[jan_count]->Update();
+		
+		//ホーミングじゃん撃であればプレイヤーの座標をセットする
+		obj_jangeki[jan_count]->SetTargetLocation(player_x, player_y);
+		reflection->SetTargetLocation(player_x, player_y);
 
-		//画面外で削除する
 		if (obj_jangeki[jan_count]->CheckScreenOut() == true)
 		{
 			DeleteJangeki(jan_count);
@@ -117,19 +122,67 @@ void Enemy_09::Update_Jangeki()
 		
 	{
 		float radius = 35.5f;   //半径
-		float speed = -3.0f;     //スピード
+		float speed = 3.0f;     //スピード
 
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
 	
 		//生成
-		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
-		if(reflection->GetFlg()==true)reflection->obj_reflection[jan_count]= new Jangeki_Base(x, y, radius, speed, type);
+		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
+		//反射じゃん撃生成
+		if(reflection->GetFlg()==true)reflection->obj_reflection[reflection->jan_count_reflection]= new Jangeki_Homing(x, y, radius, speed, type);
 		reflection->falseFlg();
 	}
 }
-void Enemy_09::MoveEnmey_09() {
+
+void Enemy_09::Homing()
+{
+	int jan_count;
+
+
+	//じゃん撃配列をひとつずつ
+	for (jan_count = 0; jan_count < JANGEKI_MAX; jan_count++)
+	{
+		//配列の jan_count 番目がnullptr（空要素）ならそれ以上処理しない
+		if (obj_jangeki[jan_count] == nullptr) break;
+
+
+
+		obj_jangeki[jan_count]->Update();
+
+		//ホーミングじゃん撃であれば敵の座標をセットする
+		reflection->SetTargetLocation(GetX(), GetY());
+	
+
+		//画面外で削除する
+		if (obj_jangeki[jan_count]->CheckScreenOut() == true)
+		{
+			DeleteJangeki(jan_count);
+			jan_count--;
+		}
+	}
+
+	/*********************** ↓↓ 発射・生成 ↓↓ ***********************/
+	frame_count++;
+
+	//配列の空要素
+	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
+
+	{
+		float radius = 35.5f;   //半径
+		float speed = 10.0f;     //スピード
+		
+		Jan_Type jangeki_type = Jan_Type::SCISSORS;  //じゃん撃の属性
+		
+		
+		obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, jangeki_type);
+		
+	}
+}
+
+void Enemy_09::MoveEnmey_09() 
+{
 	interval++;
 	if (/*land_flg == true && *//*GetRand(100) == 5 &&*/ interval % 300 == 0) {
 		switch (GetRand(12))
@@ -192,10 +245,4 @@ void Enemy_09::MoveEnmey_09() {
 		}
 	}
 
-}
-int Enemy_09::GetX() {
-	return x;
-}
-int Enemy_09::GetY() {
-	return y;
 }

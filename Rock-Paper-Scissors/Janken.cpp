@@ -2,91 +2,146 @@
 #include"KeyManager.h"
 #include"Janken.h"
 
+
 //コンストラクタ　　　　　　　　　　enemyの出す手が決まる
-Janken::Janken(Jan_Type enemy_jan) : enemy_jan(enemy_jan)
+Janken::Janken(Jan_Type enemy_jan, const int stage_num)
+	: enemy_jan(enemy_jan), p_image_x(-50), e_image_x(1330)
 {
 	//適当に初期化
 	player_jan = Jan_Type::ROCK;
 	result = Jan_Result::_ERROR;
 
 	//画像読み込み
-	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image);
+	LoadDivGraph("images/Janken_Test.png", 3, 3, 1, 200, 200, image);
+	image_back = LoadGraph("images/Jan_Back_ver1.png");             //じゃんけん中背景
+	image_hand = LoadGraph("images/Janken_Hand.png");
+	image_player = LoadGraph("images/sd_body-1.png");
+	image_enemy = LoadGraph("images/tyokitest.png");
 
-	SetFontSize(50);
+	//フォントデータを作成　　　　　　Windows標準搭載フォントなら大丈夫。多分　　　[候補 "Yu Gothic UI"]
+	font_result = CreateFontToHandle("メイリオ", 70, 8, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 2);
+	font_other = CreateFontToHandle("メイリオ", 40, 3, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
+
+	//色
+	blue      = GetColor(0, 0, 255);    
+	red       = GetColor(255, 0, 0);
+	brack     = GetColor(0, 0, 0);
+	white     = GetColor(255, 255, 255);
+	green     = GetColor(0, 255, 0);
 }
 
 //デストラクタ
 Janken::~Janken()
 {
-
-	SetFontSize(20);
+	//フォントデータを削除
+	DeleteFontToHandle(font_result);
 }
 
 //更新
 void Janken::Update()
 {
-	//B,Y,Xが押されるまでなにもしない 　押された瞬間if文の中
-	if (Check_AnyButton() == true)
+	//40フレーム後
+	if (++time > 40)
 	{
-		// じゃんけんの結果を取得
-		result = Get_JankenResult();
+		//B,Y,Xが押されるまでなにもしない 　押された瞬間if文の中
+		if (Check_AnyButton() == true)
+		{
+			// じゃんけんの結果を取得
+			result = Get_JankenResult();
+		}
+		else
+		{
+			return;   //何もしない
+		}
 	}
 	else
 	{
-		return;   //何もしない
+		const int speed = 10;     //移動スピード
+		const int p_goal = 200;   //停止点player
+		const int e_goal = 1070;  //停止点enemy
+
+		//プレイヤー画像を移動させる
+		p_image_x += speed;
+		if (p_image_x > p_goal) p_image_x = p_goal;
+
+		//敵画像を移動させる
+		e_image_x -= speed;
+		if (e_image_x < e_goal) e_image_x = e_goal;
 	}
 }
 
 //描画
 void Janken::Draw() const
 {
+	//背景
+	DrawGraph(0, 0, image_back, TRUE);
+
 	//プレイヤー
-	DrawCircle(120, 200, 200, 0xffffff, TRUE);
-	DrawString(120, 200, "player", 0x000000);
+	DrawRotaGraph(p_image_x, 300, 2, 0, image_player, TRUE, TRUE);
 
 	//敵
-	DrawCircle(1160, 200, 200, 0xffff00, TRUE);
-	DrawString(1160, 200, "enemy", 0x000000);
+	DrawRotaGraph(e_image_x, 600, 2, 0, image_enemy, TRUE);
 
-	//どのボタンも押されていないとき
-	if (button_B == false && button_Y == false && button_X == false)
+	//40フレーム後
+	if (time > 40)
 	{
-		DrawString(280, 400, "じゃ ん け ん....", 0xffffff);
-	}
-	else
-	{
-		DrawString(280, 400, "ぽ ん", 0xffffff);
-
-		//プレイヤーの手
-		DrawRotaGraph(250, 580, 1.8, 1, image[static_cast<int>(player_jan)], TRUE);
-
-		//敵の手
-		DrawRotaGraph(1030, 580, 1.8, 1, image[static_cast<int>(enemy_jan)], TRUE);
-
-
-		//じゃんけんの結果（プレイヤー目線）
-		switch (result)
+		//どのボタンも押されていないとき
+		if (button_B == false && button_Y == false && button_X == false)
 		{
-		case Jan_Result::LOSE:
+			DrawStringToHandle(380, 450, "じゃんけん....", white, font_other);
 
-			DrawString(350, 300, "負けた", 0xffffff);
-			break;
-
-		case Jan_Result::WIN:
-
-			DrawString(350, 300, "勝った", 0xffffff);
-			break;
-
-		case Jan_Result::ONEMORE:
-
-			DrawString(350, 300, "あいこ", 0xffffff);
-			break;
-
-		default:
-			break;
+			//ふきだし
+			DrawOval(600, 100, 130, 80, 0xffffff, TRUE);
+			DrawOval(480, 200, 40, 20, 0xffffff, TRUE);
+			DrawOval(400, 230, 20, 10, 0xffffff, TRUE);
+			DrawRotaGraph(600, 100, 0.35, 0, image_hand, TRUE);  //手
 		}
+		else
+		{
+			DrawStringToHandle(400, 450, "ぽ ん", white, font_other);
 
-		DrawString(300, 600, "Aボタンを押してください", 0xffffff);
+			//プレイヤーの手
+			DrawRotaGraph(420, 180, 1.0, 0.5, image[static_cast<int>(player_jan)], TRUE);
+
+			//敵の手
+			DrawRotaGraph(850, 500, 1.0, 0.5, image[static_cast<int>(enemy_jan)], TRUE);
+
+
+			//じゃんけんの結果（プレイヤー目線）
+			switch (result)
+			{
+			case Jan_Result::LOSE:
+
+				DrawStringToHandle(50, 50, "LOSE...", blue, font_result, brack);
+				DrawStringToHandle(950, 300, "WIN!", red, font_result, brack);
+				break;
+
+			case Jan_Result::WIN:
+
+				DrawStringToHandle(50, 50, "WIN!", red, font_result, brack);
+				DrawStringToHandle(950, 300, "LOSE...", blue, font_result, brack);
+				break;
+
+			case Jan_Result::ONEMORE:
+
+				DrawStringToHandle(50, 50, "ONEMORE", 0xffffff, font_result);
+				DrawStringToHandle(850, 300, "ONEMORE", 0xffffff,font_result);
+				break;
+
+			default:
+				break;
+			}
+
+			//点滅
+			static int counter;
+
+			if (counter++ < 30)
+			{
+				DrawStringToHandle(350, 650, "-- Press  A  Button --", white, font_other, green);
+			}
+			else if (counter > 60)  counter = 0;
+			else {}
+		}
 	}
 
 	

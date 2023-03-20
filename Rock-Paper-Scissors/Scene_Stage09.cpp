@@ -58,34 +58,24 @@ Scene_Stage09::~Scene_Stage09()
 //更新
 void Scene_Stage09::Update()
 {
-	//接触じゃんけんでない時
-	if (janken_flag == false)
+	
+	//接触じゃんけん開始前
+	if (GetJanState() == Jan_State::BEFORE)
 	{
 		obj_player->Update();    // プレイヤー更新・操作可能
+
+		//（playerが）敵の座標を取得
+		obj_player->SetEnemyLocation(obj_enemy->GetX(), obj_enemy->GetY());
+
 		obj_enemy->Update();     //敵キャラ更新・内部処理
 		obj_enemy->reflection->Update_reflection();
-
-
-		//敵とプレイヤーの当たり判定  　ここで"接触じゃんけん"
-		if (obj_enemy->Hit_Character(obj_player) == true)
-		{
-			//敵が出す手をランダムに決める　　　（ランダムなint型の値(0～2)を Jan_Type型に変換）
-			Jan_Type enemy_janken = static_cast<Jan_Type> (GetRand(2));
-
-			//じゃんけん用オブジェクト生成
-			obj_janken = new Janken(enemy_janken);
-
-
-			//接触じゃんけん開始
-			janken_flag = true;
-
-		}
+				//プレイヤーの座標を取得
+		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
+		obj_enemy->reflection->SetEnemyLocation(obj_enemy->GetX(), obj_enemy->GetY());
 	}
-	else
-	{
-		//接触時じゃんけんの処理を実行
-		Update_Janken();
-	}
+
+	//接触じゃんけん処理
+	Touch_Janken(obj_enemy, this);
 
 
 	//playerのじゃん撃をとってくる
@@ -108,7 +98,7 @@ void Scene_Stage09::Update()
 
 		for (int e_count = 0; e_count < JANGEKI_MAX; e_count++)
 		{
-			if (enemy_jangeki[e_count] == nullptr) break;         //じゃん撃がない時は処理しない
+			if (enemy_jangeki[e_count] == nullptr) break;         //じゃん撃がない時は処理しないuuuuuuuuuuuuuuuuuuuuuuu
 
 			if (player_jangeki[p_count]->Hit_Jangeki(enemy_jangeki[e_count]) == true)
 			{
@@ -135,8 +125,10 @@ void Scene_Stage09::Update()
 				case 2:             //あいこ
 
 					//player側のじゃん撃を削除
-					delete_player = true;
-
+					if (Rflg == false) 
+					{
+						delete_player = true;
+					}
 					//enemy側のじゃん撃を削除
 					obj_enemy->DeleteJangeki(e_count);
 					e_count--;
@@ -282,6 +274,12 @@ void Scene_Stage09::Update()
 						obj_enemy->reflection->Delete_reflectionJangeki(r_count);
 						r_count--;
 
+						//ホーミングを特殊生成
+						obj_player->Create_Homing(p_count, player_jangeki[p_count]->GetX() , player_jangeki[p_count]->GetY(), player_jangeki[p_count]->GetR(), player_jangeki[p_count]->GetSpeed(), player_jangeki[p_count]->GetType());
+
+						//delete_player = true;
+						//obj_enemy->Homing();
+
 						break;
 
 					case 2:             //あいこ
@@ -364,7 +362,7 @@ void Scene_Stage09::Draw() const
 	//HP表示
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
 	//接触じゃんけんでない時
-	if (janken_flag == false)
+	if (GetJanState() == Jan_State::BEFORE)
 	{
 
 		obj_player->Draw();  //プレイヤー描画
@@ -389,57 +387,6 @@ void Scene_Stage09::Draw() const
 	DrawString(640, 360, "Stage09", 0xffffff);
 }
 
-//じゃんけん更新・内部処理
-void Scene_Stage09::Update_Janken()
-{
-	//　ここは改良したほうがいい
-
-
-	obj_janken->Update();
-
-	//Aボタンが押されたとき 
-	if (KeyManager::OnPadClicked(PAD_INPUT_A) == true)
-	{
-		//結果を取得
-		switch (obj_janken->GetResult())
-		{
-		case Jan_Result::LOSE:    //負け
-
-			obj_player->SetX(640);   //ずらす
-			janken_flag = false;
-
-			obj_enemy->Init_Jangeki();
-
-			delete obj_janken;
-			break;
-
-		case Jan_Result::WIN:     //勝ち
-
-			obj_player->SetX(640);   //ずらす
-			janken_flag = false;
-
-			obj_enemy->Init_Jangeki();
-
-			delete obj_janken;
-			break;
-
-		case Jan_Result::ONEMORE: //あいこ
-
-			janken_flag = false;
-
-			obj_enemy->Init_Jangeki();
-
-			delete obj_janken;
-			break;
-
-		case Jan_Result::_ERROR:  //まだじゃんけん中
-			break;
-
-		default:
-			break;
-		}
-	}
-}
 
 //じゃんけん描画
 void Scene_Stage09::Draw_Janken() const
@@ -470,4 +417,16 @@ AbstractScene* Scene_Stage09::ChangeScene()
 #endif // DEBUG_OFF_09
 
 	return this;
+}
+
+//じゃんけん終了後の挙動（プレイヤー勝ち）
+void Scene_Stage09::AfterJanken_WIN()
+{
+	obj_player->SetX(100);
+}
+
+//じゃんけん終了後の挙動（プレイヤー負け）
+void Scene_Stage09::AfterJanken_LOSE()
+{
+	obj_player->SetX(100);
 }
