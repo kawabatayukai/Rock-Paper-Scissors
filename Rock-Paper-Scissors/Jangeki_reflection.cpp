@@ -1,4 +1,5 @@
 #include "Jangeki_Reflection.h"
+#include"Jangeki_Homing.h"
 #include<math.h>
 //コンストラクタ
 Jangeki_Reflection::Jangeki_Reflection(float x, float y, float r, float speed, Jan_Type type)
@@ -15,7 +16,7 @@ Jangeki_Reflection::~Jangeki_Reflection()
 }
 
 void Jangeki_Reflection::Update_reflection()  {
-	int jan_count_reflection;
+	
 
 	//じゃん撃配列をひとつずつ
 	for (jan_count_reflection = 0; jan_count_reflection < JANGEKI_MAX; jan_count_reflection++)
@@ -24,7 +25,8 @@ void Jangeki_Reflection::Update_reflection()  {
 		if (obj_reflection[jan_count_reflection] == nullptr) break;
 
 		obj_reflection[jan_count_reflection]->Update();
-
+	
+		obj_reflection[jan_count_reflection]->SetTargetLocation(targetX, targetY);
 		//画面外で削除する
 		if (obj_reflection[jan_count_reflection]->CheckScreenOut() == true)
 		{
@@ -41,14 +43,13 @@ void Jangeki_Reflection::Update_reflection()  {
 
 	{
 
-		
 		float radius = 35.5f;   //半径
 		float speed = -3.0f;     //スピード
 
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 		
-		/*if (reflectionFlg == true) obj_reflection[jan_count_reflection] = new Jangeki_Base(chara->GetX(), chara->GetY(), radius, speed, type);
+		/*if (reflectionFlg == true) obj_reflection[jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed, type);
 		reflectionFlg = false;*/
 	}
 	
@@ -104,4 +105,10 @@ void Jangeki_Reflection::trueFlg() {
 }
 void Jangeki_Reflection::falseFlg() {
 	reflectionFlg = false;
+}
+
+void Jangeki_Reflection::SetTargetLocation(float x, float y)
+{
+	targetX = x;
+	targetY = y;
 }
