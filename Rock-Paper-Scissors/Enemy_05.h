@@ -29,6 +29,8 @@ private:
 
 	int Enemy_image;		   //敵画像用
 	int Enemy_jamp_image;	   //敵ジャンプ時画像用
+	int Movepattern;			//動きのパターン
+	int Movetimer;				//動き用のタイマー
 };
 
 

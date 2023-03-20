@@ -40,15 +40,13 @@ Scene_Stage04::Scene_Stage04(const Player* player)
 	obj_floor[6] = new Floor(390, 425, 10, 170, 0x493759);		//‘«ê(‰ºc)
 	obj_floor[7] = new Floor(667, 295, 10, 130, 0x493759);		//‘«ê(^‚ñ’†c)
 	obj_floor[8] = new Floor(467, 125, 10, 130, 0x493759);		//‘«ê(ãc)
-	obj_floor[9] = new Floor(0, 320, 100, 5, 0x493759);		//™‡@
-	obj_floor[10] = new Floor(0, 540, 70, 5, 0x493759);		//™‡A
-	obj_floor[11] = new Floor(300, 0, 5, 80, 0x493759);		//™‡B
-	obj_floor[12] = new Floor(900, 0, 5, 130, 0x493759);		//™‡C
-	obj_floor[13] = new Floor(1100, 0, 5, 40, 0x493759);		//™‡D
-	obj_floor[14] = new Floor(1180, 150, 100, 5, 0x493759);	//™‡E
-	obj_floor[15] = new Floor(1230, 400, 30, 5, 0x493759);		//™‡F
-	obj_floor[16] = new Floor(1000, 650, 5, 70, 0x493759);		//™‡G
-	obj_floor[17] = new Floor(700, 680, 5, 40, 0x493759);		//™‡H
+	obj_floor[9] = new Floor(0, 320, 100, 5, 0x493759);		    //™‡@
+	obj_floor[10] = new Floor(0, 540, 70, 5, 0x493759);		    //™‡A
+	obj_floor[11] = new Floor(300, 0, 5, 80, 0x493759);		    //™‡B
+	obj_floor[12] = new Floor(1180, 150, 100, 5, 0x493759);	    //™‡C
+	obj_floor[13] = new Floor(1230, 400, 30, 5, 0x493759);		//™‡D
+	obj_floor[14] = new Floor(1000, 650, 5, 70, 0x493759);		//™‡E
+	obj_floor[15] = new Floor(700, 680, 5, 40, 0x493759);		//™‡F
 }
 
 //ƒfƒXƒgƒ‰ƒNƒ^

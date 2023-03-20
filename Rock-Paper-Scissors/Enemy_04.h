@@ -38,10 +38,10 @@ private:
 
 	/**********************************************************/
 
-	int waitTime = 0;			//待ち時間用変数
-	int frame_count = 0;       //じゃん撃発射用
-	Pattern_04 moveinfo[20]; //行動パターン20種
-	short current = 0; //現在のパターン配列添字
+	int waitTime;				//待ち時間用変数
+	int frame_count;			//じゃん撃発射用
+	Pattern_04 moveinfo[20];	//行動パターン20種
+	short current;				//現在のパターン配列添字
 };
 
 
