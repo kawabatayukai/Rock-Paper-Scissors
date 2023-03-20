@@ -29,6 +29,7 @@ public:
 	void Move_Pattern();             //行動パターンに沿った行動
 
 	void Jan_360degrees(int count, float rad, float speed, Jan_Type type);  //360度発射（必殺）
+	void Jan_Vertical(int count, float rad, float speed, Jan_Type type);    //縦にたくさん発射（特殊）
 
 private:
 	/********************   ジャンプ関係   ********************/

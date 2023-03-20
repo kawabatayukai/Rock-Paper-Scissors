@@ -31,7 +31,6 @@ public:
 bool Rflg = false; //”½ŽË‚¶‚á‚ñŒ‚”»•Ê—p
 private:
 	Enemy_09* obj_enemy;            //“G
-	Enemy_09* obj_enemy1;            //“G
 	Jangeki_Reflection* reflection;
 
 

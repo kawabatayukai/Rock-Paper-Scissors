@@ -82,8 +82,8 @@
     <Filter Include="ソース ファイル\Jangeki\tamayose">
       <UniqueIdentifier>{d315c432-ea81-43c0-91d3-c6daa18af80b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Jangeki\nakayoshi">
-      <UniqueIdentifier>{097a98c9-c56a-4c15-ab2d-0c2675765e66}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\Jangeki\yonahara">
+      <UniqueIdentifier>{a42c1488-1e9a-40ca-a97d-cbb48bf7da50}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -210,14 +210,26 @@
     <ClCompile Include="Jangeki_Changespeed.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Jangeki_reflection.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
     <ClCompile Include="Jangeki_Spin.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Jangeki_Coming.cpp">
       <Filter>ソース ファイル\Jangeki\tamayose</Filter>
     </ClCompile>
-    <ClCompile Include="Jangeki_reflection.cpp">
-      <Filter>ソース ファイル\Jangeki\nakayoshi</Filter>
+    <ClCompile Include="Jangeki_whole.cpp">
+      <Filter>ソース ファイル\Jangeki\yonahara</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MobEnemy_05.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Jangeki_Vertical.cpp">
+      <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -347,14 +359,29 @@
     <ClInclude Include="Jangeki_Changespeed.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Jangeki_reflection.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="Jangeki_Spin.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Jangeki_Coming.h">
       <Filter>ソース ファイル\Jangeki\tamayose</Filter>
     </ClInclude>
-    <ClInclude Include="Jangeki_reflection.h">
-      <Filter>ソース ファイル\Jangeki\nakayoshi</Filter>
+    <ClInclude Include="Jangeki_whole.h">
+      <Filter>ソース ファイル\Jangeki\yonahara</Filter>
+    </ClInclude>
+    <ClInclude Include="comon.h">
+      <Filter>ソース ファイル\Jangeki\yonahara</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MobEnemy_05.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_Vertical.h">
+      <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

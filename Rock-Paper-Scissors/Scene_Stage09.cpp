@@ -71,7 +71,7 @@ void Scene_Stage09::Update()
 		obj_enemy->reflection->Update_reflection();
 				//プレイヤーの座標を取得
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
-		obj_enemy->reflection->SetEnemyLocation(obj_enemy->GetX(), obj_enemy->GetY());
+		/*obj_enemy->reflection->SetEnemyLocation(obj_enemy->GetX(), obj_enemy->GetY());*/
 	}
 
 	//接触じゃんけん処理
@@ -275,10 +275,7 @@ void Scene_Stage09::Update()
 						r_count--;
 
 						//ホーミングを特殊生成
-						obj_player->Create_Homing(p_count, player_jangeki[p_count]->GetX() , player_jangeki[p_count]->GetY(), player_jangeki[p_count]->GetR(), player_jangeki[p_count]->GetSpeed(), player_jangeki[p_count]->GetType());
-
-						//delete_player = true;
-						//obj_enemy->Homing();
+						obj_player->Create_Homing(p_count, player_jangeki[p_count]->GetX() , player_jangeki[p_count]->GetY(), player_jangeki[p_count]->GetR(),10, player_jangeki[p_count]->GetType());
 
 						break;
 

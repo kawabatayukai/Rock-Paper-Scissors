@@ -3,6 +3,7 @@
 #include"Player.h"
 #include"Jangeki_Base.h"
 #include"Jangeki_Homing.h"
+#include"Jangeki_Vertical.h"
 #include<typeinfo>
 
 #define _USE_MATH_DEFINES
@@ -115,14 +116,24 @@ void Enemy_07::Update_Jangeki()
 		//¶¬
 		if (frame_count % 120 == 0)
 		{
-			if (GetRand(1) == 0)
+			switch (GetRand(2))
 			{
+			case 0:
 				Jan_360degrees(jan_count, radius, speed, type);
-			}
-			else
-			{
+				break;
+
+			case 1:
 				obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
+				break;
+
+			case 2:
+				Jan_Vertical(jan_count, radius, speed, type);
+				break;
+
+			default:
+				break;
 			}
+
 		}
 	}
 
@@ -182,4 +193,14 @@ void Enemy_07::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
 
 		obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
 	}
+}
+
+//c‚É‚½‚­‚³‚ñ”­Ëi“Áêj
+void Enemy_07::Jan_Vertical(int count, float rad, float speed, Jan_Type type)
+{
+	//4ŒÂ¶¬
+	obj_jangeki[count]     = new Jangeki_Vertical(x, y, rad, -speed, (y + 50), type);
+	obj_jangeki[count + 1] = new Jangeki_Vertical(x, y, rad, -speed, (y + 75), type);
+	obj_jangeki[count + 2] = new Jangeki_Vertical(x, y, rad, -speed, (y - 50), type);
+	obj_jangeki[count + 3] = new Jangeki_Vertical(x, y, rad, -speed, (y - 75), type);
 }

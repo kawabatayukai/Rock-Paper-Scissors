@@ -1,47 +1,47 @@
-ï»¿#pragma once
-
+#pragma once
 #include"EnemyBase.h"
 
-//4ã‚¹ãƒ†ãƒ¼ã‚¸ã€€æ•µã‚­ãƒ£ãƒ©
+//s“®ƒpƒ^[ƒ“04—p
+struct Pattern_04 {
+
+	int moveflg; //0:“®‚©‚È‚¢,1:“®‚­
+	float location_x; //–Úw‚µ‚Ä‚¢‚éÀ•Wx
+	float location_y; //–Úw‚µ‚Ä‚¢‚éÀ•Wy
+	float waitFlameTime; //‘Ò‚¿ŠÔ
+	int next_index; //Ÿ”z—ñ‚Ìƒpƒ^[ƒ“‚Ì”Ô†
+
+};
+
+//4ƒXƒe[ƒW@“GƒLƒƒƒ‰
 class Enemy_04 : public EnemyBase
 {
 public:
-	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ åº§æ¨™ãƒ»å±æ€§ã‚’è¨­å®š
+	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^ À•WE‘®«‚ğİ’è
 	Enemy_04(float x, float y, Jan_Type type);
 
-	~Enemy_04();                     //ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+	~Enemy_04();                     //ƒfƒXƒgƒ‰ƒNƒ^
 
-	void Update() override;          //æ›´æ–°
-	void Draw() const override;      //æç”»
+	void Update() override;          //XV
+	void Draw() const override;      //•`‰æ
 
-	void Update_Jangeki() override;  //ã˜ã‚ƒã‚“æ’ƒç”Ÿæˆãƒ»æ›´æ–°
+	void Update_Jangeki() override;  //‚¶‚á‚ñŒ‚¶¬EXV
 
 	void Move_Pattern();
 
 private:
-	//è¡Œå‹•ãƒ‘ã‚¿ãƒ¼ãƒ³04ç”¨
-	struct Pattern_04
-	{
-		int moveflg; //0:å‹•ã‹ãªã„,1:å‹•ã
-		float location_x; //ç›®æŒ‡ã—ã¦ã„ã‚‹åº§æ¨™x
-		float location_y; //ç›®æŒ‡ã—ã¦ã„ã‚‹åº§æ¨™y
-		float waitFlameTime; //å¾…ã¡æ™‚é–“
-		int next_index; //æ¬¡é…åˆ—ã®ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ç•ªå·
+	/********************   ƒWƒƒƒ“ƒvŠÖŒW   ********************/
 
-	};
-	/********************   ã‚¸ãƒ£ãƒ³ãƒ—é–¢ä¿‚   ********************/
-
-	//float old_x = 0;          //å‰å›ã®ä½ç½®X
-	//float old_y = 0;          //å‰å›ã®ä½ç½®Y
-	//float y_add = 0;          //è½ä¸‹è·é›¢
-	//float g_add = 1.0f;       //é‡åŠ›åŠ é€Ÿåº¦
+	//float old_x = 0;          //‘O‰ñ‚ÌˆÊ’uX
+	//float old_y = 0;          //‘O‰ñ‚ÌˆÊ’uY
+	//float y_add = 0;          //—‰º‹——£
+	//float g_add = 1.0f;       //d—Í‰Á‘¬“x
 
 	/**********************************************************/
 
-	int waitTime;			//å¾…ã¡æ™‚é–“ç”¨å¤‰æ•°
-	int frame_count;       //ã˜ã‚ƒã‚“æ’ƒç™ºå°„ç”¨
-	Pattern_04 moveinfo[20]; //è¡Œå‹•ãƒ‘ã‚¿ãƒ¼ãƒ³20ç¨®
-	short current; //ç¾åœ¨ã®ãƒ‘ã‚¿ãƒ¼ãƒ³é…åˆ—æ·»å­—
+	int waitTime;				//‘Ò‚¿ŠÔ—p•Ï”
+	int frame_count;			//‚¶‚á‚ñŒ‚”­Ë—p
+	Pattern_04 moveinfo[20];	//s“®ƒpƒ^[ƒ“20í
+	short current;				//Œ»İ‚Ìƒpƒ^[ƒ“”z—ñ“Yš
 };
 
 
