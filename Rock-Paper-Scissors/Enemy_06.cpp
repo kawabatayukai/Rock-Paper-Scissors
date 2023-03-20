@@ -106,6 +106,9 @@ void Enemy_06::Update_Jangeki()
 
 		obj_jangeki[jan_count]->Update();
 
+		////ホーミングじゃん撃であればプレイヤーの座標をセットする
+		//obj_jangeki[jan_count]->SetTargetLocation(player_x, player_y);
+
 		//画面外で削除する
 		if (obj_jangeki[jan_count]->CheckScreenOut() == true)
 		{
