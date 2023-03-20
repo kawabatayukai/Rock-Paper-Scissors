@@ -30,7 +30,7 @@ void Stage_Base::DrawUI(Jan_Type type, int hp) const
 		DrawRotaGraph(810, 60, 0.5, 0, typeImage[1], TRUE);
 		break;
 	case Jan_Type::PAPER:
-		DrawRotaGraph(950, 60, 0.5, 0, typeImage[2], TRUE);
+		DrawRotaGraph(810, 60, 0.5, 0, typeImage[2], TRUE);
 		break;
 	default:
 		break;

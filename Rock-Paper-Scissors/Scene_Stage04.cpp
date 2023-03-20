@@ -25,7 +25,7 @@ Scene_Stage04::Scene_Stage04(const Player* player)
 	}
 
 	//“G‚ğ¶¬
-	obj_enemy = new Enemy_04(1100, 550, Jan_Type::SCISSORS);
+	obj_enemy = new Enemy_04(1100, 600, Jan_Type::SCISSORS);
 
 	//°E•Ç‚Ì—pˆÓ
 	Init_Floor(STAGE_04_FLOOR);
@@ -43,8 +43,8 @@ Scene_Stage04::Scene_Stage04(const Player* player)
 	obj_floor[9] = new Floor(0, 320, 100, 5, 0x493759);		    //™‡@
 	obj_floor[10] = new Floor(0, 540, 70, 5, 0x493759);		    //™‡A
 	obj_floor[11] = new Floor(300, 0, 5, 80, 0x493759);		    //™‡B
-	obj_floor[12] = new Floor(1180, 150, 100, 5, 0x493759);	    //™‡C
-	obj_floor[13] = new Floor(1230, 400, 30, 5, 0x493759);		//™‡D
+	obj_floor[12] = new Floor(1180, 300, 100, 5, 0x493759);	    //™‡C
+	obj_floor[13] = new Floor(1130, 460, 130, 5, 0x493759);		//™‡D
 	obj_floor[14] = new Floor(1000, 650, 5, 70, 0x493759);		//™‡E
 	obj_floor[15] = new Floor(700, 680, 5, 40, 0x493759);		//™‡F
 }
@@ -212,7 +212,7 @@ void Scene_Stage04::Update()
 
 
 	HitCtrl_Floor(obj_player, STAGE_04_FLOOR);     // player@°E•Ç”»’è
-	HitCtrl_Floor(obj_enemy, STAGE_04_FLOOR);      // “G@@@°E•Ç”»’è
+	//HitCtrl_Floor(obj_enemy, STAGE_04_FLOOR);      // “G@@@°E•Ç”»’è
 
 
 }
