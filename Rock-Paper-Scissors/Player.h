@@ -35,6 +35,9 @@ public:
 	/*腕の描画・動き*/
 	void ArmDrawMove() const;
 
+	//プレイヤーのUI描画
+	void PlayerDrawUI(int hp) const;
+
 private:
 	/********************   ジャンプ関係   ********************/
 
@@ -70,6 +73,7 @@ private:
 
 	int image_JanType[3];     //選択じゃん撃画像
 	int image_setsumei;       //操作説明用　モロ
+	int hpImage;
 
 	//向き（左右のみ）
 	enum class DIRECTION
