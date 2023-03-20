@@ -3,7 +3,6 @@
 #include "DxLib.h"
 #include"Scene_GameOver.h"
 #include "Scene_GameClear.h"
-#include"Scene_Stage06.h"
 #define PI    3.1415926535897932384626433832795f
 
 //デバッグモード
