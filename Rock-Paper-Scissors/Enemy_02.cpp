@@ -2,6 +2,11 @@
 #include"DxLib.h"
 #include"Player.h"
 #include"Jangeki_Base.h"
+#include "Jangeki_whole.h"
+#include<typeinfo>
+
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_02::Enemy_02(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
@@ -59,7 +64,7 @@ void Enemy_02::Update()
 	}
 	
 	//左に行く
-	if (jump_cnt >= 0 && direction_flg == false)
+	if (jump_cnt >= 0 && direction_flg == false && Stop_flg == false)
 	{
 
 		x = x - 5;
@@ -68,7 +73,7 @@ void Enemy_02::Update()
 			image = LoadGraph("images/stage02/junp2.png");
 			jump_cnt = 0;
 			direction_flg = true;
-			
+			Stop_flg = true;
 		}
 		
 		if (land_flg == true && GetRand(1) == 1)    //GetRand(30) == 3　のところがジャンプの条件
@@ -81,7 +86,7 @@ void Enemy_02::Update()
 		
 	}
 	//右に行く
-	else if (jump_cnt >= 0 && direction_flg == true)
+	else if (jump_cnt >= 0 && direction_flg == true&&Stop_flg==false)
 	{
 		x = x + 5;
 		if (x > 1180)
@@ -89,52 +94,42 @@ void Enemy_02::Update()
 			image = LoadGraph("images/stage02/junp4.png");
 			jump_cnt = 0;
 			direction_flg = false;
+			Stop_flg = true;
 		}
+
+
 		if (land_flg == true && GetRand(1) == 1)    //GetRand(30) == 3　のところがジャンプの条件
 		{
 			g_add = -30.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 			land_flg = false;  //地面についていない
 
 		}
-		//waitTime++;
-		/*if (moveinfo[current].waitFlameTime <= waitTime)
-		{
+		
+		
+	}
+
+	//壁につく処理
+	if (Stop_flg == true) {
+		waitTime++;
+		if (waitTime > 180) {
 			waitTime = 0;
-			current = moveinfo[current].next_index;
-		}*/
-	/*switch (moveinfo[current].moveflg)
-		{
-		case 0:
-			waitTime++;
-			if (moveinfo[current].waitFlameTime <= waitTime)
-			{
-				waitTime = 0;
-				current = moveinfo[current].next_index;
-			}
-			break;
-
-		case 1:
-			Move_Pattern();
-			break;
-
-		default:
-			break;
+			Stop_flg = false;
 		}
-		*/
+	}
+	if (Stop_flg == false) {
+		y_add = (y - old_y) + g_add;  //今回の落下距離を設定
+
+			//落下速度の制限
+		if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
+
+
+		old_y = y;                    //1フレーム前のｙ座標
+		y += y_add;                   //落下距離をｙ座標に加算する
+		g_add = _GRAVITY;              //重力加速度を初期化する
+
 	}
 
 	
- 
-	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
-	
-	//落下速度の制限
-	if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
-   
-
-	old_y = y;                    //1フレーム前のｙ座標
-	y += y_add;                   //落下距離をｙ座標に加算する
-	g_add = _GRAVITY;              //重力加速度を初期化する
-
 
 	if (hp <= 0) hp = 0;
 	else if (hp <= 50) speed = 5.0f;
@@ -189,9 +184,30 @@ void Enemy_02::Update_Jangeki()
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
-
 		//生成
-		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+		if (frame_count % 120 == 0)
+		{
+			if (GetRand(0) == 0)
+			{
+				Jan_360degrees(jan_count, radius, speed, type);
+			}
+			
+		}
+		//生成
+		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_whole(x, y, radius, speed, type, player_x, player_y);
+		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+	}
+	
+}
+//360度発射（必殺）
+void Enemy_02::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
+{
+	//45度ずつ8個生成
+	for (int i = count; i < (count + 18); i++)
+	{
+		double angle = static_cast<double>((20.0 * i) * (M_PI / 180));
+
+		obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
 	}
 }
 //old_yの取得関数
