@@ -70,6 +70,9 @@ Player::~Player()
 //更新
 void Player::Update()
 {
+	//前回の座標ｘを保存
+	old_x = x;
+
 	//左
 	if (KeyManager::OnPadPressed(PAD_INPUT_LEFT))
 	{

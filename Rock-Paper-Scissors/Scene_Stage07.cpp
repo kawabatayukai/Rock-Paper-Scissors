@@ -210,11 +210,8 @@ void Scene_Stage07::Update()
 		}
 	}
 
-
 	HitCtrl_Floor(obj_player, STAGE_07_FLOOR);     // player　床・壁判定
 	HitCtrl_Floor(obj_enemy, STAGE_07_FLOOR);      // 敵　　　床・壁判定
-
-
 }
 
 

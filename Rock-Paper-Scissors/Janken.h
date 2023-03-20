@@ -14,7 +14,7 @@ class Janken
 {
 public:
 	//コンストラクタ   敵の出す手をもらう
-	Janken(Jan_Type enemy_jan);
+	Janken(Jan_Type enemy_jan, const int stage_num = 0);
 
 	~Janken();            //デストラクタ
 
@@ -42,6 +42,28 @@ private:
 	Jan_Type player_jan;     //プレイヤーの出す手  Check_AnyButton()で押されたボタン
 
 	Jan_Result result;       // じゃんけんの結果を格納する
-	
+
+	int time = 0;            //カウンター
+	int p_image_x;           //プレイヤー描画ｘ座標
+	int e_image_x;           //敵描画ｘ座標
+
+
+//---------------------------------------------------------------
 	int image[3];            //画像
+	int image_back;          //じゃんけん中背景
+	int image_hand;          //じゃんけん説明
+	int image_player;        //プレイヤーじゃんけん中
+	int image_enemy;         //敵じゃんけん中
+
+	int font_result;         //結果(WIN or LOSE or ONEMORE) 用フォント 
+	int font_other;          //「じゃんけん..」,「ぽん」など用フォント
+
+	//色
+	int blue;
+	int red;
+	int brack;
+	int white;
+	int green;
+
+	const char* n = nullptr;
 };
