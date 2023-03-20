@@ -60,7 +60,7 @@ Scene_Stage08::Scene_Stage08(const Player* player)
 	obj_floor[26] = new Floor(920, 175, 5, 120, 0x00ff00);      //足場　右下
 	obj_floor[27] = new Floor(665, 175, 5, 120, 0x00ff00);      //足場　右下
 	obj_floor[28] = new Floor(179, 155, 5, 120, 0x00ff00);      //足場　右下
-	obj_floor[29] = new Floor(64, 275, 120, 5, 0x00ff00);      //足場　右下
+	obj_floor[29] = new Floor(64,  275, 120, 5, 0x00ff00);      //足場　右下
 
 	Back_image = LoadGraph("images/stage08/Stage08_1.jpg",TRUE);
 }
