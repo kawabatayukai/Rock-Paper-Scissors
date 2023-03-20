@@ -12,6 +12,12 @@ EnemyBase::~EnemyBase()
 	delete[] obj_jangeki;
 }
 
+//属性変更
+void EnemyBase::SetType(Jan_Type type)
+{
+	this->e_type = type;
+}
+
 //HPをセット
 void EnemyBase::SetHP(int damage)
 {

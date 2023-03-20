@@ -15,7 +15,8 @@ Jangeki_Reflection::~Jangeki_Reflection()
 
 }
 
-void Jangeki_Reflection::Update_reflection()  {
+void Jangeki_Reflection::Update_reflection()  
+{
 	
 
 	//‚¶‚á‚ñŒ‚”z—ñ‚ğ‚Ğ‚Æ‚Â‚¸‚Â
@@ -111,4 +112,9 @@ void Jangeki_Reflection::SetTargetLocation(float x, float y)
 {
 	targetX = x;
 	targetY = y;
+}
+void Jangeki_Reflection::SetEnemyLocation(float enemy_x, float enemy_y)
+{
+	this->enemy_x = enemy_x;
+	this->enemy_y = enemy_y;
 }
