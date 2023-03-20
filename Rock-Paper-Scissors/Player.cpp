@@ -344,9 +344,9 @@ void Player::PlayerDrawUI(int hp) const
 		break;
 	}*/
 
-	DrawRotaGraph(200, 60, 0.5, 0, hpImage, TRUE);			//体力ゲージ枠
-	DrawBox(115, 45, 120 + static_cast<int>(hp * 2.54), 75, 0x00ff00, TRUE);	//体力ゲージ
-	DrawFormatString(820, 85, 0x00ff00, "残り:%d", hp);	//残り体力(数値)
+	DrawRotaGraph(200, 50, 0.5, 0, hpImage, TRUE);			//体力ゲージ枠
+	DrawBox(115, 33, 120 + static_cast<int>(hp * 2.54), 67, 0x00ff00, TRUE);	//体力ゲージ
+	DrawFormatString(200, 40, 0x0000ff, "残り:%d", hp);	//残り体力(数値)
 }
 
 //描画
@@ -386,9 +386,10 @@ void Player::Draw() const
 	PlayerDrawUI(GetHP());
 
 	//テスト 選択じゃん撃
-	//DrawString(30, 50, "SELECT : ", 0xffffff);
-	DrawRotaGraph(60, 60, 1, 0, image_JanType[static_cast<int>(select_JanType)], TRUE);
+	DrawString(30, 105, "SELECT : ", 0xffffff);
+	DrawRotaGraph(160, 115, 0.5, 0, image_JanType[static_cast<int>(select_JanType)], TRUE);
 	DrawString(30, 150, "RB : 発射", 0xffffff);
+	DrawString(30, 180, "LB : ジャンプ", 0xffffff);
 
 	//テスト
 	//DrawGraph(20, 0, image_setsumei, TRUE);
