@@ -258,6 +258,8 @@ void Scene_Stage07::Draw() const
 		//ÚG‚¶‚á‚ñ‚¯‚ñ•`‰æ
 		Draw_Janken();
 	}
+
+	
 }
 
 //‚¶‚á‚ñ‚¯‚ñ•`‰æ
