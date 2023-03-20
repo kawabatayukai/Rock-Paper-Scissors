@@ -28,6 +28,7 @@ public:
 	int jan_count_reflection;
 	
 	void SetTargetLocation(float x, float y);
+	void SetEnemyLocation(float enemy_x, float enemy_y);
 
 protected:
 	
@@ -37,5 +38,10 @@ private:
 	
 	float targetX = 0;
 	float targetY = 0;
+	
+	float enemy_x = 0;
+	float enemy_y = 0;
+
+
 };
 
