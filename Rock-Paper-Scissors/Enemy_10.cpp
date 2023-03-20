@@ -84,6 +84,9 @@ void  Enemy_10::Move()
 		break;
 	}
 
+	/*敵直接の属性変化*/
+	//e_type = Jan_Type::PAPER;
+
 	/********************   ジャンプ関係   ********************/
 
 	//if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
