@@ -8,7 +8,7 @@ Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 {
 	speed = 7.0f;
 	dir = 1;
-	hp = 200;
+	hp = 100;
 
 	image = LoadGraph("images/tyokitest.png");
 
@@ -106,6 +106,9 @@ void Enemy_06::Update_Jangeki()
 
 		obj_jangeki[jan_count]->Update();
 
+		////ホーミングじゃん撃であればプレイヤーの座標をセットする
+		//obj_jangeki[jan_count]->SetTargetLocation(player_x, player_y);
+
 		//画面外で削除する
 		if (obj_jangeki[jan_count]->CheckScreenOut() == true)
 		{
@@ -182,8 +185,8 @@ void Enemy_06::AttackPattern_1()
 		ChangeCnt = 0;
 	}
 
-	//HPが150以下になると次の行動ループに移行
-	if (hp <= 150)
+	//HPが70以下になると次の行動ループに移行
+	if (hp <= 70)
 	{
 		attack_pattern = 1;    //攻撃パターンを変更
 		jump_cnt = 0;          //ジャンプカウント初期化
@@ -308,8 +311,8 @@ void Enemy_06::AttackPattern_2()
 		ChangeCnt = 0;
 	}
 
-	//HPが100以下になると次の行動ループに移行
-	if (hp <= 100)
+	//HPが40以下になると次の行動ループに移行
+	if (hp <= 40)
 	{
 		/*attack_pattern = 2;*/
 	}
