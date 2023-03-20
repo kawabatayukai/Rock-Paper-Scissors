@@ -16,6 +16,11 @@ public:
 
 	void Update_Jangeki() override;  //じゃん撃生成・更新
 
+	//ホーミングを特殊生成
+	void Create_Homing(int jan_count, float x, float y,float r, float speed, Jan_Type type);
+	//敵の座標を取得
+	void SetEnemyLocation( const float x, const float y);
+
 	int Get_OldX();                   //old_xの取得関数
 	int Get_X();                      //xの取得
 	int Get_OldY();                   //old_yの取得関数
@@ -37,6 +42,9 @@ private:
 
 	double jan_angle = 0;     //じゃん撃の角度
 	int jan_interval = 0;     //じゃん撃発射間隔
+
+	float enemy_x = 0;        //敵の座標ｘ
+	float enemy_y = 0;        //敵の座標ｙ
 
 	int image_JanType[3];     //選択じゃん撃画像
 	int image_setsumei;       //操作説明用　モロ

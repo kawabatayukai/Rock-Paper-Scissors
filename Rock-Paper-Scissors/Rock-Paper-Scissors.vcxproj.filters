@@ -82,6 +82,9 @@
     <Filter Include="ソース ファイル\Jangeki\tamayose">
       <UniqueIdentifier>{d315c432-ea81-43c0-91d3-c6daa18af80b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Jangeki\nakayoshi">
+      <UniqueIdentifier>{097a98c9-c56a-4c15-ab2d-0c2675765e66}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -207,14 +210,14 @@
     <ClCompile Include="Jangeki_Changespeed.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Jangeki_reflection.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Jangeki_Spin.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Jangeki_Coming.cpp">
       <Filter>ソース ファイル\Jangeki\tamayose</Filter>
+    </ClCompile>
+    <ClCompile Include="Jangeki_reflection.cpp">
+      <Filter>ソース ファイル\Jangeki\nakayoshi</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -344,14 +347,14 @@
     <ClInclude Include="Jangeki_Changespeed.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Jangeki_reflection.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Jangeki_Spin.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Jangeki_Coming.h">
       <Filter>ソース ファイル\Jangeki\tamayose</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_reflection.h">
+      <Filter>ソース ファイル\Jangeki\nakayoshi</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -63,10 +63,15 @@ void Scene_Stage09::Update()
 	if (GetJanState() == Jan_State::BEFORE)
 	{
 		obj_player->Update();    // プレイヤー更新・操作可能
+
+		//（playerが）敵の座標を取得
+		obj_player->SetEnemyLocation(obj_enemy->GetX(), obj_enemy->GetY());
+
 		obj_enemy->Update();     //敵キャラ更新・内部処理
 		obj_enemy->reflection->Update_reflection();
 				//プレイヤーの座標を取得
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
+		obj_enemy->reflection->SetEnemyLocation(obj_enemy->GetX(), obj_enemy->GetY());
 	}
 
 	//接触じゃんけん処理
@@ -93,7 +98,7 @@ void Scene_Stage09::Update()
 
 		for (int e_count = 0; e_count < JANGEKI_MAX; e_count++)
 		{
-			if (enemy_jangeki[e_count] == nullptr) break;         //じゃん撃がない時は処理しない
+			if (enemy_jangeki[e_count] == nullptr) break;         //じゃん撃がない時は処理しないuuuuuuuuuuuuuuuuuuuuuuu
 
 			if (player_jangeki[p_count]->Hit_Jangeki(enemy_jangeki[e_count]) == true)
 			{
@@ -120,8 +125,10 @@ void Scene_Stage09::Update()
 				case 2:             //あいこ
 
 					//player側のじゃん撃を削除
-					delete_player = true;
-
+					if (Rflg == false) 
+					{
+						delete_player = true;
+					}
 					//enemy側のじゃん撃を削除
 					obj_enemy->DeleteJangeki(e_count);
 					e_count--;
@@ -266,6 +273,12 @@ void Scene_Stage09::Update()
 						Rflg = true;
 						obj_enemy->reflection->Delete_reflectionJangeki(r_count);
 						r_count--;
+
+						//ホーミングを特殊生成
+						obj_player->Create_Homing(p_count, player_jangeki[p_count]->GetX() , player_jangeki[p_count]->GetY(), player_jangeki[p_count]->GetR(), player_jangeki[p_count]->GetSpeed(), player_jangeki[p_count]->GetType());
+
+						//delete_player = true;
+						//obj_enemy->Homing();
 
 						break;
 

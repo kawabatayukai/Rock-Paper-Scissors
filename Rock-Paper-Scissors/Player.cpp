@@ -5,6 +5,7 @@
 #include "Player.h"
 #include"KeyManager.h"
 #include"Debug_Manager.h"
+#include"Jangeki_Homing.h"
 
 //じゃん撃発射間隔　（1秒）
 #define PLAYER_JAN_INTERVAL 60
@@ -218,6 +219,7 @@ void Player::Update_Jangeki()
 		if (obj_jangeki[jan_count] == nullptr) break;
 
 		obj_jangeki[jan_count]->Update();
+		obj_jangeki[jan_count]->SetTargetLocation(enemy_x, enemy_y);  //じゃん撃に敵の座標をセット
 
 		//画面外で削除する
 		if (obj_jangeki[jan_count]->CheckScreenOut() == true)
@@ -280,6 +282,26 @@ void Player::Update_Jangeki()
 	//間隔
 	jan_interval--;
 	if (jan_interval < 0) jan_interval = 0;
+}
+
+//ホーミングを特殊生成
+void Player::Create_Homing(int jan_count, float x, float y, float r, float speed, Jan_Type type)
+{
+	//不正な場合は処理しない
+	if (jan_count > JANGEKI_MAX || jan_count < 0)  return;
+
+	//一旦削除
+	delete obj_jangeki[jan_count];
+	
+	//ホーミングを生成
+	obj_jangeki[jan_count] = new Jangeki_Homing(x, y, r, speed, type);
+}
+
+//敵の座標を取得
+void Player::SetEnemyLocation(const float x, const float y)
+{
+	this->enemy_x = x;
+	this->enemy_y = y;
 }
 
 //old_yの取得関数
