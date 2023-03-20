@@ -233,6 +233,8 @@ void Scene_Stage10::Update()
 //•`‰æ
 void Scene_Stage10::Draw() const
 {
+	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+
 	//ÚG‚¶‚á‚ñ‚¯‚ñ‚Å‚È‚¢
 	if (janken_flag == false)
 	{
