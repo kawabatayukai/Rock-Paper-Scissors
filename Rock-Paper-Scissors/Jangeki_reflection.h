@@ -28,7 +28,7 @@ public:
 	int jan_count_reflection;
 	
 	void SetTargetLocation(float x, float y);
-
+	
 protected:
 	
 private:
@@ -37,5 +37,8 @@ private:
 	
 	float targetX = 0;
 	float targetY = 0;
+	
+	
+
 };
 

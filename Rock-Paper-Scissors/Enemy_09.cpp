@@ -101,15 +101,12 @@ void Enemy_09::Update_Jangeki()
 		//配列の jan_count 番目がnullptr（空要素）ならそれ以上処理しない
 		if (obj_jangeki[jan_count] == nullptr) break;
 
-		
-		
 		obj_jangeki[jan_count]->Update();
 		
 		//ホーミングじゃん撃であればプレイヤーの座標をセットする
 		obj_jangeki[jan_count]->SetTargetLocation(player_x, player_y);
 		reflection->SetTargetLocation(player_x, player_y);
 
-		//画面外で削除する
 		if (obj_jangeki[jan_count]->CheckScreenOut() == true)
 		{
 			DeleteJangeki(jan_count);
@@ -140,7 +137,8 @@ void Enemy_09::Update_Jangeki()
 }
 
 
-void Enemy_09::MoveEnmey_09() {
+void Enemy_09::MoveEnmey_09() 
+{
 	interval++;
 	if (/*land_flg == true && *//*GetRand(100) == 5 &&*/ interval % 300 == 0) {
 		switch (GetRand(12))

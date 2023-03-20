@@ -76,11 +76,11 @@
     <Filter Include="ソース ファイル\Jangeki\kawabata">
       <UniqueIdentifier>{32b49806-6f27-4d6d-9c72-c0dfb3c9ad29}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Jangeki\bise">
-      <UniqueIdentifier>{0225705f-57ca-4278-af2c-b05082ba30c7}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\Jangeki\nakayoshi">
+      <UniqueIdentifier>{529d5a9c-658b-4cf3-928a-2113071af2af}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Jangeki\tamayose">
-      <UniqueIdentifier>{d315c432-ea81-43c0-91d3-c6daa18af80b}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\Jangeki\bise">
+      <UniqueIdentifier>{86c002c3-3b89-438c-bf87-d5a780bfe79d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -141,9 +141,6 @@
     <ClCompile Include="Enemy_09.cpp">
       <Filter>ソース ファイル\GameMainScene\Stage_09</Filter>
     </ClCompile>
-    <ClCompile Include="Jangeki_Base.cpp">
-      <Filter>ソース ファイル\Jangeki</Filter>
-    </ClCompile>
     <ClCompile Include="Scene_Stage00.cpp">
       <Filter>ソース ファイル\GameMainScene\Stage_00</Filter>
     </ClCompile>
@@ -201,20 +198,29 @@
     <ClCompile Include="Jangeki_Homing.cpp">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClCompile>
+    <ClCompile Include="Jangeki_Base.cpp">
+      <Filter>ソース ファイル\Jangeki</Filter>
+    </ClCompile>
+    <ClCompile Include="Jangeki_reflection.cpp">
+      <Filter>ソース ファイル\Jangeki\nakayoshi</Filter>
+    </ClCompile>
     <ClCompile Include="Jangeki_Zigzag.cpp">
       <Filter>ソース ファイル\Jangeki\bise</Filter>
     </ClCompile>
-    <ClCompile Include="Jangeki_Changespeed.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Jangeki_reflection.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Jangeki_Spin.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Jangeki\bise</Filter>
+    </ClCompile>
+    <ClCompile Include="Jangeki_Changespeed.cpp">
+      <Filter>ソース ファイル\Jangeki\bise</Filter>
     </ClCompile>
     <ClCompile Include="Jangeki_Coming.cpp">
-      <Filter>ソース ファイル\Jangeki\tamayose</Filter>
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MobEnemy_05.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_05</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -275,9 +281,6 @@
     <ClInclude Include="Enemy_09.h">
       <Filter>ソース ファイル\GameMainScene\Stage_09</Filter>
     </ClInclude>
-    <ClInclude Include="Jangeki_Base.h">
-      <Filter>ソース ファイル\Jangeki</Filter>
-    </ClInclude>
     <ClInclude Include="Scene_Stage00.h">
       <Filter>ソース ファイル\GameMainScene\Stage_00</Filter>
     </ClInclude>
@@ -335,23 +338,32 @@
     <ClInclude Include="Jangeki_Homing.h">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClInclude>
+    <ClInclude Include="Jangeki_Base.h">
+      <Filter>ソース ファイル\Jangeki</Filter>
+    </ClInclude>
     <ClInclude Include="Debug_Manager.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_reflection.h">
+      <Filter>ソース ファイル\Jangeki\nakayoshi</Filter>
     </ClInclude>
     <ClInclude Include="Jangeki_Zigzag.h">
       <Filter>ソース ファイル\Jangeki\bise</Filter>
     </ClInclude>
-    <ClInclude Include="Jangeki_Changespeed.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Jangeki_reflection.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Jangeki_Spin.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\Jangeki\bise</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_Changespeed.h">
+      <Filter>ソース ファイル\Jangeki\bise</Filter>
     </ClInclude>
     <ClInclude Include="Jangeki_Coming.h">
-      <Filter>ソース ファイル\Jangeki\tamayose</Filter>
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MobEnemy_05.h">
+      <Filter>ソース ファイル\GameMainScene\Stage_05</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

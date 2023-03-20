@@ -16,10 +16,24 @@ public:
 
 	void Update_Jangeki() override;  //じゃん撃生成・更新
 
+	//ホーミングを特殊生成
+	void Create_Homing(int jan_count, float x, float y,float r, float speed, Jan_Type type);
+	//敵の座標を取得
+	void SetEnemyLocation( const float x, const float y);
+
 	int Get_OldX();                   //old_xの取得関数
 	int Get_X();                      //xの取得
 	int Get_OldY();                   //old_yの取得関数
 	int Get_Y();                      //yの取得
+
+	/*画像の変更取得*/
+	void PlayerSwitch();
+
+	/*画像の動作変更*/
+	void PlayerChangeMoveimg();
+
+	/*腕の描画・動き*/
+	void ArmDrawMove() const;
 
 private:
 	/********************   ジャンプ関係   ********************/
@@ -31,12 +45,28 @@ private:
 
 	/**********************************************************/
 
-	int image = 0;  //画像用
+	int image[10]; //画像
+
+	int armL_Image[3];
+	int armR_Image[3];
+
+	int player_Image; //画像の配列保持
+
+	int playerGetMove;   //移動保持
+
+	int playerCount; //画像のフレームカウント
+
+	int playerChange_Image; //画像変更
+
+	int pCount; //最後の画像
 
 	Jan_Type select_JanType;  //選択した"手"
 
 	double jan_angle = 0;     //じゃん撃の角度
 	int jan_interval = 0;     //じゃん撃発射間隔
+
+	float enemy_x = 0;        //敵の座標ｘ
+	float enemy_y = 0;        //敵の座標ｙ
 
 	int image_JanType[3];     //選択じゃん撃画像
 	int image_setsumei;       //操作説明用　モロ
