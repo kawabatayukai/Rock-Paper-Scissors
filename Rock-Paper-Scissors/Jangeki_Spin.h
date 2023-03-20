@@ -1,21 +1,20 @@
 #pragma once
 #include "Jangeki_Base.h"
-class Jangeki_Spin :
-    public Jangeki_Base
+
+class Jangeki_Spin : public Jangeki_Base
 {
 private:
-	float UD;			//上下
-	bool UDflg;
-	float LR;			//左右
-	bool LRflg;
-	double angle;             //角度
-	int time_counter;
+	float angle;
+	float player_x;
+	float player_y;
+	float rad;
 
 public:
 	//コンストラクタ
-	Jangeki_Spin(float x, float y, float r, float speed, Jan_Type type);
+	Jangeki_Spin(float x, float y, float r, float speed, Jan_Type type, float p_x, float p_y);
 	~Jangeki_Spin();
 
 	virtual void Update()override;
 };
+
 

@@ -5,7 +5,7 @@
 #include"Player.h"
 #include"Floor.h"
 
-#define STAGE_04_FLOOR 18         //床・壁の合計数
+#define STAGE_04_FLOOR 16         //床・壁の合計数
 
 //0ステージ
 class Scene_Stage04 : public Stage_Base
@@ -20,16 +20,18 @@ public:
 
 	void Draw() const override;            //描画
 
-	void Update_Janken();                  //じゃんけん更新・内部処理
 	void Draw_Janken() const;              //じゃんけん描画
 
 	AbstractScene* ChangeScene() override; //シーンの変更
+
+	void AfterJanken_WIN()  override;      //じゃんけん終了後の挙動（プレイヤー勝ち）
+	void AfterJanken_LOSE() override;      //じゃんけん終了後の挙動（プレイヤー負け）
 
 	int back_image;
 
 private:
 	Enemy_04* obj_enemy;            //敵
 
-	bool janken_flag = false;       //接触時じゃんけんフラグ
+	
 };
 

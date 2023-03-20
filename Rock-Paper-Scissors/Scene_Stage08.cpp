@@ -31,8 +31,8 @@ Scene_Stage08::Scene_Stage08(const Player* player)
 
 	//一つずつ生成  STAGE_08_FLOOR 個分
 	obj_floor[0] = new Floor(0, 700, 1280, 20,0x00ff00);        //床
-	obj_floor[1] = new Floor(0, 0, 20, 1720);           //壁（左）
-	obj_floor[2] = new Floor(1260, 0, 20, 1720);           //壁（右）
+	obj_floor[1] = new Floor(0, -300, 20, 1720);           //壁（左）
+	obj_floor[2] = new Floor(1260, -300, 20, 1720);           //壁（右）
 	obj_floor[3] = new Floor(211, 590, 100, 5, 0x00ff00);      //足場　下1
 	obj_floor[4] = new Floor(465, 590, 105, 5, 0x00ff00);      //足場　下2
 	obj_floor[5] = new Floor(717, 590, 107, 5, 0x00ff00);      //足場　下3
@@ -50,7 +50,7 @@ Scene_Stage08::Scene_Stage08(const Player* player)
 	obj_floor[16] = new Floor(311, 290, 100, 5, 0x00ff00);      //足場　右下
 	obj_floor[17] = new Floor(565, 290, 105, 5, 0x00ff00);      //足場　右下
 	obj_floor[18] = new Floor(817, 290, 108, 5, 0x00ff00);      //足場　右下
-	obj_floor[19] = new Floor(1073, 290, 445, 5,0x00ff00);      //足場　右下
+	obj_floor[19] = new Floor(1073, 290, 187, 5,0x00ff00);      //足場　右下
 	obj_floor[20] = new Floor(407, 170, 160, 5, 0x00ff00);      //足場　右下
 	obj_floor[21] = new Floor(665, 170, 153, 5, 0x00ff00);      //足場　右下
 	obj_floor[22] = new Floor(920, 170, 153, 5, 0x00ff00);      //足場　右下
@@ -59,6 +59,8 @@ Scene_Stage08::Scene_Stage08(const Player* player)
 	obj_floor[25] = new Floor(817, 170, 5, 120, 0x00ff00);      //足場　右下
 	obj_floor[26] = new Floor(920, 175, 5, 120, 0x00ff00);      //足場　右下
 	obj_floor[27] = new Floor(665, 175, 5, 120, 0x00ff00);      //足場　右下
+	obj_floor[28] = new Floor(179, 155, 5, 120, 0x00ff00);      //足場　右下
+	obj_floor[29] = new Floor(64,  275, 120, 5, 0x00ff00);      //足場　右下
 
 	Back_image = LoadGraph("images/stage08/Stage08_1.jpg",TRUE);
 }
@@ -71,34 +73,15 @@ Scene_Stage08::~Scene_Stage08()
 //更新
 void Scene_Stage08::Update()
 {
-	//接触じゃんけんでない時
-	if (janken_flag == false)
+	//接触じゃんけん開始前
+	if (GetJanState() == Jan_State::BEFORE)
 	{
 		obj_player->Update();    // プレイヤー更新・操作可能
 		obj_enemy->Update();     //敵キャラ更新・内部処理
-
-
-
-		//敵とプレイヤーの当たり判定  　ここで"接触じゃんけん"
-		if (obj_enemy->Hit_Character(obj_player) == true)
-		{
-			//敵が出す手をランダムに決める　　　（ランダムなint型の値(0～2)を Jan_Type型に変換）
-			Jan_Type enemy_janken = static_cast<Jan_Type> (GetRand(2));
-
-			//じゃんけん用オブジェクト生成
-			obj_janken = new Janken(enemy_janken);
-
-
-			//接触じゃんけん開始
-			janken_flag = true;
-
-		}
 	}
-	else
-	{
-		//接触時じゃんけんの処理を実行
-		Update_Janken();
-	}
+
+	//接触じゃんけん処理
+	Touch_Janken(obj_enemy, this);
 
 
 	//playerのじゃん撃をとってくる
@@ -189,7 +172,7 @@ void Scene_Stage08::Update()
 				//パーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::PAPER)
 				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					obj_enemy->ReceiveDamage(5);     //ダメージが入る
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -201,7 +184,7 @@ void Scene_Stage08::Update()
 				//グーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::ROCK)
 				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					obj_enemy->ReceiveDamage(5);     //ダメージが入る
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -212,7 +195,7 @@ void Scene_Stage08::Update()
 				//チョキのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::SCISSORS)
 				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					obj_enemy->ReceiveDamage(5);     //ダメージが入る
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -256,7 +239,7 @@ void Scene_Stage08::Draw() const
 {
 	DrawRotaGraph(640, 360, 1.f, 0, Back_image,TRUE);
 	//接触じゃんけんでない時
-	if (janken_flag == false)
+	if (GetJanState() == Jan_State::BEFORE)
 	{
 
 		obj_player->Draw();  //プレイヤー描画
@@ -279,57 +262,6 @@ void Scene_Stage08::Draw() const
 	DrawString(640, 360, "Stage08", 0xffffff);
 }
 
-//じゃんけん更新・内部処理
-void Scene_Stage08::Update_Janken()
-{
-	//　ここは改良したほうがいい
-
-
-	obj_janken->Update();
-
-	//Aボタンが押されたとき 
-	if (KeyManager::OnPadClicked(PAD_INPUT_A) == true)
-	{
-		//結果を取得
-		switch (obj_janken->GetResult())
-		{
-		case Jan_Result::LOSE:    //負け
-
-			obj_player->SetX(640);   //ずらす
-			janken_flag = false;
-
-			obj_enemy->Init_Jangeki();
-
-			delete obj_janken;
-			break;
-
-		case Jan_Result::WIN:     //勝ち
-
-			obj_player->SetX(640);   //ずらす
-			janken_flag = false;
-
-			obj_enemy->Init_Jangeki();
-
-			delete obj_janken;
-			break;
-
-		case Jan_Result::ONEMORE: //あいこ
-
-			janken_flag = false;
-
-			obj_enemy->Init_Jangeki();
-
-			delete obj_janken;
-			break;
-
-		case Jan_Result::_ERROR:  //まだじゃんけん中
-			break;
-
-		default:
-			break;
-		}
-	}
-}
 
 //じゃんけん描画
 void Scene_Stage08::Draw_Janken() const
@@ -360,4 +292,16 @@ AbstractScene* Scene_Stage08::ChangeScene()
 #endif // DEBUG_OFF_08
 
 	return this;
+}
+
+//じゃんけん終了後の挙動（プレイヤー勝ち）
+void Scene_Stage08::AfterJanken_WIN()
+{
+	obj_player->SetX(100);
+}
+
+//じゃんけん終了後の挙動（プレイヤー負け）
+void Scene_Stage08::AfterJanken_LOSE()
+{
+	obj_player->SetX(100);
 }

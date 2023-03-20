@@ -6,12 +6,15 @@
 #include "Jangeki_Zigzag.h" 
 #include "Jangeki_Spin.h" 
 
+
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_05::Enemy_05(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
 	speed = 7.0f;
 	dir = 1;
 	hp = 100;
+	Movepattern = 1;
+	Movetimer = 0;
 
 	image = LoadGraph("images/tyokitest.png");
 
@@ -46,10 +49,138 @@ void Enemy_05::Update()
 
 	/********************   ジャンプ関係   ********************/
 
-	if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
+	//if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
+	//{
+	//	//g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+	//	g_add = -25.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+	//	land_flg = false;  //地面についていない
+	//}
+
+	Movetimer++;
+
+	//敵の移動
+	switch (Movepattern)
 	{
-		g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-		land_flg = false;  //地面についていない
+	case 1:		//真ん中の台へ
+		if (x >= 650 && Movetimer >= 30)
+		{
+			x -= 5;
+		}
+		else if (Movetimer > 30)
+		{
+			Movepattern = 2;
+		}
+		if (Movepattern == 2)
+		{
+			Movetimer = 0;
+		}
+		if (land_flg == true && Movetimer == 60)
+		{
+			g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+			land_flg = false;  //地面についていない
+		}
+		break;
+
+	case 2:		//右下の台へ
+		if (x <= 1000 && Movetimer >= 30)
+		{
+			x += 5;
+		}
+		else if (Movetimer > 30)
+		{
+			Movepattern = 3;
+		}
+		if (Movepattern == 3)
+		{
+			Movetimer = 0;
+		}
+		if (land_flg == true && Movetimer == 40)
+		{
+			g_add = -15.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+			land_flg = false;  //地面についていない
+		}
+		break;
+
+	case 3:		//左上の台へ
+		if (x >= 300 && Movetimer >= 30)
+		{
+			x -= 5;
+
+		}
+		else if (Movetimer > 30)
+		{
+			Movepattern = 4;
+		}
+		if (Movepattern == 4)
+		{
+			Movetimer = 0;
+		}
+		if (land_flg == true && Movetimer == 60 || Movetimer == 120)
+		{
+			g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+			land_flg = false;  //地面についていない
+		}
+		break;
+
+	case 4:		//真ん中の台へ
+		if (x <= 650 && Movetimer >= 30)
+		{
+			x += 5;
+		}
+		else if (Movetimer > 30)
+		{
+			Movepattern = 5;
+		}
+		if (Movepattern == 5)
+		{
+			Movetimer = 0;
+		}
+		if (land_flg == true && Movetimer == 60)
+		{
+			g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+			land_flg = false;  //地面についていない
+		}
+		break;
+
+	case 5:		//右下の台へ
+		if (x >= 300 && Movetimer >= 30)
+		{
+			x -= 5;
+		}
+		else if (Movetimer > 30)
+		{
+			Movepattern = 6;
+		}
+		if (Movepattern == 6)
+		{
+			Movetimer = 0;
+		}
+		if (land_flg == true && Movetimer == 40)
+		{
+			g_add = -15.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+			land_flg = false;  //地面についていない
+		}
+		break;
+
+	case 6:		//右上の台へ
+		if (x <= 1000 && Movetimer >= 30)
+		{
+			x += 5;
+		}
+		else if (Movetimer > 30)
+		{
+			Movepattern = 1;
+		}
+		if (Movepattern == 1)
+		{
+			Movetimer = 0;
+		}
+		if (land_flg == true && Movetimer == 60|| Movetimer == 120)
+		{
+			g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+			land_flg = false;  //地面についていない
+		}
+		break;
 	}
 
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
@@ -118,7 +249,7 @@ void Enemy_05::Update_Jangeki()
 
 
 		//生成
-		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Zigzag(x, y, radius, speed, type,player_x,player_y);
-		
+		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Spin(x, y, radius, speed, type,player_x,player_y);
+
 	}
 }

@@ -12,8 +12,8 @@
 #define DEBUG_OFF_03
 #define DEBUG_OFF_04
 #define DEBUG_OFF_05
-#define DEBUG_OFF_06
-#define DEBUG_OFF_07
+//#define DEBUG_OFF_06
+//#define DEBUG_OFF_07
 #define DEBUG_OFF_08
 #define DEBUG_OFF_09
 #define DEBUG_OFF_10
