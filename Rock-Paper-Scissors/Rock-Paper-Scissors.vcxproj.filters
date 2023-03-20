@@ -216,6 +216,9 @@
     <ClCompile Include="Jangeki_Coming.cpp">
       <Filter>ソース ファイル\Jangeki\tamayose</Filter>
     </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -352,6 +355,9 @@
     </ClInclude>
     <ClInclude Include="Jangeki_Coming.h">
       <Filter>ソース ファイル\Jangeki\tamayose</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
