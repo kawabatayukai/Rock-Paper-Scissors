@@ -187,7 +187,7 @@ void Enemy_02::Update_Jangeki()
 		//ê∂ê¨
 		if (frame_count % 120 == 0)
 		{
-			if (GetRand(1) == 0)
+			if (GetRand(0) == 0)
 			{
 				Jan_360degrees(jan_count, radius, speed, type);
 			}

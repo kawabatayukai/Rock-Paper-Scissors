@@ -4,7 +4,7 @@
 #define _USE_MATH_DEFINES      //数学系マクロの使用
 #include<math.h>
 
-#define HOMING_TIME 100        //追跡時間
+//#define HOMING_TIME 100        //追跡時間
 
 
 //コンストラクタ
@@ -24,16 +24,8 @@ Jangeki_whole::~Jangeki_whole()
 //アップデート
 void Jangeki_whole::Update()
 {
-	//追跡時間内
-	if (time_counter < HOMING_TIME)
-	{
-		
-
-
-		double radius = 8;            //くるくるの半径（見たらわかる）
-
-		
-	}
+	
+	double radius = 8;            //くるくるの半径（見たらわかる）
 	x += static_cast<float>(cos(angle)) * speed;      //cos(角度)　でｘ軸の移動量を計算
 	y += static_cast<float>(sin(angle)) * speed;      //sin(角度)　でｙ軸の移動量を計算
 
