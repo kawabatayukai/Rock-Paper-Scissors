@@ -42,8 +42,6 @@ void Enemy_06::Update()
 
 	//x += dir * speed;
 
-	/********************   ジャンプ関係   ********************/
-
 	//攻撃パターン1
 	if (attack_pattern == 0)
 	{
@@ -61,6 +59,8 @@ void Enemy_06::Update()
 	{
 		AttackPattern_3();
 	}
+
+	/********************   ジャンプ関係   ********************/
 
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
@@ -87,6 +87,9 @@ void Enemy_06::Draw() const
 	//テスト
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
 	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
+
+	//デバッグ用ChangeCnt表示
+	DrawFormatString(900, 600, 0xffffff, "%d", ChangeCnt);
 
 }
 
@@ -158,6 +161,7 @@ void Enemy_06::AttackPattern_1()
 		{
 			jump_cnt = 0;          //ジャンプ回数のリセット
 			direction_flg = true;  //向いている向きの反転
+			ChangeCnt++;
 		}
 	}
 	else if (jump_cnt >= 3 && direction_flg == true)    //右を向いている時の処理
@@ -167,7 +171,15 @@ void Enemy_06::AttackPattern_1()
 		{
 			jump_cnt = 0;           //ジャンプ回数のリセット
 			direction_flg = false;  //向いている向きの反転
+			ChangeCnt++;
 		}
+	}
+
+	//敵の属性変化処理
+	if (ChangeCnt > 4)
+	{
+		SetType(static_cast<Jan_Type>(GetRand(2)));
+		ChangeCnt = 0;
 	}
 
 	//HPが150以下になると次の行動ループに移行
@@ -234,6 +246,7 @@ void Enemy_06::AttackPattern_2()
 		{
 			teleport_Flg = true;
 			direction_flg = true;
+			ChangeCnt++;
 		}
 
 		//ジャンプ処理
@@ -276,6 +289,7 @@ void Enemy_06::AttackPattern_2()
 		{
 			teleport_Flg = true;
 			direction_flg = false;
+			ChangeCnt++;
 		}
 
 		//ジャンプ処理
@@ -287,7 +301,14 @@ void Enemy_06::AttackPattern_2()
 		}
 	}
 
+	//敵の属性変化処理
+	if (ChangeCnt > 3)
+	{
+		SetType(static_cast<Jan_Type>(GetRand(2)));
+		ChangeCnt = 0;
+	}
 
+	//HPが100以下になると次の行動ループに移行
 	if (hp <= 100)
 	{
 		/*attack_pattern = 2;*/
@@ -297,7 +318,7 @@ void Enemy_06::AttackPattern_2()
 //行動ループ3
 void Enemy_06::AttackPattern_3()
 {
-
+	
 }
 
 //old_yの取得関数
