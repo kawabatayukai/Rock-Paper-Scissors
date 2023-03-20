@@ -31,7 +31,9 @@ public:
 private:
 	Enemy_03* obj_enemy;            //“G
 
-	
+
 	int stage = 0;//”wŒi
+	int GroundImages = 0; //’n–Ê
+	int BlockImages = 0; //ƒuƒƒbƒN
 };
 

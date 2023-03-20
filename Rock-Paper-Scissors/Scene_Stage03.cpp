@@ -13,6 +13,9 @@
 Scene_Stage03::Scene_Stage03(const Player* player)
 {
 	stage = LoadGraph("images/stage03/stage03back.png");
+	GroundImages = LoadGraph("images/stage03/GroundImages.png");
+	BlockImages = LoadGraph("images/stage03/BlockImages.png");
+
 
 
 	//プレイヤー情報が渡されていれば
@@ -34,21 +37,21 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	Init_Floor(STAGE_03_FLOOR);
 
 	//一つずつ生成  STAGE_03_FLOOR 個分
-	obj_floor[0] = new Floor(0, 700, 1280, 20, GetColor(240, 230, 140));      //床
-	obj_floor[1] = new Floor(0, 0, 20, 1720, GetColor(240, 230, 140));        //壁（左）
-	obj_floor[2] = new Floor(1260, 0, 20, 1720, GetColor(240, 230, 140));     //壁（右）
+	obj_floor[0] = new Floor("images/stage03/GroundImages.png",0, 700, 1280, 20);      //床, GetColor(240, 230, 140)
+	obj_floor[1] = new Floor("images/stage03/GroundImagesTate.png",0, 0, 20, 1720);        //壁（左）, GetColor(240, 230, 140)
+	obj_floor[2] = new Floor("images/stage03/GroundImagesTate.png",1260, 0, 20, 1720);     //壁（右）, GetColor(240, 230, 140)
 
 	//右から順に
 
-	obj_floor[3] = new Floor(1120, 400, 95, 30,GetColor(193, 107, 68));//足場8//130
-	obj_floor[4] = new Floor(980, 550, 95, 30,	GetColor(193, 107, 68));//足場8//130
-	obj_floor[5] = new Floor(970, 220, 130, 40, GetColor(193, 107, 68));//足場1
-	obj_floor[6] = new Floor(780, 150, 130, 40, GetColor(193, 107, 68));//足場2//130
-	obj_floor[7] = new Floor(585, 220, 130, 40, GetColor(193, 107, 68));//足場3//100
-	obj_floor[8] = new Floor(400, 150, 130, 40, GetColor(193, 107, 68));//足場4//130
-	obj_floor[9] = new Floor(220, 220, 130, 40, GetColor(193, 107, 68));//足場5//130
-	obj_floor[10] = new Floor(20, 400, 95, 30, GetColor(193, 107, 68));//足場6//100
-	obj_floor[11] = new Floor(120,550, 95, 30, GetColor(193, 107, 68));//足場7//130
+	obj_floor[3] = new Floor("images/stage03/BlockImages.png",1140, 400, 95, 30);//足場8//130,GetColor(193, 107, 68)
+	obj_floor[4] = new Floor("images/stage03/BlockImages.png", 980, 550, 95, 30);//足場8//130,	GetColor(193, 107, 68)
+	obj_floor[5] = new Floor("images/stage03/BlockImages.png", 970, 220, 130, 40);//足場1, GetColor(193, 107, 68)
+	obj_floor[6] = new Floor("images/stage03/BlockImages.png", 780, 150, 130, 40);//足場2//130, GetColor(193, 107, 68)
+	obj_floor[7] = new Floor("images/stage03/BlockImages.png", 585, 220, 130, 40);//足場3//100, GetColor(193, 107, 68)
+	obj_floor[8] = new Floor("images/stage03/BlockImages.png", 400, 150, 130, 40);//足場4//130, GetColor(193, 107, 68)
+	obj_floor[9] = new Floor("images/stage03/BlockImages.png", 220, 220, 130, 40);//足場5//130, GetColor(193, 107, 68)
+	obj_floor[10] = new Floor("images/stage03/BlockImages.png", 20, 400, 95, 30);//足場6//100, GetColor(193, 107, 68)
+	obj_floor[11] = new Floor("images/stage03/BlockImages.png", 120,550, 95, 30);//足場7//130, GetColor(193, 107, 68)
 	
 }
 
@@ -68,6 +71,7 @@ void Scene_Stage03::Update()
 		obj_player->Update();    // プレイヤー更新・操作可能
 		obj_enemy->Update();     //敵キャラ更新・内部処理
 		obj_enemy->ChangeDir(obj_player->GetX());//プレイヤーがx < 640だったらエネミーの弾の向きを変える
+		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());	//プレイヤーの座標を取得
 	}
 
 	//接触じゃんけん処理

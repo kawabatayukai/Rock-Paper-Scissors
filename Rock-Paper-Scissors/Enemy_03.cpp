@@ -2,6 +2,7 @@
 #include"DxLib.h"
 #include"Player.h"
 #include"Jangeki_Base.h"
+#include"Jangeki_Coming.h"
 #include <typeinfo>
 
 
@@ -16,10 +17,13 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	enemyimage[0] = LoadGraph("images/stage03/stage03attack.png");
 	enemyimage[1] = LoadGraph("images/stage03/stage03gard.png");
 
+
+
+
 	Init_Jangeki();       //Ç∂Ç·ÇÒåÇÇópà”
 
 	//ìÆÇ´ÉpÉ^Å[Éì åJÇËï‘ÇµÅ@//0Ç≈ìÆÇ´,1Ç≈é~Ç‹ÇÈ
-	moveinfo[0] = { 0, 950.f, 0.f , 1,  0 ,1 };//èâä˙à íuÇÃXÇ™950Ç≈í‚é~
+	moveinfo[0] = { 0, 900.f, 0.f , 1,  0 ,1 };//èâä˙à íuÇÃXÇ™950Ç≈í‚é~
 
 	moveinfo[1] = { 1,  0 ,   0.f , 2, 125 ,1 };//èâä˙à íuÇÃXÇ™950Ç≈í‚é~
 	//Ç±Ç±Ç©ÇÁìÆÇ≠
@@ -27,12 +31,12 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	moveinfo[3] = { 1,  0 ,   0.f , 4, 125 ,1 };//XÇ™650Ç≈í‚é~
 
-	moveinfo[4] = { 0, 325.f, 0.f , 5, 0 ,1 };//XÇ™325Ç‹Ç≈ìÆÇ≠
+	moveinfo[4] = { 0, 350.f, 0.f , 5, 0 ,1 };//XÇ™325Ç‹Ç≈ìÆÇ≠
 
 	moveinfo[5] = { 1,  0 ,   0.f , 6, 125 ,1 };//XÇ™325Ç≈í‚é~
 
 	//ë´èÍÇ…èÊÇÈ
-	moveinfo[6] = { 0, 325.f, 0.f , 7, 0 ,0 };//XÇ™325Ç≈í‚é~
+	moveinfo[6] = { 0, 350.f, 0.f , 7, 0 ,0 };//XÇ™325Ç≈í‚é~
 
 	moveinfo[7] = { 1,  0 ,   0.f , 8, 125 ,1 };//XÇ™325Ç≈í‚é~
 
@@ -104,7 +108,7 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	moveinfo[41] = { 1,  0 ,   0.f , 42, 125,1 };//XÇ™325Ç≈í‚é~
 	//Ç±Ç±Ç©ÇÁìÆÇ≠2
-	moveinfo[42] = { 0, 325.f, 0.f , 43,  0 ,1 };//èâä˙à íuÇÃXÇ™950Ç≈í‚é~
+	moveinfo[42] = { 0, 350.f, 0.f , 43,  0 ,1 };//èâä˙à íuÇÃXÇ™950Ç≈í‚é~
 
 	moveinfo[43] = { 1,  0 ,   0.f , 44, 125 ,1 };//èâä˙à íuÇÃXÇ™950Ç≈í‚é~
 	
@@ -112,11 +116,11 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	moveinfo[45] = { 1,  0 ,   0.f , 46, 125 ,1 };//XÇ™650Ç≈í‚é~
 
-	moveinfo[46] = { 0,	950.f, 0.f , 47, 0 ,1 };//XÇ™325Ç‹Ç≈ìÆÇ≠
+	moveinfo[46] = { 0,	900.f, 0.f , 47, 0 ,1 };//XÇ™325Ç‹Ç≈ìÆÇ≠
 
 	moveinfo[47] = { 1,	 0,  0.f , 48, 62 ,1 };//XÇ™325Ç‹Ç≈ìÆÇ≠
 
-	moveinfo[48] = { 1,  0 ,   0.f , 0, 125 ,1 };//XÇ™650Ç≈í‚é~ÇµîzóÒ[0]Ç…ñﬂÇÈ
+	moveinfo[48] = { 1,  0 ,   0.f , 0, 125 ,1 };//XÇ™650Ç≈í‚é~ÇµîzóÒ[0]Ç…ñﬂÇÈw
 
 }
 
@@ -201,10 +205,6 @@ void Enemy_03::Update()
 	y += y_add;            //óéâ∫ãóó£ÇÇôç¿ïWÇ…â¡éZÇ∑ÇÈ
 	g_add = _GRAVITY;     //èdóÕâ¡ë¨ìxÇèâä˙âªÇ∑ÇÈ
 
-
-
-
-
 }
 /********************   â°à⁄ìÆ   ********************/
 
@@ -277,6 +277,9 @@ void Enemy_03::Update_Jangeki()
 
 		obj_jangeki[jan_count]->Update();
 
+		//ÉvÉåÉCÉÑÅ[ÇÃç¿ïWÇÉZÉbÉgÇ∑ÇÈ
+		obj_jangeki[jan_count]->SetTargetLocation(player_x, player_y);
+
 		//âÊñ äOÇ≈çÌèúÇ∑ÇÈ
 		if (obj_jangeki[jan_count]->CheckScreenOut() == true)
 		{
@@ -292,14 +295,18 @@ void Enemy_03::Update_Jangeki()
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
 		float radius = 40.0f;   //îºåa //35.5f
-		float speed = 6.0f * dir;     //ÉXÉsÅ[Éh//3.0
+		float speed = 4.5f /** dir*/;     //ÉXÉsÅ[Éh//3.0
 
 		//ÉâÉìÉ_ÉÄÇ»ëÆê´Çê∂ê¨
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));//2
 
 
+		////í èÌíeê∂ê¨
+		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+		// 
 		//ê∂ê¨
-		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+	
 	}
 }
 
