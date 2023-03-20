@@ -199,7 +199,7 @@ void Enemy_02::Update_Jangeki()
 	}
 	
 }
-//360度発射（必殺）
+//360度発射
 void Enemy_02::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
 {
 	//45度ずつ8個生成
