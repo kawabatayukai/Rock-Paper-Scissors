@@ -170,6 +170,7 @@
     <ClCompile Include="Jangeki_Homing.cpp" />
     <ClCompile Include="Jangeki_reflection.cpp" />
     <ClCompile Include="Jangeki_Spin.cpp" />
+    <ClCompile Include="Jangeki_whole.cpp" />
     <ClCompile Include="Jangeki_Zigzag.cpp" />
     <ClCompile Include="Scene_End.cpp" />
     <ClCompile Include="Scene_Help.cpp" />
@@ -199,6 +200,7 @@
   <ItemGroup>
     <ClInclude Include="AbstractScene.h" />
     <ClInclude Include="CharaBase.h" />
+    <ClInclude Include="comon.h" />
     <ClInclude Include="Debug_Manager.h" />
     <ClInclude Include="EnemyBase.h" />
     <ClInclude Include="Enemy_00.h" />
@@ -218,6 +220,7 @@
     <ClInclude Include="Jangeki_Homing.h" />
     <ClInclude Include="Jangeki_reflection.h" />
     <ClInclude Include="Jangeki_Spin.h" />
+    <ClInclude Include="Jangeki_whole.h" />
     <ClInclude Include="Jangeki_Zigzag.h" />
     <ClInclude Include="Scene_End.h" />
     <ClInclude Include="Scene_Help.h" />

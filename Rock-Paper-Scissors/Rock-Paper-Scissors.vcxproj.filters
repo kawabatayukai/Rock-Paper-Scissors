@@ -82,6 +82,9 @@
     <Filter Include="ソース ファイル\Jangeki\tamayose">
       <UniqueIdentifier>{d315c432-ea81-43c0-91d3-c6daa18af80b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Jangeki\yonahara">
+      <UniqueIdentifier>{a42c1488-1e9a-40ca-a97d-cbb48bf7da50}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -215,6 +218,9 @@
     </ClCompile>
     <ClCompile Include="Jangeki_Coming.cpp">
       <Filter>ソース ファイル\Jangeki\tamayose</Filter>
+    </ClCompile>
+    <ClCompile Include="Jangeki_whole.cpp">
+      <Filter>ソース ファイル\Jangeki\yonahara</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -352,6 +358,12 @@
     </ClInclude>
     <ClInclude Include="Jangeki_Coming.h">
       <Filter>ソース ファイル\Jangeki\tamayose</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_whole.h">
+      <Filter>ソース ファイル\Jangeki\yonahara</Filter>
+    </ClInclude>
+    <ClInclude Include="comon.h">
+      <Filter>ソース ファイル\Jangeki\yonahara</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
