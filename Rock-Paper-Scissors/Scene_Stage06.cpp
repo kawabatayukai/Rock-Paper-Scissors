@@ -61,12 +61,12 @@ Scene_Stage06::~Scene_Stage06()
 //更新
 void Scene_Stage06::Update()
 {
-	////接触じゃんけん開始前
-	//if (GetJanState() == Jan_State::BEFORE)
-	//{
-	//	obj_player->Update();    // プレイヤー更新・操作可能
-	//	obj_enemy->Update();     //敵キャラ更新・内部処理
-	//}
+	//接触じゃんけん開始前
+	if (GetJanState() == Jan_State::BEFORE)
+	{
+		obj_player->Update();    // プレイヤー更新・操作可能
+		obj_enemy->Update();     //敵キャラ更新・内部処理
+	}
 
 	////接触じゃんけん処理
 	//Touch_Janken(obj_enemy, this);

@@ -15,6 +15,10 @@ public:
 
 	void Update_Jangeki() override;  //じゃん撃生成・更新
 
+	void AttackPattern_1();          //行動ループ1
+	void AttackPattern_2();          //行動ループ1
+	void AttackPattern_3();          //行動ループ1
+
 	int Get_OldY();                   //old_yの取得関数
 	int Get_Y();                      //yの取得
 
@@ -34,7 +38,7 @@ private:
 	//	direction_flg = false    //左右反転フラグ      左向き:true           右向き:false
 	//};
 
-	int  attack_pattern = 0;      //攻撃パターン変数
+	int  attack_pattern = 2;      //攻撃パターン変数
 	bool jump_flg = false;        //ジャンプ用フラグ　　       ジャンプさせる:true   ジャンプしない:false
 	int  jump_cnt = 0;            //ジャンプカウント
 	bool direction_flg = false;   //左右反転フラグ             左向き:true           右向き:false
