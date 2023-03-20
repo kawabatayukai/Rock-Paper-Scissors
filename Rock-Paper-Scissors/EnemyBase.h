@@ -15,6 +15,8 @@ public:
 	virtual void Draw() const = 0;  //描画（定義は派生クラス内で）
 
 	Jan_Type GetType() const { return e_type; }  //属性取得
+	void SetType(Jan_Type type);                 //属性変更
+
 	void SetHP(int damage);         //ダメージを受ける
 
 	//追跡対象の座標をセット　 基本プレイヤー

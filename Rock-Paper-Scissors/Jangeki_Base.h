@@ -45,6 +45,7 @@ public:
 	float GetX() const { return x; }           //ｘ座標取得
 	float GetY() const { return y; }           //ｙ座標取得
 	float GetR() const { return r; }           //半径取得
+	float GetSpeed() const { return speed; }   //スピード取得
 	Jan_Type GetType() const { return type; }  //属性取得
 
 	//タイプ取得（グー,チョキ,パー）
