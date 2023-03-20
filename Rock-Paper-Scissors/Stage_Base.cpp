@@ -2,6 +2,7 @@
 #include"KeyManager.h"
 #include"DxLib.h"
 
+
 //衝突判定なし時間   5秒
 #define NOT_COLLISION_TIME  300
 
@@ -115,7 +116,7 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr)
 			Jan_Type enemy_janken = static_cast<Jan_Type> (GetRand(2));
 
 			//じゃんけんオブジェクト生成
-			obj_janken = new Janken(enemy_janken);
+			obj_janken = new Janken(enemy_janken, 0);
 		}
 
 	}

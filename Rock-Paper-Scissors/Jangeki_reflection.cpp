@@ -15,7 +15,8 @@ Jangeki_Reflection::~Jangeki_Reflection()
 
 }
 
-void Jangeki_Reflection::Update_reflection()  {
+void Jangeki_Reflection::Update_reflection()  
+{
 	
 
 	//‚¶‚á‚ñŒ‚”z—ñ‚ð‚Ð‚Æ‚Â‚¸‚Â

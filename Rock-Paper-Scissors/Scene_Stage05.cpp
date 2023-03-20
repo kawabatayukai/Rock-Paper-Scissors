@@ -3,7 +3,6 @@
 #include "DxLib.h"
 #include"Scene_GameOver.h"
 #include "Scene_GameClear.h"
-#include"Scene_Stage06.h"
 #define PI    3.1415926535897932384626433832795f
 
 //デバッグモード
@@ -51,36 +50,18 @@ Scene_Stage05::~Scene_Stage05()
 //更新
 void Scene_Stage05::Update()
 {
-	//接触じゃんけんでない時
-	if (janken_flag == false)
+	//接触じゃんけん開始前
+	if (GetJanState() == Jan_State::BEFORE)
 	{
 		obj_player->Update();    // プレイヤー更新・操作可能
 		obj_enemy->Update();     //敵キャラ更新・内部処理
-
 		//プレイヤーの座標を取得
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
-
-
-		//敵とプレイヤーの当たり判定  　ここで"接触じゃんけん"
-		if (obj_enemy->Hit_Character(obj_player) == true)
-		{
-			//敵が出す手をランダムに決める　　　（ランダムなint型の値(0～2)を Jan_Type型に変換）
-			Jan_Type enemy_janken = static_cast<Jan_Type> (GetRand(2));
-
-			//じゃんけん用オブジェクト生成
-			obj_janken = new Janken(enemy_janken);
-
-
-			//接触じゃんけん開始
-			janken_flag = true;
-
-		}
 	}
-	else
-	{
-		//接触時じゃんけんの処理を実行
-		Update_Janken();
-	}
+
+	//接触じゃんけん処理
+	Touch_Janken(obj_enemy, this);
+
 
 
 	//playerのじゃん撃をとってくる
@@ -241,7 +222,7 @@ void Scene_Stage05::Draw() const
 	DrawRotaGraph(640, 240, 2.0f, 0, Back_image, TRUE);
 
 	//接触じゃんけんでない時
-	if (janken_flag == false)
+	if (GetJanState() == Jan_State::BEFORE)
 	{
 
 		obj_player->Draw();  //プレイヤー描画
@@ -264,57 +245,7 @@ void Scene_Stage05::Draw() const
 	DrawString(640, 360, "Stage05", 0xffffff);
 }
 
-//じゃんけん更新・内部処理
-void Scene_Stage05::Update_Janken()
-{
-	//　ここは改良したほうがいい
 
-
-	obj_janken->Update();
-
-	//Aボタンが押されたとき 
-	if (KeyManager::OnPadClicked(PAD_INPUT_A) == true)
-	{
-		//結果を取得
-		switch (obj_janken->GetResult())
-		{
-		case Jan_Result::LOSE:    //負け
-
-			obj_player->SetX(640);   //ずらす
-			janken_flag = false;
-
-			obj_enemy->Init_Jangeki();
-
-			delete obj_janken;
-			break;
-
-		case Jan_Result::WIN:     //勝ち
-
-			obj_player->SetX(640);   //ずらす
-			janken_flag = false;
-
-			obj_enemy->Init_Jangeki();
-
-			delete obj_janken;
-			break;
-
-		case Jan_Result::ONEMORE: //あいこ
-
-			janken_flag = false;
-
-			obj_enemy->Init_Jangeki();
-
-			delete obj_janken;
-			break;
-
-		case Jan_Result::_ERROR:  //まだじゃんけん中
-			break;
-
-		default:
-			break;
-		}
-	}
-}
 
 //じゃんけん描画
 void Scene_Stage05::Draw_Janken() const
@@ -345,4 +276,17 @@ AbstractScene* Scene_Stage05::ChangeScene()
 #endif // DEBUG_OFF_05
 
 	return this;
+}
+
+
+//じゃんけん終了後の挙動（プレイヤー勝ち）
+void Scene_Stage05::AfterJanken_WIN()
+{
+	obj_player->SetX(100);
+}
+
+//じゃんけん終了後の挙動（プレイヤー負け）
+void Scene_Stage05::AfterJanken_LOSE()
+{
+	obj_player->SetX(100);
 }
