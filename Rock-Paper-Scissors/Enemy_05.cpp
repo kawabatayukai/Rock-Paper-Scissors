@@ -58,9 +58,10 @@ void Enemy_05::Update()
 
 	Movetimer++;
 
+	//敵の移動
 	switch (Movepattern)
 	{
-	case 1:
+	case 1:		//真ん中の台へ
 		if (x >= 650 && Movetimer >= 30)
 		{
 			x -= 5;
@@ -80,7 +81,7 @@ void Enemy_05::Update()
 		}
 		break;
 
-	case 2:
+	case 2:		//右下の台へ
 		if (x <= 1000 && Movetimer >= 30)
 		{
 			x += 5;
@@ -100,7 +101,7 @@ void Enemy_05::Update()
 		}
 		break;
 
-	case 3:
+	case 3:		//左上の台へ
 		if (x >= 300 && Movetimer >= 30)
 		{
 			x -= 5;
@@ -121,7 +122,7 @@ void Enemy_05::Update()
 		}
 		break;
 
-	case 4:
+	case 4:		//真ん中の台へ
 		if (x <= 650 && Movetimer >= 30)
 		{
 			x += 5;
@@ -141,7 +142,7 @@ void Enemy_05::Update()
 		}
 		break;
 
-	case 5:
+	case 5:		//右下の台へ
 		if (x >= 300 && Movetimer >= 30)
 		{
 			x -= 5;
@@ -161,7 +162,7 @@ void Enemy_05::Update()
 		}
 		break;
 
-	case 6:
+	case 6:		//右上の台へ
 		if (x <= 1000 && Movetimer >= 30)
 		{
 			x += 5;
