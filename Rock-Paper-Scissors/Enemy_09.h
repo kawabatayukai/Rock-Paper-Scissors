@@ -2,7 +2,7 @@
 #include"EnemyBase.h"
 #include"Jangeki_Base.h"
 #include"Jangeki_reflection.h"
-
+#include"Player.h"
 //9ステージ　敵キャラ
 class Enemy_09 : public EnemyBase
 {
@@ -18,6 +18,8 @@ public:
 	void Update_Jangeki() override;  //じゃん撃生成・更新
 
 	void MoveEnmey_09();
+
+	void Homing();
 
 	Jangeki_Reflection* reflection;
 
@@ -35,7 +37,9 @@ private:
 	int frame_count = 0;       //じゃん撃発射用
 	int interval = 0;
 	int image;
+
 	
+	Player* type;
 
 };
 
