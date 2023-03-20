@@ -99,31 +99,8 @@ void Enemy_02::Update()
 			land_flg = false;  //’n–Ê‚É‚Â‚¢‚Ä‚¢‚È‚¢
 
 		}
-		//waitTime++;
-		/*if (moveinfo[current].waitFlameTime <= waitTime)
-		{
-			waitTime = 0;
-			current = moveinfo[current].next_index;
-		}*/
-	/*switch (moveinfo[current].moveflg)
-		{
-		case 0:
-			waitTime++;
-			if (moveinfo[current].waitFlameTime <= waitTime)
-			{
-				waitTime = 0;
-				current = moveinfo[current].next_index;
-			}
-			break;
-
-		case 1:
-			Move_Pattern();
-			break;
-
-		default:
-			break;
-		}
-		*/
+		
+		
 	}
 
 

@@ -50,7 +50,6 @@ private:
 	bool jump_flg = false;        //ジャンプ用フラグ　　ジャンプさせる:true   ジャンプしない:false
 	bool Stop_flg = false;        //ジャンプ用フラグ　　ジャンプさせる:true   ジャンプしない:false
 	int  jump_cnt =0;            //ジャンプカウント
-	int  Stop_cnt =0;            //ジャンプカウント
 	bool direction_flg = false;   //左右反転フラグ      左向き:true   
 	/**********************************************************/
 	int waitTime = 5;			//待ち時間用変数
