@@ -35,6 +35,8 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 	armL_Image[2] = LoadGraph("images/˜r‚Ì‚İ‚Ï[¶.png");
 	armR_Image[2] = LoadGraph("images/˜r‚Ì‚İ‚Ï[‰E.png");
 
+	hpImage = LoadGraph("images/HitPoint.png");
+
 	Init_Jangeki();       //‚¶‚á‚ñŒ‚‚ğ—pˆÓ
 
 	//ƒfƒtƒHƒ‹ƒg‚Í ƒO[
@@ -155,8 +157,8 @@ void Player::Update()
 		//‰EŒü‚«‚Ì
 		if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true)
 		{
-			if (jan_angle < 0) jan_angle = 0;
-			if (jan_angle > (M_PI / 2) && jan_angle > (M_PI / -2))
+			if (/*jan_angle < 0*/KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0) jan_angle = 0;
+			if (jan_angle > (M_PI / 2) || jan_angle < (M_PI / -2))
 			{
 				//jan_angle = (M_PI / 2);
 				dir = static_cast<int>(DIRECTION::LEFT);
@@ -177,7 +179,7 @@ void Player::Update()
 		//¶Œü‚«‚Ì
 		if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true)
 		{
-			if (jan_angle < 0) jan_angle = M_PI;
+			if (/*jan_angle < 0*/KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0) jan_angle = M_PI;
 			if (jan_angle < (M_PI / 2) && jan_angle > (M_PI / -2))
 			{
 				//jan_angle = (M_PI / 2);
@@ -323,6 +325,30 @@ void Player::ArmDrawMove() const
 	}
 }
 
+//ƒvƒŒƒCƒ„[‚ÌUI•`‰æ
+void Player::PlayerDrawUI(int hp) const
+{
+	/*switch (type)
+	{
+	case Jan_Type::ROCK:
+		DrawRotaGraph(810, 60, 0.5, 0, typeImage[0], TRUE);
+		break;
+	case Jan_Type::SCISSORS:
+
+		DrawRotaGraph(810, 60, 0.5, 0, typeImage[1], TRUE);
+		break;
+	case Jan_Type::PAPER:
+		DrawRotaGraph(950, 60, 0.5, 0, typeImage[2], TRUE);
+		break;
+	default:
+		break;
+	}*/
+
+	DrawRotaGraph(200, 60, 0.5, 0, hpImage, TRUE);			//‘Ì—ÍƒQ[ƒW˜g
+	DrawBox(115, 45, 120 + static_cast<int>(hp * 2.54), 75, 0x00ff00, TRUE);	//‘Ì—ÍƒQ[ƒW
+	DrawFormatString(820, 85, 0x00ff00, "c‚è:%d", hp);	//c‚è‘Ì—Í(”’l)
+}
+
 //•`‰æ
 void Player::Draw() const
 {
@@ -357,13 +383,15 @@ void Player::Draw() const
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
 	DrawFormatString((int)(x), (int)(y - 100), 0xffffff, "%s", dir == 0 ? "L" : "R");
 
+	PlayerDrawUI(GetHP());
+
 	//ƒeƒXƒg ‘I‘ğ‚¶‚á‚ñŒ‚
-	DrawString(30, 100, "SELECT : ", 0xffffff);
-	DrawRotaGraph(160, 100, 0.5, 0, image_JanType[static_cast<int>(select_JanType)], TRUE);
+	//DrawString(30, 50, "SELECT : ", 0xffffff);
+	DrawRotaGraph(60, 60, 1, 0, image_JanType[static_cast<int>(select_JanType)], TRUE);
 	DrawString(30, 150, "RB : ”­Ë", 0xffffff);
 
 	//ƒeƒXƒg
-	DrawGraph(20, 0, image_setsumei, TRUE);
+	//DrawGraph(20, 0, image_setsumei, TRUE);
 
 #endif // DEBUG_OFF_PLAYER
 
@@ -545,7 +573,7 @@ void  Player::PlayerChangeMoveimg()
 	{
 		/*‰EˆÚ“®*/
 		/*‰EŒü‚« && Æ€‚ª”½‘Î‚ğŒü‚¢‚Ä‚È‚¢ && ‰EE‰Ÿ‚³‚ê‚Ä‚¢‚é*/
-		if (dir == static_cast<int>(DIRECTION::RIGHT) && jan_angle < (M_PI / 2) && KeyManager::OnPadPressed(PAD_INPUT_RIGHT))
+		if (dir == static_cast<int>(DIRECTION::RIGHT) /*&& jan_angle < (M_PI / 2)*/ && KeyManager::OnPadPressed(PAD_INPUT_RIGHT))
 		{
 			if (std == 1 && 2 > player_Image) // ‰æ‘œ 1
 			{
@@ -597,7 +625,7 @@ void  Player::PlayerChangeMoveimg()
 
 		/*¶ˆÚ“®*/
 		/*¶Œü‚« && Æ€‚ª”½‘Î‚ğŒü‚¢‚Ä‚È‚¢ && ¶E‰Ÿ‚³‚ê‚Ä‚¢‚é*/
-		if (dir == static_cast<int>(DIRECTION::LEFT) && jan_angle > (M_PI / 2) && KeyManager::OnPadPressed(PAD_INPUT_LEFT))
+		if (dir == static_cast<int>(DIRECTION::LEFT) /*&& jan_angle > (M_PI / 2)*/ && KeyManager::OnPadPressed(PAD_INPUT_LEFT))
 		{
 			if (std == 6 && 7 > player_Image) // ‰æ‘œ 6
 			{
