@@ -3,6 +3,10 @@
 #include"Player.h"
 #include"Jangeki_Base.h"
 #include "Jangeki_whole.h"
+#include<typeinfo>
+
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_02::Enemy_02(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
@@ -180,10 +184,30 @@ void Enemy_02::Update_Jangeki()
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
-
 		//生成
-		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_whole(x, y, radius, speed, type, player_x, player_y);
+		if (frame_count % 120 == 0)
+		{
+			if (GetRand(1) == 0)
+			{
+				Jan_360degrees(jan_count, radius, speed, type);
+			}
+			
+		}
+		//生成
+		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_whole(x, y, radius, speed, type, player_x, player_y);
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+	}
+	
+}
+//360度発射（必殺）
+void Enemy_02::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
+{
+	//45度ずつ8個生成
+	for (int i = count; i < (count + 18); i++)
+	{
+		double angle = static_cast<double>((20.0 * i) * (M_PI / 180));
+
+		obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
 	}
 }
 //old_yの取得関数

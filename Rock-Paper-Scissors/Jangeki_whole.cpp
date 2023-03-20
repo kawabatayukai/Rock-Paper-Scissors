@@ -1,15 +1,17 @@
 #include "Jangeki_whole.h"
 #include"DxLib.h"
+
+#define _USE_MATH_DEFINES      //数学系マクロの使用
 #include<math.h>
-#include "Scene_Stage02.h"
+
+#define HOMING_TIME 100        //追跡時間
+
 
 //コンストラクタ
-Jangeki_whole::Jangeki_whole(float x, float y, float r, float speed, Jan_Type type, float p_x, float p_y)
+Jangeki_whole::Jangeki_whole(float x, float y, float r, float speed, Jan_Type type)
 	:Jangeki_Base(x, y, r, speed, type)
 {
-	zigzag = 0.f;
-	flg = FALSE;
-	rad = atan2f(p_y - y, p_x - x);
+	angle = M_PI / 2;   //初期の角度
 	
 }
 
@@ -22,29 +24,17 @@ Jangeki_whole::~Jangeki_whole()
 //アップデート
 void Jangeki_whole::Update()
 {
-	x += cosf(rad) * speed;
-	y += sinf(rad) * speed;
-
-	if (flg == FALSE)
+	//追跡時間内
+	if (time_counter < HOMING_TIME)
 	{
-		zigzag += 3.f;
-
-	}
-	else if (flg == TRUE)
-	{
-		zigzag -= 3.f;
-	}
+		
 
 
-	if (zigzag <= -10)
-	{
-		flg = FALSE;
-	}
-	else if (zigzag >= 10)
-	{
-		flg = TRUE;
-	}
+		double radius = 8;            //くるくるの半径（見たらわかる）
 
-	y += zigzag;
+		
+	}
+	x += static_cast<float>(cos(angle)) * speed;      //cos(角度)　でｘ軸の移動量を計算
+	y += static_cast<float>(sin(angle)) * speed;      //sin(角度)　でｙ軸の移動量を計算
 
 }
