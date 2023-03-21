@@ -44,12 +44,12 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	//‰E‚©‚ç‡‚É
 
 	obj_floor[3] = new Floor("images/stage03/BlockImages.png",1150, 430, 95, 30);//‘«ê8//130,GetColor(193, 107, 68)
-	obj_floor[4] = new Floor("images/stage03/BlockImages.png", 1040, 570, 95, 30);//‘«ê8//130,	GetColor(193, 107, 68)
-	obj_floor[5] = new Floor("images/stage03/BlockImages.png", 970, 220, 130, 40);//‘«ê1, GetColor(193, 107, 68)
+	obj_floor[4] = new Floor("images/stage03/BlockImages.png", 1050, 570, 95, 30);//‘«ê8//130,	GetColor(193, 107, 68)
+	obj_floor[5] = new Floor("images/stage03/BlockImages.png", 970, 215, 130, 40);//‘«ê1, GetColor(193, 107, 68)
 	obj_floor[6] = new Floor("images/stage03/BlockImages.png", 770, 150, 130, 40);//‘«ê2//130, GetColor(193, 107, 68)
-	obj_floor[7] = new Floor("images/stage03/BlockImages.png", 575, 220, 130, 40);//‘«ê3//100, GetColor(193, 107, 68)
+	obj_floor[7] = new Floor("images/stage03/BlockImages.png", 575, 215, 130, 40);//‘«ê3//100, GetColor(193, 107, 68)
 	obj_floor[8] = new Floor("images/stage03/BlockImages.png", 390, 150, 130, 40);//‘«ê4//130, GetColor(193, 107, 68)
-	obj_floor[9] = new Floor("images/stage03/BlockImages.png", 210, 220, 130, 40);//‘«ê5//130, GetColor(193, 107, 68)
+	obj_floor[9] = new Floor("images/stage03/BlockImages.png", 210, 215, 130, 40);//‘«ê5//130, GetColor(193, 107, 68)
 	obj_floor[10] = new Floor("images/stage03/BlockImages.png", 30, 400, 95, 30);//‘«ê6//100, GetColor(193, 107, 68)
 	obj_floor[11] = new Floor("images/stage03/BlockImages.png", 120,550, 95, 30);//‘«ê7//130, GetColor(193, 107, 68)
 	

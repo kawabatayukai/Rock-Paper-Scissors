@@ -68,7 +68,7 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	moveinfo[21] = { 1,  0 ,   0.f , 22, 125,1 };//X‚ª1160‚Å’â~
 
-	moveinfo[22] = { 0,  1020.f , 0.f , 23, 0, 1 };//X‚ª1160‚Ì‘«ê‚É”ò‚Ô
+	moveinfo[22] = { 0,  1050.f , 0.f , 23, 0, 1 };//X‚ª1160‚Ì‘«ê‚É”ò‚Ô
 
 	moveinfo[23] = { 1,  0 ,   0.f , 24, 125,1 };//X‚ª1160‚Å’â~
 
@@ -76,7 +76,7 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	moveinfo[25] = { 1,  0 , 0.f , 26, 125,1 };//X‚ª930‚Å’â~
 
-	moveinfo[26] = { 0, 1020.f , 0.f , 27, 0, 0 };//X‚ª1020‚Ì‘«ê‚É”ò‚Ô
+	moveinfo[26] = { 0, 1050.f , 0.f , 27, 0, 0 };//X‚ª1020‚Ì‘«ê‚É”ò‚Ô
 
 	moveinfo[27] = { 1,  0 , 0.f , 28, 125,1 };//X‚ª1020‚Å’â~
 
