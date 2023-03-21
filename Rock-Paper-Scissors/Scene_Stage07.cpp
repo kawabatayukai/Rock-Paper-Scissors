@@ -62,10 +62,13 @@ void Scene_Stage07::Update()
 
 		//プレイヤーの座標を取得
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
+
+		//プレイヤーがリング上か
+		obj_enemy->CheckPlayerState(obj_player);
 	}
 	
 	//接触じゃんけん処理
-	Touch_Janken(obj_enemy, this);
+	//Touch_Janken(obj_enemy, this);
 
 
 	//playerのじゃん撃をとってくる

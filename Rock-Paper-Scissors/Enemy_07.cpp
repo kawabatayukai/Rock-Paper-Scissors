@@ -9,8 +9,20 @@
 #define _USE_MATH_DEFINES
 #include<math.h>
 
+//定数
+namespace _ENEMY_07
+{
+	const float RING_LEFT  = 250.0f;    //リング左端
+	const float RING_RIGHT = 1030.0f;   //リング右端
+
+
+	char state_string[][10] = { "ON_RING","DO_NOT" };   //テスト用
+	char action_str[][15] = { "NO_ACT","LEFT_TO_RIGHT","RIGHT_TO_LEFT" };
+}
+
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_07::Enemy_07(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
+, Player_State(PLAYER_STATE::DO_NOT), Now_Action(ACT_TYPE::NO_ACT)
 {
 	speed = 3.0f;
 	dir = 1;
@@ -23,20 +35,20 @@ Enemy_07::Enemy_07(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	//パターン（csvに）
 	moveinfo[0] = { 1,620.f,0.f,1 };
 	moveinfo[1] = { 1,1030.f,0.f,0 };
-
 }
 
 //デストラクタ
 Enemy_07::~Enemy_07()
 {
-
+	
 }
 
 
 //更新
 void Enemy_07::Update()
 {
-	Move_Pattern();
+	//Move_Pattern();
+	Move_Controller();
 
 	//じゃん撃更新・生成
 	Update_Jangeki();
@@ -44,11 +56,11 @@ void Enemy_07::Update()
 
 	/********************   ジャンプ関係   ********************/
 
-	if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
-	{
-		g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-		land_flg = false;  //地面についていない
-	}
+	//if (land_flg == true)    //GetRand(30) == 3　のところがジャンプの条件
+	//{
+	//	g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+	//	land_flg = false;  //地面についていない
+	//}
 
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
@@ -75,6 +87,11 @@ void Enemy_07::Draw() const
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
 	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
 
+	LPCTSTR string = _ENEMY_07::state_string[static_cast<int>(Player_State)];
+	LPCTSTR string_act = _ENEMY_07::action_str[static_cast<int>(Now_Action)];
+
+	DrawString(200, 300, string, 0xff0000);
+	DrawString(200, 330, string_act, 0xff0000);
 }
 
 //じゃん撃生成・更新
@@ -183,6 +200,176 @@ void Enemy_07::Move_Pattern()
 	y = move_y;
 }
 
+/*--------------------------------------------------------------------------------------*/
+//行動制御
+void Enemy_07::Move_Controller()
+{
+	//目標座標
+	float target_x = 0;
+	float target_y = 0;
+
+	//移動量
+	float move_x = x;
+	float move_y = y;
+
+	switch (Player_State)
+	{
+	case PLAYER_STATE::ON_RING:    //リング上
+
+		Move_ON_RING(target_x, target_y);
+		break;
+
+
+	default:
+
+		target_x = 1280 / 2;
+		break;
+	}
+
+	//x座標が目標と不一致
+	if (x != target_x)
+	{
+		//目標の方が大きい（目標は右方向）
+		if (x < target_x)
+		{
+			move_x += speed;      //右移動（正の値）
+
+			//目標を超えた場合
+			if (x <= target_x && target_x <= move_x)
+			{
+				move_x = target_x;     //目標座標で固定
+			}
+		}
+		else
+		{
+			move_x -= speed; //左移動（負の値）
+
+			//目標を超えた場合
+			if (move_x <= target_x && target_x <= x)
+			{
+				move_x = target_x;     //目標座標で固定
+			}
+		}
+	}
+
+	//移動を反映
+	x = move_x;
+	y = move_y;
+}
+
+//プレイヤーがリング上 
+void Enemy_07::Move_ON_RING(float& target_x, float& target_y)
+{
+	//右（左）から　左（右）　と目標座標が切り替わる
+
+	//目標座標(1番目)と一致しているか
+	static bool match = false;
+
+	//行動中でない
+	if (Now_Action == ACT_TYPE::NO_ACT)
+	{
+		//プレイヤーが半分より左側
+		if (player_x < (1280 / 2))
+		{
+			Now_Action = ACT_TYPE::RIGHT_TO_LEFT;  //右→左
+			match = false;
+		}
+		else
+		{
+			Now_Action = ACT_TYPE::LEFT_TO_RIGHT;  //左→右
+			match = false;
+		}
+	}
+
+	//右→左
+	if (Now_Action == ACT_TYPE::RIGHT_TO_LEFT)
+	{
+		/*******************************　１  **++***************************/
+		{
+			//リング右を目指す
+			if (match == false) target_x = _ENEMY_07::RING_RIGHT - (w / 2);
+
+			//リング右に到達
+			if (x == _ENEMY_07::RING_RIGHT - (w / 2))
+			{
+				match = true;  //1番目終了
+				speed = 9.0f;  //スピードアップ
+			}
+		}
+		/*******************************************************************/
+
+
+		//リング右に到達したのち、リング左を目指す
+
+		/*******************************　２  **++***************************/
+		{
+			//リング左を目指す
+			if (match == true) target_x = _ENEMY_07::RING_LEFT + (w / 2);
+
+			//リング左に到達                             
+			if (x == _ENEMY_07::RING_LEFT + (w / 2))
+			{
+				Now_Action = ACT_TYPE::NO_ACT;  //Actionの完了
+				speed = 3.0f;                   //スピードを戻す
+			}
+		}
+		/*******************************************************************/
+	}
+
+	//左→右
+	if (Now_Action == ACT_TYPE::LEFT_TO_RIGHT)
+	{
+		/*******************************　１  **++***************************/
+		{
+			//リング左を目指す
+			if (match == false) target_x = _ENEMY_07::RING_LEFT + (w / 2);
+
+			//リング右に到達
+			if (x == _ENEMY_07::RING_LEFT + (w / 2))
+			{
+				match = true;  //1番目終了
+				speed = 9.0f;  //スピードアップ
+			}
+		}
+		/*******************************************************************/
+
+
+		//リング左に到達したのち、リング右を目指す
+
+		/*******************************　２  **++***************************/
+		{
+			//リング右を目指す
+			if (match == true) target_x = _ENEMY_07::RING_RIGHT - (w / 2);
+
+			//リング右に到達                            
+			if (x == _ENEMY_07::RING_RIGHT - (w / 2))
+			{
+				Now_Action = ACT_TYPE::NO_ACT;  //Actionの完了
+				speed = 3.0f;                   //スピードを戻す
+			}
+		}
+		/*******************************************************************/
+	}
+}
+
+
+//プレイヤーの状況を取得
+void Enemy_07::CheckPlayerState(const Player* player)
+{
+	//当たり判定を活用          リング上の範囲
+	if (player->CheckHitBox_Box(220, 260, 840, 330) == true)
+	{
+		Player_State = PLAYER_STATE::ON_RING;   //リング上
+	}
+	else
+	{
+		Player_State = PLAYER_STATE::DO_NOT;    //リング上ではない
+	}
+}
+
+
+/*--------------------------------------------------------------------------------------*/
+
 //360度発射（必殺）
 void Enemy_07::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
 {
@@ -204,3 +391,6 @@ void Enemy_07::Jan_Vertical(int count, float rad, float speed, Jan_Type type)
 	obj_jangeki[count + 2] = new Jangeki_Vertical(x, y, rad, -speed, (y - 50), type);
 	obj_jangeki[count + 3] = new Jangeki_Vertical(x, y, rad, -speed, (y - 75), type);
 }
+
+
+
