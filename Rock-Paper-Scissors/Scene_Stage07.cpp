@@ -224,6 +224,12 @@ void Scene_Stage07::Draw() const
 	//背景
 	DrawGraph(0, 0, image_back, TRUE);
 
+	//UI
+	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+
+	//テスト
+	DrawFormatString(300, 300, 0x00ff00, "p-x : %f   p-y : %f", obj_player->GetX(), obj_player->GetY());
+
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{

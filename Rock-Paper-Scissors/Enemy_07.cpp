@@ -15,14 +15,18 @@ namespace _ENEMY_07
 	const float RING_LEFT  = 250.0f;    //リング左端
 	const float RING_RIGHT = 1030.0f;   //リング右端
 
+	const float CORNER_LEFT  = 235.0f;  //左コーナートップ
+	const float CORNER_RIGHT = 1045.0f; //右コーナートップ
 
-	char state_string[][10] = { "ON_RING","DO_NOT" };   //テスト用
-	char action_str[][15] = { "NO_ACT","LEFT_TO_RIGHT","RIGHT_TO_LEFT" };
+	//テスト表示用
+	char state_str [][20] = { "ON_RING","ON_FLOOR","ON_FLOOR_LURK","DO_NOT" };   
+	char action_str[][20] = { "NO_ACT","LEFT_TO_RIGHT","RIGHT_TO_LEFT"
+		                     ,"CLIMB_CORNER_LEFT", "CLIMB_CORNER_RIGHT"};
 }
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_07::Enemy_07(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
-, Player_State(PLAYER_STATE::DO_NOT), Now_Action(ACT_TYPE::NO_ACT)
+, Player_State(PLAYER_STATE::DO_NOT), Now_Action(ACT_TYPE::NO_ACT), Pre_Action(ACT_TYPE::NO_ACT)
 {
 	speed = 3.0f;
 	dir = 1;
@@ -32,9 +36,6 @@ Enemy_07::Enemy_07(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	Init_Jangeki();       //じゃん撃を用意
 
-	//パターン（csvに）
-	moveinfo[0] = { 1,620.f,0.f,1 };
-	moveinfo[1] = { 1,1030.f,0.f,0 };
 }
 
 //デストラクタ
@@ -87,11 +88,13 @@ void Enemy_07::Draw() const
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
 	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
 
-	LPCTSTR string = _ENEMY_07::state_string[static_cast<int>(Player_State)];
+	LPCTSTR string = _ENEMY_07::state_str[static_cast<int>(Player_State)];
 	LPCTSTR string_act = _ENEMY_07::action_str[static_cast<int>(Now_Action)];
+	LPCTSTR string_pre = _ENEMY_07::action_str[static_cast<int>(Pre_Action)];
 
 	DrawString(200, 300, string, 0xff0000);
 	DrawString(200, 330, string_act, 0xff0000);
+	DrawString(200, 360, string_pre, 0xff0000);
 }
 
 //じゃん撃生成・更新
@@ -156,51 +159,9 @@ void Enemy_07::Update_Jangeki()
 
 }
 
-//行動パターンに沿った行動
-void Enemy_07::Move_Pattern()
-{
-	//移動量
-	float move_x = x;
-	float move_y = y;
-
-	//目標座標と完全一致（x座標だけ）
-	if (x == moveinfo[current].location_x)
-	{
-		current = moveinfo[current].next_index;   //次のパターンへ
-	}
-
-	//x座標が目標と不一致
-	if (x != moveinfo[current].location_x)
-	{
-		//目標の方が大きい（目標は右方向）
-		if (x < moveinfo[current].location_x)
-		{
-			move_x += speed;      //右移動（正の値）
-
-			//目標を超えた場合
-			if (x <= moveinfo[current].location_x && moveinfo[current].location_x <= move_x)
-			{
-				move_x = moveinfo[current].location_x;     //目標座標で固定
-			}
-		}
-		else
-		{
-			move_x -= speed; //左移動（負の値）
-
-			//目標を超えた場合
-			if (move_x <= moveinfo[current].location_x && moveinfo[current].location_x <= x)
-			{
-				move_x =  moveinfo[current].location_x;     //目標座標で固定
-			}
-		}
-	}
-
-	//移動を反映
-	x = move_x;
-	y = move_y;
-}
 
 /*--------------------------------------------------------------------------------------*/
+
 //行動制御
 void Enemy_07::Move_Controller()
 {
@@ -212,6 +173,7 @@ void Enemy_07::Move_Controller()
 	float move_x = x;
 	float move_y = y;
 
+	//プレイヤーの状態によって行動を決める
 	switch (Player_State)
 	{
 	case PLAYER_STATE::ON_RING:    //リング上
@@ -219,6 +181,10 @@ void Enemy_07::Move_Controller()
 		Move_ON_RING(target_x, target_y);
 		break;
 
+	case PLAYER_STATE::ON_FLOOR:   //足場上
+
+		Move_ON_FLOOR(target_x, target_y);
+		break;
 
 	default:
 
@@ -254,7 +220,7 @@ void Enemy_07::Move_Controller()
 
 	//移動を反映
 	x = move_x;
-	y = move_y;
+	//y = move_y;
 }
 
 //プレイヤーがリング上 
@@ -272,13 +238,13 @@ void Enemy_07::Move_ON_RING(float& target_x, float& target_y)
 		if (player_x < (1280 / 2))
 		{
 			Now_Action = ACT_TYPE::RIGHT_TO_LEFT;  //右→左
-			match = false;
 		}
 		else
 		{
 			Now_Action = ACT_TYPE::LEFT_TO_RIGHT;  //左→右
-			match = false;
 		}
+
+		match = false;
 	}
 
 	//右→左
@@ -309,6 +275,8 @@ void Enemy_07::Move_ON_RING(float& target_x, float& target_y)
 			//リング左に到達                             
 			if (x == _ENEMY_07::RING_LEFT + (w / 2))
 			{
+				Pre_Action = Now_Action;        //今回のActionを保存
+
 				Now_Action = ACT_TYPE::NO_ACT;  //Actionの完了
 				speed = 3.0f;                   //スピードを戻す
 			}
@@ -324,7 +292,7 @@ void Enemy_07::Move_ON_RING(float& target_x, float& target_y)
 			//リング左を目指す
 			if (match == false) target_x = _ENEMY_07::RING_LEFT + (w / 2);
 
-			//リング右に到達
+			//リング左に到達
 			if (x == _ENEMY_07::RING_LEFT + (w / 2))
 			{
 				match = true;  //1番目終了
@@ -344,8 +312,125 @@ void Enemy_07::Move_ON_RING(float& target_x, float& target_y)
 			//リング右に到達                            
 			if (x == _ENEMY_07::RING_RIGHT - (w / 2))
 			{
+				Pre_Action = Now_Action;        //今回のActionを保存
+
 				Now_Action = ACT_TYPE::NO_ACT;  //Actionの完了
 				speed = 3.0f;                   //スピードを戻す
+			}
+		}
+		/*******************************************************************/
+	}
+}
+
+//プレイヤーが足場（空中）上
+void Enemy_07::Move_ON_FLOOR(float& target_x, float& target_y)
+{
+	//プレイヤーが足場上にいる時間をカウント
+	static unsigned int time_count;
+
+	//行動中でない
+	if (Now_Action == ACT_TYPE::NO_ACT)
+	{
+		// 左右ランダム
+		if (GetRand(1) == 0)
+		{
+			Now_Action = ACT_TYPE::CLIMB_CORNER_LEFT;    //コーナーに上る（左）
+		}
+		else
+		{
+			Now_Action = ACT_TYPE::CLIMB_CORNER_RIGHT;   //コーナーに上る（右）
+		}
+
+		//カウンターをリセット
+		time_count = 0;
+	}
+
+
+	//コーナーに上る（左）
+	if (Now_Action == ACT_TYPE::CLIMB_CORNER_LEFT)
+	{
+		//(１) ジャンプ地点に到達・ジャンプ    (２) コーナー上を目指す
+
+		/*******************************　１  **++***************************/
+		{
+			//（左）ジャンプ地点を目指す
+			if (time_count == 0) target_x = _ENEMY_07::RING_LEFT + 100;
+
+			//ジャンプ地点に到達
+			if (x == _ENEMY_07::RING_LEFT + 100)
+			{
+				time_count = 1;
+
+				//ジャンプ
+				if (land_flg == true)
+				{
+					g_add = -21.5f;    //重力加速度をマイナス値に　
+					land_flg = false;  //地面についていない
+				}
+			}
+		}
+		/*******************************************************************/
+
+		/*******************************　２  **++***************************/
+		{
+			// ジャンプした後
+			if ( time_count > 0 )
+			{
+				//コーナー上を目指す         左
+				target_x = _ENEMY_07::CORNER_LEFT;
+
+				//３秒後
+				if (time_count++ > 180)
+				{
+					Pre_Action = Now_Action;        //今回のActionを保存
+
+					Now_Action = ACT_TYPE::NO_ACT;  //Actionの完了
+				}
+			}
+		}
+		/*******************************************************************/
+	}
+
+	//コーナーに上る（右）
+	if (Now_Action == ACT_TYPE::CLIMB_CORNER_RIGHT)
+	{
+		//(１) ジャンプ地点に到達・ジャンプ    (２) コーナー上を目指す
+
+		/*******************************　１  **++***************************/
+		{
+			//（右）ジャンプ地点を目指す
+			if (time_count == 0) target_x = _ENEMY_07::RING_RIGHT - 100;
+
+			//ジャンプ地点に到達
+			if (x == _ENEMY_07::RING_RIGHT - 100)
+			{
+				time_count = 1;
+
+				//ジャンプ
+				if (land_flg == true)
+				{
+					g_add = -21.5f;    //重力加速度をマイナス値に　
+					land_flg = false;  //地面についていない
+				}
+			}
+		}
+		/*******************************************************************/
+
+		/*******************************　２  **++***************************/
+		{
+			// ジャンプした後
+			if (time_count > 0)
+			{
+				//コーナー上を目指す         右
+				target_x = _ENEMY_07::CORNER_RIGHT;
+
+				//３秒後
+				if (time_count++ > 180)
+				{
+					Pre_Action = Now_Action;        //今回のActionを保存
+
+					Now_Action = ACT_TYPE::NO_ACT;  //Actionの完了
+				}
 			}
 		}
 		/*******************************************************************/
@@ -356,14 +441,28 @@ void Enemy_07::Move_ON_RING(float& target_x, float& target_y)
 //プレイヤーの状況を取得
 void Enemy_07::CheckPlayerState(const Player* player)
 {
-	//当たり判定を活用          リング上の範囲
-	if (player->CheckHitBox_Box(220, 260, 840, 330) == true)
+	//実行中のAction（行動）を終えてから変更する
+	if (Now_Action == ACT_TYPE::NO_ACT)
 	{
-		Player_State = PLAYER_STATE::ON_RING;   //リング上
-	}
-	else
-	{
-		Player_State = PLAYER_STATE::DO_NOT;    //リング上ではない
+		//当たり判定を活用          
+		if (player->CheckHitBox_Box(220, 260, 840, 330) == true)        //リング上の範囲
+		{
+			Player_State = PLAYER_STATE::ON_RING;   //リング上
+		}
+		else if (player->CheckHitBox_Box(20, -180, 1240, 380) == true)  //空中の足場全体の範囲
+		{
+			//前回も足場上の行動をしていた
+			if ( Pre_Action == ACT_TYPE::CLIMB_CORNER_LEFT || Pre_Action == ACT_TYPE::CLIMB_CORNER_RIGHT )
+			{
+				Player_State = PLAYER_STATE::ON_FLOOR_LURK;  //足場上で潜んでいる
+			}
+			else 
+				Player_State = PLAYER_STATE::ON_FLOOR;       //足場上
+		}
+		else
+		{
+			Player_State = PLAYER_STATE::DO_NOT;    //リング上ではない
+		}
 	}
 }
 
