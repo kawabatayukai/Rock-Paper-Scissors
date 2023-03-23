@@ -253,8 +253,6 @@ void Enemy_03::Draw() const
 	Draw_Jangeki();
 
 
-
-
 	//テスト                                                      //赤色
 	if (moveinfo[current].enemywaitTime > 0) DrawFormatString((int)(x - 100), (int)(y - 100), GetColor(0, 0, 255), "防御力 UP↑", moveinfo[current].enemywaitTime);
 
@@ -298,14 +296,14 @@ void Enemy_03::Update_Jangeki()
 		float speed = 4.5f /** dir*/;     //スピード//3.0
 
 		//ランダムな属性を生成
-		Jan_Type type = static_cast<Jan_Type>(GetRand(2));//2
+		Jan_Type type = static_cast<Jan_Type>(GetRand(1));//2 //主に属性時のジャン撃を繰り出す
 
 
 		////通常弾生成
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
 		// 
-		//生成
-		if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+		//プレイヤー方向へのジャン撃生成
+		if (frame_count % 75 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 	
 	}
 }
