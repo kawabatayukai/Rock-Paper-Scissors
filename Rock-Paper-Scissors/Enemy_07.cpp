@@ -712,9 +712,9 @@ void Enemy_07::Init_MoveAndAction()
 void Enemy_07::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
 {
 	//45“x‚¸‚Â8ŒÂ¶¬
-	for (int i = count; i < (count + 18); i++)
+	for (int i = count; i < (count + 8); i++)
 	{
-		double angle = static_cast<double>((20.0 * i) * (M_PI / 180));
+		double angle = static_cast<double>((45.0 * i) * (M_PI / 180));
 
 		obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
 	}
