@@ -68,7 +68,7 @@ void Scene_Stage07::Update()
 	}
 	
 	//接触じゃんけん処理
-	//Touch_Janken(obj_enemy, this);
+	Touch_Janken(obj_enemy, this);
 
 
 	//playerのじゃん撃をとってくる
@@ -228,7 +228,7 @@ void Scene_Stage07::Draw() const
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
 
 	//テスト
-	DrawFormatString(300, 300, 0x00ff00, "p-x : %f   p-y : %f", obj_player->GetX(), obj_player->GetY());
+	//DrawFormatString(300, 300, 0x00ff00, "p-x : %f   p-y : %f", obj_player->GetX(), obj_player->GetY());
 
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
@@ -277,14 +277,18 @@ void Scene_Stage07::Draw_Janken() const
 void Scene_Stage07::AfterJanken_WIN()
 {
 	obj_player->SetX(100);
-	obj_enemy->SetX(1100);
+	obj_enemy->SetX(900);
+
+	obj_enemy->Init_MoveAndAction();
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）
 void Scene_Stage07::AfterJanken_LOSE()
 {
 	obj_player->SetX(100);
-	obj_enemy->SetX(1100);
+	obj_enemy->SetX(900);
+
+	obj_enemy->Init_MoveAndAction();
 }
 
 

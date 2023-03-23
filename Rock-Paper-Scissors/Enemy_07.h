@@ -16,12 +16,12 @@ public:
 
 	void Update_Jangeki() override;  //じゃん撃生成・更新
 
+	//ジャンプ（ジャンプ力）
+	void Jump_Enemy(float g_add = -21.5f);
+
 /*---------------------------- パターンでない行動 --------------------------------------*/
 
 	void Move_Controller();          //行動制御
-
-	//void SelectAction_From_State();  //プレイヤーの状態から行動を決める
-
 
 	//プレイヤーがリング上 
 	void Move_ON_RING(float& target_x, float& target_y);                            
@@ -34,6 +34,10 @@ public:
 
 	//プレイヤーの状況を取得
 	void CheckPlayerState(const Player* player);
+
+
+	//行動を初期化（接触じゃんけん終了後　用）
+	void Init_MoveAndAction();
 
 /*--------------------------------------------------------------------------------------*/
 
@@ -49,6 +53,8 @@ private:
 	float g_add = 1.0f;       //重力加速度
 
 	/**********************************************************/
+
+	const float init_speed;    //初期スピード（固定）
 
 	int frame_count = 0;       //じゃん撃発射用
 
@@ -80,7 +86,6 @@ private:
 	ACT_TYPE Pre_Action;    //１つ前のAction（行動）
 
 //------------------------ テスト ------------------------
-
 
 };
 

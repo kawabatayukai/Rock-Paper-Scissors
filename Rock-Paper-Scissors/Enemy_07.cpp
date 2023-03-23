@@ -9,26 +9,40 @@
 #define _USE_MATH_DEFINES
 #include<math.h>
 
-//定数
-namespace _ENEMY_07
+constexpr int AAKA = 0;
+
+//定数　
+namespace _CONSTANTS_07
 {
 	const float RING_LEFT  = 250.0f;    //リング左端
 	const float RING_RIGHT = 1030.0f;   //リング右端
+	const float RING_HEIGHT = 590.0f;   //リングの高さ
 
-	const float CORNER_LEFT  = 235.0f;  //左コーナートップ
-	const float CORNER_RIGHT = 1045.0f; //右コーナートップ
+	const float CORNER_LEFT  = 235.0f;  //左コーナートップ (中心ｘ座標)
+	const float CORNER_RIGHT = 1045.0f; //右コーナートップ (中心ｘ座標)
+	const float CORNER_Y = 440.0f;      //コーナーの高さ（共通）
+
+	// "足場"は画面左から順に 1,2,3,....と番号をつける
+	const float FLOOR_NO_01 = 95.0f;    //足場１ (中心ｘ座標)
+	const float FLOOR_NO_02 = 490.0f;   //足場２ (中心ｘ座標)
+	const float FLOOR_NO_03 = 790.0f;   //足場３ (中心ｘ座標)
+	const float FLOOR_NO_04 = 1185.0f;  //足場４ (中心ｘ座標)
+
+	const float FLOOR_NO_01_04_Y = 230.0f;  // 足場１，４のｙ座標
+	const float FLOOR_NO_02_03_Y = 110.0f;  // 足場２，３のｙ座標
 
 	//テスト表示用
 	char state_str [][20] = { "ON_RING","ON_FLOOR","ON_FLOOR_LURK","DO_NOT" };   
 	char action_str[][20] = { "NO_ACT","LEFT_TO_RIGHT","RIGHT_TO_LEFT"
-		                     ,"CLIMB_CORNER_LEFT", "CLIMB_CORNER_RIGHT"};
+		                     ,"CLIMB_CORNER_LEFT", "CLIMB_CORNER_RIGHT"
+		                     ,"CROSS_FLOOR_LEFT","CROSS_FLOOR_RIGHT"};
 }
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
-Enemy_07::Enemy_07(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
+Enemy_07::Enemy_07(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type), init_speed(4.0f)
 , Player_State(PLAYER_STATE::DO_NOT), Now_Action(ACT_TYPE::NO_ACT), Pre_Action(ACT_TYPE::NO_ACT)
 {
-	speed = 3.0f;
+	speed = 4.0f;
 	dir = 1;
 	hp = 100;
 
@@ -85,16 +99,16 @@ void Enemy_07::Draw() const
 	Draw_Jangeki();
 
 	//テスト
-	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
-	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
+	//if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
+	//else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
 
-	LPCTSTR string = _ENEMY_07::state_str[static_cast<int>(Player_State)];
-	LPCTSTR string_act = _ENEMY_07::action_str[static_cast<int>(Now_Action)];
-	LPCTSTR string_pre = _ENEMY_07::action_str[static_cast<int>(Pre_Action)];
+	LPCTSTR string = _CONSTANTS_07::state_str[static_cast<int>(Player_State)];
+	LPCTSTR string_act = _CONSTANTS_07::action_str[static_cast<int>(Now_Action)];
+	LPCTSTR string_pre = _CONSTANTS_07::action_str[static_cast<int>(Pre_Action)];
 
-	DrawString(200, 300, string, 0xff0000);
-	DrawString(200, 330, string_act, 0xff0000);
-	DrawString(200, 360, string_pre, 0xff0000);
+	DrawString(23, 580, string, 0x00ff00);
+	DrawString(23, 610, string_act, 0x00ff00);
+	DrawString(23, 640, string_pre, 0x00ff00);
 }
 
 //じゃん撃生成・更新
@@ -159,6 +173,20 @@ void Enemy_07::Update_Jangeki()
 
 }
 
+//ジャンプ（ジャンプ力）
+void Enemy_07::Jump_Enemy(float g_add)
+{
+	//マイナス値でなければ処理しない
+	if (g_add > 0) return;
+
+	//接地していれば
+	if (land_flg == true)
+	{
+		this->g_add = g_add;    //重力加速度をマイナス値に　
+		land_flg = false;       //地面についていない
+	}
+}
+
 
 /*--------------------------------------------------------------------------------------*/
 
@@ -176,14 +204,19 @@ void Enemy_07::Move_Controller()
 	//プレイヤーの状態によって行動を決める
 	switch (Player_State)
 	{
-	case PLAYER_STATE::ON_RING:    //リング上
+	case PLAYER_STATE::ON_RING:       //リング上
 
 		Move_ON_RING(target_x, target_y);
 		break;
 
-	case PLAYER_STATE::ON_FLOOR:   //足場上
+	case PLAYER_STATE::ON_FLOOR:      //足場上
 
 		Move_ON_FLOOR(target_x, target_y);
+		break;
+
+	case PLAYER_STATE::ON_FLOOR_LURK: //足場上で3秒以上
+
+		Move_ON_FLOOR_LURK(target_x, target_y);
 		break;
 
 	default:
@@ -220,7 +253,7 @@ void Enemy_07::Move_Controller()
 
 	//移動を反映
 	x = move_x;
-	//y = move_y;
+	y = move_y;
 }
 
 //プレイヤーがリング上 
@@ -253,10 +286,10 @@ void Enemy_07::Move_ON_RING(float& target_x, float& target_y)
 		/*******************************　１  **++***************************/
 		{
 			//リング右を目指す
-			if (match == false) target_x = _ENEMY_07::RING_RIGHT - (w / 2);
+			if (match == false) target_x = _CONSTANTS_07::RING_RIGHT - (w / 2);
 
 			//リング右に到達
-			if (x == _ENEMY_07::RING_RIGHT - (w / 2))
+			if (x == _CONSTANTS_07::RING_RIGHT - (w / 2))
 			{
 				match = true;  //1番目終了
 				speed = 9.0f;  //スピードアップ
@@ -270,15 +303,15 @@ void Enemy_07::Move_ON_RING(float& target_x, float& target_y)
 		/*******************************　２  **++***************************/
 		{
 			//リング左を目指す
-			if (match == true) target_x = _ENEMY_07::RING_LEFT + (w / 2);
+			if (match == true) target_x = _CONSTANTS_07::RING_LEFT + (w / 2);
 
 			//リング左に到達                             
-			if (x == _ENEMY_07::RING_LEFT + (w / 2))
+			if (x == _CONSTANTS_07::RING_LEFT + (w / 2))
 			{
 				Pre_Action = Now_Action;        //今回のActionを保存
 
 				Now_Action = ACT_TYPE::NO_ACT;  //Actionの完了
-				speed = 3.0f;                   //スピードを戻す
+				speed = init_speed;             //スピードを戻す
 			}
 		}
 		/*******************************************************************/
@@ -290,10 +323,10 @@ void Enemy_07::Move_ON_RING(float& target_x, float& target_y)
 		/*******************************　１  **++***************************/
 		{
 			//リング左を目指す
-			if (match == false) target_x = _ENEMY_07::RING_LEFT + (w / 2);
+			if (match == false) target_x = _CONSTANTS_07::RING_LEFT + (w / 2);
 
 			//リング左に到達
-			if (x == _ENEMY_07::RING_LEFT + (w / 2))
+			if (x == _CONSTANTS_07::RING_LEFT + (w / 2))
 			{
 				match = true;  //1番目終了
 				speed = 9.0f;  //スピードアップ
@@ -307,15 +340,15 @@ void Enemy_07::Move_ON_RING(float& target_x, float& target_y)
 		/*******************************　２  **++***************************/
 		{
 			//リング右を目指す
-			if (match == true) target_x = _ENEMY_07::RING_RIGHT - (w / 2);
+			if (match == true) target_x = _CONSTANTS_07::RING_RIGHT - (w / 2);
 
 			//リング右に到達                            
-			if (x == _ENEMY_07::RING_RIGHT - (w / 2))
+			if (x == _CONSTANTS_07::RING_RIGHT - (w / 2))
 			{
 				Pre_Action = Now_Action;        //今回のActionを保存
 
 				Now_Action = ACT_TYPE::NO_ACT;  //Actionの完了
-				speed = 3.0f;                   //スピードを戻す
+				speed = init_speed;             //スピードを戻す
 			}
 		}
 		/*******************************************************************/
@@ -354,19 +387,15 @@ void Enemy_07::Move_ON_FLOOR(float& target_x, float& target_y)
 		/*******************************　１  **++***************************/
 		{
 			//（左）ジャンプ地点を目指す
-			if (time_count == 0) target_x = _ENEMY_07::RING_LEFT + 100;
+			if (time_count == 0) target_x = _CONSTANTS_07::RING_LEFT + 100;
 
 			//ジャンプ地点に到達
-			if (x == _ENEMY_07::RING_LEFT + 100)
+			if (x == _CONSTANTS_07::RING_LEFT + 100 && y == (_CONSTANTS_07::RING_HEIGHT - (h / 2)))
 			{
 				time_count = 1;
 
 				//ジャンプ
-				if (land_flg == true)
-				{
-					g_add = -21.5f;    //重力加速度をマイナス値に　
-					land_flg = false;  //地面についていない
-				}
+				Jump_Enemy();
 			}
 		}
 		/*******************************************************************/
@@ -377,7 +406,7 @@ void Enemy_07::Move_ON_FLOOR(float& target_x, float& target_y)
 			if ( time_count > 0 )
 			{
 				//コーナー上を目指す         左
-				target_x = _ENEMY_07::CORNER_LEFT;
+				target_x = _CONSTANTS_07::CORNER_LEFT;
 
 				//３秒後
 				if (time_count++ > 180)
@@ -399,19 +428,15 @@ void Enemy_07::Move_ON_FLOOR(float& target_x, float& target_y)
 		/*******************************　１  **++***************************/
 		{
 			//（右）ジャンプ地点を目指す
-			if (time_count == 0) target_x = _ENEMY_07::RING_RIGHT - 100;
+			if (time_count == 0) target_x = _CONSTANTS_07::RING_RIGHT - 100;
 
 			//ジャンプ地点に到達
-			if (x == _ENEMY_07::RING_RIGHT - 100)
+			if (x == _CONSTANTS_07::RING_RIGHT - 100 && y == (_CONSTANTS_07::RING_HEIGHT - (h / 2)))
 			{
 				time_count = 1;
 
 				//ジャンプ
-				if (land_flg == true)
-				{
-					g_add = -21.5f;    //重力加速度をマイナス値に　
-					land_flg = false;  //地面についていない
-				}
+				Jump_Enemy();
 			}
 		}
 		/*******************************************************************/
@@ -422,7 +447,7 @@ void Enemy_07::Move_ON_FLOOR(float& target_x, float& target_y)
 			if (time_count > 0)
 			{
 				//コーナー上を目指す         右
-				target_x = _ENEMY_07::CORNER_RIGHT;
+				target_x = _CONSTANTS_07::CORNER_RIGHT;
 
 				//３秒後
 				if (time_count++ > 180)
@@ -437,6 +462,212 @@ void Enemy_07::Move_ON_FLOOR(float& target_x, float& target_y)
 	}
 }
 
+//プレイヤーが足場で3秒以上
+void Enemy_07::Move_ON_FLOOR_LURK(float& target_x, float& target_y)
+{
+	// 到達した回数
+	static unsigned short count_ari;
+
+	//ジャンプ力（テスト）
+	float jump_add = -21.5f;
+
+	//(既にコーナーに上っている前提)
+
+	//行動中でない
+	if (Now_Action == ACT_TYPE::NO_ACT)
+	{
+		// 前回のActionが左コーナー上
+		if (Pre_Action == ACT_TYPE::CLIMB_CORNER_LEFT)   Now_Action = ACT_TYPE::CROSS_FLOOR_LEFT;
+
+		// 前回のActionが右コーナー上 
+		if (Pre_Action == ACT_TYPE::CLIMB_CORNER_RIGHT)  Now_Action = ACT_TYPE::CROSS_FLOOR_RIGHT;
+
+		//カウントの初期化
+		count_ari = 0;
+
+		//ジャンプ
+		Jump_Enemy(jump_add);
+	}
+
+	// 足場を渡る（左から右）
+	if (Now_Action == ACT_TYPE::CROSS_FLOOR_LEFT)
+	{
+        /*******************************　１  **++***************************/
+		if (count_ari == 0)
+		{
+			// 足場 1 を目指す
+			target_x = _CONSTANTS_07::FLOOR_NO_01;
+
+			// 足場 1 に到達
+			if (x == _CONSTANTS_07::FLOOR_NO_01)
+			{
+				count_ari = 1;
+
+				speed = 7.5f;
+				Jump_Enemy(jump_add);   //ジャンプ
+			}
+		}
+
+		/*******************************************************************/
+
+		/*******************************　２  **++***************************/
+		if (count_ari == 1)
+		{
+			// 足場 2 を目指す
+			target_x = _CONSTANTS_07::FLOOR_NO_02;
+
+			// 足場 2 に到達
+			if (x == _CONSTANTS_07::FLOOR_NO_02)
+			{
+				count_ari = 2;
+				Jump_Enemy(-18.f);   //ジャンプ
+			}
+		}
+
+		/*******************************************************************/
+
+		/*******************************　３  **++***************************/
+		if (count_ari == 2)
+		{
+			// 足場 3 を目指す
+			target_x = _CONSTANTS_07::FLOOR_NO_03;
+
+			// 足場 3 に到達
+			if (x == _CONSTANTS_07::FLOOR_NO_03)
+			{
+				count_ari = 3;
+				Jump_Enemy(jump_add);   //ジャンプ
+			}
+		}
+
+		/*******************************************************************/
+
+		/*******************************　４  **++***************************/
+		if (count_ari == 3)
+		{
+			// 足場 4 を目指す
+			target_x = _CONSTANTS_07::FLOOR_NO_04;
+
+			// 足場 4 に到達
+			if (x == _CONSTANTS_07::FLOOR_NO_04 && y == (_CONSTANTS_07::FLOOR_NO_01_04_Y - (h / 2)))
+			{
+				count_ari = 4;
+
+				Jump_Enemy(jump_add);   //ジャンプ
+			}
+		}
+
+		/*******************************************************************/
+
+		/*******************************　５  **++***************************/
+		if (count_ari == 4)
+		{
+			// 右コーナー上 を目指す
+			target_x = _CONSTANTS_07::CORNER_RIGHT;
+
+			// 右コーナー上 に到達
+			if (x == _CONSTANTS_07::CORNER_RIGHT && y == (_CONSTANTS_07::CORNER_Y - (h / 2)))
+			{
+				Pre_Action = Now_Action;        //今回のActionを保存
+				Now_Action = ACT_TYPE::NO_ACT;  //Actionの完了
+
+				speed = init_speed;
+			}
+		}
+
+		/*******************************************************************/
+	}
+
+
+	// 足場を渡る（右から左）
+	if (Now_Action == ACT_TYPE::CROSS_FLOOR_RIGHT)
+	{
+		/*******************************　１  **++***************************/
+		if (count_ari == 0)
+		{
+			// 足場 4 を目指す
+			target_x = _CONSTANTS_07::FLOOR_NO_04;
+
+			// 足場 4 に到達
+			if (x == _CONSTANTS_07::FLOOR_NO_04)
+			{
+				count_ari = 1;
+
+				speed = 7.5f;
+				Jump_Enemy(jump_add);   //ジャンプ
+			}
+		}
+
+		/*******************************************************************/
+
+		/*******************************　２  **++***************************/
+		if (count_ari == 1)
+		{
+			// 足場 3 を目指す
+			target_x = _CONSTANTS_07::FLOOR_NO_03;
+
+			// 足場 3 に到達
+			if (x == _CONSTANTS_07::FLOOR_NO_03)
+			{
+				count_ari = 2;
+				Jump_Enemy(-18.f);   //ジャンプ
+			}
+		}
+
+		/*******************************************************************/
+
+		/*******************************　３  **++***************************/
+		if (count_ari == 2)
+		{
+			// 足場 2 を目指す
+			target_x = _CONSTANTS_07::FLOOR_NO_02;
+
+			// 足場 2 に到達
+			if (x == _CONSTANTS_07::FLOOR_NO_02)
+			{
+				count_ari = 3;
+				Jump_Enemy(jump_add);   //ジャンプ
+			}
+		}
+
+		/*******************************************************************/
+
+		/*******************************　４  **++***************************/
+		if (count_ari == 3)
+		{
+			// 足場 1 を目指す
+			target_x = _CONSTANTS_07::FLOOR_NO_01;
+
+			// 足場 1 に到達
+			if (x == _CONSTANTS_07::FLOOR_NO_01 && y == (_CONSTANTS_07::FLOOR_NO_01_04_Y - (h / 2)))
+			{
+				count_ari = 4;
+
+				Jump_Enemy(jump_add);   //ジャンプ
+			}
+		}
+
+		/*******************************************************************/
+
+		/*******************************　５  **++***************************/
+		if (count_ari == 4)
+		{
+			// 左コーナー上 を目指す
+			target_x = _CONSTANTS_07::CORNER_LEFT;
+
+			// 左コーナー上 に到達
+			if (x == _CONSTANTS_07::CORNER_LEFT && y == (_CONSTANTS_07::CORNER_Y - (h / 2)))
+			{
+				Pre_Action = Now_Action;        //今回のActionを保存
+				Now_Action = ACT_TYPE::NO_ACT;  //Actionの完了
+
+				speed = init_speed;
+			}
+		}
+
+		/*******************************************************************/
+	}
+}
 
 //プレイヤーの状況を取得
 void Enemy_07::CheckPlayerState(const Player* player)
@@ -466,6 +697,14 @@ void Enemy_07::CheckPlayerState(const Player* player)
 	}
 }
 
+
+//行動を初期化（接触じゃんけん終了後　用）
+void Enemy_07::Init_MoveAndAction()
+{
+	Player_State = PLAYER_STATE::DO_NOT;
+	Now_Action = ACT_TYPE::NO_ACT;
+	Pre_Action = ACT_TYPE::NO_ACT;
+}
 
 /*--------------------------------------------------------------------------------------*/
 
