@@ -25,6 +25,7 @@ Scene_Stage05::Scene_Stage05(const Player* player)
 
 	//敵を生成
 	obj_enemy = new Enemy_05(1000, 360, Jan_Type::SCISSORS);
+	obj_mobenemy = new MobEnemy_05(640, 100, Jan_Type::PAPER);
 
 	//床・壁の用意
 	Init_Floor(STAGE_05_FLOOR);
@@ -55,8 +56,10 @@ void Scene_Stage05::Update()
 	{
 		obj_player->Update();    // プレイヤー更新・操作可能
 		obj_enemy->Update();     //敵キャラ更新・内部処理
+		obj_mobenemy->Update();
 		//プレイヤーの座標を取得
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
+		obj_mobenemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
 	}
 
 	//接触じゃんけん処理
@@ -70,6 +73,8 @@ void Scene_Stage05::Update()
 	//enemyのじゃん撃をとってくる
 	Jangeki_Base** enemy_jangeki = obj_enemy->GetJangeki();
 
+	//enemyのじゃん撃をとってくる
+	Jangeki_Base** mobenemy_jangeki = obj_mobenemy->GetJangeki();
 
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -227,6 +232,7 @@ void Scene_Stage05::Draw() const
 
 		obj_player->Draw();  //プレイヤー描画
 		obj_enemy->Draw();   //敵キャラ描画
+		obj_mobenemy->Draw();	//	モブ敵キャラ描画
 
 		//床・壁描画
 		for (int i = 0; i < STAGE_05_FLOOR; i++)

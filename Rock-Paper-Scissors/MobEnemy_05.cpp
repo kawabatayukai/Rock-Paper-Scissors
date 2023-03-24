@@ -1,21 +1,40 @@
 #include "MobEnemy_05.h"
 #include "DxLib.h"
+#include "Player.h"
+#include "Jangeki_Spin.h"
+#include "Enemy_05.h"
+#include "Jangeki_Base.h"
+#include "Jangeki_Changespeed.h"
+#include "Jangeki_Zigzag.h" 
 
 MobEnemy_05::MobEnemy_05(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
+	Mobenemy_image = LoadGraph("images/stage05/Mobenemy_image.png", TRUE);
 
+	Init_Jangeki();       //じゃん撃を用意
 }
+
 MobEnemy_05::~MobEnemy_05()
 {
 
 }
+
 void MobEnemy_05::Update()
 {
-
+	//じゃん撃更新・生成
+	Update_Jangeki();
 }
+
 void MobEnemy_05::Draw() const
 {
+	//中心から描画
+	DrawRotaGraphF(x, y, 1, 0, Mobenemy_image, TRUE);
 
+	//じゃん撃描画
+	Draw_Jangeki();
+	//テスト
+	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
+	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
 }
 
 void MobEnemy_05::Update_Jangeki()
@@ -55,7 +74,7 @@ void MobEnemy_05::Update_Jangeki()
 
 
 		//生成
-		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Spin(x, y, radius, speed, type,player_x,player_y);
+		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Zigzag(x, y, radius, speed, type,player_x,player_y);
 
 	}
 }
