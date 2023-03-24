@@ -68,8 +68,8 @@ void Scene_Stage06::Update()
 		obj_enemy->Update();     //敵キャラ更新・内部処理
 	}
 
-	////接触じゃんけん処理
-	//Touch_Janken(obj_enemy, this);
+	//接触じゃんけん処理
+	Touch_Janken(obj_enemy, this);
 
 
 	//playerのじゃん撃をとってくる

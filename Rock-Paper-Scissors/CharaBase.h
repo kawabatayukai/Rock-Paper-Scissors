@@ -50,7 +50,7 @@ public:
 	//じゃん撃とキャラクターの当たり判定
 	bool Hit_Jangeki(const Jangeki_Base* jangeki);
 
-private:
+//private:
 	//矩形と矩形の当たり判定
 	bool CheckHitBox_Box(int box_x, int box_y, int box_w, int box_h) const;
 

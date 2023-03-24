@@ -2,6 +2,7 @@
 #include"DxLib.h"
 #include"Player.h"
 #include"Jangeki_Base.h"
+#include"Jangeki_Coming.h"
 #include <typeinfo>
 
 
@@ -16,26 +17,114 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	enemyimage[0] = LoadGraph("images/stage03/stage03attack.png");
 	enemyimage[1] = LoadGraph("images/stage03/stage03gard.png");
 
+
+
+
 	Init_Jangeki();       //じゃん撃を用意
 
 	//動きパターン 繰り返し　//0で動き,1で止まる
-	moveinfo[0] = { 0, 950.f, 0.f , 1,  0 };//初期位置のXが950で停止
+	moveinfo[0] = { 0, 900.f, 0.f , 1,  0 ,1 };//初期位置のXが950で停止
 
-	moveinfo[1] = { 1,  0 ,   0.f , 2, 125 };//初期位置のXが950で停止
+	moveinfo[1] = { 1,  0 ,   0.f , 2, 125 ,1 };//初期位置のXが950で停止
 	//ここから動く
-	moveinfo[2] = { 0, 650.f, 0.f , 3,  0 };//Xが650まで動く
+	moveinfo[2] = { 0, 650.f, 0.f , 3,  0 ,1 };//Xが650まで動く
 
-	moveinfo[3] = { 1,  0 ,   0.f , 4, 125 };//Xが650で停止
+	moveinfo[3] = { 1,  0 ,   0.f , 4, 125 ,1 };//Xが650で停止
 
-	moveinfo[4] = { 0, 325.f, 0.f , 5, 0 };//Xが325まで動く
+	moveinfo[4] = { 0, 350.f, 0.f , 5, 0 ,1 };//Xが325まで動く
 
-	moveinfo[5] = { 1,  0 ,   0.f , 6, 125 };//Xが325で停止
+	moveinfo[5] = { 1,  0 ,   0.f , 6, 125 ,1 };//Xが325で停止
 
-	moveinfo[6] = { 0, 650.f, 0.f , 7,  0 };//Xが650まで動く
+	//足場に乗る
+	moveinfo[6] = { 0, 350.f, 0.f , 7, 0 ,0 };//Xが350の足場に飛ぶ
 
-	moveinfo[7] = { 1,  0 ,   0.f , 0, 125 };//Xが650で停止し配列[0]に戻る
+	moveinfo[7] = { 1,  0 ,   0.f , 8, 125 ,1 };//Xが350で停止
+
+	moveinfo[8] = { 0,  70.f , 0.f , 9, 0 ,0 };//Xが70足場に飛ぶ
+
+	moveinfo[9] = { 1,  0 ,   0.f , 10, 125 ,1 };//Xが70で停止
+
+	moveinfo[10] = { 0, 280.f, 0.f , 11,  0 ,0 };//Xが280の足場に飛ぶ
+
+	moveinfo[11] = { 1,  0 ,   0.f , 12, 125,1 };//Xが280で停止
+
+	moveinfo[12] = { 0, 465.f, 0.f , 13,  0 ,0 };//Xが465の足場に飛ぶ
+
+	moveinfo[13] = { 1,  0 ,   0.f , 14, 125,1 };//Xが465で停止
+
+	moveinfo[14] = { 0, 585.f,0.f , 15,  0 ,0 };//Xが585の足場に飛ぶ
+
+	moveinfo[15] = { 1,  0 ,   0.f , 16, 125,1 };//Xが585で停止
+
+	moveinfo[16] = { 0, 780.f, 0.f , 17,  0 ,0 };//Xが780の足場に飛ぶ
+
+	moveinfo[17] = { 1,  0 ,   0.f , 18, 125,1 };//Xが780で停止
+
+	moveinfo[18] = { 0, 970.f, 0.f , 19,  0 ,0 };//Xが970の足場に飛ぶ
+
+	moveinfo[19] = { 1,  0 ,   0.f , 20, 125,1 };//Xが970の足場で停止
+
+	moveinfo[20] = { 0, 1160.f, 0.f , 21,  0 ,0 };//Xが1160の足場に飛ぶ
+
+	moveinfo[21] = { 1,  0 ,   0.f , 22, 125,1 };//Xが1160で停止
+
+	moveinfo[22] = { 0,  1050.f , 0.f , 23, 0, 1 };//Xが1160の足場に飛ぶ
+
+	moveinfo[23] = { 1,  0 ,   0.f , 24, 125,1 };//Xが1160で停止
+
+	moveinfo[24] = { 0,  930.f , 0.f , 25, 0, 1 };//Xが930まで移動
+
+	moveinfo[25] = { 1,  0 , 0.f , 26, 125,1 };//Xが930で停止
+
+	moveinfo[26] = { 0, 1050.f , 0.f , 27, 0, 0 };//Xが1020の足場に飛ぶ
+
+	moveinfo[27] = { 1,  0 , 0.f , 28, 125,1 };//Xが1020で停止
+
+	moveinfo[28] = { 0,  1160.f , 0.f , 29, 0, 0 };//Xが1160の足場に飛ぶ
+
+	moveinfo[29] = { 1,  0 , 0.f , 30, 125, 1 };//Xが1160で停止
+
+	moveinfo[30] = { 0,  970.f , 0.f , 31, 0, 0 };//Xが970の足場に飛ぶ
+
+	moveinfo[31] = { 1,  0 , 0.f , 32, 125,1 };//Xが970で停止
+
+	moveinfo[32] = { 0,  780.f , 0.f , 33, 0, 0 };//Xが780の足場に飛ぶ
+
+	moveinfo[33] = { 1,  0 , 0.f , 34, 125,1 };//Xが780で停止
+
+	moveinfo[34] = { 0,  585.f , 0.f , 35, 0, 0 };//Xが585の足場に飛ぶ
+
+	moveinfo[35] = { 1,  0 ,   0.f , 36, 125,1 };//Xが585で停止
+
+	moveinfo[36] = { 0, 465.f, 0.f , 37,  0 ,0 };//Xが465の足場に飛ぶ
+
+	moveinfo[37] = { 1,  0 ,   0.f , 38, 125,1 };//Xが465で停止
+
+	moveinfo[38] = { 0, 280.f, 0.f , 39,  0 ,0 };//Xが280の足場に飛ぶ
+
+	moveinfo[39] = { 1,  0 ,   0.f , 40, 125,1 };//Xが280で停止
+
+	moveinfo[40] = { 0, 70.f,  0.f , 41,  0 ,0 };//Xが70まで動く
+
+	moveinfo[41] = { 1,  0 ,   0.f , 42, 125,1 };//Xが325で停止
+	//ここから動く2
+	moveinfo[42] = { 0, 350.f, 0.f , 43,  0 ,1 };//初期位置のXが350で停止
+
+	moveinfo[43] = { 1,  0 ,   0.f , 44, 125 ,1 };//初期位置のXが350で停止
+	
+	moveinfo[44] = { 0, 650.f, 0.f , 45,  0 ,1 };//Xが650まで動く
+
+	moveinfo[45] = { 1,  0 ,   0.f , 46, 125 ,1 };//Xが650で停止
+
+	moveinfo[46] = { 0,	900.f, 0.f , 47, 0 ,1 };//Xが900まで動く
+
+	moveinfo[47] = { 1,	 0,  0.f , 48, 62 ,1 };//Xが900で少しの時間停止
+
+	moveinfo[48] = { 1,  0 ,   0.f , 0, 125 ,1 };//Xが650で停止し配列[0]に戻るw
 
 }
+
+
 
 //デストラクタ
 Enemy_03::~Enemy_03()
@@ -46,6 +135,14 @@ Enemy_03::~Enemy_03()
 //更新
 void Enemy_03::Update()
 {
+	if (land_flg == true && moveinfo[current].enemywaitTime == 0 && moveinfo[current].jumpflg == 0)    //GetRand(30) == 3　のところがジャンプの条件
+	{
+		g_add = -23.f;    //初期-21.5f,重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+		land_flg = false;  //地面についていない
+
+		speed = 2.8f;
+	}
+
 	//じゃん撃更新・生成
 	Update_Jangeki();
 
@@ -63,6 +160,7 @@ void Enemy_03::Update()
 	{
 	case 0:
 		Move_Pattern();
+
 		break;
 	case 1:
 		waitcount++;
@@ -96,35 +194,19 @@ void Enemy_03::Update()
 
 	/********************   ジャンプ関係   ********************/
 
-	if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
-	{
-		g_add = -22.f;    //初期-21.5f,重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-		land_flg = false;  //地面についていない
 
-	}
 
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
 	//落下速度の制限
 	if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
 
-	old_y = y;                    //1フレーム前のｙ座標
-	y += y_add;                   //落下距離をｙ座標に加算する
-	g_add = _GRAVITY;              //重力加速度を初期化する
-
-
-	//停止時はジャンプさせない
-	if (moveinfo[current].enemywaitTime > 0) {
-
-		
-			g_add = 25.f;   //ジャンプ制御
-		
-
-	}
-
+	old_y = y;              //1フレーム前のｙ座標
+	y += y_add;            //落下距離をｙ座標に加算する
+	g_add = _GRAVITY;     //重力加速度を初期化する
 
 }
-	/********************   横移動   ********************/
+/********************   横移動   ********************/
 
 //if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
 //{
@@ -171,14 +253,14 @@ void Enemy_03::Draw() const
 	Draw_Jangeki();
 
 
-	
+
 
 	//テスト                                                      //赤色
-	if (moveinfo[current].enemywaitTime > 0) DrawFormatString((int)(x - 100), (int)(y - 100), GetColor(0,0,255), "防御力 UP↑", moveinfo[current].enemywaitTime);
-	
+	if (moveinfo[current].enemywaitTime > 0) DrawFormatString((int)(x - 100), (int)(y - 100), GetColor(0, 0, 255), "防御力 UP↑", moveinfo[current].enemywaitTime);
+
 	if (hp <= 50) DrawFormatString((int)(x - 100), (int)(y - 80), GetColor(255, 0, 0), "攻撃力 UP↑", hp);
 
-	if(hp <= 0)DrawString((int)(x - 100), (int)(y - 120), "death!", 0xff0000);
+	if (hp <= 0)DrawString((int)(x - 100), (int)(y - 120), "death!", 0xff0000);
 
 }
 
@@ -195,6 +277,9 @@ void Enemy_03::Update_Jangeki()
 
 		obj_jangeki[jan_count]->Update();
 
+		//プレイヤーの座標をセットする
+		obj_jangeki[jan_count]->SetTargetLocation(player_x, player_y);
+
 		//画面外で削除する
 		if (obj_jangeki[jan_count]->CheckScreenOut() == true)
 		{
@@ -210,14 +295,18 @@ void Enemy_03::Update_Jangeki()
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
 		float radius = 40.0f;   //半径 //35.5f
-		float speed = 6.0f * dir;     //スピード//3.0
+		float speed = 4.5f /** dir*/;     //スピード//3.0
 
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));//2
 
 
+		////通常弾生成
+		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+		// 
 		//生成
-		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+		if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+	
 	}
 }
 
@@ -229,11 +318,24 @@ void Enemy_03::Move_Pattern() {
 
 	//目指している座標とX座標が一致したとき
 	if (x == moveinfo[current].location_x) {
+
 		current = moveinfo[current].next_index; //次のパターン
+
+		//speedがup
+		speed = 2.8f;
+
 	}
 
 	//x座標が目指している座標と不一致
 	if (x != moveinfo[current].location_x) {
+
+		//ジャンプしているとき
+		if (moveinfo[current].jumpflg == 0) {
+
+			//speedがup
+			speed = 4.0f;
+
+		}
 
 		//目指しているx座標の右方が大きい
 		if (x < moveinfo[current].location_x) {
