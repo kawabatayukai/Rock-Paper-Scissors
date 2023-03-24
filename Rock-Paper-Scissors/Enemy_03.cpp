@@ -10,7 +10,7 @@
 Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
 
-	speed = 1.85f;//1.5f
+	speed = 1.5f;//1.5f //前回1.85f
 	dir = 1;//エネミーの向き
 	hp = 100;
 

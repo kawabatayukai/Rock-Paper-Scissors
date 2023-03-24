@@ -237,15 +237,15 @@ void Scene_Stage03::Update()
 		//じゃん撃との当たり判定
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
-			//エネミーのHPが30以下の場合40ダメージ食らう
-			if (obj_enemy->GetHP() <= 50) {
+			//エネミーのHPが40以下の場合40ダメージ食らう
+			if (obj_enemy->GetHP() < 40) {
 
 				obj_player->ReceiveDamage(40);
 			}
 
 			//それ以外
 			//通常時のダメージを受ける（プレイヤー）
-			else obj_player->ReceiveDamage(30);
+			else obj_player->ReceiveDamage(20);
 
 			//あたったじゃん撃を削除
 			obj_enemy->DeleteJangeki(i);
