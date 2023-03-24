@@ -6,10 +6,7 @@ Jangeki_Reflection::Jangeki_Reflection(float x, float y, float r, float speed, J
 	:Jangeki_Base(x, y, r, speed, type)    // ←基底クラスのコンストラクタを呼ぶ
 {
 	obj_reflection = nullptr;
-	for (int i = 0; i < 3; i++) Rimage[i] = 0;
-	//画像読み込み
-	LoadDivGraph("images/stage09/Reflection_Jangeki.png", 3, 3, 1, 100, 100, Rimage);
-	
+
 }
 
 //デストラクタ
@@ -18,42 +15,9 @@ Jangeki_Reflection::~Jangeki_Reflection()
 
 }
 
-//描画
-void Jangeki_Reflection::Draw (float rx, float ry)const
+void Jangeki_Reflection::Update_reflection()
 {
-	//拡大率
-	double rate = (static_cast<double>(r) * 2) / 100;
 
-	//座標をint型に変換　（警告減らす）
-	int x = static_cast<int>(rx);
-	int y = static_cast<int>(ry);
-
-	switch (type)
-	{
-	case Jan_Type::ROCK:         //グー
-
-		DrawRotaGraph(x, y, 0.8, 1, Rimage[0], TRUE);
-		break;
-
-	case Jan_Type::SCISSORS:     //チョキ
-
-		DrawRotaGraph(x, y, 0.8, 1, Rimage[1], TRUE);
-		break;
-
-	case Jan_Type::PAPER:        //パー
-
-		DrawRotaGraph(x, y, 0.8, 1, Rimage[2], TRUE);
-		break;
-
-	default:
-		break;
-	}
-}
-
-
-void Jangeki_Reflection::Update_reflection()  
-{
-	
 
 	//じゃん撃配列をひとつずつ
 	for (jan_count_reflection = 0; jan_count_reflection < JANGEKI_MAX; jan_count_reflection++)
@@ -62,14 +26,14 @@ void Jangeki_Reflection::Update_reflection()
 		if (obj_reflection[jan_count_reflection] == nullptr) break;
 
 		obj_reflection[jan_count_reflection]->Update();
-	
+
 		obj_reflection[jan_count_reflection]->SetTargetLocation(targetX, targetY);
 		//画面外で削除する
 		if (obj_reflection[jan_count_reflection]->CheckScreenOut() == true)
 		{
 			Delete_reflectionJangeki(jan_count_reflection);
 			jan_count_reflection--;
-			
+
 		}
 	}
 
@@ -85,20 +49,20 @@ void Jangeki_Reflection::Update_reflection()
 
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
-		
+
 		/*if (reflectionFlg == true) obj_reflection[jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed, type);
 		reflectionFlg = false;*/
 	}
-	
+
 }
 //じゃん撃描画
-void Jangeki_Reflection::Draw_reflectionJangeki ()const
+void Jangeki_Reflection::Draw_reflectionJangeki()const
 {
 	for (int i = 0; i < JANGEKI_MAX; i++)
 	{
 		//要素がなければ処理しない
 		if (obj_reflection[i] == nullptr) break;
-		Draw(obj_reflection[i]->GetX(), obj_reflection[i]->GetY());                //配列に要素がある時
+		obj_reflection[i]->Draw();                //配列に要素がある時
 	}
 }
 

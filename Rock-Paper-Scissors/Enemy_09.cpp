@@ -38,7 +38,7 @@ void Enemy_09::Update()
 	//‚¶‚á‚ñŒ‚XVE¶¬
 	Update_Jangeki();
 	reflection->Update_reflection();
-	MoveEnmey_09();
+	//MoveEnmey_09();
 
 	//if (x + (w / 2) == (1280 - 20))
 	//{
@@ -130,7 +130,7 @@ void Enemy_09::Update_Jangeki()
 
 	
 		//¶¬
-		if (frame_count % 60 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
+		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
 		//”½ŽË‚¶‚á‚ñŒ‚¶¬
 		if(reflection->GetFlg()==true)reflection->obj_reflection[reflection->jan_count_reflection]= new Jangeki_Homing(x, y, radius, speed, type);
 		reflection->falseFlg();
