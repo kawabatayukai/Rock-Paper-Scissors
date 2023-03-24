@@ -230,6 +230,8 @@
     </ClCompile>
     <ClCompile Include="Jangeki_reflection.cpp">
       <Filter>ソース ファイル\Jangeki\nakayoshi</Filter>
+    <ClCompile Include="Jangeki_Vertical.cpp">
+      <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -379,6 +381,8 @@
     </ClInclude>
     <ClInclude Include="Jangeki_reflection.h">
       <Filter>ソース ファイル\Jangeki\nakayoshi</Filter>
+    <ClInclude Include="Jangeki_Vertical.h">
+      <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

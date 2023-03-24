@@ -14,7 +14,7 @@ Janken::Janken(Jan_Type enemy_jan, const int stage_num)
 	//‰æ‘œ“Ç‚İ‚İ
 	LoadDivGraph("images/Janken_Test.png", 3, 3, 1, 200, 200, image);
 	image_back = LoadGraph("images/Jan_Back_ver1.png");             //‚¶‚á‚ñ‚¯‚ñ’†”wŒi
-	image_hand = LoadGraph("images/Janken_Hand.png");
+	image_hand = LoadGraph("images/Janken_Hand2.png");
 	image_player = LoadGraph("images/sd_body-1.png");
 	image_enemy = LoadGraph("images/tyokitest.png");
 

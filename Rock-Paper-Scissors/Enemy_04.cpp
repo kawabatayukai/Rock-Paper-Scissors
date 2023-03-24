@@ -17,10 +17,14 @@ Enemy_04::Enemy_04(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	Init_Jangeki();       //じゃん撃を用意
 
 		//動きパターン
-	moveinfo[0] = { 1,0.f,150.f, 0,1 };
-	moveinfo[1] = { 0,0.f,  0.f,50,2 };
-	moveinfo[2] = { 1,0.f,600.f, 0,3 };
-	moveinfo[3] = { 0,0.f,  0.f,50,0 };
+	moveinfo[0] = { 1,1100.f,120.f, 0,1 };
+	moveinfo[1] = { 0,   0.f,  0.f,50,2 };
+	moveinfo[2] = { 1, 180.f,120.f, 0,3 };
+	moveinfo[3] = { 0,   0.f,  0.f,50,4 };
+	moveinfo[4] = { 1, 180.f,600.f, 0,5 };
+	moveinfo[5] = { 0,   0.f,  0.f,50,6 };
+	moveinfo[6] = { 1,1100.f,600.f, 0,7 };
+	moveinfo[7] = { 0,   0.f,  0.f,50,0 };
 }
 
 //デストラクタ
@@ -162,17 +166,51 @@ void Enemy_04::Move_Pattern() {
 	float move_x = x;
 	float move_y = y;
 
-	//目指している座標とX座標が一致したとき
-	if (y == moveinfo[current].location_y) {
+	//目指しているx座標とy座標が一致したとき
+	if (x == moveinfo[current].location_x && y == moveinfo[current].location_y) {
 		current = moveinfo[current].next_index; //次のパターン
 	}
 
 	//x座標が目指している座標と不一致
-	if (y != moveinfo[current].location_y) {
+	if (x != moveinfo[current].location_x) {
 
 		//目指しているx座標の右方が大きい
+		if (x < moveinfo[current].location_x) {
+			move_x += speed; //右移動にプラスする
+
+			//目指していた座標を超えたとき
+			if (x <= moveinfo[current].location_x && moveinfo[current].location_x <= move_x)
+			{
+
+				move_x = moveinfo[current].location_x; //目指していた座標で固定
+
+			}
+
+		}
+		else
+		{
+			move_x -= speed; //左移動にマイナスする
+
+			//目指していた座標を超えたとき
+			if (move_x <= moveinfo[current].location_x && moveinfo[current].location_x <= x)
+			{
+
+				move_x = moveinfo[current].location_x; //目指していた座標で固定
+
+			}
+
+
+		}
+
+
+	}
+
+	//y座標が目指している座標と不一致
+	if (y != moveinfo[current].location_y) {
+
+		//目指しているy座標の右方が大きい
 		if (y < moveinfo[current].location_y) {
-			move_y += speed; //右移動にプラスする
+			move_y += speed; //下移動にプラスする
 
 			//目指していた座標を超えたとき
 			if (y <= moveinfo[current].location_y && moveinfo[current].location_y <= move_y)
@@ -185,7 +223,7 @@ void Enemy_04::Move_Pattern() {
 		}
 		else
 		{
-			move_y -= speed; //左移動にマイナスする
+			move_y -= speed; //上移動にマイナスする
 
 			//目指していた座標を超えたとき
 			if (move_y <= moveinfo[current].location_y && moveinfo[current].location_y <= y)
