@@ -43,8 +43,8 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 
 	//‰E‚©‚ç‡‚É
 
-	obj_floor[3] = new Floor("images/stage03/BlockImages.png",1150, 430, 95, 30);//‘«ê8//130,GetColor(193, 107, 68)
-	obj_floor[4] = new Floor("images/stage03/BlockImages.png", 1050, 570, 95, 30);//‘«ê8//130,	GetColor(193, 107, 68)
+	obj_floor[3] = new Floor("images/stage03/BlockImages.png",1150, 410, 95, 30);//‘«ê8//130,GetColor(193, 107, 68)
+	obj_floor[4] = new Floor("images/stage03/BlockImages.png", 1050, 550, 95, 30);//‘«ê8//130,	GetColor(193, 107, 68)
 	obj_floor[5] = new Floor("images/stage03/BlockImages.png", 970, 215, 130, 40);//‘«ê1, GetColor(193, 107, 68)
 	obj_floor[6] = new Floor("images/stage03/BlockImages.png", 770, 150, 130, 40);//‘«ê2//130, GetColor(193, 107, 68)
 	obj_floor[7] = new Floor("images/stage03/BlockImages.png", 575, 215, 130, 40);//‘«ê3//100, GetColor(193, 107, 68)
