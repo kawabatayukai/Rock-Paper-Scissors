@@ -200,7 +200,7 @@ void Enemy_05::Update()
 void Enemy_05::Draw() const
 {
 	//’†S‚©‚ç•`‰æ
-	DrawRotaGraphF(x, y, 5, 0, Enemy_image, TRUE);
+	DrawRotaGraphF(x, y, 1, 0, Enemy_image, TRUE);
 
 	//‚¶‚á‚ñŒ‚•`‰æ
 	Draw_Jangeki();
