@@ -324,26 +324,48 @@ void Scene_Stage09::Update()
 			}
 		}
 
+		////反射されたじゃん撃とenemyの当たり判定
+		//if (Rflg == true) {
+		//	for (int i = 0; i < JANGEKI_MAX; i++)
+		//	{
+		//		//じゃん撃がない時は処理しない
+		//		if (player_jangeki[i] == nullptr) break;
+
+		//		//じゃん撃との当たり判定
+		//		if (obj_enemy->Hit_Jangeki(player_jangeki[i]) == true)
+		//		{
+		//			//ダメージを受ける（プレイヤー）
+		//			obj_enemy->ReceiveDamage(30);
+
+		//			//あたったじゃん撃を削除
+		//			obj_player->DeleteJangeki(i);
+		//			i--;
+		//			Rflg = false;
+		//		}
+		//	}
+		//}
+
 		//反射されたじゃん撃とenemyの当たり判定
 		if (Rflg == true) {
 			for (int i = 0; i < JANGEKI_MAX; i++)
 			{
 				//じゃん撃がない時は処理しない
-				if (player_jangeki[i] == nullptr) break;
+				if (reflection_jangeki[i] == nullptr) break;
 
 				//じゃん撃との当たり判定
-				if (obj_enemy->Hit_Jangeki(player_jangeki[i]) == true)
+				if (obj_enemy->Hit_Jangeki(reflection_jangeki[i]) == true)
 				{
 					//ダメージを受ける（プレイヤー）
 					obj_enemy->ReceiveDamage(30);
 
 					//あたったじゃん撃を削除
-					obj_player->DeleteJangeki(i);
+					obj_enemy->reflection->Delete_reflectionJangeki(i);
 					i--;
 					Rflg = false;
 				}
 			}
 		}
+
 		
 		
 
