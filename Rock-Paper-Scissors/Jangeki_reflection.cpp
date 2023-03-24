@@ -6,7 +6,7 @@ Jangeki_Reflection::Jangeki_Reflection(float x, float y, float r, float speed, J
 	:Jangeki_Base(x, y, r, speed, type)    // ←基底クラスのコンストラクタを呼ぶ
 {
 	obj_reflection = nullptr;
-	
+
 }
 
 //デストラクタ
@@ -15,9 +15,9 @@ Jangeki_Reflection::~Jangeki_Reflection()
 
 }
 
-void Jangeki_Reflection::Update_reflection()  
+void Jangeki_Reflection::Update_reflection()
 {
-	
+
 
 	//じゃん撃配列をひとつずつ
 	for (jan_count_reflection = 0; jan_count_reflection < JANGEKI_MAX; jan_count_reflection++)
@@ -26,14 +26,14 @@ void Jangeki_Reflection::Update_reflection()
 		if (obj_reflection[jan_count_reflection] == nullptr) break;
 
 		obj_reflection[jan_count_reflection]->Update();
-	
+
 		obj_reflection[jan_count_reflection]->SetTargetLocation(targetX, targetY);
 		//画面外で削除する
 		if (obj_reflection[jan_count_reflection]->CheckScreenOut() == true)
 		{
 			Delete_reflectionJangeki(jan_count_reflection);
 			jan_count_reflection--;
-			
+
 		}
 	}
 
@@ -49,14 +49,14 @@ void Jangeki_Reflection::Update_reflection()
 
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
-		
+
 		/*if (reflectionFlg == true) obj_reflection[jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed, type);
 		reflectionFlg = false;*/
 	}
-	
+
 }
 //じゃん撃描画
-void Jangeki_Reflection::Draw_reflectionJangeki ()const
+void Jangeki_Reflection::Draw_reflectionJangeki()const
 {
 	for (int i = 0; i < JANGEKI_MAX; i++)
 	{

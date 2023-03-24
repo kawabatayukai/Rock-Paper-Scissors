@@ -15,7 +15,7 @@ Enemy_09::Enemy_09(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	if (hp <= 0)hp = 0;
 
-	image = LoadGraph("images/Stage9.png");
+	image = LoadGraph("images/stage09/Stage9.png");
 	
 	//じゃん撃を用意
 	Init_Jangeki();       
@@ -38,7 +38,7 @@ void Enemy_09::Update()
 	//じゃん撃更新・生成
 	Update_Jangeki();
 	reflection->Update_reflection();
-	MoveEnmey_09();
+	//MoveEnmey_09();
 
 	//if (x + (w / 2) == (1280 - 20))
 	//{
@@ -82,6 +82,7 @@ void Enemy_09::Draw() const
 	//じゃん撃描画
 	Draw_Jangeki();
 	reflection->Draw_reflectionJangeki();
+	
 
 	//テスト
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
