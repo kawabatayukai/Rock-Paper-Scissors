@@ -43,8 +43,8 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 
 	//右から順に
 
-	obj_floor[3] = new Floor("images/stage03/BlockImages.png",1150, 410, 95, 30);//足場8//130,GetColor(193, 107, 68)
-	obj_floor[4] = new Floor("images/stage03/BlockImages.png", 1050, 550, 95, 30);//足場8//130,	GetColor(193, 107, 68)
+	obj_floor[3] = new Floor("images/stage03/BlockImages.png",1150, 430, 95, 30);//足場8//130,GetColor(193, 107, 68)
+	obj_floor[4] = new Floor("images/stage03/BlockImages.png", 1050, 570, 95, 30);//足場8//130,	GetColor(193, 107, 68)
 	obj_floor[5] = new Floor("images/stage03/BlockImages.png", 970, 215, 130, 40);//足場1, GetColor(193, 107, 68)
 	obj_floor[6] = new Floor("images/stage03/BlockImages.png", 770, 150, 130, 40);//足場2//130, GetColor(193, 107, 68)
 	obj_floor[7] = new Floor("images/stage03/BlockImages.png", 575, 215, 130, 40);//足場3//100, GetColor(193, 107, 68)
@@ -237,15 +237,15 @@ void Scene_Stage03::Update()
 		//じゃん撃との当たり判定
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
-			//エネミーのHPが40以下の場合40ダメージ食らう
-			if (obj_enemy->GetHP() < 40) {
+			//エネミーのHPが30以下の場合40ダメージ食らう
+			if (obj_enemy->GetHP() <= 50) {
 
 				obj_player->ReceiveDamage(40);
 			}
 
 			//それ以外
 			//通常時のダメージを受ける（プレイヤー）
-			else obj_player->ReceiveDamage(20);
+			else obj_player->ReceiveDamage(30);
 
 			//あたったじゃん撃を削除
 			obj_enemy->DeleteJangeki(i);
