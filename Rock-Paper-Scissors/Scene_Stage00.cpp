@@ -22,7 +22,7 @@ Scene_Stage00::Scene_Stage00(const Player* player)
 		//プレイヤーを生成
 		obj_player = new Player(640, 360);
 	}
-	
+
 
 	//敵を生成
 	obj_enemy = new Enemy_00(1200, 360, Jan_Type::SCISSORS);
@@ -42,14 +42,30 @@ Scene_Stage00::Scene_Stage00(const Player* player)
 
 	obj_floor[0] = new Floor(50, 700, 1280, 20);        //床
 	obj_floor[1] = new Floor(0, 0, 20, 1720);          //壁（左）
-	obj_floor[2] = new Floor(1260,0,20,1720);          //壁（右）
+	obj_floor[2] = new Floor(1260, 0, 20, 1720);          //壁（右）
 	obj_floor[3] = new Floor(1000, 100, 120, 50);      //足場
 	obj_floor[4] = new Floor(40, 500, 500, 60);        //足場
 	obj_floor[5] = new Floor(100, 300, 100, 50);
-	obj_floor[6] = new Floor(200, 100, 50,50);//イメージ追加
+	obj_floor[6] = new Floor(200, 100, 50, 50);//イメージ追加
 
 	//テスト
 	setumei = LoadGraph("images/Setumei.png");
+
+	//画像一覧
+	int players[10];
+	LoadDivGraph("images/ワンパンマンALL画像腕無し.png", 10, 5, 2, 100, 100, players);
+
+	player_image = players[0];
+
+	enemy_02 = LoadGraph("images/stage02/ex.png");
+	enemy_03 = LoadGraph("images/tyokitest.png");
+	enemy_04 = LoadGraph("images/Stage4/ステージ4_ボス.png");
+	enemy_05 = LoadGraph("images/stage05/Stage5_Enemy_NoMove_Left.png");
+	enemy_06 = LoadGraph("images/tyokitest.png");
+	enemy_07 = LoadGraph("images/tyokitest.png");
+	enemy_08 = LoadGraph("images/stage08/Stage8_image.png");
+	enemy_09 = LoadGraph("images/tyokitest.png");
+	enemy_10 = LoadGraph("images/tyokitest.png");
 }
 
 //デストラクタ
@@ -63,8 +79,8 @@ void Scene_Stage00::Update()
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
-		obj_player->Update();    // プレイヤー更新・操作可能
-		obj_enemy->Update();     //敵キャラ更新・内部処理
+		//obj_player->Update();    // プレイヤー更新・操作可能
+		//obj_enemy->Update();     //敵キャラ更新・内部処理
 
 		//プレイヤーの座標を取得
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
@@ -97,7 +113,7 @@ void Scene_Stage00::Update()
 			if (player_jangeki[p_count]->Hit_Jangeki(enemy_jangeki[e_count]) == true)
 			{
 				//有利属性チェック
-				int result = player_jangeki[p_count]->CheckAdvantage( enemy_jangeki[e_count] );
+				int result = player_jangeki[p_count]->CheckAdvantage(enemy_jangeki[e_count]);
 
 				switch (result)
 				{
@@ -119,10 +135,10 @@ void Scene_Stage00::Update()
 				case 2:             //あいこ
 
 					//player側のじゃん撃を削除
-					delete_player = true;  
-					
+					delete_player = true;
+
 					//enemy側のじゃん撃を削除
-					obj_enemy->DeleteJangeki(e_count);   
+					obj_enemy->DeleteJangeki(e_count);
 					e_count--;
 
 					break;
@@ -137,7 +153,7 @@ void Scene_Stage00::Update()
 		if (delete_player == true)
 		{
 			//player側のじゃん撃を削除
-			obj_player->DeleteJangeki(p_count);  
+			obj_player->DeleteJangeki(p_count);
 			p_count--;
 		}
 	}
@@ -230,15 +246,27 @@ void Scene_Stage00::Draw() const
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
-		obj_player->Draw();  //プレイヤー描画
-		obj_enemy->Draw();   //敵キャラ描画
+		//obj_player->Draw();  //プレイヤー描画
+		//obj_enemy->Draw();   //敵キャラ描画
 
-		//床・壁描画
-		for (int i = 0; i < STAGE_00_FLOOR; i++)
-		{
-			if (obj_floor[i] == nullptr) break;
-			obj_floor[i]->Draw();
-		}
+		////床・壁描画
+		//for (int i = 0; i < STAGE_00_FLOOR; i++)
+		//{
+		//	if (obj_floor[i] == nullptr) break;
+		//	obj_floor[i]->Draw();
+		//}
+
+		//すべてのキャラを描画
+		DrawGraph(50, 0, player_image, TRUE);
+		DrawGraph(200, 0, enemy_02, TRUE);
+		DrawGraph(350, 0, enemy_03, TRUE);
+		DrawGraph(500, 0, enemy_04, TRUE);
+		DrawGraph(650, 0, enemy_05, TRUE);
+		DrawGraph(50, 150, enemy_06, TRUE);
+		DrawGraph(200, 150, enemy_07, TRUE);
+		DrawGraph(350, 150, enemy_08, TRUE);
+		DrawGraph(500, 150, enemy_09, TRUE);
+		DrawGraph(650, 150, enemy_10, TRUE);
 	}
 	else
 	{
@@ -247,7 +275,7 @@ void Scene_Stage00::Draw() const
 	}
 
 	//テスト
-	DrawGraph(20, 0, setumei, TRUE);
+	//DrawGraph(20, 0, setumei, TRUE);
 
 }
 
