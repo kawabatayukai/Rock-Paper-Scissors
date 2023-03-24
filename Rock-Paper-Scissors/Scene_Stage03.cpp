@@ -310,12 +310,12 @@ AbstractScene* Scene_Stage03::ChangeScene()
 #ifdef DEBUG_OFF_03
 
 	//敵のHP0
-	//if (obj_enemy->GetHP() < 0) {
+	if (obj_enemy->GetHP() < 0) {
 
-	//	//ゲームクリアシーンへ切り替え
-	//	return dynamic_cast<AbstractScene*> (new GameClearScene(4));
+		//ゲームクリアシーンへ切り替え
+		return dynamic_cast<AbstractScene*> (new GameClearScene(4));
 
-	//}
+	}
 
 	//プレイヤーのHPが0
 	if (obj_player->GetHP() < 0) {
