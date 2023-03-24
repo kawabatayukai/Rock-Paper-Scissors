@@ -71,7 +71,7 @@ void Scene_Stage09::Update()
 		obj_enemy->reflection->Update_reflection();
 				//プレイヤーの座標を取得
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
-		/*obj_enemy->reflection->SetEnemyLocation(obj_enemy->GetX(), obj_enemy->GetY());*/
+		
 	}
 
 	//接触じゃんけん処理
@@ -169,9 +169,7 @@ void Scene_Stage09::Update()
 
 			obj_enemy->reflection->trueFlg();
 
-			//	//じゃん撃描画
-			//	obj_enemy->Draw_Jangeki();
-			//	obj_enemy->Update_Jangeki();
+
 
 			//	Jan_Type enemy_type = obj_enemy->GetType();            //敵の属性
 			//	Jan_Type jangeki_type = player_jangeki[i]->GetType();  //当たったじゃん撃の属性
@@ -331,21 +329,22 @@ void Scene_Stage09::Update()
 			for (int i = 0; i < JANGEKI_MAX; i++)
 			{
 				//じゃん撃がない時は処理しない
-				if (reflection_jangeki[i] == nullptr) break;
+				if (player_jangeki[i] == nullptr) break;
 
 				//じゃん撃との当たり判定
-				if (obj_enemy->Hit_Jangeki(reflection_jangeki[i]) == true)
+				if (obj_enemy->Hit_Jangeki(player_jangeki[i]) == true)
 				{
 					//ダメージを受ける（プレイヤー）
 					obj_enemy->ReceiveDamage(30);
 
 					//あたったじゃん撃を削除
-					obj_enemy->reflection->Delete_reflectionJangeki(i);
+					obj_player->DeleteJangeki(i);
 					i--;
 					Rflg = false;
 				}
 			}
 		}
+		
 		
 
 	HitCtrl_Floor(obj_player, STAGE_09_FLOOR);     // player　床・壁判定
