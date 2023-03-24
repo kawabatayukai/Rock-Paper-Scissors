@@ -50,7 +50,7 @@ private:
 	int frame_count = 0;       //じゃん撃発射用
 
 	float v = V;
-	float a = 0.6;
+	float a = 0.6f;
 
 	/*敵：移動, 目的地, NEXT, 待ち時間, 攻撃方法の配列*/
 	MoveInformation10 MoveInfo[10] = {};
