@@ -8,7 +8,7 @@
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_04::Enemy_04(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
-	speed = 2.5f;
+	speed = 3.0f;
 	dir = 1;
 	hp = 100;
 
@@ -62,8 +62,12 @@ void Enemy_04::Update()
 		break;
 	}
 
-	if (hp <= 0) hp = 0; 
-	else if (hp <= 50) speed = 8.0f;
+	if (hp <= 0) hp = 0;
+	
+	if (hp <= 50) speed = 6.0f;
+	else speed = 3.0f;
+	
+	if (hp < 100 && frame_count % 15 == 0) hp++;
 
 	//if (x + (w / 2) == (1280 - 20))
 	//{
@@ -144,18 +148,18 @@ void Enemy_04::Update_Jangeki()
 	//配列の空要素
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
-		float radius = 35.5f;   //半径
-		float speed = 3.0f;     //スピード
+		float radius = 40.0f;   //半径
+		float speed = 2.0f;     //スピード
 		
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
 
 		//生成
-		/*if (hp <= 50)
+		if (hp <= 50)
 		{
-			if (frame_count % 40 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius*0.7, speed*-1.5, type);
-		}*/
+			if (frame_count % 40 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius * 0.5, speed * -2, type);
+		}
 		if (frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 	}
 }
