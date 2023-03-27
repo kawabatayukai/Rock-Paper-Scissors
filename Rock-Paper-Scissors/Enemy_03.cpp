@@ -155,8 +155,10 @@ void Enemy_03::Update()
 		e_type = Jan_Type::ROCK;
 
 	}
-	//上記の属性変更以外
-	else e_type = Jan_Type::SCISSORS;
+	//動いているとき属性変更
+	else if (moveinfo[current].enemywaitTime < 125) {
+		e_type = Jan_Type::SCISSORS;
+	}
 
 	//ステ03パターン用関数
 	switch (moveinfo[current].moveflg)
@@ -182,7 +184,6 @@ void Enemy_03::Update()
 
 	//HPが0以下だったらHPに0を代入
 	if (hp <= 0)hp = 0;
-
 
 
 	//if (x + (w / 2) == (1280 - 20))
@@ -251,8 +252,6 @@ void Enemy_03::Draw() const
 	}
 
 
-
-
 	//じゃん撃描画
 	Draw_Jangeki();
 
@@ -305,7 +304,7 @@ void Enemy_03::Update_Jangeki()
 
 		//プレイヤー方向へのジャン撃生成
 
-		if(hp >= 41){
+		if (hp >= 41) {
 			if (frame_count % 80 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 		}
 		////通常弾生成
@@ -320,7 +319,7 @@ void Enemy_03::Update_Jangeki()
 
 			if (frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 
-			
+
 
 		}
 

@@ -240,12 +240,12 @@ void Scene_Stage03::Update()
 			//エネミーのHPが40以下の場合30ダメージ食らう
 			if (obj_enemy->GetHP() <= 40 ) {
 
-				//半径が100.0fの場合のダメージ
+				//半径が90.0fの場合のダメージ
 				float radius = 90.0f;
 
 				if(radius >= 90.0f){
 
-					obj_player->ReceiveDamage(30);
+					obj_player->ReceiveDamage(35);
 				}
 			}
 
