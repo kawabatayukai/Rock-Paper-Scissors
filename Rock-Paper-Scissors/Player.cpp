@@ -91,7 +91,8 @@ void Player::Update()
 		x -= speed;
 		//dir = static_cast<int>(DIRECTION::LEFT);   //向きを設定（左）
 	}
-	if (KeyManager::OnPadClicked(PAD_INPUT_LEFT)) //押された瞬間だけ左を向く
+	if (KeyManager::OnPadClicked(PAD_INPUT_LEFT) && 
+		KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0) //押された瞬間だけ左を向く
 	{
 		dir = static_cast<int>(DIRECTION::LEFT);   //向きを設定（左）
 	}
@@ -103,7 +104,8 @@ void Player::Update()
 		x += speed;
 		//dir = static_cast<int>(DIRECTION::RIGHT);  //向きを設定（右）
 	}
-	if (KeyManager::OnPadClicked(PAD_INPUT_RIGHT)) //押された瞬間だけ右を向く
+	if (KeyManager::OnPadClicked(PAD_INPUT_RIGHT) &&
+		KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0) //押された瞬間だけ右を向く
 	{
 		dir = static_cast<int>(DIRECTION::RIGHT);   //向きを設定（右）
 	}
