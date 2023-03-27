@@ -8,13 +8,13 @@
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_04::Enemy_04(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
-	speed = 3.0f;
+	speed = 1.5f;
 	dir = 1;
 	hp = 100;
 
 	//ランダムな座標取得
-	enemy_x = GetRand(1100) + 100;
-	enemy_y = GetRand(540) + 100;
+	enemy_x = GetRand(1160) + 100;
+	enemy_y = GetRand(600) + 100;
 
 	image = LoadGraph("images/Stage4/ステージ4_ボス.png");
 
@@ -45,8 +45,8 @@ void Enemy_04::Update()
 		if (moveinfo[current].waitFlameTime <= waitTime)
 		{
 			waitTime = 0;
-			enemy_x = GetRand(1100) + 100;
-			enemy_y = GetRand(540) + 100;
+			enemy_x = GetRand(1160) + 100;
+			enemy_y = GetRand(600) + 100;
 			current = moveinfo[current].next_index;
 		}
 		break;
@@ -63,42 +63,11 @@ void Enemy_04::Update()
 	if (hp <= 0) hp = 0;
 	
 	//HP50％以下でスピードUP
-	if (hp <= 50) speed = 6.0f;
-	else speed = 3.0f;
+	if (hp <= 50) speed = 4.0f;
+	else speed = 1.5f;
 	
-	//少しずつ体力が回復していく
-	if (hp < 100 && frame_count % 15 == 0) hp++;
-
-	//if (x + (w / 2) == (1280 - 20))
-	//{
-	//	dir = -1;
-	//}
-	//else if (x - (w / 2) == (20))
-	//{
-	//	dir = 1;
-	//}
-
-	//x += dir * speed;
-
-	/********************   ジャンプ関係   ********************/
-
-	//if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
-	//{
-	//	g_add = -31.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-	//	land_flg = false;  //地面についていない
-	//}
-
-	//y_add = (y - old_y) + g_add;  //今回の落下距離を設定
-
-	////落下速度の制限
-	//if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
-
-	//old_y = y;                    //1フレーム前のｙ座標
-	//y += y_add;                   //落下距離をｙ座標に加算する
-	//g_add = _GRAVITY;              //重力加速度を初期化する
-
-	/**********************************************************/
-
+	//少しずつHP回復
+	//if (hp < 100 && frame_count % 15 == 0) hp++;
 }
 
 //描画
@@ -109,13 +78,6 @@ void Enemy_04::Draw() const
 
 	//じゃん撃描画
 	Draw_Jangeki();
-
-
-
-	//テスト
-	/*if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
-	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);*/
-
 }
 
 //じゃん撃生成・更新
@@ -149,29 +111,29 @@ void Enemy_04::Update_Jangeki()
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
 		float radius = 38.0f;   //半径
-		float speed  =  2.0f;   //スピード
+		float speed  =  2.5f;   //スピード
 		
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
 
 		//プレイヤーの角度へ発射するジャン撃生成
-		if (frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+		if (frame_count % 40 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 
-		//HPが50%以下で新たなジャン撃生成
-		if (hp <= 50)
-		{
-			//プレイヤーのx座標によって発射する方向を変える(左右)
-			if (player_x <= 640)
-			{
-				if (frame_count % 40 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius * 0.5, speed * -2, type);
-			}
-			else if (player_x > 640)
-			{
-				if (frame_count % 40 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius * 0.5, speed *  2, type);
-			}
-			
-		}
+		////HPが50%以下で新たなジャン撃生成
+		//if (hp <= 50)
+		//{
+		//	//プレイヤーのx座標によって発射する方向を変える(左右)
+		//	if (player_x <= 640)
+		//	{
+		//		if (frame_count % 40 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius * 0.5, speed * -2, type);
+		//	}
+		//	else if (player_x > 640)
+		//	{
+		//		if (frame_count % 40 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius * 0.5, speed *  2, type);
+		//	}
+		//	
+		//}
 	}
 }
 

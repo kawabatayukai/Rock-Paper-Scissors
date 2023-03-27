@@ -154,7 +154,7 @@ void Scene_Stage04::Update()
 				//パーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::PAPER)
 				{
-					obj_enemy->ReceiveDamage(20);     //ダメージが入る
+					obj_enemy->ReceiveDamage(15);     //ダメージが入る
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -166,7 +166,7 @@ void Scene_Stage04::Update()
 				//グーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::ROCK)
 				{
-					obj_enemy->ReceiveDamage(20);     //ダメージが入る
+					obj_enemy->ReceiveDamage(15);     //ダメージが入る
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -177,7 +177,7 @@ void Scene_Stage04::Update()
 				//チョキのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::SCISSORS)
 				{
-					obj_enemy->ReceiveDamage(20);     //ダメージが入る
+					obj_enemy->ReceiveDamage(15);     //ダメージが入る
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -200,7 +200,7 @@ void Scene_Stage04::Update()
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
 			//ダメージを受ける（プレイヤー）
-			obj_player->ReceiveDamage(20);
+			obj_player->ReceiveDamage(50);
 
 			//あたったじゃん撃を削除
 			obj_enemy->DeleteJangeki(i);
