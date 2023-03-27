@@ -259,7 +259,7 @@ void Scene_Stage08::Draw() const
 		Draw_Janken();
 	}
 
-	DrawString(140, 360, "Stage08", 0xffffff);
+	//DrawString(640, 360, "Stage08", 0xffffff);
 }
 
 

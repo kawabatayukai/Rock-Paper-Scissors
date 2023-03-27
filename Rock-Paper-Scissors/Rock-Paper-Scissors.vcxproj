@@ -164,6 +164,7 @@
     <ClCompile Include="Enemy_08.cpp" />
     <ClCompile Include="Enemy_09.cpp" />
     <ClCompile Include="Enemy_10.cpp" />
+    <ClCompile Include="Enemy_Cannon.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Jangeki_Changespeed.cpp" />
@@ -217,6 +218,7 @@
     <ClInclude Include="Enemy_08.h" />
     <ClInclude Include="Enemy_09.h" />
     <ClInclude Include="Enemy_10.h" />
+    <ClInclude Include="Enemy_Cannon.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Jangeki_Changespeed.h" />

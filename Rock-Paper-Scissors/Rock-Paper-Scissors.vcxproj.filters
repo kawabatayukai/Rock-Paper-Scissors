@@ -231,6 +231,9 @@
     <ClCompile Include="Jangeki_Vertical.cpp">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy_Cannon.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -382,6 +385,9 @@
     </ClInclude>
     <ClInclude Include="Jangeki_Vertical.h">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_Cannon.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
