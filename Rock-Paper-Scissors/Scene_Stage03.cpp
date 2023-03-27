@@ -27,7 +27,7 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	else
 	{
 		//プレイヤーを生成
-		obj_player = new Player(10, 640);
+		obj_player = new Player(100, 640);
 	}
 
 	//敵を生成							//敵の属性チョキ
@@ -178,6 +178,7 @@ void Scene_Stage03::Update()
 					}
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
+					
 				}
 
 				break;
@@ -333,11 +334,23 @@ AbstractScene* Scene_Stage03::ChangeScene()
 
 void Scene_Stage03::AfterJanken_WIN()
 {
+
+	
+
+
+
 	obj_player->SetX(100);
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）
 void Scene_Stage03::AfterJanken_LOSE()
 {
+
+
+
+
+
+
+
 	obj_player->SetX(100);
 }

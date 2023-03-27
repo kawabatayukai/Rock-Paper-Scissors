@@ -31,9 +31,9 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	moveinfo[3] = { 1,  0 ,   0.f , 4, 125 ,1 };//X‚ª650‚Å’â~
 
-	moveinfo[4] = { 0, 350.f, 0.f , 5, 0 ,1 };//X‚ª325‚Ü‚Å“®‚­
+	moveinfo[4] = { 0, 350.f, 0.f , 5, 0 ,1 };//X‚ª350‚Ü‚Å“®‚­
 
-	moveinfo[5] = { 1,  0 ,   0.f , 6, 125 ,1 };//X‚ª325‚Å’â~
+	moveinfo[5] = { 1,  0 ,   0.f , 6, 125 ,1 };//X‚ª350‚Å’â~
 
 	//‘«ê‚Éæ‚é
 	moveinfo[6] = { 0, 350.f, 0.f , 7, 0 ,0 };//X‚ª350‚Ì‘«ê‚É”ò‚Ô
@@ -76,7 +76,9 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
     moveinfo[20] = { 1,  0 , 0.f , 21, 125,1 };//X‚ª930‚Å’â~
 
-	moveinfo[21] = { 0, 1050.f , 0.f , 22, 0, 0 };//X‚ª1020‚Ì‘«ê‚É”ò‚Ô
+
+	//‘O‰ñ‚Ì‹tƒpƒ^[ƒ“‚Ö
+	moveinfo[21] = { 0, 1050.f , 0.f , 22, 0, 0 };//X‚ª1050‚Ì‘«ê‚É”ò‚Ô
 
 	//moveinfo[27] = { 1,  0 , 0.f , 28, 125,1 };//X‚ª1020‚Å’â~
 
@@ -107,7 +109,7 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	moveinfo[31] = { 0, 70.f,  0.f , 32,  0 ,0 };//X‚ª70‚Ü‚Å“®‚­
 
-	moveinfo[32] = { 1,  0 ,   0.f , 33, 125,1 };//X‚ª325‚Å’â~
+	moveinfo[32] = { 1,  0 ,   0.f , 33, 125,1 };//X‚ª70‚Å’â~
 	//‚±‚±‚©‚ç“®‚­2
 	moveinfo[33] = { 0, 350.f, 0.f , 34,  0 ,1 };//‰ŠúˆÊ’u‚ÌX‚ª350‚Å’â~
 
@@ -121,7 +123,7 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	//moveinfo[47] = { 1,	 0,  0.f , 48, 62 ,1 };//X‚ª900‚Å­‚µ‚ÌŠÔ’â~
 
-	moveinfo[38] = { 1,  0 ,   0.f , 0, 125 ,1 };//X‚ª650‚Å’â~‚µ”z—ñ[0]‚É–ß‚éw
+	moveinfo[38] = { 1,  0 ,   0.f , 0, 125 ,1 };//X‚ª900‚Å’â~‚µ”z—ñ[0]‚É–ß‚é
 
 }
 
@@ -164,6 +166,7 @@ void Enemy_03::Update()
 
 		break;
 	case 1:
+		//‘Ò‚¿ŠÔƒJƒEƒ“ƒg
 		waitcount++;
 		if (moveinfo[current].enemywaitTime <= waitcount) {
 
@@ -236,14 +239,14 @@ void Enemy_03::Draw() const
 	//ƒGƒlƒ~[’â~
 	if (moveinfo[current].enemywaitTime > 0) {
 
-		//ƒK[ƒh‚Ì‰æ‘œ•`‰æ
+		//ƒK[ƒh‚Ì‰æ‘œ•`‰æ							
 		DrawRotaGraphF(x, y, 1, 0, enemyimage[1], TRUE, dir == -1 ? 0 : 1);
 
 
 	}
 	//‚»‚¤‚¶‚á‚È‚¢‚Æ‚«
 	else {
-		//UŒ‚‚Ì‰æ‘œ•`‰æ
+		//UŒ‚‚Ì‰æ‘œ•`‰æ								//Œü‚«‚ğ•Ï‚¦‚é
 		DrawRotaGraphF(x, y, 1, 0, enemyimage[0], TRUE, dir == -1 ? 0 : 1);
 	}
 
@@ -257,7 +260,7 @@ void Enemy_03::Draw() const
 	//ƒeƒXƒg                                                      //ÔF
 	if (moveinfo[current].enemywaitTime > 0) DrawFormatString((int)(x - 100), (int)(y - 100), GetColor(0, 0, 255), "–hŒä—Í UPª", moveinfo[current].enemywaitTime);
 
-	if (hp <= 50) DrawFormatString((int)(x - 100), (int)(y - 80), GetColor(255, 0, 0), "UŒ‚—Í UPª", hp);
+	if (hp <= 40) DrawFormatString((int)(x - 100), (int)(y - 80), GetColor(255, 0, 0), "UŒ‚—Í UPª", hp);
 
 	if (hp <= 0)DrawString((int)(x - 100), (int)(y - 120), "death!", 0xff0000);
 
