@@ -56,7 +56,10 @@ void Scene_Stage05::Update()
 	{
 		obj_player->Update();    // プレイヤー更新・操作可能
 		obj_enemy->Update();     //敵キャラ更新・内部処理
-		obj_mobenemy->Update();
+		if (obj_mobenemy->GetHP() >= 0)
+		{
+			obj_mobenemy->Update();
+		}
 		//プレイヤーの座標を取得
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
 		obj_mobenemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
@@ -253,60 +256,63 @@ void Scene_Stage05::Update()
 		}
 	}
 
-	//playerじゃん撃とmobenemyの当たり判定
-	for (int i = 0; i < JANGEKI_MAX; i++)
+	if (obj_mobenemy->GetHP() >= 0)
 	{
-		if (player_jangeki[i] == nullptr) break;         //じゃん撃がない時は処理しない
-
-		//じゃん撃との当たり判定
-		if (obj_mobenemy->Hit_Jangeki(player_jangeki[i]) == true)
+		//playerじゃん撃とmobenemyの当たり判定
+		for (int i = 0; i < JANGEKI_MAX; i++)
 		{
-			Jan_Type mobenemy_type = obj_mobenemy->GetType();            //敵の属性
-			Jan_Type jangeki_type = player_jangeki[i]->GetType();  //当たったじゃん撃の属性
+			if (player_jangeki[i] == nullptr) break;         //じゃん撃がない時は処理しない
 
-			//不利属性のみダメージが入る
-			switch (mobenemy_type)
+			//じゃん撃との当たり判定
+			if (obj_mobenemy->Hit_Jangeki(player_jangeki[i]) == true)
 			{
-			case Jan_Type::ROCK:                           //敵の属性　グー
+				Jan_Type mobenemy_type = obj_mobenemy->GetType();            //敵の属性
+				Jan_Type jangeki_type = player_jangeki[i]->GetType();  //当たったじゃん撃の属性
 
-				//パーのじゃん撃のみ有効
-				if (jangeki_type == Jan_Type::PAPER)
+				//不利属性のみダメージが入る
+				switch (mobenemy_type)
 				{
-					obj_mobenemy->ReceiveDamage(30);     //ダメージが入る
-					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
-					i--;
+				case Jan_Type::ROCK:                           //敵の属性　グー
+
+					//パーのじゃん撃のみ有効
+					if (jangeki_type == Jan_Type::PAPER)
+					{
+						obj_mobenemy->ReceiveDamage(30);     //ダメージが入る
+						obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
+						i--;
+					}
+
+					break;
+
+				case Jan_Type::SCISSORS:                       //敵の属性　チョキ
+
+					//グーのじゃん撃のみ有効
+					if (jangeki_type == Jan_Type::ROCK)
+					{
+						obj_mobenemy->ReceiveDamage(30);     //ダメージが入る
+						obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
+						i--;
+					}
+					break;
+
+				case Jan_Type::PAPER:                          //敵の属性　パー
+
+					//チョキのじゃん撃のみ有効
+					if (jangeki_type == Jan_Type::SCISSORS)
+					{
+						obj_mobenemy->ReceiveDamage(30);     //ダメージが入る
+						obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
+						i--;
+					}
+					break;
+
+				default:
+					break;
 				}
-
-				break;
-
-			case Jan_Type::SCISSORS:                       //敵の属性　チョキ
-
-				//グーのじゃん撃のみ有効
-				if (jangeki_type == Jan_Type::ROCK)
-				{
-					obj_mobenemy->ReceiveDamage(30);     //ダメージが入る
-					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
-					i--;
-				}
-				break;
-
-			case Jan_Type::PAPER:                          //敵の属性　パー
-
-				//チョキのじゃん撃のみ有効
-				if (jangeki_type == Jan_Type::SCISSORS)
-				{
-					obj_mobenemy->ReceiveDamage(30);     //ダメージが入る
-					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
-					i--;
-				}
-				break;
-
-			default:
-				break;
 			}
 		}
 	}
-	
+
 	//enemyじゃん撃とplayerの当たり判定
 	for (int i = 0; i < JANGEKI_MAX; i++)
 	{
@@ -362,7 +368,10 @@ void Scene_Stage05::Draw() const
 
 		obj_player->Draw();  //プレイヤー描画
 		obj_enemy->Draw();   //敵キャラ描画
-		obj_mobenemy->Draw();	//	モブ敵キャラ描画
+		if (obj_mobenemy->GetHP() >= 0)
+		{
+			obj_mobenemy->Draw();	//	モブ敵キャラ描画
+		}
 
 		//床・壁描画
 		for (int i = 0; i < STAGE_05_FLOOR; i++)
