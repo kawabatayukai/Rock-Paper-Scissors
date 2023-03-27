@@ -133,7 +133,7 @@ void Jangeki_Base::Draw() const
 bool Jangeki_Base::CheckScreenOut()
 {
 	if (x > 1280 || x < 0) return true;
-	if (y > 720 || y < 0) return true;
+	if (y > 780 || y < 0) return true;
 
 	return false;
 }

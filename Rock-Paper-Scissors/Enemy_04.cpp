@@ -8,23 +8,17 @@
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_04::Enemy_04(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
-	speed = 2.5f;
+	speed = 3.0f;
 	dir = 1;
 	hp = 100;
+
+	//ランダムな座標取得
+	enemy_x = GetRand(1100) + 100;
+	enemy_y = GetRand(540) + 100;
 
 	image = LoadGraph("images/Stage4/ステージ4_ボス.png");
 
 	Init_Jangeki();       //じゃん撃を用意
-
-		//動きパターン
-	moveinfo[0] = { 1,1100.f,120.f, 0,1 };
-	moveinfo[1] = { 0,   0.f,  0.f,50,2 };
-	moveinfo[2] = { 1, 180.f,120.f, 0,3 };
-	moveinfo[3] = { 0,   0.f,  0.f,50,4 };
-	moveinfo[4] = { 1, 180.f,600.f, 0,5 };
-	moveinfo[5] = { 0,   0.f,  0.f,50,6 };
-	moveinfo[6] = { 1,1100.f,600.f, 0,7 };
-	moveinfo[7] = { 0,   0.f,  0.f,50,0 };
 }
 
 //デストラクタ
@@ -40,8 +34,9 @@ void Enemy_04::Update()
 	//じゃん撃更新・生成
 	Update_Jangeki();
 
-	//ステ04パターン用関数
-	//Move_Pattern();
+	//動きパターン
+	moveinfo[0] = { 1,enemy_x,enemy_y, 0, 1 };
+	moveinfo[1] = { 0,    0.f,    0.f, 0, 0 };
 
 	switch (moveinfo[current].moveflg)
 	{
@@ -50,6 +45,8 @@ void Enemy_04::Update()
 		if (moveinfo[current].waitFlameTime <= waitTime)
 		{
 			waitTime = 0;
+			enemy_x = GetRand(1100) + 100;
+			enemy_y = GetRand(540) + 100;
 			current = moveinfo[current].next_index;
 		}
 		break;
@@ -62,8 +59,15 @@ void Enemy_04::Update()
 		break;
 	}
 
-	if (hp <= 0) hp = 0; 
-	else if (hp <= 50) speed = 8.0f;
+	//体力ゲージがマイナスにならないように
+	if (hp <= 0) hp = 0;
+	
+	//HP50％以下でスピードUP
+	if (hp <= 50) speed = 6.0f;
+	else speed = 3.0f;
+	
+	//少しずつ体力が回復していく
+	if (hp < 100 && frame_count % 15 == 0) hp++;
 
 	//if (x + (w / 2) == (1280 - 20))
 	//{
@@ -144,19 +148,30 @@ void Enemy_04::Update_Jangeki()
 	//配列の空要素
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
-		float radius = 35.5f;   //半径
-		float speed = 3.0f;     //スピード
+		float radius = 38.0f;   //半径
+		float speed  =  2.0f;   //スピード
 		
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
 
-		//生成
-		/*if (hp <= 50)
-		{
-			if (frame_count % 40 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius*0.7, speed*-1.5, type);
-		}*/
+		//プレイヤーの角度へ発射するジャン撃生成
 		if (frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+
+		//HPが50%以下で新たなジャン撃生成
+		if (hp <= 50)
+		{
+			//プレイヤーのx座標によって発射する方向を変える(左右)
+			if (player_x <= 640)
+			{
+				if (frame_count % 40 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius * 0.5, speed * -2, type);
+			}
+			else if (player_x > 640)
+			{
+				if (frame_count % 40 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius * 0.5, speed *  2, type);
+			}
+			
+		}
 	}
 }
 

@@ -25,7 +25,7 @@ Scene_Stage04::Scene_Stage04(const Player* player)
 	}
 
 	//敵を生成
-	obj_enemy = new Enemy_04(1100, 600, Jan_Type::SCISSORS);
+	obj_enemy = new Enemy_04(1100, 360, Jan_Type::SCISSORS);
 
 	//床・壁の用意
 	Init_Floor(STAGE_04_FLOOR);
@@ -45,8 +45,6 @@ Scene_Stage04::Scene_Stage04(const Player* player)
 	obj_floor[11] = new Floor(300, 0, 5, 80, 0x493759);				//棘③
 	obj_floor[12] = new Floor(1180, 300, 100,  5, 0x493759);	    //棘④
 	obj_floor[13] = new Floor(1130, 460, 130,  5, 0x493759);		//棘⑤
-	obj_floor[14] = new Floor(1000, 650,   5, 70, 0x493759);		//棘⑥
-	obj_floor[15] = new Floor(700,  680,   5, 40, 0x493759);		//棘⑦
 }
 
 //デストラクタ
@@ -156,7 +154,7 @@ void Scene_Stage04::Update()
 				//パーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::PAPER)
 				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					obj_enemy->ReceiveDamage(20);     //ダメージが入る
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -168,7 +166,7 @@ void Scene_Stage04::Update()
 				//グーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::ROCK)
 				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					obj_enemy->ReceiveDamage(20);     //ダメージが入る
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -179,7 +177,7 @@ void Scene_Stage04::Update()
 				//チョキのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::SCISSORS)
 				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					obj_enemy->ReceiveDamage(20);     //ダメージが入る
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -202,7 +200,7 @@ void Scene_Stage04::Update()
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
 			//ダメージを受ける（プレイヤー）
-			obj_player->ReceiveDamage(30);
+			obj_player->ReceiveDamage(20);
 
 			//あたったじゃん撃を削除
 			obj_enemy->DeleteJangeki(i);
