@@ -25,6 +25,7 @@ Scene_Stage05::Scene_Stage05(const Player* player)
 
 	//敵を生成
 	obj_enemy = new Enemy_05(1000, 360, Jan_Type::SCISSORS);
+	obj_mobenemy = new MobEnemy_05(640, 100, Jan_Type::PAPER);
 
 	//床・壁の用意
 	Init_Floor(STAGE_05_FLOOR);
@@ -55,8 +56,10 @@ void Scene_Stage05::Update()
 	{
 		obj_player->Update();    // プレイヤー更新・操作可能
 		obj_enemy->Update();     //敵キャラ更新・内部処理
+		obj_mobenemy->Update();
 		//プレイヤーの座標を取得
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
+		obj_mobenemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
 	}
 
 	//接触じゃんけん処理
@@ -70,6 +73,8 @@ void Scene_Stage05::Update()
 	//enemyのじゃん撃をとってくる
 	Jangeki_Base** enemy_jangeki = obj_enemy->GetJangeki();
 
+	//enemyのじゃん撃をとってくる
+	Jangeki_Base** mobenemy_jangeki = obj_mobenemy->GetJangeki();
 
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -114,6 +119,65 @@ void Scene_Stage05::Update()
 
 					//enemy側のじゃん撃を削除
 					obj_enemy->DeleteJangeki(e_count);
+					e_count--;
+
+					break;
+
+				default:
+					break;
+				}
+			}
+		}
+
+		//プレイヤーじゃん撃削除フラグがtrue
+		if (delete_player == true)
+		{
+			//player側のじゃん撃を削除
+			obj_player->DeleteJangeki(p_count);
+			p_count--;
+		}
+	}
+
+	//じゃん撃同士の当たり判定（プレイヤーじゃん撃目線）(mob用)
+	for (int p_count = 0; p_count < JANGEKI_MAX; p_count++)
+	{
+		if (player_jangeki[p_count] == nullptr) break;         //じゃん撃がない時は処理しない
+
+		bool delete_player = false;       //プレイヤーじゃん撃削除フラグ　true:削除　false:削除しない
+
+		for (int e_count = 0; e_count < JANGEKI_MAX; e_count++)
+		{
+			if (mobenemy_jangeki[e_count] == nullptr) break;         //じゃん撃がない時は処理しない
+
+			if (player_jangeki[p_count]->Hit_Jangeki(mobenemy_jangeki[e_count]) == true)
+			{
+				//有利属性チェック
+				int result = player_jangeki[p_count]->CheckAdvantage(mobenemy_jangeki[e_count]);
+
+				switch (result)
+				{
+				case 0:             //playerのじゃん撃が不利
+
+					//player側のじゃん撃を削除
+					delete_player = true;
+
+					break;
+
+				case 1:             //playerのじゃん撃が有利
+
+					//enemy側のじゃん撃を削除
+					obj_mobenemy->DeleteJangeki(e_count);
+					e_count--;
+
+					break;
+
+				case 2:             //あいこ
+
+					//player側のじゃん撃を削除
+					delete_player = true;
+
+					//enemy側のじゃん撃を削除
+					obj_mobenemy->DeleteJangeki(e_count);
 					e_count--;
 
 					break;
@@ -189,7 +253,60 @@ void Scene_Stage05::Update()
 		}
 	}
 
+	//playerじゃん撃とmobenemyの当たり判定
+	for (int i = 0; i < JANGEKI_MAX; i++)
+	{
+		if (player_jangeki[i] == nullptr) break;         //じゃん撃がない時は処理しない
 
+		//じゃん撃との当たり判定
+		if (obj_mobenemy->Hit_Jangeki(player_jangeki[i]) == true)
+		{
+			Jan_Type mobenemy_type = obj_mobenemy->GetType();            //敵の属性
+			Jan_Type jangeki_type = player_jangeki[i]->GetType();  //当たったじゃん撃の属性
+
+			//不利属性のみダメージが入る
+			switch (mobenemy_type)
+			{
+			case Jan_Type::ROCK:                           //敵の属性　グー
+
+				//パーのじゃん撃のみ有効
+				if (jangeki_type == Jan_Type::PAPER)
+				{
+					obj_mobenemy->ReceiveDamage(30);     //ダメージが入る
+					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
+					i--;
+				}
+
+				break;
+
+			case Jan_Type::SCISSORS:                       //敵の属性　チョキ
+
+				//グーのじゃん撃のみ有効
+				if (jangeki_type == Jan_Type::ROCK)
+				{
+					obj_mobenemy->ReceiveDamage(30);     //ダメージが入る
+					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
+					i--;
+				}
+				break;
+
+			case Jan_Type::PAPER:                          //敵の属性　パー
+
+				//チョキのじゃん撃のみ有効
+				if (jangeki_type == Jan_Type::SCISSORS)
+				{
+					obj_mobenemy->ReceiveDamage(30);     //ダメージが入る
+					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
+					i--;
+				}
+				break;
+
+			default:
+				break;
+			}
+		}
+	}
+	
 	//enemyじゃん撃とplayerの当たり判定
 	for (int i = 0; i < JANGEKI_MAX; i++)
 	{
@@ -204,6 +321,24 @@ void Scene_Stage05::Update()
 
 			//あたったじゃん撃を削除
 			obj_enemy->DeleteJangeki(i);
+			i--;
+		}
+	}
+
+	//mobenemyじゃん撃とplayerの当たり判定
+	for (int i = 0; i < JANGEKI_MAX; i++)
+	{
+		//じゃん撃がない時は処理しない
+		if (mobenemy_jangeki[i] == nullptr) break;
+
+		//じゃん撃との当たり判定
+		if (obj_player->Hit_Jangeki(mobenemy_jangeki[i]) == true)
+		{
+			//ダメージを受ける（プレイヤー）
+			obj_player->ReceiveDamage(30);
+
+			//あたったじゃん撃を削除
+			obj_mobenemy->DeleteJangeki(i);
 			i--;
 		}
 	}
@@ -227,6 +362,7 @@ void Scene_Stage05::Draw() const
 
 		obj_player->Draw();  //プレイヤー描画
 		obj_enemy->Draw();   //敵キャラ描画
+		obj_mobenemy->Draw();	//	モブ敵キャラ描画
 
 		//床・壁描画
 		for (int i = 0; i < STAGE_05_FLOOR; i++)

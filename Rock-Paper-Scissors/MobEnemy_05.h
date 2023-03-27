@@ -1,6 +1,6 @@
 #include"EnemyBase.h"
 
-class MobEnemy_05 :EnemyBase
+class MobEnemy_05 :public EnemyBase
 {
 public:
 	MobEnemy_05(float x, float y, Jan_Type type);		//コンストラクタ
@@ -12,4 +12,6 @@ public:
 
 private:
 	int frame_count = 0;       //じゃん撃発射用
+
+	int Mobenemy_image;			//画像用
 };
