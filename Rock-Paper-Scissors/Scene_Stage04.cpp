@@ -200,7 +200,7 @@ void Scene_Stage04::Update()
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
 			//ダメージを受ける（プレイヤー）
-			obj_player->ReceiveDamage(15);
+			obj_player->ReceiveDamage(20);
 
 			//あたったじゃん撃を削除
 			obj_enemy->DeleteJangeki(i);
