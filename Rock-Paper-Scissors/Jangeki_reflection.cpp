@@ -51,39 +51,7 @@ void Jangeki_Reflection::Update_reflection()
 
 }
 
-//描画
-void Jangeki_Reflection::Draw(float rx, float ry) const
-{
-	{
-		//拡大率
-		double rate = (static_cast<double>(r) * 2) / 100;
 
-		//座標をint型に変換　（警告減らす）
-		int x = static_cast<int>(rx);
-		int y = static_cast<int>(ry);
-
-		switch (type)
-		{
-		case Jan_Type::ROCK:         //グー
-
-			DrawRotaGraph(x, y, rate, 1, Rimage[0], TRUE);
-			break;
-
-		case Jan_Type::SCISSORS:     //チョキ
-
-			DrawRotaGraph(x, y, rate, 1, Rimage[1], TRUE);
-			break;
-
-		case Jan_Type::PAPER:        //パー
-
-			DrawRotaGraph(x, y, rate, 1, Rimage[2], TRUE);
-			break;
-
-		default:
-			break;
-		}
-	}
-}
 //じゃん撃描画
 void Jangeki_Reflection::Draw_reflectionJangeki()const
 {
@@ -127,6 +95,8 @@ void Jangeki_Reflection::Delete_reflectionJangeki(int jan_count_reflection)
 		obj_reflection[i + 1] = nullptr;
 	}
 }
+
+
 
 bool Jangeki_Reflection::GetFlg() {
 	return reflectionFlg;
