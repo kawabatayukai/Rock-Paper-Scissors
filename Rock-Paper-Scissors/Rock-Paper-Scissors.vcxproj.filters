@@ -43,9 +43,6 @@
     <Filter Include="ソース ファイル\GameMainScene\Stage_02">
       <UniqueIdentifier>{253dbd13-cbee-4939-adec-881fbe7f3f51}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\GameMainScene\Stage_03">
-      <UniqueIdentifier>{541f08c4-6dfa-4a35-a86b-63667d913571}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\GameMainScene\Stage_04">
       <UniqueIdentifier>{cc7cc45b-dd40-451e-938b-c11c8647b765}</UniqueIdentifier>
     </Filter>
@@ -84,6 +81,12 @@
     </Filter>
     <Filter Include="ソース ファイル\Jangeki\yonahara">
       <UniqueIdentifier>{a42c1488-1e9a-40ca-a97d-cbb48bf7da50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameMainScene\Stage_02\Stage_03">
+      <UniqueIdentifier>{541f08c4-6dfa-4a35-a86b-63667d913571}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Jangeki\nakayoshi">
+      <UniqueIdentifier>{0371adfb-44da-4d91-b7dc-f2323cd22f0e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -124,7 +127,7 @@
       <Filter>ソース ファイル\GameMainScene\Stage_10</Filter>
     </ClCompile>
     <ClCompile Include="Enemy_03.cpp">
-      <Filter>ソース ファイル\GameMainScene\Stage_03</Filter>
+      <Filter>ソース ファイル\GameMainScene\Stage_02\Stage_03</Filter>
     </ClCompile>
     <ClCompile Include="Enemy_04.cpp">
       <Filter>ソース ファイル\GameMainScene\Stage_04</Filter>
@@ -187,7 +190,7 @@
       <Filter>ソース ファイル\GameMainScene\Stage_04</Filter>
     </ClCompile>
     <ClCompile Include="Scene_Stage03.cpp">
-      <Filter>ソース ファイル\GameMainScene\Stage_03</Filter>
+      <Filter>ソース ファイル\GameMainScene\Stage_02\Stage_03</Filter>
     </ClCompile>
     <ClCompile Include="Scene_Stage02.cpp">
       <Filter>ソース ファイル\GameMainScene\Stage_02</Filter>
@@ -207,15 +210,6 @@
     <ClCompile Include="Jangeki_Zigzag.cpp">
       <Filter>ソース ファイル\Jangeki\bise</Filter>
     </ClCompile>
-    <ClCompile Include="Jangeki_Changespeed.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Jangeki_reflection.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Jangeki_Spin.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Jangeki_Coming.cpp">
       <Filter>ソース ファイル\Jangeki\tamayose</Filter>
     </ClCompile>
@@ -225,11 +219,23 @@
     <ClCompile Include="Item.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="MobEnemy_05.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Jangeki_Vertical.cpp">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
+    </ClCompile>
+    <ClCompile Include="MobEnemy_05.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_05</Filter>
+    </ClCompile>
+    <ClCompile Include="Jangeki_Spin.cpp">
+      <Filter>ソース ファイル\Jangeki\bise</Filter>
+    </ClCompile>
+    <ClCompile Include="Jangeki_Changespeed.cpp">
+      <Filter>ソース ファイル\Jangeki\bise</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_Cannon.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Jangeki_reflection.cpp">
+      <Filter>ソース ファイル\Jangeki\nakayoshi</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -270,7 +276,7 @@
       <Filter>ソース ファイル\GameMainScene\Stage_10</Filter>
     </ClInclude>
     <ClInclude Include="Enemy_03.h">
-      <Filter>ソース ファイル\GameMainScene\Stage_03</Filter>
+      <Filter>ソース ファイル\GameMainScene\Stage_02\Stage_03</Filter>
     </ClInclude>
     <ClInclude Include="Enemy_04.h">
       <Filter>ソース ファイル\GameMainScene\Stage_04</Filter>
@@ -333,7 +339,7 @@
       <Filter>ソース ファイル\GameMainScene\Stage_04</Filter>
     </ClInclude>
     <ClInclude Include="Scene_Stage03.h">
-      <Filter>ソース ファイル\GameMainScene\Stage_03</Filter>
+      <Filter>ソース ファイル\GameMainScene\Stage_02\Stage_03</Filter>
     </ClInclude>
     <ClInclude Include="Scene_Stage02.h">
       <Filter>ソース ファイル\GameMainScene\Stage_02</Filter>
@@ -356,15 +362,6 @@
     <ClInclude Include="Jangeki_Zigzag.h">
       <Filter>ソース ファイル\Jangeki\bise</Filter>
     </ClInclude>
-    <ClInclude Include="Jangeki_Changespeed.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Jangeki_reflection.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Jangeki_Spin.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Jangeki_Coming.h">
       <Filter>ソース ファイル\Jangeki\tamayose</Filter>
     </ClInclude>
@@ -377,11 +374,23 @@
     <ClInclude Include="Item.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="MobEnemy_05.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Jangeki_Vertical.h">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_Spin.h">
+      <Filter>ソース ファイル\Jangeki\bise</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_Changespeed.h">
+      <Filter>ソース ファイル\Jangeki\bise</Filter>
+    </ClInclude>
+    <ClInclude Include="MobEnemy_05.h">
+      <Filter>ソース ファイル\GameMainScene\Stage_05</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_Cannon.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_reflection.h">
+      <Filter>ソース ファイル\Jangeki\nakayoshi</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

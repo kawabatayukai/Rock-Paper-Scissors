@@ -33,6 +33,8 @@ private:
 	Enemy_09* obj_enemy;            //“G
 	Jangeki_Reflection* reflection;
 
+	int stageimage;
+
 
 };
 

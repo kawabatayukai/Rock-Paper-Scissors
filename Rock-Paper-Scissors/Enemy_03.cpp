@@ -10,7 +10,7 @@
 Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
 
-	speed = 1.85f;//1.5f
+	speed = 1.5f;//1.5f //前回1.85f
 	dir = 1;//エネミーの向き
 	hp = 100;
 
@@ -118,9 +118,9 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	moveinfo[46] = { 0,	900.f, 0.f , 47, 0 ,1 };//Xが900まで動く
 
-	moveinfo[47] = { 1,	 0,  0.f , 48, 62 ,1 };//Xが900で少しの時間停止
+	//moveinfo[47] = { 1,	 0,  0.f , 48, 62 ,1 };//Xが900で少しの時間停止
 
-	moveinfo[48] = { 1,  0 ,   0.f , 0, 125 ,1 };//Xが650で停止し配列[0]に戻るw
+	moveinfo[47] = { 1,  0 ,   0.f , 0, 125 ,1 };//Xが650で停止し配列[0]に戻るw
 
 }
 
@@ -253,8 +253,6 @@ void Enemy_03::Draw() const
 	Draw_Jangeki();
 
 
-
-
 	//テスト                                                      //赤色
 	if (moveinfo[current].enemywaitTime > 0) DrawFormatString((int)(x - 100), (int)(y - 100), GetColor(0, 0, 255), "防御力 UP↑", moveinfo[current].enemywaitTime);
 
@@ -298,14 +296,14 @@ void Enemy_03::Update_Jangeki()
 		float speed = 4.5f /** dir*/;     //スピード//3.0
 
 		//ランダムな属性を生成
-		Jan_Type type = static_cast<Jan_Type>(GetRand(2));//2
+		Jan_Type type = static_cast<Jan_Type>(GetRand(1));//2 //主に属性時のジャン撃を繰り出す
 
 
 		////通常弾生成
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
 		// 
-		//生成
-		if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+		//プレイヤー方向へのジャン撃生成
+		if (frame_count % 75 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 	
 	}
 }
