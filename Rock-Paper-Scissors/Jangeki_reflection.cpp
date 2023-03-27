@@ -3,9 +3,10 @@
 #include<math.h>
 //コンストラクタ
 Jangeki_Reflection::Jangeki_Reflection(float x, float y, float r, float speed, Jan_Type type)
-	:Jangeki_Base(x, y, r, speed, type)    // ←基底クラスのコンストラクタを呼ぶ
+	:Jangeki_Base(x, y, r, speed, type)  ,jan_count_reflection(0)  // ←基底クラスのコンストラクタを呼ぶ
 {
 	obj_reflection = nullptr;
+	LoadDivGraph("images/stage09/Reflection_Jangeki.png", 3, 3, 1, 100, 100, Rimage);
 
 }
 
@@ -44,16 +45,44 @@ void Jangeki_Reflection::Update_reflection()
 
 	{
 
-		float radius = 35.5f;   //半径
-		float speed = -3.0f;     //スピード
-
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
-
-		/*if (reflectionFlg == true) obj_reflection[jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed, type);
-		reflectionFlg = false;*/
 	}
 
+}
+
+//描画
+void Jangeki_Reflection::Draw(float rx, float ry) const
+{
+	{
+		//拡大率
+		double rate = (static_cast<double>(r) * 2) / 100;
+
+		//座標をint型に変換　（警告減らす）
+		int x = static_cast<int>(rx);
+		int y = static_cast<int>(ry);
+
+		switch (type)
+		{
+		case Jan_Type::ROCK:         //グー
+
+			DrawRotaGraph(x, y, rate, 1, Rimage[0], TRUE);
+			break;
+
+		case Jan_Type::SCISSORS:     //チョキ
+
+			DrawRotaGraph(x, y, rate, 1, Rimage[1], TRUE);
+			break;
+
+		case Jan_Type::PAPER:        //パー
+
+			DrawRotaGraph(x, y, rate, 1, Rimage[2], TRUE);
+			break;
+
+		default:
+			break;
+		}
+	}
 }
 //じゃん撃描画
 void Jangeki_Reflection::Draw_reflectionJangeki()const
@@ -62,7 +91,9 @@ void Jangeki_Reflection::Draw_reflectionJangeki()const
 	{
 		//要素がなければ処理しない
 		if (obj_reflection[i] == nullptr) break;
-		obj_reflection[i]->Draw();                //配列に要素がある時
+
+		obj_reflection[i]->Draw();
+		//Draw(obj_reflection[i]->GetX(), obj_reflection[i]->GetY());                //配列に要素がある時
 	}
 }
 

@@ -3,23 +3,27 @@
 #include "Jangeki_Base.h"
 
 //コンストラクタ
-Jangeki_Base::Jangeki_Base(float x, float y, float r, float speed, Jan_Type type)
-	: x(x), y(y), r(r), speed(speed), type(type)
+Jangeki_Base::Jangeki_Base(float x, float y, float r, float speed, Jan_Type type, bool ref)
+	: x(x), y(y), r(r), speed(speed), type(type),refrection(ref)
 {
 	for (int i = 0; i < 3; i++) image[i] = 0;
 
 	//画像読み込み
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image);
+
+	LoadDivGraph("images/stage09/Reflection_Jangeki.png", 3, 3, 1, 100, 100, reflection_image);
 }
 
 //コンストラクタ（角度あり）
-Jangeki_Base::Jangeki_Base(float x, float y, float r, float speed, double angle, Jan_Type type)
-	: x(x), y(y), r(r), type(type)
+Jangeki_Base::Jangeki_Base(float x, float y, float r, float speed, double angle, Jan_Type type, bool ref)
+	: x(x), y(y), r(r), type(type), refrection(ref)
 {
 	for (int i = 0; i < 3; i++) image[i] = 0;
 
 	//画像読み込み
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image);
+
+	LoadDivGraph("images/stage09/Reflection_Jangeki.png", 3, 3, 1, 100, 100, reflection_image);
 
 	//x,y方向のスピードを決める
 	this->speed = fabsf(speed) * cosf(static_cast<float>(angle));
@@ -74,26 +78,54 @@ void Jangeki_Base::Draw() const
 		int x = static_cast<int>(this->x);
 		int y = static_cast<int>(this->y);
 
-		switch (type)
+
+		if (refrection == false)
 		{
-		case Jan_Type::ROCK:         //グー
+			switch (type)
+			{
+			case Jan_Type::ROCK:         //グー
 
-			DrawRotaGraph(x, y, rate, 1, image[0], TRUE);
-			break;
+				DrawRotaGraph(x, y, rate, 1, image[0], TRUE);
+				break;
 
-		case Jan_Type::SCISSORS:     //チョキ
-			
-			DrawRotaGraph(x, y, rate, 1, image[1], TRUE);
-			break;
+			case Jan_Type::SCISSORS:     //チョキ
 
-		case Jan_Type::PAPER:        //パー
+				DrawRotaGraph(x, y, rate, 1, image[1], TRUE);
+				break;
 
-			DrawRotaGraph(x, y, rate, 1, image[2], TRUE);
-			break;
+			case Jan_Type::PAPER:        //パー
 
-		default:
-			break;
+				DrawRotaGraph(x, y, rate, 1, image[2], TRUE);
+				break;
+
+			default:
+				break;
+			}
 		}
+		else
+		{
+			switch (type)
+			{
+			case Jan_Type::ROCK:         //グー
+
+				DrawRotaGraph(x, y, rate, 1, reflection_image[0], TRUE);
+				break;
+
+			case Jan_Type::SCISSORS:     //チョキ
+
+				DrawRotaGraph(x, y, rate, 1, reflection_image[1], TRUE);
+				break;
+
+			case Jan_Type::PAPER:        //パー
+
+				DrawRotaGraph(x, y, rate, 1, reflection_image[2], TRUE);
+				break;
+
+			default:
+				break;
+			}
+		}
+
 	}
 }
 

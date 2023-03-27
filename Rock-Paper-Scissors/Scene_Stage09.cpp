@@ -178,55 +178,11 @@ void Scene_Stage09::Update()
 
 				//あたったじゃん撃を削除
 				obj_player->DeleteJangeki(i);
+				i--;
 			}
 
-
-
-			//	Jan_Type enemy_type = obj_enemy->GetType();            //敵の属性
-			//	Jan_Type jangeki_type = player_jangeki[i]->GetType();  //当たったじゃん撃の属性
-
-			//	//不利属性のみダメージが入る
-			//	switch (enemy_type)
-			//	{
-			//	case Jan_Type::ROCK:                           //敵の属性　グー
-
-			//		//パーのじゃん撃のみ有効
-			//		if (jangeki_type == Jan_Type::PAPER)
-			//		{
-			//			obj_enemy->ReceiveDamage(30);     //ダメージが入る
-			//			obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
-			//			i--;
-			//		}
-
-			//		break;
-
-			//	case Jan_Type::SCISSORS:                       //敵の属性　チョキ
-
-			//		//グーのじゃん撃のみ有効
-			//		if (jangeki_type == Jan_Type::ROCK)
-			//		{
-			//			obj_enemy->ReceiveDamage(30);     //ダメージが入る
-			//			obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
-			//			i--;
-			//		}
-			//		break;
-
-			//	case Jan_Type::PAPER:                          //敵の属性　パー
-
-			//		//チョキのじゃん撃のみ有効
-			//		if (jangeki_type == Jan_Type::SCISSORS)
-			//		{
-			//			obj_enemy->ReceiveDamage(30);     //ダメージが入る
-			//			obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
-			//			i--;
-			//		}
-			//		break;
-
-			//	default:
-			//		break;
-			//	}
 		}
-		//obj_enemy->reflection->falseFlg();
+
 	}
 
 
@@ -334,50 +290,6 @@ void Scene_Stage09::Update()
 			i--;
 		}
 	}
-
-	//////反射されたじゃん撃とenemyの当たり判定
-	//if (Rflg == true) {
-	//	for (int i = 0; i < JANGEKI_MAX; i++)
-	//	{
-	//		//じゃん撃がない時は処理しない
-	//		if (player_jangeki[i] == nullptr) break;
-
-	//		//じゃん撃との当たり判定
-	//		if (obj_enemy->Hit_Jangeki(player_jangeki[i]) == true)
-	//		{
-	//			//ダメージを受ける（プレイヤー）
-	//			obj_enemy->ReceiveDamage(30);
-
-	//			//あたったじゃん撃を削除
-	//			obj_player->DeleteJangeki(i);
-	//			i--;
-	//			Rflg = false;
-	//		}
-	//	}
-	//}
-
-	//反射されたじゃん撃とenemyの当たり判定
-	//if (Rflg == true) {
-	//	for (int i = 0; i < JANGEKI_MAX; i++)
-	//	{
-	//		//じゃん撃がない時は処理しない
-	//		if (reflection_jangeki[i] == nullptr) break;
-
-	//		//じゃん撃との当たり判定
-	//		if (obj_enemy->Hit_Jangeki(reflection_jangeki[i]) == true)
-	//		{
-	//			//ダメージを受ける（プレイヤー）
-	//			obj_enemy->ReceiveDamage(30);
-
-	//			//あたったじゃん撃を削除
-	//			obj_enemy->reflection->Delete_reflectionJangeki(i);
-	//			i--;
-	//			Rflg = false;
-	//		}
-	//	}
-	//}
-
-
 
 
 	HitCtrl_Floor(obj_player, STAGE_09_FLOOR);     // player　床・壁判定

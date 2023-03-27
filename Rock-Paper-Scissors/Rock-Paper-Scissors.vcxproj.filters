@@ -222,6 +222,15 @@
     <ClCompile Include="Jangeki_Vertical.cpp">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Jangeki_whole.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MobEnemy_05.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -361,6 +370,18 @@
     </ClInclude>
     <ClInclude Include="Jangeki_Vertical.h">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
+    </ClInclude>
+    <ClInclude Include="comon.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_whole.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MobEnemy_05.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
