@@ -74,7 +74,7 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	moveinfo[19] = { 0,  930.f , 0.f , 20, 0, 1 };//X‚ª930‚Ü‚ÅˆÚ“®
 
-    moveinfo[20] = { 1,  0 , 0.f , 21, 125,1 };//X‚ª930‚Å’â~
+	moveinfo[20] = { 1,  0 , 0.f , 21, 125,1 };//X‚ª930‚Å’â~
 
 
 	//‘O‰ñ‚Ì‹tƒpƒ^[ƒ“‚Ö
@@ -100,7 +100,7 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	moveinfo[28] = { 0, 465.f, 0.f , 29,  0 ,0 };//X‚ª465‚Ì‘«ê‚É”ò‚Ô
 
-    moveinfo[29] = { 1,  0 ,   0.f , 30, 125,1 };//X‚ª465‚Å’â~
+	moveinfo[29] = { 1,  0 ,   0.f , 30, 125,1 };//X‚ª465‚Å’â~
 
 	moveinfo[30] = { 0, 280.f, 0.f , 31,  0 ,0 };//X‚ª280‚Ì‘«ê‚É”ò‚Ô
 
@@ -114,7 +114,7 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	moveinfo[33] = { 0, 350.f, 0.f , 34,  0 ,1 };//‰ŠúˆÊ’u‚ÌX‚ª350‚Å’â~
 
 	moveinfo[34] = { 1,  0 ,   0.f , 35, 125 ,1 };//‰ŠúˆÊ’u‚ÌX‚ª350‚Å’â~
-	
+
 	moveinfo[35] = { 0, 650.f, 0.f , 36,  0 ,1 };//X‚ª650‚Ü‚Å“®‚­
 
 	moveinfo[36] = { 1,  0 ,   0.f , 37, 125 ,1 };//X‚ª650‚Å’â~
@@ -260,7 +260,7 @@ void Enemy_03::Draw() const
 	//ƒeƒXƒg                                                      //ÔF
 	if (moveinfo[current].enemywaitTime > 0) DrawFormatString((int)(x - 100), (int)(y - 100), GetColor(0, 0, 255), "–hŒä—Í UPª", moveinfo[current].enemywaitTime);
 
-	if (hp <= 40) DrawFormatString((int)(x - 100), (int)(y - 80), GetColor(255, 0, 0), "UŒ‚—Í UPª", hp);
+	if (hp <= 40) DrawFormatString((int)(x - 100), (int)(y - 80), GetColor(255, 0, 0), " UŒ‚—Í UP ª", hp);
 
 	if (hp <= 0)DrawString((int)(x - 100), (int)(y - 120), "death!", 0xff0000);
 
@@ -296,19 +296,35 @@ void Enemy_03::Update_Jangeki()
 	//”z—ñ‚Ì‹ó—v‘f
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
-		float radius = 40.0f;   //”¼Œa //35.5f
+		float radius = 35.5f;   //”¼Œa //35.5f
 		float speed = 4.5f /** dir*/;     //ƒXƒs[ƒh//3.0
 
 		//ƒ‰ƒ“ƒ_ƒ€‚È‘®«‚ğ¶¬
 		Jan_Type type = static_cast<Jan_Type>(GetRand(1));//2 //å‚É‘®«‚ÌƒWƒƒƒ“Œ‚‚ğŒJ‚èo‚·
 
 
+		//ƒvƒŒƒCƒ„[•ûŒü‚Ö‚ÌƒWƒƒƒ“Œ‚¶¬
+
+		if(hp >= 41){
+			if (frame_count % 80 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+		}
 		////’Êí’e¶¬
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
-		// 
-		//ƒvƒŒƒCƒ„[•ûŒü‚Ö‚ÌƒWƒƒƒ“Œ‚¶¬
-		if (frame_count % 85 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
-	
+
+		//UŒ‚UP‚ÌƒWƒƒƒ“Œ‚
+		else if (hp <= 40) {
+
+
+			float radius = 90.0f;
+			float speed = 4.5f;
+
+			if (frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+
+			
+
+		}
+
+
 	}
 }
 
@@ -391,3 +407,4 @@ void Enemy_03::ChangeDir(float x)
 	if (x < 640) dir = -1;
 	else dir = 1;
 }
+
