@@ -63,7 +63,7 @@ void Enemy_04::Update()
 	if (hp <= 0) hp = 0;
 	
 	//HP50％以下でスピードUP
-	if (hp <= 50) speed = 4.0f;
+	if (hp <= 50) speed = 3.0f;
 	else speed = 1.5f;
 	
 	//少しずつHP回復
@@ -110,15 +110,15 @@ void Enemy_04::Update_Jangeki()
 	//配列の空要素
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
-		float radius = 38.0f;   //半径
-		float speed  =  2.5f;   //スピード
+		float radius = 50.0f;   //半径
+		float speed  =  2.0f;   //スピード
 		
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
 
 		//プレイヤーの角度へ発射するジャン撃生成
-		if (frame_count % 40 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+		if (frame_count % 50 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 
 		////HPが50%以下で新たなジャン撃生成
 		//if (hp <= 50)
