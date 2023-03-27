@@ -25,7 +25,7 @@ Scene_Stage04::Scene_Stage04(const Player* player)
 	}
 
 	//敵を生成
-	obj_enemy = new Enemy_04(1100, 600, Jan_Type::SCISSORS);
+	obj_enemy = new Enemy_04(1100, 360, Jan_Type::SCISSORS);
 
 	//床・壁の用意
 	Init_Floor(STAGE_04_FLOOR);
@@ -45,8 +45,6 @@ Scene_Stage04::Scene_Stage04(const Player* player)
 	obj_floor[11] = new Floor(300, 0, 5, 80, 0x493759);				//棘③
 	obj_floor[12] = new Floor(1180, 300, 100,  5, 0x493759);	    //棘④
 	obj_floor[13] = new Floor(1130, 460, 130,  5, 0x493759);		//棘⑤
-	obj_floor[14] = new Floor(1000, 650,   5, 70, 0x493759);		//棘⑥
-	obj_floor[15] = new Floor(700,  680,   5, 40, 0x493759);		//棘⑦
 }
 
 //デストラクタ
