@@ -3,9 +3,10 @@
 #include<math.h>
 //コンストラクタ
 Jangeki_Reflection::Jangeki_Reflection(float x, float y, float r, float speed, Jan_Type type)
-	:Jangeki_Base(x, y, r, speed, type)    // ←基底クラスのコンストラクタを呼ぶ
+	:Jangeki_Base(x, y, r, speed, type)  ,jan_count_reflection(0)  // ←基底クラスのコンストラクタを呼ぶ
 {
 	obj_reflection = nullptr;
+	LoadDivGraph("images/stage09/Reflection_Jangeki.png", 3, 3, 1, 100, 100, Rimage);
 
 }
 
@@ -44,17 +45,13 @@ void Jangeki_Reflection::Update_reflection()
 
 	{
 
-		float radius = 35.5f;   //半径
-		float speed = -3.0f;     //スピード
-
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
-
-		/*if (reflectionFlg == true) obj_reflection[jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed, type);
-		reflectionFlg = false;*/
 	}
 
 }
+
+
 //じゃん撃描画
 void Jangeki_Reflection::Draw_reflectionJangeki()const
 {
@@ -62,7 +59,9 @@ void Jangeki_Reflection::Draw_reflectionJangeki()const
 	{
 		//要素がなければ処理しない
 		if (obj_reflection[i] == nullptr) break;
-		obj_reflection[i]->Draw();                //配列に要素がある時
+
+		obj_reflection[i]->Draw();
+		//Draw(obj_reflection[i]->GetX(), obj_reflection[i]->GetY());                //配列に要素がある時
 	}
 }
 
@@ -96,6 +95,8 @@ void Jangeki_Reflection::Delete_reflectionJangeki(int jan_count_reflection)
 		obj_reflection[i + 1] = nullptr;
 	}
 }
+
+
 
 bool Jangeki_Reflection::GetFlg() {
 	return reflectionFlg;

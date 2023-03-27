@@ -8,8 +8,8 @@
 
 
 //コンストラクタ
-Jangeki_Homing::Jangeki_Homing(float x, float y, float r, float speed, Jan_Type type)
-	:Jangeki_Base(x, y, r, speed, type)       // ←基底クラスのコンストラクタを呼ぶ
+Jangeki_Homing::Jangeki_Homing(float x, float y, float r, float speed, Jan_Type type, bool ref)
+	:Jangeki_Base(x, y, r, speed, type, ref)       // ←基底クラスのコンストラクタを呼ぶ
 {
 	angle = M_PI / 2;   //初期の角度
 }

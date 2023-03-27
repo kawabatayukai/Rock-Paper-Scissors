@@ -30,18 +30,5 @@ private:
 
 	//test
 	int setumei;  //à–¾‰æ‘œ
-
-	//‰æ‘œˆê——
-	int player_image;
-
-	int enemy_02;
-	int enemy_03;
-	int enemy_04;
-	int enemy_05;
-	int enemy_06;
-	int enemy_07;
-	int enemy_08;
-	int enemy_09;
-	int enemy_10;
 };
 

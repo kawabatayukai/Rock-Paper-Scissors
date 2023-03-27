@@ -29,6 +29,8 @@ Scene_Stage09::Scene_Stage09(const Player* player)
 
 	reflection = new Jangeki_Reflection(0, 0, 0, 0, Jan_Type::ROCK);
 
+	stageimage = LoadGraph("images/stage09/stage09_image.png");
+
 	//床・壁の用意
 	Init_Floor(STAGE_09_FLOOR);
 
@@ -37,16 +39,16 @@ Scene_Stage09::Scene_Stage09(const Player* player)
 	obj_floor[1] = new Floor(0, 0, 20, 1720);           //壁（左）
 	obj_floor[2] = new Floor(1260, 0, 20, 1720);           //壁（右）
 	//足場   左側
-	obj_floor[3] = new Floor(100, 500, 120, 20);
-	obj_floor[4] = new Floor(300, 325, 120, 20);
-	obj_floor[5] = new Floor(100, 150, 120, 20);
+	obj_floor[3] = new Floor(100, 500, 120, 20, 0xd2d2d2);
+	obj_floor[4] = new Floor(300, 325, 120, 20, 0xd2d2d2);
+	obj_floor[5] = new Floor(100, 150, 120, 20, 0xd2d2d2);
 	//足場   右側
-	obj_floor[6] = new Floor(1050, 500, 120, 20);
-	obj_floor[7] = new Floor(850, 325, 120, 20);
-	obj_floor[8] = new Floor(1050, 150, 120, 20);
+	obj_floor[6] = new Floor(1050, 500, 120, 20, 0xd2d2d2);
+	obj_floor[7] = new Floor(850, 325, 120, 20, 0xd2d2d2);
+	obj_floor[8] = new Floor(1050, 150, 120, 20, 0xd2d2d2);
 	//足場   右側
-	obj_floor[9] = new Floor(560, 420, 120, 20);
-	obj_floor[10] = new Floor(560, 100, 120, 20);
+	obj_floor[9] = new Floor(560, 420, 120, 20, 0xd2d2d2);
+	obj_floor[10] = new Floor(560, 100, 120, 20, 0xd2d2d2);
 
 }
 
@@ -178,55 +180,11 @@ void Scene_Stage09::Update()
 
 				//あたったじゃん撃を削除
 				obj_player->DeleteJangeki(i);
+				i--;
 			}
 
-
-
-			//	Jan_Type enemy_type = obj_enemy->GetType();            //敵の属性
-			//	Jan_Type jangeki_type = player_jangeki[i]->GetType();  //当たったじゃん撃の属性
-
-			//	//不利属性のみダメージが入る
-			//	switch (enemy_type)
-			//	{
-			//	case Jan_Type::ROCK:                           //敵の属性　グー
-
-			//		//パーのじゃん撃のみ有効
-			//		if (jangeki_type == Jan_Type::PAPER)
-			//		{
-			//			obj_enemy->ReceiveDamage(30);     //ダメージが入る
-			//			obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
-			//			i--;
-			//		}
-
-			//		break;
-
-			//	case Jan_Type::SCISSORS:                       //敵の属性　チョキ
-
-			//		//グーのじゃん撃のみ有効
-			//		if (jangeki_type == Jan_Type::ROCK)
-			//		{
-			//			obj_enemy->ReceiveDamage(30);     //ダメージが入る
-			//			obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
-			//			i--;
-			//		}
-			//		break;
-
-			//	case Jan_Type::PAPER:                          //敵の属性　パー
-
-			//		//チョキのじゃん撃のみ有効
-			//		if (jangeki_type == Jan_Type::SCISSORS)
-			//		{
-			//			obj_enemy->ReceiveDamage(30);     //ダメージが入る
-			//			obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
-			//			i--;
-			//		}
-			//		break;
-
-			//	default:
-			//		break;
-			//	}
 		}
-		//obj_enemy->reflection->falseFlg();
+
 	}
 
 
@@ -335,50 +293,6 @@ void Scene_Stage09::Update()
 		}
 	}
 
-	//////反射されたじゃん撃とenemyの当たり判定
-	//if (Rflg == true) {
-	//	for (int i = 0; i < JANGEKI_MAX; i++)
-	//	{
-	//		//じゃん撃がない時は処理しない
-	//		if (player_jangeki[i] == nullptr) break;
-
-	//		//じゃん撃との当たり判定
-	//		if (obj_enemy->Hit_Jangeki(player_jangeki[i]) == true)
-	//		{
-	//			//ダメージを受ける（プレイヤー）
-	//			obj_enemy->ReceiveDamage(30);
-
-	//			//あたったじゃん撃を削除
-	//			obj_player->DeleteJangeki(i);
-	//			i--;
-	//			Rflg = false;
-	//		}
-	//	}
-	//}
-
-	//反射されたじゃん撃とenemyの当たり判定
-	//if (Rflg == true) {
-	//	for (int i = 0; i < JANGEKI_MAX; i++)
-	//	{
-	//		//じゃん撃がない時は処理しない
-	//		if (reflection_jangeki[i] == nullptr) break;
-
-	//		//じゃん撃との当たり判定
-	//		if (obj_enemy->Hit_Jangeki(reflection_jangeki[i]) == true)
-	//		{
-	//			//ダメージを受ける（プレイヤー）
-	//			obj_enemy->ReceiveDamage(30);
-
-	//			//あたったじゃん撃を削除
-	//			obj_enemy->reflection->Delete_reflectionJangeki(i);
-	//			i--;
-	//			Rflg = false;
-	//		}
-	//	}
-	//}
-
-
-
 
 	HitCtrl_Floor(obj_player, STAGE_09_FLOOR);     // player　床・壁判定
 	HitCtrl_Floor(obj_enemy, STAGE_09_FLOOR);      // 敵　　　床・壁判定
@@ -388,8 +302,13 @@ void Scene_Stage09::Update()
 //描画
 void Scene_Stage09::Draw() const
 {
+	
+
+	DrawGraph(0, 0, stageimage, false);
+	
 	//HP表示
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+
 	//接触じゃんけんでない時
 	if (GetJanState() == Jan_State::BEFORE)
 	{
