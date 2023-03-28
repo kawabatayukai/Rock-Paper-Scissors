@@ -19,6 +19,8 @@ public:
 	//ジャンプ（ジャンプ力）
 	void Jump_Enemy(float g_add = -21.5f);
 
+	void Change_JanType();           //ランダムに属性変化
+
 /*---------------------------- パターンでない行動 --------------------------------------*/
 
 	void Move_Controller();          //行動制御

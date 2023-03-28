@@ -160,6 +160,8 @@ void Scene_Stage07::Update()
 				if (jangeki_type == Jan_Type::PAPER)
 				{
 					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					obj_enemy->Change_JanType();      //属性が変わる
+
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -172,6 +174,8 @@ void Scene_Stage07::Update()
 				if (jangeki_type == Jan_Type::ROCK)
 				{
 					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					obj_enemy->Change_JanType();      //属性が変わる
+
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -183,6 +187,8 @@ void Scene_Stage07::Update()
 				if (jangeki_type == Jan_Type::SCISSORS)
 				{
 					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					obj_enemy->Change_JanType();      //属性が変わる
+
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -191,6 +197,7 @@ void Scene_Stage07::Update()
 			default:
 				break;
 			}
+
 		}
 	}
 
@@ -245,8 +252,8 @@ void Scene_Stage07::Draw() const
 		}
 
 		//コーナーポスト
-		DrawBox(220, 440, (220 + 30), (440 + 150), 0x007cfe, TRUE);
-		DrawBox(1030, 440, (1030 + 30), (440 + 150), 0x007cfe, TRUE);
+		DrawBox(220, 440, (220 + 30), (440 + 150), 0x007cfe, TRUE);    //左
+		DrawBox(1030, 440, (1030 + 30), (440 + 150), 0x007cfe, TRUE);  //右
 
 
 		//ロープ

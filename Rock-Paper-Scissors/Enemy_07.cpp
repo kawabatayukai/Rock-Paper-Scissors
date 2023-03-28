@@ -9,8 +9,6 @@
 #define _USE_MATH_DEFINES
 #include<math.h>
 
-constexpr int AAKA = 0;
-
 //’è”@
 namespace _CONSTANTS_07
 {
@@ -187,6 +185,33 @@ void Enemy_07::Jump_Enemy(float g_add)
 	}
 }
 
+//ƒ‰ƒ“ƒ_ƒ€‚É‘®«•Ï‰»
+void Enemy_07::Change_JanType()
+{
+	//Œ»Ý‚Ì‘®«‚ÆˆÙ‚È‚é2‘®«‚Ì‚¤‚¿ƒ‰ƒ“ƒ_ƒ€
+	switch (this -> e_type)
+	{
+	case Jan_Type::ROCK:
+
+		e_type = GetRand(1) == 1 ? Jan_Type::PAPER : Jan_Type::SCISSORS;
+		break;
+
+	case Jan_Type::SCISSORS:
+
+		e_type = GetRand(1) == 1 ? Jan_Type::PAPER : Jan_Type::ROCK;
+		break;
+
+	case Jan_Type::PAPER:
+
+		e_type = GetRand(1) == 1 ? Jan_Type::ROCK : Jan_Type::SCISSORS;
+		break;
+
+	default:
+		break;
+	}
+
+	return;
+}
 
 /*--------------------------------------------------------------------------------------*/
 
