@@ -166,25 +166,24 @@ void Scene_Stage09::Update()
 		//じゃん撃との当たり判定
 		if (obj_enemy->Hit_Jangeki(player_jangeki[i]) == true)
 		{
+			
 			if (player_jangeki[i]->GetR() != 35.f)
 			{
 				obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 				i--;
-
 				obj_enemy->reflection->trueFlg();
 			}
 			else
 			{
-				//ダメージを受ける（プレイヤー）
-				obj_enemy->ReceiveDamage(30);
+				obj_enemy->ReceiveDamage(20);
+				obj_enemy->HP();
 
 				//あたったじゃん撃を削除
 				obj_player->DeleteJangeki(i);
 				i--;
 			}
-
 		}
-
+		
 	}
 
 
@@ -349,7 +348,7 @@ AbstractScene* Scene_Stage09::ChangeScene()
 #ifdef DEBUG_OFF_09
 
 	//敵のHPが0以下
-	if (obj_enemy->GetHP() < 0)
+	if (clearFlg == true)
 	{
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(10));
@@ -370,11 +369,23 @@ AbstractScene* Scene_Stage09::ChangeScene()
 //じゃんけん終了後の挙動（プレイヤー勝ち）
 void Scene_Stage09::AfterJanken_WIN()
 {
+	if (obj_enemy->GetHP() == 1)
+	{
+		clearFlg = true;
+	}
+
 	obj_player->SetX(100);
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）
 void Scene_Stage09::AfterJanken_LOSE()
 {
+	
+	if (obj_enemy->GetHP() == 1)
+	{
+
+		obj_enemy->SetHP(-hp);
+		hp = hp / 2;
+	}
 	obj_player->SetX(100);
 }
