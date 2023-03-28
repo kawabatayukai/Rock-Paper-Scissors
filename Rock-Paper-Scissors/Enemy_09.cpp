@@ -13,8 +13,6 @@ Enemy_09::Enemy_09(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = 1;
 	hp = 100;
 
-	if (hp <= 0)hp = 0;
-
 	image = LoadGraph("images/stage09/Stage9.png");
 	
 	//‚¶‚á‚ñŒ‚‚ð—pˆÓ
@@ -130,13 +128,12 @@ void Enemy_09::Update_Jangeki()
 
 	
 		//¶¬
-		if (frame_count % 60 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
+		if (frame_count % 75 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
 		//”½ŽË‚¶‚á‚ñŒ‚¶¬
-		if(reflection->GetFlg()==true)reflection->obj_reflection[reflection->jan_count_reflection]= new Jangeki_Homing(x, y, radius, speed, type);
+		if (reflection->GetFlg() == true)reflection->obj_reflection[reflection->jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed, type, true);
 		reflection->falseFlg();
 	}
 }
-
 
 void Enemy_09::MoveEnmey_09() 
 {
@@ -202,4 +199,11 @@ void Enemy_09::MoveEnmey_09()
 		}
 	}
 
+}
+
+void Enemy_09::HP() {
+	if (hp <= 0)
+	{
+		hp = 1;
+	}
 }
