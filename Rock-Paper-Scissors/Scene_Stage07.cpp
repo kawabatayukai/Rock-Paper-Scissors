@@ -67,9 +67,11 @@ void Scene_Stage07::Update()
 		obj_enemy->CheckPlayerState(obj_player);
 	}
 	
-	//接触じゃんけん処理
-	Touch_Janken(obj_enemy, this);
-
+	//接触じゃんけん処理 (敵の行動が"ダイブ"の時は判定なし)
+	if (obj_enemy->Is_Diving_TouchJanken() != true)
+	{
+		Touch_Janken(obj_enemy, this);
+	}
 
 	//playerのじゃん撃をとってくる
 	Jangeki_Base** player_jangeki = obj_player->GetJangeki();
@@ -212,7 +214,7 @@ void Scene_Stage07::Update()
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
 			//ダメージを受ける（プレイヤー）
-			obj_player->ReceiveDamage(30);
+			obj_player->ReceiveDamage(10);
 
 			//あたったじゃん撃を削除
 			obj_enemy->DeleteJangeki(i);
@@ -221,7 +223,13 @@ void Scene_Stage07::Update()
 	}
 
 	HitCtrl_Floor(obj_player, STAGE_07_FLOOR);     // player　床・壁判定
-	HitCtrl_Floor(obj_enemy, STAGE_07_FLOOR);      // 敵　　　床・壁判定
+
+	//ﾄﾍﾟｺﾝﾋｰﾛ（ダイブ）中の場合、判定をとらない
+	if (obj_enemy->Is_Diving_Collision() != true)
+	{
+		HitCtrl_Floor(obj_enemy, STAGE_07_FLOOR);      // 敵　　　床・壁判定
+	}
+	
 }
 
 

@@ -34,6 +34,9 @@ public:
 	//プレイヤーが足場で3秒以上
 	void Move_ON_FLOOR_LURK(float& target_x, float& target_y);
 
+	//プレイヤーが場外
+	void Move_OUT_RING(float& target_x, float& target_y);
+
 	//プレイヤーの状況を取得
 	void CheckPlayerState(const Player* player);
 
@@ -41,9 +44,15 @@ public:
 	//行動を初期化（接触じゃんけん終了後　用）
 	void Init_MoveAndAction();
 
+	//（ダイブ中に）当たり判定をとらない  true : ダイブ中。当たり判定をとらない 
+	bool Is_Diving_Collision();
+
+	//（ダイブ中に）接触じゃんけんをしない  true : ダイブ中。接触じゃんけんをしない
+	bool Is_Diving_TouchJanken();   
+
 /*--------------------------------------------------------------------------------------*/
 
-	void Jan_360degrees(int count, float rad, float speed, Jan_Type type);  //360度発射（必殺）
+	void Jan_360degrees();  //360度発射
 	void Jan_Vertical(int count, float rad, float speed, Jan_Type type);    //縦にたくさん発射（特殊）
 
 private:
@@ -57,9 +66,9 @@ private:
 	/**********************************************************/
 
 	const float init_speed;    //初期スピード（固定）
+	double draw_angle;         //描画角度
 
-	int frame_count = 0;       //じゃん撃発射用
-
+	int jan_count;             //Update_Jangeki() で じゃん撃配列の空要素の配列番号が入る
 
 	//自身から見たプレイヤーの状態
 	enum class PLAYER_STATE
@@ -67,6 +76,7 @@ private:
 		ON_RING,         //リング上
 		ON_FLOOR,        //足場上
 		ON_FLOOR_LURK,   //足場上で潜んでいる
+		OUT_RING,        //リング外
 
 		DO_NOT,          //判断しない
 	};
@@ -83,12 +93,13 @@ private:
 		CLIMB_CORNER_RIGHT, //コーナーに上る（右）
 		CROSS_FLOOR_LEFT,   //足場を渡る（左から右）
 		CROSS_FLOOR_RIGHT,  //足場を渡る（右から左）
+		DIVE_OUT_LEFT,      //場外へダイブ（左）
+		DIVE_OUT_RIGHT,     //場外へダイブ（右）
 	};
 	ACT_TYPE Now_Action;    //実行中のAction（行動）
 	ACT_TYPE Pre_Action;    //１つ前のAction（行動）
 
 //------------------------ テスト ------------------------
-
 };
 
 

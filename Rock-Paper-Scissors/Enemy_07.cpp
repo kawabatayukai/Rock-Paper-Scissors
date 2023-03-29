@@ -16,6 +16,8 @@ namespace _CONSTANTS_07
 	const float RING_RIGHT = 1030.0f;   //リング右端
 	const float RING_HEIGHT = 590.0f;   //リングの高さ
 
+	const float RING_CENTER = 640.0f;   //リングの中心
+
 	const float CORNER_LEFT  = 235.0f;  //左コーナートップ (中心ｘ座標)
 	const float CORNER_RIGHT = 1045.0f; //右コーナートップ (中心ｘ座標)
 	const float CORNER_Y = 440.0f;      //コーナーの高さ（共通）
@@ -29,15 +31,19 @@ namespace _CONSTANTS_07
 	const float FLOOR_NO_01_04_Y = 230.0f;  // 足場１，４のｙ座標
 	const float FLOOR_NO_02_03_Y = 110.0f;  // 足場２，３のｙ座標
 
+	const float OUT_RING_LEFT = 120.0f;     //場外左
+	const float OUT_RING_RIGHT = 1160.0f;   //場外右
+
 	//テスト表示用
-	char state_str [][20] = { "ON_RING","ON_FLOOR","ON_FLOOR_LURK","DO_NOT" };   
+	char state_str [][20] = { "ON_RING","ON_FLOOR","ON_FLOOR_LURK","OUT_RING","DO_NOT" };   
 	char action_str[][20] = { "NO_ACT","LEFT_TO_RIGHT","RIGHT_TO_LEFT"
 		                     ,"CLIMB_CORNER_LEFT", "CLIMB_CORNER_RIGHT"
-		                     ,"CROSS_FLOOR_LEFT","CROSS_FLOOR_RIGHT"};
+		                     ,"CROSS_FLOOR_LEFT","CROSS_FLOOR_RIGHT"
+	                         ,"DIVE_OUT_LEFT","DIVE_OUT_RIGHT"};
 }
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
-Enemy_07::Enemy_07(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type), init_speed(4.0f)
+Enemy_07::Enemy_07(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type), init_speed(4.0f), jan_count(0), draw_angle(0.0)
 , Player_State(PLAYER_STATE::DO_NOT), Now_Action(ACT_TYPE::NO_ACT), Pre_Action(ACT_TYPE::NO_ACT)
 {
 	speed = 4.0f;
@@ -91,7 +97,7 @@ void Enemy_07::Update()
 void Enemy_07::Draw() const
 {
 	//中心から描画
-	DrawRotaGraphF(x, y, 1, 0, image, TRUE);
+	DrawRotaGraphF(x, y, 1, draw_angle, image, TRUE);
 
 	//じゃん撃描画
 	Draw_Jangeki();
@@ -112,7 +118,7 @@ void Enemy_07::Draw() const
 //じゃん撃生成・更新
 void Enemy_07::Update_Jangeki()
 {
-	int jan_count;
+	//int jan_count;
 
 	//じゃん撃配列をひとつずつ
 	for (jan_count = 0; jan_count < JANGEKI_MAX; jan_count++)
@@ -134,9 +140,7 @@ void Enemy_07::Update_Jangeki()
 	}
 
 	/*********************** ↓↓ 発射・生成 ↓↓ ***********************/
-	frame_count++;
-
-	//配列の空要素
+	//配列の空要素                                                     　じゃん撃発射 ON
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
 		float radius = 25.5f;   //半径
@@ -145,28 +149,31 @@ void Enemy_07::Update_Jangeki()
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
-		//生成
-		if (frame_count % 120 == 0)
-		{
-			switch (GetRand(2))
-			{
-			case 0:
-				Jan_360degrees(jan_count, radius, speed, type);
-				break;
+		////生成
+		//if (0)
+		//{
+		//	switch (GetRand(2))
+		//	{
+		//	case 0:
+		//		Jan_360degrees(jan_count, radius, speed, type);
+		//		break;
 
-			case 1:
-				obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
-				break;
+		//	case 1:
+		//		obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
+		//		break;
 
-			case 2:
-				Jan_Vertical(jan_count, radius, speed, type);
-				break;
+		//	case 2:
+		//		Jan_Vertical(jan_count, radius, speed, type);
+		//		break;
 
-			default:
-				break;
-			}
+		//	default:
+		//		break;
 
-		}
+		//	obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, this->speed, type);
+		//	}
+
+		//}
+
 	}
 
 }
@@ -244,6 +251,11 @@ void Enemy_07::Move_Controller()
 		Move_ON_FLOOR_LURK(target_x, target_y);
 		break;
 
+	case PLAYER_STATE::OUT_RING:      //場外
+
+		Move_OUT_RING(target_x, target_y);
+		break;
+
 	default:
 
 		target_x = 1280 / 2;
@@ -289,6 +301,12 @@ void Enemy_07::Move_ON_RING(float& target_x, float& target_y)
 	//目標座標(1番目)と一致しているか
 	static bool match = false;
 
+	//生成するじゃん撃の半径
+	float radius = 25.5f;
+
+	//ランダムな属性を生成
+	Jan_Type type = static_cast<Jan_Type>(GetRand(2));
+
 	//行動中でない
 	if (Now_Action == ACT_TYPE::NO_ACT)
 	{
@@ -318,6 +336,15 @@ void Enemy_07::Move_ON_RING(float& target_x, float& target_y)
 			{
 				match = true;  //1番目終了
 				speed = 9.0f;  //スピードアップ
+
+				//じゃん撃を生成する（配列の空要素であることを確実に）                                       
+				if ( jan_count + 2 < JANGEKI_MAX && obj_jangeki[jan_count + 2] == nullptr )
+				{
+					//スピードが自身と同じ かつ マイナス方向に飛ぶじゃん撃
+					obj_jangeki[jan_count] = new Jangeki_Base(x, y - 40, radius, -speed, type);
+					obj_jangeki[jan_count + 1] = new Jangeki_Base(x - 40, y + 30, radius, -speed, type);
+					obj_jangeki[jan_count + 2] = new Jangeki_Base(x + 40, y + 30, radius, -speed, type);
+				}
 			}
 		}
 		/*******************************************************************/
@@ -328,10 +355,12 @@ void Enemy_07::Move_ON_RING(float& target_x, float& target_y)
 		/*******************************　２  **++***************************/
 		{
 			//リング左を目指す
-			if (match == true) target_x = _CONSTANTS_07::RING_LEFT + (w / 2);
+			//if (match == true) target_x = _CONSTANTS_07::RING_LEFT + 200;
+			if (match == true) target_x = _CONSTANTS_07::RING_CENTER - 100;
 
 			//リング左に到達                             
-			if (x == _CONSTANTS_07::RING_LEFT + (w / 2))
+			//if (x == _CONSTANTS_07::RING_LEFT + 200)
+			if (x == _CONSTANTS_07::RING_CENTER - 100)
 			{
 				Pre_Action = Now_Action;        //今回のActionを保存
 
@@ -355,6 +384,15 @@ void Enemy_07::Move_ON_RING(float& target_x, float& target_y)
 			{
 				match = true;  //1番目終了
 				speed = 9.0f;  //スピードアップ
+
+				//じゃん撃を生成する（配列の空要素であることを確実に）                                       
+				if (jan_count + 2 < JANGEKI_MAX && obj_jangeki[jan_count + 2] == nullptr)
+				{
+					//スピードが自身と同じ かつ プラス方向に飛ぶじゃん撃
+					obj_jangeki[jan_count] = new Jangeki_Base(x, y - 40, radius, speed, type);
+					obj_jangeki[jan_count + 1] = new Jangeki_Base(x - 40, y + 30, radius, speed, type);
+					obj_jangeki[jan_count + 2] = new Jangeki_Base(x + 40, y + 30, radius, speed, type);
+				}
 			}
 		}
 		/*******************************************************************/
@@ -365,10 +403,12 @@ void Enemy_07::Move_ON_RING(float& target_x, float& target_y)
 		/*******************************　２  **++***************************/
 		{
 			//リング右を目指す
-			if (match == true) target_x = _CONSTANTS_07::RING_RIGHT - (w / 2);
+			//if (match == true) target_x = _CONSTANTS_07::RING_RIGHT - 200;
+			if (match == true) target_x = _CONSTANTS_07::RING_CENTER + 100;
 
 			//リング右に到達                            
-			if (x == _CONSTANTS_07::RING_RIGHT - (w / 2))
+			//if (x == _CONSTANTS_07::RING_RIGHT - 200)
+			if (x == _CONSTANTS_07::RING_CENTER + 100)
 			{
 				Pre_Action = Now_Action;        //今回のActionを保存
 
@@ -385,6 +425,12 @@ void Enemy_07::Move_ON_FLOOR(float& target_x, float& target_y)
 {
 	//プレイヤーが足場上にいる時間をカウント
 	static unsigned int time_count;
+
+	//生成するじゃん撃の半径
+	float radius = 25.5f;
+
+	//ランダムな属性を生成
+	Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
 	//行動中でない
 	if (Now_Action == ACT_TYPE::NO_ACT)
@@ -433,6 +479,12 @@ void Enemy_07::Move_ON_FLOOR(float& target_x, float& target_y)
 				//コーナー上を目指す         左
 				target_x = _CONSTANTS_07::CORNER_LEFT;
 
+				//１秒おきにじゃん撃生成
+				if (time_count % 100 == 0)
+				{
+					obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, 3.0f, type);
+				}
+
 				//３秒後
 				if (time_count++ > 180)
 				{
@@ -474,6 +526,12 @@ void Enemy_07::Move_ON_FLOOR(float& target_x, float& target_y)
 				//コーナー上を目指す         右
 				target_x = _CONSTANTS_07::CORNER_RIGHT;
 
+				//１秒おきにじゃん撃生成
+				if (time_count % 100 == 0)
+				{
+					obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, 3.0f, type);
+				}
+
 				//３秒後
 				if (time_count++ > 180)
 				{
@@ -514,6 +572,13 @@ void Enemy_07::Move_ON_FLOOR_LURK(float& target_x, float& target_y)
 		Jump_Enemy(jump_add);
 	}
 
+	
+	//生成するじゃん撃の半径
+	float radius = 25.5f;
+	//ランダムな属性を生成
+	Jan_Type type = static_cast<Jan_Type>(GetRand(2));
+
+
 	// 足場を渡る（左から右）
 	if (Now_Action == ACT_TYPE::CROSS_FLOOR_LEFT)
 	{
@@ -527,6 +592,9 @@ void Enemy_07::Move_ON_FLOOR_LURK(float& target_x, float& target_y)
 			if (x == _CONSTANTS_07::FLOOR_NO_01)
 			{
 				count_ari = 1;
+
+				//じゃん撃を発射する
+				obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, this->speed, type);
 
 				speed = 7.5f;
 				Jump_Enemy(jump_add);   //ジャンプ
@@ -545,6 +613,9 @@ void Enemy_07::Move_ON_FLOOR_LURK(float& target_x, float& target_y)
 			if (x == _CONSTANTS_07::FLOOR_NO_02)
 			{
 				count_ari = 2;
+
+				//じゃん撃を発射する
+				obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, this->speed, type);
 				Jump_Enemy(-18.f);   //ジャンプ
 			}
 		}
@@ -561,6 +632,9 @@ void Enemy_07::Move_ON_FLOOR_LURK(float& target_x, float& target_y)
 			if (x == _CONSTANTS_07::FLOOR_NO_03)
 			{
 				count_ari = 3;
+
+				//じゃん撃を発射する
+				obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, this->speed, type);
 				Jump_Enemy(jump_add);   //ジャンプ
 			}
 		}
@@ -578,6 +652,8 @@ void Enemy_07::Move_ON_FLOOR_LURK(float& target_x, float& target_y)
 			{
 				count_ari = 4;
 
+				//じゃん撃を発射する
+				obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, this->speed, type);
 				Jump_Enemy(jump_add);   //ジャンプ
 			}
 		}
@@ -596,7 +672,7 @@ void Enemy_07::Move_ON_FLOOR_LURK(float& target_x, float& target_y)
 				Pre_Action = Now_Action;        //今回のActionを保存
 				Now_Action = ACT_TYPE::NO_ACT;  //Actionの完了
 
-				speed = init_speed;
+				speed = init_speed;             //スピードを初期に戻す
 			}
 		}
 
@@ -618,6 +694,9 @@ void Enemy_07::Move_ON_FLOOR_LURK(float& target_x, float& target_y)
 			{
 				count_ari = 1;
 
+				//じゃん撃を発射する
+				obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, -(this->speed), type);
+
 				speed = 7.5f;
 				Jump_Enemy(jump_add);   //ジャンプ
 			}
@@ -635,6 +714,9 @@ void Enemy_07::Move_ON_FLOOR_LURK(float& target_x, float& target_y)
 			if (x == _CONSTANTS_07::FLOOR_NO_03)
 			{
 				count_ari = 2;
+
+				//じゃん撃を発射する
+				obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, -(this->speed), type);
 				Jump_Enemy(-18.f);   //ジャンプ
 			}
 		}
@@ -651,6 +733,9 @@ void Enemy_07::Move_ON_FLOOR_LURK(float& target_x, float& target_y)
 			if (x == _CONSTANTS_07::FLOOR_NO_02)
 			{
 				count_ari = 3;
+
+				//じゃん撃を発射する
+				obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, -(this->speed), type);
 				Jump_Enemy(jump_add);   //ジャンプ
 			}
 		}
@@ -668,6 +753,8 @@ void Enemy_07::Move_ON_FLOOR_LURK(float& target_x, float& target_y)
 			{
 				count_ari = 4;
 
+				//じゃん撃を発射する
+				obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, -(this->speed), type);
 				Jump_Enemy(jump_add);   //ジャンプ
 			}
 		}
@@ -694,6 +781,221 @@ void Enemy_07::Move_ON_FLOOR_LURK(float& target_x, float& target_y)
 	}
 }
 
+//プレイヤーが場外
+void Enemy_07::Move_OUT_RING(float& target_x, float& target_y)
+{
+	//場外へダイブ（トペ・コンヒーロ的な）
+
+	// 到達した回数
+	static unsigned short count_ari;
+
+	//行動中でない
+	if (Now_Action == ACT_TYPE::NO_ACT)
+	{
+		//プレイヤーが半分より左側
+		if (player_x < _CONSTANTS_07::RING_CENTER)
+		{
+			Now_Action = ACT_TYPE::DIVE_OUT_LEFT;   //リング左
+		}
+		else
+		{
+			Now_Action = ACT_TYPE::DIVE_OUT_RIGHT;  //リング右
+		}
+
+		count_ari = 0;  //カウンターをリセット
+		speed = 11.0f;  //スピードアップ
+	}
+
+	//リング左へダイブ
+	if (Now_Action == ACT_TYPE::DIVE_OUT_LEFT)
+	{
+		// （1）助走      (2) ジャンプ地点に到達・ジャンプ   
+		//  (3)ダイブ     (4) リング内に戻る
+
+        /*******************************　１  **++***************************/
+		{
+			//リング右を目指す
+			if (count_ari == 0) target_x = _CONSTANTS_07::RING_RIGHT - (w / 2);
+
+			//リング右に到達
+			if (x == _CONSTANTS_07::RING_RIGHT - (w / 2))
+			{
+				count_ari = 1;   // 2 へ
+				speed = 11.0f;   //スピードアップ
+			}
+		}
+		/*******************************************************************/
+
+		/*******************************　２  **++***************************/
+		{
+			if (count_ari == 1)
+			{
+				//（左）ジャンプ地点を目指す
+				target_x = _CONSTANTS_07::RING_LEFT + 400;
+
+				//ジャンプ地点に到着
+				if (x == _CONSTANTS_07::RING_LEFT + 400 && y == (_CONSTANTS_07::RING_HEIGHT - (h / 2)))
+				{
+					count_ari = 2;       // 3 へ
+					Jump_Enemy(-23.0f);  //ジャンプ
+
+					Jan_360degrees();    //じゃん撃発射
+				}
+			}
+		}
+		/*******************************************************************/
+
+		/*******************************　３  **++***************************/
+		{
+			if (count_ari == 2)
+			{
+				//ジャンプ中
+
+				//リング外を目指す         左
+				target_x = _CONSTANTS_07::OUT_RING_LEFT - 35;
+				
+				//画像を回転させる
+				draw_angle -= 0.1;
+
+				//着地
+				if (x == _CONSTANTS_07::OUT_RING_LEFT - 35 && land_flg == true)
+				{
+					count_ari = 3;       // 4 へ
+					speed = init_speed;  //スピードを初期に戻す
+					draw_angle = 0.0;    //初期の角度に戻す
+				}
+			}
+		}
+		/*******************************************************************/
+
+		/*******************************　４  **++***************************/
+		{
+			//20フレーム待機    count_ariでフレームを計測する
+			if (count_ari >= 3 && count_ari < 23)
+			{
+				count_ari++;
+
+				//20フレーム経過後
+				if (count_ari == 23)
+				{
+					Jump_Enemy(-18.0f);
+					count_ari = 99;
+				}
+			}
+
+			if (count_ari == 99)
+			{
+				//リング内を目指す         
+				target_x = _CONSTANTS_07::RING_LEFT + (w / 2);
+
+				//リング内に到達
+				if (x == _CONSTANTS_07::RING_LEFT + (w / 2))
+				{
+					Pre_Action = Now_Action;        //今回のActionを保存
+					Now_Action = ACT_TYPE::NO_ACT;  //Actionの完了
+					speed = init_speed;             //スピードを初期に戻す
+				}
+			}
+		}
+		/*******************************************************************/
+	}
+
+
+	//リング右へダイブ
+	if (Now_Action == ACT_TYPE::DIVE_OUT_RIGHT)
+	{
+		// （1）助走      (2) ジャンプ地点に到達・ジャンプ   
+		//  (3)ダイブ     (4) リング内に戻る
+
+		/*******************************　１  **++***************************/
+		{
+			//リング左を目指す
+			if (count_ari == 0) target_x = _CONSTANTS_07::RING_LEFT + (w / 2);
+
+			//リング左に到達
+			if (x == _CONSTANTS_07::RING_LEFT + (w / 2))
+			{
+				count_ari = 1;   // 2 へ
+				speed = 11.0f;   //スピードアップ
+			}
+		}
+		/*******************************************************************/
+
+		/*******************************　２  **++***************************/
+		{
+			if (count_ari == 1)
+			{
+				//（右）ジャンプ地点を目指す
+				target_x = _CONSTANTS_07::RING_RIGHT - 400;
+
+				//ジャンプ地点に到着
+				if (x == _CONSTANTS_07::RING_RIGHT - 400 && y == (_CONSTANTS_07::RING_HEIGHT - (h / 2)))
+				{
+					count_ari = 2;       // 3 へ
+					Jump_Enemy(-23.0f);  //ジャンプ
+
+					Jan_360degrees();    //じゃん撃発射
+				}
+			}
+		}
+		/*******************************************************************/
+
+		/*******************************　３  **++***************************/
+		{
+			if (count_ari == 2)
+			{
+				//ジャンプ中
+
+				//リング外を目指す         右
+				target_x = _CONSTANTS_07::OUT_RING_RIGHT + 35;
+
+				//画像を回転させる
+				draw_angle += 0.1;
+
+				//着地
+				if (x == _CONSTANTS_07::OUT_RING_RIGHT + 35 && land_flg == true)
+				{
+					count_ari = 3;       // 4 へ
+					speed = init_speed;  //スピードを初期に戻す
+					draw_angle = 0.0;    //初期の角度に戻す
+				}
+			}
+		}
+		/*******************************************************************/
+
+		/*******************************　４  **++***************************/
+		{
+			//20フレーム待機    count_ariでフレームを計測する
+			if (count_ari >= 3 && count_ari < 23)
+			{
+				count_ari++;
+
+				//20フレーム経過後
+				if (count_ari == 23)
+				{
+					Jump_Enemy(-18.0f);
+					count_ari = 99;
+				}
+			}
+
+			if (count_ari == 99)
+			{
+				//リング内を目指す         
+				target_x = _CONSTANTS_07::RING_RIGHT - (w / 2);
+
+				//リング内に到達
+				if (x == _CONSTANTS_07::RING_RIGHT - (w / 2))
+				{
+					Pre_Action = Now_Action;        //今回のActionを保存
+					Now_Action = ACT_TYPE::NO_ACT;  //Actionの完了
+					speed = init_speed;             //スピードを初期に戻す
+				}
+			}
+		}
+		/*******************************************************************/
+	}
+}
+
 //プレイヤーの状況を取得
 void Enemy_07::CheckPlayerState(const Player* player)
 {
@@ -715,9 +1017,13 @@ void Enemy_07::CheckPlayerState(const Player* player)
 			else 
 				Player_State = PLAYER_STATE::ON_FLOOR;       //足場上
 		}
+		else if (player->CheckHitBox_Box(20, 620, 200, 80) == true || player->CheckHitBox_Box(1060, 620, 200, 80) == true)
+		{
+			Player_State = PLAYER_STATE::OUT_RING;  //場外（リング外）
+		}
 		else
 		{
-			Player_State = PLAYER_STATE::DO_NOT;    //リング上ではない
+			Player_State = PLAYER_STATE::DO_NOT;    //判断しない
 		}
 	}
 }
@@ -731,17 +1037,45 @@ void Enemy_07::Init_MoveAndAction()
 	Pre_Action = ACT_TYPE::NO_ACT;
 }
 
+//（ダイブ中に）当たり判定をとらない  true : ダイブ中。当たり判定をとらない 
+bool Enemy_07::Is_Diving_Collision()
+{
+	// Actionはダイブ かつ リングより高い位置にいる  →　　ジャンプ中（足場に引っかからないように）  
+	if (Now_Action == ACT_TYPE::DIVE_OUT_LEFT && y < (_CONSTANTS_07::RING_HEIGHT - (h / 2)) ||
+		Now_Action == ACT_TYPE::DIVE_OUT_RIGHT && y < (_CONSTANTS_07::RING_HEIGHT - (h / 2)))
+	{
+		return true;
+	}
+	return false;
+}
+
+//（ダイブ中に）接触じゃんけんをしない  true : ダイブ中。接触じゃんけんをしない
+bool Enemy_07::Is_Diving_TouchJanken()
+{
+	if (Now_Action == ACT_TYPE::DIVE_OUT_LEFT || Now_Action == ACT_TYPE::DIVE_OUT_RIGHT)
+	{
+		return true;
+	}
+	return false;
+}
+
 /*--------------------------------------------------------------------------------------*/
 
-//360度発射（必殺）
-void Enemy_07::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
+//360度発射
+void Enemy_07::Jan_360degrees()
 {
+	//生成するじゃん撃の半径
+	float radius = 25.5f;
+
+	//ランダムな属性を生成
+	Jan_Type type = static_cast<Jan_Type>(GetRand(2));
+
 	//45度ずつ8個生成
-	for (int i = count; i < (count + 8); i++)
+	for (int i = jan_count; i < (jan_count + 8); i++)
 	{
 		double angle = static_cast<double>((45.0 * i) * (M_PI / 180));
 
-		obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
+		obj_jangeki[i] = new Jangeki_Base(x, y, radius, speed, angle, type);
 	}
 }
 
