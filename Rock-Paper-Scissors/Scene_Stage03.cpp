@@ -27,7 +27,7 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	else
 	{
 		//プレイヤーを生成
-		obj_player = new Player(10, 640);
+		obj_player = new Player(100, 640);
 	}
 
 	//敵を生成							//敵の属性チョキ
@@ -42,16 +42,15 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	obj_floor[2] = new Floor("images/stage03/GroundImagesTate.png",1260, 0, 20, 1720);     //壁（右）, GetColor(240, 230, 140)
 
 	//右から順に
-
-	obj_floor[3] = new Floor("images/stage03/BlockImages.png",1150, 410, 95, 30);//足場8//130,GetColor(193, 107, 68)
-	obj_floor[4] = new Floor("images/stage03/BlockImages.png", 1050, 550, 95, 30);//足場8//130,	GetColor(193, 107, 68)
-	obj_floor[5] = new Floor("images/stage03/BlockImages.png", 970, 215, 130, 40);//足場1, GetColor(193, 107, 68)
-	obj_floor[6] = new Floor("images/stage03/BlockImages.png", 770, 150, 130, 40);//足場2//130, GetColor(193, 107, 68)
-	obj_floor[7] = new Floor("images/stage03/BlockImages.png", 575, 215, 130, 40);//足場3//100, GetColor(193, 107, 68)
-	obj_floor[8] = new Floor("images/stage03/BlockImages.png", 390, 150, 130, 40);//足場4//130, GetColor(193, 107, 68)
-	obj_floor[9] = new Floor("images/stage03/BlockImages.png", 210, 215, 130, 40);//足場5//130, GetColor(193, 107, 68)
-	obj_floor[10] = new Floor("images/stage03/BlockImages.png", 30, 400, 95, 30);//足場6//100, GetColor(193, 107, 68)
-	obj_floor[11] = new Floor("images/stage03/BlockImages.png", 120,550, 95, 30);//足場7//130, GetColor(193, 107, 68)
+	obj_floor[3] = new Floor("images/stage03/BlockImages.png",1150, 410, 95, 30);//足場1//130,GetColor(193, 107, 68)
+	obj_floor[4] = new Floor("images/stage03/BlockImages.png", 1050, 550, 95, 30);//足場2//130,	GetColor(193, 107, 68)
+	obj_floor[5] = new Floor("images/stage03/BlockImages.png", 970, 215, 130, 40);//足場3, GetColor(193, 107, 68)
+	obj_floor[6] = new Floor("images/stage03/BlockImages.png", 770, 150, 130, 40);//足場4//130, GetColor(193, 107, 68)
+	obj_floor[7] = new Floor("images/stage03/BlockImages.png", 575, 215, 130, 40);//足場5//100, GetColor(193, 107, 68)
+	obj_floor[8] = new Floor("images/stage03/BlockImages.png", 390, 150, 130, 40);//足場6//130, GetColor(193, 107, 68)
+	obj_floor[9] = new Floor("images/stage03/BlockImages.png", 210, 215, 130, 40);//足場7//130, GetColor(193, 107, 68)
+	obj_floor[10] = new Floor("images/stage03/BlockImages.png", 30, 400, 95, 30);//足場8//100, GetColor(193, 107, 68)
+	obj_floor[11] = new Floor("images/stage03/BlockImages.png", 120,550, 95, 30);//足場9//130, GetColor(193, 107, 68)
 	
 }
 
@@ -178,6 +177,7 @@ void Scene_Stage03::Update()
 					}
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
+					
 				}
 
 				break;
@@ -237,10 +237,16 @@ void Scene_Stage03::Update()
 		//じゃん撃との当たり判定
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
-			//エネミーのHPが40以下の場合40ダメージ食らう
-			if (obj_enemy->GetHP() < 40) {
+			//エネミーのHPが40以下の場合30ダメージ食らう
+			if (obj_enemy->GetHP() <= 40 ) {
 
-				obj_player->ReceiveDamage(40);
+				//半径が90.0fの場合のダメージ
+				float radius = 50.0f;
+
+				if(radius >= 50.0f){
+
+					obj_player->ReceiveDamage(35);
+				}
 			}
 
 			//それ以外
@@ -333,11 +339,23 @@ AbstractScene* Scene_Stage03::ChangeScene()
 
 void Scene_Stage03::AfterJanken_WIN()
 {
+
+	
+
+
+
 	obj_player->SetX(100);
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）
 void Scene_Stage03::AfterJanken_LOSE()
 {
+
+
+
+
+
+
+
 	obj_player->SetX(100);
 }

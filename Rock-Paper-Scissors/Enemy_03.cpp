@@ -31,9 +31,9 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	moveinfo[3] = { 1,  0 ,   0.f , 4, 125 ,1 };//X‚ª650‚Å’â~
 
-	moveinfo[4] = { 0, 350.f, 0.f , 5, 0 ,1 };//X‚ª325‚Ü‚Å“®‚­
+	moveinfo[4] = { 0, 350.f, 0.f , 5, 0 ,1 };//X‚ª350‚Ü‚Å“®‚­
 
-	moveinfo[5] = { 1,  0 ,   0.f , 6, 125 ,1 };//X‚ª325‚Å’â~
+	moveinfo[5] = { 1,  0 ,   0.f , 6, 125 ,1 };//X‚ª350‚Å’â~
 
 	//‘«ê‚Éæ‚é
 	moveinfo[6] = { 0, 350.f, 0.f , 7, 0 ,0 };//X‚ª350‚Ì‘«ê‚É”ò‚Ô
@@ -42,85 +42,88 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	moveinfo[8] = { 0,  70.f , 0.f , 9, 0 ,0 };//X‚ª70‘«ê‚É”ò‚Ô
 
-	moveinfo[9] = { 1,  0 ,   0.f , 10, 125 ,1 };//X‚ª70‚Å’â~
+	//moveinfo[9] = { 1,  0 ,   0.f , 10, 125 ,1 };//X‚ª70‚Å’â~
 
-	moveinfo[10] = { 0, 280.f, 0.f , 11,  0 ,0 };//X‚ª280‚Ì‘«ê‚É”ò‚Ô
+	moveinfo[9] = { 0, 280.f, 0.f , 10,  0 ,0 };//X‚ª280‚Ì‘«ê‚É”ò‚Ô
 
-	moveinfo[11] = { 1,  0 ,   0.f , 12, 125,1 };//X‚ª280‚Å’â~
+	moveinfo[10] = { 1,  0 ,   0.f , 11, 125,1 };//X‚ª280‚Å’â~
 
-	moveinfo[12] = { 0, 465.f, 0.f , 13,  0 ,0 };//X‚ª465‚Ì‘«ê‚É”ò‚Ô
+	moveinfo[11] = { 0, 465.f, 0.f , 12,  0 ,0 };//X‚ª465‚Ì‘«ê‚É”ò‚Ô
 
-	moveinfo[13] = { 1,  0 ,   0.f , 14, 125,1 };//X‚ª465‚Å’â~
+	//moveinfo[12] = { 1,  0 ,   0.f , 14, 125,1 };//X‚ª465‚Å’â~
 
-	moveinfo[14] = { 0, 585.f,0.f , 15,  0 ,0 };//X‚ª585‚Ì‘«ê‚É”ò‚Ô
+	moveinfo[12] = { 0, 585.f,0.f , 13,  0 ,0 };//X‚ª585‚Ì‘«ê‚É”ò‚Ô
 
-	moveinfo[15] = { 1,  0 ,   0.f , 16, 125,1 };//X‚ª585‚Å’â~
+	moveinfo[13] = { 1,  0 ,   0.f , 14, 125,1 };//X‚ª585‚Å’â~
 
-	moveinfo[16] = { 0, 780.f, 0.f , 17,  0 ,0 };//X‚ª780‚Ì‘«ê‚É”ò‚Ô
+	moveinfo[14] = { 0, 780.f, 0.f , 15,  0 ,0 };//X‚ª780‚Ì‘«ê‚É”ò‚Ô
 
-	moveinfo[17] = { 1,  0 ,   0.f , 18, 125,1 };//X‚ª780‚Å’â~
+	//moveinfo[17] = { 1,  0 ,   0.f , 18, 125,1 };//X‚ª780‚Å’â~
 
-	moveinfo[18] = { 0, 970.f, 0.f , 19,  0 ,0 };//X‚ª970‚Ì‘«ê‚É”ò‚Ô
+	moveinfo[15] = { 0, 970.f, 0.f , 16,  0 ,0 };//X‚ª970‚Ì‘«ê‚É”ò‚Ô
 
-	moveinfo[19] = { 1,  0 ,   0.f , 20, 125,1 };//X‚ª970‚Ì‘«ê‚Å’â~
+	moveinfo[16] = { 1,  0 ,   0.f , 17, 125,1 };//X‚ª970‚Ì‘«ê‚Å’â~
 
-	moveinfo[20] = { 0, 1160.f, 0.f , 21,  0 ,0 };//X‚ª1160‚Ì‘«ê‚É”ò‚Ô
+	moveinfo[17] = { 0, 1160.f, 0.f , 18,  0 ,0 };//X‚ª1160‚Ì‘«ê‚É”ò‚Ô
 
-	moveinfo[21] = { 1,  0 ,   0.f , 22, 125,1 };//X‚ª1160‚Å’â~
+	//moveinfo[21] = { 1,  0 ,   0.f , 22, 125,1 };//X‚ª1160‚Å’â~
 
-	moveinfo[22] = { 0,  1050.f , 0.f , 23, 0, 1 };//X‚ª1160‚Ì‘«ê‚É”ò‚Ô
+	moveinfo[18] = { 0,  1050.f , 0.f , 19, 0, 1 };//X‚ª1160‚Ì‘«ê‚É”ò‚Ô
 
-	moveinfo[23] = { 1,  0 ,   0.f , 24, 125,1 };//X‚ª1160‚Å’â~
+	//moveinfo[19] = { 1,  0 ,   0.f , 20, 125,1 };//X‚ª1160‚Å’â~
 
-	moveinfo[24] = { 0,  930.f , 0.f , 25, 0, 1 };//X‚ª930‚Ü‚ÅˆÚ“®
+	moveinfo[19] = { 0,  930.f , 0.f , 20, 0, 1 };//X‚ª930‚Ü‚ÅˆÚ“®
 
-	moveinfo[25] = { 1,  0 , 0.f , 26, 125,1 };//X‚ª930‚Å’â~
+	moveinfo[20] = { 1,  0 , 0.f , 21, 125,1 };//X‚ª930‚Å’â~
 
-	moveinfo[26] = { 0, 1050.f , 0.f , 27, 0, 0 };//X‚ª1020‚Ì‘«ê‚É”ò‚Ô
 
-	moveinfo[27] = { 1,  0 , 0.f , 28, 125,1 };//X‚ª1020‚Å’â~
+	//‘O‰ñ‚Ì‹tƒpƒ^[ƒ“‚Ö
+	moveinfo[21] = { 0, 1050.f , 0.f , 22, 0, 0 };//X‚ª1050‚Ì‘«ê‚É”ò‚Ô
 
-	moveinfo[28] = { 0,  1160.f , 0.f , 29, 0, 0 };//X‚ª1160‚Ì‘«ê‚É”ò‚Ô
+	//moveinfo[27] = { 1,  0 , 0.f , 28, 125,1 };//X‚ª1020‚Å’â~
 
-	moveinfo[29] = { 1,  0 , 0.f , 30, 125, 1 };//X‚ª1160‚Å’â~
+	moveinfo[22] = { 0,  1160.f , 0.f , 23, 0, 0 };//X‚ª1160‚Ì‘«ê‚É”ò‚Ô
 
-	moveinfo[30] = { 0,  970.f , 0.f , 31, 0, 0 };//X‚ª970‚Ì‘«ê‚É”ò‚Ô
+	moveinfo[23] = { 1,  0 , 0.f , 24, 125, 1 };//X‚ª1160‚Å’â~
 
-	moveinfo[31] = { 1,  0 , 0.f , 32, 125,1 };//X‚ª970‚Å’â~
+	moveinfo[24] = { 0,  970.f , 0.f , 25, 0, 0 };//X‚ª970‚Ì‘«ê‚É”ò‚Ô
 
-	moveinfo[32] = { 0,  780.f , 0.f , 33, 0, 0 };//X‚ª780‚Ì‘«ê‚É”ò‚Ô
+	//moveinfo[25] = { 1,  0 , 0.f , 26, 125,1 };//X‚ª970‚Å’â~
 
-	moveinfo[33] = { 1,  0 , 0.f , 34, 125,1 };//X‚ª780‚Å’â~
+	moveinfo[25] = { 0,  780.f , 0.f , 26, 0, 0 };//X‚ª780‚Ì‘«ê‚É”ò‚Ô
 
-	moveinfo[34] = { 0,  585.f , 0.f , 35, 0, 0 };//X‚ª585‚Ì‘«ê‚É”ò‚Ô
+	moveinfo[26] = { 1,  0 , 0.f , 27, 125,1 };//X‚ª780‚Å’â~
 
-	moveinfo[35] = { 1,  0 ,   0.f , 36, 125,1 };//X‚ª585‚Å’â~
+	moveinfo[27] = { 0,  585.f , 0.f , 28, 0, 0 };//X‚ª585‚Ì‘«ê‚É”ò‚Ô
 
-	moveinfo[36] = { 0, 465.f, 0.f , 37,  0 ,0 };//X‚ª465‚Ì‘«ê‚É”ò‚Ô
+	//moveinfo[28] = { 1,  0 ,   0.f , 29, 125,1 };//X‚ª585‚Å’â~
 
-	moveinfo[37] = { 1,  0 ,   0.f , 38, 125,1 };//X‚ª465‚Å’â~
+	moveinfo[28] = { 0, 465.f, 0.f , 29,  0 ,0 };//X‚ª465‚Ì‘«ê‚É”ò‚Ô
 
-	moveinfo[38] = { 0, 280.f, 0.f , 39,  0 ,0 };//X‚ª280‚Ì‘«ê‚É”ò‚Ô
+	moveinfo[29] = { 1,  0 ,   0.f , 30, 125,1 };//X‚ª465‚Å’â~
 
-	moveinfo[39] = { 1,  0 ,   0.f , 40, 125,1 };//X‚ª280‚Å’â~
+	moveinfo[30] = { 0, 280.f, 0.f , 31,  0 ,0 };//X‚ª280‚Ì‘«ê‚É”ò‚Ô
 
-	moveinfo[40] = { 0, 70.f,  0.f , 41,  0 ,0 };//X‚ª70‚Ü‚Å“®‚­
 
-	moveinfo[41] = { 1,  0 ,   0.f , 42, 125,1 };//X‚ª325‚Å’â~
+	//moveinfo[31] = { 1,  0 ,   0.f , 32, 125,1 };//X‚ª280‚Å’â~
+
+	moveinfo[31] = { 0, 70.f,  0.f , 32,  0 ,0 };//X‚ª70‚Ü‚Å“®‚­
+
+	moveinfo[32] = { 1,  0 ,   0.f , 33, 125,1 };//X‚ª70‚Å’â~
 	//‚±‚±‚©‚ç“®‚­2
-	moveinfo[42] = { 0, 350.f, 0.f , 43,  0 ,1 };//‰ŠúˆÊ’u‚ÌX‚ª350‚Å’â~
+	moveinfo[33] = { 0, 350.f, 0.f , 34,  0 ,1 };//‰ŠúˆÊ’u‚ÌX‚ª350‚Å’â~
 
-	moveinfo[43] = { 1,  0 ,   0.f , 44, 125 ,1 };//‰ŠúˆÊ’u‚ÌX‚ª350‚Å’â~
-	
-	moveinfo[44] = { 0, 650.f, 0.f , 45,  0 ,1 };//X‚ª650‚Ü‚Å“®‚­
+	moveinfo[34] = { 1,  0 ,   0.f , 35, 125 ,1 };//‰ŠúˆÊ’u‚ÌX‚ª350‚Å’â~
 
-	moveinfo[45] = { 1,  0 ,   0.f , 46, 125 ,1 };//X‚ª650‚Å’â~
+	moveinfo[35] = { 0, 650.f, 0.f , 36,  0 ,1 };//X‚ª650‚Ü‚Å“®‚­
 
-	moveinfo[46] = { 0,	900.f, 0.f , 47, 0 ,1 };//X‚ª900‚Ü‚Å“®‚­
+	moveinfo[36] = { 1,  0 ,   0.f , 37, 125 ,1 };//X‚ª650‚Å’â~
+
+	moveinfo[37] = { 0,	900.f, 0.f , 38, 0 ,1 };//X‚ª900‚Ü‚Å“®‚­
 
 	//moveinfo[47] = { 1,	 0,  0.f , 48, 62 ,1 };//X‚ª900‚Å­‚µ‚ÌŠÔ’â~
 
-	moveinfo[47] = { 1,  0 ,   0.f , 0, 125 ,1 };//X‚ª650‚Å’â~‚µ”z—ñ[0]‚É–ß‚éw
+	moveinfo[38] = { 1,  0 ,   0.f , 0, 125 ,1 };//X‚ª900‚Å’â~‚µ”z—ñ[0]‚É–ß‚é
 
 }
 
@@ -152,8 +155,10 @@ void Enemy_03::Update()
 		e_type = Jan_Type::ROCK;
 
 	}
-	//ã‹L‚Ì‘®«•ÏXˆÈŠO
-	else e_type = Jan_Type::SCISSORS;
+	//“®‚¢‚Ä‚¢‚é‚Æ‚«‘®«•ÏX
+	else if (moveinfo[current].enemywaitTime < 125) {
+		e_type = Jan_Type::SCISSORS;
+	}
 
 	//ƒXƒe03ƒpƒ^[ƒ“—pŠÖ”
 	switch (moveinfo[current].moveflg)
@@ -163,6 +168,7 @@ void Enemy_03::Update()
 
 		break;
 	case 1:
+		//‘Ò‚¿ŠÔƒJƒEƒ“ƒg
 		waitcount++;
 		if (moveinfo[current].enemywaitTime <= waitcount) {
 
@@ -178,7 +184,6 @@ void Enemy_03::Update()
 
 	//HP‚ª0ˆÈ‰º‚¾‚Á‚½‚çHP‚É0‚ğ‘ã“ü
 	if (hp <= 0)hp = 0;
-
 
 
 	//if (x + (w / 2) == (1280 - 20))
@@ -235,18 +240,16 @@ void Enemy_03::Draw() const
 	//ƒGƒlƒ~[’â~
 	if (moveinfo[current].enemywaitTime > 0) {
 
-		//ƒK[ƒh‚Ì‰æ‘œ•`‰æ
+		//ƒK[ƒh‚Ì‰æ‘œ•`‰æ							
 		DrawRotaGraphF(x, y, 1, 0, enemyimage[1], TRUE, dir == -1 ? 0 : 1);
 
 
 	}
 	//‚»‚¤‚¶‚á‚È‚¢‚Æ‚«
 	else {
-		//UŒ‚‚Ì‰æ‘œ•`‰æ
+		//UŒ‚‚Ì‰æ‘œ•`‰æ								//Œü‚«‚ğ•Ï‚¦‚é
 		DrawRotaGraphF(x, y, 1, 0, enemyimage[0], TRUE, dir == -1 ? 0 : 1);
 	}
-
-
 
 
 	//‚¶‚á‚ñŒ‚•`‰æ
@@ -256,7 +259,7 @@ void Enemy_03::Draw() const
 	//ƒeƒXƒg                                                      //ÔF
 	if (moveinfo[current].enemywaitTime > 0) DrawFormatString((int)(x - 100), (int)(y - 100), GetColor(0, 0, 255), "–hŒä—Í UPª", moveinfo[current].enemywaitTime);
 
-	if (hp <= 50) DrawFormatString((int)(x - 100), (int)(y - 80), GetColor(255, 0, 0), "UŒ‚—Í UPª", hp);
+	if (hp <= 40) DrawFormatString((int)(x - 100), (int)(y - 80), GetColor(255, 0, 0), " UŒ‚—Í UP ª", hp);
 
 	if (hp <= 0)DrawString((int)(x - 100), (int)(y - 120), "death!", 0xff0000);
 
@@ -292,19 +295,35 @@ void Enemy_03::Update_Jangeki()
 	//”z—ñ‚Ì‹ó—v‘f
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
-		float radius = 40.0f;   //”¼Œa //35.5f
+		float radius = 35.5f;   //”¼Œa //35.5f
 		float speed = 4.5f /** dir*/;     //ƒXƒs[ƒh//3.0
 
 		//ƒ‰ƒ“ƒ_ƒ€‚È‘®«‚ğ¶¬
 		Jan_Type type = static_cast<Jan_Type>(GetRand(1));//2 //å‚É‘®«‚ÌƒWƒƒƒ“Œ‚‚ğŒJ‚èo‚·
 
 
+		//ƒvƒŒƒCƒ„[•ûŒü‚Ö‚ÌƒWƒƒƒ“Œ‚¶¬
+
+		if (hp >= 41) {
+			if (frame_count % 80 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+		}
 		////’Êí’e¶¬
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
-		// 
-		//ƒvƒŒƒCƒ„[•ûŒü‚Ö‚ÌƒWƒƒƒ“Œ‚¶¬
-		if (frame_count % 75 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
-	
+
+		//UŒ‚UP‚ÌƒWƒƒƒ“Œ‚
+		else if (hp <= 40) {
+
+
+			float radius = 50.0f;
+			float speed = 4.5f;
+
+			if (frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+
+
+
+		}
+
+
 	}
 }
 
@@ -387,3 +406,4 @@ void Enemy_03::ChangeDir(float x)
 	if (x < 640) dir = -1;
 	else dir = 1;
 }
+
