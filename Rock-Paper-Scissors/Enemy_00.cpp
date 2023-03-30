@@ -13,7 +13,6 @@ Enemy_00::Enemy_00(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	image = LoadGraph("images/tyokitest.png");
 
 	Init_Jangeki();       //じゃん撃を用意
-
 }
 
 //デストラクタ

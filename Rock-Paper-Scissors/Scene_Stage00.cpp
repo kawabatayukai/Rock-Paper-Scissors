@@ -50,6 +50,23 @@ Scene_Stage00::Scene_Stage00(const Player* player)
 
 	//テスト
 	setumei = LoadGraph("images/Setumei.png");
+
+	//画像一覧
+	int players[10];
+	LoadDivGraph("images/ワンパンマンALL画像腕無し.png", 10, 5, 2, 100, 100, players);
+
+	player_image = players[0];
+	player_all = LoadGraph("images/ワンパンマンALL画像腕無し.png");
+
+	enemy_02 = LoadGraph("images/stage02/ex.png");
+	enemy_03 = LoadGraph("images/stage03/stage03gard.png");
+	enemy_04 = LoadGraph("images/Stage4/ステージ4_ボス100.png");
+	enemy_05 = LoadGraph("images/stage05/Stage5_Enemy_NoMove_Left.png");
+	enemy_06 = LoadGraph("images/tyokitest.png");
+	enemy_07 = LoadGraph("images/tyokitest.png");
+	enemy_08 = LoadGraph("images/stage08/Stage8_image100.png");
+	enemy_09 = LoadGraph("images/stage09/Stage9_100.png");
+	enemy_10 = LoadGraph("images/tyokitest.png");
 }
 
 //デストラクタ
@@ -68,8 +85,6 @@ void Scene_Stage00::Update()
 
 		//プレイヤーの座標を取得
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
-
-
 	}
 
 	//接触じゃんけん処理
@@ -230,15 +245,31 @@ void Scene_Stage00::Draw() const
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
-		obj_player->Draw();  //プレイヤー描画
-		obj_enemy->Draw();   //敵キャラ描画
+		//obj_player->Draw();  //プレイヤー描画
+		//obj_enemy->Draw();   //敵キャラ描画
 
-		//床・壁描画
-		for (int i = 0; i < STAGE_00_FLOOR; i++)
-		{
-			if (obj_floor[i] == nullptr) break;
-			obj_floor[i]->Draw();
-		}
+		////床・壁描画
+		//for (int i = 0; i < STAGE_00_FLOOR; i++)
+		//{
+		//	if (obj_floor[i] == nullptr) break;
+		//	obj_floor[i]->Draw();
+		//}
+
+		DrawBox(0, 0, 1280, 720, 0xffffff, TRUE);
+
+		//すべてのキャラを描画
+		DrawGraph(50, 0, player_image, TRUE);
+		DrawGraph(200, 0, enemy_02, TRUE);
+		DrawGraph(350, 0, enemy_03, TRUE);
+		DrawGraph(500, 0, enemy_04, TRUE);
+		DrawGraph(650, 0, enemy_05, TRUE);
+		DrawGraph(50, 150, enemy_06, TRUE);
+		DrawGraph(200, 150, enemy_07, TRUE);
+		DrawGraph(350, 150, enemy_08, TRUE);
+		DrawGraph(500, 150, enemy_09, TRUE);
+		DrawGraph(650, 150, enemy_10, TRUE);
+
+		DrawGraph(50, 350, player_all, TRUE);
 	}
 	else
 	{
@@ -246,8 +277,8 @@ void Scene_Stage00::Draw() const
 		Draw_Janken();
 	}
 
-	//テスト
-	DrawGraph(20, 0, setumei, TRUE);
+	////テスト
+	//DrawGraph(20, 0, setumei, TRUE);
 
 }
 
