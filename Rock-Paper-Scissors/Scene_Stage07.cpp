@@ -67,9 +67,11 @@ void Scene_Stage07::Update()
 		obj_enemy->CheckPlayerState(obj_player);
 	}
 	
-	//接触じゃんけん処理
-	Touch_Janken(obj_enemy, this);
-
+	//接触じゃんけん処理 (敵の行動が"ダイブ"の時は判定なし)
+	if (obj_enemy->Is_Diving_TouchJanken() != true)
+	{
+		Touch_Janken(obj_enemy, this);
+	}
 
 	//playerのじゃん撃をとってくる
 	Jangeki_Base** player_jangeki = obj_player->GetJangeki();
@@ -159,7 +161,9 @@ void Scene_Stage07::Update()
 				//パーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::PAPER)
 				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					obj_enemy->ReceiveDamage(10);     //ダメージが入る
+					obj_enemy->Change_JanType();      //属性が変わる
+
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -171,7 +175,9 @@ void Scene_Stage07::Update()
 				//グーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::ROCK)
 				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					obj_enemy->ReceiveDamage(10);     //ダメージが入る
+					obj_enemy->Change_JanType();      //属性が変わる
+
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -182,7 +188,9 @@ void Scene_Stage07::Update()
 				//チョキのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::SCISSORS)
 				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					obj_enemy->ReceiveDamage(10);     //ダメージが入る
+					obj_enemy->Change_JanType();      //属性が変わる
+
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -191,6 +199,7 @@ void Scene_Stage07::Update()
 			default:
 				break;
 			}
+
 		}
 	}
 
@@ -205,7 +214,7 @@ void Scene_Stage07::Update()
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
 			//ダメージを受ける（プレイヤー）
-			obj_player->ReceiveDamage(30);
+			obj_player->ReceiveDamage(10);
 
 			//あたったじゃん撃を削除
 			obj_enemy->DeleteJangeki(i);
@@ -214,7 +223,13 @@ void Scene_Stage07::Update()
 	}
 
 	HitCtrl_Floor(obj_player, STAGE_07_FLOOR);     // player　床・壁判定
-	HitCtrl_Floor(obj_enemy, STAGE_07_FLOOR);      // 敵　　　床・壁判定
+
+	//ﾄﾍﾟｺﾝﾋｰﾛ（ダイブ）中の場合、判定をとらない
+	if (obj_enemy->Is_Diving_Collision() != true)
+	{
+		HitCtrl_Floor(obj_enemy, STAGE_07_FLOOR);      // 敵　　　床・壁判定
+	}
+	
 }
 
 
@@ -245,8 +260,8 @@ void Scene_Stage07::Draw() const
 		}
 
 		//コーナーポスト
-		DrawBox(220, 440, (220 + 30), (440 + 150), 0x007cfe, TRUE);
-		DrawBox(1030, 440, (1030 + 30), (440 + 150), 0x007cfe, TRUE);
+		DrawBox(220, 440, (220 + 30), (440 + 150), 0x007cfe, TRUE);    //左
+		DrawBox(1030, 440, (1030 + 30), (440 + 150), 0x007cfe, TRUE);  //右
 
 
 		//ロープ
