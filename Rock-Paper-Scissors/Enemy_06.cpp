@@ -88,9 +88,6 @@ void Enemy_06::Draw() const
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
 	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
 
-	//デバッグ用ChangeCnt表示
-	DrawFormatString(900, 600, 0xffffff, "%d", ChangeCnt);
-
 }
 
 //じゃん撃生成・更新
@@ -146,20 +143,15 @@ void Enemy_06::AttackPattern_1()
 			jump_flg = true;
 		}
 
-		if (land_flg == true && jump_flg == true)    //jump_flgがジャンプの条件
-		{
-			g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-			land_flg = false;  //地面についていない
-			jump_flg = false;  //ジャンプ用フラグのリセット
-			jump_cnt++;        //ジャンプ回数のカウント
-		}
+		//ジャンプ処理
+		jump();
 	}
 
 	//4回以上ジャンプした際の処理
 	if (jump_cnt >= 3 && direction_flg == false)        //左を向いている時の処理
 	{
 
-		x = x - 7;      //1フレームの間に左へ進む距離
+		x = x - 5;      //1フレームの間に左へ進む距離
 		if (x < 100)    //目標座標に到着したかのチェック
 		{
 			jump_cnt = 0;          //ジャンプ回数のリセット
@@ -169,7 +161,7 @@ void Enemy_06::AttackPattern_1()
 	}
 	else if (jump_cnt >= 3 && direction_flg == true)    //右を向いている時の処理
 	{
-		x = x + 7;      //1フレームの間に右へ進む距離
+		x = x + 5;      //1フレームの間に右へ進む距離
 		if (x > 1180)   //目標座標に到着したかのチェック
 		{
 			jump_cnt = 0;           //ジャンプ回数のリセット
@@ -253,12 +245,7 @@ void Enemy_06::AttackPattern_2()
 		}
 
 		//ジャンプ処理
-		if (jump_flg == true && land_flg == true)
-		{
-			g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-			land_flg = false;  //地面についていない
-			jump_flg = false;  //ジャンプ用フラグのリセット
-		}
+		jump();
 	}
 
 	else if (P1_side == true)
@@ -296,12 +283,7 @@ void Enemy_06::AttackPattern_2()
 		}
 
 		//ジャンプ処理
-		if (jump_flg == true && land_flg == true)
-		{
-			g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-			land_flg = false;  //地面についていない
-			jump_flg = false;  //ジャンプ用フラグのリセット
-		}
+		jump();
 	}
 
 	//敵の属性変化処理
@@ -314,14 +296,229 @@ void Enemy_06::AttackPattern_2()
 	//HPが40以下になると次の行動ループに移行
 	if (hp <= 40)
 	{
-		/*attack_pattern = 2;*/
+		attack_pattern = 2;
+		teleport_Flg = true;
 	}
 }
 
 //行動ループ3
 void Enemy_06::AttackPattern_3()
 {
-	
+	//攻撃パターン3初期処理
+	if (teleport_Flg == true)
+	{
+		x = 1149;
+		y = 450;
+		floor = 5;
+		direction_flg = false;
+		teleport_Flg = false;
+		jump_cnt = 0;
+	}
+
+
+	//床ごとの処理
+	switch (floor)
+	{
+	case 1:
+		if (direction_flg == true)
+		{
+			x += 7;
+		}
+		
+		if (y == 450 && jump_cnt == 0)
+		{
+			jump_flg = true;
+		}
+
+		//ジャンプ処理
+		jump();
+
+		//指定座標に到着したらswitch遷移
+		if (x >= 393)
+		{
+			floor = 2;
+			jump_cnt = 0;
+			decision_Direction();
+			jump_Direction();
+		}
+
+		break;
+
+	case 2:
+		if (direction_flg == false)
+		{
+			x -= 7;
+		}
+		if (direction_flg == true)
+		{
+			x += 7;
+		}
+
+		//ジャンプ処理
+		jump();
+
+		//指定座標に到着したらswitch遷移
+		if (x <= 141)
+		{
+			floor = 1;
+			jump_cnt = 0;
+			direction_flg = true;
+			jump_Direction();
+		}
+		if (x >= 645)
+		{
+			floor = 3;
+			jump_cnt = 0;
+			decision_Direction();
+			jump_Direction();
+		}
+
+		break;
+
+	case 3:
+		if (direction_flg == false)
+		{
+			x -= 7;
+		}
+		if (direction_flg == true)
+		{
+			x += 7;
+		}
+
+		if (y == 450 && jump_cnt == 0)
+		{
+			jump_flg = true;
+		}
+
+		//ジャンプ処理
+		jump();
+
+		//指定座標に到着したらswitch遷移
+		if (x <= 393)
+		{
+			floor = 2;
+			jump_cnt = 0;
+			decision_Direction();
+			jump_Direction();
+		}
+		if (x >= 897)
+		{
+			floor = 4;
+			jump_cnt = 0;
+			decision_Direction();
+			jump_Direction();
+		}
+
+		break;
+
+	case 4:
+		if (direction_flg == false)
+		{
+			x -= 7;
+		}
+		if (direction_flg == true)
+		{
+			x += 7;
+		}
+
+		//ジャンプ処理
+		jump();
+
+		//指定座標に到着したらswitch遷移
+		if (x <= 645)
+		{
+			floor = 3;
+			jump_cnt = 0;
+			decision_Direction();
+			jump_Direction();
+		}
+		if (x >= 1149)
+		{
+			floor = 5;
+			jump_cnt = 0;
+			direction_flg = false;
+			jump_Direction();
+		}
+
+		break;
+
+	case 5:
+		if (direction_flg == false)
+		{
+			x -= 7;
+		}
+
+		if (y == 450 && jump_cnt == 0)
+		{
+			jump_flg = true;
+			jump_cnt++;
+		}
+
+		//ジャンプ処理
+		jump();
+
+		//指定座標に到着したらswitch遷移
+		if (x <= 897)
+		{
+			floor = 4;
+			jump_cnt = 0;
+			decision_Direction();
+			jump_Direction();
+		}
+
+		break;
+	}
+
+	//敵の属性変化処理
+	if (ChangeCnt > 5)
+	{
+		SetType(static_cast<Jan_Type>(GetRand(2)));
+		ChangeCnt = 0;
+	}
+}
+
+//ジャンプ
+void Enemy_06::jump()
+{
+	//ジャンプ処理
+	if (jump_flg == true && land_flg == true)
+	{
+		g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+		land_flg = false;  //地面についていない
+		jump_flg = false;  //ジャンプ用フラグのリセット
+
+		if (attack_pattern == 0)
+		{
+			jump_cnt++;        //ジャンプ回数のカウント
+		}
+
+		if (attack_pattern == 2)
+		{
+			ChangeCnt++;       //属性変化までのカウント
+		}
+	}
+}
+
+//向きを乱数で決める関数
+void Enemy_06::decision_Direction()
+{
+	if (GetRand(1) == 1)
+	{
+		direction_flg = false;
+	}
+	else
+	{
+		direction_flg = true;
+	}
+}
+
+//ジャンプするかを乱数で決める関数
+void Enemy_06::jump_Direction()
+{
+	if (GetRand(1) == 1)
+	{
+		jump_flg = true;
+	}
 }
 
 //old_yの取得関数
