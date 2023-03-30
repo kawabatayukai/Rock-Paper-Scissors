@@ -161,7 +161,7 @@ void Scene_Stage07::Update()
 				//パーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::PAPER)
 				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					obj_enemy->ReceiveDamage(10);     //ダメージが入る
 					obj_enemy->Change_JanType();      //属性が変わる
 
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
@@ -175,7 +175,7 @@ void Scene_Stage07::Update()
 				//グーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::ROCK)
 				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					obj_enemy->ReceiveDamage(10);     //ダメージが入る
 					obj_enemy->Change_JanType();      //属性が変わる
 
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
@@ -188,7 +188,7 @@ void Scene_Stage07::Update()
 				//チョキのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::SCISSORS)
 				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					obj_enemy->ReceiveDamage(10);     //ダメージが入る
 					obj_enemy->Change_JanType();      //属性が変わる
 
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除

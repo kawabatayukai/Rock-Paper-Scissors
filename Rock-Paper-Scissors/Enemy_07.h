@@ -31,7 +31,7 @@ public:
 	//プレイヤーが足場（空中）上
 	void Move_ON_FLOOR(float& target_x, float& target_y);
 
-	//プレイヤーが足場で3秒以上
+	//プレイヤーが足場で2秒以上
 	void Move_ON_FLOOR_LURK(float& target_x, float& target_y);
 
 	//プレイヤーが場外

@@ -480,13 +480,13 @@ void Enemy_07::Move_ON_FLOOR(float& target_x, float& target_y)
 				target_x = _CONSTANTS_07::CORNER_LEFT;
 
 				//１秒おきにじゃん撃生成
-				if (time_count % 100 == 0)
+				if (time_count % 60 == 0)
 				{
-					obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, 3.0f, type);
+					obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, 5.0f, type);
 				}
 
-				//３秒後
-				if (time_count++ > 180)
+				//２秒後
+				if (time_count++ > 120)
 				{
 					Pre_Action = Now_Action;        //今回のActionを保存
 
@@ -527,13 +527,13 @@ void Enemy_07::Move_ON_FLOOR(float& target_x, float& target_y)
 				target_x = _CONSTANTS_07::CORNER_RIGHT;
 
 				//１秒おきにじゃん撃生成
-				if (time_count % 100 == 0)
+				if (time_count % 60 == 0)
 				{
-					obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, 3.0f, type);
+					obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, 5.0f, type);
 				}
 
-				//３秒後
-				if (time_count++ > 180)
+				//２秒後
+				if (time_count++ > 120)
 				{
 					Pre_Action = Now_Action;        //今回のActionを保存
 
@@ -545,7 +545,7 @@ void Enemy_07::Move_ON_FLOOR(float& target_x, float& target_y)
 	}
 }
 
-//プレイヤーが足場で3秒以上
+//プレイヤーが足場で2秒以上
 void Enemy_07::Move_ON_FLOOR_LURK(float& target_x, float& target_y)
 {
 	// 到達した回数
@@ -675,7 +675,6 @@ void Enemy_07::Move_ON_FLOOR_LURK(float& target_x, float& target_y)
 				speed = init_speed;             //スピードを初期に戻す
 			}
 		}
-
 		/*******************************************************************/
 	}
 
@@ -860,6 +859,7 @@ void Enemy_07::Move_OUT_RING(float& target_x, float& target_y)
 				//着地
 				if (x == _CONSTANTS_07::OUT_RING_LEFT - 35 && land_flg == true)
 				{
+					Jan_360degrees();    //じゃん撃発射
 					count_ari = 3;       // 4 へ
 					speed = init_speed;  //スピードを初期に戻す
 					draw_angle = 0.0;    //初期の角度に戻す
@@ -899,7 +899,6 @@ void Enemy_07::Move_OUT_RING(float& target_x, float& target_y)
 		}
 		/*******************************************************************/
 	}
-
 
 	//リング右へダイブ
 	if (Now_Action == ACT_TYPE::DIVE_OUT_RIGHT)
@@ -955,6 +954,7 @@ void Enemy_07::Move_OUT_RING(float& target_x, float& target_y)
 				//着地
 				if (x == _CONSTANTS_07::OUT_RING_RIGHT + 35 && land_flg == true)
 				{
+					Jan_360degrees();    //じゃん撃発射
 					count_ari = 3;       // 4 へ
 					speed = init_speed;  //スピードを初期に戻す
 					draw_angle = 0.0;    //初期の角度に戻す
@@ -1005,7 +1005,7 @@ void Enemy_07::CheckPlayerState(const Player* player)
 		//当たり判定を活用          
 		if (player->CheckHitBox_Box(220, 260, 840, 330) == true)        //リング上の範囲
 		{
-			Player_State = PLAYER_STATE::ON_RING;   //リング上
+			Player_State = PLAYER_STATE::ON_RING;            //リング上
 		}
 		else if (player->CheckHitBox_Box(20, -180, 1240, 380) == true)  //空中の足場全体の範囲
 		{
@@ -1019,7 +1019,13 @@ void Enemy_07::CheckPlayerState(const Player* player)
 		}
 		else if (player->CheckHitBox_Box(20, 620, 200, 80) == true || player->CheckHitBox_Box(1060, 620, 200, 80) == true)
 		{
-			Player_State = PLAYER_STATE::OUT_RING;  //場外（リング外）
+			//前回も場外の行動をしていた
+			if (Pre_Action == ACT_TYPE::DIVE_OUT_LEFT || Pre_Action == ACT_TYPE::DIVE_OUT_RIGHT)
+			{
+				Player_State = PLAYER_STATE::ON_RING;        //リング上にいる時の行動をする
+			}
+			else
+				Player_State = PLAYER_STATE::OUT_RING;       //場外（リング外）
 		}
 		else
 		{
