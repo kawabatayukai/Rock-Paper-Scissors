@@ -241,9 +241,9 @@ void Scene_Stage03::Update()
 			if (obj_enemy->GetHP() <= 40 ) {
 
 				//”¼Œa‚ª90.0f‚Ìê‡‚Ìƒ_ƒ[ƒW
-				float radius = 90.0f;
+				float radius = 50.0f;
 
-				if(radius >= 90.0f){
+				if(radius >= 50.0f){
 
 					obj_player->ReceiveDamage(35);
 				}

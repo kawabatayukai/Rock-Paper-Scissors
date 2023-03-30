@@ -314,7 +314,7 @@ void Enemy_03::Update_Jangeki()
 		else if (hp <= 40) {
 
 
-			float radius = 90.0f;
+			float radius = 50.0f;
 			float speed = 4.5f;
 
 			if (frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
