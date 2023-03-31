@@ -8,7 +8,7 @@
 #include"Jangeki_Homing.h"
 
 //じゃん撃発射間隔　（1秒）
-#define PLAYER_JAN_INTERVAL 60
+#define PLAYER_JAN_INTERVAL 30
 
 
 //コンストラクタ　　　　　　　　　　　　　  ｘ　ｙ　幅　　　高さ
