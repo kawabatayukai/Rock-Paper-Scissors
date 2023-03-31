@@ -4,6 +4,7 @@
 #include"Stage_Base.h"
 #include"Player.h"
 #include"Floor.h"
+#include"MobEnemy_05.h"
 
 #define STAGE_05_FLOOR 8         //床・壁の合計数
 
@@ -20,15 +21,18 @@ public:
 
 	void Draw() const override;            //描画
 
-	void Update_Janken();                  //じゃんけん更新・内部処理
 	void Draw_Janken() const;              //じゃんけん描画
 
 	AbstractScene* ChangeScene() override; //シーンの変更
 
+	void AfterJanken_WIN()  override;      //じゃんけん終了後の挙動（プレイヤー勝ち）
+	void AfterJanken_LOSE() override;      //じゃんけん終了後の挙動（プレイヤー負け）
+
+
+
 private:
 	Enemy_05* obj_enemy;            //敵
-
-	bool janken_flag = false;       //接触時じゃんけんフラグ
+	MobEnemy_05* obj_mobenemy;		//モブ敵
 
 	int Back_image;					//背景画像
 };

@@ -11,7 +11,7 @@ public:
 	~Jangeki_Reflection();
 
 	//virtual void Update() override;       //更新　オーバーライド（再定義）
-	//void Draw() const override;        //描画は基底クラスの内容のままでok
+	//void Draw() const ;        //描画は基底クラスの内容のままでok
 
 	void Update_reflection();
 	void Draw_reflectionJangeki() const;
@@ -28,8 +28,8 @@ public:
 	int jan_count_reflection;
 	
 	void SetTargetLocation(float x, float y);
-	void SetEnemyLocation(float enemy_x, float enemy_y);
 
+	
 protected:
 	
 private:
@@ -39,9 +39,8 @@ private:
 	float targetX = 0;
 	float targetY = 0;
 	
-	float enemy_x = 0;
-	float enemy_y = 0;
-
+	int Rimage[3];
+	
 
 };
 

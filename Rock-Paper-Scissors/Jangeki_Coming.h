@@ -1,7 +1,7 @@
 #pragma once
 #include "Jangeki_Base.h"
 
-//スピードが変化するジャン撃
+//プレイヤーの角度へ発射されるジャン撃
 class Jangeki_Coming : public Jangeki_Base
 {
 private:

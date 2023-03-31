@@ -9,7 +9,7 @@ struct Pattern_03 {
 	float location_y; //目指している座標y
 	int next_index; //次配列のパターンの番号
 	int enemywaitTime;//エネミーの待ち時間
-
+	int jumpflg;
 };
 
 //3ステージ　敵キャラ
@@ -43,13 +43,15 @@ private:
 	float old_y = 0;	//前回の位置Y
 	float y_add = 0;     //落下距離  
 	float g_add = 1.0f;//重力加速度
+	
+
 
 	/**********************************************************/
 	int frame_count = 0;       //じゃん撃発射用
 
 	int waitcount = 0;//待ち時間カウント
 
-	Pattern_03 moveinfo[20]; //行動パターン20種
+	Pattern_03 moveinfo[40]; //行動パターン50種
 	short current = 0; //現在のパターン配列添字
 
 	int enemyimage[2];      //敵画像配列

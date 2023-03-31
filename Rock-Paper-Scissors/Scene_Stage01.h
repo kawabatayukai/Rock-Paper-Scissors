@@ -22,12 +22,10 @@ public:
 
 	AbstractScene* ChangeScene() override; //シーンの変更
 
-	void Update_Janken();                  //じゃんけん更新・内部処理
 	void Draw_Janken() const;              //じゃんけん描画
 
 private:
 	Enemy_01* obj_enemy;            //敵
 
-	bool janken_flag = false;       //接触時じゃんけんフラグ
 };
 

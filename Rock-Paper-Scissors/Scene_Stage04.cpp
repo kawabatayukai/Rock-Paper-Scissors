@@ -25,30 +25,26 @@ Scene_Stage04::Scene_Stage04(const Player* player)
 	}
 
 	//敵を生成
-	obj_enemy = new Enemy_04(1100, 550, Jan_Type::SCISSORS);
+	obj_enemy = new Enemy_04(1100, 360, Jan_Type::SCISSORS);
 
 	//床・壁の用意
 	Init_Floor(STAGE_04_FLOOR);
 
 	//一つずつ生成  STAGE_04_FLOOR 個分
-	obj_floor[0] = new Floor(0, 700, 1280, 20, 0x493759);		//床
-	obj_floor[1] = new Floor(0, 0, 20, 1720, 0x493759);			//壁（左）
-	obj_floor[2] = new Floor(1260, 0, 20, 1720, 0x493759);		//壁（右）
-	obj_floor[3] = new Floor(300, 500, 200, 10, 0x493759);		//足場(下横)
-	obj_floor[4] = new Floor(600, 350, 150, 10, 0x493759);		//足場(真ん中横)
-	obj_floor[5] = new Floor(400, 180, 150, 10, 0x493759);		//足場(上横)
-	obj_floor[6] = new Floor(390, 425, 10, 170, 0x493759);		//足場(下縦)
-	obj_floor[7] = new Floor(667, 295, 10, 130, 0x493759);		//足場(真ん中縦)
-	obj_floor[8] = new Floor(467, 125, 10, 130, 0x493759);		//足場(上縦)
-	obj_floor[9] = new Floor(0, 320, 100, 5, 0x493759);		//棘①
-	obj_floor[10] = new Floor(0, 540, 70, 5, 0x493759);		//棘②
-	obj_floor[11] = new Floor(300, 0, 5, 80, 0x493759);		//棘③
-	obj_floor[12] = new Floor(900, 0, 5, 130, 0x493759);		//棘④
-	obj_floor[13] = new Floor(1100, 0, 5, 40, 0x493759);		//棘⑤
-	obj_floor[14] = new Floor(1180, 150, 100, 5, 0x493759);	//棘⑥
-	obj_floor[15] = new Floor(1230, 400, 30, 5, 0x493759);		//棘⑦
-	obj_floor[16] = new Floor(1000, 650, 5, 70, 0x493759);		//棘⑧
-	obj_floor[17] = new Floor(700, 680, 5, 40, 0x493759);		//棘⑨
+	obj_floor[0] = new Floor(0,  700, 1280,   20, 0x493759);		//床
+	obj_floor[1] = new Floor(0,    0,   20, 1720, 0x493759);		//壁（左）
+	obj_floor[2] = new Floor(1260, 0,   20, 1720, 0x493759);		//壁（右）
+	obj_floor[3] = new Floor(300, 500, 200, 10, 0x493759);			//足場(下横)
+	obj_floor[4] = new Floor(600, 350, 150, 10, 0x493759);			//足場(真ん中横)
+	obj_floor[5] = new Floor(400, 180, 150, 10, 0x493759);			//足場(上横)
+	obj_floor[6] = new Floor(390, 425, 10, 170, 0x493759);			//足場(下縦)
+	obj_floor[7] = new Floor(667, 295, 10, 130, 0x493759);			//足場(真ん中縦)
+	obj_floor[8] = new Floor(467, 125, 10, 130, 0x493759);			//足場(上縦)
+	obj_floor[9] = new Floor(0, 320, 100, 5, 0x493759);				//棘①
+	obj_floor[10] = new Floor(0, 540, 70, 5, 0x493759);				//棘②
+	obj_floor[11] = new Floor(300, 0, 5, 80, 0x493759);				//棘③
+	obj_floor[12] = new Floor(1180, 300, 100,  5, 0x493759);	    //棘④
+	obj_floor[13] = new Floor(1130, 460, 130,  5, 0x493759);		//棘⑤
 }
 
 //デストラクタ
@@ -158,7 +154,7 @@ void Scene_Stage04::Update()
 				//パーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::PAPER)
 				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					obj_enemy->ReceiveDamage(15);     //ダメージが入る
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -170,7 +166,7 @@ void Scene_Stage04::Update()
 				//グーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::ROCK)
 				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					obj_enemy->ReceiveDamage(15);     //ダメージが入る
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -181,7 +177,7 @@ void Scene_Stage04::Update()
 				//チョキのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::SCISSORS)
 				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					obj_enemy->ReceiveDamage(15);     //ダメージが入る
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -204,7 +200,7 @@ void Scene_Stage04::Update()
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
 			//ダメージを受ける（プレイヤー）
-			obj_player->ReceiveDamage(30);
+			obj_player->ReceiveDamage(50);
 
 			//あたったじゃん撃を削除
 			obj_enemy->DeleteJangeki(i);
@@ -214,7 +210,7 @@ void Scene_Stage04::Update()
 
 
 	HitCtrl_Floor(obj_player, STAGE_04_FLOOR);     // player　床・壁判定
-	HitCtrl_Floor(obj_enemy, STAGE_04_FLOOR);      // 敵　　　床・壁判定
+	//HitCtrl_Floor(obj_enemy, STAGE_04_FLOOR);      // 敵　　　床・壁判定
 
 
 }
@@ -265,14 +261,14 @@ AbstractScene* Scene_Stage04::ChangeScene()
 #ifdef DEBUG_OFF_04
 
 	//敵のHPが0以下
-	if (obj_enemy->GetHP() < 0)
+	if (obj_enemy->GetHP() <= 0)
 	{
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(5));
 	}
 
 	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() < 0)
+	if (obj_player->GetHP() <= 0)
 	{
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(4));

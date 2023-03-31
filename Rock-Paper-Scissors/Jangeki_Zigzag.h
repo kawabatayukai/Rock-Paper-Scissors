@@ -1,7 +1,6 @@
 #pragma once
 #include "Jangeki_Base.h"
 
-//スピードが変化するジャン撃
 class Jangeki_Zigzag : public Jangeki_Base
 {
 private:

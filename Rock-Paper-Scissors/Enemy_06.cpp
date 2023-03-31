@@ -8,7 +8,7 @@ Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 {
 	speed = 7.0f;
 	dir = 1;
-	hp = 200;
+	hp = 100;
 
 	image = LoadGraph("images/tyokitest.png");
 
@@ -42,170 +42,25 @@ void Enemy_06::Update()
 
 	//x += dir * speed;
 
-	/********************   ジャンプ関係   ********************/
-
-	if (attack_pattern == 0)      //攻撃パターン1
+	//攻撃パターン1
+	if (attack_pattern == 0)
 	{
-		if (jump_cnt < 3)         //4回ジャンプするまでの間以下の処理を繰り返す
-		{
-			if (GetRand(3) == 3)  //乱数でjump_flgをtrueにする
-			{
-				jump_flg = true;
-			}
-
-			if (land_flg == true && jump_flg == true)    //jump_flgがジャンプの条件
-			{
-				g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-				land_flg = false;  //地面についていない
-				jump_flg = false;  //ジャンプ用フラグのリセット
-				jump_cnt++;        //ジャンプ回数のカウント
-			}
-		}
-
-		//4回以上ジャンプした際の処理
-		if (jump_cnt >= 3 && direction_flg == false)        //左を向いている時の処理
-		{
-
-			x = x - 7;      //1フレームの間に左へ進む距離
-			if (x < 100)    //目標座標に到着したかのチェック
-			{
-				jump_cnt = 0;          //ジャンプ回数のリセット
-				direction_flg = true;  //向いている向きの反転
-			}
-		}
-		else if (jump_cnt >= 3 && direction_flg == true)    //右を向いている時の処理
-		{
-			x = x + 7;      //1フレームの間に右へ進む距離
-			if (x > 1180)   //目標座標に到着したかのチェック
-			{
-				jump_cnt = 0;           //ジャンプ回数のリセット
-				direction_flg = false;  //向いている向きの反転
-			}
-		}
-
-		if (hp <= 150)
-		{
-			attack_pattern = 1;
-			jump_cnt = 0;
-			jump_flg = false;
-		}
+		AttackPattern_1();
 	}
 	
+	//攻撃パターン2
 	if (attack_pattern == 1)
 	{
-		if (teleport_Flg == true && direction_flg == false)
-		{
-			x = 1180;
-			y = 450;
-			direction_flg = false;
-			teleport_Flg = false;
-			P1_side = false;
-			jump_cnt = 0;
-		}
-		else if (teleport_Flg == true && direction_flg == true)
-		{
-			x = 100;
-			y = 450;
-			direction_flg = true;
-			teleport_Flg = false;
-			P1_side = true;
-			jump_cnt = 0;
-		}
-
-
-
-		if (P1_side == false)
-		{
-			//左の足場へジャンプ
-			if (x >= 930 && direction_flg == true)
-			{
-				x = x - 6;
-			}
-			else if (x <= 1180 && direction_flg == true)
-			{
-				direction_flg = false;
-				jump_flg = true;
-				jump_cnt++;
-			}
-
-			//右の足場へジャンプ
-			if (x <= 1180 && direction_flg == false)
-			{
-				x = x + 6;
-			}
-			else if (x >= 930 && direction_flg == false)
-			{
-				direction_flg = true;
-				jump_flg = true;
-				jump_cnt++;
-			}
-
-			//瞬間移動
-			if (jump_cnt == 5)
-			{
-				teleport_Flg = true;
-				direction_flg = true;
-			}
-
-			//ジャンプ処理
-			if (jump_flg == true && land_flg == true)
-			{
-				g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-				land_flg = false;  //地面についていない
-				jump_flg = false;  //ジャンプ用フラグのリセット
-			}
-		}
-
-
-
-		else if (P1_side == true)
-		{
-			//右の足場へジャンプ
-			if (x <= 350 && direction_flg == false)
-			{
-				x = x + 6;
-			}
-			else if(x >= 100 && direction_flg == false)
-			{
-				direction_flg = true;
-				jump_flg = true;
-				jump_cnt++;
-			}
-
-			//左の足場へジャンプ
-			if (x >= 100 && direction_flg == true)
-			{
-				x = x - 5;
-			}
-			else if(x <= 350 && direction_flg == true)
-			{
-				direction_flg = false;
-				jump_flg = true;
-				jump_cnt++;
-			}
-
-			//瞬間移動
-			if (jump_cnt == 5)
-			{
-				teleport_Flg = true;
-				direction_flg = false;
-			}
-
-			//ジャンプ処理
-			if (jump_flg == true && land_flg == true)
-			{
-				g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-				land_flg = false;  //地面についていない
-				jump_flg = false;  //ジャンプ用フラグのリセット
-			}
-		}
-
-
-		if (hp <= 100)
-		{
-			/*attack_pattern = 2;*/
-		}
+		AttackPattern_2();
 	}
+
+	//攻撃パターン3
+	if (attack_pattern == 2)
+	{
+		AttackPattern_3();
+	}
+
+	/********************   ジャンプ関係   ********************/
 
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
@@ -248,6 +103,9 @@ void Enemy_06::Update_Jangeki()
 
 		obj_jangeki[jan_count]->Update();
 
+		////ホーミングじゃん撃であればプレイヤーの座標をセットする
+		//obj_jangeki[jan_count]->SetTargetLocation(player_x, player_y);
+
 		//画面外で削除する
 		if (obj_jangeki[jan_count]->CheckScreenOut() == true)
 		{
@@ -271,6 +129,395 @@ void Enemy_06::Update_Jangeki()
 
 		//生成
 		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+	}
+}
+
+//行動ループ1
+void Enemy_06::AttackPattern_1()
+{
+	//4回ジャンプするまでの間以下の処理(ジャンプ)を繰り返す
+	if (jump_cnt < 3)         
+	{
+		if (GetRand(3) == 3)  //乱数でjump_flgをtrueにする
+		{
+			jump_flg = true;
+		}
+
+		//ジャンプ処理
+		jump();
+	}
+
+	//4回以上ジャンプした際の処理
+	if (jump_cnt >= 3 && direction_flg == false)        //左を向いている時の処理
+	{
+
+		x = x - 5;      //1フレームの間に左へ進む距離
+		if (x < 100)    //目標座標に到着したかのチェック
+		{
+			jump_cnt = 0;          //ジャンプ回数のリセット
+			direction_flg = true;  //向いている向きの反転
+			ChangeCnt++;
+		}
+	}
+	else if (jump_cnt >= 3 && direction_flg == true)    //右を向いている時の処理
+	{
+		x = x + 5;      //1フレームの間に右へ進む距離
+		if (x > 1180)   //目標座標に到着したかのチェック
+		{
+			jump_cnt = 0;           //ジャンプ回数のリセット
+			direction_flg = false;  //向いている向きの反転
+			ChangeCnt++;
+		}
+	}
+
+	//敵の属性変化処理
+	if (ChangeCnt > 4)
+	{
+		SetType(static_cast<Jan_Type>(GetRand(2)));
+		ChangeCnt = 0;
+	}
+
+	//HPが70以下になると次の行動ループに移行
+	if (hp <= 70)
+	{
+		attack_pattern = 1;    //攻撃パターンを変更
+		jump_cnt = 0;          //ジャンプカウント初期化
+		jump_flg = false;      //ジャンプフラグ初期化
+	}
+}
+
+//行動ループ2
+void Enemy_06::AttackPattern_2()
+{
+	if (teleport_Flg == true && direction_flg == false)
+	{
+		x = 1180;
+		y = 450;
+		direction_flg = false;
+		teleport_Flg = false;
+		P1_side = false;
+		jump_cnt = 0;
+	}
+	else if (teleport_Flg == true && direction_flg == true)
+	{
+		x = 100;
+		y = 450;
+		direction_flg = true;
+		teleport_Flg = false;
+		P1_side = true;
+		jump_cnt = 0;
+	}
+
+
+
+	if (P1_side == false)
+	{
+		//左の足場へジャンプ
+		if (x >= 930 && direction_flg == true)
+		{
+			x = x - 6;
+		}
+		else if (x <= 1180 && direction_flg == true)
+		{
+			direction_flg = false;
+			jump_flg = true;
+			jump_cnt++;
+		}
+
+		//右の足場へジャンプ
+		if (x <= 1180 && direction_flg == false)
+		{
+			x = x + 6;
+		}
+		else if (x >= 930 && direction_flg == false)
+		{
+			direction_flg = true;
+			jump_flg = true;
+			jump_cnt++;
+		}
+
+		//瞬間移動
+		if (jump_cnt == 5)
+		{
+			teleport_Flg = true;
+			direction_flg = true;
+			ChangeCnt++;
+		}
+
+		//ジャンプ処理
+		jump();
+	}
+
+	else if (P1_side == true)
+	{
+		//右の足場へジャンプ
+		if (x <= 350 && direction_flg == false)
+		{
+			x = x + 6;
+		}
+		else if (x >= 100 && direction_flg == false)
+		{
+			direction_flg = true;
+			jump_flg = true;
+			jump_cnt++;
+		}
+
+		//左の足場へジャンプ
+		if (x >= 100 && direction_flg == true)
+		{
+			x = x - 5;
+		}
+		else if (x <= 350 && direction_flg == true)
+		{
+			direction_flg = false;
+			jump_flg = true;
+			jump_cnt++;
+		}
+
+		//瞬間移動
+		if (jump_cnt == 5)
+		{
+			teleport_Flg = true;
+			direction_flg = false;
+			ChangeCnt++;
+		}
+
+		//ジャンプ処理
+		jump();
+	}
+
+	//敵の属性変化処理
+	if (ChangeCnt > 3)
+	{
+		SetType(static_cast<Jan_Type>(GetRand(2)));
+		ChangeCnt = 0;
+	}
+
+	//HPが40以下になると次の行動ループに移行
+	if (hp <= 40)
+	{
+		attack_pattern = 2;
+		teleport_Flg = true;
+	}
+}
+
+//行動ループ3
+void Enemy_06::AttackPattern_3()
+{
+	//攻撃パターン3初期処理
+	if (teleport_Flg == true)
+	{
+		x = 1149;
+		y = 450;
+		floor = 5;
+		direction_flg = false;
+		teleport_Flg = false;
+		jump_cnt = 0;
+	}
+
+
+	//床ごとの処理
+	switch (floor)
+	{
+	case 1:
+		if (direction_flg == true)
+		{
+			x += 7;
+		}
+		
+		if (y == 450 && jump_cnt == 0)
+		{
+			jump_flg = true;
+		}
+
+		//ジャンプ処理
+		jump();
+
+		//指定座標に到着したらswitch遷移
+		if (x >= 393)
+		{
+			floor = 2;
+			jump_cnt = 0;
+			decision_Direction();
+			jump_Direction();
+		}
+
+		break;
+
+	case 2:
+		if (direction_flg == false)
+		{
+			x -= 7;
+		}
+		if (direction_flg == true)
+		{
+			x += 7;
+		}
+
+		//ジャンプ処理
+		jump();
+
+		//指定座標に到着したらswitch遷移
+		if (x <= 141)
+		{
+			floor = 1;
+			jump_cnt = 0;
+			direction_flg = true;
+			jump_Direction();
+		}
+		if (x >= 645)
+		{
+			floor = 3;
+			jump_cnt = 0;
+			decision_Direction();
+			jump_Direction();
+		}
+
+		break;
+
+	case 3:
+		if (direction_flg == false)
+		{
+			x -= 7;
+		}
+		if (direction_flg == true)
+		{
+			x += 7;
+		}
+
+		if (y == 450 && jump_cnt == 0)
+		{
+			jump_flg = true;
+		}
+
+		//ジャンプ処理
+		jump();
+
+		//指定座標に到着したらswitch遷移
+		if (x <= 393)
+		{
+			floor = 2;
+			jump_cnt = 0;
+			decision_Direction();
+			jump_Direction();
+		}
+		if (x >= 897)
+		{
+			floor = 4;
+			jump_cnt = 0;
+			decision_Direction();
+			jump_Direction();
+		}
+
+		break;
+
+	case 4:
+		if (direction_flg == false)
+		{
+			x -= 7;
+		}
+		if (direction_flg == true)
+		{
+			x += 7;
+		}
+
+		//ジャンプ処理
+		jump();
+
+		//指定座標に到着したらswitch遷移
+		if (x <= 645)
+		{
+			floor = 3;
+			jump_cnt = 0;
+			decision_Direction();
+			jump_Direction();
+		}
+		if (x >= 1149)
+		{
+			floor = 5;
+			jump_cnt = 0;
+			direction_flg = false;
+			jump_Direction();
+		}
+
+		break;
+
+	case 5:
+		if (direction_flg == false)
+		{
+			x -= 7;
+		}
+
+		if (y == 450 && jump_cnt == 0)
+		{
+			jump_flg = true;
+			jump_cnt++;
+		}
+
+		//ジャンプ処理
+		jump();
+
+		//指定座標に到着したらswitch遷移
+		if (x <= 897)
+		{
+			floor = 4;
+			jump_cnt = 0;
+			decision_Direction();
+			jump_Direction();
+		}
+
+		break;
+	}
+
+	//敵の属性変化処理
+	if (ChangeCnt > 5)
+	{
+		SetType(static_cast<Jan_Type>(GetRand(2)));
+		ChangeCnt = 0;
+	}
+}
+
+//ジャンプ
+void Enemy_06::jump()
+{
+	//ジャンプ処理
+	if (jump_flg == true && land_flg == true)
+	{
+		g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+		land_flg = false;  //地面についていない
+		jump_flg = false;  //ジャンプ用フラグのリセット
+
+		if (attack_pattern == 0)
+		{
+			jump_cnt++;        //ジャンプ回数のカウント
+		}
+
+		if (attack_pattern == 2)
+		{
+			ChangeCnt++;       //属性変化までのカウント
+		}
+	}
+}
+
+//向きを乱数で決める関数
+void Enemy_06::decision_Direction()
+{
+	if (GetRand(1) == 1)
+	{
+		direction_flg = false;
+	}
+	else
+	{
+		direction_flg = true;
+	}
+}
+
+//ジャンプするかを乱数で決める関数
+void Enemy_06::jump_Direction()
+{
+	if (GetRand(1) == 1)
+	{
+		jump_flg = true;
 	}
 }
 

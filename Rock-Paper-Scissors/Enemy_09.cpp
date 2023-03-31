@@ -13,9 +13,7 @@ Enemy_09::Enemy_09(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = 1;
 	hp = 100;
 
-	if (hp <= 0)hp = 0;
-
-	image = LoadGraph("images/Stage9.png");
+	image = LoadGraph("images/stage09/Stage9.png");
 	
 	//じゃん撃を用意
 	Init_Jangeki();       
@@ -38,7 +36,7 @@ void Enemy_09::Update()
 	//じゃん撃更新・生成
 	Update_Jangeki();
 	reflection->Update_reflection();
-	//MoveEnmey_09();
+	MoveEnmey_09();
 
 	//if (x + (w / 2) == (1280 - 20))
 	//{
@@ -82,6 +80,7 @@ void Enemy_09::Draw() const
 	//じゃん撃描画
 	Draw_Jangeki();
 	reflection->Draw_reflectionJangeki();
+	
 
 	//テスト
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
@@ -129,55 +128,10 @@ void Enemy_09::Update_Jangeki()
 
 	
 		//生成
-		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
+		if (frame_count % 75 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
 		//反射じゃん撃生成
-		if(reflection->GetFlg()==true)reflection->obj_reflection[reflection->jan_count_reflection]= new Jangeki_Homing(x, y, radius, speed, type);
+		if (reflection->GetFlg() == true)reflection->obj_reflection[reflection->jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed, type, true);
 		reflection->falseFlg();
-	}
-}
-
-void Enemy_09::Homing()
-{
-	int jan_count;
-
-
-	//じゃん撃配列をひとつずつ
-	for (jan_count = 0; jan_count < JANGEKI_MAX; jan_count++)
-	{
-		//配列の jan_count 番目がnullptr（空要素）ならそれ以上処理しない
-		if (obj_jangeki[jan_count] == nullptr) break;
-
-
-
-		obj_jangeki[jan_count]->Update();
-
-		//ホーミングじゃん撃であれば敵の座標をセットする
-		reflection->SetTargetLocation(GetX(), GetY());
-	
-
-		//画面外で削除する
-		if (obj_jangeki[jan_count]->CheckScreenOut() == true)
-		{
-			DeleteJangeki(jan_count);
-			jan_count--;
-		}
-	}
-
-	/*********************** ↓↓ 発射・生成 ↓↓ ***********************/
-	frame_count++;
-
-	//配列の空要素
-	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
-
-	{
-		float radius = 35.5f;   //半径
-		float speed = 10.0f;     //スピード
-		
-		Jan_Type jangeki_type = Jan_Type::SCISSORS;  //じゃん撃の属性
-		
-		
-		obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, jangeki_type);
-		
 	}
 }
 
@@ -245,4 +199,11 @@ void Enemy_09::MoveEnmey_09()
 		}
 	}
 
+}
+
+void Enemy_09::HP() {
+	if (hp <= 0)
+	{
+		hp = 1;
+	}
 }

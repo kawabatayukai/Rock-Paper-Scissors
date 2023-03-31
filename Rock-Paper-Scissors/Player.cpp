@@ -390,7 +390,8 @@ void Player::Draw() const
 	DrawString(30, 180, "LB : ジャンプ", 0xffffff);
 
 	//テスト
-	//DrawGraph(20, 0, image_setsumei, TRUE);
+	//DrawGraph(20, 80, image_setsumei, TRUE);
+	DrawRotaGraph(300, 130, 0.5, 0, image_setsumei, TRUE);
 
 #endif // DEBUG_OFF_PLAYER
 

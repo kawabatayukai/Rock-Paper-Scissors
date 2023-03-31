@@ -13,6 +13,9 @@
 Scene_Stage03::Scene_Stage03(const Player* player)
 {
 	stage = LoadGraph("images/stage03/stage03back.png");
+	GroundImages = LoadGraph("images/stage03/GroundImages.png");
+	BlockImages = LoadGraph("images/stage03/BlockImages.png");
+
 
 
 	//プレイヤー情報が渡されていれば
@@ -24,7 +27,7 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	else
 	{
 		//プレイヤーを生成
-		obj_player = new Player(10, 640);
+		obj_player = new Player(100, 640);
 	}
 
 	//敵を生成							//敵の属性チョキ
@@ -34,20 +37,21 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	Init_Floor(STAGE_03_FLOOR);
 
 	//一つずつ生成  STAGE_03_FLOOR 個分
-	obj_floor[0] = new Floor(0, 700, 1280, 20, GetColor(240, 230, 140));      //床
-	obj_floor[1] = new Floor(0, 0, 20, 1720, GetColor(240, 230, 140));        //壁（左）
-	obj_floor[2] = new Floor(1260, 0, 20, 1720, GetColor(240, 230, 140));     //壁（右）
+	obj_floor[0] = new Floor("images/stage03/GroundImages.png",0, 700, 1280, 20);      //床, GetColor(240, 230, 140)
+	obj_floor[1] = new Floor("images/stage03/GroundImagesTate.png",0, 0, 20, 1720);        //壁（左）, GetColor(240, 230, 140)
+	obj_floor[2] = new Floor("images/stage03/GroundImagesTate.png",1260, 0, 20, 1720);     //壁（右）, GetColor(240, 230, 140)
 
 	//右から順に
-	obj_floor[3] = new Floor(970, 300, 130, 40, GetColor(193, 107, 68));//足場1
-	obj_floor[4] = new Floor(780, 230, 130, 40, GetColor(193, 107, 68));//足場2//130
-	obj_floor[5] = new Floor(585, 300, 130, 40, GetColor(193, 107, 68));//足場3//100
-	obj_floor[6] = new Floor(400, 230, 130, 40, GetColor(193, 107, 68));//足場4//130
-	obj_floor[7] = new Floor(220, 300, 130, 40, GetColor(193, 107, 68));//足場5//130
-	obj_floor[8] = new Floor(20, 400, 90, 40, GetColor(193, 107, 68));//足場6//100
-	obj_floor[9] = new Floor(120, 550, 90, 40, GetColor(193, 107, 68));//足場7//130
-	//obj_floor[10] = new Floor(15, 250, 120, 20);//足場8//130
-
+	obj_floor[3] = new Floor("images/stage03/BlockImages.png",1150, 410, 95, 30);//足場1//130,GetColor(193, 107, 68)
+	obj_floor[4] = new Floor("images/stage03/BlockImages.png", 1050, 550, 95, 30);//足場2//130,	GetColor(193, 107, 68)
+	obj_floor[5] = new Floor("images/stage03/BlockImages.png", 970, 215, 130, 40);//足場3, GetColor(193, 107, 68)
+	obj_floor[6] = new Floor("images/stage03/BlockImages.png", 770, 150, 130, 40);//足場4//130, GetColor(193, 107, 68)
+	obj_floor[7] = new Floor("images/stage03/BlockImages.png", 575, 215, 130, 40);//足場5//100, GetColor(193, 107, 68)
+	obj_floor[8] = new Floor("images/stage03/BlockImages.png", 390, 150, 130, 40);//足場6//130, GetColor(193, 107, 68)
+	obj_floor[9] = new Floor("images/stage03/BlockImages.png", 210, 215, 130, 40);//足場7//130, GetColor(193, 107, 68)
+	obj_floor[10] = new Floor("images/stage03/BlockImages.png", 30, 400, 95, 30);//足場8//100, GetColor(193, 107, 68)
+	obj_floor[11] = new Floor("images/stage03/BlockImages.png", 120,550, 95, 30);//足場9//130, GetColor(193, 107, 68)
+	
 }
 
 //デストラクタ
@@ -58,37 +62,19 @@ Scene_Stage03::~Scene_Stage03()
 //更新
 void Scene_Stage03::Update()
 {
-	//接触じゃんけんでない時
-	if (janken_flag == false)
+	
+
+	//接触じゃんけん開始前
+	if (GetJanState() == Jan_State::BEFORE)
 	{
 		obj_player->Update();    // プレイヤー更新・操作可能
 		obj_enemy->Update();     //敵キャラ更新・内部処理
 		obj_enemy->ChangeDir(obj_player->GetX());//プレイヤーがx < 640だったらエネミーの弾の向きを変える
-
-
-		//敵とプレイヤーの当たり判定  　ここで"接触じゃんけん"
-		if (obj_enemy->Hit_Character(obj_player) == true)
-		{
-			//敵が出す手をランダムに決める　　　（ランダムなint型の値(0～2)を Jan_Type型に変換）
-			Jan_Type enemy_janken = static_cast<Jan_Type> (GetRand(2));
-
-
-			//じゃんけん用オブジェクト生成
-			obj_janken = new Janken(enemy_janken);
-
-
-			//接触じゃんけん開始
-			janken_flag = true;
-
-		}
-
-	}
-	else
-	{
-		//接触時じゃんけんの処理を実行
-		Update_Janken();
+		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());	//プレイヤーの座標を取得
 	}
 
+	//接触じゃんけん処理
+	Touch_Janken(obj_enemy, this);
 
 	//playerのじゃん撃をとってくる
 	Jangeki_Base** player_jangeki = obj_player->GetJangeki();
@@ -191,6 +177,7 @@ void Scene_Stage03::Update()
 					}
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
+					
 				}
 
 				break;
@@ -250,15 +237,21 @@ void Scene_Stage03::Update()
 		//じゃん撃との当たり判定
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
-			//エネミーのHPが30以下の場合40ダメージ食らう
-			if (obj_enemy->GetHP() <= 50) {
+			//エネミーのHPが40以下の場合30ダメージ食らう
+			if (obj_enemy->GetHP() <= 40 ) {
 
-				obj_player->ReceiveDamage(40);
+				//半径が90.0fの場合のダメージ
+				float radius = 50.0f;
+
+				if(radius >= 50.0f){
+
+					obj_player->ReceiveDamage(35);
+				}
 			}
 
 			//それ以外
 			//通常時のダメージを受ける（プレイヤー）
-			else obj_player->ReceiveDamage(30);
+			else obj_player->ReceiveDamage(20);
 
 			//あたったじゃん撃を削除
 			obj_enemy->DeleteJangeki(i);
@@ -284,7 +277,7 @@ void Scene_Stage03::Draw() const
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
 
 	//接触じゃんけんでない時
-	if (janken_flag == false)
+	if (GetJanState() == Jan_State::BEFORE)
 	{
 
 		obj_player->Draw();  //プレイヤー描画
@@ -308,57 +301,7 @@ void Scene_Stage03::Draw() const
 	//DrawString(640, 360, "Stage03", 0xffff);
 }
 
-//じゃんけん更新・内部処理
-void Scene_Stage03::Update_Janken()
-{
-	//　ここは改良したほうがいい
 
-
-	obj_janken->Update();
-
-	//Aボタンが押されたとき 
-	if (KeyManager::OnPadClicked(PAD_INPUT_A) == true)
-	{
-		//結果を取得
-		switch (obj_janken->GetResult())
-		{
-		case Jan_Result::LOSE:    //負け
-
-			obj_player->SetX(640);   //ずらす
-			janken_flag = false;
-
-			obj_enemy->Init_Jangeki();
-
-			delete obj_janken;
-			break;
-
-		case Jan_Result::WIN:     //勝ち
-
-			obj_player->SetX(640);   //ずらす
-			janken_flag = false;
-
-			obj_enemy->Init_Jangeki();
-
-			delete obj_janken;
-			break;
-
-		case Jan_Result::ONEMORE: //あいこ
-
-			janken_flag = false;
-
-			obj_enemy->Init_Jangeki();
-
-			delete obj_janken;
-			break;
-
-		case Jan_Result::_ERROR:  //まだじゃんけん中
-			break;
-
-		default:
-			break;
-		}
-	}
-}
 
 //じゃんけん描画
 void Scene_Stage03::Draw_Janken() const
@@ -373,12 +316,12 @@ AbstractScene* Scene_Stage03::ChangeScene()
 #ifdef DEBUG_OFF_03
 
 	//敵のHP0
-	//if (obj_enemy->GetHP() < 0) {
+	if (obj_enemy->GetHP() < 0) {
 
-	//	//ゲームクリアシーンへ切り替え
-	//	return dynamic_cast<AbstractScene*> (new GameClearScene(4));
+		//ゲームクリアシーンへ切り替え
+		return dynamic_cast<AbstractScene*> (new GameClearScene(4));
 
-	//}
+	}
 
 	//プレイヤーのHPが0
 	if (obj_player->GetHP() < 0) {
@@ -392,3 +335,27 @@ AbstractScene* Scene_Stage03::ChangeScene()
 	return this;
 }
 
+//じゃんけん終了後の挙動（プレイヤー勝ち）
+
+void Scene_Stage03::AfterJanken_WIN()
+{
+
+	
+
+
+
+	obj_player->SetX(100);
+}
+
+//じゃんけん終了後の挙動（プレイヤー負け）
+void Scene_Stage03::AfterJanken_LOSE()
+{
+
+
+
+
+
+
+
+	obj_player->SetX(100);
+}

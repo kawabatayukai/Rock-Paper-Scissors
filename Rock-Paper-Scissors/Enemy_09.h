@@ -19,7 +19,7 @@ public:
 
 	void MoveEnmey_09();
 
-	void Homing();
+	void HP(); 
 
 	Jangeki_Reflection* reflection;
 

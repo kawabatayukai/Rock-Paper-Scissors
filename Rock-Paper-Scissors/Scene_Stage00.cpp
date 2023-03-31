@@ -50,6 +50,23 @@ Scene_Stage00::Scene_Stage00(const Player* player)
 
 	//テスト
 	setumei = LoadGraph("images/Setumei.png");
+
+	//画像一覧
+	int players[10];
+	LoadDivGraph("images/ワンパンマンALL画像腕無し.png", 10, 5, 2, 100, 100, players);
+
+	player_image = players[0];
+	player_all = LoadGraph("images/ワンパンマンALL画像腕無し.png");
+
+	enemy_02 = LoadGraph("images/stage02/ex.png");
+	enemy_03 = LoadGraph("images/stage03/stage03gard.png");
+	enemy_04 = LoadGraph("images/Stage4/ステージ4_ボス100.png");
+	enemy_05 = LoadGraph("images/stage05/Stage5_Enemy_NoMove_Left.png");
+	enemy_06 = LoadGraph("images/tyokitest.png");
+	enemy_07 = LoadGraph("images/tyokitest.png");
+	enemy_08 = LoadGraph("images/stage08/Stage8_image100.png");
+	enemy_09 = LoadGraph("images/stage09/Stage9_100.png");
+	enemy_10 = LoadGraph("images/tyokitest.png");
 }
 
 //デストラクタ
@@ -60,35 +77,18 @@ Scene_Stage00::~Scene_Stage00()
 //更新
 void Scene_Stage00::Update()
 {
-	//接触じゃんけんでない時
-	if (janken_flag == false)
+	//接触じゃんけん開始前
+	if (GetJanState() == Jan_State::BEFORE)
 	{
-		obj_player->Update();    // プレイヤー更新・操作可能
-		obj_enemy->Update();     //敵キャラ更新・内部処理
+		//obj_player->Update();    // プレイヤー更新・操作可能
+		//obj_enemy->Update();     //敵キャラ更新・内部処理
 
-
-
-		//敵とプレイヤーの当たり判定  　ここで"接触じゃんけん"
-		if (obj_enemy->Hit_Character(obj_player) == true)
-		{
-			//敵が出す手をランダムに決める　　　（ランダムなint型の値(0～2)を Jan_Type型に変換）
-			Jan_Type enemy_janken = static_cast<Jan_Type> (GetRand(2));
-
-			//じゃんけん用オブジェクト生成
-			obj_janken = new Janken(enemy_janken);
-
-
-			//接触じゃんけん開始
-			janken_flag = true;
-
-		}
-	}
-	else
-	{
-		//接触時じゃんけんの処理を実行
-		Update_Janken(); 
+		////プレイヤーの座標を取得
+		//obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
 	}
 
+	//接触じゃんけん処理
+	Touch_Janken(obj_enemy, this);
 
 	//playerのじゃん撃をとってくる
 	Jangeki_Base** player_jangeki = obj_player->GetJangeki();
@@ -242,18 +242,34 @@ void Scene_Stage00::Update()
 //描画
 void Scene_Stage00::Draw() const
 {
-	//接触じゃんけんでない時
-	if (janken_flag == false)
+	//接触じゃんけん開始前
+	if (GetJanState() == Jan_State::BEFORE)
 	{
-		obj_player->Draw();  //プレイヤー描画
-		obj_enemy->Draw();   //敵キャラ描画
+		//obj_player->Draw();  //プレイヤー描画
+		//obj_enemy->Draw();   //敵キャラ描画
 
-		//床・壁描画
-		for (int i = 0; i < STAGE_00_FLOOR; i++)
-		{
-			if (obj_floor[i] == nullptr) break;
-			obj_floor[i]->Draw();
-		}
+		////床・壁描画
+		//for (int i = 0; i < STAGE_00_FLOOR; i++)
+		//{
+		//	if (obj_floor[i] == nullptr) break;
+		//	obj_floor[i]->Draw();
+		//}
+
+		DrawBox(0, 0, 1280, 720, 0xffffff, TRUE);
+
+		//すべてのキャラを描画
+		DrawGraph(50, 0, player_image, TRUE);
+		DrawGraph(200, 0, enemy_02, TRUE);
+		DrawGraph(350, 0, enemy_03, TRUE);
+		DrawGraph(500, 0, enemy_04, TRUE);
+		DrawGraph(650, 0, enemy_05, TRUE);
+		DrawGraph(50, 150, enemy_06, TRUE);
+		DrawGraph(200, 150, enemy_07, TRUE);
+		DrawGraph(350, 150, enemy_08, TRUE);
+		DrawGraph(500, 150, enemy_09, TRUE);
+		DrawGraph(650, 150, enemy_10, TRUE);
+
+		DrawGraph(50, 350, player_all, TRUE);
 	}
 	else
 	{
@@ -261,63 +277,11 @@ void Scene_Stage00::Draw() const
 		Draw_Janken();
 	}
 
-	//テスト
-	DrawGraph(20, 0, setumei, TRUE);
+	////テスト
+	//DrawGraph(20, 0, setumei, TRUE);
 
 }
 
-
-//じゃんけん更新・内部処理
-void Scene_Stage00::Update_Janken()
-{
-	//　ここは改良したほうがいい
-
-
-	obj_janken->Update();
-
-	//Aボタンが押されたとき 
-	if (KeyManager::OnPadClicked(PAD_INPUT_A) == true)
-	{
-		//結果を取得
-		switch ( obj_janken->GetResult() )
-		{
-		case Jan_Result::LOSE:    //負け
-
-			obj_player->SetX(640);   //ずらす
-			janken_flag = false;
-
-			obj_enemy->Init_Jangeki();
-
-			delete obj_janken;
-			break;
-
-		case Jan_Result::WIN:     //勝ち
-
-			obj_player->SetX(640);   //ずらす
-			janken_flag = false;
-
-			obj_enemy->Init_Jangeki();
-
-			delete obj_janken;
-			break;
-			
-		case Jan_Result::ONEMORE: //あいこ
-
-			janken_flag = false;
-
-			obj_enemy->Init_Jangeki();
-
-			delete obj_janken;
-			break;
-
-		case Jan_Result::_ERROR:  //まだじゃんけん中
-			break;
-
-		default:
-			break;
-		}
-	}
-}
 
 //じゃんけん描画
 void Scene_Stage00::Draw_Janken() const

@@ -15,6 +15,14 @@ public:
 
 	void Update_Jangeki() override;  //じゃん撃生成・更新
 
+	void AttackPattern_1();          //行動ループ1
+	void AttackPattern_2();          //行動ループ2
+	void AttackPattern_3();          //行動ループ3
+
+	void decision_Direction();       //向きを乱数で決める関数
+	void jump_Direction();           //ジャンプするかを乱数で決める関数
+	void jump();                     //ジャンプ
+
 	int Get_OldY();                   //old_yの取得関数
 	int Get_Y();                      //yの取得
 
@@ -26,20 +34,14 @@ private:
 	float y_add = 0;          //落下距離
 	float g_add = 1.0f;       //重力加速度
 
-	//enum pattern
-	//{
-	//	attack_pattern = 0,      //攻撃パターン変数
-	//	jump_flg = false,        //ジャンプ用フラグ　　ジャンプさせる:true   ジャンプしない:false
-	//	jump_cnt = 0,            //ジャンプカウント
-	//	direction_flg = false    //左右反転フラグ      左向き:true           右向き:false
-	//};
-
 	int  attack_pattern = 0;      //攻撃パターン変数
 	bool jump_flg = false;        //ジャンプ用フラグ　　       ジャンプさせる:true   ジャンプしない:false
 	int  jump_cnt = 0;            //ジャンプカウント
 	bool direction_flg = false;   //左右反転フラグ             左向き:true           右向き:false
 	bool teleport_Flg = true;    //瞬間移動フラグ              瞬間移動する:true     瞬間移動しない:false
 	bool P1_side = false;       //パターン2時の位置フラグ     左側:true             右側:false
+	int  floor = 5;
+	int  ChangeCnt = 0;         //敵の属性変化までのカウント用変数
 
 	/**********************************************************/
 

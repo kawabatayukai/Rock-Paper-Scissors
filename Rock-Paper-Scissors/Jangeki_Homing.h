@@ -10,7 +10,7 @@ class Jangeki_Homing : public Jangeki_Base
 {
 public:
 	//コンストラクタ  ｘ　　　　ｙ　　　半径　　スピード　　　タイプ
-	Jangeki_Homing(float x, float y, float r, float speed, Jan_Type type);
+	Jangeki_Homing(float x, float y, float r, float speed, Jan_Type type, bool ref = false);
 
 	~Jangeki_Homing();
 
