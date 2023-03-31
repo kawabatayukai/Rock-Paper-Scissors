@@ -26,11 +26,13 @@ public:
 
 	void Update_Jangeki() override;  //じゃん撃生成・更新
 
-	void Move_Pattern();
+	void Move_Pattern();//動きのパターン
 
-	int GetWaitTime()const;
+	int GetWaitTime()const;//待ち時間の取得
 
-	void ChangeDir(float x);
+	void ChangeDir(float x);//向きの切り替え
+
+	float Get_OldY() const { return old_y; } //Y座標の取得
 
 
 private:
