@@ -80,11 +80,11 @@ void Scene_Stage00::Update()
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
-		obj_player->Update();    // プレイヤー更新・操作可能
-		obj_enemy->Update();     //敵キャラ更新・内部処理
+		//obj_player->Update();    // プレイヤー更新・操作可能
+		//obj_enemy->Update();     //敵キャラ更新・内部処理
 
-		//プレイヤーの座標を取得
-		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
+		////プレイヤーの座標を取得
+		//obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
 	}
 
 	//接触じゃんけん処理
