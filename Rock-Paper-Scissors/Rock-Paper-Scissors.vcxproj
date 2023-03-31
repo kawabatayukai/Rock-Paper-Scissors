@@ -164,6 +164,7 @@
     <ClCompile Include="Enemy_08.cpp" />
     <ClCompile Include="Enemy_09.cpp" />
     <ClCompile Include="Enemy_10.cpp" />
+    <ClCompile Include="Enemy_Cannon.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Jangeki_Changespeed.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="Jangeki_Homing.cpp" />
     <ClCompile Include="Jangeki_reflection.cpp" />
     <ClCompile Include="Jangeki_Spin.cpp" />
+    <ClCompile Include="Jangeki_Vertical.cpp" />
     <ClCompile Include="Jangeki_whole.cpp" />
     <ClCompile Include="Jangeki_Zigzag.cpp" />
     <ClCompile Include="MobEnemy_05.cpp" />
@@ -216,6 +218,7 @@
     <ClInclude Include="Enemy_08.h" />
     <ClInclude Include="Enemy_09.h" />
     <ClInclude Include="Enemy_10.h" />
+    <ClInclude Include="Enemy_Cannon.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Jangeki_Changespeed.h" />
@@ -223,6 +226,7 @@
     <ClInclude Include="Jangeki_Homing.h" />
     <ClInclude Include="Jangeki_reflection.h" />
     <ClInclude Include="Jangeki_Spin.h" />
+    <ClInclude Include="Jangeki_Vertical.h" />
     <ClInclude Include="Jangeki_whole.h" />
     <ClInclude Include="Jangeki_Zigzag.h" />
     <ClInclude Include="MobEnemy_05.h" />

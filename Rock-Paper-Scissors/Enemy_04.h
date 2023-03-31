@@ -40,8 +40,9 @@ private:
 
 	int waitTime;				//待ち時間用変数
 	int frame_count;			//じゃん撃発射用
-	Pattern_04 moveinfo[20];	//行動パターン20種
+	Pattern_04 moveinfo[2];	    //行動パターン
 	short current;				//現在のパターン配列添字
+	float enemy_x, enemy_y;		//座標取得用変数
 };
 
 

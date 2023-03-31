@@ -21,11 +21,11 @@ enum class Jan_Result
 class Jangeki_Base
 {
 public:
-	//コンストラクタ  ｘ　　　　ｙ　　　半径　　スピード　　　タイプ
-	Jangeki_Base(float x, float y, float r, float speed, Jan_Type type);
+	//コンストラクタ  ｘ　　　　ｙ　　　半径　　スピード　　　タイプ      反射タイプか
+	Jangeki_Base(float x, float y, float r, float speed, Jan_Type type, bool ref = false);
 
 	//コンストラクタ（角度あり）
-	Jangeki_Base(float x, float y, float r, float speed, double angle, Jan_Type type);
+	Jangeki_Base(float x, float y, float r, float speed, double angle, Jan_Type type, bool ref = false);
 
 	//デストラクタ
 	~Jangeki_Base();
@@ -71,6 +71,10 @@ protected:
 	float speed_y = 0; //ｙ座標スピード
 
 	int image[3];
+
+	//反射専用
+	int reflection_image[3];
+	bool refrection;
 
 	Jan_Type type;   //タイプ　グーorチョキorパー
 

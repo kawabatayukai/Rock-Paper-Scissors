@@ -89,12 +89,10 @@ void Player::Update()
 	if (KeyManager::OnPadPressed(PAD_INPUT_LEFT))
 	{
 		x -= speed;
-		//dir = static_cast<int>(DIRECTION::LEFT);   //向きを設定（左）
-	}
-	/*右スティックが押されてない時*/
-	if (KeyManager::OnPadClicked(PAD_INPUT_LEFT) && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0) //押された瞬間だけ左を向く
-	{
-		dir = static_cast<int>(DIRECTION::LEFT);   //向きを設定（左）
+		if (KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0) //右スティックが押されてない時
+		{
+			dir = static_cast<int>(DIRECTION::LEFT);   //向きを設定（左）
+		}
 	}
 	playerChange_Image = 2; //switch文の割り当て番号
 
@@ -102,11 +100,10 @@ void Player::Update()
 	if (KeyManager::OnPadPressed(PAD_INPUT_RIGHT))
 	{
 		x += speed;
-		//dir = static_cast<int>(DIRECTION::RIGHT);  //向きを設定（右）
-	}
-	if (KeyManager::OnPadClicked(PAD_INPUT_RIGHT) && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0) //押された瞬間だけ右を向く
-	{
-		dir = static_cast<int>(DIRECTION::RIGHT);   //向きを設定（右）
+		if (KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0) //右スティックが押されてない時
+		{
+			dir = static_cast<int>(DIRECTION::RIGHT);   //向きを設定（右）
+		}
 	}
 	playerChange_Image = 1; //switch文の割り当て番号
 
@@ -393,7 +390,8 @@ void Player::Draw() const
 	DrawString(30, 180, "LB : ジャンプ", 0xffffff);
 
 	//テスト
-	//DrawGraph(20, 0, image_setsumei, TRUE);
+	//DrawGraph(20, 80, image_setsumei, TRUE);
+	DrawRotaGraph(300, 130, 0.5, 0, image_setsumei, TRUE);
 
 #endif // DEBUG_OFF_PLAYER
 

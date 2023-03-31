@@ -20,7 +20,6 @@ public:
 
 	void Draw() const override;            //描画
 
-	void Update_Janken();                  //じゃんけん更新・内部処理
 	void Draw_Janken() const;              //じゃんけん描画
 
 	AbstractScene* ChangeScene() override; //シーンの変更
@@ -28,9 +27,21 @@ public:
 private:
 	Enemy_00* obj_enemy;            //敵
 
-	bool janken_flag = false;       //接触時じゃんけんフラグ
 
 	//test
 	int setumei;  //説明画像
+
+	int player_image;
+	int player_all;
+
+	int enemy_02;
+	int enemy_03;
+	int enemy_04;
+	int enemy_05;
+	int enemy_06;
+	int enemy_07;
+	int enemy_08;
+	int enemy_09;
+	int enemy_10;
 };
 
