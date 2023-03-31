@@ -20,6 +20,8 @@ public:
 	int Get_Y();                      //yの取得
 
 	void Jan_360degrees(int count, float rad, float speed, Jan_Type type);
+	
+	void ChangeDir(float x);
 private:
 	/********************   ジャンプ関係   ********************/
 
@@ -44,7 +46,8 @@ private:
 	int waitTime = 5;			//待ち時間用変数
 	int frame_count = 0;       //じゃん撃発射用
 	short current = 0; //現在のパターン配列添字
-	
+	int  attack_pattern = 0;      //攻撃パターン変数
+	float enemy_x, enemy_y;		//座標取得用変数
 };
 
 
