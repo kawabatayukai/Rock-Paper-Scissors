@@ -8,7 +8,7 @@
 #include"Debug_Manager.h"
 
 //コンストラクタ
-Scene_Stage01::Scene_Stage01(const Player* player)
+Scene_Stage01::Scene_Stage01(const Player* player) : Now_Tu_State(TUTORIAL_STATE::START_TUTORIAL)
 {
 	//プレイヤー情報が渡されていれば
 	if (player != nullptr)
