@@ -56,6 +56,9 @@ void Scene_Stage10::Update()
 		obj_player->Update();    // プレイヤー更新・操作可能
 		obj_enemy->Update();     //敵キャラ更新・内部処理
 
+		/*ステージでの属性変化*/
+		//obj_enemy->SetType(Jan_Type::PAPER);
+
         /*敵がプレイヤーの座標を返す*/
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
 

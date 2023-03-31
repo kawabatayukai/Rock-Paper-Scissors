@@ -38,8 +38,8 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 
 	//一つずつ生成  STAGE_03_FLOOR 個分
 	obj_floor[0] = new Floor("images/stage03/GroundImages.png",0, 700, 1280, 20);      //床, GetColor(240, 230, 140)
-	obj_floor[1] = new Floor("images/stage03/GroundImagesTate.png",0, 0, 20, 1720);        //壁（左）, GetColor(240, 230, 140)
-	obj_floor[2] = new Floor("images/stage03/GroundImagesTate.png",1260, 0, 20, 1720);     //壁（右）, GetColor(240, 230, 140)
+	obj_floor[1] = new Floor("images/stage03/GroundImagesTate.png",0, -100, 20, 1720);        //壁（左）, GetColor(240, 230, 140)
+	obj_floor[2] = new Floor("images/stage03/GroundImagesTate.png",1260, -100, 20, 1720);     //壁（右）, GetColor(240, 230, 140)
 
 	//右から順に
 	obj_floor[3] = new Floor("images/stage03/BlockImages.png",1150, 410, 95, 30);//足場1//130,GetColor(193, 107, 68)
@@ -260,8 +260,23 @@ void Scene_Stage03::Update()
 	}
 
 
-	HitCtrl_Floor(obj_player, STAGE_03_FLOOR);     // player　床・壁判定
-	HitCtrl_Floor(obj_enemy, STAGE_03_FLOOR);      // 敵　　　床・壁判定
+		//壁との当たり判定
+	if (obj_player->Get_X() <= 50 || obj_player->Get_X() >= 1200)
+	{
+		HitCtrl_Floor(obj_player, STAGE_03_FLOOR);     // player　床・壁判定
+	}
+
+	//プレイヤーのy座標が減少しない時のみ当たり判定を取得
+	if (obj_player->Get_Y() >= obj_player->Get_OldY())
+	{
+		HitCtrl_Floor(obj_player, STAGE_03_FLOOR);     // player　床・壁判定
+	}
+
+	//敵のy座標が減少しない時のみ当たり判定を取得
+	if (obj_enemy->GetY() >= obj_enemy->Get_OldY())
+	{
+		HitCtrl_Floor(obj_enemy, STAGE_03_FLOOR);      // 敵　　　床・壁判定
+	}
 
 
 }

@@ -8,7 +8,7 @@
 #include"Jangeki_Homing.h"
 
 //じゃん撃発射間隔　（1秒）
-#define PLAYER_JAN_INTERVAL 60
+#define PLAYER_JAN_INTERVAL 30
 
 
 //コンストラクタ　　　　　　　　　　　　　  ｘ　ｙ　幅　　　高さ
@@ -89,12 +89,10 @@ void Player::Update()
 	if (KeyManager::OnPadPressed(PAD_INPUT_LEFT))
 	{
 		x -= speed;
-		//dir = static_cast<int>(DIRECTION::LEFT);   //向きを設定（左）
-	}
-	if (KeyManager::OnPadClicked(PAD_INPUT_LEFT) && 
-		KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0) //押された瞬間だけ左を向く
-	{
-		dir = static_cast<int>(DIRECTION::LEFT);   //向きを設定（左）
+		if (KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0) //右スティックが押されてない時
+		{
+			dir = static_cast<int>(DIRECTION::LEFT);   //向きを設定（左）
+		}
 	}
 	playerChange_Image = 2; //switch文の割り当て番号
 
@@ -102,12 +100,10 @@ void Player::Update()
 	if (KeyManager::OnPadPressed(PAD_INPUT_RIGHT))
 	{
 		x += speed;
-		//dir = static_cast<int>(DIRECTION::RIGHT);  //向きを設定（右）
-	}
-	if (KeyManager::OnPadClicked(PAD_INPUT_RIGHT) &&
-		KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0) //押された瞬間だけ右を向く
-	{
-		dir = static_cast<int>(DIRECTION::RIGHT);   //向きを設定（右）
+		if (KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0) //右スティックが押されてない時
+		{
+			dir = static_cast<int>(DIRECTION::RIGHT);   //向きを設定（右）
+		}
 	}
 	playerChange_Image = 1; //switch文の割り当て番号
 
