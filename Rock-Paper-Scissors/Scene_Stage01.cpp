@@ -7,8 +7,22 @@
 //デバッグモード
 #include"Debug_Manager.h"
 
+//表示する文字列
+namespace _STR_TUTORIAL
+{
+	char draw_str[][40] =
+	{
+		"ようこそ。最初に操作説明をします",
+		"左スティックで左右移動できます",
+		"LBボタンでジャンプします",
+		"右スティックで照準を操作できます",
+		"敵に接触するとじゃんけんが始まります",
+	};
+}
+
 //コンストラクタ
-Scene_Stage01::Scene_Stage01(const Player* player) : Now_Tu_State(TUTORIAL_STATE::START_TUTORIAL)
+Scene_Stage01::Scene_Stage01(const Player* player)
+	: frame_count(0), Now_Tut_State(TUTORIAL_STATE::START_TUTORIAL)
 {
 	//プレイヤー情報が渡されていれば
 	if (player != nullptr)
@@ -34,6 +48,17 @@ Scene_Stage01::Scene_Stage01(const Player* player) : Now_Tu_State(TUTORIAL_STATE
 	obj_floor[2] = new Floor(1260, 0, 20, 720);           //壁（右）
 	obj_floor[3] = new Floor(1000, 100, 120, 50);      //壁（右）
 	obj_floor[4] = new Floor(400, 300, 500, 20);      //壁（右）
+
+
+	//色
+	blue = GetColor(0, 0, 255);
+	red = GetColor(255, 0, 0);
+	brack = GetColor(0, 0, 0);
+	white = GetColor(255, 255, 255);
+	green = GetColor(0, 255, 0);
+
+	//フォントデータを作成　　　　　　Windows標準搭載フォントなら大丈夫。多分　　　[候補 "Yu Gothic UI"]
+	font_tut = CreateFontToHandle("メイリオ", 40, 8, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 2);
 }
 
 //デストラクタ
@@ -48,15 +73,15 @@ void Scene_Stage01::Update()
 	if (GetJanState() == Jan_State::BEFORE)
 	{
 		obj_player->Update();    // プレイヤー更新・操作可能
-		obj_enemy->Update();     //敵キャラ更新・内部処理
+		//obj_enemy->Update();     //敵キャラ更新・内部処理
 
 		//プレイヤーの座標を取得
-		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
+		//obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
 
 	}
 
 	//接触じゃんけん処理
-	Touch_Janken(obj_enemy, this);
+	Touch_Janken(obj_enemy, this, 1);
 
 
 	//playerのじゃん撃をとってくる
@@ -205,6 +230,26 @@ void Scene_Stage01::Update()
 	HitCtrl_Floor(obj_player, STAGE_01_FLOOR);     // player　床・壁判定
 	HitCtrl_Floor(obj_enemy, STAGE_01_FLOOR);      // 敵　　　床・壁判定
 
+
+
+	switch (Now_Tut_State)
+	{
+	case Scene_Stage01::TUTORIAL_STATE::START_TUTORIAL:
+		break;
+	case Scene_Stage01::TUTORIAL_STATE::PLAYER_MOVE:
+		break;
+	case Scene_Stage01::TUTORIAL_STATE::PLAYER_JUMP:
+		break;
+	case Scene_Stage01::TUTORIAL_STATE::PLAYER_AIMING:
+		break;
+	case Scene_Stage01::TUTORIAL_STATE::TOUCH_JANKEN:
+		break;
+	default:
+		break;
+	}
+
+	NextTutorial();
+
 }
 
 //描画
@@ -215,7 +260,7 @@ void Scene_Stage01::Draw() const
 	{
 
 		obj_player->Draw();  //プレイヤー描画
-		obj_enemy->Draw();   //敵キャラ描画
+		//obj_enemy->Draw();   //敵キャラ描画
 
 		//床・壁描画
 		for (int i = 0; i < STAGE_01_FLOOR; i++)
@@ -230,6 +275,30 @@ void Scene_Stage01::Draw() const
 		//接触時じゃんけん描画
 		Draw_Janken();
 	}
+
+
+	//表示する文字列
+	const char* str = _STR_TUTORIAL::draw_str[static_cast<int>(Now_Tut_State)];
+
+	DrawStringToHandle(200, 200, str, green, font_tut, white);
+
+
+
+	//点滅
+	static int counter;
+
+	if (counter++ < 30)
+	{
+		DrawCircle(1060, 320, 20, white, TRUE);
+		DrawCircle(1060, 320, 18, green, TRUE);
+		DrawStringToHandle(1030, 310, "A", white, font_tut, brack);
+
+		//DrawStringToHandle(1060, 320, "-- Press  A  Button --", white, font_other, green);
+	}
+	else if (counter > 60)  counter = 0;
+	else {}
+
+
 }
 
 //じゃんけん描画
@@ -260,4 +329,61 @@ AbstractScene* Scene_Stage01::ChangeScene()
 #endif 
 
 	return this;   //更新なし
+}
+
+//次の操作へ
+void Scene_Stage01::NextTutorial()
+{
+	//チュートリアル
+	if (KeyManager::OnPadClicked(PAD_INPUT_A))
+	{
+		switch (Now_Tut_State)
+		{
+		case Scene_Stage01::TUTORIAL_STATE::START_TUTORIAL:
+
+			//左右移動へ
+			Now_Tut_State = TUTORIAL_STATE::PLAYER_MOVE;
+			break;
+
+		case Scene_Stage01::TUTORIAL_STATE::PLAYER_MOVE:
+
+			//ジャンプへ
+			Now_Tut_State = TUTORIAL_STATE::PLAYER_JUMP;
+			break;
+
+		case Scene_Stage01::TUTORIAL_STATE::PLAYER_JUMP:
+
+			//照準へ
+			Now_Tut_State = TUTORIAL_STATE::PLAYER_AIMING;
+			break;
+
+		case Scene_Stage01::TUTORIAL_STATE::PLAYER_AIMING:
+
+			//接触じゃんけんへ
+			Now_Tut_State = TUTORIAL_STATE::TOUCH_JANKEN;
+			break;
+
+		case Scene_Stage01::TUTORIAL_STATE::TOUCH_JANKEN:
+
+			break;
+
+		default:
+			break;
+		}
+	}
+}
+
+//左右移動を確認する
+bool Scene_Stage01::CheckMoveLR()
+{
+	static bool move_left;    //左移動したか
+	static bool move_right;   //右移動したか
+
+	//前回の座標と一致していた場合、移動していない
+	if (obj_player->Get_OldX() == obj_player->GetX()) return false;
+
+	
+
+	//どちらも移動した
+	if (move_left == true && move_right == true) return true;
 }
