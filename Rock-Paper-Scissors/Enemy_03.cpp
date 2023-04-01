@@ -40,7 +40,7 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	moveinfo[7] = { 1,  0 ,   0.f , 8, 200 ,1 };//X‚ª350‚Å’â~
 
-	moveinfo[8] = { 0,  70.f , 0.f , 9, 0 ,0 };//X‚ª70‘«ê‚É”ò‚Ô
+	moveinfo[8] = { 0,  50.f , 0.f , 9, 0 ,0 };//X‚ª70‘«ê‚É”ò‚Ô
 
 	//moveinfo[9] = { 1,  0 ,   0.f , 10, 200 ,1 };//X‚ª70‚Å’â~
 
@@ -64,25 +64,25 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	moveinfo[16] = { 1,  0 ,   0.f , 17, 200,1 };//X‚ª970‚Ì‘«ê‚Å’â~
 
-	moveinfo[17] = { 0, 1160.f, 0.f , 18,  0 ,0 };//X‚ª1160‚Ì‘«ê‚É”ò‚Ô
+	moveinfo[17] = { 0, 1150.f, 0.f , 18,  0 ,0 };//X‚ª1160‚Ì‘«ê‚É”ò‚Ô
 
 	//moveinfo[21] = { 1,  0 ,   0.f , 22, 200,1 };//X‚ª1160‚Å’â~
 
-	moveinfo[18] = { 0,  1050.f , 0.f , 19, 0, 1 };//X‚ª1160‚Ì‘«ê‚É”ò‚Ô
+	moveinfo[18] = { 0,  1150.f , 0.f , 19, 0, 1 };//X‚ª1160‚Ì‘«ê‚É”ò‚Ô
 
 	//moveinfo[19] = { 1,  0 ,   0.f , 20, 200,1 };//X‚ª1160‚Å’â~
 
-	moveinfo[19] = { 0,  930.f , 0.f , 20, 0, 1 };//X‚ª930‚Ü‚ÅˆÚ“®
+	moveinfo[19] = { 0,  970.f , 0.f , 20, 0, 1 };//X‚ª930‚Ü‚ÅˆÚ“®
 
 	moveinfo[20] = { 1,  0 , 0.f , 21, 200,1 };//X‚ª930‚Å’â~
 
 
 	//‘O‰ñ‚Ì‹tƒpƒ^[ƒ“‚Ö
-	moveinfo[21] = { 0, 1050.f , 0.f , 22, 0, 0 };//X‚ª1050‚Ì‘«ê‚É”ò‚Ô
+	moveinfo[21] = { 0, 1150.f , 0.f , 22, 0, 0 };//X‚ª1050‚Ì‘«ê‚É”ò‚Ô
 
 	//moveinfo[27] = { 1,  0 , 0.f , 28, 200,1 };//X‚ª1020‚Å’â~
 
-	moveinfo[22] = { 0,  1160.f , 0.f , 23, 0, 0 };//X‚ª1160‚Ì‘«ê‚É”ò‚Ô
+	moveinfo[22] = { 0,  1150.f , 0.f , 23, 0, 0 };//X‚ª1160‚Ì‘«ê‚É”ò‚Ô
 
 	moveinfo[23] = { 1,  0 , 0.f , 24, 200, 1 };//X‚ª1160‚Å’â~
 
@@ -107,7 +107,7 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	//moveinfo[31] = { 1,  0 ,   0.f , 32, 200,1 };//X‚ª280‚Å’â~
 
-	moveinfo[31] = { 0, 70.f,  0.f , 32,  0 ,0 };//X‚ª70‚Ü‚Å“®‚­
+	moveinfo[31] = { 0, 50.f,  0.f , 32,  0 ,0 };//X‚ª70‚Ü‚Å“®‚­
 
 	moveinfo[32] = { 1,  0 ,   0.f , 33, 200,1 };//X‚ª70‚Å’â~
 	//‚±‚±‚©‚ç“®‚­2
@@ -308,7 +308,7 @@ void Enemy_03::Update_Jangeki()
 		//ƒvƒŒƒCƒ„[•ûŒü‚Ö‚ÌƒWƒƒƒ“Œ‚¶¬
 
 		if (hp >= 41) {
-			if (frame_count % 80 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+			if (frame_count % 85 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 		}
 		////’Êí’e¶¬
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);

@@ -42,15 +42,21 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	obj_floor[2] = new Floor("images/stage03/GroundImagesTate.png", 1260, -100, 20, 1720);     //壁（右）, GetColor(240, 230, 140)
 
 	//右から順に
-	obj_floor[3] = new Floor("images/stage03/BlockImages.png", 1150, 350, 95, 30);//足場1//130,GetColor(193, 107, 68)
-	obj_floor[4] = new Floor("images/stage03/BlockImages.png", 1050, 500, 95, 30);//足場2//130,	GetColor(193, 107, 68)
-	obj_floor[5] = new Floor("images/stage03/BlockImages.png", 970, 215, 95, 30);//足場3, GetColor(193, 107, 68)
-	obj_floor[6] = new Floor("images/stage03/BlockImages.png", 770, 150, 95, 30);//足場4//130, GetColor(193, 107, 68)
-	obj_floor[7] = new Floor("images/stage03/BlockImages.png", 575, 215, 95, 30);//足場5//100, GetColor(193, 107, 68)
-	obj_floor[8] = new Floor("images/stage03/BlockImages.png", 390, 150, 95, 30);//足場6//130, GetColor(193, 107, 68)
-	obj_floor[9] = new Floor("images/stage03/BlockImages.png", 210, 215, 95, 30);//足場7//130, GetColor(193, 107, 68)
-	obj_floor[10] = new Floor("images/stage03/BlockImages.png", 30, 350, 95, 30);//足場8//100, GetColor(193, 107, 68)
-	obj_floor[11] = new Floor("images/stage03/BlockImages.png", 120, 500, 95, 30);//足場9//130, GetColor(193, 107, 68)
+	obj_floor[3] = new Floor("images/stage03/BlockImages.png", 1150, 320, 105, 1);//足場1//130,GetColor(193, 107, 68)
+	obj_floor[4] = new Floor("images/stage03/BlockImages.png", 1150, 500, 105, 1);//足場2//130,	GetColor(193, 107, 68)
+	obj_floor[5] = new Floor("images/stage03/BlockImages.png", 920, 205, 105, 1);//足場3, GetColor(193, 107, 68)
+	obj_floor[6] = new Floor("images/stage03/BlockImages.png", 770, 150, 105, 1);//足場4//130, GetColor(193, 107, 68)
+	obj_floor[7] = new Floor("images/stage03/BlockImages.png", 575, 205, 105, 1);//足場5//100, GetColor(193, 107, 68)
+	obj_floor[8] = new Floor("images/stage03/BlockImages.png", 390, 150, 105, 1);//足場6//130, GetColor(193, 107, 68)
+	obj_floor[9] = new Floor("images/stage03/BlockImages.png", 220, 205, 105, 1);//足場7//130, GetColor(193, 107, 68)
+	obj_floor[10] = new Floor("images/stage03/BlockImages.png", 60, 320, 105, 1);//足場8//100, GetColor(193, 107, 68)
+	obj_floor[11] = new Floor("images/stage03/BlockImages.png", 60, 500, 105, 1);//足場9//130, GetColor(193, 107, 68)
+
+	//obj_floor[12] = new Floor("images/stage03/BlockImages.png", 970, 405, 95, 10);//足場3, GetColor(193, 107, 68)
+	//obj_floor[12] = new Floor("images/stage03/BlockImages.png", 790, 360, 95, 10);//足場4//130, GetColor(193, 107, 68)
+	//obj_floor[13] = new Floor("images/stage03/BlockImages.png", 595, 425, 95, 10);//足場5//100, GetColor(193, 107, 68)
+	//obj_floor[14] = new Floor("images/stage03/BlockImages.png", 410, 360, 95, 10);//足場6//130, GetColor(193, 107, 68)
+	//obj_floor[16] = new Floor("images/stage03/BlockImages.png", 210, 405, 95, 10);//足場7//130, GetColor(193, 107, 68)
 
 }
 
@@ -359,7 +365,7 @@ void Scene_Stage03::AfterJanken_WIN()
 
 
 
-	obj_player->SetX(100);
+	obj_player->SetX(200);
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）
@@ -372,5 +378,5 @@ void Scene_Stage03::AfterJanken_LOSE()
 
 
 
-	obj_player->SetX(100);
+	obj_player->SetX(200);
 }
