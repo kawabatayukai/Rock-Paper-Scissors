@@ -40,11 +40,12 @@ Scene_Stage04::Scene_Stage04(const Player* player)
 	obj_floor[6] = new Floor(390, 425, 10, 170, 0x493759);			//足場(下縦)
 	obj_floor[7] = new Floor(667, 295, 10, 130, 0x493759);			//足場(真ん中縦)
 	obj_floor[8] = new Floor(467, 125, 10, 130, 0x493759);			//足場(上縦)
-	obj_floor[9] = new Floor(0, 320, 100, 5, 0x493759);				//棘①
-	obj_floor[10] = new Floor(0, 540, 70, 5, 0x493759);				//棘②
-	obj_floor[11] = new Floor(300, 0, 5, 80, 0x493759);				//棘③
-	obj_floor[12] = new Floor(1180, 300, 100,  5, 0x493759);	    //棘④
-	obj_floor[13] = new Floor(1130, 460, 130,  5, 0x493759);		//棘⑤
+	obj_floor[9] = new Floor(850, 280, 150, 10, 0x493759);			//足場(右横)
+	obj_floor[10] = new Floor(917, 225, 10, 130, 0x493759);			//足場(右縦)
+	obj_floor[11] = new Floor(0, 320, 150, 10, 0x493759);			//足場壁際左①
+	obj_floor[12] = new Floor(0, 540, 120, 10, 0x493759);			//足場壁際左②
+	obj_floor[13] = new Floor(1180, 350, 100,  10, 0x493759);	    //足場壁際右①
+	obj_floor[14] = new Floor(1130, 510, 130,  10, 0x493759);		//足場壁際右②
 }
 
 //デストラクタ
@@ -200,7 +201,7 @@ void Scene_Stage04::Update()
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
 			//ダメージを受ける（プレイヤー）
-			obj_player->ReceiveDamage(50);
+			obj_player->ReceiveDamage(25);
 
 			//あたったじゃん撃を削除
 			obj_enemy->DeleteJangeki(i);
@@ -264,14 +265,14 @@ AbstractScene* Scene_Stage04::ChangeScene()
 	if (obj_enemy->GetHP() <= 0)
 	{
 		//ゲームクリアシーンへ切り替え
-		return dynamic_cast<AbstractScene*> (new GameClearScene(5));
+		//return dynamic_cast<AbstractScene*> (new GameClearScene(5));
 	}
 
 	//プレイヤーのHPが0以下
 	if (obj_player->GetHP() <= 0)
 	{
 		//ゲームオーバーシーンへ切り替え
-		return dynamic_cast<AbstractScene*> (new GameOverScene(4));
+		//return dynamic_cast<AbstractScene*> (new GameOverScene(4));
 	}
 
 #endif // DEBUG_OFF_04

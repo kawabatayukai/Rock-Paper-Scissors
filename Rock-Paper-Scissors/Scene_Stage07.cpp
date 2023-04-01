@@ -70,7 +70,7 @@ void Scene_Stage07::Update()
 	//接触じゃんけん処理 (敵の行動が"ダイブ"の時は判定なし)
 	if (obj_enemy->Is_Diving_TouchJanken() != true)
 	{
-		Touch_Janken(obj_enemy, this);
+		Touch_Janken(obj_enemy, this, 7);
 	}
 
 	//playerのじゃん撃をとってくる
