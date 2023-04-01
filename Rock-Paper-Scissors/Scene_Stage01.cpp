@@ -10,14 +10,14 @@
 //表示する文字列
 namespace _STR_TUTORIAL
 {
-	char draw_str[][40] =
-	{
-		"ようこそ。最初に操作説明をします",
-		"左スティックで左右移動できます",
-		"LBボタンでジャンプします",
-		"右スティックで照準を操作できます",
-		"敵に接触するとじゃんけんが始まります",
-	};
+	//char draw_str[][40] =
+	//{
+	//	"ようこそ。最初に操作説明をします",
+	//	"左スティックで左右移動できます",
+	//	"LBボタンでジャンプします",
+	//	"右スティックで照準を操作できます",
+	//	"敵に接触するとじゃんけんが始まります",
+	//};
 }
 
 //コンストラクタ
@@ -278,9 +278,9 @@ void Scene_Stage01::Draw() const
 
 
 	//表示する文字列
-	const char* str = _STR_TUTORIAL::draw_str[static_cast<int>(Now_Tut_State)];
+	//const char* str = _STR_TUTORIAL::draw_str[static_cast<int>(Now_Tut_State)];
 
-	DrawStringToHandle(200, 200, str, green, font_tut, white);
+	//DrawStringToHandle(200, 200, str, green, font_tut, white);
 
 
 
