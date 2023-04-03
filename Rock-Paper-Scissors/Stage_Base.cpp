@@ -1,7 +1,7 @@
 #include "Stage_Base.h"
 #include"KeyManager.h"
 #include"DxLib.h"
-
+#include"GameData.h"
 
 //衝突判定なし時間   5秒
 #define NOT_COLLISION_TIME  300
@@ -39,6 +39,9 @@ void Stage_Base::DrawUI(Jan_Type type, int hp) const
 	DrawRotaGraph(1030, 60, 0.5, 0, hpImage, TRUE);			//体力ゲージ枠
 	DrawBox(948, 45, 948 + static_cast<int>(hp * 2.54), 75, 0x00ff00, TRUE);	//体力ゲージ
 	DrawFormatString(1120, 85, 0x00ff00, "残り:%d", hp);	//残り体力(数値)
+
+	//制限時間描画
+	DrawFormatString(1050, 120, 0x00ff00, "TimeLimit : %d", GameData::Get_Each_Time() / 60);
 
 	/*if (hp > 0) DrawFormatString(1000, 50, 0xffffff, "HP : %d", hp);
 	else DrawString(1100, 50, "death!", 0xffffff);*/
