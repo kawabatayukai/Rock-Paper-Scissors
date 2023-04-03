@@ -176,11 +176,11 @@ int Jangeki_Base::CheckAdvantage(const Jangeki_Base* jangeki)
 	default:
 		break;
 	}
-	if (judg_SCORE == 1) //じゃんけん勝ち
+	if (result_num == 1) //じゃんけん勝ち
 	{
 		GameData::Add_Score(100);    //スコア加算
 	}
-	if (judg_SCORE == 2) //じゃんけんあいこ
+	if (result_num == 2) //じゃんけんあいこ
 	{
 		GameData::Add_Score(100 / 2);    //スコア加算
 	}
