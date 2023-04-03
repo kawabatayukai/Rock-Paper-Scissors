@@ -12,7 +12,7 @@
 Scene_Stage04::Scene_Stage04(const Player* player)
 {
 	//§ŒÀŠÔ‚ğƒZƒbƒg
-	GameData::Set_TimeLimit(600);
+	GameData::Set_TimeLimit(3600);
 
 	back_image = LoadGraph("images/Stage4/Stage_Image2.png");
 

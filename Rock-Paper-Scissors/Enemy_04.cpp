@@ -12,10 +12,6 @@ Enemy_04::Enemy_04(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = 1;
 	hp = 100;
 
-	//ランダムな座標取得
-	enemy_x = GetRand(1160) + 100;
-	enemy_y = GetRand(600) + 100;
-
 	image = LoadGraph("images/Stage4/ステージ4_ボス100.png");
 
 	Init_Jangeki();       //じゃん撃を用意
@@ -35,7 +31,6 @@ void Enemy_04::Update()
 	Update_Jangeki();
 
 	//動きパターン
-	//moveinfo[0] = { 1,enemy_x,enemy_y, 0, 1 };
 	moveinfo[0] = { 1,player_x,player_y, 0, 1 };
 	moveinfo[1] = { 0,     0.f,     0.f, 0, 0 };
 
@@ -46,8 +41,6 @@ void Enemy_04::Update()
 		if (moveinfo[current].waitFlameTime <= waitTime)
 		{
 			waitTime = 0;
-			enemy_x = GetRand(1160) + 100;
-			enemy_y = GetRand(600) + 100;
 			current = moveinfo[current].next_index;
 		}
 		break;
@@ -68,7 +61,7 @@ void Enemy_04::Update()
 	else speed = 1.0f;*/
 	
 	//少しずつHP回復
-	if (hp < 100 && frame_count % 40 == 0) hp++;
+	if (hp < 100 && frame_count % 30 == 0) hp++;
 }
 
 //描画
