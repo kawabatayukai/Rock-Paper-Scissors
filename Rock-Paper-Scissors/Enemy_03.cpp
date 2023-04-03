@@ -18,12 +18,10 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	enemyimage[1] = LoadGraph("images/stage03/stage03gard.png");
 
 
-
-
 	Init_Jangeki();       //じゃん撃を用意
 
 	//動きパターン 繰り返し　//0で動き,1で止まる
-	moveinfo[0] = { 0, 900.f, 0.f , 1,  0 ,1 };//初期位置のXが950で停止
+	moveinfo[0] = { 0, 950.f, 0.f , 1,  0 ,1 };//初期位置のXが950で停止
 
 	moveinfo[1] = { 1,  0 ,   0.f , 2, 200 ,1 };//初期位置のXが950で停止
 	//ここから動く
@@ -119,7 +117,7 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	moveinfo[36] = { 1,  0 ,   0.f , 37, 200 ,1 };//Xが650で停止
 
-	moveinfo[37] = { 0,	900.f, 0.f , 38, 0 ,1 };//Xが900まで動く
+	moveinfo[37] = { 0,	950.f, 0.f , 38, 0 ,1 };//Xが900まで動く
 
 	//moveinfo[47] = { 1,	 0,  0.f , 48, 62 ,1 };//Xが900で少しの時間停止
 
@@ -146,10 +144,11 @@ void Enemy_03::Update()
 		speed = 2.8f;
 	}
 
+
 	//じゃん撃更新・生成
 	Update_Jangeki();
 
-	//属性変更
+	////属性変更
 	if (moveinfo[current].enemywaitTime > 0) {
 
 		e_type = Jan_Type::ROCK;
@@ -162,6 +161,7 @@ void Enemy_03::Update()
 
 		e_type = Jan_Type::SCISSORS;
 	}
+
 
 	//ステ03パターン用関数
 	switch (moveinfo[current].moveflg)
@@ -177,6 +177,10 @@ void Enemy_03::Update()
 
 			waitcount = 0;
 			current = moveinfo[current].next_index;
+
+			//ランダムな動きX方向//
+			//moveinfo[current].location_x = GetRand(1150);
+
 
 		}
 		break;
@@ -200,18 +204,17 @@ void Enemy_03::Update()
 
 	//x += dir * speed;
 
-	/********************   ジャンプ関係   ********************/
+	///********************   ジャンプ関係   ********************/
 
 
+		y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
-	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
+		//落下速度の制限
+		if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
 
-	//落下速度の制限
-	if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
-
-	old_y = y;              //1フレーム前のｙ座標
-	y += y_add;            //落下距離をｙ座標に加算する
-	g_add = _GRAVITY;     //重力加速度を初期化する
+		old_y = y;              //1フレーム前のｙ座標
+		y += y_add;            //落下距離をｙ座標に加算する
+		g_add = _GRAVITY;     //重力加速度を初期化する
 
 }
 /********************   横移動   ********************/
@@ -343,19 +346,24 @@ void Enemy_03::Move_Pattern() {
 
 		//speedがup
 		speed = 2.8f;
-
 	}
+
 
 	//x座標が目指している座標と不一致
 	if (x != moveinfo[current].location_x) {
 
+
+
+
+
 		//ジャンプしているとき
 		if (moveinfo[current].jumpflg == 0) {
 
-			//speedがup
-			speed = 4.0f;
+			//speedがup,足場に乗せるための調整
+			speed = 4.2f;
 
 		}
+
 
 		//目指しているx座標の右方が大きい
 		if (x < moveinfo[current].location_x) {
