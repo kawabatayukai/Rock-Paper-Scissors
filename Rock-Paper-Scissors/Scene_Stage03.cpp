@@ -243,7 +243,7 @@ void Scene_Stage03::Update()
 		//じゃん撃との当たり判定
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
-			//エネミーのHPが40以下の場合30ダメージ食らう
+			//エネミーのHPが40以下の場合35ダメージ食らう
 			if (obj_enemy->GetHP() <= 40) {
 
 				//半径が90.0fの場合のダメージ
@@ -265,7 +265,7 @@ void Scene_Stage03::Update()
 		}
 	}
 
-
+	///////////////下ブロックの当たり判定削除///////////////////
 	//壁との当たり判定
 	if (obj_player->Get_X() <= 50 || obj_player->Get_X() >= 1200)
 	{
@@ -337,12 +337,12 @@ AbstractScene* Scene_Stage03::ChangeScene()
 #ifdef DEBUG_OFF_03
 
 	//敵のHP0
-	if (obj_enemy->GetHP() < 0) {
+	//if (obj_enemy->GetHP() < 0) {
 
-		//ゲームクリアシーンへ切り替え
-		return dynamic_cast<AbstractScene*> (new GameClearScene(4));
+	//	//ゲームクリアシーンへ切り替え
+	//	return dynamic_cast<AbstractScene*> (new GameClearScene(4));
 
-	}
+	//}
 
 	//プレイヤーのHPが0
 	if (obj_player->GetHP() < 0) {
@@ -361,22 +361,13 @@ AbstractScene* Scene_Stage03::ChangeScene()
 void Scene_Stage03::AfterJanken_WIN()
 {
 
-
-
-
-
 	obj_player->SetX(200);
+
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）
 void Scene_Stage03::AfterJanken_LOSE()
 {
-
-
-
-
-
-
 
 	obj_player->SetX(200);
 }

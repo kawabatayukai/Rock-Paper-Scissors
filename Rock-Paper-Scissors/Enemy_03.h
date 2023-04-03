@@ -10,6 +10,7 @@ struct Pattern_03 {
 	int next_index; //次配列のパターンの番号
 	int enemywaitTime;//エネミーの待ち時間
 	int jumpflg; //ジャンプするかしないか
+
 };
 
 //3ステージ　敵キャラ
