@@ -89,7 +89,7 @@ void Enemy_07::Update()
 
 	/**********************************************************/
 
-	if (++frame_count % 6 == 0)
+	if (++frame_count % 5 == 0)
 	{
 		current_index++;
 		if (current_index >= 9) current_index = 0;
