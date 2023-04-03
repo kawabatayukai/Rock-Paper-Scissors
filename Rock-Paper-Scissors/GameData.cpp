@@ -7,7 +7,7 @@ namespace TIME_LIMIT
 
 	const int LIMIT_STAGE_02 = 999;
 	const int LIMIT_STAGE_03 = 999;
-	const int LIMIT_STAGE_04 = 999;
+	const int LIMIT_STAGE_04 = 3600;
 	const int LIMIT_STAGE_05 = 999;
 	const int LIMIT_STAGE_06 = 999;
 	const int LIMIT_STAGE_07 = 600;

@@ -1,6 +1,7 @@
 #include"DxLib.h"
 #include<math.h>
 #include "Jangeki_Base.h"
+#include"GameData.h"
 
 //コンストラクタ
 Jangeki_Base::Jangeki_Base(float x, float y, float r, float speed, Jan_Type type, bool ref)
@@ -146,35 +147,51 @@ bool Jangeki_Base::CheckScreenOut()
 // ・　　　あいこ　　（例　自分：グー　引数：グー）　　return 2
 int Jangeki_Base::CheckAdvantage(const Jangeki_Base* jangeki)
 {
+	int result_num = 0;    //結果を格納
+
 	// 引数のじゃん撃の属性が
 	switch (jangeki->GetType())
 	{
 	case Jan_Type::ROCK:         //グーの時
 
-		if (this->type == Jan_Type::SCISSORS) return 0; //自分の属性がチョキの時　0(不利)
-		if (this->type == Jan_Type::PAPER) return 1;    //自分の属性がパーの時　　1(有利)
-		if (this->type == Jan_Type::ROCK) return 2;     //自分の属性がグーの時　　2(あいこ)
+		if (this->type == Jan_Type::SCISSORS) result_num= 0; //自分の属性がチョキの時　0(不利)
+		if (this->type == Jan_Type::PAPER) result_num = 1;    //自分の属性がパーの時　　1(有利)
+		if (this->type == Jan_Type::ROCK) result_num = 2;     //自分の属性がグーの時　　2(あいこ)
 		break;
 
 	case Jan_Type::SCISSORS:     //チョキの時
 
-		if (this->type == Jan_Type::PAPER) return 0;    //自分の属性がパーの時　0(不利)
-		if (this->type == Jan_Type::ROCK) return 1;     //自分の属性がグーの時　1(有利)
-		if (this->type == Jan_Type::SCISSORS) return 2; //自分の属性がチョキの時　2(あいこ)
+		if (this->type == Jan_Type::PAPER) result_num = 0;    //自分の属性がパーの時　0(不利)
+		if (this->type == Jan_Type::ROCK) result_num = 1;     //自分の属性がグーの時　1(有利)
+		if (this->type == Jan_Type::SCISSORS) result_num = 2; //自分の属性がチョキの時　2(あいこ)
 		break;
 
 	case Jan_Type::PAPER:        //パーの時
 
-		if (this->type == Jan_Type::ROCK) return 0;     //自分の属性がグーの時　0(不利)
-		if (this->type == Jan_Type::SCISSORS) return 1; //自分の属性がチョキの時　1(有利)
-		if (this->type == Jan_Type::PAPER) return 2;    //自分の属性がパーの時　2(あいこ)
+		if (this->type == Jan_Type::ROCK) result_num = 0;     //自分の属性がグーの時　0(不利)
+		if (this->type == Jan_Type::SCISSORS) result_num = 1; //自分の属性がチョキの時　1(有利)
+		if (this->type == Jan_Type::PAPER) result_num = 2;    //自分の属性がパーの時　2(あいこ)
 		break;
 
 	default:
 		break;
 	}
+	if (result_num == 1) //じゃんけん勝ち
+	{
+		GameData::Add_Score(100);    //スコア加算
+	}
+	if (result_num == 2) //じゃんけんあいこ
+	{
+		GameData::Add_Score(100 / 2);    //スコア加算
+	}
 
-	return false;
+	//有利の時
+	if (result_num == 1)
+	{
+		GameData::Add_Score(100);    //スコア加算
+	}
+
+	return result_num;
 }
 
 
