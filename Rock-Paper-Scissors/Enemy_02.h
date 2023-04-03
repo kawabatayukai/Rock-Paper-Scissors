@@ -1,6 +1,16 @@
 #pragma once
 #include"EnemyBase.h"
 
+//行動パターン04用
+struct Pattern_02 {
+
+	int moveflg; //0:動かない,1:動く
+	float location_x; //目指している座標x
+	float location_y; //目指している座標y
+	float waitFlameTime; //待ち時間
+	int next_index; //次配列のパターンの番号
+
+};
 
 //2ステージ　敵キャラ
 class Enemy_02 : public EnemyBase
@@ -21,7 +31,7 @@ public:
 
 	void Jan_360degrees(int count, float rad, float speed, Jan_Type type);
 	
-	void ChangeDir(float x);
+	//void ChangeDir(float x);
 private:
 	/********************   ジャンプ関係   ********************/
 
@@ -48,6 +58,7 @@ private:
 	short current = 0; //現在のパターン配列添字
 	int  attack_pattern = 0;      //攻撃パターン変数
 	float enemy_x, enemy_y;		//座標取得用変数
+	Pattern_02 moveinfo[2];	    //行動パターン
 };
 
 
