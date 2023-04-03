@@ -37,7 +37,6 @@ private:
 	int  attack_pattern = 0;      //攻撃パターン変数
 	bool jump_flg = false;        //ジャンプ用フラグ　　       ジャンプさせる:true   ジャンプしない:false
 	int  jump_cnt = 0;            //ジャンプカウント
-	bool direction_flg = false;   //左右反転フラグ             左向き:true           右向き:false
 	bool teleport_Flg = true;     //瞬間移動フラグ              瞬間移動する:true     瞬間移動しない:false
 	bool P1_side = false;         //パターン2時の位置フラグ     左側:true             右側:false
 	int  floor = 5;

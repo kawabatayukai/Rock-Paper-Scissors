@@ -3,13 +3,12 @@
 #include"Player.h"
 #include"Jangeki_Base.h"
 #include"Jangeki_Coming.h"
-#include "Scene_Stage06.h"
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
 	speed = 7.0f;
-	dir = 1;
+	dir = -1;                 //-1なら左向き  +1なら右向き
 	hp = 100;
 
 	image = LoadGraph("images/tyokitest.png");
@@ -109,8 +108,6 @@ void Enemy_06::Update_Jangeki()
 
 		obj_jangeki[jan_count]->Update();
 
-		SetPlayerLocation(player_x, player_y);
-
 		//プレイヤーの座標をセットする
 		obj_jangeki[jan_count]->SetTargetLocation(player_x, player_y);
 
@@ -158,24 +155,24 @@ void Enemy_06::AttackPattern_1()
 	}
 
 	//4回以上ジャンプした際の処理
-	if (jump_cnt >= 3 && direction_flg == false)        //左を向いている時の処理
+	if (jump_cnt >= 3 && dir == -1)        //左を向いている時の処理
 	{
 
 		x = x - 5;      //1フレームの間に左へ進む距離
 		if (x < 100)    //目標座標に到着したかのチェック
 		{
 			jump_cnt = 0;          //ジャンプ回数のリセット
-			direction_flg = true;  //向いている向きの反転
+			dir = 1;  //向いている向きの反転
 			ChangeCnt++;
 		}
 	}
-	else if (jump_cnt >= 3 && direction_flg == true)    //右を向いている時の処理
+	else if (jump_cnt >= 3 && dir == 1)    //右を向いている時の処理
 	{
 		x = x + 5;      //1フレームの間に右へ進む距離
 		if (x > 1180)   //目標座標に到着したかのチェック
 		{
 			jump_cnt = 0;           //ジャンプ回数のリセット
-			direction_flg = false;  //向いている向きの反転
+			dir = -1;  //向いている向きの反転
 			ChangeCnt++;
 		}
 	}
@@ -199,20 +196,20 @@ void Enemy_06::AttackPattern_1()
 //行動ループ2
 void Enemy_06::AttackPattern_2()
 {
-	if (teleport_Flg == true && direction_flg == false)
+	if (teleport_Flg == true && dir == -1)
 	{
 		x = 1180;
 		y = 450;
-		direction_flg = false;
+		dir = -1;
 		teleport_Flg = false;
 		P1_side = false;
 		jump_cnt = 0;
 	}
-	else if (teleport_Flg == true && direction_flg == true)
+	else if (teleport_Flg == true && dir == 1)
 	{
 		x = 100;
 		y = 450;
-		direction_flg = true;
+		dir = 1;
 		teleport_Flg = false;
 		P1_side = true;
 		jump_cnt = 0;
@@ -223,25 +220,25 @@ void Enemy_06::AttackPattern_2()
 	if (P1_side == false)
 	{
 		//左の足場へジャンプ
-		if (x >= 930 && direction_flg == true)
+		if (x >= 930 && dir == 1)
 		{
 			x = x - 6;
 		}
-		else if (x <= 1180 && direction_flg == true)
+		else if (x <= 1180 && dir == 1)
 		{
-			direction_flg = false;
+			dir = -1;
 			jump_flg = true;
 			jump_cnt++;
 		}
 
 		//右の足場へジャンプ
-		if (x <= 1180 && direction_flg == false)
+		if (x <= 1180 && dir == -1)
 		{
 			x = x + 6;
 		}
-		else if (x >= 930 && direction_flg == false)
+		else if (x >= 930 && dir == -1)
 		{
-			direction_flg = true;
+			dir = 1;
 			jump_flg = true;
 			jump_cnt++;
 		}
@@ -250,7 +247,7 @@ void Enemy_06::AttackPattern_2()
 		if (jump_cnt == 5)
 		{
 			teleport_Flg = true;
-			direction_flg = true;
+			dir = 1;
 			ChangeCnt++;
 		}
 
@@ -261,25 +258,25 @@ void Enemy_06::AttackPattern_2()
 	else if (P1_side == true)
 	{
 		//右の足場へジャンプ
-		if (x <= 350 && direction_flg == false)
+		if (x <= 350 && dir == -1)
 		{
 			x = x + 6;
 		}
-		else if (x >= 100 && direction_flg == false)
+		else if (x >= 100 && dir == -1)
 		{
-			direction_flg = true;
+			dir = 1;
 			jump_flg = true;
 			jump_cnt++;
 		}
 
 		//左の足場へジャンプ
-		if (x >= 100 && direction_flg == true)
+		if (x >= 100 && dir == 1)
 		{
 			x = x - 5;
 		}
-		else if (x <= 350 && direction_flg == true)
+		else if (x <= 350 && dir == 1)
 		{
-			direction_flg = false;
+			dir = -1;
 			jump_flg = true;
 			jump_cnt++;
 		}
@@ -288,7 +285,7 @@ void Enemy_06::AttackPattern_2()
 		if (jump_cnt == 5)
 		{
 			teleport_Flg = true;
-			direction_flg = false;
+			dir = -1;
 			ChangeCnt++;
 		}
 
@@ -320,7 +317,7 @@ void Enemy_06::AttackPattern_3()
 		x = 1149;
 		y = 450;
 		floor = 5;
-		direction_flg = false;
+		dir = -1;
 		teleport_Flg = false;
 		jump_cnt = 0;
 	}
@@ -330,7 +327,7 @@ void Enemy_06::AttackPattern_3()
 	switch (floor)
 	{
 	case 1:
-		if (direction_flg == true)
+		if (dir == 1)
 		{
 			x += 7;
 		}
@@ -355,11 +352,11 @@ void Enemy_06::AttackPattern_3()
 		break;
 
 	case 2:
-		if (direction_flg == false)
+		if (dir == -1)
 		{
 			x -= 7;
 		}
-		if (direction_flg == true)
+		if (dir == 1)
 		{
 			x += 7;
 		}
@@ -372,7 +369,7 @@ void Enemy_06::AttackPattern_3()
 		{
 			floor = 1;
 			jump_cnt = 0;
-			direction_flg = true;
+			dir = 1;
 			jump_Direction();
 		}
 		if (x >= 645)
@@ -386,11 +383,11 @@ void Enemy_06::AttackPattern_3()
 		break;
 
 	case 3:
-		if (direction_flg == false)
+		if (dir == -1)
 		{
 			x -= 7;
 		}
-		if (direction_flg == true)
+		if (dir == 1)
 		{
 			x += 7;
 		}
@@ -422,11 +419,11 @@ void Enemy_06::AttackPattern_3()
 		break;
 
 	case 4:
-		if (direction_flg == false)
+		if (dir == -1)
 		{
 			x -= 7;
 		}
-		if (direction_flg == true)
+		if (dir == 1)
 		{
 			x += 7;
 		}
@@ -446,14 +443,14 @@ void Enemy_06::AttackPattern_3()
 		{
 			floor = 5;
 			jump_cnt = 0;
-			direction_flg = false;
+			dir = -1;
 			jump_Direction();
 		}
 
 		break;
 
 	case 5:
-		if (direction_flg == false)
+		if (dir == -1)
 		{
 			x -= 7;
 		}
@@ -514,11 +511,11 @@ void Enemy_06::decision_Direction()
 {
 	if (GetRand(1) == 1)
 	{
-		direction_flg = false;
+		dir = -1;
 	}
 	else
 	{
-		direction_flg = true;
+		dir = 1;
 	}
 }
 
