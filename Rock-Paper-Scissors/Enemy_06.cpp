@@ -2,6 +2,8 @@
 #include"DxLib.h"
 #include"Player.h"
 #include"Jangeki_Base.h"
+#include"Jangeki_Coming.h"
+#include "Scene_Stage06.h"
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
@@ -88,6 +90,10 @@ void Enemy_06::Draw() const
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
 	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
 
+	//プレイヤーのx座標とy座標を表示するデバッグ用機能
+	DrawFormatString(800, 500, 0xffffff, "player_x : %f", player_x);
+	DrawFormatString(800, 530, 0xffffff, "player_y : %f", player_y);
+
 }
 
 //じゃん撃生成・更新
@@ -103,8 +109,10 @@ void Enemy_06::Update_Jangeki()
 
 		obj_jangeki[jan_count]->Update();
 
-		////ホーミングじゃん撃であればプレイヤーの座標をセットする
-		//obj_jangeki[jan_count]->SetTargetLocation(player_x, player_y);
+		SetPlayerLocation(player_x, player_y);
+
+		//プレイヤーの座標をセットする
+		obj_jangeki[jan_count]->SetTargetLocation(player_x, player_y);
 
 		//画面外で削除する
 		if (obj_jangeki[jan_count]->CheckScreenOut() == true)
@@ -121,14 +129,16 @@ void Enemy_06::Update_Jangeki()
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
 		float radius = 35.5f;   //半径
-		float speed = -8.0f;     //スピード
+		float speed = 3.0f;     //スピード
 
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
+		//プレイヤー方向に向かって発射されるジャン撃の生成
+		if (frame_count % 80 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 
-		//生成
-		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+		////通常弾生成
+		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
 	}
 }
 
@@ -522,13 +532,13 @@ void Enemy_06::jump_Direction()
 }
 
 //old_yの取得関数
-int Enemy_06::Get_OldY()
+float Enemy_06::Get_OldY()
 {
 	return old_y;
 }
 
 //yの取得関数
-int Enemy_06::Get_Y()
+float Enemy_06::Get_Y()
 {
 	return y;
 }
