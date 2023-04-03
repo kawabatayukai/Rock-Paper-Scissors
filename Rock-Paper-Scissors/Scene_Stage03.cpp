@@ -59,7 +59,7 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	//obj_floor[16] = new Floor("images/stage03/BlockImages.png", 210, 405, 95, 10);//‘«ê7//130, GetColor(193, 107, 68)
 
 	//§ŒÀŠÔ‚ğƒZƒbƒg
-	GameData::Set_TimeLimit(600);
+	GameData::Set_TimeLimit(6000);
 
 
 }
