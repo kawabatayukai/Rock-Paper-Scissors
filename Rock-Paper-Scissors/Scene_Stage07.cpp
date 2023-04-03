@@ -12,6 +12,10 @@
 //コンストラクタ
 Scene_Stage07::Scene_Stage07(const Player* player)
 {
+	//制限時間をセット
+	GameData::Set_TimeLimit(600);
+
+
 	//プレイヤー情報が渡されていれば
 	if (player != nullptr)
 	{
@@ -55,6 +59,10 @@ Scene_Stage07::~Scene_Stage07()
 //更新
 void Scene_Stage07::Update()
 {
+	//時間をカウント
+	GameData::Time_Update();
+
+
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
@@ -325,7 +333,7 @@ AbstractScene* Scene_Stage07::ChangeScene()
 	}
 
 	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() < 0)
+	if (obj_player->GetHP() < 0 || GameData::Get_Each_Time() <= 0)
 	{
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(7));
