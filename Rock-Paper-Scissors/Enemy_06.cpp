@@ -88,11 +88,6 @@ void Enemy_06::Draw() const
 	//テスト
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
 	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
-
-	//プレイヤーのx座標とy座標を表示するデバッグ用機能
-	DrawFormatString(800, 500, 0xffffff, "player_x : %f", player_x);
-	DrawFormatString(800, 530, 0xffffff, "player_y : %f", player_y);
-
 }
 
 //じゃん撃生成・更新
@@ -131,11 +126,29 @@ void Enemy_06::Update_Jangeki()
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
-		//プレイヤー方向に向かって発射されるジャン撃の生成
-		if (frame_count % 80 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+		//行動パターン1の時の弾(speed = 3.0f  frame_count % 80)
+		if (attack_pattern == 0)
+		{
+			//プレイヤー方向に向かって発射されるジャン撃の生成
+			if (frame_count % 80 == 0) obj_jangeki[jan_count] = 
+				new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+		}
 
-		////通常弾生成
-		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+		//行動パターン2の時の弾(speed = 3.0f  frame_count % 80)
+		if (attack_pattern == 1)
+		{
+			//プレイヤー方向に向かって発射されるジャン撃の生成
+			if (frame_count % 80 == 0) obj_jangeki[jan_count] =
+				new Jangeki_Coming(x, y, radius, speed + 1.0f, type, player_x, player_y);
+		}
+
+		//行動パターン3の時の弾(speed = 3.0f  frame_count % 80)
+		if (attack_pattern == 2)
+		{
+			//プレイヤー方向に向かって発射されるジャン撃の生成
+			if (frame_count % 70 == 0) obj_jangeki[jan_count] =
+				new Jangeki_Coming(x, y, radius, speed + 1.0f, type, player_x, player_y);
+		}
 	}
 }
 
@@ -188,130 +201,16 @@ void Enemy_06::AttackPattern_1()
 	if (hp <= 70)
 	{
 		attack_pattern = 1;    //攻撃パターンを変更
-		jump_cnt = 0;          //ジャンプカウント初期化
-		jump_flg = false;      //ジャンプフラグ初期化
+		teleport_Flg = true;   //瞬間移動フラグをtrueにする
+		//jump_cnt = 0;          //ジャンプカウント初期化
+		//jump_flg = false;      //ジャンプフラグ初期化
 	}
 }
 
 //行動ループ2
 void Enemy_06::AttackPattern_2()
 {
-	if (teleport_Flg == true && dir == -1)
-	{
-		x = 1180;
-		y = 450;
-		dir = -1;
-		teleport_Flg = false;
-		P1_side = false;
-		jump_cnt = 0;
-	}
-	else if (teleport_Flg == true && dir == 1)
-	{
-		x = 100;
-		y = 450;
-		dir = 1;
-		teleport_Flg = false;
-		P1_side = true;
-		jump_cnt = 0;
-	}
-
-
-
-	if (P1_side == false)
-	{
-		//左の足場へジャンプ
-		if (x >= 930 && dir == 1)
-		{
-			x = x - 6;
-		}
-		else if (x <= 1180 && dir == 1)
-		{
-			dir = -1;
-			jump_flg = true;
-			jump_cnt++;
-		}
-
-		//右の足場へジャンプ
-		if (x <= 1180 && dir == -1)
-		{
-			x = x + 6;
-		}
-		else if (x >= 930 && dir == -1)
-		{
-			dir = 1;
-			jump_flg = true;
-			jump_cnt++;
-		}
-
-		//瞬間移動
-		if (jump_cnt == 5)
-		{
-			teleport_Flg = true;
-			dir = 1;
-			ChangeCnt++;
-		}
-
-		//ジャンプ処理
-		jump();
-	}
-
-	else if (P1_side == true)
-	{
-		//右の足場へジャンプ
-		if (x <= 350 && dir == -1)
-		{
-			x = x + 6;
-		}
-		else if (x >= 100 && dir == -1)
-		{
-			dir = 1;
-			jump_flg = true;
-			jump_cnt++;
-		}
-
-		//左の足場へジャンプ
-		if (x >= 100 && dir == 1)
-		{
-			x = x - 5;
-		}
-		else if (x <= 350 && dir == 1)
-		{
-			dir = -1;
-			jump_flg = true;
-			jump_cnt++;
-		}
-
-		//瞬間移動
-		if (jump_cnt == 5)
-		{
-			teleport_Flg = true;
-			dir = -1;
-			ChangeCnt++;
-		}
-
-		//ジャンプ処理
-		jump();
-	}
-
-	//敵の属性変化処理
-	if (ChangeCnt > 3)
-	{
-		SetType(static_cast<Jan_Type>(GetRand(2)));
-		ChangeCnt = 0;
-	}
-
-	//HPが40以下になると次の行動ループに移行
-	if (hp <= 40)
-	{
-		attack_pattern = 2;
-		teleport_Flg = true;
-	}
-}
-
-//行動ループ3
-void Enemy_06::AttackPattern_3()
-{
-	//攻撃パターン3初期処理
+	//攻撃パターン2初期処理
 	if (teleport_Flg == true)
 	{
 		x = 1149;
@@ -322,16 +221,15 @@ void Enemy_06::AttackPattern_3()
 		jump_cnt = 0;
 	}
 
-
 	//床ごとの処理
 	switch (floor)
 	{
 	case 1:
 		if (dir == 1)
 		{
-			x += 7;
+			x += 5;
 		}
-		
+
 		if (y == 450 && jump_cnt == 0)
 		{
 			jump_flg = true;
@@ -354,11 +252,11 @@ void Enemy_06::AttackPattern_3()
 	case 2:
 		if (dir == -1)
 		{
-			x -= 7;
+			x -= 5;
 		}
 		if (dir == 1)
 		{
-			x += 7;
+			x += 5;
 		}
 
 		//ジャンプ処理
@@ -385,11 +283,11 @@ void Enemy_06::AttackPattern_3()
 	case 3:
 		if (dir == -1)
 		{
-			x -= 7;
+			x -= 5;
 		}
 		if (dir == 1)
 		{
-			x += 7;
+			x += 5;
 		}
 
 		if (y == 450 && jump_cnt == 0)
@@ -421,11 +319,11 @@ void Enemy_06::AttackPattern_3()
 	case 4:
 		if (dir == -1)
 		{
-			x -= 7;
+			x -= 5;
 		}
 		if (dir == 1)
 		{
-			x += 7;
+			x += 5;
 		}
 
 		//ジャンプ処理
@@ -452,7 +350,7 @@ void Enemy_06::AttackPattern_3()
 	case 5:
 		if (dir == -1)
 		{
-			x -= 7;
+			x -= 5;
 		}
 
 		if (y == 450 && jump_cnt == 0)
@@ -476,12 +374,287 @@ void Enemy_06::AttackPattern_3()
 		break;
 	}
 
+
+
+	//敵の属性変化処理
+	if (ChangeCnt > 7)
+	{
+		SetType(static_cast<Jan_Type>(GetRand(2)));
+		ChangeCnt = 0;
+	}
+
+	//HPが40以下になると次の行動ループに移行
+	if (hp <= 40)
+	{
+		attack_pattern = 2;
+	}
+}
+
+//行動ループ3
+void Enemy_06::AttackPattern_3()
+{
+	//床ごとの処理
+	switch (floor)
+	{
+	case 1:
+		if (dir == 1)
+		{
+			x += 8;
+		}
+		
+		if (y == 450 && jump_cnt == 0)
+		{
+			jump_flg = true;
+		}
+
+		//ジャンプ処理
+		jump();
+
+		//指定座標に到着したらswitch遷移
+		if (x >= 393)
+		{
+			floor = 2;
+			jump_cnt = 0;
+			decision_Direction();
+			jump_Direction();
+		}
+
+		break;
+
+	case 2:
+		if (dir == -1)
+		{
+			x -= 8;
+		}
+		if (dir == 1)
+		{
+			x += 8;
+		}
+
+		//ジャンプ処理
+		jump();
+
+		//指定座標に到着したらswitch遷移
+		if (x <= 141)
+		{
+			floor = 1;
+			jump_cnt = 0;
+			dir = 1;
+			jump_Direction();
+		}
+		if (x >= 645)
+		{
+			floor = 3;
+			jump_cnt = 0;
+			decision_Direction();
+			jump_Direction();
+		}
+
+		break;
+
+	case 3:
+		if (dir == -1)
+		{
+			x -= 8;
+		}
+		if (dir == 1)
+		{
+			x += 8;
+		}
+
+		if (y == 450 && jump_cnt == 0)
+		{
+			jump_flg = true;
+		}
+
+		//ジャンプ処理
+		jump();
+
+		//指定座標に到着したらswitch遷移
+		if (x <= 393)
+		{
+			floor = 2;
+			jump_cnt = 0;
+			decision_Direction();
+			jump_Direction();
+		}
+		if (x >= 897)
+		{
+			floor = 4;
+			jump_cnt = 0;
+			decision_Direction();
+			jump_Direction();
+		}
+
+		break;
+
+	case 4:
+		if (dir == -1)
+		{
+			x -= 8;
+		}
+		if (dir == 1)
+		{
+			x += 8;
+		}
+
+		//ジャンプ処理
+		jump();
+
+		//指定座標に到着したらswitch遷移
+		if (x <= 645)
+		{
+			floor = 3;
+			jump_cnt = 0;
+			decision_Direction();
+			jump_Direction();
+		}
+		if (x >= 1149)
+		{
+			floor = 5;
+			jump_cnt = 0;
+			dir = -1;
+			jump_Direction();
+		}
+
+		break;
+
+	case 5:
+		if (dir == -1)
+		{
+			x -= 8;
+		}
+
+		if (y == 450 && jump_cnt == 0)
+		{
+			jump_flg = true;
+			jump_cnt++;
+		}
+
+		//ジャンプ処理
+		jump();
+
+		//指定座標に到着したらswitch遷移
+		if (x <= 897)
+		{
+			floor = 4;
+			jump_cnt = 0;
+			decision_Direction();
+			jump_Direction();
+		}
+
+		break;
+	}
+
+
+
 	//敵の属性変化処理
 	if (ChangeCnt > 5)
 	{
 		SetType(static_cast<Jan_Type>(GetRand(2)));
 		ChangeCnt = 0;
 	}
+}
+
+//旧行動ループ2(保存用)
+void Enemy_06::AttackPattern_00()
+{
+	//if (teleport_Flg == true && dir == -1)
+	//{
+	//	x = 1180;
+	//	y = 450;
+	//	dir = -1;
+	//	teleport_Flg = false;
+	//	P1_side = false;
+	//	jump_cnt = 0;
+	//}
+	//else if (teleport_Flg == true && dir == 1)
+	//{
+	//	x = 100;
+	//	y = 450;
+	//	dir = 1;
+	//	teleport_Flg = false;
+	//	P1_side = true;
+	//	jump_cnt = 0;
+	//}
+
+
+
+	//if (P1_side == false)
+	//{
+	//	//左の足場へジャンプ
+	//	if (x >= 930 && dir == 1)
+	//	{
+	//		x = x - 6;
+	//	}
+	//	else if (x <= 1180 && dir == 1)
+	//	{
+	//		dir = -1;
+	//		jump_flg = true;
+	//		jump_cnt++;
+	//	}
+
+	//	//右の足場へジャンプ
+	//	if (x <= 1180 && dir == -1)
+	//	{
+	//		x = x + 6;
+	//	}
+	//	else if (x >= 930 && dir == -1)
+	//	{
+	//		dir = 1;
+	//		jump_flg = true;
+	//		jump_cnt++;
+	//	}
+
+	//	//瞬間移動
+	//	if (jump_cnt == 5)
+	//	{
+	//		teleport_Flg = true;
+	//		dir = 1;
+	//		ChangeCnt++;
+	//	}
+
+	//	//ジャンプ処理
+	//	jump();
+	//}
+
+	//else if (P1_side == true)
+	//{
+	//	//右の足場へジャンプ
+	//	if (x <= 350 && dir == -1)
+	//	{
+	//		x = x + 6;
+	//	}
+	//	else if (x >= 100 && dir == -1)
+	//	{
+	//		dir = 1;
+	//		jump_flg = true;
+	//		jump_cnt++;
+	//	}
+
+	//	//左の足場へジャンプ
+	//	if (x >= 100 && dir == 1)
+	//	{
+	//		x = x - 5;
+	//	}
+	//	else if (x <= 350 && dir == 1)
+	//	{
+	//		dir = -1;
+	//		jump_flg = true;
+	//		jump_cnt++;
+	//	}
+
+	//	//瞬間移動
+	//	if (jump_cnt == 5)
+	//	{
+	//		teleport_Flg = true;
+	//		dir = -1;
+	//		ChangeCnt++;
+	//	}
+
+	//	//ジャンプ処理
+	//	jump();
+	//}
 }
 
 //ジャンプ

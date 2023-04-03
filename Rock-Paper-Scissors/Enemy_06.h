@@ -19,6 +19,8 @@ public:
 	void AttackPattern_2();          //行動ループ2
 	void AttackPattern_3();          //行動ループ3
 
+	void AttackPattern_00();         //旧行動ループ2(保存用)
+
 	void decision_Direction();       //向きを乱数で決める関数
 	void jump_Direction();           //ジャンプするかを乱数で決める関数
 	void jump();                     //ジャンプ
