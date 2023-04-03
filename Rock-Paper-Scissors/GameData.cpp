@@ -42,7 +42,7 @@ unsigned int GameData::Get_Score()
 
 
 //制限時間を設定（各ステージの番号）
-void GameData::Set_TimeLimit(const unsigned int time_limit = 999)
+void GameData::Set_TimeLimit(const unsigned int time_limit)
 {
 	//0以下の場合は処理しない
 	if (time_limit < 0)
