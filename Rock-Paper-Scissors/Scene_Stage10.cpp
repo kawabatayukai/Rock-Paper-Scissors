@@ -6,6 +6,9 @@
 #include"Scene_GameClear.h"
 #include"Scene_GameOver.h"
 #include"Jangeki_Homing.h"
+#include"Scene_Result.h"
+#include"GameData.h"
+
 
 //デバッグモード
 #include"Debug_Manager.h"
@@ -13,6 +16,9 @@
 //コンストラクタ
 Scene_Stage10::Scene_Stage10(const Player* player)
 {
+	//制限時間をセット
+	GameData::Set_TimeLimit(3700);
+
 	//プレイヤー情報が渡されていれば
 	if (player != nullptr)
 	{
@@ -50,6 +56,9 @@ Scene_Stage10::~Scene_Stage10()
 //更新
 void Scene_Stage10::Update()
 {
+	//時間をカウント
+	GameData::Time_Update();
+
 	//接触じゃんけんでない時
 	if (janken_flag == false)
 	{
@@ -329,8 +338,8 @@ AbstractScene* Scene_Stage10::ChangeScene()
 	//敵のHPが0以下
 	if (obj_enemy->GetHP() < 0)
 	{
-		//ゲームクリアシーンへ切り替え
-		return dynamic_cast<AbstractScene*> (new GameClearScene(0));
+		//リザルトへ切り替え
+		return dynamic_cast<AbstractScene*> (new Scene_Result());
 	}
 
 	//プレイヤーのHPが0以下

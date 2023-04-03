@@ -41,7 +41,10 @@ void Stage_Base::DrawUI(Jan_Type type, int hp) const
 	DrawFormatString(1120, 85, 0x00ff00, "残り:%d", hp);	//残り体力(数値)
 
 	//制限時間描画
-	DrawFormatString(1050, 120, 0x00ff00, "TimeLimit : %d", GameData::Get_Each_Time() / 60);
+	DrawFormatString(550, 40, 0x00ff00, "%d分%d秒", GameData::Get_Each_Time() / 3600, GameData::Get_Each_Time() / 60);
+
+	//スコア表示
+	DrawFormatString(20, 220, 0xffffff, "スコア：%d", GameData::Get_Score());
 
 	/*if (hp > 0) DrawFormatString(1000, 50, 0xffffff, "HP : %d", hp);
 	else DrawString(1100, 50, "death!", 0xffffff);*/

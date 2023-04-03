@@ -243,6 +243,15 @@
     <ClCompile Include="GameData.cpp">
       <Filter>ソース ファイル\GameMainScene\GameData</Filter>
     </ClCompile>
+    <ClCompile Include="Scene_Result.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_InputRanking.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Ranking.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -400,6 +409,15 @@
     </ClInclude>
     <ClInclude Include="GameData.h">
       <Filter>ソース ファイル\GameMainScene\GameData</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Result.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_InputRanking.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Ranking.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
