@@ -4,6 +4,7 @@
 #include"Scene_GameOver.h"
 #include "Scene_GameClear.h"
 #include "Enemy_02.h"
+#include"GameData.h"
 
 //デバッグモード
 #include"Debug_Manager.h"
@@ -51,6 +52,9 @@ Scene_Stage06::Scene_Stage06(const Player* player)
 	obj_floor[13] = new Floor(1089, 100, 120, 10);
 	obj_floor[14] = new Floor(1089, 300, 120, 10);
 	obj_floor[15] = new Floor(1089, 500, 120, 10);
+
+	//制限時間をセット
+	GameData::Set_TimeLimit(600);
 }
 
 //デストラクタ
@@ -61,6 +65,12 @@ Scene_Stage06::~Scene_Stage06()
 //更新
 void Scene_Stage06::Update()
 {
+	//時間をカウント
+	GameData::Time_Update();
+
+	//プレイヤー座標を取得
+	obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
+
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
@@ -70,7 +80,6 @@ void Scene_Stage06::Update()
 
 	//接触じゃんけん処理
 	Touch_Janken(obj_enemy, this);
-
 
 	//playerのじゃん撃をとってくる
 	Jangeki_Base** player_jangeki = obj_player->GetJangeki();
@@ -295,7 +304,7 @@ AbstractScene* Scene_Stage06::ChangeScene()
 	}
 
 	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() <= 0)
+	if (obj_player->GetHP() < 0 /* || GameData::Get_Each_Time() <= 0 */)
 	{
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(6));

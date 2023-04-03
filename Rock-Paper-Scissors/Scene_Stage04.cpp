@@ -3,6 +3,7 @@
 #include"DxLib.h"
 #include"Scene_GameOver.h"
 #include"Scene_GameClear.h"
+#include"GameData.h"
 
 //デバッグモード
 #include"Debug_Manager.h"
@@ -10,6 +11,9 @@
 //コンストラクタ
 Scene_Stage04::Scene_Stage04(const Player* player)
 {
+	//制限時間をセット(1分間)
+	GameData::Set_TimeLimit(3600);
+
 	back_image = LoadGraph("images/Stage4/Stage_Image2.png");
 
 	//プレイヤー情報が渡されていれば
@@ -35,17 +39,17 @@ Scene_Stage04::Scene_Stage04(const Player* player)
 	obj_floor[1] = new Floor(0,    0,   20, 1720, 0x493759);		//壁（左）
 	obj_floor[2] = new Floor(1260, 0,   20, 1720, 0x493759);		//壁（右）
 	obj_floor[3] = new Floor(300, 500, 200, 10, 0x493759);			//足場(下横)
-	obj_floor[4] = new Floor(600, 350, 150, 10, 0x493759);			//足場(真ん中横)
-	obj_floor[5] = new Floor(400, 180, 150, 10, 0x493759);			//足場(上横)
+	obj_floor[4] = new Floor(650, 450, 150, 10, 0x493759);			//足場(真ん中横)
+	obj_floor[5] = new Floor(400, 250, 150, 10, 0x493759);			//足場(上横)
 	obj_floor[6] = new Floor(390, 425, 10, 170, 0x493759);			//足場(下縦)
-	obj_floor[7] = new Floor(667, 295, 10, 130, 0x493759);			//足場(真ん中縦)
-	obj_floor[8] = new Floor(467, 125, 10, 130, 0x493759);			//足場(上縦)
-	obj_floor[9] = new Floor(850, 280, 150, 10, 0x493759);			//足場(右横)
-	obj_floor[10] = new Floor(917, 225, 10, 130, 0x493759);			//足場(右縦)
-	obj_floor[11] = new Floor(0, 320, 150, 10, 0x493759);			//足場壁際左①
-	obj_floor[12] = new Floor(0, 540, 120, 10, 0x493759);			//足場壁際左②
-	obj_floor[13] = new Floor(1180, 350, 100,  10, 0x493759);	    //足場壁際右①
-	obj_floor[14] = new Floor(1130, 510, 130,  10, 0x493759);		//足場壁際右②
+	obj_floor[7] = new Floor(717, 395, 10, 130, 0x493759);			//足場(真ん中縦)
+	obj_floor[8] = new Floor(467, 195, 10, 130, 0x493759);			//足場(上縦)
+	obj_floor[9] = new Floor(850, 250, 150, 10, 0x493759);			//足場(右横)
+	obj_floor[10] = new Floor(917, 195, 10, 130, 0x493759);			//足場(右縦)
+	obj_floor[11] = new Floor(80, 320, 150, 10, 0x493759);			//足場壁際左①
+	obj_floor[12] = new Floor(80, 500, 120, 10, 0x493759);			//足場壁際左②
+	obj_floor[13] = new Floor(1100, 350, 100,  10, 0x493759);	    //足場壁際右①
+	obj_floor[14] = new Floor(1050, 510, 130,  10, 0x493759);		//足場壁際右②
 }
 
 //デストラクタ
@@ -56,6 +60,9 @@ Scene_Stage04::~Scene_Stage04()
 //更新
 void Scene_Stage04::Update()
 {
+	//時間をカウント
+	GameData::Time_Update();
+
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
@@ -156,6 +163,7 @@ void Scene_Stage04::Update()
 				if (jangeki_type == Jan_Type::PAPER)
 				{
 					obj_enemy->ReceiveDamage(15);     //ダメージが入る
+					obj_enemy->Change_JanType();      //属性が変わる
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -168,6 +176,7 @@ void Scene_Stage04::Update()
 				if (jangeki_type == Jan_Type::ROCK)
 				{
 					obj_enemy->ReceiveDamage(15);     //ダメージが入る
+					obj_enemy->Change_JanType();      //属性が変わる
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -179,6 +188,7 @@ void Scene_Stage04::Update()
 				if (jangeki_type == Jan_Type::SCISSORS)
 				{
 					obj_enemy->ReceiveDamage(15);     //ダメージが入る
+					obj_enemy->Change_JanType();      //属性が変わる
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -201,7 +211,7 @@ void Scene_Stage04::Update()
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
 			//ダメージを受ける（プレイヤー）
-			obj_player->ReceiveDamage(25);
+			obj_player->ReceiveDamage(20);
 
 			//あたったじゃん撃を削除
 			obj_enemy->DeleteJangeki(i);
@@ -210,10 +220,19 @@ void Scene_Stage04::Update()
 	}
 
 
-	HitCtrl_Floor(obj_player, STAGE_04_FLOOR);     // player　床・壁判定
-	//HitCtrl_Floor(obj_enemy, STAGE_04_FLOOR);      // 敵　　　床・壁判定
+	//HitCtrl_Floor(obj_player, STAGE_04_FLOOR);     // player　床・壁判定
 
+	////壁との当たり判定
+	if (obj_player->Get_X() <= 50 || obj_player->Get_X() >= 1200)
+	{
+		HitCtrl_Floor(obj_player, STAGE_04_FLOOR);     // player　床・壁判定
+	}
 
+	//プレイヤーのy座標が減少しない時のみ当たり判定を取得
+	if (obj_player->Get_Y() >= obj_player->Get_OldY())
+	{
+		HitCtrl_Floor(obj_player, STAGE_04_FLOOR);     // player　床・壁判定
+	}
 }
 
 
@@ -245,8 +264,6 @@ void Scene_Stage04::Draw() const
 		//接触時じゃんけん描画
 		Draw_Janken();
 	}
-
-	//DrawString(640, 360, "Stage04", 0xffffff);
 }
 
 //じゃんけん描画
@@ -265,14 +282,14 @@ AbstractScene* Scene_Stage04::ChangeScene()
 	if (obj_enemy->GetHP() <= 0)
 	{
 		//ゲームクリアシーンへ切り替え
-		//return dynamic_cast<AbstractScene*> (new GameClearScene(5));
+		return dynamic_cast<AbstractScene*> (new GameClearScene(5));
 	}
 
 	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() <= 0)
+	if (obj_player->GetHP() <= 0 || GameData::Get_Each_Time() <= 0)
 	{
 		//ゲームオーバーシーンへ切り替え
-		//return dynamic_cast<AbstractScene*> (new GameOverScene(4));
+		return dynamic_cast<AbstractScene*> (new GameOverScene(4));
 	}
 
 #endif // DEBUG_OFF_04
@@ -284,10 +301,12 @@ AbstractScene* Scene_Stage04::ChangeScene()
 void Scene_Stage04::AfterJanken_WIN()
 {
 	obj_player->SetX(100);
+	obj_enemy->SetX(1180);
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）
 void Scene_Stage04::AfterJanken_LOSE()
 {
 	obj_player->SetX(100);
+	obj_enemy->SetX(1180);
 }
