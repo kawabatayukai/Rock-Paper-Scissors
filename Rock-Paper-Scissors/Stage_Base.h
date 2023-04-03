@@ -29,7 +29,7 @@ public:
 	Jan_Result Get_JankenResult(Jan_Type player, Jan_Type enemy);
 
 	//敵とプレイヤーの当たり判定→接触じゃんけん処理    敵へのポインタ、"this" を引数に
-	void Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr);
+	void Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_StageNum = 0);
 
 	virtual void AfterJanken_WIN();        //じゃんけん終了後の挙動（プレイヤー勝ち）
 	virtual void AfterJanken_LOSE();       //じゃんけん終了後の挙動（プレイヤー負け）
@@ -40,7 +40,6 @@ public:
 protected:
 	Player* obj_player = nullptr;             //プレイヤー
 	Floor** obj_floor = nullptr;              //床・壁
-
 	Janken* obj_janken = nullptr;             //じゃんけん用
 
 private:

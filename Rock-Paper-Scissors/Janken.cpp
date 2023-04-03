@@ -5,7 +5,7 @@
 
 //コンストラクタ　　　　　　　　　　enemyの出す手が決まる
 Janken::Janken(Jan_Type enemy_jan, const int stage_num)
-	: enemy_jan(enemy_jan), p_image_x(-50), e_image_x(1330)
+	: enemy_jan(enemy_jan), p_image_x(-50), e_image_x(1330), stage_num(stage_num)
 {
 	//適当に初期化
 	player_jan = Jan_Type::ROCK;
@@ -17,6 +17,19 @@ Janken::Janken(Jan_Type enemy_jan, const int stage_num)
 	image_hand = LoadGraph("images/Janken_Hand2.png");
 	image_player = LoadGraph("images/sd_body-1.png");
 	image_enemy = LoadGraph("images/tyokitest.png");
+
+	//敵の画像
+	image_all_enemy[0] = LoadGraph("images/tyokitest.png");
+	image_all_enemy[1] = LoadGraph("images/tyokitest.png");
+	image_all_enemy[2] = LoadGraph("images/stage02/ex.png");
+	image_all_enemy[3] = LoadGraph("images/stage03/stage03attack.png");
+	image_all_enemy[4] = LoadGraph("images/Stage04/ステージ4_ボス100.png");
+	image_all_enemy[5] = LoadGraph("images/stage05/Stage5_Enemy_NoMove_Left.png");
+	image_all_enemy[6] = LoadGraph("images/tyokitest.png");
+	image_all_enemy[7] = LoadGraph("images/tyokitest.png");
+	image_all_enemy[8] = LoadGraph("images/stage08/Stage8_image100.png");
+	image_all_enemy[9] = LoadGraph("images/stage09/Stage9_100.png");
+	image_all_enemy[10] = LoadGraph("images/tyokitest.png");
 
 	//フォントデータを作成　　　　　　Windows標準搭載フォントなら大丈夫。多分　　　[候補 "Yu Gothic UI"]
 	font_result = CreateFontToHandle("メイリオ", 70, 8, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 2);
@@ -79,8 +92,16 @@ void Janken::Draw() const
 	//プレイヤー
 	DrawRotaGraph(p_image_x, 300, 2, 0, image_player, TRUE, TRUE);
 
-	//敵
-	DrawRotaGraph(e_image_x, 600, 2, 0, image_enemy, TRUE);
+	//画像読み込みに失敗していなければ
+	if (image_all_enemy[stage_num] != -1)
+	{
+		DrawRotaGraph(e_image_x, 600, 2, 0, image_all_enemy[stage_num], TRUE);
+	}
+	else
+	{
+		DrawRotaGraph(e_image_x, 600, 2, 0, image_enemy, TRUE);
+	}
+
 
 	//40フレーム後
 	if (time > 40)

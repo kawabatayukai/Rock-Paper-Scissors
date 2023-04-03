@@ -40,11 +40,12 @@ Scene_Stage04::Scene_Stage04(const Player* player)
 	obj_floor[6] = new Floor(390, 425, 10, 170, 0x493759);			//‘«ê(‰ºc)
 	obj_floor[7] = new Floor(667, 295, 10, 130, 0x493759);			//‘«ê(^‚ñ’†c)
 	obj_floor[8] = new Floor(467, 125, 10, 130, 0x493759);			//‘«ê(ãc)
-	obj_floor[9] = new Floor(0, 320, 100, 5, 0x493759);				//ž™‡@
-	obj_floor[10] = new Floor(0, 540, 70, 5, 0x493759);				//ž™‡A
-	obj_floor[11] = new Floor(300, 0, 5, 80, 0x493759);				//ž™‡B
-	obj_floor[12] = new Floor(1180, 300, 100,  5, 0x493759);	    //ž™‡C
-	obj_floor[13] = new Floor(1130, 460, 130,  5, 0x493759);		//ž™‡D
+	obj_floor[9] = new Floor(850, 280, 150, 10, 0x493759);			//‘«ê(‰E‰¡)
+	obj_floor[10] = new Floor(917, 225, 10, 130, 0x493759);			//‘«ê(‰Ec)
+	obj_floor[11] = new Floor(0, 320, 150, 10, 0x493759);			//‘«ê•ÇÛ¶‡@
+	obj_floor[12] = new Floor(0, 540, 120, 10, 0x493759);			//‘«ê•ÇÛ¶‡A
+	obj_floor[13] = new Floor(1180, 350, 100,  10, 0x493759);	    //‘«ê•ÇÛ‰E‡@
+	obj_floor[14] = new Floor(1130, 510, 130,  10, 0x493759);		//‘«ê•ÇÛ‰E‡A
 }
 
 //ƒfƒXƒgƒ‰ƒNƒ^
@@ -200,7 +201,7 @@ void Scene_Stage04::Update()
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
 			//ƒ_ƒ[ƒW‚ðŽó‚¯‚éiƒvƒŒƒCƒ„[j
-			obj_player->ReceiveDamage(50);
+			obj_player->ReceiveDamage(25);
 
 			//‚ ‚½‚Á‚½‚¶‚á‚ñŒ‚‚ðíœ
 			obj_enemy->DeleteJangeki(i);
