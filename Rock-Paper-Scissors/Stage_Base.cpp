@@ -10,6 +10,9 @@ Stage_Base::Stage_Base()
 {
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, typeImage);
 	hpImage = LoadGraph("images/HitPoint.png");
+
+	//                           サイズ 幅              外枠
+	font = CreateFontToHandle(NULL, 60, 3, DX_FONTTYPE_ANTIALIASING/*DX_FONTTYPE_ANTIALIASING_EDGE_4X4*/, -1, 2);
 }
 
 Stage_Base::~Stage_Base()
@@ -41,7 +44,7 @@ void Stage_Base::DrawUI(Jan_Type type, int hp) const
 	DrawFormatString(1120, 85, 0x00ff00, "残り:%d", hp);	//残り体力(数値)
 
 	//制限時間描画
-	DrawFormatString(550, 40, 0x00ff00, "%d分%d秒", GameData::Get_Each_Time() / 3600, GameData::Get_Each_Time() / 60);
+	DrawFormatStringToHandle(500, 20, 0x00ff00, font, "%d分%d秒", GameData::Get_Each_Time() / 3600, GameData::Get_Each_Time() / 60);
 
 	//スコア表示
 	DrawFormatString(20, 220, 0xffffff, "スコア：%d", GameData::Get_Score());
