@@ -3,6 +3,7 @@
 #include"DxLib.h"
 #include"Scene_GameOver.h"
 #include"Scene_GameClear.h"
+#include"GameData.h"
 
 //デバッグモード
 #include"Debug_Manager.h"
@@ -10,6 +11,9 @@
 //コンストラクタ
 Scene_Stage04::Scene_Stage04(const Player* player)
 {
+	//制限時間をセット
+	GameData::Set_TimeLimit(600);
+
 	back_image = LoadGraph("images/Stage4/Stage_Image2.png");
 
 	//プレイヤー情報が渡されていれば
@@ -56,6 +60,9 @@ Scene_Stage04::~Scene_Stage04()
 //更新
 void Scene_Stage04::Update()
 {
+	//時間をカウント
+	GameData::Time_Update();
+
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
@@ -156,6 +163,7 @@ void Scene_Stage04::Update()
 				if (jangeki_type == Jan_Type::PAPER)
 				{
 					obj_enemy->ReceiveDamage(15);     //ダメージが入る
+					obj_enemy->Change_JanType();      //属性が変わる
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -168,6 +176,7 @@ void Scene_Stage04::Update()
 				if (jangeki_type == Jan_Type::ROCK)
 				{
 					obj_enemy->ReceiveDamage(15);     //ダメージが入る
+					obj_enemy->Change_JanType();      //属性が変わる
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -179,6 +188,7 @@ void Scene_Stage04::Update()
 				if (jangeki_type == Jan_Type::SCISSORS)
 				{
 					obj_enemy->ReceiveDamage(15);     //ダメージが入る
+					obj_enemy->Change_JanType();      //属性が変わる
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -201,7 +211,7 @@ void Scene_Stage04::Update()
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
 			//ダメージを受ける（プレイヤー）
-			obj_player->ReceiveDamage(25);
+			obj_player->ReceiveDamage(20);
 
 			//あたったじゃん撃を削除
 			obj_enemy->DeleteJangeki(i);
@@ -211,9 +221,24 @@ void Scene_Stage04::Update()
 
 
 	HitCtrl_Floor(obj_player, STAGE_04_FLOOR);     // player　床・壁判定
-	//HitCtrl_Floor(obj_enemy, STAGE_04_FLOOR);      // 敵　　　床・壁判定
 
+	////壁との当たり判定
+	//if (obj_player->Get_X() <= 50 || obj_player->Get_X() >= 1200)
+	//{
+	//	HitCtrl_Floor(obj_player, STAGE_04_FLOOR);     // player　床・壁判定
+	//}
 
+	////プレイヤーのy座標が減少しない時のみ当たり判定を取得
+	//if (obj_player->Get_Y() >= obj_player->Get_OldY())
+	//{
+	//	HitCtrl_Floor(obj_player, STAGE_04_FLOOR);     // player　床・壁判定
+	//}
+
+	////敵のy座標が減少しない時のみ当たり判定を取得
+	//if (obj_enemy->Get_Y() >= obj_enemy->Get_OldY())
+	//{
+	//	HitCtrl_Floor(obj_enemy, STAGE_04_FLOOR);      // 敵　　　床・壁判定
+	//}
 }
 
 
@@ -269,7 +294,7 @@ AbstractScene* Scene_Stage04::ChangeScene()
 	}
 
 	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() <= 0)
+	if (obj_player->GetHP() <= 0 || GameData::Get_Each_Time() <= 0)
 	{
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(4));
@@ -284,10 +309,12 @@ AbstractScene* Scene_Stage04::ChangeScene()
 void Scene_Stage04::AfterJanken_WIN()
 {
 	obj_player->SetX(100);
+	obj_enemy->SetX(1180);
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）
 void Scene_Stage04::AfterJanken_LOSE()
 {
 	obj_player->SetX(100);
+	obj_enemy->SetX(1180);
 }

@@ -28,6 +28,8 @@ public:
 
 	void Move_Pattern();
 
+	void Change_JanType();           //ƒ‰ƒ“ƒ_ƒ€‚É‘®«•Ï‰»
+
 private:
 	/********************   ƒWƒƒƒ“ƒvŠÖŒW   ********************/
 
