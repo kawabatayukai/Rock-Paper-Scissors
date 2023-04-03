@@ -11,6 +11,7 @@
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_02::Enemy_02(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
+
 	speed = 7.0f;
 	dir = 1;
 	hp = 100;
@@ -193,27 +194,27 @@ void Enemy_02::Update_Jangeki()
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
 		float radius = 35.5f;   //半径
-		float speed = -2.5f;     //スピード
+		float speed = 2.5f;     //スピード
 
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
 
 		////生成
-		if (frame_count % 120 == 0)
+		/*if (frame_count % 120 == 0)
 		{
 			if (GetRand(0) == 0)
 			{
 				Jan_360degrees(jan_count, radius, speed, type);
 			}
 			
-		}
+		}*/
 		//生成
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_whole(x, y, radius, speed, type, player_x, player_y);
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(float x, float y, float r, float speed, Jan_Type type, float p_x, float p_y);
 		
 		//プレイヤーの角度へ発射するジャン撃生成
-		if (frame_count % 50 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+		if (frame_count % 75 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 
 		//プレイヤーのx座標によって発射する方向を変える(左右)
 		
@@ -224,7 +225,8 @@ void Enemy_02::Update_Jangeki()
 //360度発射
 void Enemy_02::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
 {
-	if (hp <= 50)
+	////45度ずつ8個生成
+	/*if (hp <= 50)
 	{
 		for (int i = count; i < (count + 18); i++)
 	{
@@ -233,8 +235,8 @@ void Enemy_02::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
 		obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
 	}
 
-	}
-	////45度ずつ8個生成
+	}*/
+	
 	
 
 }

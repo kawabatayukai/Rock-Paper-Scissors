@@ -4,6 +4,7 @@
 #include "Scene_Stage03.h"
 #include"Scene_GameOver.h"
 #include "Scene_GameClear.h"
+#include "GameData.h"
 
 //デバッグモード
 #include"Debug_Manager.h"
@@ -11,6 +12,9 @@
 //コンストラクタ
 Scene_Stage02::Scene_Stage02(const Player* player)
 {
+	//制限時間をセット
+	GameData::Set_TimeLimit(6000);
+
 	//プレイヤー情報が渡されていれば
 	if (player != nullptr)
 	{
@@ -46,6 +50,12 @@ Scene_Stage02::~Scene_Stage02()
 //更新
 void Scene_Stage02::Update()
 {
+
+	//時間をカウント
+	GameData::Time_Update();
+
+	obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
+
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
@@ -98,6 +108,8 @@ void Scene_Stage02::Update()
 					//enemy側のじゃん撃を削除
 					obj_enemy->DeleteJangeki(e_count);
 					e_count--;
+
+					GameData::Add_Score(100);    //スコア加算
 
 					break;
 
@@ -262,10 +274,11 @@ AbstractScene* Scene_Stage02::ChangeScene()
 	}
 
 	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() < 0)
+	if (obj_player->GetHP() < 0 || GameData::Get_Each_Time() <= 0)
 	{
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(2));
+		
 	}
 
 #endif // DEBUG_OFF_02
