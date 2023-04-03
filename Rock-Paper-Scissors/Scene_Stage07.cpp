@@ -1,6 +1,7 @@
 #include "Scene_Stage07.h"
 #include"KeyManager.h"
 #include"DxLib.h"
+#include"GameData.h"
 
 #include"Scene_GameOver.h"
 #include"Scene_GameClear.h"
@@ -111,6 +112,8 @@ void Scene_Stage07::Update()
 					//enemy側のじゃん撃を削除
 					obj_enemy->DeleteJangeki(e_count);
 					e_count--;
+
+					GameData::Add_Score(100);    //スコア加算
 
 					break;
 
@@ -241,6 +244,8 @@ void Scene_Stage07::Draw() const
 
 	//UI
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+
+	DrawFormatString(300, 300, 0xffffff, "%d", GameData::Get_Score());
 
 	//テスト
 	//DrawFormatString(300, 300, 0x00ff00, "p-x : %f   p-y : %f", obj_player->GetX(), obj_player->GetY());

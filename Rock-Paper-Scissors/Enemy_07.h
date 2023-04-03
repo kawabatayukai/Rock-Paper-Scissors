@@ -100,6 +100,12 @@ private:
 	ACT_TYPE Pre_Action;    //１つ前のAction（行動）
 
 //------------------------ テスト ------------------------
+
+	unsigned int frame_count;  //フレームカウント変数
+
+	int* image_NowState;       //現在描画すべき画像
+	int image_running[9];      //画像（走る）
+	int current_index = 0;
 };
 
 
