@@ -13,7 +13,7 @@
 Scene_Stage07::Scene_Stage07(const Player* player)
 {
 	//制限時間をセット
-	GameData::Set_TimeLimit(600);
+	GameData::Set_TimeLimit(6000);
 
 
 	//プレイヤー情報が渡されていれば
@@ -121,7 +121,7 @@ void Scene_Stage07::Update()
 					obj_enemy->DeleteJangeki(e_count);
 					e_count--;
 
-					GameData::Add_Score(100);    //スコア加算
+					
 
 					break;
 
