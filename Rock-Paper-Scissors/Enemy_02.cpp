@@ -200,20 +200,23 @@ void Enemy_02::Update_Jangeki()
 
 
 		////生成
-		//if (frame_count % 120 == 0)
-		//{
-		//	if (GetRand(0) == 0)
-		//	{
-		//		Jan_360degrees(jan_count, radius, speed, type);
-		//	}
-		//	
-		//}
+		if (frame_count % 120 == 0)
+		{
+			if (GetRand(0) == 0)
+			{
+				Jan_360degrees(jan_count, radius, speed, type);
+			}
+			
+		}
 		//生成
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_whole(x, y, radius, speed, type, player_x, player_y);
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(float x, float y, float r, float speed, Jan_Type type, float p_x, float p_y);
 		
 		//プレイヤーの角度へ発射するジャン撃生成
 		if (frame_count % 50 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+
+		//プレイヤーのx座標によって発射する方向を変える(左右)
+		
 	}
 	
 }
@@ -221,13 +224,18 @@ void Enemy_02::Update_Jangeki()
 //360度発射
 void Enemy_02::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
 {
-	////45度ずつ8個生成
-	//for (int i = count; i < (count + 18); i++)
-	//{
-	//	double angle = static_cast<double>((20.0 * i) * (M_PI / 180));
+	if (hp <= 50)
+	{
+		for (int i = count; i < (count + 18); i++)
+	{
+		double angle = static_cast<double>((20.0 * i) * (M_PI / 180));
 
-	//	obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
-	//}
+		obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
+	}
+
+	}
+	////45度ずつ8個生成
+	
 
 }
 //old_yの取得関数
@@ -243,5 +251,11 @@ int Enemy_02::Get_Y()
 }
 
 
+//プレイヤーの座標を継承
+void Enemy_02::ChangeDir(float x)
+{
+	if (x < 640) dir = -1;
+	else dir = 1;
+}
 
 

@@ -30,7 +30,7 @@ public:
 	int Get_Y();                      //y‚Ìæ“¾
 
 	void Jan_360degrees(int count, float rad, float speed, Jan_Type type);
-	
+	void ChangeDir(float x);//Œü‚«‚ÌØ‚è‘Ö‚¦
 	//void ChangeDir(float x);
 private:
 	/********************   ƒWƒƒƒ“ƒvŠÖŒW   ********************/
