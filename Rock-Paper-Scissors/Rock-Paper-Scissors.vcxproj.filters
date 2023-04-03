@@ -88,6 +88,9 @@
     <Filter Include="ソース ファイル\Jangeki\nakayoshi">
       <UniqueIdentifier>{0371adfb-44da-4d91-b7dc-f2323cd22f0e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\GameMainScene\GameData">
+      <UniqueIdentifier>{9f06c314-6ab2-4a50-a430-f3d9e3eb4ddf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -236,6 +239,9 @@
     </ClCompile>
     <ClCompile Include="Jangeki_reflection.cpp">
       <Filter>ソース ファイル\Jangeki\nakayoshi</Filter>
+    </ClCompile>
+    <ClCompile Include="GameData.cpp">
+      <Filter>ソース ファイル\GameMainScene\GameData</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -391,6 +397,9 @@
     </ClInclude>
     <ClInclude Include="Jangeki_reflection.h">
       <Filter>ソース ファイル\Jangeki\nakayoshi</Filter>
+    </ClInclude>
+    <ClInclude Include="GameData.h">
+      <Filter>ソース ファイル\GameMainScene\GameData</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -44,13 +44,16 @@ namespace _CONSTANTS_07
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_07::Enemy_07(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type), init_speed(4.0f), jan_count(0), draw_angle(0.0)
-, Player_State(PLAYER_STATE::DO_NOT), Now_Action(ACT_TYPE::NO_ACT), Pre_Action(ACT_TYPE::NO_ACT)
+, Player_State(PLAYER_STATE::DO_NOT), Now_Action(ACT_TYPE::NO_ACT), Pre_Action(ACT_TYPE::NO_ACT), frame_count(0)
 {
 	speed = 4.0f;
 	dir = 1;
 	hp = 100;
 
 	image = LoadGraph("images/tyokitest.png");
+
+	image_NowState = nullptr;
+	LoadDivGraph("images/stage07/wrestler_test39ver2.png", 9, 9, 1, 38, 38, image_running);
 
 	Init_Jangeki();       //じゃん撃を用意
 
@@ -75,12 +78,6 @@ void Enemy_07::Update()
 
 	/********************   ジャンプ関係   ********************/
 
-	//if (land_flg == true)    //GetRand(30) == 3　のところがジャンプの条件
-	//{
-	//	g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-	//	land_flg = false;  //地面についていない
-	//}
-
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
 	//落下速度の制限
@@ -91,13 +88,21 @@ void Enemy_07::Update()
 	g_add = _GRAVITY;             //重力加速度を初期化する
 
 	/**********************************************************/
+
+	if (++frame_count % 6 == 0)
+	{
+		current_index++;
+		if (current_index >= 9) current_index = 0;
+		frame_count = 0;
+	}
 }
 
 //描画
 void Enemy_07::Draw() const
 {
 	//中心から描画
-	DrawRotaGraphF(x, y, 1, draw_angle, image, TRUE);
+	//DrawRotaGraphF(x, y, 1, draw_angle, image, TRUE);
+	DrawRotaGraphF(x, y, 3, draw_angle, image_running[current_index], TRUE);
 
 	//じゃん撃描画
 	Draw_Jangeki();
