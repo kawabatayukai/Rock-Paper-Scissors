@@ -54,7 +54,7 @@ Scene_Stage06::Scene_Stage06(const Player* player)
 	obj_floor[15] = new Floor(1089, 500, 120, 10);
 
 	//制限時間をセット
-	GameData::Set_TimeLimit(600);
+	GameData::Set_TimeLimit(3600);
 }
 
 //デストラクタ
@@ -304,7 +304,7 @@ AbstractScene* Scene_Stage06::ChangeScene()
 	}
 
 	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() < 0 /* || GameData::Get_Each_Time() <= 0 */)
+	if (obj_player->GetHP() < 0  || GameData::Get_Each_Time() <= 0 )
 	{
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(6));

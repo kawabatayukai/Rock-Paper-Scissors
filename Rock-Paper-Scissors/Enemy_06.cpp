@@ -11,7 +11,9 @@ Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = -1;                 //-1なら左向き  +1なら右向き
 	hp = 100;
 
-	image = LoadGraph("images/tyokitest.png");
+	images[0] = LoadGraph("images/gu-test.png");
+	images[1] = LoadGraph("images/tyokitest.png");
+	images[2] = LoadGraph("images/pa-test.png");
 
 	Init_Jangeki();       //じゃん撃を用意
 
@@ -79,8 +81,26 @@ void Enemy_06::Update()
 //描画
 void Enemy_06::Draw() const
 {
-	//中心から描画
-	DrawRotaGraphF(x, y, 1, 0, image, TRUE);
+	//グー属性の時、赤いキャラ画像を表示
+	if (GetType() == static_cast<Jan_Type>(0))
+	{
+		//中心から描画
+		DrawRotaGraphF(x, y, 1, 0, images[0], TRUE, dir == -1 ? 0 : 1);
+	}
+
+	//チョキ属性の時、黄色いキャラ画像を表示
+	if (GetType() == static_cast<Jan_Type>(1))
+	{
+		//中心から描画
+		DrawRotaGraphF(x, y, 1, 0, images[1], TRUE, dir == -1 ? 0 : 1);
+	}
+
+	//パー属性の時、青いキャラ画像を表示
+	if (GetType() == static_cast<Jan_Type>(2))
+	{
+		//中心から描画
+		DrawRotaGraphF(x, y, 1, 0, images[2], TRUE, dir == -1 ? 0 : 1);
+	}
 
 	//じゃん撃描画
 	Draw_Jangeki();
