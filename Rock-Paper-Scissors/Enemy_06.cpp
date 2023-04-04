@@ -11,6 +11,8 @@ Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = -1;                 //-1‚È‚ç¶Œü‚«  +1‚È‚ç‰EŒü‚«
 	hp = 100;
 
+	old_type = static_cast<Jan_Type>(1);  //ƒ`ƒ‡ƒL‘®«‚Å‰Šú‰»
+
 	images[0] = LoadGraph("images/gu-test.png");
 	images[1] = LoadGraph("images/tyokitest.png");
 	images[2] = LoadGraph("images/pa-test.png");
@@ -213,7 +215,11 @@ void Enemy_06::AttackPattern_1()
 	//“G‚Ì‘®«•Ï‰»ˆ—
 	if (ChangeCnt > 4)
 	{
-		SetType(static_cast<Jan_Type>(GetRand(2)));
+		while (GetType() == old_type)
+		{
+			SetType(static_cast<Jan_Type>(GetRand(2)));
+		}
+		old_type = GetType();
 		ChangeCnt = 0;
 	}
 
@@ -399,7 +405,11 @@ void Enemy_06::AttackPattern_2()
 	//“G‚Ì‘®«•Ï‰»ˆ—
 	if (ChangeCnt > 7)
 	{
-		SetType(static_cast<Jan_Type>(GetRand(2)));
+		while (GetType() == old_type)
+		{
+			SetType(static_cast<Jan_Type>(GetRand(2)));
+		}
+		old_type = GetType();
 		ChangeCnt = 0;
 	}
 
@@ -571,7 +581,11 @@ void Enemy_06::AttackPattern_3()
 	//“G‚Ì‘®«•Ï‰»ˆ—
 	if (ChangeCnt > 5)
 	{
-		SetType(static_cast<Jan_Type>(GetRand(2)));
+		while (GetType() == old_type)
+		{
+			SetType(static_cast<Jan_Type>(GetRand(2)));
+		}
+		old_type = GetType();
 		ChangeCnt = 0;
 	}
 }
