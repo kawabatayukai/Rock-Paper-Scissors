@@ -14,6 +14,8 @@ MobEnemy_05::MobEnemy_05(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.
 	Mobenemy_image = LoadGraph("images/stage05/Mobenemy_image.png", TRUE);
 
 	Init_Jangeki();       //‚¶‚á‚ñŒ‚‚ð—pˆÓ
+
+	
 }
 
 MobEnemy_05::~MobEnemy_05()
