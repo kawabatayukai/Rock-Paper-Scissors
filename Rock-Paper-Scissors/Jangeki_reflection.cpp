@@ -6,7 +6,6 @@ Jangeki_Reflection::Jangeki_Reflection(float x, float y, float r, float speed, J
 	:Jangeki_Base(x, y, r, speed, type)  ,jan_count_reflection(0)  // ←基底クラスのコンストラクタを呼ぶ
 {
 	obj_reflection = nullptr;
-	LoadDivGraph("images/stage09/Reflection_Jangeki.png", 3, 3, 1, 100, 100, Rimage);
 
 }
 
@@ -18,7 +17,6 @@ Jangeki_Reflection::~Jangeki_Reflection()
 
 void Jangeki_Reflection::Update_reflection()
 {
-
 
 	//じゃん撃配列をひとつずつ
 	for (jan_count_reflection = 0; jan_count_reflection < JANGEKI_MAX; jan_count_reflection++)
@@ -44,7 +42,6 @@ void Jangeki_Reflection::Update_reflection()
 	if (jan_count_reflection < JANGEKI_MAX && obj_reflection[jan_count_reflection] == nullptr)
 
 	{
-
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 	}

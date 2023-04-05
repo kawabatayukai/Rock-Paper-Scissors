@@ -5,7 +5,7 @@
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_08::Enemy_08(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
-{
+{	
 	speed = 7.0f;
 	dir = 1;
 	hp = 100;

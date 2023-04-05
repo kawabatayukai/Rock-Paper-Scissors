@@ -14,6 +14,7 @@ public:
 
 	void Update() override;          //更新
 	void Draw() const override;      //描画
+	//void RDraw();
 
 	void Update_Jangeki() override;  //じゃん撃生成・更新
 
@@ -21,7 +22,11 @@ public:
 
 	void HP(); 
 
+	void frameUP();
+	void frameDown();
+
 	Jangeki_Reflection* reflection;
+
 
 private:
 	/********************   ジャンプ関係   ********************/
@@ -36,8 +41,9 @@ private:
 	int teleport = 0;
 	int frame_count = 0;       //じゃん撃発射用
 	int interval = 0;
+	int Rimage;
 	int image;
-
+	int janFrame = 75;
 	
 	Player* type;
 
