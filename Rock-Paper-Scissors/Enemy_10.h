@@ -37,6 +37,15 @@ public:
 	/*敵の動き*/
 	void Move();
 
+	/*敵の動き*/
+	void Enemy10_Move();
+
+	/*画像の変更取得*/
+	void EnemySwitch();
+
+	/*画像の動作変更*/
+	void EnemyChangeMoveimg();
+
 private:
 	/********************   ジャンプ関係   ********************/
 
@@ -51,6 +60,29 @@ private:
 
 	float v = V;
 	float a = 0.6f;
+
+	int image[10]; //画像
+
+	int jangeki_Set; //じゃん撃セット用変数
+
+	int jan_count;
+
+	int enemy_Image; //画像の配列保持
+
+	int enemyGetMove;   //移動保持
+
+	int enemyCount; //画像のフレームカウント
+
+	int enemyChange_Image; //画像変更
+
+	int pCount; //最後の画像
+
+	//向き（左右のみ）
+	enum class DIRECTION
+	{
+		LEFT,
+		RIGHT,
+	};
 
 	/*敵：移動, 目的地, NEXT, 待ち時間, 攻撃方法の配列*/
 	MoveInformation10 MoveInfo[10] = {};

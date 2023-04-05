@@ -1,7 +1,7 @@
 #include "Stage_Base.h"
 #include"KeyManager.h"
 #include"DxLib.h"
-
+#include"GameData.h"
 
 //衝突判定なし時間   5秒
 #define NOT_COLLISION_TIME  300
@@ -10,6 +10,9 @@ Stage_Base::Stage_Base()
 {
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, typeImage);
 	hpImage = LoadGraph("images/HitPoint.png");
+
+	//                           サイズ 幅              外枠
+	font = CreateFontToHandle(NULL, 60, 3, DX_FONTTYPE_ANTIALIASING/*DX_FONTTYPE_ANTIALIASING_EDGE_4X4*/, -1, 2);
 }
 
 Stage_Base::~Stage_Base()
@@ -39,6 +42,15 @@ void Stage_Base::DrawUI(Jan_Type type, int hp) const
 	DrawRotaGraph(1030, 60, 0.5, 0, hpImage, TRUE);			//体力ゲージ枠
 	DrawBox(948, 45, 948 + static_cast<int>(hp * 2.54), 75, 0x00ff00, TRUE);	//体力ゲージ
 	DrawFormatString(1120, 85, 0x00ff00, "残り:%d", hp);	//残り体力(数値)
+
+	//制限時間描画
+	DrawFormatStringToHandle(500, 20, 0x00ff00, font, "%d分%d秒", GameData::Get_Each_Time() / 3600, GameData::Get_Each_Time() / 60);
+
+	//スコア表示
+	DrawFormatString(20, 220, 0xffffff, "スコア：%d", GameData::Get_Score());
+
+	//スコア
+	DrawFormatString(1050, 150, 0x00ff00, "Score : %d", GameData::Get_Score());
 
 	/*if (hp > 0) DrawFormatString(1000, 50, 0xffffff, "HP : %d", hp);
 	else DrawString(1100, 50, "death!", 0xffffff);*/
@@ -101,7 +113,7 @@ Jan_Result Stage_Base::Get_JankenResult(Jan_Type player, Jan_Type enemy)
 
 
 //敵とプレイヤーの当たり判定→接触じゃんけん処理    敵へのポインタ、"this" を引数に
-void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr)
+void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_StageNum)
 {
 	//じゃんけん開始前 
 	if (j_state == Jan_State::BEFORE)
@@ -116,7 +128,7 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr)
 			Jan_Type enemy_janken = static_cast<Jan_Type> (GetRand(2));
 
 			//じゃんけんオブジェクト生成
-			obj_janken = new Janken(enemy_janken, 0);
+			obj_janken = new Janken(enemy_janken, my_StageNum);
 		}
 
 	}

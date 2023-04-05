@@ -9,7 +9,8 @@ struct Pattern_03 {
 	float location_y; //目指している座標y
 	int next_index; //次配列のパターンの番号
 	int enemywaitTime;//エネミーの待ち時間
-	int jumpflg;
+	int jumpflg; //ジャンプするかしないか
+
 };
 
 //3ステージ　敵キャラ
@@ -26,11 +27,13 @@ public:
 
 	void Update_Jangeki() override;  //じゃん撃生成・更新
 
-	void Move_Pattern();
+	void Move_Pattern();//動きのパターン
 
-	int GetWaitTime()const;
+	int GetWaitTime()const;//待ち時間の取得
 
-	void ChangeDir(float x);
+	void ChangeDir(float x);//向きの切り替え
+
+	float Get_OldY() const { return old_y; } //Y座標の取得
 
 
 private:
@@ -47,12 +50,12 @@ private:
 
 
 	/**********************************************************/
-	int frame_count = 0;       //じゃん撃発射用
+	int frame_count ;       //じゃん撃発射用
 
-	int waitcount = 0;//待ち時間カウント
+	int waitcount ;//待ち時間カウント
 
 	Pattern_03 moveinfo[40]; //行動パターン50種
-	short current = 0; //現在のパターン配列添字
+	short current ; //現在のパターン配列添字
 
 	int enemyimage[2];      //敵画像配列
 };

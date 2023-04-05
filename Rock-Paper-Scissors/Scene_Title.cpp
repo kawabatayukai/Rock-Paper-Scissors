@@ -3,6 +3,8 @@
 #include"Scene_Title.h"
 #include"Scene_GameMain.h"
 
+#include"GameData.h"
+
 //コンストラクタ
 TitleScene::TitleScene()
 {
@@ -61,6 +63,8 @@ AbstractScene* TitleScene::ChangeScene()
 
 		if (KeyManager::OnPadClicked(PAD_INPUT_A) == true)
 		{
+			GameData::Init_Data();   //データの初期化
+
 			return dynamic_cast<AbstractScene*> (new GameMainScene());
 		}
 		/*case 1:

@@ -55,6 +55,9 @@ private:
 	int image_player;        //プレイヤーじゃんけん中
 	int image_enemy;         //敵じゃんけん中
 
+	int image_all_enemy[11]; //全ステージの画像
+	int stage_num;           //呼び出し元のステージ番号
+
 	int font_result;         //結果(WIN or LOSE or ONEMORE) 用フォント 
 	int font_other;          //「じゃんけん..」,「ぽん」など用フォント
 
