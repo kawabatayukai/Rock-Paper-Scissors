@@ -111,8 +111,8 @@ void Enemy_06::Draw() const
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
 	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
 
-	//テスト
-	DrawFormatString(600, 600, 0xffffff, "ChangeCnt : %d", ChangeCnt);
+	////ChangeCnt変数表示テスト
+	//DrawFormatString(600, 600, 0xffffff, "ChangeCnt : %d", ChangeCnt);
 }
 
 //じゃん撃生成・更新
