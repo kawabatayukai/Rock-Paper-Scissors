@@ -32,8 +32,10 @@ private:
 	Enemy_03* obj_enemy;            //敵
 
 
-	int stage = 0;//背景
-	int GroundImages = 0; //地面
-	int BlockImages = 0; //ブロック
+	int stage ;//背景
+	int GroundImages ; //地面
+	int BlockImages ; //ブロック
+	int PlayerCutDamege ;//プレイヤーが勝った接触じゃんけん勝利時のダメージカット
+	int EnemyCutDamege; //エネミーが勝った接触じゃんけん勝利時のダメージカット
 };
 

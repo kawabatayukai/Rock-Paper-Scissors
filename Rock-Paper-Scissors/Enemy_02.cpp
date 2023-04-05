@@ -4,16 +4,21 @@
 #include"Jangeki_Base.h"
 #include "Jangeki_whole.h"
 #include<typeinfo>
-
+#include "Jangeki_Coming.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_02::Enemy_02(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
+
 	speed = 7.0f;
 	dir = 1;
 	hp = 100;
+
+	//ランダムな座標取得
+	enemy_x = GetRand(1160) + 100;
+	enemy_y = GetRand(600) + 100;
 
 	image = LoadGraph("images/stage02/junp4.png");
 
@@ -34,6 +39,8 @@ void Enemy_02::Update()
 	//じゃん撃更新・生成
 	Update_Jangeki();
 
+
+
 	//if (x + (w / 2) == (1280 - 20))
 	//{
 	//	dir = -1;
@@ -46,7 +53,7 @@ void Enemy_02::Update()
 	//x += dir * speed;
 
 	/********************   ジャンプ関係   ********************/
-
+	
 	if (jump_cnt < 1)
 	{
 		if (GetRand(1) == 1)  //乱数でjump_flgをtrueにする
@@ -129,7 +136,11 @@ void Enemy_02::Update()
 
 	}
 
-	
+	////HPが70以下になると次の行動ループに移行
+	//if (hp <= 70)
+	//{
+	//	attack_pattern = 1;    //攻撃パターンを変更
+	//}
 
 	if (hp <= 0) hp = 0;
 	else if (hp <= 50) speed = 5.0f;
@@ -154,6 +165,7 @@ void Enemy_02::Draw() const
 //じゃん撃生成・更新
 void Enemy_02::Update_Jangeki()
 {
+	
 	int jan_count;
 
 	//じゃん撃配列をひとつずつ
@@ -163,6 +175,9 @@ void Enemy_02::Update_Jangeki()
 		if (obj_jangeki[jan_count] == nullptr) break;
 
 		obj_jangeki[jan_count]->Update();
+
+		//プレイヤーの座標をセットする
+		obj_jangeki[jan_count]->SetTargetLocation(player_x, player_y);
 
 		//画面外で削除する
 		if (obj_jangeki[jan_count]->CheckScreenOut() == true)
@@ -179,36 +194,51 @@ void Enemy_02::Update_Jangeki()
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
 		float radius = 35.5f;   //半径
-		float speed = -3.0f;     //スピード
+		float speed = 2.5f;     //スピード
 
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
-		//生成
-		if (frame_count % 120 == 0)
+
+		////生成
+		/*if (frame_count % 120 == 0)
 		{
 			if (GetRand(0) == 0)
 			{
 				Jan_360degrees(jan_count, radius, speed, type);
 			}
 			
-		}
+		}*/
 		//生成
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_whole(x, y, radius, speed, type, player_x, player_y);
-		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(float x, float y, float r, float speed, Jan_Type type, float p_x, float p_y);
+		
+		//プレイヤーの角度へ発射するジャン撃生成
+		if (frame_count % 75 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+
+		//プレイヤーのx座標によって発射する方向を変える(左右)
+		
 	}
 	
 }
+
 //360度発射
 void Enemy_02::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
 {
-	//45度ずつ8個生成
-	for (int i = count; i < (count + 18); i++)
+	////45度ずつ8個生成
+	/*if (hp <= 50)
+	{
+		for (int i = count; i < (count + 18); i++)
 	{
 		double angle = static_cast<double>((20.0 * i) * (M_PI / 180));
 
 		obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
 	}
+
+	}*/
+	
+	
+
 }
 //old_yの取得関数
 int Enemy_02::Get_OldY()
@@ -221,4 +251,13 @@ int Enemy_02::Get_Y()
 {
 	return y;
 }
+
+
+//プレイヤーの座標を継承
+void Enemy_02::ChangeDir(float x)
+{
+	if (x < 640) dir = -1;
+	else dir = 1;
+}
+
 

@@ -10,6 +10,7 @@ struct Pattern_03 {
 	int next_index; //次配列のパターンの番号
 	int enemywaitTime;//エネミーの待ち時間
 	int jumpflg; //ジャンプするかしないか
+
 };
 
 //3ステージ　敵キャラ
@@ -49,12 +50,12 @@ private:
 
 
 	/**********************************************************/
-	int frame_count = 0;       //じゃん撃発射用
+	int frame_count ;       //じゃん撃発射用
 
-	int waitcount = 0;//待ち時間カウント
+	int waitcount ;//待ち時間カウント
 
 	Pattern_03 moveinfo[40]; //行動パターン50種
-	short current = 0; //現在のパターン配列添字
+	short current ; //現在のパターン配列添字
 
 	int enemyimage[2];      //敵画像配列
 };

@@ -4,7 +4,7 @@
 #include "Scene_GameClear.h"
 #include "Scene_GameOver.h"
 #include "Stage_Base.h"
-
+#include "GameData.h"
 
 //デバッグモード
 #include"Debug_Manager.h"
@@ -58,6 +58,10 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	//obj_floor[14] = new Floor("images/stage03/BlockImages.png", 410, 360, 95, 10);//足場6//130, GetColor(193, 107, 68)
 	//obj_floor[16] = new Floor("images/stage03/BlockImages.png", 210, 405, 95, 10);//足場7//130, GetColor(193, 107, 68)
 
+	//制限時間をセット
+	GameData::Set_TimeLimit(6000);
+
+
 }
 
 //デストラクタ
@@ -68,6 +72,9 @@ Scene_Stage03::~Scene_Stage03()
 //更新
 void Scene_Stage03::Update()
 {
+
+	//時間をカウント
+	GameData::Time_Update();
 
 
 	//接触じゃんけん開始前
@@ -174,11 +181,11 @@ void Scene_Stage03::Update()
 					//停止時ダメージ軽減
 					if (obj_enemy->GetWaitTime() > 0) {
 
-						obj_enemy->ReceiveDamage(12);     //軽減ダメージが入る
+						obj_enemy->ReceiveDamage(12 - EnemyCutDamege);     //軽減ダメージが入る
 
 					}
 					else {
-						obj_enemy->ReceiveDamage(30);     //ダメージが入る
+						obj_enemy->ReceiveDamage(30 - EnemyCutDamege);     //ダメージが入る
 
 					}
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
@@ -196,10 +203,10 @@ void Scene_Stage03::Update()
 
 					if (obj_enemy->GetWaitTime() > 0) {
 
-						obj_enemy->ReceiveDamage(12);     //軽減ダメージが入る
+						obj_enemy->ReceiveDamage(12 - EnemyCutDamege);     //軽減ダメージが入る
 					}
 					else {
-						obj_enemy->ReceiveDamage(30);     //ダメージが入る
+						obj_enemy->ReceiveDamage(30 - EnemyCutDamege);     //ダメージが入る
 					}
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
@@ -213,12 +220,12 @@ void Scene_Stage03::Update()
 				{
 					if (obj_enemy->GetWaitTime() > 0) {
 
-						obj_enemy->ReceiveDamage(12); //軽減ダメージが入る
+						obj_enemy->ReceiveDamage(12 - EnemyCutDamege); //軽減ダメージが入る
 
 					}
 					else {
 
-						obj_enemy->ReceiveDamage(30); //ダメージが入る
+						obj_enemy->ReceiveDamage(30 - EnemyCutDamege); //ダメージが入る
 
 					}
 
@@ -243,7 +250,7 @@ void Scene_Stage03::Update()
 		//じゃん撃との当たり判定
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
-			//エネミーのHPが40以下の場合30ダメージ食らう
+			//エネミーのHPが40以下の場合35ダメージ食らう
 			if (obj_enemy->GetHP() <= 40) {
 
 				//半径が90.0fの場合のダメージ
@@ -251,21 +258,22 @@ void Scene_Stage03::Update()
 
 				if (radius >= 50.0f) {
 
-					obj_player->ReceiveDamage(35);
+					obj_player->ReceiveDamage(35 - PlayerCutDamege) ;
 				}
 			}
 
 			//それ以外
 			//通常時のダメージを受ける（プレイヤー）
-			else obj_player->ReceiveDamage(20);
+			else obj_player->ReceiveDamage(20 - PlayerCutDamege);
 
+			
 			//あたったじゃん撃を削除
 			obj_enemy->DeleteJangeki(i);
 			i--;
 		}
 	}
 
-
+	///////////////下ブロックの当たり判定削除///////////////////
 	//壁との当たり判定
 	if (obj_player->Get_X() <= 50 || obj_player->Get_X() >= 1200)
 	{
@@ -344,8 +352,9 @@ AbstractScene* Scene_Stage03::ChangeScene()
 
 	}
 
-	//プレイヤーのHPが0
-	if (obj_player->GetHP() < 0) {
+	//プレイヤーのHPが0以下
+	if (obj_player->GetHP() < 0 || GameData::Get_Each_Time() <= 0){
+		 
 
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(3));
@@ -360,23 +369,20 @@ AbstractScene* Scene_Stage03::ChangeScene()
 
 void Scene_Stage03::AfterJanken_WIN()
 {
-
-
-
-
+	//じゃんけん勝利時
+	PlayerCutDamege = 10;
 
 	obj_player->SetX(200);
+	obj_enemy->SetX(1150);
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）
 void Scene_Stage03::AfterJanken_LOSE()
 {
 
-
-
-
-
-
+	//じゃんけん敗北時
+	EnemyCutDamege = 5;
 
 	obj_player->SetX(200);
+	obj_enemy->SetX(1150);
 }

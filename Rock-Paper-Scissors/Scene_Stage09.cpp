@@ -4,6 +4,7 @@
 #include"Scene_GameOver.h"
 #include "Scene_GameClear.h"
 #include"Scene_Stage10.h"
+#include"GameData.h"
 
 
 //デバッグモード
@@ -12,6 +13,9 @@
 //コンストラクタ
 Scene_Stage09::Scene_Stage09(const Player* player)
 {
+
+	GameData::Set_TimeLimit(10800);
+
 	//プレイヤー情報が渡されていれば
 	if (player != nullptr)
 	{
@@ -30,6 +34,8 @@ Scene_Stage09::Scene_Stage09(const Player* player)
 	reflection = new Jangeki_Reflection(0, 0, 0, 0, Jan_Type::ROCK);
 
 	stageimage = LoadGraph("images/stage09/stage09_image.png");
+
+
 
 	//床・壁の用意
 	Init_Floor(STAGE_09_FLOOR);
@@ -60,6 +66,8 @@ Scene_Stage09::~Scene_Stage09()
 //更新
 void Scene_Stage09::Update()
 {
+
+	GameData::Time_Update();
 
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
@@ -167,22 +175,22 @@ void Scene_Stage09::Update()
 		if (obj_enemy->Hit_Jangeki(player_jangeki[i]) == true)
 		{
 			
-			if (player_jangeki[i]->GetR() != 35.f)
+			if (player_jangeki[i]->GetR() == 35.f || rflg == true)
+			{
+				obj_enemy->ReceiveDamage(20);
+				//あたったじゃん撃を削除
+				obj_player->DeleteJangeki(i);
+				i--;
+				rflg = false;
+			}
+			else
 			{
 				obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 				i--;
 				obj_enemy->reflection->trueFlg();
 			}
-			else
-			{
-				obj_enemy->ReceiveDamage(20);
-				obj_enemy->HP();
-
-				//あたったじゃん撃を削除
-				obj_player->DeleteJangeki(i);
-				i--;
-			}
 		}
+		obj_enemy->HP();
 		
 	}
 
@@ -236,7 +244,6 @@ void Scene_Stage09::Update()
 				case 1:             //playerのじゃん撃が有利
 
 					//enemy側のじゃん撃を削除
-					Rflg = true;
 					obj_enemy->reflection->Delete_reflectionJangeki(r_count);
 					r_count--;
 
@@ -301,7 +308,6 @@ void Scene_Stage09::Update()
 //描画
 void Scene_Stage09::Draw() const
 {
-	
 
 	DrawGraph(0, 0, stageimage, false);
 	
@@ -355,13 +361,13 @@ AbstractScene* Scene_Stage09::ChangeScene()
 	}
 
 	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() < 0)
+	if (obj_player->GetHP() < 0 || GameData::Get_Each_Time() <= 0)
 	{
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(9));
 	}
 
-#endif // DEBUG_OFF_09
+#endif  DEBUG_OFF_09
 
 	return this;
 }
@@ -369,23 +375,32 @@ AbstractScene* Scene_Stage09::ChangeScene()
 //じゃんけん終了後の挙動（プレイヤー勝ち）
 void Scene_Stage09::AfterJanken_WIN()
 {
+	
 	if (obj_enemy->GetHP() == 1)
 	{
 		clearFlg = true;
 	}
-
 	obj_player->SetX(100);
+	obj_enemy->SetX(1110);
+	obj_enemy->frameDown();
+	//obj_enemy->RDraw();
+	rflg = true;
 }
-
 //じゃんけん終了後の挙動（プレイヤー負け）
 void Scene_Stage09::AfterJanken_LOSE()
 {
 	
 	if (obj_enemy->GetHP() == 1)
 	{
-
 		obj_enemy->SetHP(-hp);
 		hp = hp / 2;
 	}
 	obj_player->SetX(100);
+	obj_enemy->SetX(1110);
+	obj_enemy->frameUP();
+
+}
+bool Scene_Stage09::Getflg() 
+{
+	return rflg;
 }

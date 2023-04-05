@@ -60,7 +60,7 @@ Scene_Stage00::Scene_Stage00(const Player* player)
 
 	enemy_02 = LoadGraph("images/stage02/ex.png");
 	enemy_03 = LoadGraph("images/stage03/stage03gard.png");
-	enemy_04 = LoadGraph("images/Stage4/ステージ4_ボス.png");
+	enemy_04 = LoadGraph("images/Stage4/ステージ4_ボス100.png");
 	enemy_05 = LoadGraph("images/stage05/Stage5_Enemy_NoMove_Left.png");
 	enemy_06 = LoadGraph("images/tyokitest.png");
 	enemy_07 = LoadGraph("images/tyokitest.png");

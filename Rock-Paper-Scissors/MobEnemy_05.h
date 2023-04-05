@@ -14,4 +14,5 @@ private:
 	int frame_count = 0;       //‚¶‚á‚ñŒ‚”­ŽË—p
 
 	int Mobenemy_image;			//‰æ‘œ—p
+
 };

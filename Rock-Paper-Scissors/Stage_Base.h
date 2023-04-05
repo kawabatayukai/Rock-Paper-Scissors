@@ -45,6 +45,8 @@ protected:
 private:
 	short nhit_time = 0;                      //衝突判定なし時間
 
+	int font;         //結果(WIN or LOSE or ONEMORE) 用フォント 
+
 	Jan_State j_state = Jan_State::BEFORE;    //じゃんけんの状態
 };
 
