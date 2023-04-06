@@ -44,7 +44,7 @@ namespace _CONSTANTS_07
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_07::Enemy_07(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type), init_speed(4.0f), jan_count(0), draw_angle(0.0)
-, Player_State(PLAYER_STATE::DO_NOT), Now_Action(ACT_TYPE::NO_ACT), Pre_Action(ACT_TYPE::NO_ACT), frame_count(0)
+, Direction(DIRECTION::LEFT), Player_State(PLAYER_STATE::DO_NOT), Now_Action(ACT_TYPE::NO_ACT), Pre_Action(ACT_TYPE::NO_ACT), frame_count(0)
 {
 	speed = 4.0f;
 	dir = 1;
@@ -102,7 +102,7 @@ void Enemy_07::Draw() const
 {
 	//中心から描画
 	//DrawRotaGraphF(x, y, 1, draw_angle, image, TRUE);
-	DrawRotaGraphF(x, y, 3, draw_angle, image_running[current_index], TRUE);
+	DrawRotaGraphF(x, y, 3, draw_angle, image_running[current_index], TRUE, static_cast<int>(Direction));
 
 	//じゃん撃描画
 	Draw_Jangeki();
@@ -274,6 +274,7 @@ void Enemy_07::Move_Controller()
 		if (x < target_x)
 		{
 			move_x += speed;      //右移動（正の値）
+			Direction = DIRECTION::RIGHT;
 
 			//目標を超えた場合
 			if (x <= target_x && target_x <= move_x)
@@ -284,6 +285,7 @@ void Enemy_07::Move_Controller()
 		else
 		{
 			move_x -= speed; //左移動（負の値）
+			Direction = DIRECTION::LEFT;
 
 			//目標を超えた場合
 			if (move_x <= target_x && target_x <= x)

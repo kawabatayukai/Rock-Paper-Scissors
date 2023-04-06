@@ -94,7 +94,7 @@ void Enemy_01::Draw() const
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
 	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
 
-	DrawFormatString(50, 100, 0xff00ff, "Current : %d", current_action);
+	//DrawFormatString(50, 100, 0xff00ff, "Current : %d", current_action);
 
 }
 
