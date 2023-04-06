@@ -27,7 +27,6 @@ public:
 
 	void AfterJanken_WIN()  override;      //じゃんけん終了後の挙動（プレイヤー勝ち）
 	void AfterJanken_LOSE() override;      //じゃんけん終了後の挙動（プレイヤー負け）
-	bool Getflg();
 
 private:
 	Enemy_09* obj_enemy;            //敵
@@ -35,7 +34,6 @@ private:
 
 	int stageimage;
 
-	bool rflg = false;
 
 	bool clearFlg = false;
 

@@ -20,16 +20,11 @@ public:
 
 	void Draw() const override;            //描画
 
-	void Draw_Janken() const;              //じゃんけん描画
-
 	AbstractScene* ChangeScene() override; //シーンの変更
 
 private:
-	Enemy_00* obj_enemy;            //敵
 
-
-	//test
-	int setumei;  //説明画像
+	short frame_count;    //フレームカウント
 
 	int player_image;
 	int player_all;

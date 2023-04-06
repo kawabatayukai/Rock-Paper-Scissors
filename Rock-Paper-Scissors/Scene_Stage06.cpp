@@ -57,7 +57,7 @@ Scene_Stage06::Scene_Stage06(const Player* player)
 	obj_floor[15] = new Floor(1089, 500, 120, 10, 22822);
 
 	//制限時間をセット
-	GameData::Set_TimeLimit(3600);
+	GameData::Set_TimeLimit(5460);
 }
 
 //デストラクタ
@@ -218,7 +218,7 @@ void Scene_Stage06::Update()
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
 			//ダメージを受ける（プレイヤー）
-			obj_player->ReceiveDamage(30);
+			obj_player->ReceiveDamage(20);
 
 			//あたったじゃん撃を削除
 			obj_enemy->DeleteJangeki(i);
