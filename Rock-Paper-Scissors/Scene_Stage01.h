@@ -5,7 +5,7 @@
 #include"Player.h"
 #include"Floor.h"
 
-#define STAGE_01_FLOOR 5         //床・壁の合計数
+#define STAGE_01_FLOOR 8         //床・壁の合計数
 
 //0ステージ
 class Scene_Stage01 : public Stage_Base
@@ -24,27 +24,10 @@ public:
 
 	void Draw_Janken() const;              //じゃんけん描画
 
-	//チュートリアル
-private:
-
-	void NextTutorial();            //次の操作へ
-
-	bool CheckMoveLR();             //左右移動を確認する
-
 private:
 	Enemy_01* obj_enemy;            //敵
 
-	
 	int font_tut;                   //チュートリアル用フォント
-	int frame_count;                //時間をカウント
-
-	//色
-	int blue;
-	int red;
-	int brack;
-	int white;
-	int green;
-
 
 	//チュートリアルの段階
 	enum class TUTORIAL_STATE
