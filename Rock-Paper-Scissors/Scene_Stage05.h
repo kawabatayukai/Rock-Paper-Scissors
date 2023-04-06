@@ -33,6 +33,7 @@ public:
 private:
 	Enemy_05* obj_enemy;            //“G
 	MobEnemy_05* obj_mobenemy;		//ƒ‚ƒu“G
+	MobEnemy_05** mob;
 
 	int Back_image;					//”wŒi‰æ‘œ
 };

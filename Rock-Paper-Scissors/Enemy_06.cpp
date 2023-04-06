@@ -110,6 +110,9 @@ void Enemy_06::Draw() const
 	//テスト
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
 	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
+
+	////ChangeCnt変数表示テスト
+	//DrawFormatString(600, 600, 0xffffff, "ChangeCnt : %d", ChangeCnt);
 }
 
 //じゃん撃生成・更新
@@ -403,7 +406,7 @@ void Enemy_06::AttackPattern_2()
 
 
 	//敵の属性変化処理
-	if (ChangeCnt > 7)
+	if (ChangeCnt > 5)
 	{
 		while (GetType() == old_type)
 		{
@@ -579,7 +582,7 @@ void Enemy_06::AttackPattern_3()
 
 
 	//敵の属性変化処理
-	if (ChangeCnt > 5)
+	if (ChangeCnt > 3)
 	{
 		while (GetType() == old_type)
 		{
@@ -706,7 +709,7 @@ void Enemy_06::jump()
 			jump_cnt++;        //ジャンプ回数のカウント
 		}
 
-		if (attack_pattern == 2)
+		if (attack_pattern >= 1)
 		{
 			ChangeCnt++;       //属性変化までのカウント
 		}

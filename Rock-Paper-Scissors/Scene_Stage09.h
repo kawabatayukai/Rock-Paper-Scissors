@@ -27,13 +27,15 @@ public:
 
 	void AfterJanken_WIN()  override;      //じゃんけん終了後の挙動（プレイヤー勝ち）
 	void AfterJanken_LOSE() override;      //じゃんけん終了後の挙動（プレイヤー負け）
-	
-	bool Rflg = false; //反射じゃん撃判別用
+	bool Getflg();
+
 private:
 	Enemy_09* obj_enemy;            //敵
 	Jangeki_Reflection* reflection;
 
 	int stageimage;
+
+	bool rflg = false;
 
 	bool clearFlg = false;
 
