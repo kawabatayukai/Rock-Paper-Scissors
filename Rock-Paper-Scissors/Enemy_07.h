@@ -70,6 +70,13 @@ private:
 
 	int jan_count;             //Update_Jangeki() で じゃん撃配列の空要素の配列番号が入る
 
+	//向き
+	enum class DIRECTION
+	{
+		LEFT,RIGHT,
+	};
+	DIRECTION Direction;
+
 	//自身から見たプレイヤーの状態
 	enum class PLAYER_STATE
 	{
