@@ -4,6 +4,7 @@
 #include"Stage_Base.h"
 #include"Player.h"
 #include"Floor.h"
+#include"Enemy_Cannon.h"
 
 #define STAGE_08_FLOOR  30        //è∞ÅEï«ÇÃçáåvêî
 
@@ -30,5 +31,6 @@ public:
 private:
 	int Back_image;
 	Enemy_08* obj_enemy;            //ìG
+	Enemy_Cannon* obj_cannon;
 };
 

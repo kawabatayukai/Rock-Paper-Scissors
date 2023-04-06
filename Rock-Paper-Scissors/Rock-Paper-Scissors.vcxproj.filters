@@ -234,9 +234,6 @@
     <ClCompile Include="Jangeki_Changespeed.cpp">
       <Filter>ソース ファイル\Jangeki\bise</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy_Cannon.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Jangeki_reflection.cpp">
       <Filter>ソース ファイル\Jangeki\nakayoshi</Filter>
     </ClCompile>
@@ -251,6 +248,9 @@
     </ClCompile>
     <ClCompile Include="Scene_Ranking.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_Cannon.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_08</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -401,9 +401,6 @@
     <ClInclude Include="MobEnemy_05.h">
       <Filter>ソース ファイル\GameMainScene\Stage_05</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy_Cannon.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Jangeki_reflection.h">
       <Filter>ソース ファイル\Jangeki\nakayoshi</Filter>
     </ClInclude>
@@ -418,6 +415,9 @@
     </ClInclude>
     <ClInclude Include="Scene_Ranking.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_Cannon.h">
+      <Filter>ソース ファイル\GameMainScene\Stage_08</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
