@@ -4,6 +4,10 @@
 #include"Jangeki_Base.h"
 #include"Scene_Stage09.h"
 #include"Jangeki_Homing.h"
+#include"Jangeki_whole.h"
+#define _USE_MATH_DEFINES
+#include <math.h>
+
 
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
@@ -41,36 +45,8 @@ void Enemy_09::Update()
 	reflection->Update_reflection();
 
 	MoveEnmey_09();
-
-	//if (x + (w / 2) == (1280 - 20))
-	//{
-	//	dir = -1;
-	//}
-	//else if (x - (w / 2) == (20))
-	//{
-	//	dir = 1;
-	//}
-
-	//x += dir * speed;
-
-	/********************   ジャンプ関係   ********************/
-
-	//if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
-	//{
-    //	g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-	//	land_flg = false;  //地面についていない
-	//}
-
-	//y_add = (y - old_y) + g_add;  //今回の落下距離を設定
-
-	////落下速度の制限
-	//if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
-
-	//old_y = y;                    //1フレーム前のｙ座標
-	//y += y_add;                   //落下距離をｙ座標に加算する
-	//g_add = _GRAVITY;              //重力加速度を初期化する
-
-	/**********************************************************/
+	//SpecialMoveEnmey();
+	
 
 }
 
@@ -90,11 +66,6 @@ void Enemy_09::Draw() const
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
 	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
 
-}
-void Enemy_09::RDraw() 
-{
-	int a = 0;
-	//DrawRotaGraphF(GetX(), GetY(), 1, 0, image, TRUE);
 }
 
 //じゃん撃生成・更新
@@ -132,30 +103,36 @@ void Enemy_09::Update_Jangeki()
 		float radius = 35.5f;   //半径
 		float speed = 3.0f;     //スピード
 
+		//if (GetHP() <= 51)speed=4.5f;
+
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
-
-	
-		//生成
-		if (frame_count % janFrame == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
 		/*if(GetHP()!=1)
 		{
 			if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
 		}*/
+	
+		//生成
+		if (frame_count % janFrame == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
 		
+
 		//反射じゃん撃生成
 		if (reflection->GetFlg() == true)reflection->obj_reflection[reflection->jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed, type, true);
 		reflection->falseFlg();
 	}
 }
 
-void Enemy_09::MoveEnmey_09() 
+void Enemy_09::MoveEnmey_09()
 {
 	interval++;
-	if (/*land_flg == true && *//*GetRand(100) == 5 &&*/ interval % 300 == 0) {
+	if (GetHP() <= 51)teleport = 150;
+
+	if (GetHP() == 1)teleport = 500;
+
+	if (interval % teleport == 0) {
 		switch (GetRand(12))
 		{
-		//左側
+			//左側
 		case 0:
 			x = 160;
 			y = 480;
@@ -176,7 +153,7 @@ void Enemy_09::MoveEnmey_09()
 			x = 160;
 			y = 130;
 			break;
-		//右側
+			//右側
 		case 5:
 			x = 1110;
 			y = 480;
@@ -197,7 +174,7 @@ void Enemy_09::MoveEnmey_09()
 			x = 1110;
 			y = 130;
 			break;
-		//真ん中
+			//真ん中
 		case 10:
 			x = 620;
 			y = 400;
@@ -214,6 +191,99 @@ void Enemy_09::MoveEnmey_09()
 	}
 
 }
+
+//void Enemy_09::SpecialMoveEnmey()
+//{
+//	interval++;
+//	int Rand = 0;
+//	int i = 0;
+//	if (interval == 0)
+//	{
+//		Spflg == false;
+//		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
+//		Create_Homing(0,GetX(), GetY(), 35.5f, 3, type);
+//	}
+//
+//
+//
+//	if (Spflg == true) {
+//		if (interval % 20 == 0) {
+//			
+//			switch (GetRand(12))
+//			{
+//				//////左側
+//			case 0:
+//				x = 160;
+//				y = 480;
+//				break;
+//			case 1:
+//				x = 160;
+//				y = 700;
+//				break;
+//			case 2:
+//				x = 360;
+//				y = 305;
+//				break;
+//			case 3:
+//				x = 360;
+//				y = 700;
+//				break;
+//			case 4:
+//				x = 160;
+//				y = 130;
+//				break;
+//				//右側
+//			case 5:
+//				x = 1110;
+//				y = 480;
+//				break;
+//			case 6:
+//				x = 1110;
+//				y = 700;
+//				break;
+//			case 7:
+//				x = 910;
+//				y = 305;
+//				break;
+//			case 8:
+//				x = 910;
+//				y = 700;
+//				break;
+//			case 9:
+//				x = 1110;
+//				y = 130;
+//				break;
+//				//真ん中
+//			case 10:
+//				x = 620;
+//				y = 400;
+//				break;
+//			case 11:
+//				x = 620;
+//				y = 80;
+//				break;
+//			case 12:
+//				x = 620;
+//				y = 700;
+//				break;
+//			}
+//		}
+//	}
+//}
+
+//特殊生成
+//void Enemy_09::Create_Homing(int jan_count, float x, float y, float r, float speed, Jan_Type type)
+//{
+//	//不正な場合は処理しない
+//	if (jan_count > JANGEKI_MAX || jan_count < 0)  return;
+//
+//	//一旦削除
+//	delete obj_jangeki[jan_count];
+//
+//	//ホーミングを生成
+//	obj_jangeki[jan_count] = new Jangeki_whole(x, y, r, speed, type);
+//}
+
 
 void Enemy_09::frameUP()
 {

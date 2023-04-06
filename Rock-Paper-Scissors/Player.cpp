@@ -41,6 +41,9 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 
 	//ƒfƒtƒHƒ‹ƒg‚Í ƒO[
 	select_JanType = Jan_Type::ROCK;
+
+	//ƒtƒHƒ“ƒg‚ğì¬
+	ui_font = CreateFontToHandle("ƒƒCƒŠƒI", 20, 4, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
 }
 
 //ƒRƒ“ƒXƒgƒ‰ƒNƒ^iƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^j
@@ -71,12 +74,16 @@ Player::Player(const Player& player) : CharaBase(player.x, player.y, player.w, p
 
 	//‘I‘ğ‚¶‚á‚ñŒ‚‰æ‘œƒRƒs[i‘½•ª‚¢‚ç‚È‚¢j
 	memcpy_s(image_JanType, sizeof(player.image_JanType), player.image_JanType, sizeof(player.image_JanType));
+
+	//ƒtƒHƒ“ƒg‚ğì¬
+	ui_font = CreateFontToHandle("ƒƒCƒŠƒI", 20, 3, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
 }
 
 //ƒfƒXƒgƒ‰ƒNƒ^
 Player::~Player()
 {
-
+	//ƒtƒHƒ“ƒgƒf[ƒ^‚ğíœ
+	DeleteFontToHandle(ui_font);
 }
 
 //XV
@@ -384,10 +391,10 @@ void Player::Draw() const
 	PlayerDrawUI(GetHP());
 
 	//ƒeƒXƒg ‘I‘ğ‚¶‚á‚ñŒ‚
-	DrawString(30, 105, "SELECT : ", 0xffffff);
-	DrawRotaGraph(160, 115, 0.5, 0, image_JanType[static_cast<int>(select_JanType)], TRUE);
-	DrawString(30, 150, "RB : ”­Ë", 0xffffff);
-	DrawString(30, 180, "LB : ƒWƒƒƒ“ƒv", 0xffffff);
+	DrawStringToHandle(30, 105, "SELECT : ", 0xffffff, ui_font);
+	DrawRotaGraph(165, 115, 0.5, 0, image_JanType[static_cast<int>(select_JanType)], TRUE);
+	DrawStringToHandle(30, 150, "RB : ”­Ë", 0xffffff, ui_font);
+	DrawStringToHandle(30, 180, "LB : ƒWƒƒƒ“ƒv", 0xffffff, ui_font);
 
 	//ƒeƒXƒg
 	//DrawGraph(20, 80, image_setsumei, TRUE);

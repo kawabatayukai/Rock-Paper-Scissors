@@ -64,10 +64,33 @@ void GameData::Time_Update()
 	if (each_stage_time < 0) each_stage_time = 0;
 }
 
-//(各ステージの)制限時間を取得
+//(各ステージの)制限時間を取得（ミリ秒）
 unsigned int GameData::Get_Each_Time()
 {
 	return each_stage_time;
+}
+
+//(各ステージの)制限時間を取得（秒）
+unsigned int GameData::Get_Each_Time_Sec()
+{
+	//分(3600ミリ秒)で割った余り
+	unsigned int ret = each_stage_time % 3600;
+
+	//0除算防止
+	if (ret < 60) 
+		return 0;
+	else          
+		return ret / 60;
+}
+
+//(各ステージの)制限時間を取得（分）
+unsigned int GameData::Get_Each_Time_Min()
+{
+	//0除算防止
+	if (each_stage_time < 3600) 
+		return 0;
+	else 
+		return each_stage_time / 3600;
 }
 
 //総合時間を取得

@@ -3,6 +3,7 @@
 #include"Scene_GameOver.h"
 #include"Scene_GameClear.h"
 #include"DxLib.h"
+#include"GameData.h"
 
 //デバッグモード
 #include"Debug_Manager.h"
@@ -24,6 +25,9 @@ namespace _STR_TUTORIAL
 Scene_Stage01::Scene_Stage01(const Player* player)
 	: Now_Tut_State(TUTORIAL_STATE::START_TUTORIAL)
 {
+	//制限時間をセット
+	GameData::Set_TimeLimit(6000);
+
 	//プレイヤー情報が渡されていれば
 	if (player != nullptr)
 	{
@@ -47,14 +51,17 @@ Scene_Stage01::Scene_Stage01(const Player* player)
 	obj_floor[1] = new Floor(0, 0, 20, 720);           //壁（左）
 	obj_floor[2] = new Floor(1260, 0, 20, 720);        //壁（右）
 
-	obj_floor[3] = new Floor(1100, 500, 120, 20);      //足場No.01
-	obj_floor[4] = new Floor(900, 290, 120, 20);       //足場No.02
-	obj_floor[5] = new Floor(330, 140, 460, 20);       //足場No.03
-	obj_floor[6] = new Floor(50, 290, 120, 20);        //足場No.04
-	obj_floor[7] = new Floor(250, 500, 120, 20);       //足場No.05
+	obj_floor[3] = new Floor(1100, 500, 120, 20, 0x006400);      //足場No.01
+	obj_floor[4] = new Floor(900, 290, 120, 20, 0x006400);       //足場No.02
+	obj_floor[5] = new Floor(330, 140, 460, 20, 0x006400);       //足場No.03
+	obj_floor[6] = new Floor(50, 290, 120, 20, 0x006400);        //足場No.04
+	obj_floor[7] = new Floor(250, 500, 120, 20, 0x006400);       //足場No.05
 
 	//フォントデータを作成　　　　　　Windows標準搭載フォントなら大丈夫。多分　　　[候補 "Yu Gothic UI"]
 	font_tut = CreateFontToHandle("メイリオ", 40, 8, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 2);
+
+	//画像読み込み
+	image_back = LoadGraph("images/stage01/Tutorial_Back.png");
 }
 
 //デストラクタ
@@ -65,6 +72,9 @@ Scene_Stage01::~Scene_Stage01()
 //更新
 void Scene_Stage01::Update()
 {
+	//時間をカウント
+	GameData::Time_Update();
+
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
@@ -232,22 +242,23 @@ void Scene_Stage01::Update()
 //描画
 void Scene_Stage01::Draw() const
 {
+	//背景
+	DrawGraph(0, 0, image_back, FALSE);
+
 	//UI
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
 
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
-
-		obj_player->Draw();  //プレイヤー描画
-		obj_enemy->Draw();   //敵キャラ描画
-
 		//床・壁描画
 		for (int i = 0; i < STAGE_01_FLOOR; i++)
 		{
 			if (obj_floor[i] == nullptr) break;
 			obj_floor[i]->Draw();
 		}
+		obj_player->Draw();  //プレイヤー描画
+		obj_enemy->Draw();   //敵キャラ描画
 
 	}
 	else
@@ -278,7 +289,7 @@ AbstractScene* Scene_Stage01::ChangeScene()
 	}
 
 	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() < 0)
+	if (obj_player->GetHP() < 0 || GameData::Get_Each_Time() <= 0)
 	{
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(1));

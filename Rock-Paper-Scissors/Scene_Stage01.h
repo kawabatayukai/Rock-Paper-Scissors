@@ -31,6 +31,7 @@ private:
 	Enemy_01* obj_enemy;            //敵
 
 	int font_tut;                   //チュートリアル用フォント
+	int image_back;                 //背景
 
 	//チュートリアルの段階
 	enum class TUTORIAL_STATE
