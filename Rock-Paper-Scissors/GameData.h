@@ -19,8 +19,14 @@ public:
 	//時間カウンター
 	static void Time_Update();
 
-	//(各ステージの)制限時間を取得
+	//(各ステージの)制限時間を取得（ミリ秒）
 	static unsigned int Get_Each_Time();
+
+	//(各ステージの)制限時間を取得（秒）
+	static unsigned int Get_Each_Time_Sec();
+
+	//(各ステージの)制限時間を取得（分）
+	static unsigned int Get_Each_Time_Min();
 
 	//総合時間を取得
 	static unsigned int Get_Total_Time();
