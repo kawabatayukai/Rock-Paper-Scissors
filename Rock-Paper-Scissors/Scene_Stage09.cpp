@@ -170,7 +170,6 @@ void Scene_Stage09::Update()
 	for (int i = 0; i < JANGEKI_MAX; i++)
 	{
 		if (player_jangeki[i] == nullptr) break;         //‚¶‚á‚ñŒ‚‚ª‚È‚¢Žž‚Íˆ—‚µ‚È‚¢
-
 		//‚¶‚á‚ñŒ‚‚Æ‚Ì“–‚½‚è”»’è
 		if (obj_enemy->Hit_Jangeki(player_jangeki[i]) == true)
 		{
