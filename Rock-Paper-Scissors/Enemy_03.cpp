@@ -16,7 +16,7 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	enemyimage[0] = LoadGraph("images/stage03/stage03attack.png");
 	enemyimage[1] = LoadGraph("images/stage03/stage03gard.png");
-
+	enemyimage[2] = LoadGraph("images/stage03/stage03jump.png");
 
 	Init_Jangeki();       //‚¶‚á‚ñŒ‚‚ð—pˆÓ
 
@@ -251,6 +251,18 @@ void Enemy_03::Draw() const
 
 
 	}
+
+	else if (moveinfo[current].enemywaitTime < 0) {
+
+		//ƒWƒƒƒ“ƒvŽž‚Ì‰æ‘œ•`‰æ							
+		DrawRotaGraphF(x, y, 1, 0, enemyimage[2], TRUE, dir == -1 ? 0 : 1);
+
+	}
+
+
+
+
+
 	//‚»‚¤‚¶‚á‚È‚¢‚Æ‚«
 	else {
 		//UŒ‚Žž‚Ì‰æ‘œ•`‰æ								//Œü‚«‚ð•Ï‚¦‚é

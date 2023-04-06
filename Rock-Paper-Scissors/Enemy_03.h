@@ -57,7 +57,7 @@ private:
 	Pattern_03 moveinfo[40]; //行動パターン50種
 	short current ; //現在のパターン配列添字
 
-	int enemyimage[2];      //敵画像配列
+	int enemyimage[3];      //敵画像配列
 };
 
 
