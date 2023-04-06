@@ -5,6 +5,7 @@
 #include "Jangeki_whole.h"
 #include<typeinfo>
 #include "Jangeki_Coming.h"
+#include "Scene_Stage02.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
 
@@ -39,7 +40,11 @@ void Enemy_02::Update()
 	//じゃん撃更新・生成
 	Update_Jangeki();
 
-
+	////攻撃パターン1
+	//if (attack_pattern == 1)
+	//{
+	//	AttackPattern_1();
+	//}
 
 	//if (x + (w / 2) == (1280 - 20))
 	//{
@@ -136,11 +141,7 @@ void Enemy_02::Update()
 
 	}
 
-	////HPが70以下になると次の行動ループに移行
-	//if (hp <= 70)
-	//{
-	//	attack_pattern = 1;    //攻撃パターンを変更
-	//}
+	
 
 	if (hp <= 0) hp = 0;
 	else if (hp <= 50) speed = 5.0f;
@@ -199,16 +200,16 @@ void Enemy_02::Update_Jangeki()
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
-
 		////生成
-		if (frame_count % 120 == 0)
+		/*if (frame_count % 120 == 0)
 		{
 			if (GetRand(0) == 0)
 			{
 				Jan_360degrees(jan_count, radius, speed, type);
 			}
-			
-		}
+
+		}*/
+		
 		//生成
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_whole(x, y, radius, speed, type, player_x, player_y);
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(float x, float y, float r, float speed, Jan_Type type, float p_x, float p_y);
@@ -236,7 +237,74 @@ void Enemy_02::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
 
 	
 
+
 }
+
+
+
+void Enemy_02::AttackPattern_1()
+{
+	//int jan_count;
+
+	////じゃん撃配列をひとつずつ
+	//for (jan_count = 0; jan_count < JANGEKI_MAX; jan_count++)
+	//{
+	//	//配列の jan_count 番目がnullptr（空要素）ならそれ以上処理しない
+	//	if (obj_jangeki[jan_count] == nullptr) break;
+
+	//	obj_jangeki[jan_count]->Update();
+
+	//	//プレイヤーの座標をセットする
+	//	obj_jangeki[jan_count]->SetTargetLocation(player_x, player_y);
+
+	//	//画面外で削除する
+	//	if (obj_jangeki[jan_count]->CheckScreenOut() == true)
+	//	{
+	//		DeleteJangeki(jan_count);
+	//		jan_count--;
+	//	}
+	//}
+
+	///*********************** ↓↓ 発射・生成 ↓↓ ***********************/
+	//frame_count++;
+
+	////配列の空要素
+	//if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
+	//{
+	//	float radius = 35.5f;   //半径
+	//	float speed = 1.0f;     //スピード
+
+	//	//ランダムな属性を生成
+	//	Jan_Type type = static_cast<Jan_Type>(GetRand(2));
+
+
+	//	////生成
+	//	if (frame_count % 120 == 0)
+	//	{
+	//		if (GetRand(0) == 0)
+	//		{
+	//			Jan_360degrees(jan_count, radius, speed, type);
+	//		}
+
+	//	}
+	//	//生成
+	//	//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_whole(x, y, radius, speed, type, player_x, player_y);
+	//	//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(float x, float y, float r, float speed, Jan_Type type, float p_x, float p_y);
+
+	//	
+
+	//	
+
+	//}
+}
+
+
+////じゃんけん終了後の挙動（プレイヤー負け）
+//void Scene_Stage02::AfterJanken_LOSE()
+//{
+//	
+//	obj_player->SetX(100);
+//}
 //old_yの取得関数
 int Enemy_02::Get_OldY()
 {

@@ -5,7 +5,7 @@
 #include"Scene_GameOver.h"
 #include "Scene_GameClear.h"
 #include "GameData.h"
-
+#include "Enemy_02.h"
 //デバッグモード
 #include"Debug_Manager.h"
 
@@ -294,11 +294,8 @@ void Scene_Stage02::AfterJanken_WIN()
 //じゃんけん終了後の挙動（プレイヤー負け）
 void Scene_Stage02::AfterJanken_LOSE()
 {
-	if (obj_enemy->GetHP() == 1)
-	{
-
-		obj_enemy->SetHP(-hp);
-		hp = hp / 2;
-	}
+	
+	attack_pattern = 1;    //攻撃パターンを変更
+	
 	obj_player->SetX(100);
 }
