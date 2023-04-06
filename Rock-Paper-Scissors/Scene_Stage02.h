@@ -5,6 +5,7 @@
 #include"Player.h"
 #include"Floor.h"
 
+
 #define STAGE_02_FLOOR 3         //床・壁の合計数
 
 //0ステージ
@@ -33,5 +34,6 @@ private:
 
 private:      //画像など
 	int image_back;        //背景
+	int hp = 50;//復活HP(半分づつ減る)
 };
 

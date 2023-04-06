@@ -201,14 +201,14 @@ void Enemy_02::Update_Jangeki()
 
 
 		////¶¬
-		/*if (frame_count % 120 == 0)
+		if (frame_count % 120 == 0)
 		{
 			if (GetRand(0) == 0)
 			{
 				Jan_360degrees(jan_count, radius, speed, type);
 			}
 			
-		}*/
+		}
 		//¶¬
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_whole(x, y, radius, speed, type, player_x, player_y);
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(float x, float y, float r, float speed, Jan_Type type, float p_x, float p_y);
@@ -226,17 +226,14 @@ void Enemy_02::Update_Jangeki()
 void Enemy_02::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
 {
 	////45“x‚¸‚Â8ŒÂ¶¬
-	/*if (hp <= 50)
-	{
-		for (int i = count; i < (count + 18); i++)
+	
+	for (int i = count; i < (count + 18); i++)
 	{
 		double angle = static_cast<double>((20.0 * i) * (M_PI / 180));
 
 		obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
 	}
 
-	}*/
-	
 	
 
 }

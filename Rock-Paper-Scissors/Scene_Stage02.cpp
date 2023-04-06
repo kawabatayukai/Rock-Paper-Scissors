@@ -294,5 +294,11 @@ void Scene_Stage02::AfterJanken_WIN()
 //じゃんけん終了後の挙動（プレイヤー負け）
 void Scene_Stage02::AfterJanken_LOSE()
 {
+	if (obj_enemy->GetHP() == 1)
+	{
+
+		obj_enemy->SetHP(-hp);
+		hp = hp / 2;
+	}
 	obj_player->SetX(100);
 }
