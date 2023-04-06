@@ -6,13 +6,14 @@
 #include <typeinfo>
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
-Enemy_04::Enemy_04(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
+Enemy_04::Enemy_04(float x, float y, Jan_Type type) : EnemyBase(x, y, 130.0f, 130.0f, type)
 {
 	speed = 1.0f;
 	dir = 1;
 	hp = 100;
 
 	image = LoadGraph("images/Stage4/ステージ4_ボス100.png");
+	//image = LoadGraph("images/Stage4/stage_Boss04.png");
 
 	Init_Jangeki();       //じゃん撃を用意
 }
@@ -31,8 +32,8 @@ void Enemy_04::Update()
 	Update_Jangeki();
 
 	//動きパターン
-	moveinfo[0] = { 1,player_x,player_y, 0, 1 };
-	moveinfo[1] = { 0,     0.f,     0.f, 0, 0 };
+	moveinfo[0] = { 1, player_x, player_y, 0, 1 };
+	moveinfo[1] = { 0,      0.f,      0.f, 0, 0 };
 
 	switch (moveinfo[current].moveflg)
 	{
@@ -61,7 +62,7 @@ void Enemy_04::Update()
 	else speed = 1.0f;*/
 	
 	//少しずつHP回復
-	if (hp < 100 && frame_count % 30 == 0) hp++;
+	if (hp < 100 && frame_count % 40 == 0) hp++;
 }
 
 //描画

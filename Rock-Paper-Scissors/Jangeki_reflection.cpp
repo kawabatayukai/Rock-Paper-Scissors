@@ -36,16 +36,6 @@ void Jangeki_Reflection::Update_reflection()
 		}
 	}
 
-	/*********************** ↓↓ 発射・生成 ↓↓ ***********************/
-
-	//配列の空要素
-	if (jan_count_reflection < JANGEKI_MAX && obj_reflection[jan_count_reflection] == nullptr)
-
-	{
-		//ランダムな属性を生成
-		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
-	}
-
 }
 
 
@@ -58,7 +48,6 @@ void Jangeki_Reflection::Draw_reflectionJangeki()const
 		if (obj_reflection[i] == nullptr) break;
 
 		obj_reflection[i]->Draw();
-		//Draw(obj_reflection[i]->GetX(), obj_reflection[i]->GetY());                //配列に要素がある時
 	}
 }
 
