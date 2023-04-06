@@ -24,6 +24,9 @@ public:
 
 	void Draw_Janken() const;              //じゃんけん描画
 
+	void AfterJanken_WIN()  override;      //じゃんけん終了後の挙動（プレイヤー勝ち）
+	void AfterJanken_LOSE() override;      //じゃんけん終了後の挙動（プレイヤー負け）
+
 private:
 	Enemy_01* obj_enemy;            //敵
 

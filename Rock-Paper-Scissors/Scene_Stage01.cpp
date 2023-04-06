@@ -288,3 +288,20 @@ AbstractScene* Scene_Stage01::ChangeScene()
 
 	return this;   //更新なし
 }
+
+//じゃんけん終了後の挙動（プレイヤー勝ち）
+void Scene_Stage01::AfterJanken_WIN()
+{
+	obj_player->SetX(1280 / 2);
+	//obj_player->SetY(500);
+
+	//HPを全回復
+	obj_player->Recover_HP(100);
+}
+
+//じゃんけん終了後の挙動（プレイヤー負け）
+void Scene_Stage01::AfterJanken_LOSE()
+{
+	obj_player->SetX(1280 / 2);
+	//obj_player->SetY(500);
+}
