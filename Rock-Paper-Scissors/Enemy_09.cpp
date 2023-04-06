@@ -14,10 +14,10 @@ Enemy_09::Enemy_09(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = 1;
 	hp = 100;
 
-
-	image = LoadGraph("images/stage09/Stage9_1.png");
 	
-	/*image = LoadGraph("images/stage09/Stage9.png");*/
+	Rimage = LoadGraph("images/stage09/Stage9_1.png");	//反射ON
+	image = LoadGraph("images/stage09/Stage9.png");		//反射OFF
+	
 
 	//じゃん撃を用意
 	Init_Jangeki();       
@@ -79,23 +79,23 @@ void Enemy_09::Draw() const
 {
 	
 	//中心から描画
-	DrawRotaGraphF(x, y, 1, 0, image, TRUE);
-	
+	if(rflg==false)DrawRotaGraphF(x, y, 1, 0, Rimage, TRUE);
+	if(rflg==true)DrawRotaGraphF(GetX(), GetY(), 1, 0, image, TRUE);
 
 	//じゃん撃描画
 	Draw_Jangeki();
 	reflection->Draw_reflectionJangeki();
 	
-
 	//テスト
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
 	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
 
 }
-//void Enemy_09::RDraw() 
-//{
-//	DrawRotaGraphF(GetX(), GetY(), 1, 0, image, TRUE);
-//}
+void Enemy_09::RDraw() 
+{
+	int a = 0;
+	//DrawRotaGraphF(GetX(), GetY(), 1, 0, image, TRUE);
+}
 
 //じゃん撃生成・更新
 void Enemy_09::Update_Jangeki()
@@ -238,4 +238,17 @@ void Enemy_09::HP()
 	{
 		hp = 1;
 	}
+}
+
+bool Enemy_09::Getflg()
+{
+	return rflg;
+}
+void Enemy_09::Tflg()
+{
+	rflg = true;
+}
+void Enemy_09::Fflg()
+{
+	rflg = false;
 }

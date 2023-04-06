@@ -14,7 +14,7 @@ public:
 
 	void Update() override;          //更新
 	void Draw() const override;      //描画
-	//void RDraw();
+	void RDraw();
 
 	void Update_Jangeki() override;  //じゃん撃生成・更新
 
@@ -24,6 +24,10 @@ public:
 
 	void frameUP();
 	void frameDown();
+
+	bool Getflg();
+	void Tflg();
+	void Fflg();
 
 	Jangeki_Reflection* reflection;
 
@@ -44,6 +48,7 @@ private:
 	int Rimage;
 	int image;
 	int janFrame = 75;
+	bool rflg = false; //反射用
 	
 	Player* type;
 

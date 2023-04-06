@@ -175,13 +175,13 @@ void Scene_Stage09::Update()
 		if (obj_enemy->Hit_Jangeki(player_jangeki[i]) == true)
 		{
 			
-			if (player_jangeki[i]->GetR() == 35.f || rflg == true)
+			if (player_jangeki[i]->GetR() == 35.f || obj_enemy->Getflg() == true)
 			{
 				obj_enemy->ReceiveDamage(20);
 				//あたったじゃん撃を削除
 				obj_player->DeleteJangeki(i);
 				i--;
-				rflg = false;
+				if (obj_enemy->Getflg() == true)obj_enemy->Fflg();
 			}
 			else
 			{
@@ -383,8 +383,7 @@ void Scene_Stage09::AfterJanken_WIN()
 	obj_player->SetX(100);
 	obj_enemy->SetX(1110);
 	obj_enemy->frameDown();
-	//obj_enemy->RDraw();
-	rflg = true;
+	obj_enemy->Tflg();
 }
 //じゃんけん終了後の挙動（プレイヤー負け）
 void Scene_Stage09::AfterJanken_LOSE()
@@ -399,8 +398,4 @@ void Scene_Stage09::AfterJanken_LOSE()
 	obj_enemy->SetX(1110);
 	obj_enemy->frameUP();
 
-}
-bool Scene_Stage09::Getflg() 
-{
-	return rflg;
 }
