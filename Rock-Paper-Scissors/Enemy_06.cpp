@@ -11,7 +11,11 @@ Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = -1;                 //-1なら左向き  +1なら右向き
 	hp = 100;
 
-	image = LoadGraph("images/tyokitest.png");
+	old_type = static_cast<Jan_Type>(1);  //チョキ属性で初期化
+
+	images[0] = LoadGraph("images/gu-test.png");
+	images[1] = LoadGraph("images/tyokitest.png");
+	images[2] = LoadGraph("images/pa-test.png");
 
 	Init_Jangeki();       //じゃん撃を用意
 
@@ -79,8 +83,26 @@ void Enemy_06::Update()
 //描画
 void Enemy_06::Draw() const
 {
-	//中心から描画
-	DrawRotaGraphF(x, y, 1, 0, image, TRUE);
+	//グー属性の時、赤いキャラ画像を表示
+	if (GetType() == static_cast<Jan_Type>(0))
+	{
+		//中心から描画
+		DrawRotaGraphF(x, y, 1, 0, images[0], TRUE, dir == -1 ? 0 : 1);
+	}
+
+	//チョキ属性の時、黄色いキャラ画像を表示
+	if (GetType() == static_cast<Jan_Type>(1))
+	{
+		//中心から描画
+		DrawRotaGraphF(x, y, 1, 0, images[1], TRUE, dir == -1 ? 0 : 1);
+	}
+
+	//パー属性の時、青いキャラ画像を表示
+	if (GetType() == static_cast<Jan_Type>(2))
+	{
+		//中心から描画
+		DrawRotaGraphF(x, y, 1, 0, images[2], TRUE, dir == -1 ? 0 : 1);
+	}
 
 	//じゃん撃描画
 	Draw_Jangeki();
@@ -88,6 +110,9 @@ void Enemy_06::Draw() const
 	//テスト
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
 	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
+
+	////ChangeCnt変数表示テスト
+	//DrawFormatString(600, 600, 0xffffff, "ChangeCnt : %d", ChangeCnt);
 }
 
 //じゃん撃生成・更新
@@ -193,7 +218,11 @@ void Enemy_06::AttackPattern_1()
 	//敵の属性変化処理
 	if (ChangeCnt > 4)
 	{
-		SetType(static_cast<Jan_Type>(GetRand(2)));
+		while (GetType() == old_type)
+		{
+			SetType(static_cast<Jan_Type>(GetRand(2)));
+		}
+		old_type = GetType();
 		ChangeCnt = 0;
 	}
 
@@ -377,9 +406,13 @@ void Enemy_06::AttackPattern_2()
 
 
 	//敵の属性変化処理
-	if (ChangeCnt > 7)
+	if (ChangeCnt > 5)
 	{
-		SetType(static_cast<Jan_Type>(GetRand(2)));
+		while (GetType() == old_type)
+		{
+			SetType(static_cast<Jan_Type>(GetRand(2)));
+		}
+		old_type = GetType();
 		ChangeCnt = 0;
 	}
 
@@ -549,9 +582,13 @@ void Enemy_06::AttackPattern_3()
 
 
 	//敵の属性変化処理
-	if (ChangeCnt > 5)
+	if (ChangeCnt > 3)
 	{
-		SetType(static_cast<Jan_Type>(GetRand(2)));
+		while (GetType() == old_type)
+		{
+			SetType(static_cast<Jan_Type>(GetRand(2)));
+		}
+		old_type = GetType();
 		ChangeCnt = 0;
 	}
 }
@@ -672,7 +709,7 @@ void Enemy_06::jump()
 			jump_cnt++;        //ジャンプ回数のカウント
 		}
 
-		if (attack_pattern == 2)
+		if (attack_pattern >= 1)
 		{
 			ChangeCnt++;       //属性変化までのカウント
 		}

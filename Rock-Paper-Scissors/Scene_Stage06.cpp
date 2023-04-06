@@ -27,34 +27,37 @@ Scene_Stage06::Scene_Stage06(const Player* player)
 	//“G‚ð¶¬
 	obj_enemy = new Enemy_06(1200, 360, Jan_Type::SCISSORS);
 
+	//”wŒi‰æ‘œ‚Ì“Ç‚Ýž‚Ý
+	stage6_BackImage = LoadGraph("images/stage6/mori32-.png");
+
 	//°E•Ç‚Ì—pˆÓ
 	Init_Floor(STAGE_06_FLOOR);
 
 	//ˆê‚Â‚¸‚Â¶¬  STAGE_06_FLOOR ŒÂ•ª
-	obj_floor[0] = new Floor(0, 700, 1280, 20);        //°
+	obj_floor[0] = new Floor(0, 700, 1280, 20, 22822);        //°
 	obj_floor[1] = new Floor(0, 0 - 400, 20, 1720 + 400);           //•Çi¶j
 	obj_floor[2] = new Floor(1260, 0 - 400, 20, 1720 + 400);           //•Çi‰Ej
 
-	obj_floor[3] = new Floor(81, 100, 120, 10);          //‘«ê[3]`[15]
-	obj_floor[4] = new Floor(81, 300, 120, 10);
-	obj_floor[5] = new Floor(81, 500, 120, 10);
+	obj_floor[3] = new Floor(81, 100, 120, 10, 22822);          //‘«ê[3]`[15]
+	obj_floor[4] = new Floor(81, 300, 120, 10, 22822);
+	obj_floor[5] = new Floor(81, 500, 120, 10, 22822);
 
-	obj_floor[6] = new Floor(333, 200, 120, 10);
-	obj_floor[7] = new Floor(333, 400, 120, 10);
+	obj_floor[6] = new Floor(333, 200, 120, 10, 22822);
+	obj_floor[7] = new Floor(333, 400, 120, 10, 22822);
 
-	obj_floor[8] = new Floor(585, 100, 120, 10);
-	obj_floor[9] = new Floor(585, 300, 120, 10);      
-	obj_floor[10] = new Floor(585, 500, 120, 10);
+	obj_floor[8] = new Floor(585, 100, 120, 10, 22822);
+	obj_floor[9] = new Floor(585, 300, 120, 10, 22822);
+	obj_floor[10] = new Floor(585, 500, 120, 10, 22822);
 
-	obj_floor[11] = new Floor(837, 200, 120, 10);      
-	obj_floor[12] = new Floor(837, 400, 120, 10);
+	obj_floor[11] = new Floor(837, 200, 120, 10, 22822);
+	obj_floor[12] = new Floor(837, 400, 120, 10, 22822);
 
-	obj_floor[13] = new Floor(1089, 100, 120, 10);
-	obj_floor[14] = new Floor(1089, 300, 120, 10);
-	obj_floor[15] = new Floor(1089, 500, 120, 10);
+	obj_floor[13] = new Floor(1089, 100, 120, 10, 22822);
+	obj_floor[14] = new Floor(1089, 300, 120, 10, 22822);
+	obj_floor[15] = new Floor(1089, 500, 120, 10, 22822);
 
 	//§ŒÀŽžŠÔ‚ðƒZƒbƒg
-	GameData::Set_TimeLimit(600);
+	GameData::Set_TimeLimit(3600);
 }
 
 //ƒfƒXƒgƒ‰ƒNƒ^
@@ -246,6 +249,10 @@ void Scene_Stage06::Update()
 //•`‰æ
 void Scene_Stage06::Draw() const
 {
+	//”wŒi‚Ì•`‰æ
+	DrawGraph(0, 0, stage6_BackImage, TRUE);
+
+	//UI‚Ì•`‰æ
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
 
 	//ÚG‚¶‚á‚ñ‚¯‚ñ‚Å‚È‚¢Žž
@@ -304,7 +311,7 @@ AbstractScene* Scene_Stage06::ChangeScene()
 	}
 
 	//ƒvƒŒƒCƒ„[‚ÌHP‚ª0ˆÈ‰º
-	if (obj_player->GetHP() < 0 /* || GameData::Get_Each_Time() <= 0 */)
+	if (obj_player->GetHP() < 0  || GameData::Get_Each_Time() <= 0 )
 	{
 		//ƒQ[ƒ€ƒI[ƒo[ƒV[ƒ“‚ÖØ‚è‘Ö‚¦
 		return dynamic_cast<AbstractScene*> (new GameOverScene(6));

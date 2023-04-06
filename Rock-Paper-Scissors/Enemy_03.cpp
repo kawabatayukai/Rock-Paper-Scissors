@@ -353,9 +353,6 @@ void Enemy_03::Move_Pattern() {
 	if (x != moveinfo[current].location_x) {
 
 
-
-
-
 		//ƒWƒƒƒ“ƒv‚µ‚Ä‚¢‚é‚Æ‚«
 		if (moveinfo[current].jumpflg == 0) {
 

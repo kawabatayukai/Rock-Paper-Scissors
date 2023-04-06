@@ -36,6 +36,8 @@ private:
 	float y_add = 0;              //落下距離
 	float g_add = 1.0f;           //重力加速度
 
+	/********************  行動パターン関係  ******************/
+
 	int  attack_pattern = 0;      //攻撃パターン変数
 	bool jump_flg = false;        //ジャンプ用フラグ　　       ジャンプさせる:true   ジャンプしない:false
 	int  jump_cnt = 0;            //ジャンプカウント
@@ -47,6 +49,8 @@ private:
 	/**********************************************************/
 
 	int frame_count = 0;          //じゃん撃発射用
+	int images[3];                //敵画像
+	Jan_Type old_type;            //前回の敵ジャンケン属性
 };
 
 

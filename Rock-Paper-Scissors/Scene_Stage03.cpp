@@ -4,7 +4,7 @@
 #include "Scene_GameClear.h"
 #include "Scene_GameOver.h"
 #include "Stage_Base.h"
-
+#include "GameData.h"
 
 //デバッグモード
 #include"Debug_Manager.h"
@@ -58,6 +58,10 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	//obj_floor[14] = new Floor("images/stage03/BlockImages.png", 410, 360, 95, 10);//足場6//130, GetColor(193, 107, 68)
 	//obj_floor[16] = new Floor("images/stage03/BlockImages.png", 210, 405, 95, 10);//足場7//130, GetColor(193, 107, 68)
 
+	//制限時間をセット
+	GameData::Set_TimeLimit(6000);
+
+
 }
 
 //デストラクタ
@@ -68,6 +72,9 @@ Scene_Stage03::~Scene_Stage03()
 //更新
 void Scene_Stage03::Update()
 {
+
+	//時間をカウント
+	GameData::Time_Update();
 
 
 	//接触じゃんけん開始前
@@ -345,8 +352,9 @@ AbstractScene* Scene_Stage03::ChangeScene()
 
 	}
 
-	//プレイヤーのHPが0
-	if (obj_player->GetHP() < 0) {
+	//プレイヤーのHPが0以下
+	if (obj_player->GetHP() < 0 || GameData::Get_Each_Time() <= 0){
+		 
 
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(3));
@@ -365,7 +373,7 @@ void Scene_Stage03::AfterJanken_WIN()
 	PlayerCutDamege = 10;
 
 	obj_player->SetX(200);
-
+	obj_enemy->SetX(1150);
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）
@@ -376,4 +384,5 @@ void Scene_Stage03::AfterJanken_LOSE()
 	EnemyCutDamege = 5;
 
 	obj_player->SetX(200);
+	obj_enemy->SetX(1150);
 }
