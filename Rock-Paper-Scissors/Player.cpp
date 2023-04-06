@@ -797,3 +797,13 @@ int Player::Get_Y()
 {
 	return static_cast<int>(y);
 }
+
+//HP回復（引数 : 回復量）
+void Player::Recover_HP(const unsigned int recovery)
+{
+	//HP最大量（ここは要改善）
+	int max_hp = 100;
+
+	this->hp += recovery;
+	if (hp > max_hp) hp = max_hp;
+}

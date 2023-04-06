@@ -256,7 +256,7 @@ void Scene_Stage07::Draw() const
 	DrawFormatString(300, 300, 0xffffff, "%d", GameData::Get_Score());
 
 	//テスト
-	//DrawFormatString(300, 300, 0x00ff00, "p-x : %f   p-y : %f", obj_player->GetX(), obj_player->GetY());
+	DrawFormatString(300, 300, 0x00ff00, "p-x : %f   p-y : %f", obj_player->GetX(), obj_player->GetY());
 
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
@@ -304,10 +304,11 @@ void Scene_Stage07::Draw_Janken() const
 //じゃんけん終了後の挙動（プレイヤー勝ち）
 void Scene_Stage07::AfterJanken_WIN()
 {
-	obj_player->SetX(100);
-	obj_enemy->SetX(900);
+	//obj_player->SetX(100);
+	//obj_enemy->SetX(900);
 
 	obj_enemy->Init_MoveAndAction();
+
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）

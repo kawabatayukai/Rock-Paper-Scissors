@@ -110,9 +110,6 @@ void Enemy_06::Draw() const
 	//テスト
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
 	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
-
-	////ChangeCnt変数表示テスト
-	//DrawFormatString(600, 600, 0xffffff, "ChangeCnt : %d", ChangeCnt);
 }
 
 //じゃん撃生成・更新
@@ -155,7 +152,7 @@ void Enemy_06::Update_Jangeki()
 		if (attack_pattern == 0)
 		{
 			//プレイヤー方向に向かって発射されるジャン撃の生成
-			if (frame_count % 80 == 0) obj_jangeki[jan_count] = 
+			if (frame_count % 100 == 0) obj_jangeki[jan_count] = 
 				new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 		}
 
@@ -163,7 +160,7 @@ void Enemy_06::Update_Jangeki()
 		if (attack_pattern == 1)
 		{
 			//プレイヤー方向に向かって発射されるジャン撃の生成
-			if (frame_count % 80 == 0) obj_jangeki[jan_count] =
+			if (frame_count % 100 == 0) obj_jangeki[jan_count] =
 				new Jangeki_Coming(x, y, radius, speed + 1.0f, type, player_x, player_y);
 		}
 
@@ -171,7 +168,7 @@ void Enemy_06::Update_Jangeki()
 		if (attack_pattern == 2)
 		{
 			//プレイヤー方向に向かって発射されるジャン撃の生成
-			if (frame_count % 70 == 0) obj_jangeki[jan_count] =
+			if (frame_count % 80 == 0) obj_jangeki[jan_count] =
 				new Jangeki_Coming(x, y, radius, speed + 1.0f, type, player_x, player_y);
 		}
 	}
@@ -406,7 +403,7 @@ void Enemy_06::AttackPattern_2()
 
 
 	//敵の属性変化処理
-	if (ChangeCnt > 5)
+	if (ChangeCnt > 6)
 	{
 		while (GetType() == old_type)
 		{
@@ -582,7 +579,7 @@ void Enemy_06::AttackPattern_3()
 
 
 	//敵の属性変化処理
-	if (ChangeCnt > 3)
+	if (ChangeCnt > 4)
 	{
 		while (GetType() == old_type)
 		{
