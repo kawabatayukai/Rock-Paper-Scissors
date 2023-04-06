@@ -38,5 +38,11 @@ private:
 	int enemy_08;
 	int enemy_09;
 	int enemy_10;
+
+	int enemy_05_mob;
+
+	int hand_rock;
+	int hand_scissors;
+	int hand_paper;
 };
 

@@ -19,13 +19,19 @@ Scene_Stage00::Scene_Stage00(const Player* player) : frame_count(0)
 
 	enemy_02 = LoadGraph("images/stage02/ex.png");
 	enemy_03 = LoadGraph("images/stage03/stage03gard.png");
-	enemy_04 = LoadGraph("images/Stage4/ステージ4_ボス100.png");
+	enemy_04 = LoadGraph("images/Stage4/stage_Boss04.png");
 	enemy_05 = LoadGraph("images/stage05/Stage5_Enemy_NoMove_Left.png");
 	enemy_06 = LoadGraph("images/tyokitest.png");
 	enemy_07 = LoadGraph("images/tyokitest.png");
 	enemy_08 = LoadGraph("images/stage08/Stage8_image100.png");
 	enemy_09 = LoadGraph("images/stage09/Stage9_100.png");
 	enemy_10 = LoadGraph("images/tyokitest.png");
+
+	enemy_05_mob = LoadGraph("images/stage05/Mobenemy_image.png");
+
+	hand_rock = LoadGraph("images/腕のみぐーh左.png");
+	hand_scissors = LoadGraph("images/腕のみちょき左.png");
+	hand_paper = LoadGraph("images/腕のみぱー左.png");
 }
 
 //デストラクタ
@@ -37,7 +43,7 @@ Scene_Stage00::~Scene_Stage00()
 void Scene_Stage00::Update()
 {
 	frame_count++;
-	if (frame_count > 60) frame_count = 0;
+	if (frame_count > 120) frame_count = 0;
 
 	return;
 }
@@ -61,7 +67,13 @@ void Scene_Stage00::Draw() const
 
 	DrawGraph(50, 350, player_all, TRUE);
 
-	if (frame_count < 30) DrawString(350, 670, "Press A Button To SelectScene", 0x006400);
+	DrawGraph(800, 0, enemy_05_mob, TRUE);
+
+	DrawGraph(50, 550, hand_rock, TRUE);
+	DrawGraph(150, 550, hand_scissors, TRUE);
+	DrawGraph(250, 550, hand_paper, TRUE);
+
+	if (frame_count < 60) DrawString(350, 670, "Press A Button To SelectScene", 0x006400);
 }
 
 
