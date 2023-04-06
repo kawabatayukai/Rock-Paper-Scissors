@@ -18,6 +18,7 @@ public:
 
 	//ホーミングを特殊生成
 	void Create_Homing(int jan_count, float x, float y,float r, float speed, Jan_Type type);
+
 	//敵の座標を取得
 	void SetEnemyLocation( const float x, const float y);
 
@@ -37,6 +38,9 @@ public:
 
 	//プレイヤーのUI描画
 	void PlayerDrawUI(int hp) const;
+
+	//HP回復（引数 : 回復量）
+	void Recover_HP(const unsigned int recovery);
 
 private:
 	/********************   ジャンプ関係   ********************/
@@ -81,5 +85,7 @@ private:
 		LEFT,
 		RIGHT,
 	};
+
+	int ui_font;  //ui用フォントハンドル
 };
 
