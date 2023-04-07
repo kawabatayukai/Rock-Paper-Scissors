@@ -1,7 +1,10 @@
 #include"DxLib.h"
 #include"KeyManager.h"
+#include"Debug_Manager.h"
 #include"Scene_Title.h"
 #include"Scene_GameMain.h"
+#include"Scene_End.h"
+#include"Scene_Stage01.h"
 
 #include"GameData.h"
 
@@ -9,12 +12,16 @@
 TitleScene::TitleScene()
 {
 	TitleImage = LoadGraph("images/JankenWorldTitle.png");
+
+	//フォントデータを作成
+	font_title = CreateFontToHandle("Yu Gothic UI", 50, 3, DX_FONTTYPE_ANTIALIASING_4X4);
 }
 
 //デストラクタ
 TitleScene::~TitleScene()
 {
-
+	//フォントデータを削除
+	DeleteFontToHandle(font_title);
 }
 
 //更新
@@ -43,11 +50,17 @@ void TitleScene::Update()
 //描画
 void TitleScene::Draw() const
 {
-	SetFontSize(50);
 	DrawGraph(0,0,TitleImage,TRUE);
-	DrawString(70, 350, "GAMEMAIN", 0xf);
-	DrawString(70, 395, "END", 0xf);
+	
+	// 開発モード時はDebug_Manager.hの"DEBUG_MODE_GAMEMAIN"をコメントアウトする
+#ifdef  DEBUG_MODE_GAMEMAIN
 
+	DrawStringToHandle(70, 350, "START", 0xf, font_title);
+#else
+	DrawStringToHandle(70, 350, "GAMEMAIN", 0xf, font_title);
+#endif
+
+	DrawStringToHandle(70, 395, "END", 0xf, font_title);
 
 	//メニューカーソル
 	DrawTriangle(40, 355 + (T_selectnum * 52), 60, 370 + (T_selectnum * 52), 40, 385 + (T_selectnum * 52), GetColor(255, 0, 0), TRUE);
@@ -56,25 +69,39 @@ void TitleScene::Draw() const
 //シーンの変更
 AbstractScene* TitleScene::ChangeScene()
 {
-	
-	switch (T_selectnum)
+	//Aボタンで決定
+	if (KeyManager::OnPadClicked(PAD_INPUT_A) == true)
 	{
-	case 0:
-
-		if (KeyManager::OnPadClicked(PAD_INPUT_A) == true)
+		switch (T_selectnum)
 		{
+		case 0:
+
 			GameData::Init_Data();   //データの初期化
 
-			return dynamic_cast<AbstractScene*> (new GameMainScene());
-		}
-		/*case 1:
-			if (KeyManager::OnPadClicked(PAD_INPUT_A))
-			{
-				return dynamic_cast<AbstractScene*> (new GameEnd());
-			}*/
+			// 開発モード時はDebug_Manager.hの"DEBUG_MODE_GAMEMAIN"をコメントアウトする
+#ifdef  DEBUG_MODE_GAMEMAIN
 
-	default:
-		break;
+			return dynamic_cast<AbstractScene*> (new Scene_Stage01());
+#else
+			return dynamic_cast<AbstractScene*> (new GameMainScene());
+#endif
+			break;
+
+
+
+#ifdef  DEBUG_MODE_GAMEMAIN
+
+			case 1:
+				if (KeyManager::OnPadClicked(PAD_INPUT_A))
+				{
+					return dynamic_cast<AbstractScene*> (new EndScene());
+				}
+				break;
+#endif
+
+		default:
+			break;
+		}
 	}
 
 	return this;  //更新なし

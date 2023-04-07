@@ -12,7 +12,7 @@ Stage_Base::Stage_Base()
 	hpImage = LoadGraph("images/HitPoint.png");
 
 	//                           サイズ 幅              外枠
-	font = CreateFontToHandle(NULL, 60, 3, DX_FONTTYPE_ANTIALIASING/*DX_FONTTYPE_ANTIALIASING_EDGE_4X4*/, -1, 2);
+	font = CreateFontToHandle(NULL, 60, 3, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
 }
 
 Stage_Base::~Stage_Base()
@@ -23,29 +23,38 @@ Stage_Base::~Stage_Base()
 //UI描画
 void Stage_Base::DrawUI(Jan_Type type, int hp) const
 {
+	int color = 0x00ff00;    //HPバーの色
+
 	switch (type)
 	{
 	case Jan_Type::ROCK:
 		DrawRotaGraph(810, 60, 0.5, 0, typeImage[0], TRUE);
+		color = 0xff0000;    //red
 		break;
 	case Jan_Type::SCISSORS:
 					
 		DrawRotaGraph(810, 60, 0.5, 0, typeImage[1], TRUE);
+		color = 0xffd400;    //yellow
 		break;
+
 	case Jan_Type::PAPER:
+
 		DrawRotaGraph(810, 60, 0.5, 0, typeImage[2], TRUE);
+		color = 0x0000ff;    //blue
 		break;
+
 	default:
 		break;
 	}
 
+
 	DrawRotaGraph(1030, 60, 0.5, 0, hpImage, TRUE);			//体力ゲージ枠
-	DrawBox(948, 45, 948 + static_cast<int>(hp * 2.54), 75, 0x00ff00, TRUE);	//体力ゲージ
+	DrawBox(948, 45, 948 + static_cast<int>(hp * 2.54), 75, color, TRUE);	//体力ゲージ
 	DrawFormatString(1120, 85, 0x00ff00, "残り:%d", hp);	//残り体力(数値)
 
 	//制限時間描画
 	//DrawFormatStringToHandle(500, 20, 0x00ff00, font, "%d分%d秒", GameData::Get_Each_Time() / 3600, GameData::Get_Each_Time() / 60);
-	DrawFormatStringToHandle(500, 20, 0x00ff00, font, "%d分%d秒", GameData::Get_Each_Time_Min(), GameData::Get_Each_Time_Sec());
+	DrawFormatStringToHandle(500, 20, 0x00ff00, font, "%d : %d", GameData::Get_Each_Time_Min(), GameData::Get_Each_Time_Sec(),0xffffff);
 
 	//スコア表示
 	DrawFormatString(20, 220, 0xffffff, "スコア：%d", GameData::Get_Score());
