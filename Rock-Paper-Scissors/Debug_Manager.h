@@ -6,6 +6,8 @@
 */
 
 //デバッグモード
+//#define DEBUG_MODE_GAMEMAIN
+
 #define DEBUG_OFF_00
 #define DEBUG_OFF_01
 #define DEBUG_OFF_02

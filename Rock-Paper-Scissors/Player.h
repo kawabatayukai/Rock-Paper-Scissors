@@ -85,5 +85,7 @@ private:
 		LEFT,
 		RIGHT,
 	};
+
+	int ui_font;  //ui用フォントハンドル
 };
 

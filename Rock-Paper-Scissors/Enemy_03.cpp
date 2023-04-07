@@ -16,28 +16,28 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	enemyimage[0] = LoadGraph("images/stage03/stage03attack.png");
 	enemyimage[1] = LoadGraph("images/stage03/stage03gard.png");
-
+	enemyimage[2] = LoadGraph("images/stage03/stage03jump.png");
 
 	Init_Jangeki();       //じゃん撃を用意
 
 	//動きパターン 繰り返し　//0で動き,1で止まる
-	moveinfo[0] = { 0, 950.f, 0.f , 1,  0 ,1 };//初期位置のXが950で停止
+	moveinfo[0] = { 0, 950.f, 0.f , 1,  0 ,0 };//初期位置のXが950で停止
 
 	moveinfo[1] = { 1,  0 ,   0.f , 2, 200 ,1 };//初期位置のXが950で停止
 	//ここから動く
-	moveinfo[2] = { 0, 650.f, 0.f , 3,  0 ,1 };//Xが650まで動く
+	moveinfo[2] = { 0, 650.f, 0.f , 3,  0 ,0 };//Xが650まで動く
 
 	moveinfo[3] = { 1,  0 ,   0.f , 4, 200 ,1 };//Xが650で停止
 
-	moveinfo[4] = { 0, 350.f, 0.f , 5, 0 ,1 };//Xが350まで動く
+	moveinfo[4] = { 0, 350.f, 0.f , 5, 0 ,0 };//Xが350まで動く
 
 	moveinfo[5] = { 1,  0 ,   0.f , 6, 200 ,1 };//Xが350で停止
 
-	//足場に乗る
-	moveinfo[6] = { 0, 350.f, 0.f , 7, 0 ,0 };//Xが350の足場に飛ぶ
+	moveinfo[6] = { 0, 350.f, 0.f , 7, 0 ,1 };//Xが350の足場に飛ぶ
 
 	moveinfo[7] = { 1,  0 ,   0.f , 8, 200 ,1 };//Xが350で停止
 
+	//足場に乗る
 	moveinfo[8] = { 0,  50.f , 0.f , 9, 0 ,0 };//Xが70足場に飛ぶ
 
 	//moveinfo[9] = { 1,  0 ,   0.f , 10, 200 ,1 };//Xが70で停止
@@ -113,11 +113,11 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	moveinfo[34] = { 1,  0 ,   0.f , 35, 200 ,1 };//初期位置のXが350で停止
 
-	moveinfo[35] = { 0, 650.f, 0.f , 36,  0 ,1 };//Xが650まで動く
+	moveinfo[35] = { 0, 650.f, 0.f , 36,  0 ,0};//Xが650まで動く
 
 	moveinfo[36] = { 1,  0 ,   0.f , 37, 200 ,1 };//Xが650で停止
 
-	moveinfo[37] = { 0,	950.f, 0.f , 38, 0 ,1 };//Xが900まで動く
+	moveinfo[37] = { 0,	950.f, 0.f , 38, 0 ,0 };//Xが900まで動く
 
 	//moveinfo[47] = { 1,	 0,  0.f , 48, 62 ,1 };//Xが900で少しの時間停止
 
@@ -136,7 +136,7 @@ Enemy_03::~Enemy_03()
 //更新
 void Enemy_03::Update()
 {
-	if (land_flg == true && moveinfo[current].enemywaitTime == 0 && moveinfo[current].jumpflg == 0)    //GetRand(30) == 3　のところがジャンプの条件
+	if (land_flg == true && moveinfo[current].enemywaitTime == 0 && moveinfo[current].jumpflg == 0 )    //GetRand(30) == 3　のところがジャンプの条件
 	{
 		g_add = -23.f;    //初期-21.5f,重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 		land_flg = false;  //地面についていない
@@ -205,8 +205,7 @@ void Enemy_03::Update()
 	//x += dir * speed;
 
 	///********************   ジャンプ関係   ********************/
-
-
+	
 		y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
 		//落下速度の制限
@@ -251,6 +250,14 @@ void Enemy_03::Draw() const
 
 
 	}
+
+	else if ( moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200 ) {
+
+		//ジャンプ時の画像描画							
+		DrawRotaGraphF(x, y, 1, 0, enemyimage[2], TRUE, dir == -1 ? 0 : 1);
+
+	}
+
 	//そうじゃないとき
 	else {
 		//攻撃時の画像描画								//向きを変える

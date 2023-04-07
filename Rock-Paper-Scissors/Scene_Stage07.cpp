@@ -36,8 +36,8 @@ Scene_Stage07::Scene_Stage07(const Player* player)
 
 	//一つずつ生成  STAGE_07_FLOOR 個分
 	obj_floor[0] = new Floor(0, 700, 1280, 20);        //床
-	obj_floor[1] = new Floor(0, 0, 20, 1720);          //壁（左）
-	obj_floor[2] = new Floor(1260, 0, 20, 1720);       //壁（右）
+	obj_floor[1] = new Floor(0, -100, 20, 1720);          //壁（左）
+	obj_floor[2] = new Floor(1260, -100, 20, 1720);       //壁（右）
 	obj_floor[3] = new Floor("images/stage07/Ring.png", 220, 590, 840, 110);   //リング
 	obj_floor[4] = new Floor(220, 440, 30, 10, 0x007cfe);        //コーナーポスト（当たり判定は少し　　DrawBoxで表現）
 	obj_floor[5] = new Floor(1030, 440, 30, 10, 0x007cfe);       //コーナーポスト（当たり判定は少し　　DrawBoxで表現）
@@ -59,15 +59,13 @@ Scene_Stage07::~Scene_Stage07()
 //更新
 void Scene_Stage07::Update()
 {
-	//時間をカウント
-	GameData::Time_Update();
-
-
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
 		obj_player->Update();    // プレイヤー更新・操作可能
 		obj_enemy->Update();     //敵キャラ更新・内部処理
+
+		GameData::Time_Update(); //時間をカウント
 
 		//プレイヤーの座標を取得
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
@@ -252,11 +250,12 @@ void Scene_Stage07::Draw() const
 
 	//UI
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+	DrawUI_ON_Enemy(obj_enemy);
 
-	DrawFormatString(300, 300, 0xffffff, "%d", GameData::Get_Score());
+	//DrawFormatString(300, 300, 0xffffff, "%d", GameData::Get_Score());
 
 	//テスト
-	DrawFormatString(300, 300, 0x00ff00, "p-x : %f   p-y : %f", obj_player->GetX(), obj_player->GetY());
+	//DrawFormatString(300, 300, 0x00ff00, "p-x : %f   p-y : %f", obj_player->GetX(), obj_player->GetY());
 
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
@@ -334,7 +333,7 @@ AbstractScene* Scene_Stage07::ChangeScene()
 	}
 
 	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() < 0 || GameData::Get_Each_Time() <= 0)
+	if (obj_player->GetHP() <= 0 || GameData::Get_Each_Time() <= 0)
 	{
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(7));

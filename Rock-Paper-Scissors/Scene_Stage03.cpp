@@ -31,7 +31,7 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	}
 
 	//敵を生成							//敵の属性チョキ
-	obj_enemy = new Enemy_03(950, 680, Jan_Type::SCISSORS);//敵の位置
+	obj_enemy = new Enemy_03(950, 650, Jan_Type::SCISSORS);//敵の位置
 
 	//床・壁の用意
 	Init_Floor(STAGE_03_FLOOR);

@@ -3,6 +3,7 @@
 #include"Scene_GameOver.h"
 #include"Scene_GameClear.h"
 #include"DxLib.h"
+#include"GameData.h"
 
 //デバッグモード
 #include"Debug_Manager.h"
@@ -24,6 +25,9 @@ namespace _STR_TUTORIAL
 Scene_Stage01::Scene_Stage01(const Player* player)
 	: Now_Tut_State(TUTORIAL_STATE::START_TUTORIAL)
 {
+	//制限時間をセット
+	GameData::Set_TimeLimit(6000);
+
 	//プレイヤー情報が渡されていれば
 	if (player != nullptr)
 	{
@@ -68,6 +72,9 @@ Scene_Stage01::~Scene_Stage01()
 //更新
 void Scene_Stage01::Update()
 {
+	//時間をカウント
+	GameData::Time_Update();
+
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
@@ -240,20 +247,20 @@ void Scene_Stage01::Draw() const
 
 	//UI
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+	DrawUI_ON_Enemy(obj_enemy);
 
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
-
-		obj_player->Draw();  //プレイヤー描画
-		obj_enemy->Draw();   //敵キャラ描画
-
 		//床・壁描画
 		for (int i = 0; i < STAGE_01_FLOOR; i++)
 		{
 			if (obj_floor[i] == nullptr) break;
 			obj_floor[i]->Draw();
 		}
+		obj_player->Draw();  //プレイヤー描画
+		obj_enemy->Draw();   //敵キャラ描画
+
 	}
 	else
 	{
@@ -283,7 +290,7 @@ AbstractScene* Scene_Stage01::ChangeScene()
 	}
 
 	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() < 0)
+	if (obj_player->GetHP() < 0 || GameData::Get_Each_Time() <= 0)
 	{
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(1));

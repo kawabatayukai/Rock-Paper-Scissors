@@ -12,7 +12,7 @@ Stage_Base::Stage_Base()
 	hpImage = LoadGraph("images/HitPoint.png");
 
 	//                           サイズ 幅              外枠
-	font = CreateFontToHandle(NULL, 60, 3, DX_FONTTYPE_ANTIALIASING/*DX_FONTTYPE_ANTIALIASING_EDGE_4X4*/, -1, 2);
+	font = CreateFontToHandle(NULL, 60, 3, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
 }
 
 Stage_Base::~Stage_Base()
@@ -23,29 +23,38 @@ Stage_Base::~Stage_Base()
 //UI描画
 void Stage_Base::DrawUI(Jan_Type type, int hp) const
 {
+	int color = 0x00ff00;    //HPバーの色
+
 	switch (type)
 	{
 	case Jan_Type::ROCK:
 		DrawRotaGraph(810, 60, 0.5, 0, typeImage[0], TRUE);
+		color = 0xff0000;    //red
 		break;
 	case Jan_Type::SCISSORS:
 					
 		DrawRotaGraph(810, 60, 0.5, 0, typeImage[1], TRUE);
+		color = 0xffd400;    //yellow
 		break;
+
 	case Jan_Type::PAPER:
+
 		DrawRotaGraph(810, 60, 0.5, 0, typeImage[2], TRUE);
+		color = 0x0000ff;    //blue
 		break;
+
 	default:
 		break;
 	}
 
+
 	DrawRotaGraph(1030, 60, 0.5, 0, hpImage, TRUE);			//体力ゲージ枠
-	DrawBox(948, 45, 948 + static_cast<int>(hp * 2.54), 75, 0x00ff00, TRUE);	//体力ゲージ
+	DrawBox(948, 45, 948 + static_cast<int>(hp * 2.54), 75, color, TRUE);	//体力ゲージ
 	DrawFormatString(1120, 85, 0x00ff00, "残り:%d", hp);	//残り体力(数値)
 
 	//制限時間描画
 	//DrawFormatStringToHandle(500, 20, 0x00ff00, font, "%d分%d秒", GameData::Get_Each_Time() / 3600, GameData::Get_Each_Time() / 60);
-	DrawFormatStringToHandle(500, 20, 0x00ff00, font, "%d分%d秒", GameData::Get_Each_Time_Min(), GameData::Get_Each_Time_Sec());
+	DrawFormatStringToHandle(500, 20, 0x00ff00, font, "%d : %d", GameData::Get_Each_Time_Min(), GameData::Get_Each_Time_Sec(),0xffffff);
 
 	//スコア表示
 	DrawFormatString(20, 220, 0xffffff, "スコア：%d", GameData::Get_Score());
@@ -55,6 +64,57 @@ void Stage_Base::DrawUI(Jan_Type type, int hp) const
 
 	/*if (hp > 0) DrawFormatString(1000, 50, 0xffffff, "HP : %d", hp);
 	else DrawString(1100, 50, "death!", 0xffffff);*/
+}
+
+//敵の上にUI描画
+void Stage_Base::DrawUI_ON_Enemy(const EnemyBase* enemy) const
+{
+	//情報を取得
+	Jan_Type type = enemy->GetType();
+	int enemy_hp  = enemy->GetHP();
+	float enemy_x = enemy->GetX();
+	float enemy_y = enemy->GetY();
+	float enemy_h = enemy->GetH();
+
+	//HPバーの色
+	int bar_color = 0xffffff;
+	//描画するじゃん撃属性の配列番号
+	int index = 0;
+
+	switch (type)
+	{
+	case Jan_Type::ROCK:
+
+		index = 0;
+		bar_color = 0xff0000;    //red
+		break;
+
+	case Jan_Type::SCISSORS:
+
+		index = 1;
+		bar_color = 0xffd400;    //yellow
+		break;
+
+	case Jan_Type::PAPER:
+
+		index = 2;
+		bar_color = 0x0000ff;    //blue
+		break;
+
+	default:
+		break;
+	}
+
+	float draw_x = enemy_x - 50;  //描画ｘ
+	float draw_y = enemy_y - 100; //描画ｙ
+
+	//属性
+	DrawRotaGraph(draw_x - 20, draw_y + 5, 0.3, 1, typeImage[index], TRUE);
+	//枠
+	DrawBoxAA(draw_x - 3, draw_y - 3, draw_x + 103, draw_y + 13, 0xffffff, TRUE);
+	DrawBoxAA(draw_x, draw_y, (draw_x + 100), draw_y + 10, 0x000000, TRUE);
+	//HP
+	DrawBoxAA(draw_x, draw_y, (draw_x + enemy_hp), draw_y + 10, bar_color, TRUE);
 }
 
 //床・壁の準備　　STAGE_XX_FLOOR を引数に
