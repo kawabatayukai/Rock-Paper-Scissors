@@ -250,6 +250,7 @@ void Scene_Stage07::Draw() const
 
 	//UI
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+	DrawUI_ON_Enemy(obj_enemy);
 
 	//DrawFormatString(300, 300, 0xffffff, "%d", GameData::Get_Score());
 
