@@ -247,6 +247,7 @@ void Scene_Stage01::Draw() const
 
 	//UI
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+	DrawUI_ON_Enemy(obj_enemy);
 
 	//ÚG‚¶‚á‚ñ‚¯‚ñŠJn‘O
 	if (GetJanState() == Jan_State::BEFORE)

@@ -66,6 +66,57 @@ void Stage_Base::DrawUI(Jan_Type type, int hp) const
 	else DrawString(1100, 50, "death!", 0xffffff);*/
 }
 
+//“G‚Ìã‚ÉUI•`‰æ
+void Stage_Base::DrawUI_ON_Enemy(const EnemyBase* enemy) const
+{
+	//î•ñ‚ğæ“¾
+	Jan_Type type = enemy->GetType();
+	int enemy_hp  = enemy->GetHP();
+	float enemy_x = enemy->GetX();
+	float enemy_y = enemy->GetY();
+	float enemy_h = enemy->GetH();
+
+	//HPƒo[‚ÌF
+	int bar_color = 0xffffff;
+	//•`‰æ‚·‚é‚¶‚á‚ñŒ‚‘®«‚Ì”z—ñ”Ô†
+	int index = 0;
+
+	switch (type)
+	{
+	case Jan_Type::ROCK:
+
+		index = 0;
+		bar_color = 0xff0000;    //red
+		break;
+
+	case Jan_Type::SCISSORS:
+
+		index = 1;
+		bar_color = 0xffd400;    //yellow
+		break;
+
+	case Jan_Type::PAPER:
+
+		index = 2;
+		bar_color = 0x0000ff;    //blue
+		break;
+
+	default:
+		break;
+	}
+
+	float draw_x = enemy_x - 50;  //•`‰æ‚˜
+	float draw_y = enemy_y - 100; //•`‰æ‚™
+
+	//‘®«
+	DrawRotaGraph(draw_x - 20, draw_y + 5, 0.3, 1, typeImage[index], TRUE);
+	//˜g
+	DrawBoxAA(draw_x - 3, draw_y - 3, draw_x + 103, draw_y + 13, 0xffffff, TRUE);
+	DrawBoxAA(draw_x, draw_y, (draw_x + 100), draw_y + 10, 0x000000, TRUE);
+	//HP
+	DrawBoxAA(draw_x, draw_y, (draw_x + enemy_hp), draw_y + 10, bar_color, TRUE);
+}
+
 //°E•Ç‚Ì€”õ@@STAGE_XX_FLOOR ‚ğˆø”‚É
 void Stage_Base::Init_Floor(const int floor_MAX)
 {
