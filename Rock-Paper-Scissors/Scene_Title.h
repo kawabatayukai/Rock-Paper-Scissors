@@ -8,6 +8,8 @@ private:
 
 	int TitleImage = 0;
 	int T_selectnum = 0;
+
+	int font_title;   //フォントハンドル
 public:
 
 	//コンストラクタ
