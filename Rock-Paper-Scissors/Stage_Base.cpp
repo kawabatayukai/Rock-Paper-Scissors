@@ -23,24 +23,33 @@ Stage_Base::~Stage_Base()
 //UI描画
 void Stage_Base::DrawUI(Jan_Type type, int hp) const
 {
+	int color = 0x00ff00;    //HPバーの色
+
 	switch (type)
 	{
 	case Jan_Type::ROCK:
 		DrawRotaGraph(810, 60, 0.5, 0, typeImage[0], TRUE);
+		color = 0xff0000;    //red
 		break;
 	case Jan_Type::SCISSORS:
 					
 		DrawRotaGraph(810, 60, 0.5, 0, typeImage[1], TRUE);
+		color = 0xffd400;    //yellow
 		break;
+
 	case Jan_Type::PAPER:
+
 		DrawRotaGraph(810, 60, 0.5, 0, typeImage[2], TRUE);
+		color = 0x0000ff;    //blue
 		break;
+
 	default:
 		break;
 	}
 
+
 	DrawRotaGraph(1030, 60, 0.5, 0, hpImage, TRUE);			//体力ゲージ枠
-	DrawBox(948, 45, 948 + static_cast<int>(hp * 2.54), 75, 0x00ff00, TRUE);	//体力ゲージ
+	DrawBox(948, 45, 948 + static_cast<int>(hp * 2.54), 75, color, TRUE);	//体力ゲージ
 	DrawFormatString(1120, 85, 0x00ff00, "残り:%d", hp);	//残り体力(数値)
 
 	//制限時間描画

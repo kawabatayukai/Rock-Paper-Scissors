@@ -145,8 +145,8 @@ void Janken::Draw() const
 
 			case Jan_Result::ONEMORE:
 
-				DrawStringToHandle(50, 50, "ONEMORE", 0xffffff, font_result);
-				DrawStringToHandle(850, 300, "ONEMORE", 0xffffff,font_result);
+				DrawStringToHandle(50, 50, "AGAIN!", 0xffffff, font_result);
+				DrawStringToHandle(850, 300, "AGAIN!", 0xffffff,font_result);
 				break;
 
 			default:
