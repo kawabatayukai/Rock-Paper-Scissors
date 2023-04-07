@@ -6,14 +6,14 @@
 #include <typeinfo>
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
-Enemy_04::Enemy_04(float x, float y, Jan_Type type) : EnemyBase(x, y, 130.0f, 130.0f, type)
+Enemy_04::Enemy_04(float x, float y, Jan_Type type) : EnemyBase(x, y, 150.0f, 150.0f, type)
 {
 	speed = 1.0f;
 	dir = 1;
 	hp = 100;
 
-	image = LoadGraph("images/Stage4/ステージ4_ボス100.png");
-	//image = LoadGraph("images/Stage4/stage_Boss04.png");
+	//image = LoadGraph("images/Stage4/ステージ4_ボス100.png");
+	image = LoadGraph("images/Stage4/stage_Boss04.png");
 
 	Init_Jangeki();       //じゃん撃を用意
 }
