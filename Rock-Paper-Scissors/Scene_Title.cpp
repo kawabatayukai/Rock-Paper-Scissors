@@ -81,7 +81,7 @@ AbstractScene* TitleScene::ChangeScene()
 			// 開発モード時はDebug_Manager.hの"DEBUG_MODE_GAMEMAIN"をコメントアウトする
 #ifdef  DEBUG_MODE_GAMEMAIN
 
-			return dynamic_cast<AbstractScene*> (new Scene_Stage01);
+			return dynamic_cast<AbstractScene*> (new Scene_Stage01());
 #else
 			return dynamic_cast<AbstractScene*> (new GameMainScene());
 #endif
