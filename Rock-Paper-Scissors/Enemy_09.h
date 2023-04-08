@@ -18,8 +18,8 @@ public:
 	void Update_Jangeki() override;  //じゃん撃生成・更新
 
 	void MoveEnmey_09();
+	void Jan_360degrees();
 	void SpecialMoveEnmey();
-	void Create_Homing(int jan_count, float x, float y, float r, float speed, Jan_Type type);
 
 	void HP(); 
 
@@ -30,6 +30,7 @@ public:
 	void Tflg();
 	void Fflg();
 
+	bool Spflg = true;  //特殊行動フラグ
 
 	Jangeki_Reflection* reflection;
 
@@ -51,7 +52,8 @@ private:
 	int image;
 	int janFrame = 75;
 	bool rflg = false; //反射用
-	bool Spflg = true; 
+	
+	int jan_count;
 	
 	Player* type;
 

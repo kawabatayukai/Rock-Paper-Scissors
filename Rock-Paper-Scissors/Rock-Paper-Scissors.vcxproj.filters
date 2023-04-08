@@ -22,9 +22,6 @@
     <Filter Include="ソース ファイル\GameMainScene">
       <UniqueIdentifier>{09f65302-5512-4fde-8126-2d745f76e28c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\CharaBase">
-      <UniqueIdentifier>{69d52d54-be0e-45b2-a843-52ce30cee56e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Player">
       <UniqueIdentifier>{4eb6eef7-3fd4-4582-9ff1-b58f37db29b5}</UniqueIdentifier>
     </Filter>
@@ -91,6 +88,9 @@
     <Filter Include="ソース ファイル\GameMainScene\GameData">
       <UniqueIdentifier>{9f06c314-6ab2-4a50-a430-f3d9e3eb4ddf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\GameMainScene\Stage_00\CharaBase">
+      <UniqueIdentifier>{69d52d54-be0e-45b2-a843-52ce30cee56e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -106,7 +106,7 @@
       <Filter>ソース ファイル\GameMainScene</Filter>
     </ClCompile>
     <ClCompile Include="CharaBase.cpp">
-      <Filter>ソース ファイル\CharaBase</Filter>
+      <Filter>ソース ファイル\GameMainScene\Stage_00\CharaBase</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>ソース ファイル\Player</Filter>
@@ -267,7 +267,7 @@
       <Filter>ソース ファイル\GameMainScene</Filter>
     </ClInclude>
     <ClInclude Include="CharaBase.h">
-      <Filter>ソース ファイル\CharaBase</Filter>
+      <Filter>ソース ファイル\GameMainScene\Stage_00\CharaBase</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>ソース ファイル\Player</Filter>
