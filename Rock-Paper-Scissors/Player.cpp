@@ -6,6 +6,7 @@
 #include"KeyManager.h"
 #include"Debug_Manager.h"
 #include"Jangeki_Homing.h"
+#include"Jangeki_Growing.h"
 
 //‚¶‚á‚ñŒ‚”­ËŠÔŠu@i1•bj
 #define PLAYER_JAN_INTERVAL 30

@@ -11,7 +11,7 @@ Jangeki_Base::Jangeki_Base(float x, float y, float r, float speed, Jan_Type type
 
 	//‰æ‘œ“Ç‚İ‚İ
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image);
-
+	
 	LoadDivGraph("images/stage09/Reflection_Jangeki.png", 3, 3, 1, 100, 100, reflection_image);
 }
 

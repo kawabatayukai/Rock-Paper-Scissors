@@ -252,6 +252,9 @@
     <ClCompile Include="Scene_Ranking.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Jangeki_Growing.cpp">
+      <Filter>ソース ファイル\Jangeki\kawabata</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -374,9 +377,6 @@
     <ClInclude Include="Debug_Manager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Jangeki_Zigzag.h">
-      <Filter>ソース ファイル\Jangeki\bise</Filter>
-    </ClInclude>
     <ClInclude Include="Jangeki_Coming.h">
       <Filter>ソース ファイル\Jangeki\tamayose</Filter>
     </ClInclude>
@@ -418,6 +418,12 @@
     </ClInclude>
     <ClInclude Include="Scene_Ranking.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_Zigzag.h">
+      <Filter>ソース ファイル\Jangeki\bise</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_Growing.h">
+      <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
