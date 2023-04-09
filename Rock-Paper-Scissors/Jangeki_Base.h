@@ -79,4 +79,5 @@ protected:
 
 	float target_x = 0;       //‘ÎÛ‚Ì‚˜À•W
 	float target_y = 0;       //‘ÎÛ‚Ì‚™À•W
+
 };

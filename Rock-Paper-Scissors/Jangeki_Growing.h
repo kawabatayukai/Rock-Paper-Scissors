@@ -24,4 +24,6 @@ private:
 	double rate_pct;                //拡大率(max100)
 
 	unsigned short frame_count;     //フレームカウント
+
+	int image_lightning;            //雷的なもの
 };

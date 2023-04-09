@@ -11,17 +11,20 @@ Jangeki_Growing::Jangeki_Growing(float x, float y, float r, float speed, Jan_Typ
 	{
 	case Jan_Type::ROCK:
 
-		LoadDivGraph("images/Effect/jan120_gu.png", 6, 6, 1, 120, 120, image_jangeki);
+		LoadDivGraph("images/Effect/jan100_gu.png", 6, 6, 1, 100, 100, image_jangeki);
+		image_lightning = LoadGraph("images/Effect/lightning_gu_120.png");
 		break;
 
 	case Jan_Type::SCISSORS:
 
-		LoadDivGraph("images/Effect/jan120_tyoki.png", 6, 6, 1, 120, 120, image_jangeki);
+		LoadDivGraph("images/Effect/jan100_tyoki.png", 6, 6, 1, 100, 100, image_jangeki);
+		image_lightning = LoadGraph("images/Effect/lightning_tyoki_120.png");
 		break;
 
 	case Jan_Type::PAPER:
 
-		LoadDivGraph("images/Effect/jan120_pa.png", 6, 6, 1, 120, 120, image_jangeki);
+		LoadDivGraph("images/Effect/jan100_pa.png", 6, 6, 1, 100, 100, image_jangeki);
+		image_lightning = LoadGraph("images/Effect/lightning_pa_120.png");
 		break;
 
 	default:
@@ -39,17 +42,20 @@ Jangeki_Growing::Jangeki_Growing(float x, float y, float r, float speed, double 
 	{
 	case Jan_Type::ROCK:
 
-		LoadDivGraph("images/Effect/jan120_gu.png", 6, 6, 1, 120, 120, image_jangeki);
+		LoadDivGraph("images/Effect/jan100_gu.png", 6, 6, 1, 100, 100, image_jangeki);
+		image_lightning = LoadGraph("images/Effect/lightning_gu_120.png");
 		break;
 
 	case Jan_Type::SCISSORS:
 
-		LoadDivGraph("images/Effect/jan120_tyoki.png", 6, 6, 1, 120, 120, image_jangeki);
+		LoadDivGraph("images/Effect/jan100_tyoki.png", 6, 6, 1, 100, 100, image_jangeki);
+		image_lightning = LoadGraph("images/Effect/lightning_tyoki_120.png");
 		break;
 
 	case Jan_Type::PAPER:
 
-		LoadDivGraph("images/Effect/jan120_pa.png", 6, 6, 1, 120, 120, image_jangeki);
+		LoadDivGraph("images/Effect/jan100_pa.png", 6, 6, 1, 100, 100, image_jangeki);
+		image_lightning = LoadGraph("images/Effect/lightning_pa_120.png");
 		break;
 
 	default:
@@ -66,13 +72,13 @@ void Jangeki_Growing::Update()
 	x += speed;
 	y -= speed_y;
 
-	if (++frame_count % 6 == 0)
-	{
-		index_jangeki++;  //次の画像
-		if (index_jangeki > 3) index_jangeki = 1;
+	//if (++frame_count % 1 == 0)
+	//{
+	//	index_jangeki++;  //次の画像
+	//	if (index_jangeki > 3) index_jangeki = 1;
 
-		frame_count = 0;
-	}
+	//	frame_count = 0;
+	//}
 
 	//拡大率を徐々に上げる
 	rate_pct -= 5.0;
@@ -90,6 +96,11 @@ void Jangeki_Growing::Draw() const
 	int x = static_cast<int>(this->x);
 	int y = static_cast<int>(this->y);
 
+	//エフェクト(雷的ななにか)
+	SetDrawBlendMode(DX_BLENDMODE_ADD, 255);                       //加算合成モード
+	DrawRotaGraph(x, y, 0.65, GetRand(360), image_lightning, TRUE);
+	SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 255);               //ブレンドモードをリセット
+
 	//描画
-	DrawRotaGraph(x, y, rate, 0, image_jangeki[index_jangeki], TRUE);
-}
+	DrawRotaGraph(x, y, rate, 0, image_jangeki[2], TRUE);
+}  
