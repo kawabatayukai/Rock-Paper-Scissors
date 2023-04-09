@@ -14,6 +14,7 @@
 
 //ƒRƒ“ƒXƒgƒ‰ƒNƒ^@@@@@@@@@@@@@  ‚˜@‚™@•@@@‚‚³
 Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ô
+, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0)
 {
 	speed = 7.0f;
 	hp = 100;
@@ -23,7 +24,7 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 
 	//‰æ‘œ“Ç‚İ‚İ
 	//image = LoadGraph("images/sd_body-1.png");
-	if (LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ˜r–³‚µ.png", 10, 5, 2, 100, 100, image) == -1);
+	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ˜r–³‚µ.png", 10, 5, 2, 100, 100, image);
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image_JanType);  //‚¶‚á‚ñŒ‚‰æ‘œ
 	image_setsumei = LoadGraph("images/Setumei.png");
 
@@ -49,6 +50,7 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 
 //ƒRƒ“ƒXƒgƒ‰ƒNƒ^iƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^j
 Player::Player(const Player& player) : CharaBase(player.x, player.y, player.w, player.h)  //Šî’êƒNƒ‰ƒX‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ô
+, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0)
 {
 	//ƒƒ“ƒo•Ï”‚ğˆø”‚ÌƒIƒuƒWƒFƒNƒg‚Ì“à—e‚Å‰Šú‰»‚·‚é
 	// 
@@ -71,10 +73,20 @@ Player::Player(const Player& player) : CharaBase(player.x, player.y, player.w, p
 	//this->image = player.image;             //ƒvƒŒƒCƒ„[‰æ‘œ
 	this->select_JanType = player.select_JanType;    //‘I‘ğ‚µ‚½"è"
 	this->jan_angle = player.jan_angle;              //‚¶‚á‚ñŒ‚Šp“x
+	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ˜r–³‚µ.png", 10, 5, 2, 100, 100, image);
+	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image_JanType);  //‚¶‚á‚ñŒ‚‰æ‘œ
 	image_setsumei = LoadGraph("images/Setumei.png");
 
-	//‘I‘ğ‚¶‚á‚ñŒ‚‰æ‘œƒRƒs[i‘½•ª‚¢‚ç‚È‚¢j
-	memcpy_s(image_JanType, sizeof(player.image_JanType), player.image_JanType, sizeof(player.image_JanType));
+	armL_Image[0] = LoadGraph("images/˜r‚Ì‚İ‚®[h¶.png");
+	armR_Image[0] = LoadGraph("images/˜r‚Ì‚İ‚®[h‰E.png");
+
+	armL_Image[1] = LoadGraph("images/˜r‚Ì‚İ‚¿‚å‚«¶.png");
+	armR_Image[1] = LoadGraph("images/˜r‚Ì‚İ‚¿‚å‚«‰E.png");
+
+	armL_Image[2] = LoadGraph("images/˜r‚Ì‚İ‚Ï[¶.png");
+	armR_Image[2] = LoadGraph("images/˜r‚Ì‚İ‚Ï[‰E.png");
+
+	hpImage = LoadGraph("images/HitPoint.png");
 
 	//ƒtƒHƒ“ƒg‚ğì¬
 	ui_font = CreateFontToHandle("ƒƒCƒŠƒI", 20, 3, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
@@ -255,6 +267,9 @@ void Player::ArmDrawMove() const
 	*   ˜r‚Ì•`‰æE“®‚«   *
 	*                    *
 	*********************/
+
+	int x = static_cast<int>(this->x);
+	int y = static_cast<int>(this->y);
 
 	switch (select_JanType)
 	{

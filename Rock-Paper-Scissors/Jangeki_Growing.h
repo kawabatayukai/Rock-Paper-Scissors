@@ -21,7 +21,7 @@ private:
 	int image_jangeki[6];           //画像（グーorチョキorパー のいずれか）
 	int index_jangeki;              //配列添字
 
-	double rate_pct;
+	double rate_pct;                //拡大率(max100)
 
 	unsigned short frame_count;     //フレームカウント
 };
