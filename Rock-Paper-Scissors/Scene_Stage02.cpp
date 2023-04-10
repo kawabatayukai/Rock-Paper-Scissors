@@ -296,7 +296,7 @@ void Scene_Stage02::AfterJanken_WIN()
 void Scene_Stage02::AfterJanken_LOSE()
 {
 	
-	
+	obj_enemy->SetSpecialTime(600);
 	obj_enemy->frameUP();
 	obj_player->SetX(100);
 	obj_enemy->Spflg = true;

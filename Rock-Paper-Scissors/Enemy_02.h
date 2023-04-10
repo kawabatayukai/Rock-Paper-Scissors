@@ -34,6 +34,8 @@ public:
 	void frameUP();
 	void frameDown();
 
+	void SetSpecialTime(int Time);
+
 	void AttackPattern_1();
 	void Jan_360degrees(int count, float rad, float speed, Jan_Type type);
 	void ChangeDir(float x);//向きの切り替え
@@ -66,7 +68,7 @@ private:
 	int  attack_pattern = 0;      //攻撃パターン変数
 	float enemy_x, enemy_y;		//座標取得用変数
 	int janFrame = 75;
-
+	int SpecialTime = 0;
 	int jan_count;
 	Pattern_02 moveinfo[2];	    //行動パターン
 };

@@ -59,6 +59,8 @@ void Enemy_02::Update()
 
 	/********************   ジャンプ関係   ********************/
 	
+
+	
 	if (jump_cnt < 1)
 	{
 		if (GetRand(1) == 1)  //乱数でjump_flgをtrueにする
@@ -141,8 +143,11 @@ void Enemy_02::Update()
 
 	}
 
-	
-
+	SpecialTime--;
+	if (SpecialTime < 0)
+	{
+		SpecialTime = 0;
+	}
 	if (hp <= 0) hp = 0;
 	else if (hp <= 50) speed = 5.0f;
 	/************************************************************/
@@ -212,16 +217,15 @@ void Enemy_02::Update_Jangeki()
 		}*/
 		
 
-		if (frame_count % janFrame == 0)
+		if (frame_count % 75 == 0)
 		{
 			
-			if (frame_count % 75 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+			if (SpecialTime <= 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 			else if (frame_count % 15 == 0)
 			{
-				if (GetRand(0) == 0)
-				{
+				
 					Jan_360degrees(jan_count, radius, speed, type);
-				}
+
 
 			}
 			
@@ -233,7 +237,7 @@ void Enemy_02::Update_Jangeki()
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(float x, float y, float r, float speed, Jan_Type type, float p_x, float p_y);
 		
 		//プレイヤーの角度へ発射するジャン撃生成
-		if (frame_count % 75 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+		//if (frame_count % 75 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 
 		//プレイヤーのx座標によって発射する方向を変える(左右)
 		
@@ -254,9 +258,9 @@ void Enemy_02::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
 		//ランダムな属性を生成
 		//Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
-		for (int i = count; i < (count + 18); i++)
+		for (int i = count; i < (count + 8); i++)
 		{
-			double angle = static_cast<double>((20.0 * i) * (M_PI / 180));
+			double angle = static_cast<double>((45.0 * i) * (M_PI / 180));
 
 			obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
 			
@@ -369,4 +373,9 @@ void Enemy_02::frameDown()
 		janFrame = janFrame + 5;
 	}
 
+}
+
+void Enemy_02::SetSpecialTime(int Time)
+{
+	SpecialTime = Time;
 }
