@@ -68,21 +68,21 @@ Scene_Stage06::~Scene_Stage06()
 //更新
 void Scene_Stage06::Update()
 {
-	//時間をカウント
-	GameData::Time_Update();
-
-	//プレイヤー座標を取得
-	obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
-
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
 		obj_player->Update();    // プレイヤー更新・操作可能
 		obj_enemy->Update();     //敵キャラ更新・内部処理
+
+		//プレイヤー座標を取得
+		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
+
+		//時間をカウント
+		GameData::Time_Update();
 	}
 
 	//接触じゃんけん処理
-	Touch_Janken(obj_enemy, this);
+	Touch_Janken(obj_enemy, this, 6);
 
 	//playerのじゃん撃をとってくる
 	Jangeki_Base** player_jangeki = obj_player->GetJangeki();
@@ -254,6 +254,7 @@ void Scene_Stage06::Draw() const
 
 	//UIの描画
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+	DrawUI_ON_Enemy(obj_enemy);
 
 	//接触じゃんけんでない時
 	if (GetJanState() == Jan_State::BEFORE)
