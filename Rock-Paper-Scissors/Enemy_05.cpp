@@ -8,7 +8,7 @@
 
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
-Enemy_05::Enemy_05(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
+Enemy_05::Enemy_05(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type), respawn(false)
 {
 	speed = 7.0f;
 	dir = 1;
@@ -47,7 +47,7 @@ void Enemy_05::Update()
 
 	//x += dir * speed;
 
-	/********************   ジャンプ関係   ********************/
+	///********************   ジャンプ関係   ********************/
 
 	//if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
 	//{
@@ -56,132 +56,145 @@ void Enemy_05::Update()
 	//	land_flg = false;  //地面についていない
 	//}
 
-	Movetimer++;
+	
 
-	//敵の移動
-	//switch (Movepattern)
-	//{
-	//case 1:		//真ん中の台へ
-	//	if (x >= 650 && Movetimer >= 30)
-	//	{
-	//		x -= 5;
-	//	}
-	//	else if (Movetimer > 30)
-	//	{
-	//		Movepattern = 2;
-	//	}
-	//	if (Movepattern == 2)
-	//	{
-	//		Movetimer = 0;
-	//	}
-	//	if (land_flg == true && Movetimer == 60)
-	//	{
-	//		g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-	//		land_flg = false;  //地面についていない
-	//	}
-	//	break;
+	if (mob[0]->GetHP() <= 0 && mob[1]->GetHP() <= 0 && mob[2]->GetHP() <= 0)
+	{
+		Movetimer++;
+		//敵の移動
+		switch (Movepattern)
+		{
+		case 1:		//真ん中の台へ
+			if (x >= 650 && Movetimer >= 30)
+			{
+				x -= 5;
+			}
+			else if (Movetimer > 30)
+			{
+				Movepattern = 2;
+			}
+			if (Movepattern == 2)
+			{
+				Movetimer = 0;
+			}
+			if (land_flg == true && Movetimer == 60)
+			{
+				g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+				land_flg = false;  //地面についていない
+			}
+			break;
 
-	//case 2:		//右下の台へ
-	//	if (x <= 1000 && Movetimer >= 30)
-	//	{
-	//		x += 5;
-	//	}
-	//	else if (Movetimer > 30)
-	//	{
-	//		Movepattern = 3;
-	//	}
-	//	if (Movepattern == 3)
-	//	{
-	//		Movetimer = 0;
-	//	}
-	//	if (land_flg == true && Movetimer == 40)
-	//	{
-	//		g_add = -15.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-	//		land_flg = false;  //地面についていない
-	//	}
-	//	break;
+		case 2:		//右下の台へ
+			if (x <= 1000 && Movetimer >= 30)
+			{
+				x += 5;
+			}
+			else if (Movetimer > 30)
+			{
+				Movepattern = 3;
+			}
+			if (Movepattern == 3)
+			{
+				Movetimer = 0;
+			}
+			if (land_flg == true && Movetimer == 40)
+			{
+				g_add = -15.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+				land_flg = false;  //地面についていない
+			}
+			break;
 
-	//case 3:		//左上の台へ
-	//	if (x >= 300 && Movetimer >= 30)
-	//	{
-	//		x -= 5;
+		case 3:		//左上の台へ
+			if (x >= 300 && Movetimer >= 30)
+			{
+				x -= 5;
 
-	//	}
-	//	else if (Movetimer > 30)
-	//	{
-	//		Movepattern = 4;
-	//	}
-	//	if (Movepattern == 4)
-	//	{
-	//		Movetimer = 0;
-	//	}
-	//	if (land_flg == true && Movetimer == 60 || Movetimer == 120)
-	//	{
-	//		g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-	//		land_flg = false;  //地面についていない
-	//	}
-	//	break;
+			}
+			else if (Movetimer > 30)
+			{
+				Movepattern = 4;
+			}
+			if (Movepattern == 4)
+			{
+				Movetimer = 0;
+			}
+			if (land_flg == true && Movetimer == 60 || Movetimer == 120)
+			{
+				g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+				land_flg = false;  //地面についていない
+			}
+			break;
 
-	//case 4:		//真ん中の台へ
-	//	if (x <= 650 && Movetimer >= 30)
-	//	{
-	//		x += 5;
-	//	}
-	//	else if (Movetimer > 30)
-	//	{
-	//		Movepattern = 5;
-	//	}
-	//	if (Movepattern == 5)
-	//	{
-	//		Movetimer = 0;
-	//	}
-	//	if (land_flg == true && Movetimer == 60)
-	//	{
-	//		g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-	//		land_flg = false;  //地面についていない
-	//	}
-	//	break;
+		case 4:		//真ん中の台へ
+			if (x <= 650 && Movetimer >= 30)
+			{
+				x += 5;
+			}
+			else if (Movetimer > 30)
+			{
+				Movepattern = 5;
+			}
+			if (Movepattern == 5)
+			{
+				Movetimer = 0;
+			}
+			if (land_flg == true && Movetimer == 60)
+			{
+				g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+				land_flg = false;  //地面についていない
+			}
+			break;
 
-	//case 5:		//右下の台へ
-	//	if (x >= 300 && Movetimer >= 30)
-	//	{
-	//		x -= 5;
-	//	}
-	//	else if (Movetimer > 30)
-	//	{
-	//		Movepattern = 6;
-	//	}
-	//	if (Movepattern == 6)
-	//	{
-	//		Movetimer = 0;
-	//	}
-	//	if (land_flg == true && Movetimer == 40)
-	//	{
-	//		g_add = -15.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-	//		land_flg = false;  //地面についていない
-	//	}
-	//	break;
+		case 5:		//右下の台へ
+			if (x >= 300 && Movetimer >= 30)
+			{
+				x -= 5;
+			}
+			else if (Movetimer > 30)
+			{
+				Movepattern = 6;
+			}
+			if (Movepattern == 6)
+			{
+				Movetimer = 0;
+			}
+			if (land_flg == true && Movetimer == 40)
+			{
+				g_add = -15.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+				land_flg = false;  //地面についていない
+			}
+			break;
 
-	//case 6:		//右上の台へ
-	//	if (x <= 1000 && Movetimer >= 30)
-	//	{
-	//		x += 5;
-	//	}
-	//	else if (Movetimer > 30)
-	//	{
-	//		Movepattern = 1;
-	//	}
-	//	if (Movepattern == 1)
-	//	{
-	//		Movetimer = 0;
-	//	}
-	//	if (land_flg == true && Movetimer == 60|| Movetimer == 120)
-	//	{
-	//		g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-	//		land_flg = false;  //地面についていない
-	//	}
-	//	break;
-	//}
+		case 6:		//右上の台へ
+			if (x <= 1000 && Movetimer >= 30)
+			{
+				x += 5;
+			}
+			else if (Movetimer > 30)
+			{
+				Movepattern = 7;
+			}
+			if (Movepattern == 1)
+			{
+				Movetimer = 0;
+			}
+			if (land_flg == true && Movetimer == 60 || Movetimer == 120)
+			{
+				g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+				land_flg = false;  //地面についていない
+			}
+			break;
+
+		case 7:
+			//mob[1]->SetHP(-100);
+
+			Movepattern = 1;
+			respawn = true;
+			Movetimer = 0;
+			break;
+		}
+	}
+
 
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
@@ -252,4 +265,19 @@ void Enemy_05::Update_Jangeki()
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Spin(x, y, radius, speed, type,player_x,player_y);
 
 	}
+}
+
+void Enemy_05::GetMobEnemy(MobEnemy_05** mobenemy)
+{
+	mob = mobenemy;
+}
+
+bool Enemy_05::respawn_mobenemy()
+{
+	return respawn;
+}
+
+void Enemy_05::SetRespawn(bool flag)
+{
+	respawn = flag;
 }

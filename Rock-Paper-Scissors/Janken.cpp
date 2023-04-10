@@ -232,3 +232,17 @@ Jan_Result Janken::Get_JankenResult()
 	//それ以外はエラー
 	return Jan_Result::_ERROR;
 }
+
+
+//(あいこの時用) 必要な変数を初期化する
+void Janken::OneMore_Init()
+{
+	button_B = false;   //Bボタンが押されているか
+	button_Y = false;   //Yボタンが押されているか
+	button_X = false;   //Xボタンが押されているか
+
+	//敵の出す手を再設定
+	enemy_jan = static_cast<Jan_Type> (GetRand(2));
+
+	result = Jan_Result::_ERROR;
+}

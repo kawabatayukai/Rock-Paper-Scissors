@@ -209,7 +209,6 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 		//Aボタンが押されたとき 
 		if (KeyManager::OnPadClicked(PAD_INPUT_A) == true)
 		{
-
 			//プレイヤーの座標を初期値に
 			obj_player->SetX(640);
 
@@ -257,13 +256,14 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 				//じゃん撃を初期化する
 				enemy->Init_Jangeki();
 
-				delete obj_janken;
+				//delete obj_janken;
+				obj_janken->OneMore_Init();
 
 				//じゃんけん開始
 				j_state = Jan_State::PROGRESS;
 
 				//じゃんけんオブジェクト生成
-				obj_janken = new Janken(static_cast<Jan_Type> (GetRand(2)));
+				//obj_janken = new Janken(again_type);
 				break;
 
 			default:

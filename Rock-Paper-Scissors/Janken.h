@@ -23,6 +23,8 @@ public:
 
 	Jan_Result GetResult() const { return result; }  //‚¶‚á‚ñ‚¯‚ñ‚ÌŒ‹‰Ê‚ğ•Ô‚·
 
+	//(‚ ‚¢‚±‚Ì—p) •K—v‚È•Ï”‚ğ‰Šú‰»‚·‚é
+	void OneMore_Init();
 
 private:
 
@@ -67,6 +69,4 @@ private:
 	int brack;
 	int white;
 	int green;
-
-	const char* n = nullptr;
 };

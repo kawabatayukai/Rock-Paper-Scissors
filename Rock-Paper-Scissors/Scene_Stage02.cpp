@@ -5,7 +5,7 @@
 #include"Scene_GameOver.h"
 #include "Scene_GameClear.h"
 #include "GameData.h"
-
+#include "Enemy_02.h"
 //デバッグモード
 #include"Debug_Manager.h"
 
@@ -288,11 +288,18 @@ AbstractScene* Scene_Stage02::ChangeScene()
 //じゃんけん終了後の挙動（プレイヤー勝ち）
 void Scene_Stage02::AfterJanken_WIN()
 {
+	obj_enemy->frameDown();
 	obj_player->SetX(100);
+	obj_enemy->SetX(1100);
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）
 void Scene_Stage02::AfterJanken_LOSE()
 {
+	
+	obj_enemy->SetSpecialTime(600);
+	obj_enemy->frameUP();
 	obj_player->SetX(100);
+	obj_enemy->SetX(1100);
+	obj_enemy->Spflg = true;
 }
