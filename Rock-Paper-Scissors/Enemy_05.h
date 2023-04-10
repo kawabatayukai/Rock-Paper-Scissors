@@ -18,6 +18,9 @@ public:
 
 	void GetMobEnemy(MobEnemy_05** mobenemy);
 
+	bool respawn_mobenemy();
+	void SetRespawn(bool flag);
+
 private:
 	/********************   ジャンプ関係   ********************/
 
@@ -34,6 +37,8 @@ private:
 	int Enemy_jamp_image;	   //敵ジャンプ時画像用
 	int Movepattern;			//動きのパターン
 	int Movetimer;				//動き用のタイマー
+
+	bool respawn;
 
 	MobEnemy_05** mob;
 };

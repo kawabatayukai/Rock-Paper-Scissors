@@ -43,7 +43,7 @@ void MobEnemy_05::Draw() const
 
 void MobEnemy_05::Update_Jangeki()
 {
-	int rand = GetRand(2);
+	int rand = GetRand(1);
 	int jan_count;
 
 	//‚¶‚á‚ñŒ‚”z—ñ‚ð‚Ð‚Æ‚Â‚¸‚Â
@@ -82,15 +82,11 @@ void MobEnemy_05::Update_Jangeki()
 		switch (rand)
 		{
 		case 0:
-			if (frame_count % 300 == 0) obj_jangeki[jan_count] = new Jangeki_Zigzag(x, y, radius, speed, type, player_x, player_y);
+			if (frame_count % 240 == 0) obj_jangeki[jan_count] = new Jangeki_Zigzag(x, y, radius, speed, type, player_x, player_y);
 			break;
 
-		/*case 1:
-			if (frame_count % 300 == 0) obj_jangeki[jan_count] = new Jangeki_Changespeed(x, y, r, speed, type);
-			break;*/
-
-		case 2:
-			if (frame_count % 300 == 0) obj_jangeki[jan_count] = new Jangeki_Spin(x, y, radius, speed, type, player_x, player_y);
+		case 1:
+			if (frame_count % 240 == 0) obj_jangeki[jan_count] = new Jangeki_Spin(x, y, radius, speed, type, player_x, player_y);
 			break;
 		}
 

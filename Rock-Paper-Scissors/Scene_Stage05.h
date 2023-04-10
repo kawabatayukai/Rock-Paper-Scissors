@@ -36,5 +36,7 @@ private:
 	MobEnemy_05** mob;
 
 	int Back_image;					//”wŒi‰æ‘œ
+
+	
 };
 

@@ -27,6 +27,15 @@ void EnemyBase::SetHP(int damage)
 	}
 }
 
+//HP回復（引数 : 回復量）
+void EnemyBase::Recover_HP(const unsigned int recovery)
+{
+	//HP最大量（ここは要改善）
+	int max_hp = 100;
+
+	this->hp += recovery;
+	if (hp > max_hp) hp = max_hp;
+}
 
 /*                   こんな感じで使えます                                  */
 /*   obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY()); */
