@@ -8,7 +8,7 @@
 
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
-Enemy_05::Enemy_05(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
+Enemy_05::Enemy_05(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type), respawn(false)
 {
 	speed = 7.0f;
 	dir = 1;
@@ -172,7 +172,7 @@ void Enemy_05::Update()
 			}
 			else if (Movetimer > 30)
 			{
-				Movepattern = 1;
+				Movepattern = 7;
 			}
 			if (Movepattern == 1)
 			{
@@ -183,6 +183,14 @@ void Enemy_05::Update()
 				g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 				land_flg = false;  //地面についていない
 			}
+			break;
+
+		case 7:
+			//mob[1]->SetHP(-100);
+
+			Movepattern = 1;
+			respawn = true;
+			Movetimer = 0;
 			break;
 		}
 	}
@@ -262,4 +270,14 @@ void Enemy_05::Update_Jangeki()
 void Enemy_05::GetMobEnemy(MobEnemy_05** mobenemy)
 {
 	mob = mobenemy;
+}
+
+bool Enemy_05::respawn_mobenemy()
+{
+	return respawn;
+}
+
+void Enemy_05::SetRespawn(bool flag)
+{
+	respawn = flag;
 }
