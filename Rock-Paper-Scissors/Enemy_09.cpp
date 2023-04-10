@@ -113,8 +113,21 @@ void Enemy_09::Update_Jangeki()
 		//生成
 		if (frame_count % janFrame == 0)
 		{
-			if(Spflg==false)obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
-			else Jan_360degrees();
+			if (Spflg == false)
+			{
+				obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
+				count++;	
+			}
+			else
+			{
+				Jan_360degrees();
+				count = 0;		 //リセット
+			}
+			if (count == 5)		//五回目で四方向発射
+			{
+				Jan_40degrees();
+				count = 0;		 //リセット
+			}
 		
 		}
 
@@ -131,20 +144,40 @@ void Enemy_09::Jan_360degrees()
 		//生成するじゃん撃の半径
 		float radius = 40.f;
 		int count = 0;
-		frame_count++;
 
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
 		for (int i = jan_count; i < (jan_count + 14); i++)
 		{
-			double angle = static_cast<double>((30.0 * i) * (M_PI / 180));
+			double angle = static_cast<double>((30.0 * i) * (M_PI / 70));
 
 			obj_jangeki[i] = new Jangeki_Base(x, y, radius, speed, angle, type);
 			count++;
 
 			if (GetRand(3) == count)
 				Spflg = false;
+		}
+	}
+}
+
+void Enemy_09::Jan_40degrees()
+{
+	if (Spflg == false)
+	{
+		//生成するじゃん撃の半径
+		float radius = 35.5f;
+		if (GetHP() <= 51)radius = 45.f;
+	
+		//ランダムな属性を生成
+		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
+
+		for (int i = jan_count; i < (jan_count + 8); i++)
+		{
+			double angle = static_cast<double>((270.0 * i) * (M_PI / 120));
+
+			obj_jangeki[i] = new Jangeki_Base(x, y, radius, speed, angle, type);
+		
 		}
 	}
 }

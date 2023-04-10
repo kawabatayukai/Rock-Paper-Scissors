@@ -19,6 +19,7 @@ public:
 
 	void MoveEnmey_09();
 	void Jan_360degrees();
+	void Jan_40degrees();
 	void SpecialMoveEnmey();
 
 	void HP(); 
@@ -51,6 +52,7 @@ private:
 	int Rimage;
 	int image;
 	int janFrame = 75;
+	int count = 0;
 	bool rflg = false; //”½ŽË—p
 	
 	int jan_count;
