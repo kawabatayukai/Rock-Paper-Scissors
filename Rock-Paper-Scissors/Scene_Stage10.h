@@ -5,7 +5,7 @@
 #include"Player.h"
 #include"Floor.h"
 
-#define STAGE_10_FLOOR 5         //床・壁の合計数
+#define STAGE_10_FLOOR 16         //床・壁の合計数
 
 //0ステージ
 class Scene_Stage10 : public Stage_Base
@@ -27,6 +27,8 @@ public:
 
 private:
 	Enemy_10* obj_enemy;            //敵
+
+	Jangeki_Reflection* reflection;
 
 	bool janken_flag = false;       //接触時じゃんけんフラグ
 };

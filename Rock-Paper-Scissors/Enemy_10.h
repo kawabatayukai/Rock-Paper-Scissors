@@ -1,5 +1,8 @@
 #pragma once
 #include"EnemyBase.h"
+#include"Jangeki_reflection.h"
+#include"Jangeki_Base.h"
+#include"Player.h"
 
 const static float V = 1.f;
 
@@ -37,14 +40,25 @@ public:
 	/*敵の動き*/
 	void Move();
 
-	/*敵の動き*/
-	void Enemy10_Move();
-
 	/*画像の変更取得*/
 	void EnemySwitch();
 
 	/*画像の動作変更*/
 	void EnemyChangeMoveimg();
+
+	int Get_Enemy10Form();
+
+	void Interval();
+
+	void Jan_360degrees(int count, float rad, float speed, Jan_Type type);
+
+	void HP();
+
+	bool Getflg();
+	void Tflg();
+	void Fflg();
+
+	Jangeki_Reflection* reflection;
 
 private:
 	/********************   ジャンプ関係   ********************/
@@ -61,7 +75,12 @@ private:
 	float v = V;
 	float a = 0.6f;
 
+	int form;
+
 	int image[10]; //画像
+
+	int Rimage;
+	int Limage;
 
 	int jangeki_Set; //じゃん撃セット用変数
 
@@ -76,6 +95,8 @@ private:
 	int enemyChange_Image; //画像変更
 
 	int pCount; //最後の画像
+
+	bool rflg = false; //反射用
 
 	//向き（左右のみ）
 	enum class DIRECTION

@@ -4,6 +4,10 @@
 #include"Jangeki_Base.h"
 #include"Jangeki_Homing.h"
 #include"Jangeki_Coming.h"
+#include"Jangeki_whole.h"
+#include <math.h>
+#include <corecrt_math_defines.h>
+#include "KeyManager.h"
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_10::Enemy_10(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
@@ -12,10 +16,19 @@ Enemy_10::Enemy_10(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = 1;
 	hp = 100;
 
+	form = 1;
+
+	Rimage = LoadGraph("images/stage09/Stage9_1.png");	//反射ON
+	Limage = LoadGraph("images/stage09/Stage9.png");		//反射OFF
+
 	//image = LoadGraph("images/tyokitest.png");
 	if (LoadDivGraph("images/ワンパンマンALL画像.png", 10, 5, 2, 100, 100, image) == -1);
 
 	Init_Jangeki();       //じゃん撃を用意
+
+	/*反射弾*/
+	reflection = new Jangeki_Reflection(x, y, w, h, Jan_Type::ROCK);
+	reflection->Init_reflectionJangeki();
 
 }
 
@@ -25,68 +38,96 @@ Enemy_10::~Enemy_10()
 
 }
 
-int switchMove = 0; //作業用変数
-
 /*敵の動き*/
 void  Enemy_10::Move()
 {
-	/*左右の足場にジャンプ移動の処理*/
-	switch (switchMove)
+	static int switchMove = 0; //作業用変数
+
+	switch (form)
 	{
-	case 0:
-		if (x > 120) //左へ移動
+	/***********
+	* 第一形態
+	***********/
+	case 1:
+		if (hp > 0)
 		{
-			x--;
-			dir = static_cast<int>(DIRECTION::LEFT);   //向きを設定（左）
-
-			if (land_flg == true && x < 990 && x > 200) //ジャンプ
+			/*左右の足場にジャンプ移動の処理*/
+			switch (switchMove)
 			{
-				g_add = -25.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-				land_flg = false;  //地面についていない
-			}
-
-			if (land_flg == false) //ジャンプ中の加速
-			{
-				if (v < 15) //加速上限
+			case 0:
+				if (x > 120) //左へ移動
 				{
-					v += a;
+					x--;
+					dir = static_cast<int>(DIRECTION::LEFT);   //向きを設定（左）
+
+					if (land_flg == true && x < 990 && x > 200) //ジャンプ
+					{
+						g_add = -25.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+						land_flg = false;  //地面についていない
+					}
+
+					if (land_flg == false) //ジャンプ中の加速
+					{
+						if (v < 15) //加速上限
+						{
+							v += a;
+						}
+						x -= v;
+					}
 				}
-				x -= v;
+				else
+				{
+					switchMove = 1; //次の処理へ
+				}
+				enemyChange_Image = 2; //switch文の割り当て番号
+				break;
+
+			case 1:
+				if (x < 1100) //右へ移動
+				{
+					x++;
+					dir = static_cast<int>(DIRECTION::RIGHT);  //向きを設定（右）
+
+					if (land_flg == true && x > 200 && x < 1000) //ジャンプ
+					{
+						g_add = -25.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+						land_flg = false;  //地面についていない
+					}
+
+					if (land_flg == false) //ジャンプ中の加速
+					{
+						if (v < 15) //加速上限
+						{
+							v += a;
+						}
+						x += v;
+					}
+				}
+				else
+				{
+					switchMove = 0; //次の処理へ
+				}
+				enemyChange_Image = 1; //switch文の割り当て番号
+				break;
 			}
 		}
 		else
 		{
-			switchMove = 1; //次の処理へ
+			Interval();
 		}
-		enemyChange_Image = 2; //switch文の割り当て番号
 		break;
 
-	case 1:
-		if (x < 1100) //右へ移動
+		/***********
+		* 第二形態
+		***********/
+	case 2: 
+		if (hp > 0)
 		{
-			x++;
-			dir = static_cast<int>(DIRECTION::RIGHT);  //向きを設定（右）
-
-			if (land_flg == true && x > 200 && x < 1000) //ジャンプ
-			{
-				g_add = -25.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-				land_flg = false;  //地面についていない
-			}
-
-			if (land_flg == false) //ジャンプ中の加速
-			{
-				if (v < 15) //加速上限
-				{
-					v += a;
-				}
-				x += v;
-			}
+			
 		}
-		else
-		{
-			switchMove = 0; //次の処理へ
-		}
-		enemyChange_Image = 1; //switch文の割り当て番号
+		break;
+
+	default:
 		break;
 	}
 
@@ -116,11 +157,36 @@ void  Enemy_10::Move()
 	/**********************************************************/
 }
 
+void Enemy_10::Interval()
+{
+	//点滅
+	static int counter;
+
+	if (KeyManager::OnPadClicked(PAD_INPUT_A) == false)
+	{
+		if (counter++ < 30)
+		{
+			DrawString(550, 350, "-- Press  A  Button --", 0xffffffff);
+		}
+		else if (counter > 60)  counter = 0;
+	}
+	else
+	{
+		hp = 100;
+		x = 1100;
+		dir == static_cast<int>(DIRECTION::LEFT);
+		form = 2;
+	}
+}
+
 //更新
 void Enemy_10::Update()
 {
 	//じゃん撃更新・生成
 	Update_Jangeki();
+
+	//じゃん撃更新・生成(反射弾)
+	reflection->Update_reflection();
 
 	Move();
 
@@ -165,6 +231,7 @@ void Enemy_10::Draw() const
 
 	//じゃん撃描画
 	Draw_Jangeki();
+	reflection->Draw_reflectionJangeki(); //反射弾描画
 
 	//テスト
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
@@ -408,25 +475,145 @@ void Enemy_10::Update_Jangeki()
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
+		if (hp > 0) //HPがある時
+		switch (form)
+		{
+		/***********
+		* 第一形態
+		***********/
+		case 1:
 		/*********************** ↓↓ 生成( 通常弾 ) ↓↓ ***********************/
 
 		//            生成速度
-		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type); //通常弾
+		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type); //真横弾
 
 		/************************************************************************/
 
 		/*********************** ↓↓ 生成( 追跡弾 ) ↓↓ ***********************/
 
 		//            生成速度
-		//if (frame_count % 70 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //追跡弾 
+		//if (frame_count % 50 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //追跡弾 
 
 		/************************************************************************/
 
 		/*********************** ↓↓ 生成( プレイヤー向き通常弾 ) ↓↓ ***********************/
 
 		//            生成速度
-		if (frame_count % 70 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
-		
+		if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+
 		/************************************************************************/
+
+		/*********************** ↓↓ 生成( 中心円型拡散弾 ) ↓↓ ***********************/
+
+		/*if (frame_count % 120 == 0)
+		{
+			Jan_360degrees(jan_count, radius, speed, type); //360度発射
+		}*/
+		//            生成速度
+		//if (frame_count % 10 == 0) obj_jangeki[jan_count] = new Jangeki_whole(x, y, radius, speed, type);
+
+		/************************************************************************/
+
+		/*********************** ↓↓ 生成( 反射弾 ) ↓↓ ***********************/
+
+		//反射じゃん撃生成
+		//if (reflection->GetFlg() == true)reflection->obj_reflection[reflection->jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed, type, true);
+		//reflection->falseFlg();
+
+		/************************************************************************/
+		break;
+
+		/***********
+		* 第二形態
+		***********/
+		case 2:
+			/*********************** ↓↓ 生成( 通常弾 ) ↓↓ ***********************/
+
+		//            生成速度
+		//if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type); //真横弾
+
+		/************************************************************************/
+
+		/*********************** ↓↓ 生成( 追跡弾 ) ↓↓ ***********************/
+
+		//            生成速度
+		//if (frame_count % 150 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //追跡弾 
+
+		/************************************************************************/
+
+		/*********************** ↓↓ 生成( プレイヤー向き通常弾 ) ↓↓ ***********************/
+
+		//            生成速度
+		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+
+		/************************************************************************/
+
+		/*********************** ↓↓ 生成( 中心円型拡散弾 ) ↓↓ ***********************/
+
+		if (frame_count % 200 == 0)
+		{
+			Jan_360degrees(jan_count, radius, speed, type); //360度発射
+		}
+		//            生成速度
+		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_whole(x, y, radius, speed, type);
+
+		/************************************************************************/
+			break;
+
+		/*********************** ↓↓ 生成( 反射弾 ) ↓↓ ***********************/
+
+		//反射じゃん撃生成
+			//if (reflection->GetFlg() == true)reflection->obj_reflection[reflection->jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed, type, true);
+			//reflection->falseFlg();
+
+		/************************************************************************/
+		break;
+
+		default:
+			break;
+		}
+
+		
+	}
+}
+
+int Enemy_10::Get_Enemy10Form()
+{
+	return form;
+}
+
+//360度発射
+void Enemy_10::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
+{
+	//45度ずつ8個生成
+	//if (hp <= 50)
+	//{
+		for (int i = count; i < (count + 18); i++)
+	{
+		double angle = static_cast<double>((20.0 * i) * (M_PI / 180));
+
+		obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
+	}
+
+	//}
+}
+
+bool Enemy_10::Getflg()
+{
+	return rflg;
+}
+void Enemy_10::Tflg()
+{
+	rflg = true;
+}
+void Enemy_10::Fflg()
+{
+	rflg = false;
+}
+void Enemy_10::HP()
+{
+	if (hp <= 0)
+	{
+		hp = 1;
 	}
 }
