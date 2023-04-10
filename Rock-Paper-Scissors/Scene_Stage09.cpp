@@ -42,8 +42,8 @@ Scene_Stage09::Scene_Stage09(const Player* player)
 
 	//一つずつ生成  STAGE_09_FLOOR 個分
 	obj_floor[0] = new Floor(0, 700, 1280, 20);        //床
-	obj_floor[1] = new Floor(0, 0, 20, 1720);           //壁（左）
-	obj_floor[2] = new Floor(1260, 0, 20, 1720);           //壁（右）
+	obj_floor[1] = new Floor(0, -200, 20, 1720);           //壁（左）
+	obj_floor[2] = new Floor(1260, -200, 20, 1720);           //壁（右）
 	//足場   左側
 	obj_floor[3] = new Floor(100, 500, 120, 20, 0xd2d2d2);
 	obj_floor[4] = new Floor(300, 325, 120, 20, 0xd2d2d2);
@@ -361,7 +361,7 @@ AbstractScene* Scene_Stage09::ChangeScene()
 	}
 
 	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() < 0 || GameData::Get_Each_Time() <= 0)
+	if (obj_player->GetHP() <= 0 || GameData::Get_Each_Time() <= 0)
 	{
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(9));
