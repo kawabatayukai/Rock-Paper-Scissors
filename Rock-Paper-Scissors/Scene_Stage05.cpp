@@ -62,6 +62,7 @@ void Scene_Stage05::Update()
 {
 	static int timer = 0;
 	timer++;
+
 	/*if (timer == 900)
 	{
 		timer = 0;
@@ -70,7 +71,9 @@ void Scene_Stage05::Update()
 	if (GetJanState() == Jan_State::BEFORE)
 	{
 		obj_player->Update();    // プレイヤー更新・操作可能
+		obj_enemy->GetMobEnemy(mob);
 		obj_enemy->Update();     //敵キャラ更新・内部処理
+		
 		for (int i = 0; i < 3; i++)
 		{
 			mob[i]->Update();
