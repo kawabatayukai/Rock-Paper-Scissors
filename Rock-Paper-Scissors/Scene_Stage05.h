@@ -4,7 +4,7 @@
 #include"Stage_Base.h"
 #include"Player.h"
 #include"Floor.h"
-#include"MobEnemy_05.h"
+//#include"MobEnemy_05.h"
 
 #define STAGE_05_FLOOR 8         //è∞ÅEï«ÇÃçáåvêî
 
