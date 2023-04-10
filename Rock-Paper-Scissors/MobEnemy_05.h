@@ -1,6 +1,6 @@
 #include"EnemyBase.h"
 
-class MobEnemy_05 :public EnemyBase
+class MobEnemy_05 : public EnemyBase
 {
 public:
 	MobEnemy_05(float x, float y, Jan_Type type);		//コンストラクタ
