@@ -166,8 +166,8 @@ void Enemy_02::Draw() const
 //じゃん撃生成・更新
 void Enemy_02::Update_Jangeki()
 {
-	
 	int jan_count;
+	
 
 	//じゃん撃配列をひとつずつ
 	for (jan_count = 0; jan_count < JANGEKI_MAX; jan_count++)
@@ -186,6 +186,7 @@ void Enemy_02::Update_Jangeki()
 			DeleteJangeki(jan_count);
 			jan_count--;
 		}
+
 	}
 
 	/*********************** ↓↓ 発射・生成 ↓↓ ***********************/
@@ -210,6 +211,23 @@ void Enemy_02::Update_Jangeki()
 
 		}*/
 		
+
+		if (frame_count % janFrame == 0)
+		{
+			
+			if (frame_count % 75 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+			else if (frame_count % 15 == 0)
+			{
+				if (GetRand(0) == 0)
+				{
+					Jan_360degrees(jan_count, radius, speed, type);
+				}
+
+			}
+			
+			
+
+		}
 		//生成
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_whole(x, y, radius, speed, type, player_x, player_y);
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(float x, float y, float r, float speed, Jan_Type type, float p_x, float p_y);
@@ -227,14 +245,25 @@ void Enemy_02::Update_Jangeki()
 void Enemy_02::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
 {
 	////45度ずつ8個生成
+
+		////生成するじゃん撃の半径
+		//float radius = 40.f;
+		//int count = 0;
+		//frame_count++;
+
+		//ランダムな属性を生成
+		//Jan_Type type = static_cast<Jan_Type>(GetRand(2));
+
+		for (int i = count; i < (count + 18); i++)
+		{
+			double angle = static_cast<double>((20.0 * i) * (M_PI / 180));
+
+			obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
+			
+			
+				Spflg = false;
+		}
 	
-	for (int i = count; i < (count + 18); i++)
-	{
-		double angle = static_cast<double>((20.0 * i) * (M_PI / 180));
-
-		obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
-	}
-
 	
 
 
@@ -325,4 +354,19 @@ void Enemy_02::ChangeDir(float x)
 	else dir = 1;
 }
 
+void Enemy_02::frameUP()
+{
+	if (janFrame >= 55)
+	{
+		janFrame = janFrame - 5;
+	}
+}
 
+void Enemy_02::frameDown()
+{
+	if (janFrame < 75)
+	{
+		janFrame = janFrame + 5;
+	}
+
+}
