@@ -6,6 +6,7 @@
 #include"KeyManager.h"
 #include"Debug_Manager.h"
 #include"Jangeki_Homing.h"
+#include"Jangeki_Growing.h"
 
 //‚¶‚á‚ñŒ‚”­ËŠÔŠu@i1•bj
 #define PLAYER_JAN_INTERVAL 30
@@ -13,6 +14,7 @@
 
 //ƒRƒ“ƒXƒgƒ‰ƒNƒ^@@@@@@@@@@@@@  ‚˜@‚™@•@@@‚‚³
 Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ô
+, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0)
 {
 	speed = 7.0f;
 	hp = 100;
@@ -22,7 +24,7 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 
 	//‰æ‘œ“Ç‚İ‚İ
 	//image = LoadGraph("images/sd_body-1.png");
-	if (LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ˜r–³‚µ.png", 10, 5, 2, 100, 100, image) == -1);
+	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ˜r–³‚µ.png", 10, 5, 2, 100, 100, image);
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image_JanType);  //‚¶‚á‚ñŒ‚‰æ‘œ
 	image_setsumei = LoadGraph("images/Setumei.png");
 
@@ -48,6 +50,7 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 
 //ƒRƒ“ƒXƒgƒ‰ƒNƒ^iƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^j
 Player::Player(const Player& player) : CharaBase(player.x, player.y, player.w, player.h)  //Šî’êƒNƒ‰ƒX‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ô
+, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0)
 {
 	//ƒƒ“ƒo•Ï”‚ğˆø”‚ÌƒIƒuƒWƒFƒNƒg‚Ì“à—e‚Å‰Šú‰»‚·‚é
 	// 
@@ -70,10 +73,20 @@ Player::Player(const Player& player) : CharaBase(player.x, player.y, player.w, p
 	//this->image = player.image;             //ƒvƒŒƒCƒ„[‰æ‘œ
 	this->select_JanType = player.select_JanType;    //‘I‘ğ‚µ‚½"è"
 	this->jan_angle = player.jan_angle;              //‚¶‚á‚ñŒ‚Šp“x
+	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ˜r–³‚µ.png", 10, 5, 2, 100, 100, image);
+	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image_JanType);  //‚¶‚á‚ñŒ‚‰æ‘œ
 	image_setsumei = LoadGraph("images/Setumei.png");
 
-	//‘I‘ğ‚¶‚á‚ñŒ‚‰æ‘œƒRƒs[i‘½•ª‚¢‚ç‚È‚¢j
-	memcpy_s(image_JanType, sizeof(player.image_JanType), player.image_JanType, sizeof(player.image_JanType));
+	armL_Image[0] = LoadGraph("images/˜r‚Ì‚İ‚®[h¶.png");
+	armR_Image[0] = LoadGraph("images/˜r‚Ì‚İ‚®[h‰E.png");
+
+	armL_Image[1] = LoadGraph("images/˜r‚Ì‚İ‚¿‚å‚«¶.png");
+	armR_Image[1] = LoadGraph("images/˜r‚Ì‚İ‚¿‚å‚«‰E.png");
+
+	armL_Image[2] = LoadGraph("images/˜r‚Ì‚İ‚Ï[¶.png");
+	armR_Image[2] = LoadGraph("images/˜r‚Ì‚İ‚Ï[‰E.png");
+
+	hpImage = LoadGraph("images/HitPoint.png");
 
 	//ƒtƒHƒ“ƒg‚ğì¬
 	ui_font = CreateFontToHandle("ƒƒCƒŠƒI", 20, 3, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
@@ -202,6 +215,30 @@ void Player::Update()
 			//jan_angle = (M_PI / 2);
 			dir = static_cast<int>(DIRECTION::RIGHT);
 		}
+
+		//ãŒü‚«‚Ì
+		if (dir == static_cast<int>(DIRECTION::LEFT) && KeyManager::OnPadPressed(PAD_INPUT_UP) &&
+			KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0)
+		{
+			jan_angle = jan_angle / 2;
+		}
+		if (dir == static_cast<int>(DIRECTION::LEFT) && KeyManager::OnPadPressed(PAD_INPUT_DOWN) &&
+			KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0)
+		{
+			jan_angle = jan_angle / -2;
+		}
+
+		//‰ºŒü‚«‚Ì
+		if (dir == static_cast<int>(DIRECTION::RIGHT) && KeyManager::OnPadPressed(PAD_INPUT_UP) &&
+			KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0)
+		{
+			jan_angle = M_PI / 2;
+		}
+		if (dir == static_cast<int>(DIRECTION::RIGHT) && KeyManager::OnPadPressed(PAD_INPUT_DOWN) &&
+			KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0)
+		{
+			jan_angle = M_PI / -2;
+		}
 	}
 
 
@@ -230,6 +267,9 @@ void Player::ArmDrawMove() const
 	*   ˜r‚Ì•`‰æE“®‚«   *
 	*                    *
 	*********************/
+
+	int x = static_cast<int>(this->x);
+	int y = static_cast<int>(this->y);
 
 	switch (select_JanType)
 	{

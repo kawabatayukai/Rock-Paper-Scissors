@@ -18,6 +18,9 @@ public:
 	//UI•`‰æ
 	void DrawUI(Jan_Type type ,int hp) const;
 
+	//“G‚Ìã‚ÉUI•`‰æ
+	void DrawUI_ON_Enemy(const EnemyBase* enemy) const;
+
 	//°E•Ç‚Ì€”õ@@STAGE_XX_FLOOR ‚ğˆø”‚É
 	void Init_Floor(const int floor_MAX);
 

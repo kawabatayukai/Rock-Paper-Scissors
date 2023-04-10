@@ -4,7 +4,7 @@
 #include"Scene_GameMain.h"
 
 //コンストラクタ
-EndScene::EndScene()
+EndScene::EndScene() : framecount(0)
 {
 
 }
@@ -18,20 +18,20 @@ EndScene::~EndScene()
 //更新
 void EndScene::Update()
 {
-
+	framecount++;
 }
 
 //描画
 void EndScene::Draw() const
 {
 	SetFontSize(50);
-	DrawString(100, 100, "エンドシーン Aボタンで終了", 0xffffff);
+	DrawString(100, 100, "End..", 0xffffff);
 }
 
 //シーンの変更
 AbstractScene* EndScene::ChangeScene()
 {
-	if (KeyManager::OnPadClicked(PAD_INPUT_A))
+	if (framecount > 120)
 	{
 		return nullptr;
 	}

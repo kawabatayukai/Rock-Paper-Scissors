@@ -66,9 +66,6 @@ Scene_Stage09::~Scene_Stage09()
 //更新
 void Scene_Stage09::Update()
 {
-
-	GameData::Time_Update();
-
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
@@ -82,9 +79,11 @@ void Scene_Stage09::Update()
 		//プレイヤーの座標を取得
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
 
+		GameData::Time_Update();
 	}
 
 	//接触じゃんけん処理
+	if (obj_enemy->Spflg == false)
 	Touch_Janken(obj_enemy, this);
 
 
@@ -204,8 +203,10 @@ void Scene_Stage09::Update()
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
 			//ダメージを受ける（プレイヤー）
-			obj_player->ReceiveDamage(30);
-
+			//特殊行動中は10ダメージ
+			if (enemy_jangeki[i]->GetR()==40.f)obj_player->ReceiveDamage(10);
+			else obj_player->ReceiveDamage(30);
+			
 			//あたったじゃん撃を削除
 			obj_enemy->DeleteJangeki(i);
 			i--;
@@ -387,14 +388,16 @@ void Scene_Stage09::AfterJanken_WIN()
 //じゃんけん終了後の挙動（プレイヤー負け）
 void Scene_Stage09::AfterJanken_LOSE()
 {
-	
+
 	if (obj_enemy->GetHP() == 1)
 	{
 		obj_enemy->SetHP(-hp);
 		hp = hp / 2;
 	}
+	
 	obj_player->SetX(100);
 	obj_enemy->SetX(1110);
 	obj_enemy->frameUP();
+	obj_enemy->Spflg = true;
 
 }

@@ -14,4 +14,7 @@ public:
 	void Draw() const override;  //描画
 
 	AbstractScene* ChangeScene() override;   //シーンの変更
+
+private:
+	int framecount;  //フレーム
 };
