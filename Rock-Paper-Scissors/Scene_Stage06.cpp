@@ -38,23 +38,23 @@ Scene_Stage06::Scene_Stage06(const Player* player)
 	obj_floor[1] = new Floor(0, 0 - 400, 20, 1720 + 400);           //壁（左）
 	obj_floor[2] = new Floor(1260, 0 - 400, 20, 1720 + 400);           //壁（右）
 
-	obj_floor[3] = new Floor(81, 100, 120, 10, 22822);          //足場[3]～[15]
-	obj_floor[4] = new Floor(81, 300, 120, 10, 22822);
-	obj_floor[5] = new Floor(81, 500, 120, 10, 22822);
+	obj_floor[3] = new Floor(81, 150, 120, 10, 22822);          //足場[3]～[15]
+	obj_floor[4] = new Floor(81, 350, 120, 10, 22822);
+	obj_floor[5] = new Floor(81, 550, 120, 10, 22822);
 
-	obj_floor[6] = new Floor(333, 200, 120, 10, 22822);
-	obj_floor[7] = new Floor(333, 400, 120, 10, 22822);
+	obj_floor[6] = new Floor(333, 250, 120, 10, 22822);
+	obj_floor[7] = new Floor(333, 450, 120, 10, 22822);
 
-	obj_floor[8] = new Floor(585, 100, 120, 10, 22822);
-	obj_floor[9] = new Floor(585, 300, 120, 10, 22822);
-	obj_floor[10] = new Floor(585, 500, 120, 10, 22822);
+	obj_floor[8] = new Floor(585, 150, 120, 10, 22822);
+	obj_floor[9] = new Floor(585, 350, 120, 10, 22822);
+	obj_floor[10] = new Floor(585, 550, 120, 10, 22822);
 
-	obj_floor[11] = new Floor(837, 200, 120, 10, 22822);
-	obj_floor[12] = new Floor(837, 400, 120, 10, 22822);
+	obj_floor[11] = new Floor(837, 250, 120, 10, 22822);
+	obj_floor[12] = new Floor(837, 450, 120, 10, 22822);
 
-	obj_floor[13] = new Floor(1089, 100, 120, 10, 22822);
-	obj_floor[14] = new Floor(1089, 300, 120, 10, 22822);
-	obj_floor[15] = new Floor(1089, 500, 120, 10, 22822);
+	obj_floor[13] = new Floor(1089, 150, 120, 10, 22822);
+	obj_floor[14] = new Floor(1089, 350, 120, 10, 22822);
+	obj_floor[15] = new Floor(1089, 550, 120, 10, 22822);
 
 	//制限時間をセット
 	GameData::Set_TimeLimit(5460);
@@ -227,7 +227,7 @@ void Scene_Stage06::Update()
 	}
 
 	//壁との当たり判定
-	if (obj_player->Get_X() <= 50 || obj_player->Get_X() >= 1200)
+	if (obj_player->Get_X() <= 50 || obj_player->Get_X() >= 1220)
 	{
 		HitCtrl_Floor(obj_player, STAGE_06_FLOOR);     // player　床・壁判定
 	}
@@ -312,7 +312,7 @@ AbstractScene* Scene_Stage06::ChangeScene()
 	}
 
 	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() < 0  || GameData::Get_Each_Time() <= 0 )
+	if (obj_player->GetHP() <= 0  || GameData::Get_Each_Time() <= 0 )
 	{
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(6));
