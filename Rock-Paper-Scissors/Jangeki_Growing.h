@@ -1,7 +1,7 @@
 #pragma once
 #include"Jangeki_Base.h"
 
-//徐々に大きくなる
+//徐々に大きくなる　やかましいエフェクト有
 class Jangeki_Growing : public Jangeki_Base
 {
 public:

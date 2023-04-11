@@ -53,6 +53,8 @@ private:
 //---------------------------------------------------------------
 	int image[3];            //画像
 	int image_back;          //じゃんけん中背景
+	int image_lightning;     //背景（"VS" & イナズマ）
+
 	int image_hand;          //じゃんけん説明
 	int image_player;        //プレイヤーじゃんけん中
 	int image_enemy;         //敵じゃんけん中

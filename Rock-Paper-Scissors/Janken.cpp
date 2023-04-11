@@ -18,12 +18,14 @@ Janken::Janken(Jan_Type enemy_jan, const int stage_num)
 	image_player = LoadGraph("images/sd_body-1.png");
 	image_enemy = LoadGraph("images/tyokitest.png");
 
+	image_lightning = LoadGraph("images/Janken/Janken_Lightning.png");  //じゃんけん中"VS"
+
 	//敵の画像
 	image_all_enemy[0] = LoadGraph("images/tyokitest.png");
 	image_all_enemy[1] = LoadGraph("images/tyokitest.png");
 	image_all_enemy[2] = LoadGraph("images/stage02/ex.png");
 	image_all_enemy[3] = LoadGraph("images/stage03/stage03attack.png");
-	image_all_enemy[4] = LoadGraph("images/Stage04/ステージ4_ボス100.png");
+	image_all_enemy[4] = LoadGraph("images/Stage04/stage_Boss04.png");
 	image_all_enemy[5] = LoadGraph("images/stage05/Stage5_Enemy_NoMove_Left.png");
 	image_all_enemy[6] = LoadGraph("images/tyokitest.png");
 	image_all_enemy[7] = LoadGraph("images/tyokitest.png");
@@ -48,6 +50,8 @@ Janken::~Janken()
 {
 	//フォントデータを削除
 	DeleteFontToHandle(font_result);
+	DeleteFontToHandle(font_other);
+
 }
 
 //更新
@@ -87,7 +91,13 @@ void Janken::Update()
 void Janken::Draw() const
 {
 	//背景
-	DrawGraph(0, 0, image_back, TRUE);
+	//DrawGraph(0, 0, image_back, TRUE);
+
+	DrawBox(0, 0, 1280, 720, 0x000000, TRUE);
+	//SetDrawBlendMode(DX_BLENDMODE_ADD,255);     //加算合成       
+	//"VS"
+	DrawGraph(0, 0, image_lightning, TRUE);  
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND,255);
 
 	//プレイヤー
 	DrawRotaGraph(p_image_x, 300, 2, 0, image_player, TRUE, TRUE);

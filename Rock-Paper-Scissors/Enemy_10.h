@@ -46,6 +46,9 @@ public:
 	/*‰æ‘œ‚Ì“®ì•ÏX*/
 	void EnemyChangeMoveimg();
 
+	//”½Ë‚¶‚á‚ñŒ‚‚ğ¶¬‚·‚é
+	void CreateReflection(Jan_Type type);
+
 private:
 	/********************   ƒWƒƒƒ“ƒvŠÖŒW   ********************/
 

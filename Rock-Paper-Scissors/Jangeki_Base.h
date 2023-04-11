@@ -48,6 +48,9 @@ public:
 	float GetSpeed() const { return speed; }   //スピード取得
 	Jan_Type GetType() const { return type; }  //属性取得
 
+	//自身が反射じゃん撃か
+	bool  IsReflection() const { return refrection; }
+
 	//タイプ取得（グー,チョキ,パー）
 	Jan_Type GeteEnemyType() const { return type; }
 
@@ -72,7 +75,7 @@ protected:
 
 	//反射専用
 	int reflection_image[3];
-	bool refrection;
+	bool refrection;             //自身が反射か
 
 	Jan_Type type;   //タイプ　グーorチョキorパー
 

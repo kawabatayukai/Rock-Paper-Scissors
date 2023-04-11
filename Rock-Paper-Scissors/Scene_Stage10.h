@@ -25,9 +25,16 @@ public:
 
 	AbstractScene* ChangeScene() override; //シーンの変更
 
+	//偽プレイヤーじゃん撃生成
+	void Create_PlayerHomingJangeki(float x,float y, float r, float speed,Jan_Type type );
+	//偽じゃん撃を削除
+	void DeleteJangeki(int jan_count);
+
 private:
 	Enemy_10* obj_enemy;            //敵
 
 	bool janken_flag = false;       //接触時じゃんけんフラグ
+
+	Jangeki_Base** obj_pjangeki;    //プレイヤーじゃん撃配列（偽）
 };
 

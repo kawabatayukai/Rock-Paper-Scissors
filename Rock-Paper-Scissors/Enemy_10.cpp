@@ -119,6 +119,11 @@ void  Enemy_10::Move()
 //更新
 void Enemy_10::Update()
 {
+	//if (frame_count % 200 == 0)
+	//{
+	//	CreateReflection(Jan_Type::PAPER);
+	//}
+
 	//じゃん撃更新・生成
 	Update_Jangeki();
 
@@ -408,6 +413,8 @@ void Enemy_10::Update_Jangeki()
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
+
+
 		/*********************** ↓↓ 生成( 通常弾 ) ↓↓ ***********************/
 
 		//            生成速度
@@ -428,5 +435,27 @@ void Enemy_10::Update_Jangeki()
 		if (frame_count % 70 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 		
 		/************************************************************************/
+	}
+}
+
+//反射じゃん撃を生成する
+void Enemy_10::CreateReflection(Jan_Type type)
+{
+	int jan_count;
+
+	//じゃん撃配列の空きを探す
+	for (jan_count = 0; jan_count < JANGEKI_MAX; jan_count++)
+	{
+		//配列の jan_count 番目がnullptr（空要素）ならそれ以上処理しない
+		if (obj_jangeki[jan_count] == nullptr) break;
+	}
+
+	//じゃん撃を生成
+	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
+	{
+		float radius = 35.5f;   //半径
+		float speed = 3.0f;     //スピード
+
+		obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type, true);
 	}
 }
