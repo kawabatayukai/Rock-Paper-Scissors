@@ -31,7 +31,7 @@ public:
 
 	int GetWaitTime()const;//‘Ò‚¿ŠÔ‚Ìæ“¾
 
-	void ChangeDir(float x);//Œü‚«‚ÌØ‚è‘Ö‚¦
+	void ChangeDir(float enemy_x);//Œü‚«‚ÌØ‚è‘Ö‚¦
 
 	float Get_OldY() const { return old_y; } //YÀ•W‚Ìæ“¾
 

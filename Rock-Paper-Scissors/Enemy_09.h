@@ -53,11 +53,21 @@ private:
 	int image;
 	int janFrame = 75;
 	int count = 0;
+	
 	bool rflg = false; //反射用
+	bool animflg = false;	//アニメーションフラグ
+	bool animflg2 = false;	//アニメーションフラグ
+	int animtimer = 0;
 	
 	int jan_count;
 	
 	Player* type;
+	//アニメーション用画像変数
+	int img_teleport[15];	//再生
+	int img_teleport2[15];	//逆再生
+	float before_x = 0;
+	float before_y = 0;
+	int anim_count = 0;  //アニメーション回数
 
 };
 
