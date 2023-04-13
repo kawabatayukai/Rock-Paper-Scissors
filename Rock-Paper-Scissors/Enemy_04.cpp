@@ -38,6 +38,7 @@ void Enemy_04::Update()
 	//じゃん撃更新・生成
 	Update_Jangeki();
 
+	//プレイヤーとの角度
 	angle = atan2f((player_x - x), (player_y - y));
 
 	//動きパターン
