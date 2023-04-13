@@ -32,6 +32,7 @@ public:
 	void Fflg();
 
 	bool Spflg = true;  //特殊行動フラグ
+	bool animflg = false;	//アニメーションフラグ
 
 	Jangeki_Reflection* reflection;
 
@@ -55,8 +56,7 @@ private:
 	int count = 0;
 	
 	bool rflg = false; //反射用
-	bool animflg = false;	//アニメーションフラグ
-	bool animflg2 = false;	//アニメーションフラグ
+	
 	int animtimer = 0;
 	
 	int jan_count;
