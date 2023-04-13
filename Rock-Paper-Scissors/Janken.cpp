@@ -13,7 +13,7 @@ Janken::Janken(Jan_Type enemy_jan, const int stage_num)
 
 	//画像読み込み
 	LoadDivGraph("images/Janken_Test.png", 3, 3, 1, 200, 200, image);
-	image_back = LoadGraph("images/Jan_Back_ver1.png");             //じゃんけん中背景
+	image_back = LoadGraph("images/Janken/touch_janBack.png");             //じゃんけん中背景
 	image_back_light = LoadGraph("images/Janken/Jan_Lightning_Red.png");
 
 	image_hand = LoadGraph("images/Janken_Hand2.png");
@@ -23,17 +23,34 @@ Janken::Janken(Jan_Type enemy_jan, const int stage_num)
 	image_enemy = LoadGraph("images/tyokitest.png");
 
 	//敵の画像
-	image_all_enemy[0] = LoadGraph("images/tyokitest.png");
-	image_all_enemy[1] = LoadGraph("images/tyokitest.png");
-	image_all_enemy[2] = LoadGraph("images/stage02/ex.png");
-	image_all_enemy[3] = LoadGraph("images/stage03/stage03attack.png");
-	image_all_enemy[4] = LoadGraph("images/Stage04/ステージ4_ボス100.png");
-	image_all_enemy[5] = LoadGraph("images/stage05/Stage5_Enemy_NoMove_Left.png");
-	image_all_enemy[6] = LoadGraph("images/tyokitest.png");
-	image_all_enemy[7] = LoadGraph("images/tyokitest.png");
-	image_all_enemy[8] = LoadGraph("images/stage08/Stage8_image100.png");
-	image_all_enemy[9] = LoadGraph("images/stage09/Stage9_100.png");
-	image_all_enemy[10] = LoadGraph("images/tyokitest.png");
+	{
+		image_all_enemy[0] = LoadGraph("images/tyokitest.png");
+		image_all_enemy[1] = LoadGraph("images/tyokitest.png");
+		image_all_enemy[2] = LoadGraph("images/stage02/ex.png");
+		image_all_enemy[3] = LoadGraph("images/stage03/stage03attack.png");
+		image_all_enemy[4] = LoadGraph("images/Stage04/ステージ4_ボス100.png");
+		image_all_enemy[5] = LoadGraph("images/stage05/Stage5_Enemy_NoMove_Left.png");
+		image_all_enemy[6] = LoadGraph("images/tyokitest.png");
+		image_all_enemy[7] = LoadGraph("images/tyokitest.png");
+		image_all_enemy[8] = LoadGraph("images/stage08/Stage8_image100.png");
+		image_all_enemy[9] = LoadGraph("images/stage09/Stage9_100.png");
+		image_all_enemy[10] = LoadGraph("images/tyokitest.png");
+	}
+
+	//背景
+	{
+		image_all_back[0] = -1;
+		image_all_back[1] = LoadGraph("images/stage01/Tutorial_Back.png");
+		image_all_back[2] = LoadGraph("images/stage02/mizuumi01.png");
+		image_all_back[3] = LoadGraph("images/stage03/stage03back.png");
+		image_all_back[4] = LoadGraph("images/Stage04/Stage_Image2.png");
+		image_all_back[5] = LoadGraph("images/stage05/Stage5_Stageimage.png");
+		image_all_back[6] = LoadGraph("images/stage06/mori32-.png");
+		image_all_back[7] = LoadGraph("images/stage07/back02.png");
+		image_all_back[8] = LoadGraph("images/stage08/Stage08_1.jpg");
+		image_all_back[9] = LoadGraph("images/stage09/stage09_image.png");
+		image_all_back[10] = LoadGraph("images/stage10/tyokitest.png");
+	}
 
 	//フォントデータを作成　　　　　　Windows標準搭載フォントなら大丈夫。多分　　　[候補 "Yu Gothic UI"]
 	font_result = CreateFontToHandle("メイリオ", 70, 8, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 2);
@@ -91,6 +108,16 @@ void Janken::Update()
 void Janken::Draw() const
 {
 	//背景
+	if (stage_num == 0 || image_all_back[stage_num] == -1)        //画像読み込み失敗
+	{
+		DrawBox(0, 0, 1280, 720, 0x808080, TRUE);
+	}
+	else
+	{
+		DrawGraph(0, 0, image_all_back[stage_num], FALSE);
+	}
+
+	//"VS"
 	DrawGraph(0, 0, image_back, TRUE);
 
 	//DrawBox(0, 0, 1280, 720, 0x000000, TRUE);
