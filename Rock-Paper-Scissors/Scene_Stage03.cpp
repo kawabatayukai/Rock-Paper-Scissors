@@ -78,13 +78,18 @@ void Scene_Stage03::Update()
 
 
 	//接触じゃんけん開始前
-	if (GetJanState() == Jan_State::BEFORE)
+	if (GetJanState()  == Jan_State::BEFORE)
 	{
 		obj_player->Update();    // プレイヤー更新・操作可能
 		obj_enemy->Update();     //敵キャラ更新・内部処理
 		obj_enemy->ChangeDir(obj_player->GetX());//プレイヤーがx < 640だったらエネミーの弾の向きを変える
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());	//プレイヤーの座標を取得
+
+		
 	}
+
+
+
 
 	//接触じゃんけん処理
 	Touch_Janken(obj_enemy, this);
@@ -304,9 +309,10 @@ void Scene_Stage03::Draw() const
 
 	//HP描画
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+	DrawUI_ON_Enemy(obj_enemy);//HPバー
 
 	//接触じゃんけんでない時
-	if (GetJanState() == Jan_State::BEFORE)
+	if (GetJanState() == Jan_State::START || GetJanState() == Jan_State::BEFORE)
 	{
 
 		obj_player->Draw();  //プレイヤー描画
@@ -319,6 +325,9 @@ void Scene_Stage03::Draw() const
 			if (obj_floor[i] == nullptr) break;
 			obj_floor[i]->Draw();
 		}
+
+		//接触した瞬間の演出
+		if (GetJanState() == Jan_State::START) Draw_JankenStart();
 
 	}
 	else
