@@ -56,6 +56,8 @@ Scene_Stage06::Scene_Stage06(const Player* player)
 	obj_floor[14] = new Floor(1089, 350, 120, 10, 22822);
 	obj_floor[15] = new Floor(1089, 550, 120, 10, 22822);
 
+	obj_floor[16] = new Floor(0, -220, 1280, 20, 22822);        //天井
+
 	//制限時間をセット
 	GameData::Set_TimeLimit(5460);
 }
@@ -233,13 +235,13 @@ void Scene_Stage06::Update()
 	}
 
 	//プレイヤーのy座標が減少しない時のみ当たり判定を取得
-	if (obj_player->Get_Y() >= obj_player->Get_OldY())
+	if (obj_player->Get_Y() >= obj_player->Get_OldY() || obj_player->Get_Y() <= -200)
 	{
 		HitCtrl_Floor(obj_player, STAGE_06_FLOOR);     // player　床・壁判定
 	}
 
 	//敵のy座標が減少しない時のみ当たり判定を取得
-	if (obj_enemy->Get_Y() >= obj_enemy->Get_OldY())
+	if (obj_enemy->Get_Y() >= obj_enemy->Get_OldY() || obj_enemy->Get_Y() <= -200)
 	{
 		HitCtrl_Floor(obj_enemy, STAGE_06_FLOOR);      // 敵　　　床・壁判定
 	}
@@ -256,8 +258,8 @@ void Scene_Stage06::Draw() const
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
 	DrawUI_ON_Enemy(obj_enemy);
 
-	//接触じゃんけんでない時
-	if (GetJanState() == Jan_State::BEFORE)
+	//接触じゃんけん開始前
+	if (GetJanState() == Jan_State::START || GetJanState() == Jan_State::BEFORE)
 	{
 
 		obj_player->Draw();  //プレイヤー描画
@@ -270,6 +272,8 @@ void Scene_Stage06::Draw() const
 			obj_floor[i]->Draw();
 		}
 
+		// 接触した瞬間の演出
+		if (GetJanState() == Jan_State::START) Draw_JankenStart();
 	}
 	else
 	{

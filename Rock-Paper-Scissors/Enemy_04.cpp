@@ -68,11 +68,11 @@ void Enemy_04::Update()
 	if (hp <= 0) hp = 0;
 	
 	//HP50％以下でスピードUP
-	/*if (hp <= 50) speed = 2.0f;
-	else speed = 1.0f;*/
+	//if (hp <= 50) speed = 2.0f;
+	//else speed = 1.0f;
 	
 	//少しずつHP回復
-	if (hp < 100 && frame_count % 40 == 0) hp++;
+	if (hp < 100 && frame_count % 35 == 0) hp++;
 }
 
 //描画
@@ -133,6 +133,8 @@ void Enemy_04::Draw() const
 
 	//じゃん撃描画
 	Draw_Jangeki();
+
+	if (hp > 0) DrawFormatString((int)(x - 45), (int)(y - 130), 0xffffff, "HP : %d", hp);
 }
 
 //じゃん撃生成・更新
@@ -166,7 +168,7 @@ void Enemy_04::Update_Jangeki()
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
 		float radius = 40.0f;   //半径
-		float speed  =  3.0f;   //スピード
+		float speed  =  3.5f;   //スピード
 		
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
