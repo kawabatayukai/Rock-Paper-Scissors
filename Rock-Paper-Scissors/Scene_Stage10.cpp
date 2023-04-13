@@ -8,6 +8,7 @@
 #include"Jangeki_Homing.h"
 #include"Scene_Result.h"
 #include"GameData.h"
+#include"Scene_InputName.h"
 
 
 //デバッグモード

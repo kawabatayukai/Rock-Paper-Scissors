@@ -1,5 +1,6 @@
 #include "Scene_InputRanking.h"
 #include"GameData.h"
+#include"Scene_InputName.h"
 
 Scene_InputRanking inputRanking;
 

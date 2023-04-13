@@ -36,25 +36,24 @@ int a = 0;
 Scene_Result::Scene_Result()
 {
 	KeyBoardInit();
-
 	LoadKeyBoardImgaes();
 }
 
 //更新
 void  Scene_Result::Update()
 {
-	//// フォントサイズの設定
+	// フォントサイズの設定
 	//SetFontSize(20);
 
-	//// 名前入力指示文字列の描画
+	// 名前入力指示文字列の描画
 	//DrawString(150, 240, "ランキングに登録します", 0xFFFFFF);
 	//DrawString(150, 270, "名前を英字で入力してください", 0xFFFFFF);
-	//
-	//// 名前の入力
+	
+	// 名前の入力
 	//DrawString(150, 310, "> ", 0xFFFFFF);
 	//DrawBox(160, 305, 300, 335, 0x000055, TRUE);
-	//
-	////ランキング入力処理
+	
+	//ランキング入力処理
 	//if (KeyInputSingleCharString(170, 310, 10, name, FALSE) == 1)
 	//{
 	//	inputRanking.setName(9, name);
@@ -68,14 +67,14 @@ void  Scene_Result::Update()
 //描画
 void  Scene_Result::Draw() const
 {
-	//// フォントサイズの設定
+	// フォントサイズの設定
 	//SetFontSize(20);
-	//
-	//// 名前入力指示文字列の描画
+	
+	// 名前入力指示文字列の描画
 	//DrawString(150, 240, "ランキングに登録します", 0xFFFFFF);
 	//DrawString(150, 270, "名前を英字で入力してください", 0xFFFFFF);
-	//
-	//// 名前の入力
+	
+	// 名前の入力
 	//DrawString(150, 310, "> ", 0xFFFFFF);
 	//DrawBox(160, 305, 300, 335, 0x000055, TRUE);
 
@@ -88,17 +87,20 @@ void Scene_Result::KeyBoardInit()
 	//カーソルの初期位置は"A"
 	movekeyX = 0;             //ｘ方向0番目
 	movekeyY = 0;             //ｙ方向1番目
+
 	//カーソルの初期位置は「A」なのでノーマル
 	CURSOR_NOW = CURSOR_TYPE::NORMAL;
+
 	//入力文字列　初期化
 	for (int i = 0; i < 10; i++)
 	{
-		InputName[i] = 0;
+		name[i] = 0;
 	}
-	InputName[10] = '\0';     //配列の一番最後に"\0"(終端の目印)を入れておく
+	name[10] = '\0';     //配列の一番最後に"\0"(終端の目印)を入れておく
 	input_Pos = -1;           //
 	pushFlag = FALSE;         //最初はAボタンは押されていない
 }
+
 //画像読み込み
 int Scene_Result::LoadKeyBoardImgaes()
 {
@@ -115,13 +117,22 @@ int Scene_Result::LoadKeyBoardImgaes()
 	if ((LoadDivGraph("images/KeyBoard/N_Link_Space.png", 2, 2, 1, 200, 40, OKimage)) == -1) return -1;
 	return 0;
 }
-//キーボード描画
+
+//効果音読み込み
+//int Scene_InputName::LoadSounds()
+//{
+
+//}
+
+//描画
 void Scene_Result::KeyBoard_Draw()const
 {
 	//背景
 	DrawGraph(320, 120, backimage, FALSE);
+
 	//キーボード
 	DrawGraph(45 + CENTER_X, OUT_HEIGHT, keyboardimage, TRUE);
+
 	// ノーマル(A～Z,a～z,0～9)・「×」・「ＯＫ」によって画像変化　 switch文で操作
 	// 　　　　　　　　押す・押さないによって画像変化　　　　　　　 画像配列を PushFlg で操作
 	//画像配列の 0番目 は「押していない」カーソル　　1番目は 「押している」カーソル
@@ -142,6 +153,7 @@ void Scene_Result::KeyBoard_Draw()const
 	//入力中の文字を表示
 	DrawInputInfo();
 }
+
 //更新
 void Scene_Result::KeyBoard_Update()
 {
@@ -201,6 +213,7 @@ void Scene_Result::KeyBoard_Update()
 		CURSOR_NOW = CURSOR_TYPE::DONE;           //現在のキーはDONE「OK」
 	}
 }
+
 //カーソルの移動・ボタンの長押しを調整
 bool Scene_Result::CursorControl()
 {
@@ -209,8 +222,9 @@ bool Scene_Result::CursorControl()
 	//frame = 0;
 	return false;
 }
-//Aボタンが押された時の処理
-int Scene_Result::KeyBoard_PushA(char* name)
+
+//Aボタンが押された時の処理  入力が終わると 1 が返ってくる
+int Scene_Result::KeyBoard_PushA(char* name)       //keyflg　 は"押された瞬間"キー
 {
 	//　Aボタンを押している間
 	if (KeyManager::OnPadPressed(PAD_INPUT_A))
@@ -223,27 +237,32 @@ int Scene_Result::KeyBoard_PushA(char* name)
 			{
 				pushFlag = true;        //押されているよ
 				++input_Pos;            //入力位置を一つ右に
+
 				//上限は10文字   （配列の0～9）
 				if (input_Pos > 9) input_Pos = 9;
+
 				//文字配列に入力
-				InputName[input_Pos] = AllStr[movekeyY][movekeyX];
+				name[input_Pos] = AllStr[movekeyY][movekeyX];
 			}
 			else if (CURSOR_NOW == CURSOR_TYPE::CANCEL)                  //「×」キーの上で押された　一文字削除
 			{
 				pushFlag = true;        //押されているよ
+
 				//一文字でも入力されていれば一文字消す
-				if (InputName[input_Pos] != 0) InputName[input_Pos] = 0; //0 は何も入力されていない状態
+				if (name[input_Pos] != 0) name[input_Pos] = 0; //0 は何も入力されていない状態
 				input_Pos--;            //入力位置を一つ左に
+
 				//入力位置は最低-1まで
 				if (input_Pos < -1) input_Pos = -1;
 			}
 			else if (CURSOR_NOW == CURSOR_TYPE::DONE)                  //「OK」キーの上で押された　確定
 			{
 				//一文字も入力されていない場合は確定できない
-				if (InputName[input_Pos] != 0)
+				if (name[input_Pos] != 0)
 				{
 					//一文字でも入力アリ
-					InputName[input_Pos + 1] = '\0';       //最後の文字の一つ右に'\0'
+					name[input_Pos + 1] = '\0';       //最後の文字の一つ右に'\0'
+
 					//ランキングにセット
 					DrawString(0, 0, "Ranking", 0xffffff);
 
@@ -262,45 +281,34 @@ int Scene_Result::KeyBoard_PushA(char* name)
 	}
 	return 0;
 }
+
 //入力情報表示
 void Scene_Result::DrawInputInfo()const
 {
-	if (InputName[0] == 0)
+	if (name[0] == 0)
 	{
 		//SetDrawBlendMode
 		SetFontSize(20);
 		DrawString(200 + CENTER_X, 125 + CENTER_Y, "・ ・ 名前を入力 ・ ・", 0xffffff);
 	}
-	for (int i = 0; InputName[i] != '\0'; i++)
+	for (int i = 0; name[i] != '\0'; i++)
 	{
 		SetFontSize(30);
-		DrawFormatString((220 + 20 * i) + CENTER_X, 120 + CENTER_Y, 0xffffff, " %c", InputName[i]);
+		DrawFormatString((220 + 20 * i) + CENTER_X, 120 + CENTER_Y, 0xffffff, " %c", name[i]);
 	}
 }
-//if (KeyBoard_PushA(key, g_Ranking[RANKING_DATA - 1].name) == 1)
-//{
-//	g_Ranking[RANKING_DATA - 1].score = score;   // ランキングデータにスコアを登録
-//	SortRanking();                               // ランキング並べ替え
-//	SaveRanking();                               // ランキングデータの保存
-//	gamemode = 3;                                // ゲームモードの変更
-//}
-//else
-//{
-//	KeyBoard_Draw();
-//	KeyBoard_Update(key);
-//}
 
 //シーンの変更処理
 AbstractScene* Scene_Result::ChangeScene()
 {
-	//if (KeyManager::OnPadClicked(PAD_INPUT_A) == true)
 	if (KeyBoard_PushA(name) != 1)
 	{
 		KeyBoard_Update();
 	}
 	else
 	{
-		//return dynamic_cast<AbstractScene*>(new Scene_InputRanking());
+		Scene_InputRanking();
+
 	}
 	return this;
 }

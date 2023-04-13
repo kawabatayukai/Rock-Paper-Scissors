@@ -1,16 +1,6 @@
 #pragma once
 #include "AbstractScene.h"
 
-// キーの種類
-//enum class KEY_TYPE
-//{
-//	NONE = 0,   // 入力0（なにも押されていない）
-//	NORMAL,     // A～B,a～b,1～9
-//	CANCEL,     //「×」(ひとつ消す)
-//	DONE,       //「OK」(確定)
-//	MISS = 99
-//};
-
 //キーの種類
 enum class CURSOR_TYPE
 {
@@ -42,20 +32,28 @@ public:
 
 	//初期処理
 	void KeyBoardInit();
+
 	//画像読み込み
 	int LoadKeyBoardImgaes();
+
 	//効果音読み込み
 	//int LoadSounds();
+
 	//描画
-	void KeyBoard_Draw()const ;
+	void KeyBoard_Draw()const;
+
 	//更新
 	void KeyBoard_Update();
 	//カーソルの移動・ボタンの長押しを調整
 	bool CursorControl();
+
 	//Aボタンが押された時の処理  入力が終わると 1 が返ってくる
 	int KeyBoard_PushA(char* name);       //keyflg　 は"押された瞬間"キー
+
 	//入力情報表示
 	void DrawInputInfo()const;
+
+	int GetName();
 
 private:
 
@@ -72,9 +70,11 @@ private:
 	int movekeyX = 0;
 	int movekeyY = 0;
 	CURSOR_TYPE CURSOR_NOW = CURSOR_TYPE::NORMAL;  //現在のカーソル
-	char InputName[11];              //入力した文字が入る配列 0～9に文字(10文字ﾏﾃﾞ)　10番目には \0 です
+	//char InputName[11];              //入力した文字が入る配列 0～9に文字(10文字ﾏﾃﾞ)　10番目には \0 です
 	int input_Pos;                   //入力中の配列の〇番目
 	/********************************/
+
+
 
 //	//初期処理
 //	void KeyBoardInit();
