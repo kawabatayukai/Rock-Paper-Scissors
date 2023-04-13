@@ -415,7 +415,7 @@ int Enemy_03::GetWaitTime()const {
 
 
 
-//プレイヤーの座標を継承
+//エネミーの座標を継承
 void Enemy_03::ChangeDir(float enemy_x)
 {
 	if (enemy_x < x) dir = -1;
