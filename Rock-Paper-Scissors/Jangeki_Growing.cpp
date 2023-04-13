@@ -13,18 +13,21 @@ Jangeki_Growing::Jangeki_Growing(float x, float y, float r, float speed, Jan_Typ
 
 		LoadDivGraph("images/Effect/jan100_gu.png", 6, 6, 1, 100, 100, image_jangeki);
 		image_lightning = LoadGraph("images/Effect/lightning_gu_120.png");
+		//image_lightning = LoadGraph("images/Effect/effect_gu.png");
 		break;
 
 	case Jan_Type::SCISSORS:
 
 		LoadDivGraph("images/Effect/jan100_tyoki.png", 6, 6, 1, 100, 100, image_jangeki);
 		image_lightning = LoadGraph("images/Effect/lightning_tyoki_120.png");
+		//image_lightning = LoadGraph("images/Effect/effect_tyoki.png");
 		break;
 
 	case Jan_Type::PAPER:
 
 		LoadDivGraph("images/Effect/jan100_pa.png", 6, 6, 1, 100, 100, image_jangeki);
 		image_lightning = LoadGraph("images/Effect/lightning_pa_120.png");
+		//image_lightning = LoadGraph("images/Effect/effect_pa.png");
 		break;
 
 	default:
@@ -44,18 +47,21 @@ Jangeki_Growing::Jangeki_Growing(float x, float y, float r, float speed, double 
 
 		LoadDivGraph("images/Effect/jan100_gu.png", 6, 6, 1, 100, 100, image_jangeki);
 		image_lightning = LoadGraph("images/Effect/lightning_gu_120.png");
+		//image_lightning = LoadGraph("images/Effect/effect_gu.png");
 		break;
 
 	case Jan_Type::SCISSORS:
 
 		LoadDivGraph("images/Effect/jan100_tyoki.png", 6, 6, 1, 100, 100, image_jangeki);
 		image_lightning = LoadGraph("images/Effect/lightning_tyoki_120.png");
+		//image_lightning = LoadGraph("images/Effect/effect_tyoki.png");
 		break;
 
 	case Jan_Type::PAPER:
 
 		LoadDivGraph("images/Effect/jan100_pa.png", 6, 6, 1, 100, 100, image_jangeki);
 		image_lightning = LoadGraph("images/Effect/lightning_pa_120.png");
+		//image_lightning = LoadGraph("images/Effect/effect_pa.png");
 		break;
 
 	default:
