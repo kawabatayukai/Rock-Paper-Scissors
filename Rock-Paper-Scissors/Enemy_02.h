@@ -36,7 +36,7 @@ public:
 
 	void SetSpecialTime(int Time);
 
-	void AttackPattern_1();
+	
 	void Jan_360degrees(int count, float rad, float speed, Jan_Type type);
 	void ChangeDir(float x);//Œü‚«‚ÌØ‚è‘Ö‚¦
 	//void ChangeDir(float x);
