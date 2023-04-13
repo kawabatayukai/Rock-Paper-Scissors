@@ -14,8 +14,12 @@ Janken::Janken(Jan_Type enemy_jan, const int stage_num)
 	//‰æ‘œ“Ç‚İ‚İ
 	LoadDivGraph("images/Janken_Test.png", 3, 3, 1, 200, 200, image);
 	image_back = LoadGraph("images/Jan_Back_ver1.png");             //‚¶‚á‚ñ‚¯‚ñ’†”wŒi
+	image_back_light = LoadGraph("images/Janken/Jan_Lightning_Red.png");
+
 	image_hand = LoadGraph("images/Janken_Hand2.png");
-	image_player = LoadGraph("images/sd_body-1.png");
+
+	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ.png", 1, 1, 1, 100, 100, &image_player);
+	//image_player = LoadGraph("images/sd_body-1.png");     //ƒvƒŒƒCƒ„[
 	image_enemy = LoadGraph("images/tyokitest.png");
 
 	//“G‚Ì‰æ‘œ
@@ -89,8 +93,13 @@ void Janken::Draw() const
 	//”wŒi
 	DrawGraph(0, 0, image_back, TRUE);
 
+	//DrawBox(0, 0, 1280, 720, 0x000000, TRUE);
+	////SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
+	//DrawGraph(0, 0, image_back_light, TRUE);
+	//SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 200);
+
 	//ƒvƒŒƒCƒ„[
-	DrawRotaGraph(p_image_x, 300, 2, 0, image_player, TRUE, TRUE);
+	DrawRotaGraph(p_image_x, 300, 2, 0, image_player, TRUE);
 
 	//‰æ‘œ“Ç‚İ‚İ‚É¸”s‚µ‚Ä‚¢‚È‚¯‚ê‚Î
 	if (image_all_enemy[stage_num] != -1)
