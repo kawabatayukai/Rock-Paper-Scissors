@@ -72,7 +72,7 @@ void Enemy_04::Update()
 	//else speed = 1.0f;
 	
 	//­‚µ‚¸‚ÂHP‰ñ•œ
-	if (hp < 100 && frame_count % 40 == 0) hp++;
+	if (hp < 100 && frame_count % 35 == 0) hp++;
 }
 
 //•`‰æ
