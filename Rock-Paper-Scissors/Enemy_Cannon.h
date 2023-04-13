@@ -3,11 +3,11 @@
 #include"EnemyBase.h"
 #include"Scene_Stage08.h"
 class Enemy_Cannon
-8ステージ　敵キャラ
+//8ステージ　敵キャラ
 class Enemy_08 : public EnemyBase
 {
 public:
-	コンストラクタ 座標・属性を設定
+	//コンストラクタ 座標・属性を設定
 	Enemy_08(float x, float y, Jan_Type type);
 
 	~Enemy_08();                     //デストラクタ
