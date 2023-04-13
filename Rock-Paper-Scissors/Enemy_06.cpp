@@ -253,11 +253,11 @@ void Enemy_06::AttackPattern_1()
 		{
 			jump_flg = true;
 		}
-		else if (x > 654 && x < 660)
+		else if (x > 644 && x < 650)
 		{
 			jump_flg = true;
 		}
-		else if (x > 914 && x < 920)
+		else if (x > 904 && x < 910)
 		{
 			jump_flg = true;
 		}
