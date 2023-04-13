@@ -6,14 +6,21 @@
 #include <typeinfo>
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
-Enemy_04::Enemy_04(float x, float y, Jan_Type type) : EnemyBase(x, y, 130.0f, 130.0f, type)
+Enemy_04::Enemy_04(float x, float y, Jan_Type type) : EnemyBase(x, y, 150.0f, 150.0f, type)
 {
 	speed = 1.0f;
 	dir = 1;
 	hp = 100;
 
-	image = LoadGraph("images/Stage4/ステージ4_ボス100.png");
-	//image = LoadGraph("images/Stage4/stage_Boss04.png");
+	enemy_image[0] = LoadGraph("images/Stage4/stage_Boss04.png");
+	enemy_image[1] = LoadGraph("images/Stage4/stage_Boss04(上).png");
+	enemy_image[2] = LoadGraph("images/Stage4/stage_Boss04(右上).png");
+	enemy_image[3] = LoadGraph("images/Stage4/stage_Boss04(右).png");
+	enemy_image[4] = LoadGraph("images/Stage4/stage_Boss04(右下).png");
+	enemy_image[5] = LoadGraph("images/Stage4/stage_Boss04(下).png");
+	enemy_image[6] = LoadGraph("images/Stage4/stage_Boss04(左下).png");
+	enemy_image[7] = LoadGraph("images/Stage4/stage_Boss04(左).png");
+	enemy_image[8] = LoadGraph("images/Stage4/stage_Boss04(左上).png");
 
 	Init_Jangeki();       //じゃん撃を用意
 }
@@ -30,6 +37,9 @@ void Enemy_04::Update()
 {
 	//じゃん撃更新・生成
 	Update_Jangeki();
+
+	//プレイヤーとの角度
+	angle = atan2f((player_x - x), (player_y - y));
 
 	//動きパターン
 	moveinfo[0] = { 1, player_x, player_y, 0, 1 };
@@ -69,7 +79,57 @@ void Enemy_04::Update()
 void Enemy_04::Draw() const
 {	
 	//中心から描画
-	DrawRotaGraphF(x, y, 1.5, 0, image, TRUE);
+	DrawRotaGraphF(x, y, 1.5, 0, enemy_image[0], TRUE);
+
+	/************* ↓↓ 黒目の位置をプレイヤーとの角度によって変える ↓↓ *************/
+
+	//上向きの画像
+	if (angle > 2.625 && angle <= 3.15 || angle <= -2.625 && angle > -3)
+	{
+		DrawRotaGraphF(x, y, 1.5, 0, enemy_image[1], TRUE);
+	}
+
+	//右上向きの画像
+	if (angle <= 2.625 && angle > 1.875)
+	{
+		DrawRotaGraphF(x, y, 1.5, 0, enemy_image[2], TRUE);
+	}
+
+	//右向きの画像
+	if (angle <= 1.875 && angle > 1.125)
+	{
+		DrawRotaGraphF(x, y, 1.5, 0, enemy_image[3], TRUE);
+	}
+
+	//右下向きの画像
+	if (angle <= 1.125 && angle > 0.375)
+	{
+		DrawRotaGraphF(x, y, 1.5, 0, enemy_image[4], TRUE);
+	}
+
+	//下向きの画像
+	if (angle <= 0.375 && angle > -0.375)
+	{
+		DrawRotaGraphF(x, y, 1.5, 0, enemy_image[5], TRUE);
+	}
+
+	//左下向きの画像
+	if (angle <= -0.375 && angle > -1.125)
+	{
+		DrawRotaGraphF(x, y, 1.5, 0, enemy_image[6], TRUE);
+	}
+
+	//左向きの画像
+	if (angle <= -1.125 && angle > -1.875)
+	{
+		DrawRotaGraphF(x, y, 1.5, 0, enemy_image[7], TRUE);
+	}
+
+	//左上向きの画像
+	if (angle <= -1.875 && angle > -2.625)
+	{
+		DrawRotaGraphF(x, y, 1.5, 0, enemy_image[8], TRUE);
+	}
 
 	//じゃん撃描画
 	Draw_Jangeki();

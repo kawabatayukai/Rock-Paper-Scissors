@@ -44,6 +44,9 @@ private:
 	int frame_count;			//じゃん撃発射用
 	Pattern_04 moveinfo[2];	    //行動パターン
 	short current;				//現在のパターン配列添字
+
+	int enemy_image[9];			//画像用変数
+	float angle;
 };
 
 

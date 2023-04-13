@@ -14,8 +14,12 @@ Janken::Janken(Jan_Type enemy_jan, const int stage_num)
 	//画像読み込み
 	LoadDivGraph("images/Janken_Test.png", 3, 3, 1, 200, 200, image);
 	image_back = LoadGraph("images/Jan_Back_ver1.png");             //じゃんけん中背景
+	image_back_light = LoadGraph("images/Janken/Jan_Lightning_Red.png");
+
 	image_hand = LoadGraph("images/Janken_Hand2.png");
-	image_player = LoadGraph("images/sd_body-1.png");
+
+	LoadDivGraph("images/ワンパンマンALL画像.png", 1, 1, 1, 100, 100, &image_player);
+	//image_player = LoadGraph("images/sd_body-1.png");     //プレイヤー
 	image_enemy = LoadGraph("images/tyokitest.png");
 
 	//敵の画像
@@ -89,8 +93,13 @@ void Janken::Draw() const
 	//背景
 	DrawGraph(0, 0, image_back, TRUE);
 
+	//DrawBox(0, 0, 1280, 720, 0x000000, TRUE);
+	////SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
+	//DrawGraph(0, 0, image_back_light, TRUE);
+	//SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 200);
+
 	//プレイヤー
-	DrawRotaGraph(p_image_x, 300, 2, 0, image_player, TRUE, TRUE);
+	DrawRotaGraph(p_image_x, 300, 2, 0, image_player, TRUE);
 
 	//画像読み込みに失敗していなければ
 	if (image_all_enemy[stage_num] != -1)
@@ -231,4 +240,18 @@ Jan_Result Janken::Get_JankenResult()
 
 	//それ以外はエラー
 	return Jan_Result::_ERROR;
+}
+
+
+//(あいこの時用) 必要な変数を初期化する
+void Janken::OneMore_Init()
+{
+	button_B = false;   //Bボタンが押されているか
+	button_Y = false;   //Yボタンが押されているか
+	button_X = false;   //Xボタンが押されているか
+
+	//敵の出す手を再設定
+	enemy_jan = static_cast<Jan_Type> (GetRand(2));
+
+	result = Jan_Result::_ERROR;
 }

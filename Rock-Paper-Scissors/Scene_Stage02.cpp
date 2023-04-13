@@ -5,7 +5,7 @@
 #include"Scene_GameOver.h"
 #include "Scene_GameClear.h"
 #include "GameData.h"
-
+#include "Enemy_02.h"
 //デバッグモード
 #include"Debug_Manager.h"
 
@@ -160,7 +160,7 @@ void Scene_Stage02::Update()
 				//パーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::PAPER)
 				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					obj_enemy->ReceiveDamage(25);     //ダメージが入る
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -172,7 +172,7 @@ void Scene_Stage02::Update()
 				//グーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::ROCK)
 				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					obj_enemy->ReceiveDamage(25);     //ダメージが入る
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -183,7 +183,7 @@ void Scene_Stage02::Update()
 				//チョキのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::SCISSORS)
 				{
-					obj_enemy->ReceiveDamage(30);     //ダメージが入る
+					obj_enemy->ReceiveDamage(25);     //ダメージが入る
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -206,7 +206,7 @@ void Scene_Stage02::Update()
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
 			//ダメージを受ける（プレイヤー）
-			obj_player->ReceiveDamage(15);
+			obj_player->ReceiveDamage(25);
 
 			//あたったじゃん撃を削除
 			obj_enemy->DeleteJangeki(i);
@@ -229,6 +229,7 @@ void Scene_Stage02::Draw() const
 	DrawGraph(0, 0, image_back, TRUE);
 
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+	DrawUI_ON_Enemy(obj_enemy);
 
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
@@ -288,11 +289,18 @@ AbstractScene* Scene_Stage02::ChangeScene()
 //じゃんけん終了後の挙動（プレイヤー勝ち）
 void Scene_Stage02::AfterJanken_WIN()
 {
+	obj_enemy->frameDown();
 	obj_player->SetX(100);
+	obj_enemy->SetX(1100);
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）
 void Scene_Stage02::AfterJanken_LOSE()
 {
+	//特殊行動の時間制限の秒数を変えれる
+	obj_enemy->SetSpecialTime(600);
+	obj_enemy->frameUP();
 	obj_player->SetX(100);
+	obj_enemy->SetX(1100);
+	obj_enemy->Spflg = true;
 }
