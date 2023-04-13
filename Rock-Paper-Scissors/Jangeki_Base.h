@@ -6,6 +6,8 @@ enum class Jan_Type
 	ROCK,        //ロック　　　（グー）
 	SCISSORS,    //シザーズ　　（チョキ）
 	PAPER,       //ペーパー　　（パー）
+
+	NONE,        //無属性
 };
 
 //じゃんけんの結果
