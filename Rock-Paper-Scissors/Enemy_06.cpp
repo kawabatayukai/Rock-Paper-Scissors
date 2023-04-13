@@ -111,6 +111,9 @@ void Enemy_06::Draw() const
 	//テスト
 	if (hp > 0) DrawFormatString((int)(x - 50), (int)(y - 75), 0xffffff, "HP : %d", hp);
 	else DrawString((int)(x - 50), (int)(y - 75), "death!", 0xffffff);
+
+	//テスト
+	DrawFormatString(600, 600, 0xffffff, "%d", dir);
 }
 
 //じゃん撃生成・更新
@@ -201,24 +204,37 @@ void Enemy_06::AttackPattern_1()
 	{
 		x -= speed;      //1フレームの間に左へ進む距離
 
-		if (GetRand(3) == 3)  //乱数でjump_flgをtrueにする
+		if (x > 380 && x < 386)   //目標座標に到着したかのチェック
+		{
+			jump_flg = true;
+		}
+		else if (x > 650 && x < 656)
+		{
+			jump_flg = true;
+		}
+		else if (x > 900 && x < 906)
+		{
+			jump_flg = true;
+		}
+		else if (x > 1160 && x < 1166)
 		{
 			jump_flg = true;
 		}
 
-		//低いジャンプ
-		low_jump();
+		low_jump();     //低ジャンプ
 
-		if (land_flg == false)
+		//接地しているかどうかで移動速度を可変   接地時(true)    : speed = 5.0f
+		//                                       非接地時(false) : speed = 8.0f
+		if (land_flg == true)
+		{
+			speed = 3.0f;
+		}
+		else if(land_flg == false)
 		{
 			speed = 8.0f;
 		}
-		else if(land_flg == true)
-		{
-			speed = 5.0f;
-		}
 
-		if (x < 100)    //目標座標に到着したかのチェック
+		if (x < 115)    //目標座標に到着したかのチェック
 		{
 			jump_cnt = 0;          //ジャンプ回数のリセット
 			dir = 1;               //向いている向きの反転
@@ -229,16 +245,34 @@ void Enemy_06::AttackPattern_1()
 	{
 		x += speed;      //1フレームの間に右へ進む距離
 
-		//低いジャンプ
-		low_jump();
+		if (x > 114 && x < 120)   //目標座標に到着したかのチェック
+		{
+			jump_flg = true;
+		}
+		else if (x > 404 && x < 410)
+		{
+			jump_flg = true;
+		}
+		else if (x > 654 && x < 660)
+		{
+			jump_flg = true;
+		}
+		else if (x > 914 && x < 920)
+		{
+			jump_flg = true;
+		}
 
-		if (land_flg == false)
+		low_jump();     //低ジャンプ
+
+		//接地しているかどうかで移動速度を可変   接地時(true)    : speed = 5.0f
+		//                                       非接地時(false) : speed = 8.0f
+		if (land_flg == true)
+		{
+			speed = 3.0f;
+		}
+		else if (land_flg == false)
 		{
 			speed = 8.0f;
-		}
-		else if (land_flg == true)
-		{
-			speed = 5.0f;
 		}
 
 		if (x > 1180)   //目標座標に到着したかのチェック

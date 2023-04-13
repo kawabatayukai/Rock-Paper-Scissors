@@ -258,8 +258,8 @@ void Scene_Stage06::Draw() const
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
 	DrawUI_ON_Enemy(obj_enemy);
 
-	//接触じゃんけんでない時
-	if (GetJanState() == Jan_State::BEFORE)
+	//接触じゃんけん開始前
+	if (GetJanState() == Jan_State::START || GetJanState() == Jan_State::BEFORE)
 	{
 
 		obj_player->Draw();  //プレイヤー描画
@@ -272,6 +272,8 @@ void Scene_Stage06::Draw() const
 			obj_floor[i]->Draw();
 		}
 
+		// 接触した瞬間の演出
+		if (GetJanState() == Jan_State::START) Draw_JankenStart();
 	}
 	else
 	{
