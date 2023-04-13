@@ -13,9 +13,10 @@ Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	old_type = static_cast<Jan_Type>(1);  //チョキ属性で初期化
 
-	images[0] = LoadGraph("images/gu-test.png");
-	images[1] = LoadGraph("images/tyokitest.png");
-	images[2] = LoadGraph("images/pa-test.png");
+	//画像読み込み
+	images[0] = LoadGraph("images/gu-test.png");     //グー属性
+	images[1] = LoadGraph("images/tyokitest.png");   //チョキ属性
+	images[2] = LoadGraph("images/pa-test.png");     //パー属性
 
 	Init_Jangeki();       //じゃん撃を用意
 
@@ -110,6 +111,9 @@ void Enemy_06::Draw() const
 	//テスト
 	if (hp > 0) DrawFormatString((int)(x - 50), (int)(y - 75), 0xffffff, "HP : %d", hp);
 	else DrawString((int)(x - 50), (int)(y - 75), "death!", 0xffffff);
+
+	//テスト
+	DrawFormatString(600, 600, 0xffffff, "%d", dir);
 }
 
 //じゃん撃生成・更新
@@ -178,7 +182,7 @@ void Enemy_06::Update_Jangeki()
 void Enemy_06::AttackPattern_1()
 {
 	//4回ジャンプするまでの間以下の処理(ジャンプ)を繰り返す
-	if (jump_cnt < 3)         
+	if (jump_cnt < 2)         
 	{
 		if (GetRand(3) == 3)  //乱数でjump_flgをtrueにする
 		{
@@ -189,21 +193,51 @@ void Enemy_06::AttackPattern_1()
 		jump();
 	}
 
+	//着地してから次の行動を開始
+	if (jump_cnt == 2 && land_flg == true)
+	{
+		jump_cnt++;
+	}
+
 	//4回以上ジャンプした際の処理
 	if (jump_cnt >= 3 && dir == -1)        //左を向いている時の処理
 	{
-
 		x -= speed;      //1フレームの間に左へ進む距離
 
-		if (x < 957)
+		if (x > 380 && x < 386)   //目標座標に到着したかのチェック
 		{
-			speed = 5.0f;
+			jump_flg = true;
+		}
+		else if (x > 650 && x < 656)
+		{
+			jump_flg = true;
+		}
+		else if (x > 900 && x < 906)
+		{
+			jump_flg = true;
+		}
+		else if (x > 1160 && x < 1166)
+		{
+			jump_flg = true;
 		}
 
-		if (x < 100)    //目標座標に到着したかのチェック
+		low_jump();     //低ジャンプ
+
+		//接地しているかどうかで移動速度を可変   接地時(true)    : speed = 5.0f
+		//                                       非接地時(false) : speed = 8.0f
+		if (land_flg == true)
+		{
+			speed = 3.0f;
+		}
+		else if(land_flg == false)
+		{
+			speed = 8.0f;
+		}
+
+		if (x < 115)    //目標座標に到着したかのチェック
 		{
 			jump_cnt = 0;          //ジャンプ回数のリセット
-			dir = 1;  //向いている向きの反転
+			dir = 1;               //向いている向きの反転
 			ChangeCnt++;
 		}
 	}
@@ -211,15 +245,40 @@ void Enemy_06::AttackPattern_1()
 	{
 		x += speed;      //1フレームの間に右へ進む距離
 
-		if (x > 333)
+		if (x > 114 && x < 120)   //目標座標に到着したかのチェック
 		{
-			speed = 5.0f;
+			jump_flg = true;
+		}
+		else if (x > 404 && x < 410)
+		{
+			jump_flg = true;
+		}
+		else if (x > 644 && x < 650)
+		{
+			jump_flg = true;
+		}
+		else if (x > 904 && x < 910)
+		{
+			jump_flg = true;
+		}
+
+		low_jump();     //低ジャンプ
+
+		//接地しているかどうかで移動速度を可変   接地時(true)    : speed = 5.0f
+		//                                       非接地時(false) : speed = 8.0f
+		if (land_flg == true)
+		{
+			speed = 3.0f;
+		}
+		else if (land_flg == false)
+		{
+			speed = 8.0f;
 		}
 
 		if (x > 1180)   //目標座標に到着したかのチェック
 		{
 			jump_cnt = 0;           //ジャンプ回数のリセット
-			dir = -1;  //向いている向きの反転
+			dir = -1;               //向いている向きの反転
 			ChangeCnt++;
 		}
 	}
@@ -723,28 +782,31 @@ void Enemy_06::jump()
 	//ジャンプ処理
 	if (jump_flg == true && land_flg == true)
 	{
-		//一番高い足場にいる時だけジャンプ力をダウンさせる
-		if (y == 100)
-		{
-			g_add = -8.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-		}
-		else
-		{
-			g_add = -19.8f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-		}
+		g_add = -19.8f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 		land_flg = false;  //地面についていない
 		jump_flg = false;  //ジャンプ用フラグのリセット
 
 		if (attack_pattern == 0)
 		{
 			jump_cnt++;        //ジャンプ回数のカウント
-			speed = 8.0f;
 		}
 
 		if (attack_pattern >= 1)
 		{
 			ChangeCnt++;       //属性変化までのカウント
 		}
+	}
+}
+
+//低いジャンプ
+void Enemy_06::low_jump()
+{
+	//ジャンプ処理
+	if (jump_flg == true && land_flg == true)
+	{
+		g_add = -8.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+		land_flg = false;  //地面についていない
+		jump_flg = false;  //ジャンプ用フラグのリセット
 	}
 }
 
