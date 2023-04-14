@@ -64,7 +64,7 @@ void Scene_Stage02::Update()
 	}
 
 	//ÚG‚¶‚á‚ñ‚¯‚ñˆ—
-	Touch_Janken(obj_enemy, this);
+	Touch_Janken(obj_enemy, this, 2);
 
 
 	

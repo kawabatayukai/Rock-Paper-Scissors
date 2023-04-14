@@ -81,6 +81,7 @@ private:
 	enum class PLAYER_STATE
 	{
 		ON_RING,         //リング上
+		ON_RING_LURK,    //リング上で潜んでいる（動かない）
 		ON_FLOOR,        //足場上
 		ON_FLOOR_LURK,   //足場上で潜んでいる
 		OUT_RING,        //リング外

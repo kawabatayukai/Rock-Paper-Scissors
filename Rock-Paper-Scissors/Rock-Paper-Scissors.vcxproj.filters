@@ -79,23 +79,23 @@
     <Filter Include="ソース ファイル\Jangeki\yonahara">
       <UniqueIdentifier>{a42c1488-1e9a-40ca-a97d-cbb48bf7da50}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\GameMainScene\Stage_02\Stage_03">
-      <UniqueIdentifier>{541f08c4-6dfa-4a35-a86b-63667d913571}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Jangeki\nakayoshi">
       <UniqueIdentifier>{0371adfb-44da-4d91-b7dc-f2323cd22f0e}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\GameMainScene\GameData">
       <UniqueIdentifier>{9f06c314-6ab2-4a50-a430-f3d9e3eb4ddf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\GameMainScene\Stage_00\CharaBase">
-      <UniqueIdentifier>{69d52d54-be0e-45b2-a843-52ce30cee56e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ランキング">
       <UniqueIdentifier>{dbc2c324-e103-450b-adb4-28e0277e64aa}</UniqueIdentifier>
     </Filter>
     <Filter Include="ランキング\ヘッダー">
       <UniqueIdentifier>{12e27910-5930-45ed-9cd2-b2402931e747}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\CharaBase">
+      <UniqueIdentifier>{69d52d54-be0e-45b2-a843-52ce30cee56e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameMainScene\Stage_03">
+      <UniqueIdentifier>{541f08c4-6dfa-4a35-a86b-63667d913571}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -112,7 +112,7 @@
       <Filter>ソース ファイル\GameMainScene</Filter>
     </ClCompile>
     <ClCompile Include="CharaBase.cpp">
-      <Filter>ソース ファイル\GameMainScene\Stage_00\CharaBase</Filter>
+      <Filter>ソース ファイル\CharaBase</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>ソース ファイル\Player</Filter>
@@ -136,7 +136,7 @@
       <Filter>ソース ファイル\GameMainScene\Stage_10</Filter>
     </ClCompile>
     <ClCompile Include="Enemy_03.cpp">
-      <Filter>ソース ファイル\GameMainScene\Stage_02\Stage_03</Filter>
+      <Filter>ソース ファイル\GameMainScene\Stage_03</Filter>
     </ClCompile>
     <ClCompile Include="Enemy_04.cpp">
       <Filter>ソース ファイル\GameMainScene\Stage_04</Filter>
@@ -199,7 +199,7 @@
       <Filter>ソース ファイル\GameMainScene\Stage_04</Filter>
     </ClCompile>
     <ClCompile Include="Scene_Stage03.cpp">
-      <Filter>ソース ファイル\GameMainScene\Stage_02\Stage_03</Filter>
+      <Filter>ソース ファイル\GameMainScene\Stage_03</Filter>
     </ClCompile>
     <ClCompile Include="Scene_Stage02.cpp">
       <Filter>ソース ファイル\GameMainScene\Stage_02</Filter>
@@ -249,7 +249,7 @@
     <ClCompile Include="GameData.cpp">
       <Filter>ソース ファイル\GameMainScene\GameData</Filter>
     </ClCompile>
-    <ClCompile Include="Jangeki_Growing.cpp">
+    <ClCompile Include="Jangeki_Player.cpp">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClCompile>
     <ClCompile Include="Scene_Ranking.cpp">
@@ -276,7 +276,7 @@
       <Filter>ソース ファイル\GameMainScene</Filter>
     </ClInclude>
     <ClInclude Include="CharaBase.h">
-      <Filter>ソース ファイル\GameMainScene\Stage_00\CharaBase</Filter>
+      <Filter>ソース ファイル\CharaBase</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>ソース ファイル\Player</Filter>
@@ -300,7 +300,7 @@
       <Filter>ソース ファイル\GameMainScene\Stage_10</Filter>
     </ClInclude>
     <ClInclude Include="Enemy_03.h">
-      <Filter>ソース ファイル\GameMainScene\Stage_02\Stage_03</Filter>
+      <Filter>ソース ファイル\GameMainScene\Stage_03</Filter>
     </ClInclude>
     <ClInclude Include="Enemy_04.h">
       <Filter>ソース ファイル\GameMainScene\Stage_04</Filter>
@@ -363,7 +363,7 @@
       <Filter>ソース ファイル\GameMainScene\Stage_04</Filter>
     </ClInclude>
     <ClInclude Include="Scene_Stage03.h">
-      <Filter>ソース ファイル\GameMainScene\Stage_02\Stage_03</Filter>
+      <Filter>ソース ファイル\GameMainScene\Stage_03</Filter>
     </ClInclude>
     <ClInclude Include="Scene_Stage02.h">
       <Filter>ソース ファイル\GameMainScene\Stage_02</Filter>
@@ -419,7 +419,7 @@
     <ClInclude Include="Jangeki_Zigzag.h">
       <Filter>ソース ファイル\Jangeki\bise</Filter>
     </ClInclude>
-    <ClInclude Include="Jangeki_Growing.h">
+    <ClInclude Include="Jangeki_Player.h">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClInclude>
     <ClInclude Include="Scene_Ranking.h">

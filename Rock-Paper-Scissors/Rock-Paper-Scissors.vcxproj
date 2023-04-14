@@ -170,7 +170,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Jangeki_Changespeed.cpp" />
     <ClCompile Include="Jangeki_Coming.cpp" />
-    <ClCompile Include="Jangeki_Growing.cpp" />
+    <ClCompile Include="Jangeki_Player.cpp" />
     <ClCompile Include="Jangeki_Homing.cpp" />
     <ClCompile Include="Jangeki_reflection.cpp" />
     <ClCompile Include="Jangeki_Spin.cpp" />
@@ -229,7 +229,7 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="Jangeki_Changespeed.h" />
     <ClInclude Include="Jangeki_Coming.h" />
-    <ClInclude Include="Jangeki_Growing.h" />
+    <ClInclude Include="Jangeki_Player.h" />
     <ClInclude Include="Jangeki_Homing.h" />
     <ClInclude Include="Jangeki_reflection.h" />
     <ClInclude Include="Jangeki_Spin.h" />

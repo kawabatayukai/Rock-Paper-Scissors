@@ -6,7 +6,7 @@
 #include"KeyManager.h"
 #include"Debug_Manager.h"
 #include"Jangeki_Homing.h"
-#include"Jangeki_Growing.h"
+#include"Jangeki_Player.h"
 
 //‚¶‚á‚ñŒ‚”­ËŠÔŠu@i1•bj
 #define PLAYER_JAN_INTERVAL 30
@@ -794,12 +794,12 @@ void Player::Update_Jangeki()
 			if (jan_angle != 0)
 			{
 				//‚¶‚á‚ñŒ‚¶¬        (Šp“xw’è•t‚«)                                        
-				obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, jan_angle, select_JanType);
+				obj_jangeki[jan_count] = new Jangeki_Player(x, y, radius, speed, jan_angle, select_JanType);
 			}
 			else
 			{
 				//‚¶‚á‚ñŒ‚¶¬        (Šp“xw’è‚È‚µ)                                        
-				obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, select_JanType);
+				obj_jangeki[jan_count] = new Jangeki_Player(x, y, radius, speed, select_JanType);
 			}
 
 			//ŠÔŠuİ’è
