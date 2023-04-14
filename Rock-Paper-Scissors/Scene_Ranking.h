@@ -1,8 +1,12 @@
 #pragma once
 #include "AbstractScene.h"
+#include"SortSave.h"
 
 class Scene_Ranking : public AbstractScene
 {
+public:
+	Scene_Ranking(/*const RankingData* Data*/);
+
 	/*コンストラクタ*/
 	virtual ~Scene_Ranking() {};
 
@@ -14,5 +18,9 @@ class Scene_Ranking : public AbstractScene
 
 	//シーンの変更処理
 	AbstractScene* ChangeScene()override;
+
+private:
+
+	//RankingData dataRanking[RANKING_DATA];  // ランキングデータ変数宣言
 };
 

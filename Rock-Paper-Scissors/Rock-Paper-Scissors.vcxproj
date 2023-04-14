@@ -170,7 +170,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Jangeki_Changespeed.cpp" />
     <ClCompile Include="Jangeki_Coming.cpp" />
-    <ClCompile Include="Jangeki_Growing.cpp" />
+    <ClCompile Include="Jangeki_Player.cpp" />
     <ClCompile Include="Jangeki_Homing.cpp" />
     <ClCompile Include="Jangeki_reflection.cpp" />
     <ClCompile Include="Jangeki_Spin.cpp" />
@@ -189,9 +189,9 @@
     <ClCompile Include="Scene_GameClear.cpp" />
     <ClCompile Include="Scene_GameMain.cpp" />
     <ClCompile Include="Scene_GameOver.cpp" />
-    <ClCompile Include="Scene_InputRanking.cpp" />
+    <ClCompile Include="SortSave.cpp" />
     <ClCompile Include="Scene_Ranking.cpp" />
-    <ClCompile Include="Scene_Result.cpp" />
+    <ClCompile Include="Scene_InputName.cpp" />
     <ClCompile Include="Scene_Stage00.cpp" />
     <ClCompile Include="Scene_Stage01.cpp" />
     <ClCompile Include="Scene_Stage02.cpp" />
@@ -229,7 +229,7 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="Jangeki_Changespeed.h" />
     <ClInclude Include="Jangeki_Coming.h" />
-    <ClInclude Include="Jangeki_Growing.h" />
+    <ClInclude Include="Jangeki_Player.h" />
     <ClInclude Include="Jangeki_Homing.h" />
     <ClInclude Include="Jangeki_reflection.h" />
     <ClInclude Include="Jangeki_Spin.h" />
@@ -247,9 +247,9 @@
     <ClInclude Include="Scene_GameClear.h" />
     <ClInclude Include="Scene_GameMain.h" />
     <ClInclude Include="Scene_GameOver.h" />
-    <ClInclude Include="Scene_InputRanking.h" />
+    <ClInclude Include="SortSave.h" />
     <ClInclude Include="Scene_Ranking.h" />
-    <ClInclude Include="Scene_Result.h" />
+    <ClInclude Include="Scene_InputName.h" />
     <ClInclude Include="Scene_Stage00.h" />
     <ClInclude Include="Scene_Stage01.h" />
     <ClInclude Include="Scene_Stage02.h" />

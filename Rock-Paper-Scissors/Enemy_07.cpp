@@ -35,7 +35,7 @@ namespace _CONSTANTS_07
 	const float OUT_RING_RIGHT = 1160.0f;   //場外右
 
 	//テスト表示用
-	char state_str [][20] = { "ON_RING","ON_FLOOR","ON_FLOOR_LURK","OUT_RING","DO_NOT" };   
+	char state_str [][20] = { "ON_RING","ON_RING_LURK","ON_FLOOR","ON_FLOOR_LURK","OUT_RING","DO_NOT" };   
 	char action_str[][20] = { "NO_ACT","LEFT_TO_RIGHT","RIGHT_TO_LEFT"
 		                     ,"CLIMB_CORNER_LEFT", "CLIMB_CORNER_RIGHT"
 		                     ,"CROSS_FLOOR_LEFT","CROSS_FLOOR_RIGHT"
@@ -320,11 +320,23 @@ void Enemy_07::Move_ON_RING(float& target_x, float& target_y)
 		//プレイヤーが半分より左側
 		if (player_x < (1280 / 2))
 		{
-			Now_Action = ACT_TYPE::RIGHT_TO_LEFT;  //右→左
+			//前回も同じアクション
+			if (Pre_Action == ACT_TYPE::RIGHT_TO_LEFT)
+			{
+				Player_State = PLAYER_STATE::ON_RING_LURK;
+				return;
+			}
+			else Now_Action = ACT_TYPE::RIGHT_TO_LEFT;  //右→左
 		}
 		else
 		{
-			Now_Action = ACT_TYPE::LEFT_TO_RIGHT;  //左→右
+			//前回も同じアクション
+			if (Pre_Action == ACT_TYPE::LEFT_TO_RIGHT)
+			{
+				Player_State = PLAYER_STATE::ON_RING_LURK;
+				return;
+			}
+			else Now_Action = ACT_TYPE::LEFT_TO_RIGHT;  //左→右
 		}
 
 		match = false;
@@ -1012,7 +1024,13 @@ void Enemy_07::CheckPlayerState(const Player* player)
 		//当たり判定を活用          
 		if (player->CheckHitBox_Box(220, 260, 840, 330) == true)        //リング上の範囲
 		{
-			Player_State = PLAYER_STATE::ON_RING;            //リング上
+			////前回もリング上にいた
+			//if (Pre_Action == ACT_TYPE::LEFT_TO_RIGHT || Pre_Action == ACT_TYPE::RIGHT_TO_LEFT) 
+			//{
+			//	Player_State = PLAYER_STATE::ON_RING_LURK;   //リング上で潜んでいる
+			//}
+			//else
+				Player_State = PLAYER_STATE::ON_RING;        //リング上
 		}
 		else if (player->CheckHitBox_Box(20, -180, 1240, 380) == true)  //空中の足場全体の範囲
 		{

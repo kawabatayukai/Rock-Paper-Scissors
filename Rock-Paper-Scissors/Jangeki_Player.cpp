@@ -1,8 +1,8 @@
 #include"DxLib.h"
-#include"Jangeki_Growing.h"
+#include"Jangeki_Player.h"
 
 //コンストラクタ
-Jangeki_Growing::Jangeki_Growing(float x, float y, float r, float speed, Jan_Type type)
+Jangeki_Player::Jangeki_Player(float x, float y, float r, float speed, Jan_Type type)
 	:Jangeki_Base(x, y, r, speed, type),
 	 frame_count(0), index_jangeki(1), rate_pct(200.0)
 {
@@ -36,7 +36,7 @@ Jangeki_Growing::Jangeki_Growing(float x, float y, float r, float speed, Jan_Typ
 }
 
 //コンストラクタ（角度付き）
-Jangeki_Growing::Jangeki_Growing(float x, float y, float r, float speed, double angle, Jan_Type type)
+Jangeki_Player::Jangeki_Player(float x, float y, float r, float speed, double angle, Jan_Type type)
 	:Jangeki_Base(x, y, r, speed, angle, type),
 	 frame_count(0), index_jangeki(1), rate_pct(200.0)
 {
@@ -70,10 +70,10 @@ Jangeki_Growing::Jangeki_Growing(float x, float y, float r, float speed, double 
 }
 
 //デストラクタ
-Jangeki_Growing::~Jangeki_Growing(){}
+Jangeki_Player::~Jangeki_Player(){}
 
 //更新（オーバーライド）
-void Jangeki_Growing::Update()
+void Jangeki_Player::Update()
 {
 	x += speed;
 	y -= speed_y;
@@ -92,7 +92,7 @@ void Jangeki_Growing::Update()
 }
 
 //描画（オーバーライド）
-void Jangeki_Growing::Draw() const
+void Jangeki_Player::Draw() const
 {
 	//拡大率
 	//double rate = (static_cast<double>(r) * 2) / 100;

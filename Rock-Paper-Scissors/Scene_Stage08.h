@@ -1,6 +1,7 @@
 #pragma once
 #include "AbstractScene.h"
 #include"Enemy_08.h"
+#include"Enemy_Cannon.h"
 #include"Stage_Base.h"
 #include"Player.h"
 #include"Floor.h"
@@ -30,5 +31,6 @@ public:
 private:
 	int Back_image;
 	Enemy_08* obj_enemy;            //“G
+	EnemyBase* obj_cannon;
 };
 

@@ -2,16 +2,16 @@
 #include"Jangeki_Base.h"
 
 //徐々に大きくなる
-class Jangeki_Growing : public Jangeki_Base
+class Jangeki_Player : public Jangeki_Base
 {
 public:
 	//コンストラクタ
-	Jangeki_Growing(float x, float y, float r, float speed, Jan_Type type);
+	Jangeki_Player(float x, float y, float r, float speed, Jan_Type type);
 
 	//(角度付き)
-	Jangeki_Growing(float x, float y, float r, float speed, double angle, Jan_Type type);
+	Jangeki_Player(float x, float y, float r, float speed, double angle, Jan_Type type);
 
-	~Jangeki_Growing();             //デストラクタ
+	~Jangeki_Player();             //デストラクタ
 	 
 	void Update() override;         //更新
 	void Draw() const override;     //描画
