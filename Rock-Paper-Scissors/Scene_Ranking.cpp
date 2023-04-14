@@ -3,7 +3,7 @@
 #include"Scene_Title.h"
 #include "KeyManager.h"
 #include"SortSave.h"
-#include"Scene_InputRanking.h"
+#include"SortSave.h"
 
 int g_WaitTime = 0;
 
@@ -34,7 +34,7 @@ void Scene_Ranking::Draw() const
 	for (int i = 0; i < 10; i++)
 	{
 		//DrawFormatString(80, 170 + i * 25, 0xFFFFFF, "%2d   %10s  %10d", dataRanking[i].rank, dataRanking[i].name, dataRanking[i].score);
-		DrawFormatString(80, 170 + i * 25, 0xFFFFFF, "%2d   %10s  %10d", inputRanking.getRankingData(i).no, inputRanking.getRankingData(i).name, inputRanking.getRankingData(i).score);
+		DrawFormatString(80, 170 + i * 25, 0xFFFFFF, "%2d   %10s  %10d", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score);
 	}
 
 	SetFontSize(100);
