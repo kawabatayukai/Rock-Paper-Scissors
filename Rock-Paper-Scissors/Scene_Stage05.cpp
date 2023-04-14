@@ -46,14 +46,14 @@ Scene_Stage05::Scene_Stage05(const Player* player)
 	Init_Floor(STAGE_05_FLOOR);
 
 	//一つずつ生成  STAGE_05_FLOOR 個分
-	obj_floor[0] = new Floor(0, 700, 1280, 20);        //床
-	obj_floor[1] = new Floor(0, 0, 20, 1720);           //壁（左）
-	obj_floor[2] = new Floor(1260, 0, 20, 1720);           //壁（右）
-	obj_floor[3] = new Floor(260, 300, 120, 15);      //足場　(左上)
-	obj_floor[4] = new Floor(260, 540, 120, 15);      //足場　(左下)
-	obj_floor[5] = new Floor(590, 420, 120, 15);      //足場　(真ん中)
-	obj_floor[6] = new Floor(900, 540, 120, 15);      //足場　(右上)
-	obj_floor[7] = new Floor(900, 300, 120, 15);      //足場　(右下)
+	obj_floor[0] = new Floor(0, 700, 1280, 20, 0x00ff00);        //床
+	obj_floor[1] = new Floor(0, 0, 20, 1720, 0x00ff00);           //壁（左）
+	obj_floor[2] = new Floor(1260, 0, 20, 1720, 0x00ff00);           //壁（右）
+	obj_floor[3] = new Floor(260, 300, 120, 15, 0x00ff00);      //足場　(左上)
+	obj_floor[4] = new Floor(260, 540, 120, 15, 0x00ff00);      //足場　(左下)
+	obj_floor[5] = new Floor(590, 420, 120, 15, 0x00ff00);      //足場　(真ん中)
+	obj_floor[6] = new Floor(900, 540, 120, 15, 0x00ff00);      //足場　(右上)
+	obj_floor[7] = new Floor(900, 300, 120, 15, 0x00ff00);      //足場　(右下)
 
 	Back_image = LoadGraph("images/stage05/Stage5_Stageimage.png", TRUE);
 }
@@ -68,7 +68,7 @@ void Scene_Stage05::Update()
 {
 	static int timer = 0;
 	timer++;
-
+	
 	/*if (timer == 900)
 	{
 		timer = 0;
@@ -106,7 +106,7 @@ void Scene_Stage05::Update()
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
 	}
 	//接触じゃんけん処理
-	Touch_Janken(obj_enemy, this);
+	Touch_Janken(obj_enemy, this, 5);
 
 
 
@@ -120,15 +120,6 @@ void Scene_Stage05::Update()
 	mobenemy_jangek[0] = mob[0]->GetJangeki();
 	mobenemy_jangek[1] = mob[1]->GetJangeki();
 	mobenemy_jangek[2] = mob[2]->GetJangeki();
-
-	//for (int j = 0; j < 3; j++)
-	//{
-	//	//enemyのじゃん撃をとってくる
-	//	mobenemy_jangeki[j] = mob[j]->GetJangeki();
-	//}
-
-	//enemyのじゃん撃をとってくる
-	//Jangeki_Base** mobenemy_jangeki = obj_mobenemy->GetJangeki();
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	for (int a = 0; a < 3; a++)
@@ -201,7 +192,7 @@ void Scene_Stage05::Update()
 	for (int a = 0; a < 3; a++)
 	{
 		Jangeki_Base** enemy_jangeki = mobenemy_jangek[a];
-		if (mob[a]->GetHP() >= 0)
+		if (mob[a]->GetHP() > 0)
 		{
 			//じゃん撃同士の当たり判定（プレイヤーじゃん撃目線）(mob用)
 			for (int p_count = 0; p_count < JANGEKI_MAX; p_count++)
@@ -273,7 +264,6 @@ void Scene_Stage05::Update()
 		{
 			if (mob[0]->GetHP() <= 0 && mob[1]->GetHP() <= 0 && mob[2]->GetHP() <= 0)
 			{
-
 				if (player_jangeki[i] == nullptr) break;         //じゃん撃がない時は処理しない
 
 				//じゃん撃との当たり判定
@@ -322,20 +312,19 @@ void Scene_Stage05::Update()
 					default:
 						break;
 					}
-					int rand = GetRand(2);
-					switch (rand)
-					{
-					case 0:
-						obj_enemy->SetType(Jan_Type::ROCK);
-						break;
-					case 1:
-						obj_enemy->SetType(Jan_Type::SCISSORS);
-						break;
-					case 2:
-						obj_enemy->SetType(Jan_Type::PAPER);
-						break;
-					}
-					
+					/*	int rand = GetRand(2);
+						switch (rand)
+						{
+						case 0:
+							obj_enemy->SetType(Jan_Type::ROCK);
+							break;
+						case 1:
+							obj_enemy->SetType(Jan_Type::SCISSORS);
+							break;
+						case 2:
+							obj_enemy->SetType(Jan_Type::PAPER);
+							break;
+						}*/
 				}
 			}
 
@@ -344,7 +333,7 @@ void Scene_Stage05::Update()
 
 	for (int a = 0; a < 3; a++)
 	{
-		if (mob[a]->GetHP() >= 0)
+		if (mob[a]->GetHP() > 0)
 		{
 			//playerじゃん撃とmobenemyの当たり判定
 			for (int i = 0; i < JANGEKI_MAX; i++)
@@ -365,7 +354,7 @@ void Scene_Stage05::Update()
 						//パーのじゃん撃のみ有効
 						if (jangeki_type == Jan_Type::PAPER)
 						{
-							mob[a]->ReceiveDamage(30);     //ダメージが入る
+							mob[a]->ReceiveDamage(20);     //ダメージが入る
 							obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 							i--;
 						}
@@ -377,7 +366,7 @@ void Scene_Stage05::Update()
 						//グーのじゃん撃のみ有効
 						if (jangeki_type == Jan_Type::ROCK)
 						{
-							mob[a]->ReceiveDamage(30);     //ダメージが入る
+							mob[a]->ReceiveDamage(20);     //ダメージが入る
 							obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 							i--;
 						}
@@ -388,7 +377,7 @@ void Scene_Stage05::Update()
 						//チョキのじゃん撃のみ有効
 						if (jangeki_type == Jan_Type::SCISSORS)
 						{
-							mob[a]->ReceiveDamage(30);     //ダメージが入る
+							mob[a]->ReceiveDamage(20);     //ダメージが入る
 							obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 							i--;
 						}
@@ -425,7 +414,7 @@ void Scene_Stage05::Update()
 	for (int a = 0; a < 3; a++)
 	{
 		Jangeki_Base** enemy_jangeki = mobenemy_jangek[a];
-		if (mob[a]->GetHP() >= 0)
+		if (mob[a]->GetHP() > 0)
 		{
 			//mobenemyじゃん撃とplayerの当たり判定
 			for (int i = 0; i < JANGEKI_MAX; i++)
@@ -459,10 +448,19 @@ void Scene_Stage05::Update()
 //描画
 void Scene_Stage05::Draw() const
 {
-	DrawRotaGraph(640, 240, 2.0f, 0, Back_image, TRUE);
+	//DrawRotaGraph(640, 240, 2.0f, 0, Back_image, TRUE);
+	DrawGraph(0, 0, Back_image, FALSE);
 
-	//接触じゃんけんでない時
-	if (GetJanState() == Jan_State::BEFORE)
+	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+	DrawUI_ON_Enemy(obj_enemy);
+	for (int a = 0; a < 3; a++)
+	{
+		if (mob[a]->GetHP() > 0)
+			DrawUI_ON_Enemy(mob[a]);
+	}
+
+	//接触じゃんけん開始前
+	if (GetJanState() == Jan_State::START || GetJanState() == Jan_State::BEFORE)
 	{
 
 		obj_player->Draw();  //プレイヤー描画
@@ -470,7 +468,7 @@ void Scene_Stage05::Draw() const
 		
 		for (int i = 0; i < 3; i++)
 		{
-			if (mob[i]->GetHP() >= 0)
+			if (mob[i]->GetHP() > 0)
 			{
 				mob[i]->Draw();
 			}
@@ -483,14 +481,16 @@ void Scene_Stage05::Draw() const
 			if (obj_floor[i] == nullptr) break;
 			obj_floor[i]->Draw();
 		}
-
+		//接触した瞬間の演出
+		if (GetJanState() == Jan_State::START) Draw_JankenStart();
 	}
 	else
 	{
 		//接触時じゃんけん描画
 		Draw_Janken();
 	}
-	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+	
+	
 	DrawString(640, 360, "Stage05", 0xffffff);
 }
 
@@ -509,7 +509,7 @@ AbstractScene* Scene_Stage05::ChangeScene()
 #ifdef DEBUG_OFF_05
 
 	//敵のHPが0以下
-	if (obj_enemy->GetHP() < 0)
+	if (obj_enemy->GetHP() <= 0)
 	{
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(6));
@@ -531,11 +531,15 @@ AbstractScene* Scene_Stage05::ChangeScene()
 //じゃんけん終了後の挙動（プレイヤー勝ち）
 void Scene_Stage05::AfterJanken_WIN()
 {
-	obj_player->SetX(100);
+	obj_player->SetX(200);
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）
 void Scene_Stage05::AfterJanken_LOSE()
 {
-	obj_player->SetX(100);
+	for (int a = 0; a < 3; a++)
+	{
+		mob[a]->Janken_lose();
+	}
+	obj_player->SetX(200);
 }

@@ -36,7 +36,8 @@ namespace _CONSTANTS_07
 
 	//テスト表示用
 	char state_str [][20] = { "ON_RING","ON_RING_LURK","ON_FLOOR","ON_FLOOR_LURK","OUT_RING","DO_NOT" };   
-	char action_str[][20] = { "NO_ACT","LEFT_TO_RIGHT","RIGHT_TO_LEFT"
+	char action_str[][23] = { "NO_ACT","LEFT_TO_RIGHT","RIGHT_TO_LEFT"
+		                     ,"JUMP_ON_CORNER_LEFT","JUMP_ON_CORNER_RIGHT"
 		                     ,"CLIMB_CORNER_LEFT", "CLIMB_CORNER_RIGHT"
 		                     ,"CROSS_FLOOR_LEFT","CROSS_FLOOR_RIGHT"
 	                         ,"DIVE_OUT_LEFT","DIVE_OUT_RIGHT"};
@@ -251,6 +252,11 @@ void Enemy_07::Move_Controller()
 		Move_ON_FLOOR(target_x, target_y);
 		break;
 
+	case PLAYER_STATE::ON_RING_LURK:  //プレイヤーがリング上で動かない
+
+		Move_ON_RING_LURK(target_x, target_y);
+		break;
+
 	case PLAYER_STATE::ON_FLOOR_LURK: //足場上で3秒以上
 
 		Move_ON_FLOOR_LURK(target_x, target_y);
@@ -307,6 +313,8 @@ void Enemy_07::Move_ON_RING(float& target_x, float& target_y)
 
 	//目標座標(1番目)と一致しているか
 	static bool match = false;
+	// 到達した回数
+	static unsigned short count_ari;
 
 	//生成するじゃん撃の半径
 	float radius = 25.5f;
@@ -320,23 +328,23 @@ void Enemy_07::Move_ON_RING(float& target_x, float& target_y)
 		//プレイヤーが半分より左側
 		if (player_x < (1280 / 2))
 		{
-			//前回も同じアクション
-			if (Pre_Action == ACT_TYPE::RIGHT_TO_LEFT)
-			{
-				Player_State = PLAYER_STATE::ON_RING_LURK;
-				return;
-			}
-			else Now_Action = ACT_TYPE::RIGHT_TO_LEFT;  //右→左
+			////前回も同じアクション
+			//if (Pre_Action == ACT_TYPE::RIGHT_TO_LEFT)
+			//{
+			//	Now_Action = ACT_TYPE::JUMP_ON_CORNER_LEFT;  //左コーナーに飛び乗る
+			//}
+			//else 
+				Now_Action = ACT_TYPE::RIGHT_TO_LEFT;  //右→左
 		}
 		else
 		{
-			//前回も同じアクション
-			if (Pre_Action == ACT_TYPE::LEFT_TO_RIGHT)
-			{
-				Player_State = PLAYER_STATE::ON_RING_LURK;
-				return;
-			}
-			else Now_Action = ACT_TYPE::LEFT_TO_RIGHT;  //左→右
+			////前回も同じアクション
+			//if (Pre_Action == ACT_TYPE::LEFT_TO_RIGHT)
+			//{
+			//	Now_Action = ACT_TYPE::JUMP_ON_CORNER_RIGHT;  //右コーナーに飛び乗る
+			//}
+			//else 
+				Now_Action = ACT_TYPE::LEFT_TO_RIGHT;  //左→右
 		}
 
 		match = false;
@@ -433,6 +441,177 @@ void Enemy_07::Move_ON_RING(float& target_x, float& target_y)
 
 				Now_Action = ACT_TYPE::NO_ACT;  //Actionの完了
 				speed = init_speed;             //スピードを戻す
+			}
+		}
+		/*******************************************************************/
+	}
+
+
+}
+
+//プレイヤーがリング上で動かない
+void Enemy_07::Move_ON_RING_LURK(float& target_x, float& target_y)
+{
+	//プレイヤーがリング上で跳ねている。またはコーナーポストの上で動かない
+
+	// 到達した回数
+	static unsigned short count_ari;
+
+	//生成するじゃん撃の半径
+	float radius = 25.5f;
+	//ランダムな属性を生成
+	Jan_Type type = static_cast<Jan_Type>(GetRand(2));
+
+	//行動中でない
+	if (Now_Action == ACT_TYPE::NO_ACT)
+	{
+		//プレイヤーが半分より左側
+		if (player_x < (1280 / 2))
+		{
+			Now_Action = ACT_TYPE::JUMP_ON_CORNER_LEFT;  //右→左→左コーナーに飛び乗る
+		}
+		else
+		{
+			Now_Action = ACT_TYPE::JUMP_ON_CORNER_RIGHT;  //左→右→右コーナーに飛び乗る
+		}
+
+		count_ari = 0;   //到達回数0
+	}
+
+	//右→左→左コーナーに飛び乗る
+	if (Now_Action == ACT_TYPE::JUMP_ON_CORNER_LEFT)
+	{
+		/*******************************　１  **++***************************/
+		{
+			//リング右を目指す
+			if (count_ari == 0)
+			{
+				target_x = _CONSTANTS_07::RING_RIGHT - (w / 2);
+
+				//リング右に到達
+				if (x == _CONSTANTS_07::RING_RIGHT - (w / 2))
+				{
+					count_ari = 1;  //1番目終了
+					speed = 9.0f;   //スピードアップ
+
+					//じゃん撃を生成する（配列の空要素であることを確実に）                                       
+					if (jan_count + 2 < JANGEKI_MAX && obj_jangeki[jan_count + 2] == nullptr)
+					{
+						//スピードが自身と同じ かつ マイナス方向に飛ぶじゃん撃
+						obj_jangeki[jan_count] = new Jangeki_Base(x, y - 40, radius, -speed, type);
+						obj_jangeki[jan_count + 1] = new Jangeki_Base(x - 40, y + 30, radius, -speed, type);
+						obj_jangeki[jan_count + 2] = new Jangeki_Base(x + 40, y + 30, radius, -speed, type);
+					}
+				}
+			}
+		}
+		/*******************************************************************/
+
+		//リング右に到達したのち、リング左を目指す
+
+		/*******************************　２  **++***************************/
+		{
+			//リング左を目指す
+			if (count_ari == 1) 
+			{
+				target_x = _CONSTANTS_07::RING_CENTER - 100;
+
+				//リング左に到達                             
+				if (x == _CONSTANTS_07::RING_CENTER - 100)
+				{
+					count_ari = 2;   //2番目終了
+					Jump_Enemy();    //ジャンプ
+				}
+			}
+		}
+		/*******************************************************************/
+
+		//左コーナーポストに乗る
+		/*******************************　３  **++***************************/
+		{
+			//リング左を目指す
+			if (count_ari == 2) 
+			{
+				target_x = _CONSTANTS_07::CORNER_LEFT;
+
+				//リング左に到達                             
+				if (x == _CONSTANTS_07::CORNER_LEFT)
+				{
+					Pre_Action = Now_Action;        //今回のActionを保存
+
+					Now_Action = ACT_TYPE::NO_ACT;  //Actionの完了
+					speed = init_speed;             //スピードを戻す
+				}
+			}
+		}
+		/*******************************************************************/
+
+	}
+
+	//左→右→右コーナーに飛び乗る
+	if (Now_Action == ACT_TYPE::JUMP_ON_CORNER_RIGHT)
+	{
+		/*******************************　１  **++***************************/
+		{
+			//リング左を目指す
+			if (count_ari == 0)
+			{
+				target_x = _CONSTANTS_07::RING_LEFT + (w / 2);
+
+				//リング左に到達
+				if (x == _CONSTANTS_07::RING_LEFT + (w / 2))
+				{
+					count_ari = 1;  //1番目終了
+					speed = 9.0f;   //スピードアップ
+
+					//じゃん撃を生成する（配列の空要素であることを確実に）                                       
+					if (jan_count + 2 < JANGEKI_MAX && obj_jangeki[jan_count + 2] == nullptr)
+					{
+						//スピードが自身と同じ かつ マイナス方向に飛ぶじゃん撃
+						obj_jangeki[jan_count] = new Jangeki_Base(x, y - 40, radius, speed, type);
+						obj_jangeki[jan_count + 1] = new Jangeki_Base(x - 40, y + 30, radius, speed, type);
+						obj_jangeki[jan_count + 2] = new Jangeki_Base(x + 40, y + 30, radius, speed, type);
+					}
+				}
+			}
+		}
+		/*******************************************************************/
+
+		//リング左に到達したのち、リング右を目指す
+
+		/*******************************　２  **++***************************/
+		{
+			//リング右を目指す
+			if (count_ari == 1)
+			{
+				target_x = _CONSTANTS_07::RING_CENTER + 100;
+
+				//リング左に到達                             
+				if (x == _CONSTANTS_07::RING_CENTER + 100)
+				{
+					count_ari = 2;   //2番目終了
+					Jump_Enemy();    //ジャンプ
+				}
+			}
+		}
+		/*******************************************************************/
+
+		//右コーナーポストに乗る
+		/*******************************　３  **++***************************/
+		{
+			//リング右を目指す
+			if (count_ari == 2)
+			{
+				target_x = _CONSTANTS_07::CORNER_RIGHT;
+
+				//リング右に到達                             
+				if (x == _CONSTANTS_07::CORNER_RIGHT)
+				{
+					Pre_Action = Now_Action;        //今回のActionを保存
+
+					Now_Action = ACT_TYPE::NO_ACT;  //Actionの完了
+					speed = init_speed;             //スピードを戻す
+				}
 			}
 		}
 		/*******************************************************************/
@@ -1024,12 +1203,13 @@ void Enemy_07::CheckPlayerState(const Player* player)
 		//当たり判定を活用          
 		if (player->CheckHitBox_Box(220, 260, 840, 330) == true)        //リング上の範囲
 		{
-			////前回もリング上にいた
-			//if (Pre_Action == ACT_TYPE::LEFT_TO_RIGHT || Pre_Action == ACT_TYPE::RIGHT_TO_LEFT) 
-			//{
-			//	Player_State = PLAYER_STATE::ON_RING_LURK;   //リング上で潜んでいる
-			//}
-			//else
+			//前回もリング上にいた
+			if (   Pre_Action == ACT_TYPE::RIGHT_TO_LEFT && player->GetX() < _CONSTANTS_07::RING_CENTER
+				|| Pre_Action == ACT_TYPE::LEFT_TO_RIGHT && player->GetX() >= _CONSTANTS_07::RING_CENTER)
+			{
+				Player_State = PLAYER_STATE::ON_RING_LURK;   //リング上で潜んでいる
+			}
+			else
 				Player_State = PLAYER_STATE::ON_RING;        //リング上
 		}
 		else if (player->CheckHitBox_Box(20, -180, 1240, 380) == true)  //空中の足場全体の範囲
@@ -1083,7 +1263,8 @@ bool Enemy_07::Is_Diving_Collision()
 //（ダイブ中に）接触じゃんけんをしない  true : ダイブ中。接触じゃんけんをしない
 bool Enemy_07::Is_Diving_TouchJanken()
 {
-	if (Now_Action == ACT_TYPE::DIVE_OUT_LEFT || Now_Action == ACT_TYPE::DIVE_OUT_RIGHT)
+	if (Now_Action == ACT_TYPE::DIVE_OUT_LEFT || Now_Action == ACT_TYPE::DIVE_OUT_RIGHT ||
+		Now_Action == ACT_TYPE::JUMP_ON_CORNER_LEFT || Now_Action == ACT_TYPE::JUMP_ON_CORNER_RIGHT )
 	{
 		return true;
 	}

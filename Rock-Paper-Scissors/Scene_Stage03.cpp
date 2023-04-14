@@ -88,11 +88,8 @@ void Scene_Stage03::Update()
 		
 	}
 
-
-
-
 	//ÚG‚¶‚á‚ñ‚¯‚ñˆ—
-	Touch_Janken(obj_enemy, this);
+	Touch_Janken(obj_enemy, this, 3);
 
 	//player‚Ì‚¶‚á‚ñŒ‚‚ð‚Æ‚Á‚Ä‚­‚é
 	Jangeki_Base** player_jangeki = obj_player->GetJangeki();

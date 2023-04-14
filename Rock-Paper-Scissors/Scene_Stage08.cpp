@@ -25,7 +25,8 @@ Scene_Stage08::Scene_Stage08(const Player* player)
 
 	//敵を生成
 	obj_enemy = new Enemy_08(1200, 360, Jan_Type::SCISSORS);
-	obj_cannon = new Enemy_Cannon(640, 100, Jan_Type::ROCK);
+	obj_cannon = new Enemy_Cannon(1210, 100, Jan_Type::ROCK);
+	//obj_cannon = new Enemy_Cannon(110, 100, Jan_Type::ROCK);
 
 	//床・壁の用意
 	Init_Floor(STAGE_08_FLOOR);
@@ -80,10 +81,11 @@ void Scene_Stage08::Update()
 		obj_player->Update();    // プレイヤー更新・操作可能
 		obj_enemy->Update();     //敵キャラ更新・内部処理
 		obj_cannon->Update();
+		obj_cannon->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());	//プレイヤーの座標を取得
 	}
 
 	//接触じゃんけん処理
-	Touch_Janken(obj_enemy, this);
+	Touch_Janken(obj_enemy, this, 8);
 
 
 	//playerのじゃん撃をとってくる
@@ -238,10 +240,15 @@ void Scene_Stage08::Update()
 
 //描画
 void Scene_Stage08::Draw() const
-{
-	DrawRotaGraph(640, 360, 1.f, 0, Back_image,TRUE);
+{	
+		//HP表示
+		DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+
+		DrawUI_ON_Enemy(obj_enemy);
+		DrawRotaGraph(640, 360, 1.f, 0, Back_image,TRUE);
+
 	//接触じゃんけんでない時
-	if (GetJanState() == Jan_State::BEFORE)
+	if (GetJanState() == Jan_State::START || GetJanState() == Jan_State::BEFORE)
 	{
 
 		obj_player->Draw();  //プレイヤー描画
@@ -254,7 +261,8 @@ void Scene_Stage08::Draw() const
 			if (obj_floor[i] == nullptr) break;
 			obj_floor[i]->Draw();
 		}
-
+		//接触した瞬間の演出
+		if (GetJanState() == Jan_State::START) Draw_JankenStart();
 	}
 	else
 	{
