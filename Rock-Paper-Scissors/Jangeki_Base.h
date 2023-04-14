@@ -6,8 +6,6 @@ enum class Jan_Type
 	ROCK,        //ロック　　　（グー）
 	SCISSORS,    //シザーズ　　（チョキ）
 	PAPER,       //ペーパー　　（パー）
-
-	NONE,        //無属性
 };
 
 //じゃんけんの結果
@@ -56,6 +54,8 @@ public:
 	//追跡対象の座標をセット　プレイヤーの座標を取りたいときに使えます
 	void SetTargetLocation(const float target_x, const float target_y);
 
+
+
 	//じゃん撃同士の当たり判定
 	bool Hit_Jangeki(const Jangeki_Base* jangeki);
 
@@ -81,5 +81,4 @@ protected:
 
 	float target_x = 0;       //対象のｘ座標
 	float target_y = 0;       //対象のｙ座標
-
 };

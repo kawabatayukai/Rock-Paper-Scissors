@@ -24,7 +24,6 @@ public:
 	void decision_Direction();       //向きを乱数で決める関数
 	void jump_Direction();           //ジャンプするかを乱数で決める関数
 	void jump();                     //ジャンプ
-	void low_jump();                 //低いジャンプ
 
 	float Get_OldY();                   //old_yの取得関数
 	float Get_Y();                      //yの取得

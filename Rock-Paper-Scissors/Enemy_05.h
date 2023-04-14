@@ -1,6 +1,5 @@
 #pragma once
 #include"EnemyBase.h"
-#include"MobEnemy_05.h"
 
 //5ステージ　敵キャラ
 class Enemy_05 : public EnemyBase
@@ -15,11 +14,6 @@ public:
 	void Draw() const override;      //描画
 
 	void Update_Jangeki() override;  //じゃん撃生成・更新
-
-	void GetMobEnemy(MobEnemy_05** mobenemy);
-
-	bool respawn_mobenemy();
-	void SetRespawn(bool flag);
 
 private:
 	/********************   ジャンプ関係   ********************/
@@ -37,10 +31,6 @@ private:
 	int Enemy_jamp_image;	   //敵ジャンプ時画像用
 	int Movepattern;			//動きのパターン
 	int Movetimer;				//動き用のタイマー
-
-	bool respawn;
-
-	MobEnemy_05** mob;
 };
 
 

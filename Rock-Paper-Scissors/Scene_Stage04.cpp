@@ -243,10 +243,9 @@ void Scene_Stage04::Draw() const
 	DrawRotaGraph(640, 360, 1, 0, back_image, FALSE);
 
 	DrawUI(obj_enemy->GetType(),obj_enemy->GetHP());
-	DrawUI_ON_Enemy(obj_enemy);
 
 	//ÚG‚¶‚á‚ñ‚¯‚ñ‚Å‚È‚¢
-	if (GetJanState() == Jan_State::START || GetJanState() == Jan_State::BEFORE)
+	if (GetJanState() == Jan_State::BEFORE)
 	{
 
 		obj_player->Draw();  //ƒvƒŒƒCƒ„[•`‰æ
@@ -259,8 +258,6 @@ void Scene_Stage04::Draw() const
 			obj_floor[i]->Draw();
 		}
 
-		//ÚG‚µ‚½uŠÔ‚Ì‰‰o
-		if (GetJanState() == Jan_State::START) Draw_JankenStart();
 	}
 	else
 	{

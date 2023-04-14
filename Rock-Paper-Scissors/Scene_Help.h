@@ -4,9 +4,6 @@
 //ヘルプシーン
 class HelpScene : public AbstractScene
 {
-private:
-	int HelpImage = 0;
-	int HelpImage1;
 public:
 	//コンストラクタ
 	HelpScene();

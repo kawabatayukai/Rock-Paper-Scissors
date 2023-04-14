@@ -1,10 +1,13 @@
 #pragma once
 #include "AbstractScene.h"
 
-class Scene_Ranking : public AbstractScene
+class Scene_Result : public AbstractScene
 {
+public:
 	/*コンストラクタ*/
-	virtual ~Scene_Ranking() {};
+	virtual ~Scene_Result() {};
+
+	char name[11];
 
 	//更新
 	void Update()override;

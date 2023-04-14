@@ -6,90 +6,88 @@
 #include"Scene_GameClear.h"
 #include"Scene_GameOver.h"
 #include"Jangeki_Homing.h"
-#include"Scene_InputName.h"
+#include"Scene_Result.h"
 #include"GameData.h"
 #include"Enemy_10.h"
 #include"Jangeki_whole.h"
-#include"Scene_InputName.h"
 
-
-//ï¿½fï¿½oï¿½bï¿½Oï¿½ï¿½ï¿½[ï¿½h
+//ƒfƒoƒbƒOƒ‚[ƒh
 #include"Debug_Manager.h"
 
-//ï¿½Rï¿½ï¿½ï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^
+//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 Scene_Stage10::Scene_Stage10(const Player* player)
 {
-	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ï¿½ï¿½Zï¿½bï¿½g
+	//§ŒÀŠÔ‚ğƒZƒbƒg
 	GameData::Set_TimeLimit(3700);
 
-	//ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ñ‚ª“nï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½
+	//ƒvƒŒƒCƒ„[î•ñ‚ª“n‚³‚ê‚Ä‚¢‚ê‚Î
 	if (player != nullptr)
 	{
-		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ğ¶ï¿½
+		//î•ñ‚ğˆø‚«Œp‚¢‚¾ƒvƒŒƒCƒ„[‚ğ¶¬
 		obj_player = new Player(*player);
 	}
 	else
 	{
-		//ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ğ¶ï¿½
+		//ƒvƒŒƒCƒ„[‚ğ¶¬
 		obj_player = new Player(640, 360);
 	}
 
-	//ï¿½Gï¿½ğ¶ï¿½
+	//“G‚ğ¶¬
 	obj_enemy = new Enemy_10(1050, 220, Jan_Type::SCISSORS);
 
-	//ï¿½ï¿½ï¿½Eï¿½Ç‚Ì—pï¿½ï¿½
+	//°E•Ç‚Ì—pˆÓ
 	Init_Floor(STAGE_10_FLOOR);
 
-	//ï¿½ï¿½Â‚ï¿½ï¿½Âï¿½ï¿½ï¿½  STAGE_10_FLOOR ï¿½Â•ï¿½
-	obj_floor[0] = new Floor(0, 700, 1280, 20);        //ï¿½ï¿½
-	obj_floor[1] = new Floor(0, 0, 20, 1720);           //ï¿½Çiï¿½ï¿½ï¿½j
-	obj_floor[2] = new Floor(1260, 0, 20, 1720);           //ï¿½Çiï¿½Eï¿½j
+	//ˆê‚Â‚¸‚Â¶¬  STAGE_10_FLOOR ŒÂ•ª
+	obj_floor[0] = new Floor(0, 700, 1280, 20);        //°
+	obj_floor[1] = new Floor(0, 0, 20, 1720);           //•Çi¶j
+	obj_floor[2] = new Floor(1260, 0, 20, 1720);           //•Çi‰Ej
 
-	//obj_floor[3] = new Floor(1000, 100, 120, 50);      //ï¿½ï¿½ï¿½ï¿½	
+	//obj_floor[3] = new Floor(1000, 100, 120, 50);      //‘«ê	
 	//
 	
 	reflection = new Jangeki_Reflection(0, 0, 0, 0, Jan_Type::ROCK);
 }
 
-//ï¿½fï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^
+//ƒfƒXƒgƒ‰ƒNƒ^
 Scene_Stage10::~Scene_Stage10()
 {
 }
 
-//ï¿½Xï¿½V
+//XV
 void Scene_Stage10::Update()
 {
 	switch (obj_enemy->Get_Enemy10Form())
 	{
 	/***********
-	* ï¿½ï¿½ï¿½`ï¿½ï¿½
+	* ‘æˆêŒ`‘Ô
 	***********/
 	case 1:
-		obj_floor[3] = new Floor(100, 350, 120, 50);      //ï¿½ï¿½ï¿½ï¿½
-		obj_floor[4] = new Floor(1000, 350, 120, 50);      //ï¿½ï¿½ï¿½ï¿½
+		obj_floor[3] = new Floor(100, 350, 120, 50);      //‘«ê
+		obj_floor[4] = new Floor(1000, 350, 120, 50);      //‘«ê
 
-		obj_floor[5] = new Floor(0, 700, 1280, 20);        //ï¿½ï¿½
+		obj_floor[5] = new Floor(0, 700, 1280, 20);        //°
 
-		obj_floor[6] = new Floor(0, 700, 1280, 20);        //ï¿½ï¿½
-		obj_floor[7] = new Floor(0, 700, 1280, 20);        //ï¿½ï¿½
+		obj_floor[6] = new Floor(0, 700, 1280, 20);        //°
+		obj_floor[7] = new Floor(0, 700, 1280, 20);        //°
 
-		obj_floor[8] = new Floor(0, 700, 1280, 20);        //ï¿½ï¿½
-		obj_floor[9] = new Floor(0, 700, 1280, 20);        //ï¿½ï¿½
-		obj_floor[10] = new Floor(0, 700, 1280, 20);        //ï¿½ï¿½
+		obj_floor[8] = new Floor(0, 700, 1280, 20);        //°
+		obj_floor[9] = new Floor(0, 700, 1280, 20);        //°
+		obj_floor[10] = new Floor(0, 700, 1280, 20);        //°
 
-		obj_floor[11] = new Floor(0, 700, 1280, 20);        //ï¿½ï¿½
-		obj_floor[12] = new Floor(0, 700, 1280, 20);        //ï¿½ï¿½
+		obj_floor[11] = new Floor(0, 700, 1280, 20);        //°
+		obj_floor[12] = new Floor(0, 700, 1280, 20);        //°
 
-		obj_floor[13] = new Floor(0, 700, 1280, 20);        //ï¿½ï¿½
-		obj_floor[14] = new Floor(0, 700, 1280, 20);        //ï¿½ï¿½
-		obj_floor[15] = new Floor(0, 700, 1280, 20);        //ï¿½ï¿½
+		obj_floor[13] = new Floor(0, 700, 1280, 20);        //°
+		obj_floor[14] = new Floor(0, 700, 1280, 20);        //°
+		obj_floor[15] = new Floor(0, 700, 1280, 20);        //°
 		break;
 
 	/***********
-	* ï¿½ï¿½ï¿½`ï¿½ï¿½
+	* ‘æ“ñŒ`‘Ô
 	***********/
 	case 2:
-		obj_floor[3] = new Floor(81, 100, 120, 10, 22822);          //ï¿½ï¿½ï¿½ï¿½[3]ï¿½`[15]
+		obj_floor[3] = new Floor(81, 100, 120, 10, 22822);          //‘«ê[3]`[15]
 		obj_floor[4] = new Floor(81, 300, 120, 10, 22822);
 		obj_floor[5] = new Floor(81, 500, 120, 10, 22822);
 
@@ -111,93 +109,93 @@ void Scene_Stage10::Update()
 		break;
 	}
 
-	//ï¿½ï¿½ï¿½Ô‚ï¿½ï¿½Jï¿½Eï¿½ï¿½ï¿½g
+	//ŠÔ‚ğƒJƒEƒ“ƒg
 	GameData::Time_Update();
 
-	//ï¿½ÚGï¿½ï¿½ï¿½ï¿½ñ‚¯‚ï¿½Å‚È‚ï¿½ï¿½ï¿½
+	//ÚG‚¶‚á‚ñ‚¯‚ñ‚Å‚È‚¢
 	if (janken_flag == false)
 	{
-		obj_player->Update();    // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Xï¿½Vï¿½Eï¿½ï¿½ï¿½ï¿½Â”\
-		obj_enemy->Update();     //ï¿½Gï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½Vï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		obj_player->Update();    // ƒvƒŒƒCƒ„[XVE‘€ì‰Â”\
+		obj_enemy->Update();     //“GƒLƒƒƒ‰XVE“à•”ˆ—
 
-		/*ï¿½ï¿½ï¿½Ë’e*/
+		/*”½Ë’e*/
 		//obj_enemy->reflection->Update_reflection();
 
-		/*ï¿½Xï¿½eï¿½[ï¿½Wï¿½Å‚Ì‘ï¿½ï¿½ï¿½ï¿½Ï‰ï¿½*/
+		/*ƒXƒe[ƒW‚Å‚Ì‘®«•Ï‰»*/
 		//obj_enemy->SetType(Jan_Type::PAPER);
 
-        /*ï¿½Gï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ìï¿½ï¿½Wï¿½ï¿½Ô‚ï¿½*/
+        /*“G‚ªƒvƒŒƒCƒ„[‚ÌÀ•W‚ğ•Ô‚·*/
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
 
-		//ï¿½Gï¿½Æƒvï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ì“ï¿½ï¿½ï¿½ï¿½è”»ï¿½ï¿½  ï¿½@ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"ï¿½ÚGï¿½ï¿½ï¿½ï¿½ñ‚¯‚ï¿½"
+		//“G‚ÆƒvƒŒƒCƒ„[‚Ì“–‚½‚è”»’è  @‚±‚±‚Å"ÚG‚¶‚á‚ñ‚¯‚ñ"
 		if (obj_enemy->Hit_Character(obj_player) == true)
 		{
-			//ï¿½Gï¿½ï¿½ï¿½oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½ÉŒï¿½ï¿½ß‚ï¿½@ï¿½@ï¿½@ï¿½iï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½ï¿½intï¿½^ï¿½Ì’l(0ï¿½`2)ï¿½ï¿½ Jan_Typeï¿½^ï¿½É•ÏŠï¿½ï¿½j
+			//“G‚ªo‚·è‚ğƒ‰ƒ“ƒ_ƒ€‚ÉŒˆ‚ß‚é@@@iƒ‰ƒ“ƒ_ƒ€‚ÈintŒ^‚Ì’l(0`2)‚ğ Jan_TypeŒ^‚É•ÏŠ·j
 			Jan_Type enemy_janken = static_cast<Jan_Type> (GetRand(2));
 
-			//ï¿½ï¿½ï¿½ï¿½ñ‚¯‚ï¿½pï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½
+			//‚¶‚á‚ñ‚¯‚ñ—pƒIƒuƒWƒFƒNƒg¶¬
 			obj_janken = new Janken(enemy_janken);
 
-			//ï¿½ÚGï¿½ï¿½ï¿½ï¿½ñ‚¯‚ï¿½Jï¿½n
+			//ÚG‚¶‚á‚ñ‚¯‚ñŠJn
 			janken_flag = true;
 		}
 	}
 	else
 	{
-		//ï¿½ÚGï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ñ‚¯‚ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½s
+		//ÚG‚¶‚á‚ñ‚¯‚ñ‚Ìˆ—‚ğÀs
 		Update_Janken();
 	}
 
-	//playerï¿½Ì‚ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½Æ‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½
+	//player‚Ì‚¶‚á‚ñŒ‚‚ğ‚Æ‚Á‚Ä‚­‚é
 	Jangeki_Base** player_jangeki = obj_player->GetJangeki();
 
-	//enemyï¿½Ì‚ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½Æ‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½
+	//enemy‚Ì‚¶‚á‚ñŒ‚‚ğ‚Æ‚Á‚Ä‚­‚é
 	Jangeki_Base** enemy_jangeki = obj_enemy->GetJangeki();
 
-	//ï¿½ï¿½ï¿½Ë‚ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½Æ‚ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½
+	//”½Ë‚³‚ê‚½‚¶‚á‚ñŒ‚‚ğ‚Æ‚Á‚Ä‚­‚é
 	//Jangeki_Base** reflection_jangeki = obj_enemy->reflection->GetJangeki();
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	//ï¿½ï¿½ï¿½ï¿½ñŒ‚“ï¿½ï¿½mï¿½Ì“ï¿½ï¿½ï¿½ï¿½è”»ï¿½ï¿½iï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ñŒ‚–Úï¿½ï¿½j
+	//‚¶‚á‚ñŒ‚“¯m‚Ì“–‚½‚è”»’èiƒvƒŒƒCƒ„[‚¶‚á‚ñŒ‚–Úüj
 	for (int p_count = 0; p_count < JANGEKI_MAX; p_count++)
 	{
-		if (player_jangeki[p_count] == nullptr) break;         //ï¿½ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½Íï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½
+		if (player_jangeki[p_count] == nullptr) break;         //‚¶‚á‚ñŒ‚‚ª‚È‚¢‚Íˆ—‚µ‚È‚¢
 
-		bool delete_player = false;       //ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ñŒ‚íœï¿½tï¿½ï¿½ï¿½Oï¿½@true:ï¿½íœï¿½@false:ï¿½íœï¿½ï¿½ï¿½È‚ï¿½
+		bool delete_player = false;       //ƒvƒŒƒCƒ„[‚¶‚á‚ñŒ‚íœƒtƒ‰ƒO@true:íœ@false:íœ‚µ‚È‚¢
 
 		for (int e_count = 0; e_count < JANGEKI_MAX; e_count++)
 		{
-			if (enemy_jangeki[e_count] == nullptr) break;         //ï¿½ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½Íï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½
+			if (enemy_jangeki[e_count] == nullptr) break;         //‚¶‚á‚ñŒ‚‚ª‚È‚¢‚Íˆ—‚µ‚È‚¢
 
 			if (player_jangeki[p_count]->Hit_Jangeki(enemy_jangeki[e_count]) == true)
 			{
-				//ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½Fï¿½bï¿½N
+				//—L—˜‘®«ƒ`ƒFƒbƒN
 				int result = player_jangeki[p_count]->CheckAdvantage(enemy_jangeki[e_count]);
 
 				switch (result)
 				{
-				case 0:             //playerï¿½Ì‚ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½sï¿½ï¿½
+				case 0:             //player‚Ì‚¶‚á‚ñŒ‚‚ª•s—˜
 
-					//playerï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½íœ
+					//player‘¤‚Ì‚¶‚á‚ñŒ‚‚ğíœ
 					delete_player = true;
 
 					break;
 
-				case 1:             //playerï¿½Ì‚ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½Lï¿½ï¿½
+				case 1:             //player‚Ì‚¶‚á‚ñŒ‚‚ª—L—˜
 
-					//enemyï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½íœ
+					//enemy‘¤‚Ì‚¶‚á‚ñŒ‚‚ğíœ
 					obj_enemy->DeleteJangeki(e_count);
 					e_count--;
 
 					break;
 
-				case 2:             //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				case 2:             //‚ ‚¢‚±
 
-					//playerï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½íœ
+					//player‘¤‚Ì‚¶‚á‚ñŒ‚‚ğíœ
 					delete_player = true;
 
-					//enemyï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½íœ
+					//enemy‘¤‚Ì‚¶‚á‚ñŒ‚‚ğíœ
 					obj_enemy->DeleteJangeki(e_count);
 					e_count--;
 
@@ -209,10 +207,10 @@ void Scene_Stage10::Update()
 			}
 		}
 
-		//ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ñŒ‚íœï¿½tï¿½ï¿½ï¿½Oï¿½ï¿½true
+		//ƒvƒŒƒCƒ„[‚¶‚á‚ñŒ‚íœƒtƒ‰ƒO‚ªtrue
 		if (delete_player == true)
 		{
-			//playerï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½íœ
+			//player‘¤‚Ì‚¶‚á‚ñŒ‚‚ğíœ
 			obj_player->DeleteJangeki(p_count);
 			p_count--;
 		}
@@ -220,50 +218,50 @@ void Scene_Stage10::Update()
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	//playerï¿½ï¿½ï¿½ï¿½ñŒ‚‚ï¿½enemyï¿½Ì“ï¿½ï¿½ï¿½ï¿½è”»ï¿½ï¿½
+	//player‚¶‚á‚ñŒ‚‚Æenemy‚Ì“–‚½‚è”»’è
 	for (int i = 0; i < JANGEKI_MAX; i++)
 	{
-		if (player_jangeki[i] == nullptr) break;         //ï¿½ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½Íï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½
+		if (player_jangeki[i] == nullptr) break;         //‚¶‚á‚ñŒ‚‚ª‚È‚¢‚Íˆ—‚µ‚È‚¢
 
-		//ï¿½ï¿½ï¿½ï¿½ñŒ‚‚Æ‚Ì“ï¿½ï¿½ï¿½ï¿½è”»ï¿½ï¿½
+		//‚¶‚á‚ñŒ‚‚Æ‚Ì“–‚½‚è”»’è
 		if (obj_enemy->Hit_Jangeki(player_jangeki[i]) == true)
 		{
-			Jan_Type enemy_type = obj_enemy->GetType();            //ï¿½Gï¿½Ì‘ï¿½ï¿½ï¿½
-			Jan_Type jangeki_type = player_jangeki[i]->GetType();  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ñŒ‚‚Ì‘ï¿½ï¿½ï¿½
+			Jan_Type enemy_type = obj_enemy->GetType();            //“G‚Ì‘®«
+			Jan_Type jangeki_type = player_jangeki[i]->GetType();  //“–‚½‚Á‚½‚¶‚á‚ñŒ‚‚Ì‘®«
 
-			//ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚İƒ_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			//•s—˜‘®«‚Ì‚İƒ_ƒ[ƒW‚ª“ü‚é
 			switch (enemy_type)
 			{
-			case Jan_Type::ROCK:                           //ï¿½Gï¿½Ì‘ï¿½ï¿½ï¿½ï¿½@ï¿½Oï¿½[
+			case Jan_Type::ROCK:                           //“G‚Ì‘®«@ƒO[
 
-				//ï¿½pï¿½[ï¿½Ì‚ï¿½ï¿½ï¿½ñŒ‚‚Ì‚İ—Lï¿½ï¿½
+				//ƒp[‚Ì‚¶‚á‚ñŒ‚‚Ì‚İ—LŒø
 				if (jangeki_type == Jan_Type::PAPER)
 				{
-					obj_enemy->ReceiveDamage(30);     //ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-					obj_player->DeleteJangeki(i);     //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½íœ
+					obj_enemy->ReceiveDamage(30);     //ƒ_ƒ[ƒW‚ª“ü‚é
+					obj_player->DeleteJangeki(i);     //“–‚½‚Á‚½‚¶‚á‚ñŒ‚‚ğíœ
 					i--;
 				}
 
 				break;
 
-			case Jan_Type::SCISSORS:                       //ï¿½Gï¿½Ì‘ï¿½ï¿½ï¿½ï¿½@ï¿½`ï¿½ï¿½ï¿½L
+			case Jan_Type::SCISSORS:                       //“G‚Ì‘®«@ƒ`ƒ‡ƒL
 
-				//ï¿½Oï¿½[ï¿½Ì‚ï¿½ï¿½ï¿½ñŒ‚‚Ì‚İ—Lï¿½ï¿½
+				//ƒO[‚Ì‚¶‚á‚ñŒ‚‚Ì‚İ—LŒø
 				if (jangeki_type == Jan_Type::ROCK)
 				{
-					obj_enemy->ReceiveDamage(30);     //ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-					obj_player->DeleteJangeki(i);     //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½íœ
+					obj_enemy->ReceiveDamage(30);     //ƒ_ƒ[ƒW‚ª“ü‚é
+					obj_player->DeleteJangeki(i);     //“–‚½‚Á‚½‚¶‚á‚ñŒ‚‚ğíœ
 					i--;
 				}
 				break;
 
-			case Jan_Type::PAPER:                          //ï¿½Gï¿½Ì‘ï¿½ï¿½ï¿½ï¿½@ï¿½pï¿½[
+			case Jan_Type::PAPER:                          //“G‚Ì‘®«@ƒp[
 
-				//ï¿½`ï¿½ï¿½ï¿½Lï¿½Ì‚ï¿½ï¿½ï¿½ñŒ‚‚Ì‚İ—Lï¿½ï¿½
+				//ƒ`ƒ‡ƒL‚Ì‚¶‚á‚ñŒ‚‚Ì‚İ—LŒø
 				if (jangeki_type == Jan_Type::SCISSORS)
 				{
-					obj_enemy->ReceiveDamage(30);     //ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-					obj_player->DeleteJangeki(i);     //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½íœ
+					obj_enemy->ReceiveDamage(30);     //ƒ_ƒ[ƒW‚ª“ü‚é
+					obj_player->DeleteJangeki(i);     //“–‚½‚Á‚½‚¶‚á‚ñŒ‚‚ğíœ
 					i--;
 				}
 				break;
@@ -272,19 +270,19 @@ void Scene_Stage10::Update()
 				break;
 			}
 
-			/*ï¿½ï¿½ï¿½Ë’e*/
+			/*”½Ë’e*/
 			//if (player_jangeki[i]->GetR() == 35.f || obj_enemy->Getflg() == true)
 			//{
 			//	obj_enemy->ReceiveDamage(20);
 			//
-			//	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½íœ
+			//	//‚ ‚½‚Á‚½‚¶‚á‚ñŒ‚‚ğíœ
 			//	obj_player->DeleteJangeki(i);
 			//	i--;
 			//	if (obj_enemy->Getflg() == true)obj_enemy->Fflg();
 			//}
 			//else
 			//{
-			//	obj_player->DeleteJangeki(i);     //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½íœ
+			//	obj_player->DeleteJangeki(i);     //“–‚½‚Á‚½‚¶‚á‚ñŒ‚‚ğíœ
 			//	i--;
 			//	obj_enemy->reflection->trueFlg();
 			//}
@@ -293,37 +291,37 @@ void Scene_Stage10::Update()
 	}
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//ï¿½ï¿½ï¿½Ë‚ï¿½ï¿½ï¿½ñŒ‚“ï¿½ï¿½ï¿½ï¿½è”»ï¿½ï¿½
+	//”½Ë‚¶‚á‚ñŒ‚“–‚½‚è”»’è
 
-	//ï¿½ï¿½ï¿½Ë‚ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½ï¿½ñŒ‚‚ï¿½playerï¿½ï¿½ï¿½ï¿½ñŒ‚‚Ì“ï¿½ï¿½ï¿½ï¿½è”»ï¿½ï¿½
+	//”½Ë‚³‚ê‚½‚¶‚á‚ñŒ‚‚Æplayer‚¶‚á‚ñŒ‚‚Ì“–‚½‚è”»’è
 	//for (int p_count = 0; p_count < JANGEKI_MAX; p_count++)
 	//{
-	//	if (player_jangeki[p_count] == nullptr) break;         //ï¿½ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½Íï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½
-	//	bool delete_player = false;       //ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ñŒ‚íœï¿½tï¿½ï¿½ï¿½Oï¿½@true:ï¿½íœï¿½@false:ï¿½íœï¿½ï¿½ï¿½È‚ï¿½
+	//	if (player_jangeki[p_count] == nullptr) break;         //‚¶‚á‚ñŒ‚‚ª‚È‚¢‚Íˆ—‚µ‚È‚¢
+	//	bool delete_player = false;       //ƒvƒŒƒCƒ„[‚¶‚á‚ñŒ‚íœƒtƒ‰ƒO@true:íœ@false:íœ‚µ‚È‚¢
 	//	for (int r_count = 0; r_count < JANGEKI_MAX; r_count++)
 	//	{
-	//		if (reflection_jangeki[r_count] == nullptr) break;         //ï¿½ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½Íï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½
+	//		if (reflection_jangeki[r_count] == nullptr) break;         //‚¶‚á‚ñŒ‚‚ª‚È‚¢‚Íˆ—‚µ‚È‚¢
 	//		if (player_jangeki[p_count]->Hit_Jangeki(reflection_jangeki[r_count]) == true)
 	//		{
-	//			//ï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½Fï¿½bï¿½N
+	//			//—L—˜‘®«ƒ`ƒFƒbƒN
 	//			int result = player_jangeki[p_count]->CheckAdvantage(reflection_jangeki[r_count]);
 	//			switch (result)
 	//			{
-	//			case 0:             //playerï¿½Ì‚ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½sï¿½ï¿½
-	//				//playerï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½íœ
+	//			case 0:             //player‚Ì‚¶‚á‚ñŒ‚‚ª•s—˜
+	//				//player‘¤‚Ì‚¶‚á‚ñŒ‚‚ğíœ
 	//				delete_player = true;
 	//				break;
-	//			case 1:             //playerï¿½Ì‚ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½Lï¿½ï¿½
-	//				//enemyï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½íœ
+	//			case 1:             //player‚Ì‚¶‚á‚ñŒ‚‚ª—L—˜
+	//				//enemy‘¤‚Ì‚¶‚á‚ñŒ‚‚ğíœ
 	//				obj_enemy->reflection->Delete_reflectionJangeki(r_count);
 	//				r_count--;
-	//				//ï¿½zï¿½[ï¿½~ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ê¶ï¿½ï¿½
+	//				//ƒz[ƒ~ƒ“ƒO‚ğ“Áê¶¬
 	//				obj_player->Create_Homing(p_count, player_jangeki[p_count]->GetX(), player_jangeki[p_count]->GetY(), 35.f, 10, player_jangeki[p_count]->GetType());
 	//				break;
-	//			case 2:             //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	//				//playerï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½íœ
+	//			case 2:             //‚ ‚¢‚±
+	//				//player‘¤‚Ì‚¶‚á‚ñŒ‚‚ğíœ
 	//				delete_player = true;
-	//				//enemyï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½íœ(ï¿½ï¿½ï¿½Ë’e)
+	//				//enemy‘¤‚Ì‚¶‚á‚ñŒ‚‚ğíœ(”½Ë’e)
 	//				obj_enemy->reflection->Delete_reflectionJangeki(r_count);
 	//				r_count--;
 	//				break;
@@ -332,10 +330,10 @@ void Scene_Stage10::Update()
 	//			}
 	//		}
 	//	}
-	//	//ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ñŒ‚íœï¿½tï¿½ï¿½ï¿½Oï¿½ï¿½true
+	//	//ƒvƒŒƒCƒ„[‚¶‚á‚ñŒ‚íœƒtƒ‰ƒO‚ªtrue
 	//	if (delete_player == true)
 	//	{
-	//		//playerï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½íœ
+	//		//player‘¤‚Ì‚¶‚á‚ñŒ‚‚ğíœ
 	//		obj_player->DeleteJangeki(p_count);
 	//		p_count--;
 	//	}
@@ -343,52 +341,52 @@ void Scene_Stage10::Update()
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	//enemyï¿½ï¿½ï¿½ï¿½ñŒ‚‚ï¿½playerï¿½Ì“ï¿½ï¿½ï¿½ï¿½è”»ï¿½ï¿½
+	//enemy‚¶‚á‚ñŒ‚‚Æplayer‚Ì“–‚½‚è”»’è
 	for (int i = 0; i < JANGEKI_MAX; i++)
 	{
-		//ï¿½ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½Íï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½
+		//‚¶‚á‚ñŒ‚‚ª‚È‚¢‚Íˆ—‚µ‚È‚¢
 		if (enemy_jangeki[i] == nullptr) break;
 
-		//ï¿½ï¿½ï¿½ï¿½ñŒ‚‚Æ‚Ì“ï¿½ï¿½ï¿½ï¿½è”»ï¿½ï¿½
+		//‚¶‚á‚ñŒ‚‚Æ‚Ì“–‚½‚è”»’è
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
-			//ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ï¿½ó‚¯‚ï¿½iï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½j
+			//ƒ_ƒ[ƒW‚ğó‚¯‚éiƒvƒŒƒCƒ„[j
 			obj_player->ReceiveDamage(30);
 
-			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½íœ
+			//‚ ‚½‚Á‚½‚¶‚á‚ñŒ‚‚ğíœ
 			obj_enemy->DeleteJangeki(i);
 
-			/*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ñŒ‚‚ï¿½ï¿½íœ(ï¿½ï¿½ï¿½Ë’e)*/
+			/*‚ ‚½‚Á‚½‚¶‚á‚ñŒ‚‚ğíœ(”½Ë’e)*/
 			//obj_enemy->reflection->Delete_reflectionJangeki(i);
 			i--;
 		}
 	}
 
 
-	HitCtrl_Floor(obj_player, STAGE_10_FLOOR);     // playerï¿½@ï¿½ï¿½ï¿½Eï¿½Ç”ï¿½ï¿½ï¿½
-	HitCtrl_Floor(obj_enemy, STAGE_10_FLOOR);      // ï¿½Gï¿½@ï¿½@ï¿½@ï¿½ï¿½ï¿½Eï¿½Ç”ï¿½ï¿½ï¿½
+	HitCtrl_Floor(obj_player, STAGE_10_FLOOR);     // player@°E•Ç”»’è
+	HitCtrl_Floor(obj_enemy, STAGE_10_FLOOR);      // “G@@@°E•Ç”»’è
 
 
 }
 
 
-//ï¿½`ï¿½ï¿½
+//•`‰æ
 void Scene_Stage10::Draw() const
 {
-	if (obj_enemy->GetHP() > 0) //HPï¿½ï¿½ï¿½ï¿½ï¿½é
+	if (obj_enemy->GetHP() > 0) //HP‚ª‚ ‚é
 	{
 		DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
 	}
 
-	//ï¿½ÚGï¿½ï¿½ï¿½ï¿½ñ‚¯‚ï¿½Å‚È‚ï¿½ï¿½ï¿½
+	//ÚG‚¶‚á‚ñ‚¯‚ñ‚Å‚È‚¢
 	if (janken_flag == false)
 	{
 
-		obj_player->Draw();  //ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½`ï¿½ï¿½
-		obj_enemy->Draw();   //ï¿½Gï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½ï¿½
-		obj_enemy->reflection->Draw_reflectionJangeki(); //ï¿½ï¿½ï¿½Ë’eï¿½`ï¿½ï¿½
+		obj_player->Draw();  //ƒvƒŒƒCƒ„[•`‰æ
+		obj_enemy->Draw();   //“GƒLƒƒƒ‰•`‰æ
+		obj_enemy->reflection->Draw_reflectionJangeki(); //”½Ë’e•`‰æ
 
-		//ï¿½ï¿½ï¿½Eï¿½Ç•`ï¿½ï¿½
+		//°E•Ç•`‰æ
 		for (int i = 0; i < STAGE_10_FLOOR; i++)
 		{
 			if (obj_floor[i] == nullptr) break;
@@ -397,30 +395,30 @@ void Scene_Stage10::Draw() const
 	}
 	else
 	{
-		//ï¿½ÚGï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ñ‚¯‚ï¿½`ï¿½ï¿½
+		//ÚG‚¶‚á‚ñ‚¯‚ñ•`‰æ
 		Draw_Janken();
 	}
 
 	DrawString(640, 360, "Stage10", 0xffffff);
 }
 
-//ï¿½ï¿½ï¿½ï¿½ñ‚¯‚ï¿½Xï¿½Vï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//‚¶‚á‚ñ‚¯‚ñXVE“à•”ˆ—
 void Scene_Stage10::Update_Janken()
 {
-	//ï¿½@ï¿½ï¿½ï¿½ï¿½ï¿½Í‰ï¿½ï¿½Ç‚ï¿½ï¿½ï¿½ï¿½Ù‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	//@‚±‚±‚Í‰ü—Ç‚µ‚½‚Ù‚¤‚ª‚¢‚¢
 
 
 	obj_janken->Update();
 
-	//Aï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½Æ‚ï¿½ 
+	//Aƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚Æ‚« 
 	if (KeyManager::OnPadClicked(PAD_INPUT_A) == true)
 	{
-		//ï¿½ï¿½ï¿½Ê‚ï¿½ï¿½æ“¾
+		//Œ‹‰Ê‚ğæ“¾
 		switch (obj_janken->GetResult())
 		{
-		case Jan_Result::LOSE:    //ï¿½ï¿½ï¿½ï¿½
+		case Jan_Result::LOSE:    //•‰‚¯
 
-			obj_player->SetX(640);   //ï¿½ï¿½ï¿½ç‚·
+			obj_player->SetX(640);   //‚¸‚ç‚·
 			janken_flag = false;
 
 			obj_enemy->Init_Jangeki();
@@ -428,9 +426,9 @@ void Scene_Stage10::Update_Janken()
 			delete obj_janken;
 			break;
 
-		case Jan_Result::WIN:     //ï¿½ï¿½ï¿½ï¿½
+		case Jan_Result::WIN:     //Ÿ‚¿
 
-			obj_player->SetX(640);   //ï¿½ï¿½ï¿½ç‚·
+			obj_player->SetX(640);   //‚¸‚ç‚·
 			janken_flag = false;
 
 			obj_enemy->Init_Jangeki();
@@ -438,7 +436,7 @@ void Scene_Stage10::Update_Janken()
 			delete obj_janken;
 			break;
 
-		case Jan_Result::ONEMORE: //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		case Jan_Result::ONEMORE: //‚ ‚¢‚±
 
 			janken_flag = false;
 
@@ -447,7 +445,7 @@ void Scene_Stage10::Update_Janken()
 			delete obj_janken;
 			break;
 
-		case Jan_Result::_ERROR:  //ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½ï¿½ñ‚¯‚ï¿½
+		case Jan_Result::_ERROR:  //‚Ü‚¾‚¶‚á‚ñ‚¯‚ñ’†
 			break;
 
 		default:
@@ -456,31 +454,30 @@ void Scene_Stage10::Update_Janken()
 	}
 }
 
-//ï¿½ï¿½ï¿½ï¿½ñ‚¯‚ï¿½`ï¿½ï¿½
+//‚¶‚á‚ñ‚¯‚ñ•`‰æ
 void Scene_Stage10::Draw_Janken() const
 {
 	obj_janken->Draw();
 }
 
-//ï¿½Vï¿½[ï¿½ï¿½ï¿½Ì•ÏX
+//ƒV[ƒ“‚Ì•ÏX
 AbstractScene* Scene_Stage10::ChangeScene()
 {
-	//"Debug_Manager.h" ï¿½ï¿½ #define DEBUG_OFF_10 ï¿½ï¿½ï¿½Rï¿½ï¿½ï¿½ï¿½ï¿½gï¿½Aï¿½Eï¿½gï¿½ï¿½ï¿½ï¿½ÆŠJï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½h
+	//"Debug_Manager.h" ‚Ì #define DEBUG_OFF_10 ‚ğƒRƒƒ“ƒgƒAƒEƒg‚·‚é‚ÆŠJ”­ƒ‚[ƒh
 #ifdef DEBUG_OFF_10
 
-	//ï¿½Gï¿½ï¿½HPï¿½ï¿½0ï¿½È‰ï¿½
+	//“G‚ÌHP‚ª0ˆÈ‰º
 	if (obj_enemy->Get_Enemy10Form() == 2 && obj_enemy->GetHP() < 0)
 	{
-		//ï¿½ï¿½ï¿½Uï¿½ï¿½ï¿½gï¿½ÖØ‚ï¿½Ö‚ï¿½
-		//return dynamic_cast<AbstractScene*> (new Scene_InputName());
-		return dynamic_cast<AbstractScene*> (new Scene_InputName());
+		//ƒŠƒUƒ‹ƒg‚ÖØ‚è‘Ö‚¦
+		return dynamic_cast<AbstractScene*> (new Scene_Result());
 	}
 
 
-	//ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½HPï¿½ï¿½0ï¿½È‰ï¿½
+	//ƒvƒŒƒCƒ„[‚ÌHP‚ª0ˆÈ‰º
 	if (obj_player->GetHP() < 0 || GameData::Get_Each_Time() <= 0)
 	{
-		//ï¿½Qï¿½[ï¿½ï¿½ï¿½Iï¿½[ï¿½oï¿½[ï¿½Vï¿½[ï¿½ï¿½ï¿½ÖØ‚ï¿½Ö‚ï¿½
+		//ƒQ[ƒ€ƒI[ƒo[ƒV[ƒ“‚ÖØ‚è‘Ö‚¦
 		return dynamic_cast<AbstractScene*> (new GameOverScene(10));
 	}
 

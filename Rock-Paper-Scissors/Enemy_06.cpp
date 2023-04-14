@@ -7,16 +7,15 @@
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
-	speed = 5.0f;
+	speed = 7.0f;
 	dir = -1;                 //-1なら左向き  +1なら右向き
 	hp = 100;
 
 	old_type = static_cast<Jan_Type>(1);  //チョキ属性で初期化
 
-	//画像読み込み
-	images[0] = LoadGraph("images/gu-test.png");     //グー属性
-	images[1] = LoadGraph("images/tyokitest.png");   //チョキ属性
-	images[2] = LoadGraph("images/pa-test.png");     //パー属性
+	images[0] = LoadGraph("images/gu-test.png");
+	images[1] = LoadGraph("images/tyokitest.png");
+	images[2] = LoadGraph("images/pa-test.png");
 
 	Init_Jangeki();       //じゃん撃を用意
 
@@ -109,11 +108,8 @@ void Enemy_06::Draw() const
 	Draw_Jangeki();
 
 	//テスト
-	if (hp > 0) DrawFormatString((int)(x - 50), (int)(y - 75), 0xffffff, "HP : %d", hp);
-	else DrawString((int)(x - 50), (int)(y - 75), "death!", 0xffffff);
-
-	//テスト
-	DrawFormatString(600, 600, 0xffffff, "%d", dir);
+	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
+	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
 }
 
 //じゃん撃生成・更新
@@ -182,7 +178,7 @@ void Enemy_06::Update_Jangeki()
 void Enemy_06::AttackPattern_1()
 {
 	//4回ジャンプするまでの間以下の処理(ジャンプ)を繰り返す
-	if (jump_cnt < 2)         
+	if (jump_cnt < 3)         
 	{
 		if (GetRand(3) == 3)  //乱数でjump_flgをtrueにする
 		{
@@ -193,92 +189,25 @@ void Enemy_06::AttackPattern_1()
 		jump();
 	}
 
-	//着地してから次の行動を開始
-	if (jump_cnt == 2 && land_flg == true)
-	{
-		jump_cnt++;
-	}
-
 	//4回以上ジャンプした際の処理
 	if (jump_cnt >= 3 && dir == -1)        //左を向いている時の処理
 	{
-		x -= speed;      //1フレームの間に左へ進む距離
 
-		if (x > 380 && x < 386)   //目標座標に到着したかのチェック
-		{
-			jump_flg = true;
-		}
-		else if (x > 650 && x < 656)
-		{
-			jump_flg = true;
-		}
-		else if (x > 900 && x < 906)
-		{
-			jump_flg = true;
-		}
-		else if (x > 1160 && x < 1166)
-		{
-			jump_flg = true;
-		}
-
-		low_jump();     //低ジャンプ
-
-		//接地しているかどうかで移動速度を可変   接地時(true)    : speed = 5.0f
-		//                                       非接地時(false) : speed = 8.0f
-		if (land_flg == true)
-		{
-			speed = 3.0f;
-		}
-		else if(land_flg == false)
-		{
-			speed = 8.0f;
-		}
-
-		if (x < 115)    //目標座標に到着したかのチェック
+		x = x - 5;      //1フレームの間に左へ進む距離
+		if (x < 100)    //目標座標に到着したかのチェック
 		{
 			jump_cnt = 0;          //ジャンプ回数のリセット
-			dir = 1;               //向いている向きの反転
+			dir = 1;  //向いている向きの反転
 			ChangeCnt++;
 		}
 	}
 	else if (jump_cnt >= 3 && dir == 1)    //右を向いている時の処理
 	{
-		x += speed;      //1フレームの間に右へ進む距離
-
-		if (x > 114 && x < 120)   //目標座標に到着したかのチェック
-		{
-			jump_flg = true;
-		}
-		else if (x > 404 && x < 410)
-		{
-			jump_flg = true;
-		}
-		else if (x > 644 && x < 650)
-		{
-			jump_flg = true;
-		}
-		else if (x > 904 && x < 910)
-		{
-			jump_flg = true;
-		}
-
-		low_jump();     //低ジャンプ
-
-		//接地しているかどうかで移動速度を可変   接地時(true)    : speed = 5.0f
-		//                                       非接地時(false) : speed = 8.0f
-		if (land_flg == true)
-		{
-			speed = 3.0f;
-		}
-		else if (land_flg == false)
-		{
-			speed = 8.0f;
-		}
-
+		x = x + 5;      //1フレームの間に右へ進む距離
 		if (x > 1180)   //目標座標に到着したかのチェック
 		{
 			jump_cnt = 0;           //ジャンプ回数のリセット
-			dir = -1;               //向いている向きの反転
+			dir = -1;  //向いている向きの反転
 			ChangeCnt++;
 		}
 	}
@@ -299,6 +228,8 @@ void Enemy_06::AttackPattern_1()
 	{
 		attack_pattern = 1;    //攻撃パターンを変更
 		teleport_Flg = true;   //瞬間移動フラグをtrueにする
+		//jump_cnt = 0;          //ジャンプカウント初期化
+		//jump_flg = false;      //ジャンプフラグ初期化
 	}
 }
 
@@ -309,8 +240,7 @@ void Enemy_06::AttackPattern_2()
 	if (teleport_Flg == true)
 	{
 		x = 1149;
-		y = 480;
-		speed = 5.0f;
+		y = 450;
 		floor = 5;
 		dir = -1;
 		teleport_Flg = false;
@@ -323,15 +253,10 @@ void Enemy_06::AttackPattern_2()
 	case 1:
 		if (dir == 1)
 		{
-			x += speed;
+			x += 5;
 		}
 
-		if (y == 100)
-		{
-			jump_flg = false;
-		}
-
-		if (y == 500)
+		if (y == 450 && jump_cnt == 0)
 		{
 			jump_flg = true;
 		}
@@ -343,6 +268,7 @@ void Enemy_06::AttackPattern_2()
 		if (x >= 393)
 		{
 			floor = 2;
+			jump_cnt = 0;
 			decision_Direction();
 			jump_Direction();
 		}
@@ -352,11 +278,11 @@ void Enemy_06::AttackPattern_2()
 	case 2:
 		if (dir == -1)
 		{
-			x -= speed;
+			x -= 5;
 		}
 		if (dir == 1)
 		{
-			x += speed;
+			x += 5;
 		}
 
 		//ジャンプ処理
@@ -366,12 +292,14 @@ void Enemy_06::AttackPattern_2()
 		if (x <= 141)
 		{
 			floor = 1;
+			jump_cnt = 0;
 			dir = 1;
 			jump_Direction();
 		}
 		if (x >= 645)
 		{
 			floor = 3;
+			jump_cnt = 0;
 			decision_Direction();
 			jump_Direction();
 		}
@@ -381,19 +309,14 @@ void Enemy_06::AttackPattern_2()
 	case 3:
 		if (dir == -1)
 		{
-			x -= speed;
+			x -= 5;
 		}
 		if (dir == 1)
 		{
-			x += speed;
+			x += 5;
 		}
 
-		if (y == 100)
-		{
-			jump_flg = false;
-		}
-
-		if (y == 500)
+		if (y == 450 && jump_cnt == 0)
 		{
 			jump_flg = true;
 		}
@@ -405,12 +328,14 @@ void Enemy_06::AttackPattern_2()
 		if (x <= 393)
 		{
 			floor = 2;
+			jump_cnt = 0;
 			decision_Direction();
 			jump_Direction();
 		}
 		if (x >= 897)
 		{
 			floor = 4;
+			jump_cnt = 0;
 			decision_Direction();
 			jump_Direction();
 		}
@@ -420,11 +345,11 @@ void Enemy_06::AttackPattern_2()
 	case 4:
 		if (dir == -1)
 		{
-			x -= speed;
+			x -= 5;
 		}
 		if (dir == 1)
 		{
-			x += speed;
+			x += 5;
 		}
 
 		//ジャンプ処理
@@ -434,12 +359,14 @@ void Enemy_06::AttackPattern_2()
 		if (x <= 645)
 		{
 			floor = 3;
+			jump_cnt = 0;
 			decision_Direction();
 			jump_Direction();
 		}
 		if (x >= 1149)
 		{
 			floor = 5;
+			jump_cnt = 0;
 			dir = -1;
 			jump_Direction();
 		}
@@ -449,17 +376,13 @@ void Enemy_06::AttackPattern_2()
 	case 5:
 		if (dir == -1)
 		{
-			x -= speed;
+			x -= 5;
 		}
 
-		if (y == 100)
-		{
-			jump_flg = false;
-		}
-
-		if (y == 500)
+		if (y == 450 && jump_cnt == 0)
 		{
 			jump_flg = true;
+			jump_cnt++;
 		}
 
 		//ジャンプ処理
@@ -469,6 +392,7 @@ void Enemy_06::AttackPattern_2()
 		if (x <= 897)
 		{
 			floor = 4;
+			jump_cnt = 0;
 			decision_Direction();
 			jump_Direction();
 		}
@@ -493,7 +417,6 @@ void Enemy_06::AttackPattern_2()
 	if (hp <= 40)
 	{
 		attack_pattern = 2;
-		speed = 8.0f;
 	}
 }
 
@@ -506,15 +429,10 @@ void Enemy_06::AttackPattern_3()
 	case 1:
 		if (dir == 1)
 		{
-			x += speed;
-		}
-
-		if (y == 100)
-		{
-			jump_flg = false;
+			x += 8;
 		}
 		
-		if (y == 500)
+		if (y == 450 && jump_cnt == 0)
 		{
 			jump_flg = true;
 		}
@@ -526,6 +444,7 @@ void Enemy_06::AttackPattern_3()
 		if (x >= 393)
 		{
 			floor = 2;
+			jump_cnt = 0;
 			decision_Direction();
 			jump_Direction();
 		}
@@ -535,11 +454,11 @@ void Enemy_06::AttackPattern_3()
 	case 2:
 		if (dir == -1)
 		{
-			x -= speed;
+			x -= 8;
 		}
 		if (dir == 1)
 		{
-			x += speed;
+			x += 8;
 		}
 
 		//ジャンプ処理
@@ -549,12 +468,14 @@ void Enemy_06::AttackPattern_3()
 		if (x <= 141)
 		{
 			floor = 1;
+			jump_cnt = 0;
 			dir = 1;
 			jump_Direction();
 		}
 		if (x >= 645)
 		{
 			floor = 3;
+			jump_cnt = 0;
 			decision_Direction();
 			jump_Direction();
 		}
@@ -564,19 +485,14 @@ void Enemy_06::AttackPattern_3()
 	case 3:
 		if (dir == -1)
 		{
-			x -= speed;
+			x -= 8;
 		}
 		if (dir == 1)
 		{
-			x += speed;
+			x += 8;
 		}
 
-		if (y == 100)
-		{
-			jump_flg = false;
-		}
-
-		if (y == 500)
+		if (y == 450 && jump_cnt == 0)
 		{
 			jump_flg = true;
 		}
@@ -588,12 +504,14 @@ void Enemy_06::AttackPattern_3()
 		if (x <= 393)
 		{
 			floor = 2;
+			jump_cnt = 0;
 			decision_Direction();
 			jump_Direction();
 		}
 		if (x >= 897)
 		{
 			floor = 4;
+			jump_cnt = 0;
 			decision_Direction();
 			jump_Direction();
 		}
@@ -603,11 +521,11 @@ void Enemy_06::AttackPattern_3()
 	case 4:
 		if (dir == -1)
 		{
-			x -= speed;
+			x -= 8;
 		}
 		if (dir == 1)
 		{
-			x += speed;
+			x += 8;
 		}
 
 		//ジャンプ処理
@@ -634,17 +552,13 @@ void Enemy_06::AttackPattern_3()
 	case 5:
 		if (dir == -1)
 		{
-			x -= speed;
+			x -= 8;
 		}
 
-		if (y == 100)
-		{
-			jump_flg = false;
-		}
-
-		if (y == 500)
+		if (y == 450 && jump_cnt == 0)
 		{
 			jump_flg = true;
+			jump_cnt++;
 		}
 
 		//ジャンプ処理
@@ -654,6 +568,7 @@ void Enemy_06::AttackPattern_3()
 		if (x <= 897)
 		{
 			floor = 4;
+			jump_cnt = 0;
 			decision_Direction();
 			jump_Direction();
 		}
@@ -782,7 +697,7 @@ void Enemy_06::jump()
 	//ジャンプ処理
 	if (jump_flg == true && land_flg == true)
 	{
-		g_add = -19.8f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+		g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 		land_flg = false;  //地面についていない
 		jump_flg = false;  //ジャンプ用フラグのリセット
 
@@ -795,18 +710,6 @@ void Enemy_06::jump()
 		{
 			ChangeCnt++;       //属性変化までのカウント
 		}
-	}
-}
-
-//低いジャンプ
-void Enemy_06::low_jump()
-{
-	//ジャンプ処理
-	if (jump_flg == true && land_flg == true)
-	{
-		g_add = -8.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-		land_flg = false;  //地面についていない
-		jump_flg = false;  //ジャンプ用フラグのリセット
 	}
 }
 

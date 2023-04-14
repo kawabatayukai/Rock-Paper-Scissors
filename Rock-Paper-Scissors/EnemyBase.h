@@ -19,9 +19,6 @@ public:
 
 	void SetHP(int damage);         //ダメージを受ける
 
-	//HP回復（引数 : 回復量）
-	void Recover_HP(const unsigned int recovery);
-
 	//追跡対象の座標をセット　 基本プレイヤー
 	void SetPlayerLocation(const float player_x, const float player_y);
 

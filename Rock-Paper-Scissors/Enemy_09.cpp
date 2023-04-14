@@ -21,10 +21,7 @@ Enemy_09::Enemy_09(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	
 	Rimage = LoadGraph("images/stage09/Stage9_1.png");	//反射ON
 	image = LoadGraph("images/stage09/Stage9.png");		//反射OFF
-
-	LoadDivGraph("images/stage09/teleport2.png", 15, 15, 1, 120, 150, img_teleport);
-	LoadDivGraph("images/stage09/teleport22.png", 15, 15, 1, 120, 150, img_teleport2);
-
+	
 
 	//じゃん撃を用意
 	Init_Jangeki();       
@@ -47,8 +44,8 @@ void Enemy_09::Update()
 	Update_Jangeki();
 	reflection->Update_reflection();
 
-	if(Spflg==false)MoveEnmey_09();
-	else  SpecialMoveEnmey();
+	MoveEnmey_09();
+	//SpecialMoveEnmey();
 	
 
 }
@@ -56,20 +53,10 @@ void Enemy_09::Update()
 //描画
 void Enemy_09::Draw() const
 {
-
+	
 	//中心から描画
-	if (animflg == false)
-	{
-		if (rflg == false)DrawRotaGraphF(x, y, 1, 0, Rimage, TRUE);
-		if (rflg == true)DrawRotaGraphF(GetX(), GetY(), 1, 0, image, TRUE);
-	}
-
-	if (animflg == true)
-	{
-		if (anim_count == 0) DrawGraph(before_x - 65, before_y - 50, img_teleport[animtimer / 3 % 15], TRUE);
-		else DrawGraph(x - 50, y - 50, img_teleport2[animtimer / 2 % 15], TRUE);
-	}
-		
+	if(rflg==false)DrawRotaGraphF(x, y, 1, 0, Rimage, TRUE);
+	if(rflg==true)DrawRotaGraphF(GetX(), GetY(), 1, 0, image, TRUE);
 
 	//じゃん撃描画
 	Draw_Jangeki();
@@ -83,7 +70,9 @@ void Enemy_09::Draw() const
 
 //じゃん撃生成・更新
 void Enemy_09::Update_Jangeki()
-{	
+{
+	int jan_count;
+	
 
 	//じゃん撃配列をひとつずつ
 	for (jan_count = 0; jan_count < JANGEKI_MAX; jan_count++)
@@ -109,10 +98,10 @@ void Enemy_09::Update_Jangeki()
 
 	//配列の空要素
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
-
+		
 	{
 		float radius = 35.5f;   //半径
-		float speed = 3.5f;     //スピード
+		float speed = 3.0f;     //スピード
 
 		//if (GetHP() <= 51)speed=4.5f;
 
@@ -122,79 +111,14 @@ void Enemy_09::Update_Jangeki()
 		{
 			if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
 		}*/
-
-		//アニメーション再生中でなければ生成
-		//if (animflg == false)
-		//{
-			if (frame_count % janFrame == 0)
-			{
-				if (Spflg == false)
-				{
-					obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
-					count++;
-				}
-				else
-				{
-					Jan_360degrees();
-					count = 0;		 //リセット
-				}
-				if (count == 5)		//五回目で特殊弾発射
-				{
-					Jan_40degrees();
-					count = 0;		 //リセット
-				}
-
-			}
-
-			//反射じゃん撃生成
-			if (reflection->GetFlg() == true)reflection->obj_reflection[reflection->jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed, type, true);
-			reflection->falseFlg();
-		//}
-	}
-}
-
-void Enemy_09::Jan_360degrees()
-{
-	if (Spflg == true)
-	{
-		//生成するじゃん撃の半径
-		float radius = 40.f;
-		int count = 0;
-
-		//ランダムな属性を生成
-		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
-
-		for (int i = jan_count; i < (jan_count + 14); i++)
-		{
-			double angle = static_cast<double>((30.0 * i) * (M_PI / 70));
-
-			obj_jangeki[i] = new Jangeki_Base(x, y, radius, speed, angle, type);
-			count++;
-
-			if (GetRand(3) == count)
-				Spflg = false;
-		}
-	}
-}
-
-void Enemy_09::Jan_40degrees()
-{
-	if (Spflg == false)
-	{
-		//生成するじゃん撃の半径
-		float radius = 35.5f;
-		if (GetHP() <= 51)radius = 45.f;
 	
-		//ランダムな属性を生成
-		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
-
-		for (int i = jan_count; i < (jan_count + 8); i++)
-		{
-			double angle = static_cast<double>((270.0 * i) * (M_PI / 120));
-
-			obj_jangeki[i] = new Jangeki_Base(x, y, radius, speed, angle, type);
+		//生成
+		if (frame_count % janFrame == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
 		
-		}
+
+		//反射じゃん撃生成
+		if (reflection->GetFlg() == true)reflection->obj_reflection[reflection->jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed, type, true);
+		reflection->falseFlg();
 	}
 }
 
@@ -205,13 +129,7 @@ void Enemy_09::MoveEnmey_09()
 
 	if (GetHP() == 1)teleport = 500;
 
-		if (interval % teleport == 0) {
-
-		animflg = true;
-
-		before_x = x;
-		before_y = y;
-
+	if (interval % teleport == 0) {
 		switch (GetRand(12))
 		{
 			//左側
@@ -272,113 +190,100 @@ void Enemy_09::MoveEnmey_09()
 		}
 	}
 
-		if (animflg == true)
-		{
-			animtimer++;
-
-			if (animtimer / 3 % 15 == 14) {
-				
-				if (anim_count == 0)
-				{
-					animtimer = 0;
-					anim_count = 1;
-				}
-				else
-				{
-					animtimer = 0;
-					animflg = false;
-					anim_count = 0;
-				}
-				
-			}
-		}
 }
 
-void Enemy_09::SpecialMoveEnmey()
-{
-	interval++;
-	int Rand = 0;
-	int i = 0;
+//void Enemy_09::SpecialMoveEnmey()
+//{
+//	interval++;
+//	int Rand = 0;
+//	int i = 0;
+//	if (interval == 0)
+//	{
+//		Spflg == false;
+//		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
+//		Create_Homing(0,GetX(), GetY(), 35.5f, 3, type);
+//	}
+//
+//
+//
+//	if (Spflg == true) {
+//		if (interval % 20 == 0) {
+//			
+//			switch (GetRand(12))
+//			{
+//				//////左側
+//			case 0:
+//				x = 160;
+//				y = 480;
+//				break;
+//			case 1:
+//				x = 160;
+//				y = 700;
+//				break;
+//			case 2:
+//				x = 360;
+//				y = 305;
+//				break;
+//			case 3:
+//				x = 360;
+//				y = 700;
+//				break;
+//			case 4:
+//				x = 160;
+//				y = 130;
+//				break;
+//				//右側
+//			case 5:
+//				x = 1110;
+//				y = 480;
+//				break;
+//			case 6:
+//				x = 1110;
+//				y = 700;
+//				break;
+//			case 7:
+//				x = 910;
+//				y = 305;
+//				break;
+//			case 8:
+//				x = 910;
+//				y = 700;
+//				break;
+//			case 9:
+//				x = 1110;
+//				y = 130;
+//				break;
+//				//真ん中
+//			case 10:
+//				x = 620;
+//				y = 400;
+//				break;
+//			case 11:
+//				x = 620;
+//				y = 80;
+//				break;
+//			case 12:
+//				x = 620;
+//				y = 700;
+//				break;
+//			}
+//		}
+//	}
+//}
 
+//特殊生成
+//void Enemy_09::Create_Homing(int jan_count, float x, float y, float r, float speed, Jan_Type type)
+//{
+//	//不正な場合は処理しない
+//	if (jan_count > JANGEKI_MAX || jan_count < 0)  return;
+//
+//	//一旦削除
+//	delete obj_jangeki[jan_count];
+//
+//	//ホーミングを生成
+//	obj_jangeki[jan_count] = new Jangeki_whole(x, y, r, speed, type);
+//}
 
-	if (Spflg == true) {
-		if (interval % 30 == 0) {
-			animflg = true;
-
-			before_x = x;
-			before_y = y;
-
-			switch (GetRand(12))
-			{
-				//左側
-			case 0:
-				x = 160;
-				y = 480;
-				break;
-			case 1:
-				x = 160;
-				y = 700;
-				break;
-			case 2:
-				x = 360;
-				y = 305;
-				break;
-			case 3:
-				x = 360;
-				y = 700;
-				break;
-			case 4:
-				x = 160;
-				y = 130;
-				break;
-				//右側
-			case 5:
-				x = 1110;
-				y = 480;
-				break;
-			case 6:
-				x = 1110;
-				y = 700;
-				break;
-			case 7:
-				x = 910;
-				y = 305;
-				break;
-			case 8:
-				x = 910;
-				y = 700;
-				break;
-			case 9:
-				x = 1110;
-				y = 130;
-				break;
-				//真ん中
-			case 10:
-				x = 620;
-				y = 400;
-				break;
-			case 11:
-				x = 620;
-				y = 80;
-				break;
-			case 12:
-				x = 620;
-				y = 700;
-				break;
-			}
-		}
-		if (animflg == true)
-		{
-			animtimer++;
-
-			if (animtimer / 1 % 15 == 14)
-			{
-				animtimer = 0;
-				animflg = false;
-			}
-		}
-	}
-}
 
 void Enemy_09::frameUP()
 {

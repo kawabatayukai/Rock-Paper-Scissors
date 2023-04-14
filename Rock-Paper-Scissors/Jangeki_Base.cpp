@@ -11,9 +11,8 @@ Jangeki_Base::Jangeki_Base(float x, float y, float r, float speed, Jan_Type type
 
 	//画像読み込み
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image);
-	
-	LoadDivGraph("images/stage09/Reflection_Jangeki.png", 3, 3, 1, 100, 100, reflection_image);
 
+	LoadDivGraph("images/stage09/Reflection_Jangeki.png", 3, 3, 1, 100, 100, reflection_image);
 }
 
 //コンストラクタ（角度あり）
@@ -35,7 +34,6 @@ Jangeki_Base::Jangeki_Base(float x, float y, float r, float speed, double angle,
 //デストラクタ
 Jangeki_Base::~Jangeki_Base()
 {
-	//DrawRotaGraph(x, y, 1, 0, image[0], TRUE);
 }
 
 //更新
