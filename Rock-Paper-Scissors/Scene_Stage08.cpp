@@ -25,7 +25,8 @@ Scene_Stage08::Scene_Stage08(const Player* player)
 
 	//ìGÇê∂ê¨
 	obj_enemy = new Enemy_08(1200, 360, Jan_Type::SCISSORS);
-	obj_cannon = new Enemy_Cannon(640, 100, Jan_Type::ROCK);
+	obj_cannon = new Enemy_Cannon(1210, 100, Jan_Type::ROCK);
+	//obj_cannon = new Enemy_Cannon(110, 100, Jan_Type::ROCK);
 
 	//è∞ÅEï«ÇÃópà”
 	Init_Floor(STAGE_08_FLOOR);
