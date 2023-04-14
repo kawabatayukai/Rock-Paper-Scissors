@@ -18,6 +18,10 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	enemyimage[1] = LoadGraph("images/stage03/stage03gard.png");
 	enemyimage[2] = LoadGraph("images/stage03/stage03jump.png");
 
+	//LoadDivGraph("デスクトップ/stage03Anim.png",5,5,1,32,32,enemyimage);
+
+
+
 	Init_Jangeki();       //じゃん撃を用意
 
 	//動きパターン 繰り返し　//0で動き,1で止まる
@@ -215,6 +219,17 @@ void Enemy_03::Update()
 		y += y_add;            //落下距離をｙ座標に加算する
 		g_add = _GRAVITY;     //重力加速度を初期化する
 
+
+		/*if (++frame_count % 5 == 0) {
+
+			currentindex_st03++;
+			if (currentindex_st03 >= 5)currentindex_st03 = 0;
+			frame_count = 0;
+		}*/
+
+
+
+
 }
 /********************   横移動   ********************/
 
@@ -246,7 +261,7 @@ void Enemy_03::Draw() const
 	if (moveinfo[current].enemywaitTime > 0) {
 
 		//ガード時の画像描画							
-		DrawRotaGraphF(x, y, 1, 0, enemyimage[1], TRUE, dir == -1 ? 0 : 1);
+		DrawRotaGraphF(x, y, 1, 0, enemyimage[1]/*[currentindex_st03]*/, TRUE, dir == -1 ? 0 : 1);
 
 
 	}
@@ -312,7 +327,7 @@ void Enemy_03::Update_Jangeki()
 		float speed = 4.5f /** dir*/;     //スピード//3.0
 
 		//ランダムな属性を生成
-		Jan_Type type = static_cast<Jan_Type>(GetRand(1));//2 //主に属性時のジャン撃を繰り出す
+		Jan_Type type = static_cast<Jan_Type>(GetRand(4));//2 //主に属性時のジャン撃を繰り出す
 
 
 		//プレイヤー方向へのジャン撃生成
