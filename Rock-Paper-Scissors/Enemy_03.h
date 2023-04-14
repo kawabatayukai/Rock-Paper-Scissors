@@ -48,6 +48,14 @@ private:
 	float g_add = 1.0f;//重力加速度
 	
 
+	enum class ENEMY_STATE
+	{
+		STOP,
+		LEFTMOVE,
+		RIGHTMOVE,
+		JUMP,
+	};
+	ENEMY_STATE enemy_state = ENEMY_STATE::STOP;
 
 	/**********************************************************/
 	int frame_count ;       //じゃん撃発射用
@@ -58,8 +66,8 @@ private:
 	short current ; //現在のパターン配列添字
 
 
-
-	int enemyimage[5];      //敵画像配列
+	int frame_count_anim = 0;       //敵のアニメーション用
+	int enemyimage[6];      //敵画像配列
 	int currentindex_st03 = 0;
 };
 

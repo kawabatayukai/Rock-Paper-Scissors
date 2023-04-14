@@ -14,11 +14,11 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = 1;//エネミーの向き
 	hp = 100;
 
-	enemyimage[0] = LoadGraph("images/stage03/stage03attack.png");
+	/*enemyimage[0] = LoadGraph("images/stage03/stage03attack.png");
 	enemyimage[1] = LoadGraph("images/stage03/stage03gard.png");
-	enemyimage[2] = LoadGraph("images/stage03/stage03jump.png");
+	enemyimage[2] = LoadGraph("images/stage03/stage03jump.png");*/
 
-	//LoadDivGraph("デスクトップ/stage03Anim.png",5,5,1,32,32,enemyimage);
+	LoadDivGraph("images/stage03/stage03Anim.png",6,6,1,100,100,enemyimage);
 
 
 
@@ -220,12 +220,12 @@ void Enemy_03::Update()
 		g_add = _GRAVITY;     //重力加速度を初期化する
 
 
-		/*if (++frame_count % 5 == 0) {
+		if (++frame_count_anim % 5 == 0) {
 
 			currentindex_st03++;
-			if (currentindex_st03 >= 5)currentindex_st03 = 0;
-			frame_count = 0;
-		}*/
+			if (currentindex_st03 >= 3)currentindex_st03 = 0;
+			frame_count_anim = 0;
+		}
 
 
 
@@ -261,7 +261,7 @@ void Enemy_03::Draw() const
 	if (moveinfo[current].enemywaitTime > 0) {
 
 		//ガード時の画像描画							
-		DrawRotaGraphF(x, y, 1, 0, enemyimage[1]/*[currentindex_st03]*/, TRUE, dir == -1 ? 0 : 1);
+		DrawRotaGraphF(x, y, 1, 0, enemyimage[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
 
 
 	}
@@ -269,14 +269,17 @@ void Enemy_03::Draw() const
 	else if ( moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200 ) {
 
 		//ジャンプ時の画像描画							
-		DrawRotaGraphF(x, y, 1, 0, enemyimage[2], TRUE, dir == -1 ? 0 : 1);
+		DrawRotaGraphF(x, y, 1, 0, enemyimage[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
 
 	}
 
 	//そうじゃないとき
 	else {
+
+		if(enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state==ENEMY_STATE::RIGHTMOVE){
 		//攻撃時の画像描画								//向きを変える
-		DrawRotaGraphF(x, y, 1, 0, enemyimage[0], TRUE, dir == -1 ? 0 : 1);
+		DrawRotaGraphF(x, y, 1, 0, enemyimage[currentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
+		}
 	}
 
 
@@ -389,6 +392,8 @@ void Enemy_03::Move_Pattern() {
 
 			move_x += speed; //右移動にプラスする
 
+			enemy_state = ENEMY_STATE::RIGHTMOVE;
+
 			//目指していた座標を超えたとき
 			if (x <= moveinfo[current].location_x && moveinfo[current].location_x <= move_x)
 			{
@@ -401,6 +406,8 @@ void Enemy_03::Move_Pattern() {
 		else
 		{
 			move_x -= speed; //左移動にマイナスする
+
+			enemy_state = ENEMY_STATE::LEFTMOVE;
 
 			//目指していた座標を超えたとき
 			if (move_x <= moveinfo[current].location_x && moveinfo[current].location_x <= x)

@@ -379,7 +379,7 @@ void Scene_Stage03::AfterJanken_WIN()
 	PlayerCutDamege = 10;
 
 	obj_player->SetX(200);
-	obj_enemy->SetX(1150);
+	//obj_enemy->SetX(1150);
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）
@@ -390,5 +390,5 @@ void Scene_Stage03::AfterJanken_LOSE()
 	EnemyCutDamege = 5;
 
 	obj_player->SetX(200);
-	obj_enemy->SetX(1150);
+	//obj_enemy->SetX(1150);
 }
