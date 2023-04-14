@@ -270,9 +270,9 @@ void Enemy_03::Draw() const
 
 
 	//ƒeƒXƒg                                                      //ÔF
-	if (moveinfo[current].enemywaitTime > 0) DrawFormatString((int)(x - 100), (int)(y - 100), GetColor(0, 0, 255), "–hŒä—Í UPª", moveinfo[current].enemywaitTime);
+	if (moveinfo[current].enemywaitTime > 0) DrawFormatString((int)(x - 35), (int)(y - 50), GetColor(0, 0, 255), "–hŒäUPª", moveinfo[current].enemywaitTime);
 
-	if (hp <= 40) DrawFormatString((int)(x - 100), (int)(y - 80), GetColor(255, 0, 0), " UŒ‚—Í UP ª", hp);
+	if (hp <= 40) DrawFormatString((int)(x - 50), (int)(y - 70), GetColor(255, 0, 0), " UŒ‚UPª", hp);
 
 	if (hp <= 0)DrawString((int)(x - 100), (int)(y - 120), "death!", 0xff0000);
 
@@ -364,7 +364,7 @@ void Enemy_03::Move_Pattern() {
 		if (moveinfo[current].jumpflg == 0) {
 
 			//speed‚ªup,‘«ê‚Éæ‚¹‚é‚½‚ß‚Ì’²®
-			speed = 4.2f;
+			speed = 4.3f;
 
 		}
 
