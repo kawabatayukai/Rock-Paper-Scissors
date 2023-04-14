@@ -1,10 +1,11 @@
-#include "Scene_InputRanking.h"
 #include"GameData.h"
+#include"Scene_InputName.h"
+#include "SortSave.h"
 
-Scene_InputRanking inputRanking;
+SortSave sortSave;
 
 /*ランキング並べ替え*/
-void Scene_InputRanking::SortRanking(void)
+void SortSave::SortRanking(void)
 {
 	int i, j;
 	RankingData work;
@@ -40,7 +41,7 @@ void Scene_InputRanking::SortRanking(void)
 }
 
 /*ランキングデータの保存*/
-int Scene_InputRanking::SaveRanking(void)
+int SortSave::SaveRanking(void)
 {
 	//FILE* fp;
 //#pragma warning(disable:4996)
@@ -64,7 +65,7 @@ int Scene_InputRanking::SaveRanking(void)
 
 	return 0;
 }
-int  Scene_InputRanking::ReadRanking(void)
+int  SortSave::ReadRanking(void)
 {
 	//FILE* fp;
 //#pragma warning(disable:4996)
@@ -90,12 +91,12 @@ int  Scene_InputRanking::ReadRanking(void)
 }
 
 /*ランキングデータ（構造体*/
-RankingData Scene_InputRanking::getRankingData(int i)
+RankingData SortSave::getRankingData(int i)
 {
 	return g_Ranking[i];
 }
 
-void Scene_InputRanking::setName(int i, char name[11])
+void SortSave::setName(int i, char name[11])
 {
 	int j;
 
@@ -106,7 +107,7 @@ void Scene_InputRanking::setName(int i, char name[11])
 	g_Ranking[i].name[j] = '\0';
 }
 
-void Scene_InputRanking::setScore(int i, int score)
+void SortSave::setScore(int i, int score)
 {
 	if (0 <= score)
 	{

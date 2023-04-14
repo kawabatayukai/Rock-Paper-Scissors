@@ -91,6 +91,12 @@
     <Filter Include="ソース ファイル\GameMainScene\Stage_00\CharaBase">
       <UniqueIdentifier>{69d52d54-be0e-45b2-a843-52ce30cee56e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ランキング">
+      <UniqueIdentifier>{dbc2c324-e103-450b-adb4-28e0277e64aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ランキング\ヘッダー">
+      <UniqueIdentifier>{12e27910-5930-45ed-9cd2-b2402931e747}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -243,17 +249,17 @@
     <ClCompile Include="GameData.cpp">
       <Filter>ソース ファイル\GameMainScene\GameData</Filter>
     </ClCompile>
-    <ClCompile Include="Scene_Result.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene_InputRanking.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene_Ranking.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Jangeki_Growing.cpp">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Ranking.cpp">
+      <Filter>ランキング</Filter>
+    </ClCompile>
+    <ClCompile Include="SortSave.cpp">
+      <Filter>ランキング</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_InputName.cpp">
+      <Filter>ランキング</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -410,20 +416,20 @@
     <ClInclude Include="GameData.h">
       <Filter>ソース ファイル\GameMainScene\GameData</Filter>
     </ClInclude>
-    <ClInclude Include="Scene_Result.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene_InputRanking.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene_Ranking.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Jangeki_Zigzag.h">
       <Filter>ソース ファイル\Jangeki\bise</Filter>
     </ClInclude>
     <ClInclude Include="Jangeki_Growing.h">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Ranking.h">
+      <Filter>ランキング\ヘッダー</Filter>
+    </ClInclude>
+    <ClInclude Include="SortSave.h">
+      <Filter>ランキング\ヘッダー</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_InputName.h">
+      <Filter>ランキング\ヘッダー</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
