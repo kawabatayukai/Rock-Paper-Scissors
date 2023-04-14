@@ -226,10 +226,6 @@ void Enemy_02::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
 			
 				Spflg = false;
 		}
-	
-	
-
-
 }
 
 
