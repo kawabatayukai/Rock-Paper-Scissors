@@ -48,6 +48,7 @@ private:
 	float g_add = 1.0f;//重力加速度
 	
 
+	//列挙体ステージ3
 	enum class ENEMY_STATE
 	{
 		STOP,
@@ -68,6 +69,7 @@ private:
 
 	int frame_count_anim = 0;       //敵のアニメーション用
 	int enemyimage[6];      //敵画像配列
+	//int enemyimageMirror[6];//敵画像反転
 	int currentindex_st03 = 0;
 };
 

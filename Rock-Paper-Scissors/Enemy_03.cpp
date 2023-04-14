@@ -18,20 +18,20 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	enemyimage[1] = LoadGraph("images/stage03/stage03gard.png");
 	enemyimage[2] = LoadGraph("images/stage03/stage03jump.png");*/
 
-	LoadDivGraph("images/stage03/stage03Anim.png",6,6,1,100,100,enemyimage);
-
+	LoadDivGraph("images/stage03/stage03Anim.png",6,6,1,100,100,enemyimage); 
+	//LoadDivGraph("images/stage03/stage03AnimMirror.png", 6, 6, 1, 100, 100, enemyimageMirror);
 
 
 	Init_Jangeki();       //じゃん撃を用意
 
 	//動きパターン 繰り返し　//0で動き,1で止まる
-	moveinfo[0] = { 0, 950.f, 0.f , 1,  0 ,0 };//初期位置のXが950で停止
+	moveinfo[0] = { 0, 950.f, 0.f , 1,  0 ,1 };//初期位置のXが950で停止
 
 	moveinfo[1] = { 1,  0 ,   0.f , 2, 200 ,1 };//初期位置のXが950で停止
 	//ここから動く
 	moveinfo[2] = { 0, 650.f, 0.f , 3,  0 ,0 };//Xが650まで動く
 
-	moveinfo[3] = { 1,  0 ,   0.f , 4, 200 ,1 };//Xが650で停止
+	moveinfo[3] = { 1,  0 ,   0.f , 4, 0 ,1 };//Xが650で停止
 
 	moveinfo[4] = { 0, 350.f, 0.f , 5, 0 ,0 };//Xが350まで動く
 
@@ -39,7 +39,7 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	moveinfo[6] = { 0, 350.f, 0.f , 7, 0 ,1 };//Xが350の足場に飛ぶ
 
-	moveinfo[7] = { 1,  0 ,   0.f , 8, 200 ,1 };//Xが350で停止
+	moveinfo[7] = { 1,  0 ,   0.f , 8, 0 ,1 };//Xが350で停止
 
 	//足場に乗る
 	moveinfo[8] = { 0,  50.f , 0.f , 9, 0 ,0 };//Xが70足場に飛ぶ
@@ -220,7 +220,8 @@ void Enemy_03::Update()
 		g_add = _GRAVITY;     //重力加速度を初期化する
 
 
-		if (++frame_count_anim % 5 == 0) {
+		//配列0～2番目の画像のループ
+		if (++frame_count_anim % 40 == 0) {
 
 			currentindex_st03++;
 			if (currentindex_st03 >= 3)currentindex_st03 = 0;
@@ -266,6 +267,7 @@ void Enemy_03::Draw() const
 
 	}
 
+	//ジャンプ時
 	else if ( moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200 ) {
 
 		//ジャンプ時の画像描画							
@@ -273,13 +275,18 @@ void Enemy_03::Draw() const
 
 	}
 
+
 	//そうじゃないとき
+	//動いているとき
 	else {
 
+		//エネミーの構造体と一致したときにエネミーが左または右に動く
 		if(enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state==ENEMY_STATE::RIGHTMOVE){
 		//攻撃時の画像描画								//向きを変える
 		DrawRotaGraphF(x, y, 1, 0, enemyimage[currentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
 		}
+
+
 	}
 
 
