@@ -1,5 +1,12 @@
+<<<<<<< HEAD
+<<<<<<<< HEAD:Rock-Paper-Scissors/Scene_InputRanking.cpp
 #include "Scene_InputRanking.h"
 #include"GameData.h"
+=======
+#include "Scene_InputRanking.h"
+#include"GameData.h"
+#include"Scene_InputName.h"
+>>>>>>> parent of bfaa0a9 (ãƒ©ãƒ³ã‚­ãƒ³ã‚°å‡¦ç†ã®å¤‰æ›´è¿½åŠ )
 
 Scene_InputRanking inputRanking;
 
@@ -112,4 +119,145 @@ void Scene_InputRanking::setScore(int i, int score)
 	{
 		g_Ranking[i].score = GameData::Get_Score();
 	}
+<<<<<<< HEAD
 }
+========
+//#include "SortSave.h"
+//#include "GameData.h"
+//#include"Scene_Ranking.h"
+//
+//SortSave::SortSave(const char* name)
+//{
+//	for (int i = 0; i < RANKING_DATA; i++)
+//	{
+//		for (int j = 0; dataRanking[i].name[j] != '\0'; j++)
+//		{
+//			dataRanking[i].name[j] = name[j];
+//		}
+//		dataRanking[i].rank = 0;
+//		dataRanking[i].score = 0;
+//	}
+//}
+//
+////XV
+//void SortSave::Update()
+//{
+//
+//}
+//
+////•`‰æ
+//void SortSave::Draw()const
+//{
+//
+//}
+//
+///*ƒ‰ƒ“ƒLƒ“ƒO•À‚×‘Ö‚¦*/
+//void SortSave::SortRanking(void)
+//{
+//	int i, j;
+//	RankingData work;
+//
+//	// ‘I‘ð–@ƒ\[ƒg
+//	for (i = 0; i < 9; i++) {
+//		for (j = i + 1; j < RANKING_DATA; j++) {
+//			if (dataRanking[i].score <= dataRanking[j].score)
+//			{
+//				work = dataRanking[i];
+//				dataRanking[i] = dataRanking[j];
+//				dataRanking[j] = work;
+//			}
+//		}
+//	}
+//
+//	// ‡ˆÊ•t‚¯
+//	for (i = 0; i < RANKING_DATA; i++)
+//	{
+//		dataRanking[i].rank = 1;
+//	}
+//
+//	// “¾“_‚ª“¯‚¶ê‡‚ÍA“¯‚¶‡ˆÊ‚Æ‚·‚é
+//	// “¯‡ˆÊ‚ª‚ ‚Á‚½ê‡‚ÌŽŸ‚Ì‡ˆÊ‚Íƒf[ƒ^ŒÂ”‚ª‰ÁŽZ‚³‚ê‚½‡ˆÊ‚Æ‚·‚é
+//	for (i = 0; i < RANKING_DATA - 1; i++) {
+//		for (j = i + 1; j < RANKING_DATA; j++) {
+//			if (dataRanking[i].score > dataRanking[j].score)
+//			{
+//				dataRanking[j].rank++;
+//			}
+//		}
+//	}
+//}
+//
+///*ƒ‰ƒ“ƒLƒ“ƒOƒf[ƒ^‚Ì•Û‘¶*/
+//int SortSave::SaveRanking(void)
+//{
+//	//FILE* fp;
+////#pragma warning(disable:4996)
+//
+//	// ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“
+//	if ((fopen_s(&fp, "dat/rankingdata.txt", "w")) != 0)
+//	{
+//		/* ƒGƒ‰[ˆ— */
+//		printf("Ranking Data Error\n");
+//		return -1;
+//	}
+//
+//	// ƒ‰ƒ“ƒLƒ“ƒOƒf[ƒ^•ª”z—ñƒf[ƒ^‚ð‘‚«ž‚Þ
+//	for (int i = 0; i < RANKING_DATA; i++)
+//	{
+//		fprintf_s(fp, "%2d %10s %10d\n", dataRanking[i].rank, dataRanking[i].name, dataRanking[i].score);
+//	}
+//
+//	//ƒtƒ@ƒCƒ‹ƒNƒ[ƒY
+//	fclose(fp);
+//
+//	return 0;
+//}
+//
+///*ƒ‰ƒ“ƒLƒ“ƒOƒf[ƒ^“Ç‚Ýž‚Ý*/
+//int  SortSave::ReadRanking(void)
+//{
+//	//FILE* fp;
+////#pragma warning(disable:4996)
+//
+//	//ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“
+//	if ((fopen_s(&fp, "dat/rankingdata.txt", "r")) != 0)
+//	{
+//		//ƒGƒ‰[ˆ—
+//		printf("Ranking Data Error\n");
+//		return -1;
+//	}
+//
+//	//ƒ‰ƒ“ƒLƒ“ƒOƒf[ƒ^”z•ª—ñƒf[ƒ^‚ð“Ç‚Ýž‚Þ
+//	for (int i = 0; i < RANKING_DATA; i++)
+//	{
+//		fscanf_s(fp, "%2d %10s %10d", &dataRanking[i].rank, dataRanking[i].name, &dataRanking[i].score);
+//	}
+//
+//	//ƒtƒ@ƒCƒ‹ƒNƒ[ƒY
+//	fclose(fp);
+//
+//	return 0;
+//}
+//
+////ƒV[ƒ“‚Ì•ÏXˆ—
+//AbstractScene* SortSave::ChangeScene()
+//{
+//	ReadRanking();
+//	SortRanking();
+//	SaveRanking();
+//
+//	return  dynamic_cast<AbstractScene*>(new Scene_Ranking(dataRanking));
+//}
+//
+////ƒXƒRƒA‚ðƒZƒbƒg
+//void SortSave::setScore(int i, int score)
+//{
+//	if (0 <= score)
+//	{
+//		dataRanking[i].score = GameData::Get_Score();
+//	}
+//}
+>>>>>>>> parent of bfaa0a9 (ãƒ©ãƒ³ã‚­ãƒ³ã‚°å‡¦ç†ã®å¤‰æ›´è¿½åŠ ):Rock-Paper-Scissors/SortSave.cpp
+=======
+}
+>>>>>>> parent of bfaa0a9 (ãƒ©ãƒ³ã‚­ãƒ³ã‚°å‡¦ç†ã®å¤‰æ›´è¿½åŠ )

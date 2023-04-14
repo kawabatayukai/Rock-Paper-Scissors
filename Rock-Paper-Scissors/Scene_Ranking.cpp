@@ -3,6 +3,11 @@
 #include <DxLib.h>
 #include"Scene_Title.h"
 #include "KeyManager.h"
+<<<<<<< HEAD
+=======
+#include"SortSave.h"
+#include"Scene_InputRanking.h"
+>>>>>>> parent of bfaa0a9 (ランキング処理の変更追加)
 
 int g_WaitTime = 0;
 
@@ -19,6 +24,10 @@ void Scene_Ranking::Draw() const
 	SetFontSize(30);
 	for (int i = 0; i < 10; i++)
 	{
+<<<<<<< HEAD
+=======
+		//DrawFormatString(80, 170 + i * 25, 0xFFFFFF, "%2d   %10s  %10d", dataRanking[i].rank, dataRanking[i].name, dataRanking[i].score);
+>>>>>>> parent of bfaa0a9 (ランキング処理の変更追加)
 		DrawFormatString(80, 170 + i * 25, 0xFFFFFF, "%2d   %10s  %10d", inputRanking.getRankingData(i).no, inputRanking.getRankingData(i).name, inputRanking.getRankingData(i).score);
 	}
 

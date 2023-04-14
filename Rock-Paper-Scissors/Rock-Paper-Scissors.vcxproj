@@ -167,6 +167,7 @@
     <ClCompile Include="Enemy_Cannon.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="GameData.cpp" />
+    <ClCompile Include="Scene_InputName.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Jangeki_Changespeed.cpp" />
     <ClCompile Include="Jangeki_Coming.cpp" />
@@ -203,6 +204,7 @@
     <ClCompile Include="Scene_Stage09.cpp" />
     <ClCompile Include="Scene_Stage10.cpp" />
     <ClCompile Include="Scene_Title.cpp" />
+    <ClCompile Include="SortSave.cpp" />
     <ClCompile Include="Stage_Base.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -225,6 +227,7 @@
     <ClInclude Include="Enemy_Cannon.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="GameData.h" />
+    <ClInclude Include="Scene_InputName.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Jangeki_Changespeed.h" />
     <ClInclude Include="Jangeki_Coming.h" />
@@ -260,6 +263,7 @@
     <ClInclude Include="Scene_Stage09.h" />
     <ClInclude Include="Scene_Stage10.h" />
     <ClInclude Include="Scene_Title.h" />
+    <ClInclude Include="SortSave.h" />
     <ClInclude Include="Stage_Base.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
