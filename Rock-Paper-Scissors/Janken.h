@@ -7,6 +7,8 @@ enum class Jan_State
 	BEFORE,      //じゃんけん前(何もしていない)
 	PROGRESS,    //じゃんけん中・・
 	AFTER,       //じゃんけん終了（結果を取得可能）
+
+	START,       //スタート（当たった瞬間の演出）
 };
 
 // 接触時のじゃんけん  勝敗を決めるクラス
@@ -23,6 +25,8 @@ public:
 
 	Jan_Result GetResult() const { return result; }  //じゃんけんの結果を返す
 
+	//(あいこの時用) 必要な変数を初期化する
+	void OneMore_Init();
 
 private:
 
@@ -51,11 +55,14 @@ private:
 //---------------------------------------------------------------
 	int image[3];            //画像
 	int image_back;          //じゃんけん中背景
+	int image_back_light;    //じゃんけん中"VS"
+
 	int image_hand;          //じゃんけん説明
 	int image_player;        //プレイヤーじゃんけん中
 	int image_enemy;         //敵じゃんけん中
 
 	int image_all_enemy[11]; //全ステージの画像
+	int image_all_back[11];  //全ステージの背景
 	int stage_num;           //呼び出し元のステージ番号
 
 	int font_result;         //結果(WIN or LOSE or ONEMORE) 用フォント 
@@ -67,6 +74,4 @@ private:
 	int brack;
 	int white;
 	int green;
-
-	const char* n = nullptr;
 };

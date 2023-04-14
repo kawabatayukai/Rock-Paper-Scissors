@@ -8,19 +8,6 @@
 //デバッグモード
 #include"Debug_Manager.h"
 
-//表示する文字列
-namespace _STR_TUTORIAL
-{
-	//char draw_str[][40] =
-	//{
-	//	"ようこそ。最初に操作説明をします",
-	//	"左スティックで左右移動できます",
-	//	"LBボタンでジャンプします",
-	//	"右スティックで照準を操作できます",
-	//	"敵に接触するとじゃんけんが始まります",
-	//};
-}
-
 //コンストラクタ
 Scene_Stage01::Scene_Stage01(const Player* player)
 	: Now_Tut_State(TUTORIAL_STATE::START_TUTORIAL)
@@ -72,14 +59,16 @@ Scene_Stage01::~Scene_Stage01()
 //更新
 void Scene_Stage01::Update()
 {
-	//時間をカウント
-	GameData::Time_Update();
 
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
 		obj_player->Update();    // プレイヤー更新・操作可能
 		obj_enemy->Update();     //敵キャラ更新・内部処理
+
+		//時間をカウント
+		GameData::Time_Update();
+
 
 		//プレイヤーの座標を取得
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
@@ -247,9 +236,10 @@ void Scene_Stage01::Draw() const
 
 	//UI
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+	DrawUI_ON_Enemy(obj_enemy);
 
 	//接触じゃんけん開始前
-	if (GetJanState() == Jan_State::BEFORE)
+	if (GetJanState() == Jan_State::START || GetJanState() == Jan_State::BEFORE)
 	{
 		//床・壁描画
 		for (int i = 0; i < STAGE_01_FLOOR; i++)
@@ -260,6 +250,8 @@ void Scene_Stage01::Draw() const
 		obj_player->Draw();  //プレイヤー描画
 		obj_enemy->Draw();   //敵キャラ描画
 
+		//接触した瞬間の演出
+		if (GetJanState() == Jan_State::START) Draw_JankenStart();
 	}
 	else
 	{

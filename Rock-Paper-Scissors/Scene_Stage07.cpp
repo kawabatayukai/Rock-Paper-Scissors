@@ -250,6 +250,7 @@ void Scene_Stage07::Draw() const
 
 	//UI
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+	DrawUI_ON_Enemy(obj_enemy);
 
 	//DrawFormatString(300, 300, 0xffffff, "%d", GameData::Get_Score());
 
@@ -257,9 +258,8 @@ void Scene_Stage07::Draw() const
 	//DrawFormatString(300, 300, 0x00ff00, "p-x : %f   p-y : %f", obj_player->GetX(), obj_player->GetY());
 
 	//ÚG‚¶‚á‚ñ‚¯‚ñŠJn‘O
-	if (GetJanState() == Jan_State::BEFORE)
+	if (GetJanState() == Jan_State::START || GetJanState() == Jan_State::BEFORE)
 	{
-
 		obj_player->Draw();  //ƒvƒŒƒCƒ„[•`‰æ
 		obj_enemy->Draw();   //“GƒLƒƒƒ‰•`‰æ
 
@@ -284,7 +284,10 @@ void Scene_Stage07::Draw() const
 		SetDrawBlendMode(DX_BLENDMODE_ADD_X4, 150);
 		DrawGraph(0, 0, image_spotlight, TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	}
+
+		//ÚG‚µ‚½uŠÔ‚Ì‰‰o
+		if (GetJanState() == Jan_State::START) Draw_JankenStart();
+	} 
 	else
 	{
 		//ÚG‚¶‚á‚ñ‚¯‚ñ•`‰æ

@@ -33,7 +33,6 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	moveinfo[5] = { 1,  0 ,   0.f , 6, 200 ,1 };//Xが350で停止
 
-	
 	moveinfo[6] = { 0, 350.f, 0.f , 7, 0 ,1 };//Xが350の足場に飛ぶ
 
 	moveinfo[7] = { 1,  0 ,   0.f , 8, 200 ,1 };//Xが350で停止
@@ -114,11 +113,11 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	moveinfo[34] = { 1,  0 ,   0.f , 35, 200 ,1 };//初期位置のXが350で停止
 
-	moveinfo[35] = { 0, 650.f, 0.f , 36,  0 ,1 };//Xが650まで動く
+	moveinfo[35] = { 0, 650.f, 0.f , 36,  0 ,0};//Xが650まで動く
 
 	moveinfo[36] = { 1,  0 ,   0.f , 37, 200 ,1 };//Xが650で停止
 
-	moveinfo[37] = { 0,	950.f, 0.f , 38, 0 ,1 };//Xが900まで動く
+	moveinfo[37] = { 0,	950.f, 0.f , 38, 0 ,0 };//Xが900まで動く
 
 	//moveinfo[47] = { 1,	 0,  0.f , 48, 62 ,1 };//Xが900で少しの時間停止
 
@@ -416,10 +415,10 @@ int Enemy_03::GetWaitTime()const {
 
 
 
-//プレイヤーの座標を継承
-void Enemy_03::ChangeDir(float x)
+//エネミーの座標を継承
+void Enemy_03::ChangeDir(float enemy_x)
 {
-	if (x < 640) dir = -1;
+	if (enemy_x < x) dir = -1;
 	else dir = 1;
 }
 

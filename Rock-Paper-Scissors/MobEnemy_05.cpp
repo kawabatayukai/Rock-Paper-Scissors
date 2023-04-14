@@ -2,7 +2,7 @@
 #include "DxLib.h"
 #include "Player.h"
 #include "Jangeki_Spin.h"
-#include "Enemy_05.h"
+//#include "Enemy_05.h"
 #include "Jangeki_Base.h"
 #include "Jangeki_Changespeed.h"
 #include "Jangeki_Zigzag.h" 
@@ -15,7 +15,7 @@ MobEnemy_05::MobEnemy_05(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.
 
 	Init_Jangeki();       //‚¶‚á‚ñŒ‚‚ğ—pˆÓ
 
-	
+
 }
 
 MobEnemy_05::~MobEnemy_05()
@@ -43,6 +43,7 @@ void MobEnemy_05::Draw() const
 
 void MobEnemy_05::Update_Jangeki()
 {
+	int rand = GetRand(1);
 	int jan_count;
 
 	//‚¶‚á‚ñŒ‚”z—ñ‚ğ‚Ğ‚Æ‚Â‚¸‚Â
@@ -78,7 +79,16 @@ void MobEnemy_05::Update_Jangeki()
 
 
 		//¶¬
-		if (frame_count % 300 == 0) obj_jangeki[jan_count] = new Jangeki_Zigzag(x, y, radius, speed, type,player_x,player_y);
+		switch (rand)
+		{
+		case 0:
+			if (frame_count % 240 == 0) obj_jangeki[jan_count] = new Jangeki_Zigzag(x, y, radius, speed, type, player_x, player_y);
+			break;
+
+		case 1:
+			if (frame_count % 240 == 0) obj_jangeki[jan_count] = new Jangeki_Spin(x, y, radius, speed, type, player_x, player_y);
+			break;
+		}
 
 	}
 }

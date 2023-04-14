@@ -1,7 +1,7 @@
 #pragma once
 #include"EnemyBase.h"
 
-//行動パターン04用
+//行動パターン02用
 struct Pattern_02 {
 
 	int moveflg; //0:動かない,1:動く
@@ -29,6 +29,14 @@ public:
 	int Get_OldY();                   //old_yの取得関数
 	int Get_Y();                      //yの取得
 
+	bool Spflg = true;  //特殊行動フラグ
+
+	void frameUP();
+	void frameDown();
+
+	void SetSpecialTime(int Time);
+
+	
 	void Jan_360degrees(int count, float rad, float speed, Jan_Type type);
 	void ChangeDir(float x);//向きの切り替え
 	//void ChangeDir(float x);
@@ -47,7 +55,8 @@ private:
 	float g_sdd = 1.0f;
 	float g_zdd = 1.0f;
 
-
+	
+	
 	bool jump_flg = false;        //ジャンプ用フラグ　　ジャンプさせる:true   ジャンプしない:false
 	bool Stop_flg = false;        //ジャンプ用フラグ　　ジャンプさせる:true   ジャンプしない:false
 	int  jump_cnt =0;            //ジャンプカウント
@@ -58,6 +67,9 @@ private:
 	short current = 0; //現在のパターン配列添字
 	int  attack_pattern = 0;      //攻撃パターン変数
 	float enemy_x, enemy_y;		//座標取得用変数
+	int janFrame = 75;
+	int SpecialTime = 0;
+	int jan_count;
 	Pattern_02 moveinfo[2];	    //行動パターン
 };
 
