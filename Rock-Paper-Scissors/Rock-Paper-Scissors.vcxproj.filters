@@ -88,14 +88,14 @@
     <Filter Include="ソース ファイル\GameMainScene\GameData">
       <UniqueIdentifier>{9f06c314-6ab2-4a50-a430-f3d9e3eb4ddf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\GameMainScene\Stage_00\CharaBase">
-      <UniqueIdentifier>{69d52d54-be0e-45b2-a843-52ce30cee56e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ランキング">
       <UniqueIdentifier>{dbc2c324-e103-450b-adb4-28e0277e64aa}</UniqueIdentifier>
     </Filter>
     <Filter Include="ランキング\ヘッダー">
       <UniqueIdentifier>{12e27910-5930-45ed-9cd2-b2402931e747}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\CharaBase">
+      <UniqueIdentifier>{69d52d54-be0e-45b2-a843-52ce30cee56e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -112,7 +112,7 @@
       <Filter>ソース ファイル\GameMainScene</Filter>
     </ClCompile>
     <ClCompile Include="CharaBase.cpp">
-      <Filter>ソース ファイル\GameMainScene\Stage_00\CharaBase</Filter>
+      <Filter>ソース ファイル\CharaBase</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>ソース ファイル\Player</Filter>
@@ -249,7 +249,7 @@
     <ClCompile Include="GameData.cpp">
       <Filter>ソース ファイル\GameMainScene\GameData</Filter>
     </ClCompile>
-    <ClCompile Include="Jangeki_Growing.cpp">
+    <ClCompile Include="Jangeki_Player.cpp">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClCompile>
     <ClCompile Include="Scene_Ranking.cpp">
@@ -276,7 +276,7 @@
       <Filter>ソース ファイル\GameMainScene</Filter>
     </ClInclude>
     <ClInclude Include="CharaBase.h">
-      <Filter>ソース ファイル\GameMainScene\Stage_00\CharaBase</Filter>
+      <Filter>ソース ファイル\CharaBase</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>ソース ファイル\Player</Filter>
@@ -419,7 +419,7 @@
     <ClInclude Include="Jangeki_Zigzag.h">
       <Filter>ソース ファイル\Jangeki\bise</Filter>
     </ClInclude>
-    <ClInclude Include="Jangeki_Growing.h">
+    <ClInclude Include="Jangeki_Player.h">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClInclude>
     <ClInclude Include="Scene_Ranking.h">
