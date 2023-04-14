@@ -10,6 +10,8 @@ public:
 
 	void Update_Jangeki() override;  //じゃん撃生成・更新
 
+	void Janken_lose();
+
 private:
 	int frame_count = 0;       //じゃん撃発射用
 
