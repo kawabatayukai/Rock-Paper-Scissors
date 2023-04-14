@@ -46,14 +46,14 @@ Scene_Stage05::Scene_Stage05(const Player* player)
 	Init_Floor(STAGE_05_FLOOR);
 
 	//一つずつ生成  STAGE_05_FLOOR 個分
-	obj_floor[0] = new Floor(0, 700, 1280, 20);        //床
-	obj_floor[1] = new Floor(0, 0, 20, 1720);           //壁（左）
-	obj_floor[2] = new Floor(1260, 0, 20, 1720);           //壁（右）
-	obj_floor[3] = new Floor(260, 300, 120, 15);      //足場　(左上)
-	obj_floor[4] = new Floor(260, 540, 120, 15);      //足場　(左下)
-	obj_floor[5] = new Floor(590, 420, 120, 15);      //足場　(真ん中)
-	obj_floor[6] = new Floor(900, 540, 120, 15);      //足場　(右上)
-	obj_floor[7] = new Floor(900, 300, 120, 15);      //足場　(右下)
+	obj_floor[0] = new Floor(0, 700, 1280, 20, 0x00ff00);        //床
+	obj_floor[1] = new Floor(0, 0, 20, 1720, 0x00ff00);           //壁（左）
+	obj_floor[2] = new Floor(1260, 0, 20, 1720, 0x00ff00);           //壁（右）
+	obj_floor[3] = new Floor(260, 300, 120, 15, 0x00ff00);      //足場　(左上)
+	obj_floor[4] = new Floor(260, 540, 120, 15, 0x00ff00);      //足場　(左下)
+	obj_floor[5] = new Floor(590, 420, 120, 15, 0x00ff00);      //足場　(真ん中)
+	obj_floor[6] = new Floor(900, 540, 120, 15, 0x00ff00);      //足場　(右上)
+	obj_floor[7] = new Floor(900, 300, 120, 15, 0x00ff00);      //足場　(右下)
 
 	Back_image = LoadGraph("images/stage05/Stage5_Stageimage.png", TRUE);
 }
@@ -264,8 +264,6 @@ void Scene_Stage05::Update()
 		{
 			if (mob[0]->GetHP() <= 0 && mob[1]->GetHP() <= 0 && mob[2]->GetHP() <= 0)
 			{
-
-
 				if (player_jangeki[i] == nullptr) break;         //じゃん撃がない時は処理しない
 
 				//じゃん撃との当たり判定
@@ -314,7 +312,7 @@ void Scene_Stage05::Update()
 					default:
 						break;
 					}
-						int rand = GetRand(2);
+					/*	int rand = GetRand(2);
 						switch (rand)
 						{
 						case 0:
@@ -326,7 +324,7 @@ void Scene_Stage05::Update()
 						case 2:
 							obj_enemy->SetType(Jan_Type::PAPER);
 							break;
-						}
+						}*/
 				}
 			}
 
