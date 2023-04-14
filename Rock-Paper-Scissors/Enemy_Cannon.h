@@ -2,15 +2,15 @@
 #include"Enemy_Cannon.h"
 #include"EnemyBase.h"
 #include"Scene_Stage08.h"
-class Enemy_Cannon
+
 //8ステージ　敵キャラ
-class Enemy_08 : public EnemyBase
+class Enemy_Cannon : public EnemyBase
 {
 public:
 	//コンストラクタ 座標・属性を設定
-	Enemy_08(float x, float y, Jan_Type type);
+	Enemy_Cannon(float x, float y, Jan_Type type);
 
-	~Enemy_08();                     //デストラクタ
+	~Enemy_Cannon();                     //デストラクタ
 
 	void Update() override;          //更新
 	void Draw() const override;      //描画
@@ -33,6 +33,6 @@ private:
 };
 
 
-};
+
 
 

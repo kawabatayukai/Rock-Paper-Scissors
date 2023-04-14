@@ -1,9 +1,9 @@
-#include "Enemy_08.h"
+#include "Enemy_Cannon.h"
 #include"DxLib.h"
 #include"Player.h"
 #include"Jangeki_Base.h"
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
-Enemy_08::Enemy_08(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
+Enemy_Cannon::Enemy_Cannon(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
 	speed = 7.0f;
 	dir = 1;
@@ -17,14 +17,14 @@ Enemy_08::Enemy_08(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 }
 
 //デストラクタ2
-Enemy_08::~Enemy_08()
+Enemy_Cannon::~Enemy_Cannon()
 {
 
 }
 
 
 //更新
-void Enemy_08::Update()
+void Enemy_Cannon::Update()
 {
 	//じゃん撃更新・生成
 	Update_Jangeki();
@@ -39,10 +39,10 @@ void Enemy_08::Update()
 	}
 
 	x += dir * speed;
-	
+}
 //描画
-	void Enemy_08::Draw() const
-		 {
+	void Enemy_Cannon::Draw () const
+	{
 	//中心から描画
 	DrawRotaGraphF(x, y, 4.f, 0, Enemy_image, TRUE);
 
@@ -56,7 +56,7 @@ void Enemy_08::Update()
 }
 
 //じゃん撃生成・更新
-void Enemy_08::Update_Jangeki()
+void Enemy_Cannon::Update_Jangeki()
 {
 	int jan_count;
 

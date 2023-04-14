@@ -25,6 +25,7 @@ Scene_Stage08::Scene_Stage08(const Player* player)
 
 	//敵を生成
 	obj_enemy = new Enemy_08(1200, 360, Jan_Type::SCISSORS);
+	obj_cannon = new Enemy_Cannon(640, 100, Jan_Type::ROCK);
 
 	//床・壁の用意
 	Init_Floor(STAGE_08_FLOOR);
@@ -78,6 +79,7 @@ void Scene_Stage08::Update()
 	{
 		obj_player->Update();    // プレイヤー更新・操作可能
 		obj_enemy->Update();     //敵キャラ更新・内部処理
+		obj_cannon->Update();
 	}
 
 	//接触じゃんけん処理
@@ -244,6 +246,7 @@ void Scene_Stage08::Draw() const
 
 		obj_player->Draw();  //プレイヤー描画
 		obj_enemy->Draw();   //敵キャラ描画
+		obj_cannon->Draw();
 
 		//床・壁描画
 		for (int i = 0; i < STAGE_08_FLOOR; i++)
