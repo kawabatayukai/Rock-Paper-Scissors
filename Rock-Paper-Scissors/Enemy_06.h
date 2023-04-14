@@ -18,6 +18,7 @@ public:
 	void AttackPattern_1();          //行動ループ1
 	void AttackPattern_2();          //行動ループ2
 	void AttackPattern_3();          //行動ループ3
+	void SpeedUp();                  //特殊行動1   speed = 8.0f
 
 	void AttackPattern_00();         //旧行動ループ2(保存用)
 

@@ -292,14 +292,14 @@ void Scene_Stage06::Draw_Janken() const
 
 void Scene_Stage06::AfterJanken_WIN()
 {
-	//プレイヤーを指定座標に生成
-	obj_player = new Player(100, 600);
+	obj_player = new Player(100, 600);     //プレイヤーを指定座標に生成
 }
 
 void Scene_Stage06::AfterJanken_LOSE()
 {
-	//プレイヤーを指定座標に生成
-	obj_player = new Player(100, 600);
+	obj_player = new Player(100, 600);                            //プレイヤーを指定座標に生成
+	//obj_enemy  = new Enemy_06(1149, 480, obj_enemy->GetType());   //敵を指定座標に生成
+	obj_enemy->SpeedUp();                                         //敵の特殊行動1
 }
 
 //シーンの変更

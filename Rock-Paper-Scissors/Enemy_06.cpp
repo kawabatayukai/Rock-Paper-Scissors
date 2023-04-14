@@ -109,8 +109,8 @@ void Enemy_06::Draw() const
 	Draw_Jangeki();
 
 	//テスト
-	if (hp > 0) DrawFormatString((int)(x - 50), (int)(y - 75), 0xffffff, "HP : %d", hp);
-	else DrawString((int)(x - 50), (int)(y - 75), "death!", 0xffffff);
+	if (hp > 0) DrawFormatString((int)(x - 50), (int)(y - 125), 0xffffff, "HP : %d", hp);
+	else DrawString((int)(x - 50), (int)(y - 125), "death!", 0xffffff);
 
 	//テスト
 	DrawFormatString(600, 600, 0xffffff, "%d", dir);
@@ -156,24 +156,24 @@ void Enemy_06::Update_Jangeki()
 		if (attack_pattern == 0)
 		{
 			//プレイヤー方向に向かって発射されるジャン撃の生成
-			if (frame_count % 100 == 0) obj_jangeki[jan_count] = 
-				new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+			if (frame_count % 90 == 0) obj_jangeki[jan_count] = 
+				new Jangeki_Coming(x, y, radius, speed + 1.0f, type, player_x, player_y);
 		}
 
 		//行動パターン2の時の弾(speed = 3.0f  frame_count % 80)
 		if (attack_pattern == 1)
 		{
 			//プレイヤー方向に向かって発射されるジャン撃の生成
-			if (frame_count % 100 == 0) obj_jangeki[jan_count] =
-				new Jangeki_Coming(x, y, radius, speed + 1.0f, type, player_x, player_y);
+			if (frame_count % 75 == 0) obj_jangeki[jan_count] =
+				new Jangeki_Coming(x, y, radius, speed + 1.5f, type, player_x, player_y);
 		}
 
 		//行動パターン3の時の弾(speed = 3.0f  frame_count % 80)
 		if (attack_pattern == 2)
 		{
 			//プレイヤー方向に向かって発射されるジャン撃の生成
-			if (frame_count % 80 == 0) obj_jangeki[jan_count] =
-				new Jangeki_Coming(x, y, radius, speed + 1.0f, type, player_x, player_y);
+			if (frame_count % 65 == 0) obj_jangeki[jan_count] =
+				new Jangeki_Coming(x, y, radius, speed + 2.0f, type, player_x, player_y);
 		}
 	}
 }
@@ -216,22 +216,22 @@ void Enemy_06::AttackPattern_1()
 		{
 			jump_flg = true;
 		}
-		else if (x > 1160 && x < 1166)
+		else if (x > 1150 && x < 1156)
 		{
 			jump_flg = true;
 		}
 
 		low_jump();     //低ジャンプ
 
-		//接地しているかどうかで移動速度を可変   接地時(true)    : speed = 5.0f
-		//                                       非接地時(false) : speed = 8.0f
+		//接地しているかどうかで移動速度を可変   接地時(true)    : speed = 3.0f
+		//                                       非接地時(false) : speed = 7.0f
 		if (land_flg == true)
 		{
 			speed = 3.0f;
 		}
 		else if(land_flg == false)
 		{
-			speed = 8.0f;
+			speed = 7.0f;
 		}
 
 		if (x < 115)    //目標座標に到着したかのチェック
@@ -245,15 +245,15 @@ void Enemy_06::AttackPattern_1()
 	{
 		x += speed;      //1フレームの間に右へ進む距離
 
-		if (x > 114 && x < 120)   //目標座標に到着したかのチェック
+		if (x > 124 && x < 130)   //目標座標に到着したかのチェック
 		{
 			jump_flg = true;
 		}
-		else if (x > 404 && x < 410)
+		else if (x > 414 && x < 420)
 		{
 			jump_flg = true;
 		}
-		else if (x > 644 && x < 650)
+		else if (x > 664 && x < 670)
 		{
 			jump_flg = true;
 		}
@@ -264,15 +264,15 @@ void Enemy_06::AttackPattern_1()
 
 		low_jump();     //低ジャンプ
 
-		//接地しているかどうかで移動速度を可変   接地時(true)    : speed = 5.0f
-		//                                       非接地時(false) : speed = 8.0f
+		//接地しているかどうかで移動速度を可変   接地時(true)    : speed = 3.0f
+		//                                       非接地時(false) : speed = 7.0f
 		if (land_flg == true)
 		{
 			speed = 3.0f;
 		}
 		else if (land_flg == false)
 		{
-			speed = 8.0f;
+			speed = 7.0f;
 		}
 
 		if (x > 1180)   //目標座標に到着したかのチェック
@@ -493,7 +493,7 @@ void Enemy_06::AttackPattern_2()
 	if (hp <= 40)
 	{
 		attack_pattern = 2;
-		speed = 8.0f;
+		/*speed = 8.0f;*/
 	}
 }
 
@@ -673,6 +673,13 @@ void Enemy_06::AttackPattern_3()
 		old_type = GetType();
 		ChangeCnt = 0;
 	}
+}
+
+//特殊行動1   speed = 8.0f
+void Enemy_06::SpeedUp()
+{
+	attack_pattern = 2;
+	speed = 8.0f;
 }
 
 //旧行動ループ2(保存用)
