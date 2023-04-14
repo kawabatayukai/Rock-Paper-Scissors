@@ -17,4 +17,7 @@ public:
 
 private:
 	int framecount;  //ƒtƒŒ[ƒ€
+	int GameState = 0;
+	int WaitTime = 0;
+	int PosY;
 };
