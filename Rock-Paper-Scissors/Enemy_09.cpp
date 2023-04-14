@@ -21,7 +21,10 @@ Enemy_09::Enemy_09(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	
 	Rimage = LoadGraph("images/stage09/Stage9_1.png");	//反射ON
 	image = LoadGraph("images/stage09/Stage9.png");		//反射OFF
-	
+
+	LoadDivGraph("images/stage09/teleport2.png", 15, 15, 1, 120, 150, img_teleport);
+	LoadDivGraph("images/stage09/teleport22.png", 15, 15, 1, 120, 150, img_teleport2);
+
 
 	//じゃん撃を用意
 	Init_Jangeki();       
@@ -53,10 +56,20 @@ void Enemy_09::Update()
 //描画
 void Enemy_09::Draw() const
 {
-	
+
 	//中心から描画
-	if(rflg==false)DrawRotaGraphF(x, y, 1, 0, Rimage, TRUE);
-	if(rflg==true)DrawRotaGraphF(GetX(), GetY(), 1, 0, image, TRUE);
+	if (animflg == false)
+	{
+		if (rflg == false)DrawRotaGraphF(x, y, 1, 0, Rimage, TRUE);
+		if (rflg == true)DrawRotaGraphF(GetX(), GetY(), 1, 0, image, TRUE);
+	}
+
+	if (animflg == true)
+	{
+		if (anim_count == 0) DrawGraph(before_x - 65, before_y - 50, img_teleport[animtimer / 3 % 15], TRUE);
+		else DrawGraph(x - 50, y - 50, img_teleport2[animtimer / 2 % 15], TRUE);
+	}
+		
 
 	//じゃん撃描画
 	Draw_Jangeki();
@@ -96,7 +109,7 @@ void Enemy_09::Update_Jangeki()
 
 	//配列の空要素
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
-		
+
 	{
 		float radius = 35.5f;   //半径
 		float speed = 3.5f;     //スピード
@@ -109,31 +122,34 @@ void Enemy_09::Update_Jangeki()
 		{
 			if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
 		}*/
-	
-		//生成
-		if (frame_count % janFrame == 0)
-		{
-			if (Spflg == false)
-			{
-				obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
-				count++;	
-			}
-			else
-			{
-				Jan_360degrees();
-				count = 0;		 //リセット
-			}
-			if (count == 5)		//五回目で四方向発射
-			{
-				Jan_40degrees();
-				count = 0;		 //リセット
-			}
-		
-		}
 
-		//反射じゃん撃生成
-		if (reflection->GetFlg() == true)reflection->obj_reflection[reflection->jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed, type, true);
-		reflection->falseFlg();
+		//アニメーション再生中でなければ生成
+		//if (animflg == false)
+		//{
+			if (frame_count % janFrame == 0)
+			{
+				if (Spflg == false)
+				{
+					obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
+					count++;
+				}
+				else
+				{
+					Jan_360degrees();
+					count = 0;		 //リセット
+				}
+				if (count == 5)		//五回目で特殊弾発射
+				{
+					Jan_40degrees();
+					count = 0;		 //リセット
+				}
+
+			}
+
+			//反射じゃん撃生成
+			if (reflection->GetFlg() == true)reflection->obj_reflection[reflection->jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed, type, true);
+			reflection->falseFlg();
+		//}
 	}
 }
 
@@ -189,7 +205,13 @@ void Enemy_09::MoveEnmey_09()
 
 	if (GetHP() == 1)teleport = 500;
 
-	if (interval % teleport == 0) {
+		if (interval % teleport == 0) {
+
+		animflg = true;
+
+		before_x = x;
+		before_y = y;
+
 		switch (GetRand(12))
 		{
 			//左側
@@ -250,6 +272,26 @@ void Enemy_09::MoveEnmey_09()
 		}
 	}
 
+		if (animflg == true)
+		{
+			animtimer++;
+
+			if (animtimer / 3 % 15 == 14) {
+				
+				if (anim_count == 0)
+				{
+					animtimer = 0;
+					anim_count = 1;
+				}
+				else
+				{
+					animtimer = 0;
+					animflg = false;
+					anim_count = 0;
+				}
+				
+			}
+		}
 }
 
 void Enemy_09::SpecialMoveEnmey()
@@ -257,11 +299,15 @@ void Enemy_09::SpecialMoveEnmey()
 	interval++;
 	int Rand = 0;
 	int i = 0;
-	
+
 
 	if (Spflg == true) {
 		if (interval % 30 == 0) {
-			
+			animflg = true;
+
+			before_x = x;
+			before_y = y;
+
 			switch (GetRand(12))
 			{
 				//左側
@@ -275,57 +321,64 @@ void Enemy_09::SpecialMoveEnmey()
 				break;
 			case 2:
 				x = 360;
-				y = 305;	
+				y = 305;
 				break;
 			case 3:
 				x = 360;
-				y = 700;		
+				y = 700;
 				break;
 			case 4:
 				x = 160;
-				y = 130;		
+				y = 130;
 				break;
 				//右側
 			case 5:
 				x = 1110;
-				y = 480;			
+				y = 480;
 				break;
 			case 6:
 				x = 1110;
-				y = 700;	
-			break;
+				y = 700;
+				break;
 			case 7:
 				x = 910;
-				y = 305;		
+				y = 305;
 				break;
 			case 8:
 				x = 910;
-				y = 700;			
+				y = 700;
 				break;
 			case 9:
 				x = 1110;
-				y = 130;				
+				y = 130;
 				break;
 				//真ん中
 			case 10:
 				x = 620;
-				y = 400;				
+				y = 400;
 				break;
 			case 11:
 				x = 620;
-				y = 80;				
+				y = 80;
 				break;
 			case 12:
 				x = 620;
 				y = 700;
 				break;
 			}
+		}
+		if (animflg == true)
+		{
+			animtimer++;
 
+			if (animtimer / 1 % 15 == 14)
+			{
+				animtimer = 0;
+				animflg = false;
+			}
 		}
 	}
 }
-
-
 
 void Enemy_09::frameUP()
 {

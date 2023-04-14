@@ -29,7 +29,7 @@ Scene_Stage09::Scene_Stage09(const Player* player)
 	}
 
 	//ìGÇê∂ê¨
-	obj_enemy = new Enemy_09(1110, 480, Jan_Type::SCISSORS);
+	obj_enemy = new Enemy_09(1110, 480, Jan_Type::NONE);
 
 	reflection = new Jangeki_Reflection(0, 0, 0, 0, Jan_Type::ROCK);
 
@@ -169,27 +169,30 @@ void Scene_Stage09::Update()
 	for (int i = 0; i < JANGEKI_MAX; i++)
 	{
 		if (player_jangeki[i] == nullptr) break;         //Ç∂Ç·ÇÒåÇÇ™Ç»Ç¢éûÇÕèàóùÇµÇ»Ç¢
-		//Ç∂Ç·ÇÒåÇÇ∆ÇÃìñÇΩÇËîªíË
-		if (obj_enemy->Hit_Jangeki(player_jangeki[i]) == true)
-		{
-			
-			if (player_jangeki[i]->GetR() == 35.f || obj_enemy->Getflg() == true)
+
+		if (obj_enemy->animflg == false) {
+			//Ç∂Ç·ÇÒåÇÇ∆ÇÃìñÇΩÇËîªíË
+			if (obj_enemy->Hit_Jangeki(player_jangeki[i]) == true)
 			{
-				obj_enemy->ReceiveDamage(20);
-				//Ç†ÇΩÇ¡ÇΩÇ∂Ç·ÇÒåÇÇçÌèú
-				obj_player->DeleteJangeki(i);
-				i--;
-				if (obj_enemy->Getflg() == true)obj_enemy->Fflg();
+
+				if (player_jangeki[i]->GetR() == 35.f || obj_enemy->Getflg() == true)
+				{
+					obj_enemy->ReceiveDamage(20);
+					//Ç†ÇΩÇ¡ÇΩÇ∂Ç·ÇÒåÇÇçÌèú
+					obj_player->DeleteJangeki(i);
+					i--;
+					if (obj_enemy->Getflg() == true)obj_enemy->Fflg();
+				}
+				else
+				{
+					obj_player->DeleteJangeki(i);     //ìñÇΩÇ¡ÇΩÇ∂Ç·ÇÒåÇÇçÌèú
+					i--;
+					obj_enemy->reflection->trueFlg();
+				}
 			}
-			else
-			{
-				obj_player->DeleteJangeki(i);     //ìñÇΩÇ¡ÇΩÇ∂Ç·ÇÒåÇÇçÌèú
-				i--;
-				obj_enemy->reflection->trueFlg();
-			}
+			obj_enemy->HP();
+
 		}
-		obj_enemy->HP();
-		
 	}
 
 
@@ -313,6 +316,7 @@ void Scene_Stage09::Draw() const
 	
 	//HPï\é¶
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+	DrawUI_ON_Enemy(obj_enemy);
 
 	//ê⁄êGÇ∂Ç·ÇÒÇØÇÒÇ≈Ç»Ç¢éû
 	if (GetJanState() == Jan_State::BEFORE)

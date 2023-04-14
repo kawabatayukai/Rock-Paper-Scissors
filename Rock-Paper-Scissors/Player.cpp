@@ -389,9 +389,20 @@ void Player::PlayerDrawUI(int hp) const
 		break;
 	}*/
 
-	DrawRotaGraph(200, 50, 0.5, 0, hpImage, TRUE);			//体力ゲージ枠
-	DrawBox(115, 33, 120 + static_cast<int>(hp * 2.54), 67, 0x00ff00, TRUE);	//体力ゲージ
-	DrawFormatString(200, 40, 0x0000ff, "残り:%d", hp);	//残り体力(数値)
+	//DrawRotaGraph(200, 50, 0.5, 0, hpImage, TRUE);			//体力ゲージ枠
+	//DrawBox(115, 33, 120 + static_cast<int>(hp * 2.54), 67, 0x00ff00, TRUE);	//体力ゲージ
+	//DrawFormatString(200, 40, 0x0000ff, "残り:%d", hp);	//残り体力(数値)
+
+	float draw_x = x - 50;  //描画ｘ
+	float draw_y = y - 100; //描画ｙ
+
+	int bar_color = 0x00ff00;
+
+	//枠
+	DrawBoxAA(draw_x - 3, draw_y - 3, draw_x + 103, draw_y + 13, 0xffffff, TRUE);
+	DrawBoxAA(draw_x, draw_y, (draw_x + 100), draw_y + 10, 0x000000, TRUE);
+	//HP
+	DrawBoxAA(draw_x, draw_y, (draw_x + hp), draw_y + 10, bar_color, TRUE);
 }
 
 //描画
@@ -425,8 +436,8 @@ void Player::Draw() const
 #ifdef DEBUG_OFF_PLAYER
 
 	//テスト HP表示
-	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
-	DrawFormatString((int)(x), (int)(y - 100), 0xffffff, "%s", dir == 0 ? "L" : "R");
+	//if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
+	//DrawFormatString((int)(x), (int)(y - 100), 0xffffff, "%s", dir == 0 ? "L" : "R");
 
 	PlayerDrawUI(GetHP());
 
