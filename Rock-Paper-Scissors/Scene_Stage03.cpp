@@ -59,7 +59,7 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	//obj_floor[16] = new Floor("images/stage03/BlockImages.png", 210, 405, 95, 10);//足場7//130, GetColor(193, 107, 68)
 
 	//制限時間をセット
-	GameData::Set_TimeLimit(6000);
+	GameData::Set_TimeLimit(7200); //2分 ←　7200 % 3600
 
 
 }
@@ -78,13 +78,18 @@ void Scene_Stage03::Update()
 
 
 	//接触じゃんけん開始前
-	if (GetJanState() == Jan_State::BEFORE)
+	if (GetJanState()  == Jan_State::BEFORE)
 	{
 		obj_player->Update();    // プレイヤー更新・操作可能
 		obj_enemy->Update();     //敵キャラ更新・内部処理
 		obj_enemy->ChangeDir(obj_player->GetX());//プレイヤーがx < 640だったらエネミーの弾の向きを変える
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());	//プレイヤーの座標を取得
+
+		
 	}
+
+
+
 
 	//接触じゃんけん処理
 	Touch_Janken(obj_enemy, this);
@@ -304,9 +309,10 @@ void Scene_Stage03::Draw() const
 
 	//HP描画
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+	DrawUI_ON_Enemy(obj_enemy);//HPバー
 
 	//接触じゃんけんでない時
-	if (GetJanState() == Jan_State::BEFORE)
+	if (GetJanState() == Jan_State::START || GetJanState() == Jan_State::BEFORE)
 	{
 
 		obj_player->Draw();  //プレイヤー描画
@@ -319,6 +325,9 @@ void Scene_Stage03::Draw() const
 			if (obj_floor[i] == nullptr) break;
 			obj_floor[i]->Draw();
 		}
+
+		//接触した瞬間の演出
+		if (GetJanState() == Jan_State::START) Draw_JankenStart();
 
 	}
 	else

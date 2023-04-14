@@ -6,7 +6,7 @@
 //衝突判定なし時間   5秒
 #define NOT_COLLISION_TIME  300
 
-Stage_Base::Stage_Base()
+Stage_Base::Stage_Base() : blackout_time(0)
 {
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, typeImage);
 	hpImage = LoadGraph("images/HitPoint.png");
@@ -109,7 +109,7 @@ void Stage_Base::DrawUI_ON_Enemy(const EnemyBase* enemy) const
 	float draw_y = enemy_y - 100; //描画ｙ
 
 	//属性
-	DrawRotaGraph(draw_x - 20, draw_y + 5, 0.3, 1, typeImage[index], TRUE);
+	if(type != Jan_Type::NONE)DrawRotaGraph(draw_x - 20, draw_y + 5, 0.3, 1, typeImage[index], TRUE);
 	//枠
 	DrawBoxAA(draw_x - 3, draw_y - 3, draw_x + 103, draw_y + 13, 0xffffff, TRUE);
 	DrawBoxAA(draw_x, draw_y, (draw_x + 100), draw_y + 10, 0x000000, TRUE);
@@ -183,7 +183,11 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 		if (enemy->Hit_Character(obj_player) == true && nhit_time == 0)
 		{
 			//じゃんけん開始
-			j_state = Jan_State::PROGRESS;
+			//j_state = Jan_State::PROGRESS;
+
+			//接触した!
+			j_state = Jan_State::START;
+			blackout_time = 0;
 
 			//敵が出す手をランダムに決める　　　（ランダムなint型の値(0～2)を Jan_Type型に変換）
 			Jan_Type enemy_janken = static_cast<Jan_Type> (GetRand(2));
@@ -192,6 +196,14 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 			obj_janken = new Janken(enemy_janken, my_StageNum);
 		}
 
+	}
+	else if (j_state == Jan_State::START)
+	{
+		//接触した直後
+		blackout_time++;
+
+		//1秒でじゃんけん画面へ
+		if (blackout_time > 60) j_state = Jan_State::PROGRESS;
 	}
 	else if (j_state == Jan_State::PROGRESS)
 	{
@@ -282,6 +294,23 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 	if (--nhit_time < 0) nhit_time = 0;
 }
 
+//じゃんけん描画
+void Stage_Base::Draw_Janken() const
+{
+	obj_janken->Draw();
+}
+
+//じゃんけん開始直後
+void Stage_Base::Draw_JankenStart() const
+{
+	SetDrawBlendMode(DX_BLENDMODE_ADD, static_cast<int>(blackout_time * 5));
+	DrawBox(0, 0, 1280, 720, 0xffffff, TRUE);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+	//DrawBox(0, 0, static_cast<int>(blackout_time), static_cast<int>(blackout_time), 0xffffff, TRUE);
+}
+
+
 //じゃんけん終了後の挙動（プレイヤー勝ち）
 void Stage_Base::AfterJanken_WIN()
 {
@@ -292,4 +321,15 @@ void Stage_Base::AfterJanken_WIN()
 void Stage_Base::AfterJanken_LOSE()
 {
 	obj_player->SetX(100);
+}
+
+
+//じゃんけんの状態取得
+Jan_State Stage_Base::GetJanState() const
+{
+	////無理やり
+	//if (j_state == Jan_State::START) return Jan_State::BEFORE;
+	//else return j_state;
+
+	return j_state;
 }
