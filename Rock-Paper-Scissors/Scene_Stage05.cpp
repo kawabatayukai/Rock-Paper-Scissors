@@ -491,6 +491,12 @@ void Scene_Stage05::Draw() const
 		Draw_Janken();
 	}
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+	DrawUI_ON_Enemy(obj_enemy);
+	for (int a = 0; a < 3; a++)
+	{
+		if(mob[a]->GetHP()>0)
+		DrawUI_ON_Enemy(mob[a]);
+	}
 	DrawString(640, 360, "Stage05", 0xffffff);
 }
 
@@ -531,11 +537,15 @@ AbstractScene* Scene_Stage05::ChangeScene()
 //じゃんけん終了後の挙動（プレイヤー勝ち）
 void Scene_Stage05::AfterJanken_WIN()
 {
-	obj_player->SetX(100);
+	obj_player->SetX(200);
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）
 void Scene_Stage05::AfterJanken_LOSE()
 {
-	obj_player->SetX(100);
+	for (int a = 0; a < 3; a++)
+	{
+		mob[a]->Janken_lose();
+	}
+	obj_player->SetX(200);
 }
