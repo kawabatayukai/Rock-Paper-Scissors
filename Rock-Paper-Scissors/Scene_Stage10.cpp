@@ -6,8 +6,9 @@
 #include"Scene_GameClear.h"
 #include"Scene_GameOver.h"
 #include"Jangeki_Homing.h"
-#include"Scene_Result.h"
+#include"Scene_InputName.h"
 #include"GameData.h"
+#include"Scene_InputName.h"
 
 
 //デバッグモード
@@ -339,7 +340,8 @@ AbstractScene* Scene_Stage10::ChangeScene()
 	if (obj_enemy->GetHP() < 0)
 	{
 		//リザルトへ切り替え
-		return dynamic_cast<AbstractScene*> (new Scene_Result());
+		//return dynamic_cast<AbstractScene*> (new Scene_InputName());
+		return dynamic_cast<AbstractScene*> (new Scene_InputName());
 	}
 
 	//プレイヤーのHPが0以下

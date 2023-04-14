@@ -109,7 +109,7 @@ void Stage_Base::DrawUI_ON_Enemy(const EnemyBase* enemy) const
 	float draw_y = enemy_y - 100; //ï`âÊÇô
 
 	//ëÆê´
-	DrawRotaGraph(draw_x - 20, draw_y + 5, 0.3, 1, typeImage[index], TRUE);
+	if(type != Jan_Type::NONE)DrawRotaGraph(draw_x - 20, draw_y + 5, 0.3, 1, typeImage[index], TRUE);
 	//òg
 	DrawBoxAA(draw_x - 3, draw_y - 3, draw_x + 103, draw_y + 13, 0xffffff, TRUE);
 	DrawBoxAA(draw_x, draw_y, (draw_x + 100), draw_y + 10, 0x000000, TRUE);

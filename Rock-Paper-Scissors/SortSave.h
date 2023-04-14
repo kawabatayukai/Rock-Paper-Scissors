@@ -14,7 +14,7 @@ struct RankingData {
 };
 
 
-class Scene_InputRanking
+class SortSave
 {
 private:
 	FILE* fp;
@@ -38,4 +38,4 @@ public:
 
 	void setScore(int i, int score);
 };
-extern Scene_InputRanking inputRanking;
+extern SortSave sortSave;

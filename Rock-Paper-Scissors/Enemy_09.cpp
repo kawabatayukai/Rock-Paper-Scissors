@@ -67,7 +67,7 @@ void Enemy_09::Draw() const
 	if (animflg == true)
 	{
 		if (anim_count == 0) DrawGraph(before_x - 65, before_y - 50, img_teleport[animtimer / 3 % 15], TRUE);
-		else DrawGraph(x - 50, y - 50, img_teleport2[animtimer / 3 % 15], TRUE);
+		else DrawGraph(x - 50, y - 50, img_teleport2[animtimer / 2 % 15], TRUE);
 	}
 		
 
@@ -124,8 +124,8 @@ void Enemy_09::Update_Jangeki()
 		}*/
 
 		//アニメーション再生中でなければ生成
-		if (animflg == false)
-		{
+		//if (animflg == false)
+		//{
 			if (frame_count % janFrame == 0)
 			{
 				if (Spflg == false)
@@ -149,7 +149,7 @@ void Enemy_09::Update_Jangeki()
 			//反射じゃん撃生成
 			if (reflection->GetFlg() == true)reflection->obj_reflection[reflection->jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed, type, true);
 			reflection->falseFlg();
-		}
+		//}
 	}
 }
 
