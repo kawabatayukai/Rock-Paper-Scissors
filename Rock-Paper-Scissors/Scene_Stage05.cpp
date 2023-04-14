@@ -106,7 +106,7 @@ void Scene_Stage05::Update()
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
 	}
 	//ÚG‚¶‚á‚ñ‚¯‚ñˆ—
-	Touch_Janken(obj_enemy, this);
+	Touch_Janken(obj_enemy, this, 5);
 
 
 
@@ -120,15 +120,6 @@ void Scene_Stage05::Update()
 	mobenemy_jangek[0] = mob[0]->GetJangeki();
 	mobenemy_jangek[1] = mob[1]->GetJangeki();
 	mobenemy_jangek[2] = mob[2]->GetJangeki();
-
-
-	//enemy‚Ì‚¶‚á‚ñŒ‚‚ð‚Æ‚Á‚Ä‚­‚é
-	//Jangeki_Base** mobenemy_jangeki = obj_mobenemy->GetJangeki();
-	//for (int j = 0; j < 3; j++)
-	//{
-	//	//enemy‚Ì‚¶‚á‚ñŒ‚‚ð‚Æ‚Á‚Ä‚­‚é
-	//	mobenemy_jangeki[j] = mob[j]->GetJangeki();
-	//}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	for (int a = 0; a < 3; a++)
@@ -274,6 +265,7 @@ void Scene_Stage05::Update()
 			if (mob[0]->GetHP() <= 0 && mob[1]->GetHP() <= 0 && mob[2]->GetHP() <= 0)
 			{
 
+
 				if (player_jangeki[i] == nullptr) break;         //‚¶‚á‚ñŒ‚‚ª‚È‚¢Žž‚Íˆ—‚µ‚È‚¢
 
 				//‚¶‚á‚ñŒ‚‚Æ‚Ì“–‚½‚è”»’è
@@ -322,20 +314,19 @@ void Scene_Stage05::Update()
 					default:
 						break;
 					}
-					int rand = GetRand(2);
-					switch (rand)
-					{
-					case 0:
-						obj_enemy->SetType(Jan_Type::ROCK);
-						break;
-					case 1:
-						obj_enemy->SetType(Jan_Type::SCISSORS);
-						break;
-					case 2:
-						obj_enemy->SetType(Jan_Type::PAPER);
-						break;
-					}
-					
+						int rand = GetRand(2);
+						switch (rand)
+						{
+						case 0:
+							obj_enemy->SetType(Jan_Type::ROCK);
+							break;
+						case 1:
+							obj_enemy->SetType(Jan_Type::SCISSORS);
+							break;
+						case 2:
+							obj_enemy->SetType(Jan_Type::PAPER);
+							break;
+						}
 				}
 			}
 
@@ -459,10 +450,19 @@ void Scene_Stage05::Update()
 //•`‰æ
 void Scene_Stage05::Draw() const
 {
-	DrawRotaGraph(640, 240, 2.0f, 0, Back_image, TRUE);
+	//DrawRotaGraph(640, 240, 2.0f, 0, Back_image, TRUE);
+	DrawGraph(0, 0, Back_image, FALSE);
 
-	//ÚG‚¶‚á‚ñ‚¯‚ñ‚Å‚È‚¢Žž
-	if (GetJanState() == Jan_State::BEFORE)
+	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+	DrawUI_ON_Enemy(obj_enemy);
+	for (int a = 0; a < 3; a++)
+	{
+		if (mob[a]->GetHP() > 0)
+			DrawUI_ON_Enemy(mob[a]);
+	}
+
+	//ÚG‚¶‚á‚ñ‚¯‚ñŠJŽn‘O
+	if (GetJanState() == Jan_State::START || GetJanState() == Jan_State::BEFORE)
 	{
 
 		obj_player->Draw();  //ƒvƒŒƒCƒ„[•`‰æ
@@ -483,20 +483,16 @@ void Scene_Stage05::Draw() const
 			if (obj_floor[i] == nullptr) break;
 			obj_floor[i]->Draw();
 		}
-
+		//ÚG‚µ‚½uŠÔ‚Ì‰‰o
+		if (GetJanState() == Jan_State::START) Draw_JankenStart();
 	}
 	else
 	{
 		//ÚGŽž‚¶‚á‚ñ‚¯‚ñ•`‰æ
 		Draw_Janken();
 	}
-	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
-	DrawUI_ON_Enemy(obj_enemy);
-	for (int a = 0; a < 3; a++)
-	{
-		if(mob[a]->GetHP()>0)
-		DrawUI_ON_Enemy(mob[a]);
-	}
+	
+	
 	DrawString(640, 360, "Stage05", 0xffffff);
 }
 
