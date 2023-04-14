@@ -66,12 +66,9 @@ Scene_Stage05::~Scene_Stage05()
 //更新
 void Scene_Stage05::Update()
 {
-	delete obj_enemy;
-	obj_enemy = nullptr;
-
 	static int timer = 0;
 	timer++;
-
+	
 	/*if (timer == 900)
 	{
 		timer = 0;
@@ -124,14 +121,14 @@ void Scene_Stage05::Update()
 	mobenemy_jangek[1] = mob[1]->GetJangeki();
 	mobenemy_jangek[2] = mob[2]->GetJangeki();
 
+
+	//enemyのじゃん撃をとってくる
+	//Jangeki_Base** mobenemy_jangeki = obj_mobenemy->GetJangeki();
 	//for (int j = 0; j < 3; j++)
 	//{
 	//	//enemyのじゃん撃をとってくる
 	//	mobenemy_jangeki[j] = mob[j]->GetJangeki();
 	//}
-
-	//enemyのじゃん撃をとってくる
-	//Jangeki_Base** mobenemy_jangeki = obj_mobenemy->GetJangeki();
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	for (int a = 0; a < 3; a++)
@@ -204,7 +201,7 @@ void Scene_Stage05::Update()
 	for (int a = 0; a < 3; a++)
 	{
 		Jangeki_Base** enemy_jangeki = mobenemy_jangek[a];
-		if (mob[a]->GetHP() >= 0)
+		if (mob[a]->GetHP() > 0)
 		{
 			//じゃん撃同士の当たり判定（プレイヤーじゃん撃目線）(mob用)
 			for (int p_count = 0; p_count < JANGEKI_MAX; p_count++)
