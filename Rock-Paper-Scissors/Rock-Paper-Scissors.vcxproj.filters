@@ -79,9 +79,6 @@
     <Filter Include="ソース ファイル\Jangeki\yonahara">
       <UniqueIdentifier>{a42c1488-1e9a-40ca-a97d-cbb48bf7da50}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\GameMainScene\Stage_02\Stage_03">
-      <UniqueIdentifier>{541f08c4-6dfa-4a35-a86b-63667d913571}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Jangeki\nakayoshi">
       <UniqueIdentifier>{0371adfb-44da-4d91-b7dc-f2323cd22f0e}</UniqueIdentifier>
     </Filter>
@@ -96,6 +93,9 @@
     </Filter>
     <Filter Include="ソース ファイル\CharaBase">
       <UniqueIdentifier>{69d52d54-be0e-45b2-a843-52ce30cee56e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameMainScene\Stage_03">
+      <UniqueIdentifier>{541f08c4-6dfa-4a35-a86b-63667d913571}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -136,7 +136,7 @@
       <Filter>ソース ファイル\GameMainScene\Stage_10</Filter>
     </ClCompile>
     <ClCompile Include="Enemy_03.cpp">
-      <Filter>ソース ファイル\GameMainScene\Stage_02\Stage_03</Filter>
+      <Filter>ソース ファイル\GameMainScene\Stage_03</Filter>
     </ClCompile>
     <ClCompile Include="Enemy_04.cpp">
       <Filter>ソース ファイル\GameMainScene\Stage_04</Filter>
@@ -199,7 +199,7 @@
       <Filter>ソース ファイル\GameMainScene\Stage_04</Filter>
     </ClCompile>
     <ClCompile Include="Scene_Stage03.cpp">
-      <Filter>ソース ファイル\GameMainScene\Stage_02\Stage_03</Filter>
+      <Filter>ソース ファイル\GameMainScene\Stage_03</Filter>
     </ClCompile>
     <ClCompile Include="Scene_Stage02.cpp">
       <Filter>ソース ファイル\GameMainScene\Stage_02</Filter>
@@ -300,7 +300,7 @@
       <Filter>ソース ファイル\GameMainScene\Stage_10</Filter>
     </ClInclude>
     <ClInclude Include="Enemy_03.h">
-      <Filter>ソース ファイル\GameMainScene\Stage_02\Stage_03</Filter>
+      <Filter>ソース ファイル\GameMainScene\Stage_03</Filter>
     </ClInclude>
     <ClInclude Include="Enemy_04.h">
       <Filter>ソース ファイル\GameMainScene\Stage_04</Filter>
@@ -363,7 +363,7 @@
       <Filter>ソース ファイル\GameMainScene\Stage_04</Filter>
     </ClInclude>
     <ClInclude Include="Scene_Stage03.h">
-      <Filter>ソース ファイル\GameMainScene\Stage_02\Stage_03</Filter>
+      <Filter>ソース ファイル\GameMainScene\Stage_03</Filter>
     </ClInclude>
     <ClInclude Include="Scene_Stage02.h">
       <Filter>ソース ファイル\GameMainScene\Stage_02</Filter>
