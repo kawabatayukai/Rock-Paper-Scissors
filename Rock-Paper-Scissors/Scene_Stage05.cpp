@@ -66,6 +66,9 @@ Scene_Stage05::~Scene_Stage05()
 //更新
 void Scene_Stage05::Update()
 {
+	delete obj_enemy;
+	obj_enemy = nullptr;
+
 	static int timer = 0;
 	timer++;
 
@@ -344,7 +347,7 @@ void Scene_Stage05::Update()
 
 	for (int a = 0; a < 3; a++)
 	{
-		if (mob[a]->GetHP() >= 0)
+		if (mob[a]->GetHP() > 0)
 		{
 			//playerじゃん撃とmobenemyの当たり判定
 			for (int i = 0; i < JANGEKI_MAX; i++)
@@ -365,7 +368,7 @@ void Scene_Stage05::Update()
 						//パーのじゃん撃のみ有効
 						if (jangeki_type == Jan_Type::PAPER)
 						{
-							mob[a]->ReceiveDamage(30);     //ダメージが入る
+							mob[a]->ReceiveDamage(20);     //ダメージが入る
 							obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 							i--;
 						}
@@ -377,7 +380,7 @@ void Scene_Stage05::Update()
 						//グーのじゃん撃のみ有効
 						if (jangeki_type == Jan_Type::ROCK)
 						{
-							mob[a]->ReceiveDamage(30);     //ダメージが入る
+							mob[a]->ReceiveDamage(20);     //ダメージが入る
 							obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 							i--;
 						}
@@ -388,7 +391,7 @@ void Scene_Stage05::Update()
 						//チョキのじゃん撃のみ有効
 						if (jangeki_type == Jan_Type::SCISSORS)
 						{
-							mob[a]->ReceiveDamage(30);     //ダメージが入る
+							mob[a]->ReceiveDamage(20);     //ダメージが入る
 							obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 							i--;
 						}
@@ -425,7 +428,7 @@ void Scene_Stage05::Update()
 	for (int a = 0; a < 3; a++)
 	{
 		Jangeki_Base** enemy_jangeki = mobenemy_jangek[a];
-		if (mob[a]->GetHP() >= 0)
+		if (mob[a]->GetHP() > 0)
 		{
 			//mobenemyじゃん撃とplayerの当たり判定
 			for (int i = 0; i < JANGEKI_MAX; i++)
@@ -470,7 +473,7 @@ void Scene_Stage05::Draw() const
 		
 		for (int i = 0; i < 3; i++)
 		{
-			if (mob[i]->GetHP() >= 0)
+			if (mob[i]->GetHP() > 0)
 			{
 				mob[i]->Draw();
 			}
@@ -509,7 +512,7 @@ AbstractScene* Scene_Stage05::ChangeScene()
 #ifdef DEBUG_OFF_05
 
 	//敵のHPが0以下
-	if (obj_enemy->GetHP() < 0)
+	if (obj_enemy->GetHP() <= 0)
 	{
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(6));
