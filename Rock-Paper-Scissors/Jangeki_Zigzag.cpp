@@ -48,5 +48,6 @@ void Jangeki_Zigzag::Update()
 
 	y += zigzag;
 
-
+	//エフェクト
+	Update_Effect(7.0);
 }

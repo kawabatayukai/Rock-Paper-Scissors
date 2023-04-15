@@ -22,4 +22,7 @@ void Jangeki_Coming::Update()
 {
 	x += cosf(rad) * speed;
 	y += sinf(rad) * speed;
+
+	//エフェクト
+	Update_Effect();
 }

@@ -34,7 +34,10 @@ public:
 
 	virtual void Update();                    //更新
 	virtual void Draw() const;                //描画
-	bool CheckScreenOut();            //画面外にいるか　true:画面外　false:画面内
+	bool CheckScreenOut();                    //画面外にいるか　true:画面外　false:画面内
+
+	//エフェクトを動作させる（全ての派生じゃん撃内・Updateで呼ぶ）引数：フレーム毎の拡大量
+	void Update_Effect(double fp_rate = 5.0);
 
 	/* 
 	   *********  引数のじゃん撃属性と自分の属性を比較  *********  
@@ -64,22 +67,27 @@ public:
 
 protected:
 
-	float x;     //ｘ
-	float y;     //ｙ
-	float r;     //半径
-	float speed; //スピード
-	float speed_y = 0; //ｙ座標スピード
+	float x;            //ｘ
+	float y;            //ｙ
+	float r;            //半径
+	float speed;        //スピード
+	float speed_y = 0;  //ｙ座標スピード
 
-	int image[3];
+	int image[3];       //じゃん撃画像
+	int image_smoke[4]; //スモークなエフェクト
+	short smoke_index;  //エフェクトアニメーション用
+
+	double rate_pct;    //拡大率
+	double rate_turn;   //回転率
 
 	//反射専用
 	int reflection_image[3];
-	bool refrection;
+	bool refrection;    //trueの時、自身は反射である
 
-	Jan_Type type;   //タイプ　グーorチョキorパー
+	Jan_Type type;      //タイプ　グーorチョキorパー
 
 
-	float target_x = 0;       //対象のｘ座標
-	float target_y = 0;       //対象のｙ座標
+	float target_x = 0; //対象のｘ座標
+	float target_y = 0; //対象のｙ座標
 
 };

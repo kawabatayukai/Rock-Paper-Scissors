@@ -226,6 +226,16 @@ void Enemy_07::Change_JanType()
 	return;
 }
 
+//ミサイルキック  戻り値 : 着地 return 1  それ以外 return 0
+int Enemy_07::MissileKick()
+{
+	//着地
+	if (land_flg == true) return 1;
+
+	x += speed;
+	
+}
+
 /*--------------------------------------------------------------------------------------*/
 
 //行動制御
@@ -534,8 +544,8 @@ void Enemy_07::Move_ON_RING_LURK(float& target_x, float& target_y)
 			{
 				target_x = _CONSTANTS_07::CORNER_LEFT;
 
-				//リング左に到達                             
-				if (x == _CONSTANTS_07::CORNER_LEFT)
+				//左コーナーに到達                             
+				if (x == _CONSTANTS_07::CORNER_LEFT )
 				{
 					Pre_Action = Now_Action;        //今回のActionを保存
 
