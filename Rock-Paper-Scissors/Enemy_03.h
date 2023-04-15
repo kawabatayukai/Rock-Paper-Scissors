@@ -35,6 +35,9 @@ public:
 
 	float Get_OldY() const { return old_y; } //YÀ•W‚Ìæ“¾
 
+	//void MoveRunAway(float enemy_x, float enemy_y,int player_x,int player_y);//
+
+	void EnemyHP();
 
 private:
 	/********************   ƒWƒƒƒ“ƒvŠÖŒW   ********************/
@@ -71,6 +74,8 @@ private:
 	int enemyimage[6];      //“G‰æ‘œ”z—ñ
 	//int enemyimageMirror[6];//“G‰æ‘œ”½“]
 	int currentindex_st03 = 0;
+	int screenWidth = 0;
+	int screenHeight = 0;
 };
 
 

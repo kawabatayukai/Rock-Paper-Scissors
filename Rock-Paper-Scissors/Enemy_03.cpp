@@ -153,18 +153,19 @@ void Enemy_03::Update()
 	Update_Jangeki();
 
 	////属性変更
-	if (moveinfo[current].enemywaitTime > 0) {
+	if (moveinfo[current].enemywaitTime > 0 || moveinfo[current].enemywaitTime < 200 && moveinfo[current].jumpflg == 0) {
 
 		e_type = Jan_Type::ROCK;
-
+		
+		
 	}
 	//動いているとき属性変更
-	else if (moveinfo[current].enemywaitTime < 200) {
+	/*else if (moveinfo[current].enemywaitTime < 200 && moveinfo[current].jumpflg == 0) {
 
 
 
 		e_type = Jan_Type::SCISSORS;
-	}
+	}*/
 
 
 	//ステ03パターン用関数
@@ -187,6 +188,8 @@ void Enemy_03::Update()
 
 
 		}
+	/*case 2:
+		MoveRunAway(float enemy_x, float enemy_y, int player_x, int player_y);*/
 		break;
 	default:
 		break;
@@ -343,7 +346,7 @@ void Enemy_03::Update_Jangeki()
 		//プレイヤー方向へのジャン撃生成
 
 		if (hp >= 41) {
-			if (frame_count % 80 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+			if (frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 		}
 		////通常弾生成
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
@@ -355,7 +358,7 @@ void Enemy_03::Update_Jangeki()
 			float radius = 50.0f;
 			float speed = 4.5f;
 
-			if (frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+			if (frame_count % 95 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 
 
 
@@ -429,10 +432,21 @@ void Enemy_03::Move_Pattern() {
 
 
 	}
+	
 
 	//移動を反映する
 	x = move_x;
 	y = move_y;
+
+}
+
+void Enemy_03::EnemyHP() {
+
+	if (hp <= 40) {
+
+		//MoveRunAway();
+
+	}
 
 }
 
@@ -451,3 +465,39 @@ void Enemy_03::ChangeDir(float enemy_x)
 	else dir = 1;
 }
 
+//void Enemy_03::MoveRunAway(float enemy_x, float enemy_y, int player_x, int player_y) {//
+//
+//	screenWidth = 1280;
+//	screenHeight = 720;
+//
+//	 enemy_x = rand() % screenWidth;
+//	 enemy_y = rand() % screenHeight;
+//	player_x = 0.0f;
+//	player_y = 0.0f;
+//
+//	if (enemy_x < player_x) {
+//
+//		enemy_x++;
+//
+//	}
+//	else if (enemy_x > player_x) {
+//
+//		enemy_x--;
+//	}
+//	if (enemy_y < player_y) {
+//
+//		enemy_y++;
+//	}
+//	else if (enemy_y > player_y) {
+//
+//		enemy_y--;
+//	}
+//
+//	int distance = sqrt(pow(player_x - enemy_x, 2) + pow(player_y - enemy_y, 2));
+//
+//	if (distance < 50) {
+//
+//		enemy_x += rand() % 10 - 5;
+//		enemy_y += rand() % 10 - 5;
+//	}
+//}
