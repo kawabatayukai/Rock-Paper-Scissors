@@ -81,7 +81,7 @@ Jangeki_Base::Jangeki_Base(float x, float y, float r, float speed, double angle,
 //デストラクタ
 Jangeki_Base::~Jangeki_Base()
 {
-	//DrawRotaGraph(x, y, 1, 0, image[0], TRUE);
+	DrawRotaGraph(x, y, 1, 0, image[0], TRUE);
 }
 
 //更新
