@@ -201,7 +201,7 @@ void Enemy_09::Jan_40degrees()
 void Enemy_09::MoveEnmey_09()
 {
 	interval++;
-	if (GetHP() <= 51)teleport = 150;
+	if (GetHP() <= 51)teleport = 200;
 
 	if (GetHP() == 1)teleport = 500;
 
@@ -355,11 +355,11 @@ void Enemy_09::SpecialMoveEnmey()
 				//^‚ñ’†
 			case 10:
 				x = 620;
-				y = 400;
+				y = 420;
 				break;
 			case 11:
 				x = 620;
-				y = 80;
+				y = 110;
 				break;
 			case 12:
 				x = 620;

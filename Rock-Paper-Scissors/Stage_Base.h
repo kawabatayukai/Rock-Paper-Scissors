@@ -4,6 +4,7 @@
 #include"Player.h"
 #include"Janken.h"
 #include"EnemyBase.h"
+#include"Effect_Jangeki.h"
 
 //ステージのベース
 class Stage_Base : public AbstractScene
@@ -45,6 +46,9 @@ public:
 	//じゃんけんの状態取得
 	Jan_State GetJanState() const;
 
+	//エフェクト再生（エフェクト再生するスイッチ）
+	void Play_Effect();
+
 protected:
 	Player* obj_player = nullptr;             //プレイヤー
 	Floor** obj_floor = nullptr;              //床・壁
@@ -58,5 +62,7 @@ private:
 	Jan_State j_state = Jan_State::BEFORE;    //じゃんけんの状態
 
 	unsigned short blackout_time;             //暗転時間（接触直後演出）
+
+	Effect_Jangeki** obj_effect;              //エフェクト(じゃん撃同士の衝突)
 };
 

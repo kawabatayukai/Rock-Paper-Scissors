@@ -42,6 +42,9 @@ public:
 	//HP回復（引数 : 回復量）
 	void Recover_HP(const unsigned int recovery);
 
+	//向き取得 0:左　1:右
+	int GetDirection() const { return dir; }
+
 private:
 	/********************   ジャンプ関係   ********************/
 
