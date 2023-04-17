@@ -49,5 +49,5 @@ void EnemyBase::SetPlayerLocation(const float player_x, const float player_y)
 
 void EnemyBase::SetPlayerDirection(const int player_dir)
 {
-	this->dir = player_dir;
+	this->player_dir = player_dir;
 }

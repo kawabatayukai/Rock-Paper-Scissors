@@ -113,7 +113,7 @@ void Enemy_06::Draw() const
 	else DrawString((int)(x - 50), (int)(y - 125), "death!", 0xffffff);
 
 	//テスト
-	DrawFormatString(600, 600, 0xffffff, "%d", dir);
+	DrawFormatString(600, 600, 0xffffff, "%d", player_dir);
 }
 
 //じゃん撃生成・更新
