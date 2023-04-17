@@ -35,10 +35,10 @@ void EndScene::Update()
 void EndScene::Draw() const
 {
 	SetFontSize(50);
-	DrawString(100, 100, "End..", 0xffffff);
+	DrawString(300, 100, "Thank You for Playing!!!", 0xffffff);
 	SetFontSize(24);
 	DrawString(450, 170 + PosY, "タイトル　　　JankenWorld", 0xFFFFFF);
-	DrawString(450, 230 + PosY, "最終更新日　　201x年xx月xx日", 0xFFFFFF);
+	DrawString(450, 230 + PosY, "最終更新日　　2023年xx月xx日", 0xFFFFFF);
 	DrawString(450, 260 + PosY, "制作者　　　　国際電子ビジネス専門学校", 0xFFFFFF);
 	DrawString(450, 290 + PosY, "ステージ2     與那原　廉", 0xFFFFFF);
 	DrawString(450, 320 + PosY, "ステージ3     宮城ジャスティン", 0xFFFFFF);
