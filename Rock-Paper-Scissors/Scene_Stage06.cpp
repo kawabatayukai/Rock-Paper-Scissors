@@ -80,7 +80,7 @@ void Scene_Stage06::Update()
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
 
 		//プレイヤー向きを取得
-		/*obj_enemy->SetPlayerDirection(obj_player->GetDir());*/
+		obj_enemy->SetPlayerDirection(obj_player->GetDirection());
 
 		//時間をカウント
 		GameData::Time_Update();
