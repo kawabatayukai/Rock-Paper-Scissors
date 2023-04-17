@@ -44,10 +44,16 @@ private:
 	int  attack_pattern = 0;      //攻撃パターン変数
 	bool jump_flg = false;        //ジャンプ用フラグ　　       ジャンプさせる:true   ジャンプしない:false
 	int  jump_cnt = 0;            //ジャンプカウント
-	bool teleport_Flg = true;     //瞬間移動フラグ              瞬間移動する:true     瞬間移動しない:false
-	bool P1_side = false;         //パターン2時の位置フラグ     左側:true             右側:false
+	bool attack2_Flg = true;      //攻撃パターン2開始前フラグ  初期化:true       初期化終了:false
+	bool P1_side = false;         //パターン2時の位置フラグ      左側:true             右側:false
 	int  floor = 5;
 	int  ChangeCnt = 0;           //敵の属性変化までのカウント用変数
+
+	int  SpeedUpTime = 0;         //SpeedUp中のカウント
+
+	bool TeleportFlg = false;     //瞬間移動接触処理フラグ     瞬間移動接触:true    それ以外:false
+	bool TeleportInit = true;     //瞬間移動接触処理初期化フラグ     初期化:true  初期化終了:false
+	int  TeleportTime = 0;        //瞬間移動開始までのカウント
 
 	/**********************************************************/
 
