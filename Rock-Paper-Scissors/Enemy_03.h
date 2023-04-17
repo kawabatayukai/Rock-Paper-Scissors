@@ -10,6 +10,8 @@ struct Pattern_03 {
 	int next_index; //次配列のパターンの番号
 	int enemywaitTime;//エネミーの待ち時間
 	int jumpflg; //ジャンプするかしないか
+	
+
 
 };
 
@@ -76,6 +78,7 @@ private:
 	int currentindex_st03 = 0;
 	int screenWidth = 0;
 	int screenHeight = 0;
+	
 };
 
 
