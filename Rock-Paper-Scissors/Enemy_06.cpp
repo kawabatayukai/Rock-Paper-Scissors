@@ -493,7 +493,6 @@ void Enemy_06::AttackPattern_2()
 	if (hp <= 40)
 	{
 		attack_pattern = 2;
-		/*speed = 8.0f;*/
 	}
 }
 
@@ -673,6 +672,23 @@ void Enemy_06::AttackPattern_3()
 		old_type = GetType();
 		ChangeCnt = 0;
 	}
+
+	//数秒経過で元の速度 & 攻撃パターンへ遷移
+	if (frame_count % 600 == 0)
+	{
+		speed = 5.0f;
+		if (hp > 70)
+		{
+			attack_pattern = 0;
+			jump_cnt = 0;
+			x = 1200;
+			y = 360;
+		}
+		else if (hp > 40)
+		{
+			attack_pattern = 1;
+		}
+	}
 }
 
 //特殊行動1   speed = 8.0f
@@ -680,7 +696,15 @@ void Enemy_06::SpeedUp()
 {
 	attack_pattern = 2;
 	speed = 8.0f;
+	frame_count = 0;
 }
+
+//特殊行動2   プレイヤーの後方側に移動し、接近してくる
+void Enemy_06::Teleportation()
+{
+
+}
+
 
 //旧行動ループ2(保存用)
 void Enemy_06::AttackPattern_00()
