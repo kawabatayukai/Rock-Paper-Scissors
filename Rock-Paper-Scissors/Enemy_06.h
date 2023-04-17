@@ -19,6 +19,7 @@ public:
 	void AttackPattern_2();          //行動ループ2
 	void AttackPattern_3();          //行動ループ3
 	void SpeedUp();                  //特殊行動1   speed = 8.0f
+	void Teleportation();            //特殊行動2   プレイヤーの後方側に移動し、接近してくる
 
 	void AttackPattern_00();         //旧行動ループ2(保存用)
 

@@ -13,6 +13,10 @@ Stage_Base::Stage_Base() : blackout_time(0)
 
 	//                           サイズ 幅              外枠
 	font = CreateFontToHandle(NULL, 60, 3, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
+
+	//エフェクト用意
+	obj_effect =  new Effect_Jangeki * [30];
+	for (int i = 0; i < 30; i++) obj_effect = nullptr;
 }
 
 Stage_Base::~Stage_Base()

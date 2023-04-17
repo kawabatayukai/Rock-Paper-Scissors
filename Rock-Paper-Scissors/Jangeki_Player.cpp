@@ -70,7 +70,10 @@ Jangeki_Player::Jangeki_Player(float x, float y, float r, float speed, double an
 }
 
 //デストラクタ
-Jangeki_Player::~Jangeki_Player(){}
+Jangeki_Player::~Jangeki_Player()
+{
+	
+}
 
 //更新（オーバーライド）
 void Jangeki_Player::Update()
