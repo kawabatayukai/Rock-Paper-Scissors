@@ -141,6 +141,7 @@ Enemy_03::~Enemy_03()
 void Enemy_03::Update()
 {
 
+
 	if (land_flg == true && moveinfo[current].enemywaitTime == 0 && moveinfo[current].jumpflg == 0)    //GetRand(30) == 3　のところがジャンプの条件
 	{
 		g_add = -23.f;    //初期-21.5f,重力加速度をマイナス値に　　下げるほどジャンプ力アップ
@@ -170,34 +171,135 @@ void Enemy_03::Update()
 		e_type = Jan_Type::SCISSORS;
 	}*/
 
-
-	//ステ03パターン用関数
-	switch (moveinfo[current].moveflg)
-	{
-	case 0:
-		Move_Pattern();
-
-		break;
-	case 1:
-		//待ち時間カウント
-		waitcount++;
-		if (moveinfo[current].enemywaitTime <= waitcount) {
-
-			waitcount = 0;
-			current = moveinfo[current].next_index;
-
-			//ランダムな動きX方向//
-			//moveinfo[current].location_x = GetRand(1150);
+	if (hp >= 100 ) {
 
 
+		//ステ03パターン用関数
+		switch (moveinfo[current].moveflg)
+		{
+		case 0:
+			Move_Pattern();
+
+			break;
+		case 1:
+			//待ち時間カウント
+			waitcount++;
+			if (moveinfo[current].enemywaitTime <= waitcount) {
+
+				waitcount = 0;
+				current = moveinfo[current].next_index;
+
+				//ランダムな動きX方向//
+				//moveinfo[current].location_x = GetRand(1150);
+
+
+			}
+			/*case 2:
+				MoveRunAway(float enemy_x, float enemy_y, int player_x, int player_y);*/
+			break;
+		default:
+			break;
 		}
-		/*case 2:
-			MoveRunAway(float enemy_x, float enemy_y, int player_x, int player_y);*/
-		break;
-	default:
-		break;
-	}
 
+
+	}
+	else {
+		
+		//目標座標
+		static float target_x = 0;
+		static float target_y = 0;
+		
+
+		//一致回数
+		static int count;
+		if (count == 0)
+		{
+			target_x = GetRand(1170) + 70;
+			//if (x==1000)
+			//{
+			//	count = 1;
+			//}
+			count = 1;
+		}
+		if (count == 1)
+		{
+			
+			if (x == target_x)
+			{
+				count = 0;
+			}
+		}
+
+		//移動量
+		float move_x = x;
+		float move_y = y;
+		moveinfo[current].jumpflg = 1;
+
+		//x座標が目標と不一致
+		if (x != target_x)
+		{
+			//目標の方が大きい（目標は右方向）
+			if (x < target_x)
+			{
+				move_x += speed;      //右移動（正の値）
+				
+
+				//目標を超えた場合
+				if (x <= target_x && target_x <= move_x)
+				{
+					move_x = target_x;     //目標座標で固定
+				}
+			}
+			else
+			{
+				move_x -= speed; //左移動（負の値）
+				
+
+				//目標を超えた場合
+				if (move_x <= target_x && target_x <= x)
+				{
+					move_x = target_x;     //目標座標で固定
+				}
+			}
+		}
+
+		////y座標が目標と不一致
+		//if (y != target_y)
+		//{
+		//	//目標の方が大きい（目標は右方向）
+		//	if (y < target_y)
+		//	{
+		//		move_y += speed;      //右移動（正の値）
+
+
+		//		//目標を超えた場合
+		//		if (y <= target_y && target_y <= move_y)
+		//		{
+		//			move_y = target_y;     //目標座標で固定
+		//		}
+		//	}
+		//	else
+		//	{
+		//		move_y -= speed; //左移動（負の値）
+
+
+		//		//目標を超えた場合
+		//		if (move_y <= target_y && target_y <= y)
+		//		{
+		//			move_y = target_y;     //目標座標で固定
+		//		}
+		//	}
+		//}
+		//移動を反映
+		x = move_x;
+		y = move_y;
+
+		if ( old_x == x)
+		{
+			target_x = GetRand(1170) + 70;
+			
+		}
+	}
 
 	//HPが0以下だったらHPに0を代入
 	if (hp <= 0)hp = 0;
@@ -218,7 +320,7 @@ void Enemy_03::Update()
 
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
-	//落下速度の制限
+//落下速度の制限
 	if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
 
 	old_y = y;              //1フレーム前のｙ座標
@@ -235,7 +337,8 @@ void Enemy_03::Update()
 	}
 
 
-
+	//前回のｘ
+	old_x = x;
 
 }
 /********************   横移動   ********************/
@@ -361,7 +464,7 @@ void Enemy_03::Update_Jangeki()
 			float radius = 50.0f;
 			float speed = 4.5f;
 
-			if (frame_count % 95 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+			if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 
 
 
@@ -435,32 +538,32 @@ void Enemy_03::Move_Pattern() {
 
 
 	}
-	if (x != moveinfo[current].location_x || GetHP() <= 40) {
+	//if (x != moveinfo[current].location_x || GetHP() <= 40) {
 
 
-		if (GetX() > player_x) {
+	//	if (GetX() > player_x) {
 
-			moveinfo[current].location_x++;
+	//		moveinfo[current].location_x++;
 
-		}
-		else if (GetX() > player_x) {
+	//	}
+	//	else if (GetX() > player_x) {
 
-			moveinfo[current].location_x--;
+	//		moveinfo[current].location_x--;
 
-		}
-		if (GetY() > player_y) {
+	//	}
+	//	if (GetY() > player_y) {
 
-			moveinfo[current].location_y++;
+	//		moveinfo[current].location_y++;
 
-		}
-		else if (GetY() > player_y) {
+	//	}
+	//	else if (GetY() > player_y) {
 
-			moveinfo[current].location_y--;
+	//		moveinfo[current].location_y--;
 
-		}
+	//	}
 
 
-	}
+	//}
 
 	//移動を反映する
 	x = move_x;
@@ -468,23 +571,7 @@ void Enemy_03::Move_Pattern() {
 
 }
 
-//void Enemy_03::EnemyHP() {
-//
-//	if (hp <= 40) {
-//
-//		runaway = true;
-//
-//		if (runaway == true) {
-//
-//			moveinfo[current].location_x > x;
-//			moveinfo[current].location_y > y;
-//		}
-//
-//		//MoveRunAway();
-//
-//	}
-//
-//}
+
 
 //enemywaitTime継承
 int Enemy_03::GetWaitTime()const {

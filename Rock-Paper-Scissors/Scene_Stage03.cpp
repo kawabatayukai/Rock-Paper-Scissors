@@ -185,18 +185,18 @@ void Scene_Stage03::Update()
 					//HPに応じて食らうダメージが変化する
 					if (obj_enemy->GetHP() >= 100 && obj_enemy->GetWaitTime() > 0) {
 
-						SheeldEnduranse = 30;
+						SheeldEnduranse = 25;
 						obj_enemy->ReceiveDamage(30 - (SheeldEnduranse)-EnemyCutDamege); //軽減ダメージが入る
 
 					}
-					else if (obj_enemy->GetHP() <= 85 && obj_enemy->GetWaitTime() > 0) {
+					else if (obj_enemy->GetHP() <= 85 &&  obj_enemy->GetWaitTime() > 0) {
 
 						SheeldEnduranse = 20;
 						obj_enemy->ReceiveDamage(30 - (SheeldEnduranse)-EnemyCutDamege); //軽減ダメージが入る
 
 
 					}
-					else if (obj_enemy->GetHP() <= 70 && obj_enemy->GetWaitTime() > 0) {
+					else if (obj_enemy->GetHP() <=70 && obj_enemy->GetWaitTime() > 0) {
 
 						SheeldEnduranse = 15;
 						obj_enemy->ReceiveDamage(30 - (SheeldEnduranse)-EnemyCutDamege); //軽減ダメージが入る
@@ -236,9 +236,9 @@ void Scene_Stage03::Update()
 				if (jangeki_type == Jan_Type::ROCK)
 				{
 
-					if (obj_enemy->GetHP() >= 100 && obj_enemy->GetWaitTime() > 0 ) {
+					if (obj_enemy->GetHP() <= 100 && obj_enemy->GetWaitTime() > 0 ) {
 
-						SheeldEnduranse = 30;
+						SheeldEnduranse = 25;
 						obj_enemy->ReceiveDamage(30 - (SheeldEnduranse)-EnemyCutDamege); //軽減ダメージが入る
 
 					}
@@ -270,9 +270,11 @@ void Scene_Stage03::Update()
 
 
 					}
-					else {
-						obj_enemy->ReceiveDamage(5 - EnemyCutDamege);     //ダメージが入る
-					}
+
+					//else {
+					//	obj_enemy->ReceiveDamage(5 - EnemyCutDamege);     //ダメージが入る
+					//}
+
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -286,9 +288,9 @@ void Scene_Stage03::Update()
 					//if (obj_enemy->GetWaitTime() > 0) {
 
 						//HPに応じて食らうダメージが変化する
-						if (obj_enemy->GetHP() >= 100 && obj_enemy->GetWaitTime() > 0) {
+						if (obj_enemy->GetHP() <= 100 && obj_enemy->GetWaitTime() > 0) {
 
-							SheeldEnduranse = 30;
+							SheeldEnduranse = 25;
 							obj_enemy->ReceiveDamage(30 -(SheeldEnduranse)- EnemyCutDamege); //軽減ダメージが入る
 
 						}
