@@ -435,13 +435,8 @@ void Scene_Stage05::Update()
 			}
 		}
 	}
-
-
-
 	HitCtrl_Floor(obj_player, STAGE_05_FLOOR);     // player　床・壁判定
 	HitCtrl_Floor(obj_enemy, STAGE_05_FLOOR);      // 敵　　　床・壁判定
-
-
 }
 
 
@@ -532,6 +527,10 @@ AbstractScene* Scene_Stage05::ChangeScene()
 void Scene_Stage05::AfterJanken_WIN()
 {
 	obj_player->SetX(200);
+	for (int a = 0; a < 3; a++)
+	{
+		mob[a]->Janken_win();
+	}
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）

@@ -12,6 +12,8 @@ public:
 
 	void Janken_lose();
 
+	void Janken_win();
+
 private:
 	int frame_count = 0;       //‚¶‚á‚ñŒ‚”­ŽË—p
 
