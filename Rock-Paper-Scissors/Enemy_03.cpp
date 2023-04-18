@@ -18,9 +18,10 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	enemyimage[1] = LoadGraph("images/stage03/stage03gard.png");
 	enemyimage[2] = LoadGraph("images/stage03/stage03jump.png");*/
 
-	LoadDivGraph("images/stage03/stage03Anim.png", 6, 6, 1, 100, 100, enemyimage);
-	//LoadDivGraph("images/stage03/stage03AnimMirror.png", 6, 6, 1, 100, 100, enemyimageMirror);
+	LoadDivGraph("images/stage03/stage03Anim.png", 6, 6, 1, 100, 100, enemyimage1);
+	LoadDivGraph("images/stage03/stage03SheeldEnduranse1.png", 6, 6, 1, 100, 100, enemyimage2);
 
+	//LoadDivGraph("images/stage03/stage03AnimMirror.png", 6, 6, 1, 100, 100, enemyimageMirror);
 
 	Init_Jangeki();       //じゃん撃を用意
 
@@ -171,7 +172,7 @@ void Enemy_03::Update()
 		e_type = Jan_Type::SCISSORS;
 	}*/
 
-	if (hp >= 100 ) {
+	if (hp >= 100) {
 
 
 		//ステ03パターン用関数
@@ -204,11 +205,11 @@ void Enemy_03::Update()
 
 	}
 	else {
-		
+
 		//目標座標
 		static float target_x = 0;
 		static float target_y = 0;
-		
+
 
 		//一致回数
 		static int count;
@@ -223,7 +224,7 @@ void Enemy_03::Update()
 		}
 		if (count == 1)
 		{
-			
+
 			if (x == target_x)
 			{
 				count = 0;
@@ -242,7 +243,7 @@ void Enemy_03::Update()
 			if (x < target_x)
 			{
 				move_x += speed;      //右移動（正の値）
-				
+
 
 				//目標を超えた場合
 				if (x <= target_x && target_x <= move_x)
@@ -253,7 +254,7 @@ void Enemy_03::Update()
 			else
 			{
 				move_x -= speed; //左移動（負の値）
-				
+
 
 				//目標を超えた場合
 				if (move_x <= target_x && target_x <= x)
@@ -294,10 +295,10 @@ void Enemy_03::Update()
 		x = move_x;
 		y = move_y;
 
-		if ( old_x == x)
+		if (old_x == x)
 		{
 			target_x = GetRand(1170) + 70;
-			
+
 		}
 	}
 
@@ -371,7 +372,7 @@ void Enemy_03::Draw() const
 	if (moveinfo[current].enemywaitTime > 0) {
 
 		//ガード時の画像描画							
-		DrawRotaGraphF(x, y, 1, 0, enemyimage[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
+		DrawRotaGraphF(x, y, 1, 0, enemyimage1[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
 
 
 	}
@@ -380,7 +381,7 @@ void Enemy_03::Draw() const
 	else if (moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200) {
 
 		//ジャンプ時の画像描画							
-		DrawRotaGraphF(x, y, 1, 0, enemyimage[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
+		DrawRotaGraphF(x, y, 1, 0, enemyimage2[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
 
 	}
 
@@ -392,12 +393,34 @@ void Enemy_03::Draw() const
 		//エネミーの構造体と一致したときにエネミーが左または右に動く
 		if (enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE) {
 			//攻撃時の画像描画								//向きを変える
-			DrawRotaGraphF(x, y, 1, 0, enemyimage[currentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
+			DrawRotaGraphF(x, y, 1, 0, enemyimage1[currentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
 		}
 
 
 	}
 
+	//HP85以下の時
+	if (hp <= 85 && moveinfo[current].enemywaitTime > 0) {
+						
+		DrawRotaGraphF(x, y, 1, 0, enemyimage2[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
+
+	}
+	else if (hp <= 85 && moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200) {
+
+		//ジャンプ時の画像描画							
+		DrawRotaGraphF(x, y, 1, 0, enemyimage2[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
+
+	}
+	else {
+
+		//エネミーの構造体と一致したときにエネミーが左または右に動く
+		if (enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE) {
+			//攻撃時の画像描画								//向きを変える
+			DrawRotaGraphF(x, y, 1, 0, enemyimage1[currentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
+		}
+
+
+	}
 
 	//じゃん撃描画
 	Draw_Jangeki();
@@ -570,6 +593,14 @@ void Enemy_03::Move_Pattern() {
 	y = move_y;
 
 }
+
+//void Enemy_03::EnemyHP() {
+//
+//	if( hp <= 85) ;
+//
+//}
+
+
 
 
 

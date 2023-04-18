@@ -39,7 +39,7 @@ public:
 
 	//void MoveRunAway(float enemy_x, float enemy_y,int player_x,int player_y);//
 
-	void EnemyHP();
+	//void EnemyHP();
 
 private:
 	/********************   ƒWƒƒƒ“ƒvŠÖŒW   ********************/
@@ -73,7 +73,8 @@ private:
 
 
 	int frame_count_anim = 0;       //“G‚ÌƒAƒjƒ[ƒVƒ‡ƒ“—p
-	int enemyimage[6];      //“G‰æ‘œ”z—ñ
+	int enemyimage1[6];      //“G‰æ‘œ”z—ñ
+	int enemyimage2[6];
 	//int enemyimageMirror[6];//“G‰æ‘œ”½“]
 	int currentindex_st03 = 0;
 	int screenWidth = 0;
