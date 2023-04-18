@@ -30,6 +30,7 @@ public:
 	bool Getflg();
 	void Tflg();
 	void Fflg();
+	int Rand();
 
 	bool Spflg = true;  //特殊行動フラグ
 	bool animflg = false;	//アニメーションフラグ
@@ -54,6 +55,7 @@ private:
 	int image;
 	int janFrame = 75;
 	int count = 0;
+	int SPcount = 0;
 	
 	bool rflg = false; //反射用
 	
