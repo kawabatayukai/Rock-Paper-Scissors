@@ -137,6 +137,7 @@ void Enemy_09::Update_Jangeki()
 				{
 					Jan_360degrees();
 					count = 0;		 //リセット
+					SPcount++;
 				}
 				if (count == 5)		//五回目で特殊弾発射
 				{
@@ -159,22 +160,31 @@ void Enemy_09::Jan_360degrees()
 	{
 		//生成するじゃん撃の半径
 		float radius = 40.f;
-		int count = 0;
-
-		//ランダムな属性を生成
-		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
 		for (int i = jan_count; i < (jan_count + 14); i++)
 		{
+			//ランダムな属性を生成
+			Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 			double angle = static_cast<double>((30.0 * i) * (M_PI / 70));
 
 			obj_jangeki[i] = new Jangeki_Base(x, y, radius, speed, angle, type);
-			count++;
 
-			if (GetRand(3) == count)
+			if (Rand() == SPcount)
+			{
 				Spflg = false;
+				SPcount = 0;
+			}
 		}
 	}
+}
+
+int Enemy_09::Rand()
+{
+	int ran = GetRand(2);
+
+	if (ran == 0)return 2;
+	if (ran == 1)return 3;
+	if (ran == 2)return 4;
 }
 
 void Enemy_09::Jan_40degrees()
