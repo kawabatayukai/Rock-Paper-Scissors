@@ -35,8 +35,8 @@ Scene_Stage06::Scene_Stage06(const Player* player)
 
 	//一つずつ生成  STAGE_06_FLOOR 個分
 	obj_floor[0] = new Floor(0, 700, 1280, 20, 22822);        //床
-	obj_floor[1] = new Floor(0, 0 - 400, 20, 1720 + 400);           //壁（左）
-	obj_floor[2] = new Floor(1260, 0 - 400, 20, 1720 + 400);           //壁（右）
+	obj_floor[1] = new Floor(0, 0 - 420, 20, 1720 + 420);           //壁（左）
+	obj_floor[2] = new Floor(1260, 0 - 420, 20, 1720 + 420);           //壁（右）
 
 	obj_floor[3] = new Floor(81, 150, 120, 10, 22822);          //足場[3]～[15]
 	obj_floor[4] = new Floor(81, 350, 120, 10, 22822);
@@ -56,7 +56,7 @@ Scene_Stage06::Scene_Stage06(const Player* player)
 	obj_floor[14] = new Floor(1089, 350, 120, 10, 22822);
 	obj_floor[15] = new Floor(1089, 550, 120, 10, 22822);
 
-	obj_floor[16] = new Floor(0, -220, 1280, 20, 22822);        //天井
+	obj_floor[16] = new Floor(0, -420, 1280, 220, 22822);        //天井
 
 	//制限時間をセット
 	GameData::Set_TimeLimit(5460);
@@ -301,7 +301,6 @@ void Scene_Stage06::AfterJanken_WIN()
 void Scene_Stage06::AfterJanken_LOSE()
 {
 	obj_player = new Player(100, 600);                            //プレイヤーを指定座標に生成
-	//obj_enemy  = new Enemy_06(1149, 480, obj_enemy->GetType());   //敵を指定座標に生成
 	obj_enemy->SpeedUp();                                         //敵の特殊行動1
 }
 
