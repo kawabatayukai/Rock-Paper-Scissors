@@ -104,7 +104,7 @@ void Scene_InputName::KeyBoardInit()
 int Scene_InputName::LoadKeyBoardImgaes()
 {
 	//背景
-	if ((backimage = LoadGraph("images/KeyBoard/back02.png")) == -1) return -1;
+	if ((backimage = LoadGraph("images/KeyBoard/back04.png")) == -1) return -1;
 	//キーボード
 	if ((keyboardimage = LoadGraph("images/KeyBoard/OPEN_Board4.png")) == -1) return -1;
 	//分割読み込み　押したよ/押してない が連結した画像
@@ -127,7 +127,7 @@ int Scene_InputName::LoadKeyBoardImgaes()
 void Scene_InputName::KeyBoard_Draw()const
 {
 	//背景
-	DrawGraph(320, 120, backimage, FALSE);
+	DrawGraph(0, 0, backimage, FALSE);
 
 	//キーボード
 	DrawGraph(45 + CENTER_X, OUT_HEIGHT, keyboardimage, TRUE);
@@ -293,12 +293,12 @@ void Scene_InputName::DrawInputInfo()const
 	{
 		//SetDrawBlendMode
 		SetFontSize(20);
-		DrawString(200 + CENTER_X, 125 + CENTER_Y, "・ ・ 名前を入力 ・ ・", 0xffffff);
+		DrawString(200 + CENTER_X, 75 + CENTER_Y, "・ ・ 名前を入力 ・ ・", 0xffffff);
 	}
 	for (int i = 0; name[i] != '\0'; i++)
 	{
 		SetFontSize(30);
-		DrawFormatString((220 + 20 * i) + CENTER_X, 120 + CENTER_Y, 0xffffff, " %c", name[i]);
+		DrawFormatString((220 + 20 * i) + CENTER_X, 70 + CENTER_Y, 0xffffff, " %c", name[i]);
 	}
 }
 
