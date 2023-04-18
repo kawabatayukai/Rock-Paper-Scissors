@@ -81,13 +81,7 @@ void Jangeki_Player::Update()
 	x += speed;
 	y -= speed_y;
 
-	//if (++frame_count % 1 == 0)
-	//{
-	//	index_jangeki++;  //Ÿ‚Ì‰æ‘œ
-	//	if (index_jangeki > 3) index_jangeki = 1;
 
-	//	frame_count = 0;
-	//}
 
 	//Šg‘å—¦‚ğ™X‚Éã‚°‚é
 	rate_pct -= 5.0;

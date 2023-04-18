@@ -59,6 +59,7 @@ Scene_Stage07::~Scene_Stage07()
 //更新
 void Scene_Stage07::Update()
 {
+
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
@@ -118,8 +119,6 @@ void Scene_Stage07::Update()
 					//enemy側のじゃん撃を削除
 					obj_enemy->DeleteJangeki(e_count);
 					e_count--;
-
-					
 
 					break;
 

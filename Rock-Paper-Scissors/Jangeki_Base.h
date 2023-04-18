@@ -65,6 +65,11 @@ public:
 	//円形の当たり判定
 	bool Hit_CircleCircle(float c_x, float c_y, float c_r) const;
 
+	//発動すべきエフェクトを取得する
+	Jan_Result GetEffectType() const;
+
+	//
+
 protected:
 
 	float x;            //ｘ
@@ -90,4 +95,8 @@ protected:
 	float target_x = 0; //対象のｘ座標
 	float target_y = 0; //対象のｙ座標
 
+	//発動すべきエフェクトの種類
+	Jan_Result effect_type; 
+	int* image_effect;             //画像
+	int index_effect;              //画像No
 };
