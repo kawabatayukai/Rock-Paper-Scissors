@@ -4,8 +4,7 @@
 #include"Stage_Base.h"
 #include"Player.h"
 #include"Floor.h"
-//#include"MobEnemy_05.h"
-
+#include"Jangeki_reflection.h"
 #define STAGE_05_FLOOR 8         //°E•Ç‚Ì‡Œv”
 
 //0ƒXƒe[ƒW
@@ -30,12 +29,13 @@ public:
 
 
 
+
 private:
 	Enemy_05* obj_enemy;            //“G
 	MobEnemy_05** mob;				//G‹›“G
 
 	int Back_image;					//”wŒi‰æ‘œ
 
-	
+	Jangeki_Reflection* reflection;
 };
 

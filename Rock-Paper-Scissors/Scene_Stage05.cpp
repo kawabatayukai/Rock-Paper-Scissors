@@ -34,6 +34,8 @@ Scene_Stage05::Scene_Stage05(const Player* player)
 	mob[1] = new MobEnemy_05(50, 420, Jan_Type::SCISSORS);
 	mob[2] = new MobEnemy_05(1230, 420, Jan_Type::ROCK);
 
+	reflection = new Jangeki_Reflection(0, 0, 0, 0, Jan_Type::ROCK);
+
 	if (mob[0]->GetHP() <= 0 && mob[1]->GetHP() <= 0 && mob[2]->GetHP() <= 0)
 	{
 		mob[0] = new MobEnemy_05(640, 100, Jan_Type::PAPER);
@@ -90,7 +92,7 @@ void Scene_Stage05::Update()
 		obj_enemy->GetMobEnemy(mob);
 		obj_enemy->Update();     //敵キャラ更新・内部処理
 		
-
+		obj_enemy->reflection->Update_reflection();
 
 		for (int i = 0; i < 3; i++)
 		{
@@ -115,6 +117,9 @@ void Scene_Stage05::Update()
 
 	//enemyのじゃん撃をとってくる
 	Jangeki_Base** enemy_jangeki = obj_enemy->GetJangeki();
+
+	//反射されたジャン撃をとってくる
+	Jangeki_Base** reflection_Jangeki = obj_enemy->reflection->GetJangeki();
 
 	Jangeki_Base** mobenemy_jangek[3];
 	mobenemy_jangek[0] = mob[0]->GetJangeki();
@@ -255,6 +260,9 @@ void Scene_Stage05::Update()
 		}
 	}
 
+
+
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//playerじゃん撃とenemyの当たり判定
@@ -283,6 +291,7 @@ void Scene_Stage05::Update()
 							obj_enemy->ReceiveDamage(10);     //ダメージが入る
 							obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 							i--;
+							obj_enemy->reflection->trueFlg();
 						}
 
 						break;
@@ -295,6 +304,7 @@ void Scene_Stage05::Update()
 							obj_enemy->ReceiveDamage(10);     //ダメージが入る
 							obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 							i--;
+							obj_enemy->reflection->trueFlg();
 						}
 						break;
 
@@ -306,6 +316,7 @@ void Scene_Stage05::Update()
 							obj_enemy->ReceiveDamage(10);     //ダメージが入る
 							obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 							i--;
+							obj_enemy->reflection->trueFlg();
 						}
 						break;
 
@@ -435,13 +446,69 @@ void Scene_Stage05::Update()
 			}
 		}
 	}
-
-
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//反射じゃん撃当たり判定
+	//反射されたじゃん撃とplayerじゃん撃の当たり判定
+	for (int p_count = 0; p_count < JANGEKI_MAX; p_count++)
+	{
+		if (player_jangeki[p_count] == nullptr) break;         //じゃん撃がない時は処理しない
+		bool delete_player = false;       //プレイヤーじゃん撃削除フラグ　true:削除　false:削除しない
+		for (int r_count = 0; r_count < JANGEKI_MAX; r_count++)
+		{
+			if (reflection_Jangeki[r_count] == nullptr) break;         //じゃん撃がない時は処理しない
+			if (player_jangeki[p_count]->Hit_Jangeki(reflection_Jangeki[r_count]) == true)
+			{
+				//有利属性チェック
+				int result = player_jangeki[p_count]->CheckAdvantage(reflection_Jangeki[r_count]);
+				switch (result)
+				{
+				case 0:             //playerのじゃん撃が不利
+					//player側のじゃん撃を削除
+					delete_player = true;
+					break;
+				case 1:             //playerのじゃん撃が有利
+					//enemy側のじゃん撃を削除
+					obj_enemy->reflection->Delete_reflectionJangeki(r_count);
+					r_count--;
+					break;
+				case 2:             //あいこ
+					//player側のじゃん撃を削除
+					delete_player = true;
+					//enemy側のじゃん撃を削除
+					obj_enemy->reflection->Delete_reflectionJangeki(r_count);
+					r_count--;
+					break;
+				default:
+					break;
+				}
+			}
+		}
+		//プレイヤーじゃん撃削除フラグがtrue
+		if (delete_player == true)
+		{
+			//player側のじゃん撃を削除
+			obj_player->DeleteJangeki(p_count);
+			p_count--;
+		}
+	}
+	//反射されたじゃん撃とプレイヤーの当たり判定
+	for (int i = 0; i < JANGEKI_MAX; i++)
+	{
+		//じゃん撃がない時は処理しない
+		if (reflection_Jangeki[i] == nullptr) break;
+		//じゃん撃との当たり判定
+		if (obj_player->Hit_Jangeki(reflection_Jangeki[i]) == true)
+		{
+			//ダメージを受ける（プレイヤー）
+			obj_player->ReceiveDamage(30);
+			//あたったじゃん撃を削除
+			obj_enemy->reflection->Delete_reflectionJangeki(i);
+			i--;
+		}
+	}
 
 	HitCtrl_Floor(obj_player, STAGE_05_FLOOR);     // player　床・壁判定
 	HitCtrl_Floor(obj_enemy, STAGE_05_FLOOR);      // 敵　　　床・壁判定
-
-
 }
 
 
@@ -532,6 +599,10 @@ AbstractScene* Scene_Stage05::ChangeScene()
 void Scene_Stage05::AfterJanken_WIN()
 {
 	obj_player->SetX(200);
+	for (int a = 0; a < 3; a++)
+	{
+		mob[a]->Janken_win();
+	}
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）

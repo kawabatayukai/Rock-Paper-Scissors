@@ -97,3 +97,8 @@ void MobEnemy_05::Janken_lose()
 {
 	hp = 100;
 }
+
+void MobEnemy_05::Janken_win()
+{
+	hp = hp / 2;
+}
