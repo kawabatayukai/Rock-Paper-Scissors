@@ -65,14 +65,14 @@ private:
 	
 
 	//列挙体ステージ3
-	enum class ENEMY_STATE1
+	/*enum class ENEMY_STATE1
 	{
 		STOP1,
 		LEFTMOVE1,
 		RIGHTMOVE1,
 		JUMP1,
 	};
-	ENEMY_STATE1 enemy_state1 = ENEMY_STATE1::STOP1;
+	ENEMY_STATE1 enemy_state1 = ENEMY_STATE1::STOP1;*/
 
 
 
@@ -86,15 +86,18 @@ private:
 
 
 	int frame_count_anim = 0;       //敵のアニメーション用
-	
-	int enemyimage[6];      //敵画像配列
-	int enemyimage1[6]; //耐久値1の時の画像
-	int enemyimage2[6]; //耐久値2の時の画像
+	int frame_count_anim1 = 0;       //敵のアニメーション1用
 
+
+	int enemyimage[6];      //敵画像配列
+	int enemyimage1[6]; //万全の時の画像
+	int enemyimage2[6]; //耐久値2の時の画像
+	int enemyimage3[6]; //耐久値3の時の画像
+	int enemyimage4[6]; //やられかけの時の画像
 
 	//int enemyimageMirror[6];//敵画像反転
 	int currentindex_st03 = 0;
-
+	int currentindex1_st03 = 0;
 	/*int screenWidth = 0;
 	int screenHeight = 0;*/
 	
