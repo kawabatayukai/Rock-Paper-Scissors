@@ -34,5 +34,6 @@ protected:
 
 	float player_x = 0.0f;   //プレイヤーの座標
 	float player_y = 0.0f;   //プレイヤーの座標
+	int player_dir = 0;      //プレイヤーの向き
 };
 
