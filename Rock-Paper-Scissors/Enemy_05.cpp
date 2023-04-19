@@ -5,6 +5,7 @@
 #include "Jangeki_Changespeed.h"
 #include "Jangeki_Zigzag.h" 
 #include "Jangeki_Spin.h" 
+#include "Jangeki_Homing.h"
 
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
@@ -21,6 +22,8 @@ Enemy_05::Enemy_05(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	Init_Jangeki();       //じゃん撃を用意
 
 	Enemy_image = LoadGraph("images/stage05/Stage5_Enemy_NoMove_Left.png", TRUE);
+	reflection = new Jangeki_Reflection(x, y, h, w, Jan_Type::ROCK);
+	reflection->Init_reflectionJangeki();
 }
 
 //デストラクタ
@@ -35,6 +38,7 @@ void Enemy_05::Update()
 {
 	//じゃん撃更新・生成
 	Update_Jangeki();
+	reflection->Update_reflection();
 
 	//if (x + (w / 2) == (1280 - 20))
 	//{
@@ -56,7 +60,7 @@ void Enemy_05::Update()
 	//	land_flg = false;  //地面についていない
 	//}
 
-	
+
 
 	if (mob[0]->GetHP() <= 0 && mob[1]->GetHP() <= 0 && mob[2]->GetHP() <= 0)
 	{
@@ -217,10 +221,12 @@ void Enemy_05::Draw() const
 
 	//じゃん撃描画
 	Draw_Jangeki();
+	reflection->Draw_reflectionJangeki();
 
 	//テスト
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
 	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
+
 
 }
 
@@ -239,6 +245,8 @@ void Enemy_05::Update_Jangeki()
 
 		//ホーミングじゃん撃であればプレイヤーの座標をセットする
 		obj_jangeki[jan_count]->SetTargetLocation(player_x, player_y);
+
+		reflection->SetTargetLocation(player_x, player_y);
 
 		//画面外で削除する
 		if (obj_jangeki[jan_count]->CheckScreenOut() == true)
@@ -264,6 +272,9 @@ void Enemy_05::Update_Jangeki()
 		//生成
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Spin(x, y, radius, speed, type,player_x,player_y);
 
+		//反射じゃん撃生成
+		if (reflection->GetFlg() == true)reflection->obj_reflection[reflection->jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed, type, true);
+		reflection->falseFlg();
 	}
 }
 
