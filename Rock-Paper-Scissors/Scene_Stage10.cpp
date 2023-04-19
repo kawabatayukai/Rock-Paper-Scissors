@@ -87,23 +87,37 @@ void Scene_Stage10::Update()
 		* 第二形態
 		***********/
 	case 2:
-		obj_floor[3] = new Floor(81, 100, 120, 10, 22822);          //足場[3]～[15]
+		//obj_floor[3] = new Floor(81, 100, 120, 10, 22822);          //足場[3]～[15]
+		//obj_floor[4] = new Floor(81, 300, 120, 10, 22822);
+		//obj_floor[5] = new Floor(81, 500, 120, 10, 22822);
+
+		//obj_floor[6] = new Floor(333, 200, 120, 10, 22822);
+		//obj_floor[7] = new Floor(333, 400, 120, 10, 22822);
+
+		//obj_floor[8] = new Floor(585, 100, 120, 10, 22822);
+		//obj_floor[9] = new Floor(585, 300, 120, 10, 22822);
+		//obj_floor[10] = new Floor(585, 500, 120, 10, 22822);
+
+		
+		obj_floor[3] = new Floor(100, 500, 120, 20, 0xd2d2d2);//テレポート左位置
 		obj_floor[4] = new Floor(81, 300, 120, 10, 22822);
-		obj_floor[5] = new Floor(81, 500, 120, 10, 22822);
+		//obj_floor[4] = new Floor(0, 700, 1280, 20);
+		obj_floor[5] = new Floor(0, 700, 1280, 20);
 
-		obj_floor[6] = new Floor(333, 200, 120, 10, 22822);
+		//足場  
+		obj_floor[6] = new Floor(1050, 500, 120, 20, 0xd2d2d2);//テレポート右位置
 		obj_floor[7] = new Floor(333, 400, 120, 10, 22822);
-
 		obj_floor[8] = new Floor(585, 100, 120, 10, 22822);
-		obj_floor[9] = new Floor(585, 300, 120, 10, 22822);
-		obj_floor[10] = new Floor(585, 500, 120, 10, 22822);
 
+		//足場  
+		obj_floor[9] = new Floor(560, 420, 120, 20, 0xd2d2d2);//テレポート真ん中位置
+		obj_floor[10] = new Floor(0, 700, 1280, 20);
 		obj_floor[11] = new Floor(837, 200, 120, 10, 22822);
 		obj_floor[12] = new Floor(837, 400, 120, 10, 22822);
 
 		obj_floor[13] = new Floor(1089, 100, 120, 10, 22822);
 		obj_floor[14] = new Floor(1089, 300, 120, 10, 22822);
-		obj_floor[15] = new Floor(1089, 500, 120, 10, 22822);
+		obj_floor[15] = new Floor(100, 100, 120, 10, 22822);
 		break;
 	default:
 		break;

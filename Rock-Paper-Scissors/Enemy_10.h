@@ -3,6 +3,7 @@
 #include"Jangeki_reflection.h"
 #include"Jangeki_Base.h"
 #include"Player.h"
+//#include "Scene_Stage10.h"
 
 const static float V = 1.f;
 
@@ -60,6 +61,8 @@ public:
 
 	Jangeki_Reflection* reflection;
 
+	//Scene_Stage10* obj_floor;
+
 private:
 	/********************   ジャンプ関係   ********************/
 
@@ -98,6 +101,12 @@ private:
 
 	bool rflg = false; //反射用
 
+	int locationNum; /*繰り返し移動用の座標の番号を示す*/
+
+	int current = 0; /*処理用番号の変数*/
+
+	int waitCount = 0; /*停滞時間*/
+
 	//向き（左右のみ）
 	enum class DIRECTION
 	{
@@ -107,6 +116,9 @@ private:
 
 	/*敵：移動, 目的地, NEXT, 待ち時間, 攻撃方法の配列*/
 	MoveInformation10 MoveInfo[10] = {};
+
+	/*敵：移動処理・攻撃の方法、パターンのファイル読み込み*/
+	void InputCSV(const char* passCSV);
 };
 
 
