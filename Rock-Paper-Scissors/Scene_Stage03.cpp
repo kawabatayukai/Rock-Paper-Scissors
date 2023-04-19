@@ -183,27 +183,27 @@ void Scene_Stage03::Update()
 				{
 
 					//HPが100以下で86以上の時
-					if (obj_enemy->GetHP() <= 100 /*&& obj_enemy->GetHP() >= 86*/ && obj_enemy->GetWaitTime() > 0) {
+					if (obj_enemy->GetHP() <= 100 && /*obj_enemy->GetHP() >= 86 &&*/ obj_enemy->GetWaitTime() > 0) {
 
 						SheeldEnduranse = 27;
 						obj_enemy->ReceiveDamage(30 - (SheeldEnduranse)-EnemyCutDamege); //軽減ダメージが入る
 
 					}
-					else if (obj_enemy->GetHP() <= 85 /*&& obj_enemy->GetHP() >= 70 */&& obj_enemy->GetWaitTime() > 0) {
+					else if (obj_enemy->GetHP() <= 85 && /*obj_enemy->GetHP() >= 71 &&*/ obj_enemy->GetWaitTime() > 0) {
 
 						SheeldEnduranse = 24;
 						obj_enemy->ReceiveDamage(30 - (SheeldEnduranse)-EnemyCutDamege); //軽減ダメージが入る
 
 
 					}
-					else if (obj_enemy->GetHP() <= 70 && obj_enemy->GetHP() >= 55 && obj_enemy->GetWaitTime() > 0) {
+					else if (obj_enemy->GetHP() <= 70 && /*obj_enemy->GetHP() >= 56  &&*/obj_enemy->GetWaitTime() > 0) {
 
 						SheeldEnduranse = 21;
 						obj_enemy->ReceiveDamage(30 - (SheeldEnduranse)-EnemyCutDamege); //軽減ダメージが入る
 
 
 					}
-					else if (obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 40 && obj_enemy->GetWaitTime() > 0) {
+					else if (obj_enemy->GetHP() <= 55 && /*obj_enemy->GetHP() >= 41 &&*/ obj_enemy->GetWaitTime() > 0) {
 
 						SheeldEnduranse = 18;
 						obj_enemy->ReceiveDamage(30 - (SheeldEnduranse)-EnemyCutDamege); //軽減ダメージが入る
@@ -218,13 +218,12 @@ void Scene_Stage03::Update()
 
 					}
 
-					//}
-					//else {
+					else {
 
-					//	SheeldEnduranse = 0;
-					//	obj_enemy->ReceiveDamage(5 - EnemyCutDamege); //ダメージが入る
+						//SheeldEnduranse = 0;
+						obj_enemy->ReceiveDamage(2 - EnemyCutDamege); //ダメージが入る
 
-					//}
+					}
 
 
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除

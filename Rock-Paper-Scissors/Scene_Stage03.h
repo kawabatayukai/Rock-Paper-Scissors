@@ -39,4 +39,3 @@ private:
 	int EnemyCutDamege; //エネミーが勝った接触じゃんけん勝利時のダメージカット
 	int SheeldEnduranse;//シールドの耐久力
 };
-
