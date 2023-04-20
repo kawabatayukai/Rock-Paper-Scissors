@@ -91,4 +91,3 @@ private:
 
 	int ui_font;  //ui用フォントハンドル
 };
-
