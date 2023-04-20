@@ -165,7 +165,7 @@ void  Enemy_10::Move()
 			static int interval;
 			interval++;
 			static int teleport = 150;
-			static int jump = GetRand(10);
+			static int jump = GetRand(30);
 			static int h;
 			if (interval % teleport == 0) 
 			{
@@ -188,80 +188,127 @@ void  Enemy_10::Move()
 					break;
 				
 					//真ん中
-				case 3:
+				/*case 3:
 					h = 3;
 					x = 620;
 					y = 370;
 					old_y = y;
-					break;
+					break;*/
 				}
 			}
 			else
 			{
 				switch (GetRand(3))
 				{
-				case 1: //左
-					if (h == 1)
+				case 1: //始まり右に移動
+					
+					switch (h)
 					{
+					case 1: //右行く
 						if (x < 1050)
 						{
-							x += GetRand(10);
+							dir = static_cast<int>(DIRECTION::RIGHT);   //向きを設定（左）
+							x += 4/*GetRand(20)*/;
 						}
-
-						if (interval % jump == 0)
+						else if (x > 1050)
 						{
-							if (land_flg == true && y > 100) //ジャンプ
-							{
-								g_add = -25.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-								land_flg = false;  //地面についていない
-							}
-
-							if (land_flg == false) //ジャンプ中の加速
-							{
-								if (v < 15) //加速上限
-								{
-									v += a;
-								}
-								x += v;
-							}
+							h == 2;
 						}
-					}
-					break;
-
-				case 2: // 右
-					if (h == 2)
-					{
+						break;
+					case 2: //左行く
 						if (x > 0)
 						{
-							x -= GetRand(10);
+							dir = static_cast<int>(DIRECTION::LEFT);   //向きを設定（左）
+							x -= 4/*GetRand(20)*/;
 						}
-
-						if (interval % jump == 0)
+						else if (x < 10)
 						{
-							if (land_flg == true && y > 100) //ジャンプ
-							{
-								g_add = -25.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-								land_flg = false;  //地面についていない
-							}
+							h == 1;
+						}
+						break;
+					default:
+						break;
+					}
 
-							if (land_flg == false) //ジャンプ中の加速
+					//ジャンプ
+					if (interval % jump == 0)
+					{
+						if (land_flg == true && y > 100) //ジャンプ
+						{
+							g_add = -25.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+							land_flg = false;  //地面についていない
+						}
+
+						if (land_flg == false) //ジャンプ中の加速
+						{
+							if (v < 15) //加速上限
 							{
-								if (v < 15) //加速上限
-								{
-									v -= a;
-								}
-								x -= v;
+								v += a;
 							}
+							x += v;
 						}
 					}
+					enemyChange_Image = 1; //switch文の割り当て番号
 					break;
 
-				case 3: // 真ん中
-					if (h == 3)
+				case 2: // 始まり左に移動
+					
+					switch (h)
 					{
-						x += GetRand(5);
+					case 1: //右行く
+						if (x < 1050)
+						{
+							dir = static_cast<int>(DIRECTION::RIGHT);   //向きを設定（左）
+							x += 4/*GetRand(20)*/;
+						}
+						else if (x > 1050)
+						{
+							h == 2;
+						}
+						break;
+
+					case 2: //左行く
+						if (x > 0)
+						{
+							dir = static_cast<int>(DIRECTION::LEFT);   //向きを設定（左）
+							x -= 4/*GetRand(20)*/;
+						}
+						else if (x < 10)
+						{
+							h == 1;
+						}
+						break;
+					default:
+						break;
 					}
+
+					//ジャンプ
+					if (interval % jump == 0)
+					{
+						if (land_flg == true && y > 100) //ジャンプ
+						{
+							g_add = -25.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+							land_flg = false;  //地面についていない
+						}
+
+						if (land_flg == false) //ジャンプ中の加速
+						{
+							if (v < 15) //加速上限
+							{
+								v -= a;
+							}
+							x -= v;
+						}
+					}
+					enemyChange_Image = 2; //switch文の割り当て番号
 					break;
+
+				//case 3: // 真ん中
+				//	if (h == 3)
+				//	{
+				//		x += GetRand(5);
+				//	}
+				//	break;
 				}
 			}
 		}
