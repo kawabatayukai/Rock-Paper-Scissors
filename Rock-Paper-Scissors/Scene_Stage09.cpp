@@ -290,10 +290,10 @@ void Scene_Stage09::Update()
 	{
 		//じゃん撃がない時は処理しない
 		if (reflection_jangeki[i] == nullptr) break;
-
 		//じゃん撃との当たり判定
 		if (obj_player->Hit_Jangeki(reflection_jangeki[i]) == true)
 		{
+			
 			//ダメージを受ける（プレイヤー）
 			obj_player->ReceiveDamage(30);
 
