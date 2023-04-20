@@ -14,24 +14,28 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = 1;//エネミーの向き
 	hp = 100;
 
-	enemyimage[0] = LoadGraph("images/stage03/stage03attack.png");
+	/*enemyimage[0] = LoadGraph("images/stage03/stage03attack.png");
 	enemyimage[1] = LoadGraph("images/stage03/stage03gard.png");
-	enemyimage[2] = LoadGraph("images/stage03/stage03jump.png");
+	enemyimage[2] = LoadGraph("images/stage03/stage03jump.png");*/
 
-	//LoadDivGraph("デスクトップ/stage03Anim.png",5,5,1,32,32,enemyimage);
+	LoadDivGraph("images/stage03/stage03Anim.png", 6, 6, 1, 100, 100, enemyimage);
+	LoadDivGraph("images/stage03/stage03SheeldEnduranse1.png", 6, 6, 1, 100, 100, enemyimage1);
+	LoadDivGraph("images/stage03/stage03SheeldEnduranse2.png", 6, 6, 1, 100, 100, enemyimage2);
+	LoadDivGraph("images/stage03/stage03SheeldEnduranse3.png", 6, 6, 1, 100, 100, enemyimage3);
+	LoadDivGraph("images/stage03/stage03SheeldEnduranse4.png", 6, 6, 1, 100, 100, enemyimage4);
 
-
+	//LoadDivGraph("images/stage03/stage03AnimMirror.png", 6, 6, 1, 100, 100, enemyimageMirror);
 
 	Init_Jangeki();       //じゃん撃を用意
 
 	//動きパターン 繰り返し　//0で動き,1で止まる
-	moveinfo[0] = { 0, 950.f, 0.f , 1,  0 ,0 };//初期位置のXが950で停止
+	moveinfo[0] = { 0, 950.f, 0.f , 1,  0 ,1 };//初期位置のXが950で停止
 
 	moveinfo[1] = { 1,  0 ,   0.f , 2, 200 ,1 };//初期位置のXが950で停止
 	//ここから動く
 	moveinfo[2] = { 0, 650.f, 0.f , 3,  0 ,0 };//Xが650まで動く
 
-	moveinfo[3] = { 1,  0 ,   0.f , 4, 200 ,1 };//Xが650で停止
+	moveinfo[3] = { 1,  0 ,   0.f , 4, 0 ,1 };//Xが650で停止
 
 	moveinfo[4] = { 0, 350.f, 0.f , 5, 0 ,0 };//Xが350まで動く
 
@@ -39,7 +43,7 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	moveinfo[6] = { 0, 350.f, 0.f , 7, 0 ,1 };//Xが350の足場に飛ぶ
 
-	moveinfo[7] = { 1,  0 ,   0.f , 8, 200 ,1 };//Xが350で停止
+	moveinfo[7] = { 1,  0 ,   0.f , 8, 0 ,1 };//Xが350で停止
 
 	//足場に乗る
 	moveinfo[8] = { 0,  50.f , 0.f , 9, 0 ,0 };//Xが70足場に飛ぶ
@@ -117,7 +121,7 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	moveinfo[34] = { 1,  0 ,   0.f , 35, 200 ,1 };//初期位置のXが350で停止
 
-	moveinfo[35] = { 0, 650.f, 0.f , 36,  0 ,0};//Xが650まで動く
+	moveinfo[35] = { 0, 650.f, 0.f , 36,  0 ,0 };//Xが650まで動く
 
 	moveinfo[36] = { 1,  0 ,   0.f , 37, 200 ,1 };//Xが650で停止
 
@@ -140,7 +144,9 @@ Enemy_03::~Enemy_03()
 //更新
 void Enemy_03::Update()
 {
-	if (land_flg == true && moveinfo[current].enemywaitTime == 0 && moveinfo[current].jumpflg == 0 )    //GetRand(30) == 3　のところがジャンプの条件
+
+
+	if (land_flg == true && moveinfo[current].enemywaitTime == 0 && moveinfo[current].jumpflg == 0)    //GetRand(30) == 3　のところがジャンプの条件
 	{
 		g_add = -23.f;    //初期-21.5f,重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 		land_flg = false;  //地面についていない
@@ -152,46 +158,152 @@ void Enemy_03::Update()
 	//じゃん撃更新・生成
 	Update_Jangeki();
 
+
+
 	////属性変更
-	if (moveinfo[current].enemywaitTime > 0) {
+	if (moveinfo[current].enemywaitTime > 0 || moveinfo[current].enemywaitTime < 200 && moveinfo[current].jumpflg == 0) {
 
 		e_type = Jan_Type::ROCK;
 
+
 	}
 	//動いているとき属性変更
-	else if (moveinfo[current].enemywaitTime < 200) {
+	/*else if (moveinfo[current].enemywaitTime < 200 && moveinfo[current].jumpflg == 0) {
 
 
 
 		e_type = Jan_Type::SCISSORS;
+	}*/
+
+	if (hp >= 40) {
+
+
+		//ステ03パターン用関数
+		switch (moveinfo[current].moveflg)
+		{
+		case 0:
+			Move_Pattern();
+
+			break;
+		case 1:
+			//待ち時間カウント
+			waitcount++;
+			if (moveinfo[current].enemywaitTime <= waitcount) {
+
+				waitcount = 0;
+				current = moveinfo[current].next_index;
+
+				//ランダムな動きX方向//
+				//moveinfo[current].location_x = GetRand(1150);
+
+
+			}
+			/*case 2:
+				MoveRunAway(float enemy_x, float enemy_y, int player_x, int player_y);*/
+			break;
+		default:
+			break;
+		}
+
+
 	}
+	else {
+
+		//目標座標
+		static float target_x = 0;
+		static float target_y = 0;
 
 
-	//ステ03パターン用関数
-	switch (moveinfo[current].moveflg)
-	{
-	case 0:
-		Move_Pattern();
+		//一致回数
+		static int count;
+		if (count == 0)
+		{
+			target_x = GetRand(1170) + 70;
+			//if (x==1000)
+			//{
+			//	count = 1;
+			//}
+			count = 1;
+		}
+		if (count == 1)
+		{
 
-		break;
-	case 1:
-		//待ち時間カウント
-		waitcount++;
-		if (moveinfo[current].enemywaitTime <= waitcount) {
+			if (x == target_x)
+			{
+				count = 0;
+			}
+		}
 
-			waitcount = 0;
-			current = moveinfo[current].next_index;
+		//移動量
+		float move_x = x;
+		float move_y = y;
+		moveinfo[current].jumpflg = 1;
 
-			//ランダムな動きX方向//
-			//moveinfo[current].location_x = GetRand(1150);
+		//x座標が目標と不一致
+		if (x != target_x)
+		{
+			//目標の方が大きい（目標は右方向）
+			if (x < target_x)
+			{
+				move_x += speed;      //右移動（正の値）
 
+
+				//目標を超えた場合
+				if (x <= target_x && target_x <= move_x)
+				{
+					move_x = target_x;     //目標座標で固定
+				}
+			}
+			else
+			{
+				move_x -= speed; //左移動（負の値）
+
+
+				//目標を超えた場合
+				if (move_x <= target_x && target_x <= x)
+				{
+					move_x = target_x;     //目標座標で固定
+				}
+			}
+		}
+
+		////y座標が目標と不一致
+		//if (y != target_y)
+		//{
+		//	//目標の方が大きい（目標は右方向）
+		//	if (y < target_y)
+		//	{
+		//		move_y += speed;      //右移動（正の値）
+
+
+		//		//目標を超えた場合
+		//		if (y <= target_y && target_y <= move_y)
+		//		{
+		//			move_y = target_y;     //目標座標で固定
+		//		}
+		//	}
+		//	else
+		//	{
+		//		move_y -= speed; //左移動（負の値）
+
+
+		//		//目標を超えた場合
+		//		if (move_y <= target_y && target_y <= y)
+		//		{
+		//			move_y = target_y;     //目標座標で固定
+		//		}
+		//	}
+		//}
+		//移動を反映
+		x = move_x;
+		y = move_y;
+
+		if (old_x == x)
+		{
+			target_x = GetRand(1170) + 70;
 
 		}
-		break;
-	default:
-		break;
 	}
-
 
 	//HPが0以下だったらHPに0を代入
 	if (hp <= 0)hp = 0;
@@ -209,25 +321,43 @@ void Enemy_03::Update()
 	//x += dir * speed;
 
 	///********************   ジャンプ関係   ********************/
-	
-		y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
-		//落下速度の制限
-		if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
+	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
-		old_y = y;              //1フレーム前のｙ座標
-		y += y_add;            //落下距離をｙ座標に加算する
-		g_add = _GRAVITY;     //重力加速度を初期化する
+//落下速度の制限
+	if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
 
-
-		/*if (++frame_count % 5 == 0) {
-
-			currentindex_st03++;
-			if (currentindex_st03 >= 5)currentindex_st03 = 0;
-			frame_count = 0;
-		}*/
+	old_y = y;              //1フレーム前のｙ座標
+	y += y_add;            //落下距離をｙ座標に加算する
+	g_add = _GRAVITY;     //重力加速度を初期化する
 
 
+	//配列0～2番目の画像のループ
+	if (++frame_count_anim % 40 == 0) {
+
+		currentindex_st03++;
+		if (currentindex_st03 >= 3)currentindex_st03 = 0;
+		frame_count_anim = 0;
+	}
+
+	//配列0～2番目の画像のループ耐久値1の時
+	/*if (++frame_count_anim1 % 40 == 0) {
+
+		currentindex_st03++;
+		if (currentindex1_st03 >= 3)currentindex1_st03 = 0;
+		frame_count_anim1 = 0;
+	}*/
+
+
+
+	//前回のｘ
+	old_x = x;
+
+	/*if (hp >= 86) now_image = enemyimage;
+	else if (hp >= 85 && hp <= 71) now_image = enemyimage1;
+	else if (hp >= 70 && hp <= 56) now_image = enemyimage2;
+	else if (hp >= 55 && hp <= 41) now_image = enemyimage3;
+	else if (hp <= 40) now_image = enemyimage4;*/
 
 
 }
@@ -258,27 +388,168 @@ void Enemy_03::Draw() const
 
 {
 	//エネミー停止時
-	if (moveinfo[current].enemywaitTime > 0) {
+	//if (moveinfo[current].enemywaitTime > 0) {
+
+	//	//ガード時の画像描画							
+	//	DrawRotaGraphF(x, y, 1, 0, now_image[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
+
+
+	//}
+
+	////ジャンプ時
+	//else if ( moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200) {
+
+	//	//ジャンプ時の画像描画							
+	//	DrawRotaGraphF(x, y, 1, 0, now_image[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
+
+	//}
+	////そうじゃないとき
+	////動いているとき
+	//else {
+
+	//	//エネミーの構造体と一致したときに     エネミーが左または右に動く
+	//	if (/*hp <= 100*/   /*hp >= 86  &&*/ enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE && moveinfo[current].enemywaitTime < 200) {
+	//		//攻撃時の画像描画								//向きを変える
+	//		DrawRotaGraphF(x, y, 1, 0, now_image[currentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
+	//	}
+
+
+	//}
+
+
+
+	////////////////////////
+	 //HPが86以上の時
+	///////////////////////
+	//エネミー停止時
+	if (/*hp <= 100 &&*/ hp >= 86 &&moveinfo[current].enemywaitTime > 0) {
 
 		//ガード時の画像描画							
-		DrawRotaGraphF(x, y, 1, 0, enemyimage[1]/*[currentindex_st03]*/, TRUE, dir == -1 ? 0 : 1);
+		DrawRotaGraphF(x, y, 1, 0, enemyimage[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
 
 
 	}
 
-	else if ( moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200 ) {
+	//ジャンプ時
+	else if (/*hp <= 100*/  hp >= 86 && moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200) {
 
 		//ジャンプ時の画像描画							
-		DrawRotaGraphF(x, y, 1, 0, enemyimage[2], TRUE, dir == -1 ? 0 : 1);
+		DrawRotaGraphF(x, y, 1, 0, enemyimage[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
 
 	}
-
 	//そうじゃないとき
+	//動いているとき
 	else {
-		//攻撃時の画像描画								//向きを変える
-		DrawRotaGraphF(x, y, 1, 0, enemyimage[0], TRUE, dir == -1 ? 0 : 1);
+
+		//エネミーの構造体と一致したときに     エネミーが左または右に動く
+		if (/*hp <= 100*/   hp >= 86  && enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE && moveinfo[current].enemywaitTime < 200) {
+			//攻撃時の画像描画								//向きを変える
+			DrawRotaGraphF(x, y, 1, 0, enemyimage[currentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
+		}
+
+
 	}
 
+	//////////////////////
+	//HP85以上で70以下のとき
+	/////////////////////
+	if (hp <= 85 && hp >= 71 && moveinfo[current].enemywaitTime > 0) {
+
+
+		DrawRotaGraphF(x, y, 1, 0, enemyimage1[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
+
+	}
+	else if (hp <= 85 &&  hp >= 71  && moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200) {
+
+		//ジャンプ時の画像描画							
+		DrawRotaGraphF(x, y, 1, 0, enemyimage1[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
+
+	}
+	else {
+
+		//エネミーの構造体と一致したときにエネミーが左または右に動く
+		if ((hp <= 85 && hp >= 71 && enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE && moveinfo[current].enemywaitTime < 200)) {
+			//攻撃時の画像描画								//向きを変える
+			DrawRotaGraphF(x, y, 1, 0, enemyimage1[currentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
+		}
+
+
+	}
+
+	////////////////////////
+	//HP70以上で 55以下のとき
+	////////////////////////
+	if (hp<= 70 && hp >= 56 && moveinfo[current].enemywaitTime > 0) {
+
+		DrawRotaGraphF(x, y, 1, 0, enemyimage2[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
+
+	}
+	else if (hp <= 70 && hp >= 56 && moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200) {
+
+		//ジャンプ時の画像描画							
+		DrawRotaGraphF(x, y, 1, 0, enemyimage2[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
+
+	}
+	else {
+
+		//エネミーの構造体と一致したときにエネミーが左または右に動く
+		if ((hp <= 70 && hp >= 56 && enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE && moveinfo[current].enemywaitTime < 200)) {
+			//攻撃時の画像描画								//向きを変える
+			DrawRotaGraphF(x, y, 1, 0, enemyimage2[currentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
+		}
+	}
+
+
+	//////////////////////////
+	//HP55以上で 41以下のとき
+	//////////////////////////
+	if (hp <= 55 && hp >= 41 && moveinfo[current].enemywaitTime > 0) {
+
+
+		DrawRotaGraphF(x, y, 1, 0, enemyimage3[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
+
+	}
+	else if (hp <= 55 && hp >= 41 && moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200) {
+
+		//ジャンプ時の画像描画							
+		DrawRotaGraphF(x, y, 1, 0, enemyimage3[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
+
+	}
+	else {
+
+		//エネミーの構造体と一致したときにエネミーが左または右に動く
+		if ((hp <= 55 && hp >= 41 && enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE && moveinfo[current].enemywaitTime < 200)) {
+			//攻撃時の画像描画								//向きを変える
+			DrawRotaGraphF(x, y, 1, 0, enemyimage3[currentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
+		}
+
+
+	}
+
+	//////////////////////////
+	//HP40以下のとき
+	//////////////////////////
+	if (hp <= 40 /*&& hp <= 39*/ && moveinfo[current].enemywaitTime > 0) {
+
+
+		DrawRotaGraphF(x, y, 1, 0, enemyimage4[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
+
+	}
+	else if (hp <= 40 /*&& hp >= 39*/ && moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200) {
+
+		//ジャンプ時の画像描画							
+		DrawRotaGraphF(x, y, 1, 0, enemyimage4[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
+
+	}
+	else {
+
+		//エネミーの構造体と一致したときにエネミーが左または右に動く
+		if ((hp <= 40 /*&& hp >= 39*/ && enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE && moveinfo[current].enemywaitTime < 200)) {
+			//攻撃時の画像描画								//向きを変える
+			DrawRotaGraphF(x, y, 1, 0, enemyimage4[currentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
+		}
+	 
+	}
 
 	//じゃん撃描画
 	Draw_Jangeki();
@@ -327,13 +598,13 @@ void Enemy_03::Update_Jangeki()
 		float speed = 4.5f /** dir*/;     //スピード//3.0
 
 		//ランダムな属性を生成
-		Jan_Type type = static_cast<Jan_Type>(GetRand(4));//2 //主に属性時のジャン撃を繰り出す
+		Jan_Type type = static_cast<Jan_Type>(GetRand(2));//2 //主に属性時のジャン撃を繰り出す
 
 
 		//プレイヤー方向へのジャン撃生成
 
 		if (hp >= 41) {
-			if (frame_count % 85 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+			if (frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 		}
 		////通常弾生成
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
@@ -341,13 +612,10 @@ void Enemy_03::Update_Jangeki()
 		//攻撃UP時のジャン撃
 		else if (hp <= 40) {
 
-
 			float radius = 50.0f;
 			float speed = 4.5f;
 
-			if (frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
-
-
+			if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 
 		}
 
@@ -389,6 +657,8 @@ void Enemy_03::Move_Pattern() {
 
 			move_x += speed; //右移動にプラスする
 
+			enemy_state = ENEMY_STATE::RIGHTMOVE;
+
 			//目指していた座標を超えたとき
 			if (x <= moveinfo[current].location_x && moveinfo[current].location_x <= move_x)
 			{
@@ -401,6 +671,8 @@ void Enemy_03::Move_Pattern() {
 		else
 		{
 			move_x -= speed; //左移動にマイナスする
+
+			enemy_state = ENEMY_STATE::LEFTMOVE;
 
 			//目指していた座標を超えたとき
 			if (move_x <= moveinfo[current].location_x && moveinfo[current].location_x <= x)
@@ -415,6 +687,7 @@ void Enemy_03::Move_Pattern() {
 
 
 	}
+	
 
 	//移動を反映する
 	x = move_x;
@@ -437,3 +710,39 @@ void Enemy_03::ChangeDir(float enemy_x)
 	else dir = 1;
 }
 
+//void Enemy_03::MoveRunAway(float enemy_x, float enemy_y, int player_x, int player_y) {//
+//
+//	screenWidth = 1280;
+//	screenHeight = 720;
+//
+//	 enemy_x = rand() % screenWidth;
+//	 enemy_y = rand() % screenHeight;
+//	player_x = 0.0f;
+//	player_y = 0.0f;
+//
+//	if (enemy_x < player_x) {
+//
+//		enemy_x++;
+//
+//	}
+//	else if (enemy_x > player_x) {
+//
+//		enemy_x--;
+//	}
+//	if (enemy_y < player_y) {
+//
+//		enemy_y++;
+//	}
+//	else if (enemy_y > player_y) {
+//
+//		enemy_y--;
+//	}
+//
+//	int distance = sqrt(pow(player_x - enemy_x, 2) + pow(player_y - enemy_y, 2));
+//
+//	if (distance < 50) {
+//
+//		enemy_x += rand() % 10 - 5;
+//		enemy_y += rand() % 10 - 5;
+//	}
+//}
