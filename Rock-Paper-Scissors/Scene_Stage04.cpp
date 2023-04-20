@@ -311,6 +311,7 @@ void Scene_Stage04::AfterJanken_WIN()
 //じゃんけん終了後の挙動（プレイヤー負け）
 void Scene_Stage04::AfterJanken_LOSE()
 {
+	obj_enemy->Special_Action();
 	obj_player->SetX(100);
 	obj_enemy->SetX(1180);
 }

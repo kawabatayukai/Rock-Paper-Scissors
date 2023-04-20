@@ -12,6 +12,9 @@ Enemy_04::Enemy_04(float x, float y, Jan_Type type) : EnemyBase(x, y, 150.0f, 15
 	dir = 1;
 	hp = 100;
 
+	enemy_x = GetRand(1160) + 100;
+	enemy_y = GetRand(600) + 100;
+
 	enemy_image[0] = LoadGraph("images/Stage4/stage_Boss04.png");
 	enemy_image[1] = LoadGraph("images/Stage4/stage_Boss04(上).png");
 	enemy_image[2] = LoadGraph("images/Stage4/stage_Boss04(右上).png");
@@ -45,12 +48,21 @@ void Enemy_04::Update()
 	moveinfo[0] = { 1, player_x, player_y, 0, 1 };
 	moveinfo[1] = { 0,      0.f,      0.f, 0, 0 };
 
+	moveinfo[2] = { 1,  enemy_x,  enemy_y, 0, 3 };
+	moveinfo[3] = { 0,      0.f,      0.f, 0, 2 };
+
 	switch (moveinfo[current].moveflg)
 	{
 	case 0:
 		waitTime++;
 		if (moveinfo[current].waitFlameTime <= waitTime)
 		{
+			if (specialFlg == true)
+			{
+				enemy_x = GetRand(1160) + 100;
+				enemy_y = GetRand(600) + 100;
+				specialTime++;
+			}
 			waitTime = 0;
 			current = moveinfo[current].next_index;
 		}
@@ -68,11 +80,31 @@ void Enemy_04::Update()
 	if (hp <= 0) hp = 0;
 	
 	//HP50％以下でスピードUP
-	if (hp <= 50) speed = 2.0f;
-	else speed = 1.0f;
+	//if (hp <= 50) speed = 2.0f;
+	//else speed = 1.0f;
+
+	if (specialFlg == true)
+	{
+		speed = 10.0f;
+	}
+	else if (hp <= 50)
+	{
+		speed = 2.0f;
+	}
+	else
+	{
+		speed = 1.0f;
+	}
 
 	//少しずつHP回復
 	if (hp < 100 && frame_count % 25 == 0) hp++;
+
+	if (specialTime >= 500)
+	{
+		specialTime = 0;
+		specialFlg = false;
+		current = 0;
+	}
 }
 
 //描画
@@ -309,4 +341,10 @@ void Enemy_04::Change_JanType()
 	}
 
 	return;
+}
+
+void Enemy_04::Special_Action()
+{
+	specialFlg = true;
+	current = 3;
 }

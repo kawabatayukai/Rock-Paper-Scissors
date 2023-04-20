@@ -30,6 +30,8 @@ public:
 
 	void Change_JanType();           //ランダムに属性変化
 
+	void Special_Action();			//特殊行動
+
 private:
 	/********************   ジャンプ関係   ********************/
 
@@ -40,13 +42,18 @@ private:
 
 	/**********************************************************/
 
-	int waitTime;				//待ち時間用変数
-	int frame_count;			//じゃん撃発射用
-	Pattern_04 moveinfo[2];	    //行動パターン
-	short current;				//現在のパターン配列添字
+	int waitTime = 0;				//待ち時間用変数
+	int frame_count = 0;			//じゃん撃発射用
+	Pattern_04 moveinfo[4];	    //行動パターン
+	short current = 0;				//現在のパターン配列添字
+	float enemy_x = 0;
+	float enemy_y = 0;
 
 	int enemy_image[9];			//画像用変数
 	float angle;
+
+	int specialTime = 0;
+	bool specialFlg = false;
 };
 
 
