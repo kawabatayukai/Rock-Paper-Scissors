@@ -61,6 +61,9 @@ public:
 
 	Jangeki_Reflection* reflection;
 
+	float Get_OldY();                   //old_y‚Ìæ“¾ŠÖ”
+	float Get_Y();                      //y‚Ìæ“¾
+
 	//Scene_Stage10* obj_floor;
 
 private:

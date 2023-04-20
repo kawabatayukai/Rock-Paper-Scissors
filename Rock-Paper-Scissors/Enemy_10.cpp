@@ -804,3 +804,15 @@ void Enemy_10::HP()
 		hp = 1;
 	}
 }
+
+//old_y‚Ìæ“¾ŠÖ”
+float Enemy_10::Get_OldY()
+{
+	return old_y;
+}
+
+//y‚Ìæ“¾ŠÖ”
+float Enemy_10::Get_Y()
+{
+	return y;
+}
