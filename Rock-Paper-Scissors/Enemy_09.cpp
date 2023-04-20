@@ -130,7 +130,7 @@ void Enemy_09::Update_Jangeki()
 			{
 				if (Spflg == false)
 				{
-					obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
+					//obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
 					count++;
 				}
 				else
