@@ -34,7 +34,7 @@ Janken::Janken(Jan_Type enemy_jan, const int stage_num)
 		image_all_enemy[7] = LoadGraph("images/tyokitest.png");
 		image_all_enemy[8] = LoadGraph("images/stage08/Stage8_image100.png");
 		image_all_enemy[9] = LoadGraph("images/stage09/Stage9_100.png");
-		image_all_enemy[10] = LoadGraph("images/tyokitest.png");
+		image_all_enemy[10] = LoadGraph("images/ステージ10敵の画像.png");
 	}
 
 	//背景
@@ -49,7 +49,7 @@ Janken::Janken(Jan_Type enemy_jan, const int stage_num)
 		image_all_back[7] = LoadGraph("images/stage07/back02.png");
 		image_all_back[8] = LoadGraph("images/stage08/Stage08_1.jpg");
 		image_all_back[9] = LoadGraph("images/stage09/stage09_image.png");
-		image_all_back[10] = LoadGraph("images/stage10/tyokitest.png");
+		image_all_back[10] = 0; //LoadGraph("images/stage10/tyokitest.png");
 	}
 
 	//フォントデータを作成　　　　　　Windows標準搭載フォントなら大丈夫。多分　　　[候補 "Yu Gothic UI"]
