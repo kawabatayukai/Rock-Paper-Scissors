@@ -27,6 +27,7 @@ Scene_Stage08::Scene_Stage08(const Player* player)
 
 	//敵を生成
 	obj_enemy = new Enemy_08(1200, 360, Jan_Type::SCISSORS);
+	obj_cannon = new Enemy_Cannon(120, 360, Jan_Type::SCISSORS);
 	cannon = new Enemy_Cannon * [2];
 	
 	for (int a = 0; a < 2; a++)cannon[a] = nullptr;
@@ -90,7 +91,7 @@ void Scene_Stage08::Update()
 		{
 			cannon[a]->Update();
 			cannon[a]->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());	//プレイヤーの座標を取得
-		}
+		}	
 
 		//cannon[a]->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());	//プレイヤーの座標を取得
 
@@ -105,7 +106,8 @@ void Scene_Stage08::Update()
 
 	//enemyのじゃん撃をとってくる
 	Jangeki_Base** enemy_jangeki = obj_enemy->GetJangeki();
-
+	
+	Jangeki_Base** cannon_jangeki = obj_cannon->GetJangeki();
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//じゃん撃同士の当たり判定（プレイヤーじゃん撃目線）
@@ -167,8 +169,170 @@ void Scene_Stage08::Update()
 		}
 	}
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//じゃん撃同士
+	for (int a = 0; a < 3; a++)
+	{
+		//じゃん撃同士の当たり判定（プレイヤーじゃん撃目線）
+		for (int p_count = 0; p_count < JANGEKI_MAX; p_count++)
+		{
+			if (player_jangeki[p_count] == nullptr) break;         //じゃん撃がない時は処理しない
 
+			bool delete_player = false;       //プレイヤーじゃん撃削除フラグ　true:削除　false:削除しない
+
+			for (int e_count = 0; e_count < JANGEKI_MAX; e_count++)
+			{
+				if (enemy_jangeki[e_count] == nullptr) break;         //じゃん撃がない時は処理しない
+
+				if (player_jangeki[p_count]->Hit_Jangeki(enemy_jangeki[e_count]) == true)
+				{
+					//有利属性チェック
+					int result = player_jangeki[p_count]->CheckAdvantage(enemy_jangeki[e_count]);
+
+
+					switch (result)
+					{
+					case 0:             //playerのじゃん撃が不利
+
+						//player側のじゃん撃を削除
+						delete_player = true;
+
+						break;
+
+					case 1:             //playerのじゃん撃が有利
+
+						//enemy側のじゃん撃を削除
+						cannon[a]->DeleteJangeki(e_count); 
+						e_count--;
+
+
+						break;
+
+					case 2:             //あいこ
+
+						//player側のじゃん撃を削除
+						delete_player = true;
+
+						//enemy側のじゃん撃を削除
+						obj_enemy->DeleteJangeki(e_count);
+						e_count--;
+
+						break;
+
+					default:
+						break;
+					}
+
+
+				}
+			}
+			//プレイヤーじゃん撃削除フラグがtrue
+			if (delete_player == true)
+			{
+				//player側のじゃん撃を削除
+				obj_player->DeleteJangeki(p_count);
+				p_count--;
+			}
+		}
+	}
+
+
+
+
+	for (int a = 0; a < 3; a++)
+	{
+		//cannon_jangeki[a] = Jangeki_Base **enemy_jangeki;
+		//if (cannon[a]->GetHP() > 0)
+		{
+			//じゃん撃同士の当たり判定（プレイヤーじゃん撃目線）(mob用)
+			for (int p_count = 0; p_count < JANGEKI_MAX; p_count++)
+			{
+				if (player_jangeki[p_count] == nullptr) break;         //じゃん撃がない時は処理しない
+
+				bool delete_player = false;       //プレイヤーじゃん撃削除フラグ　true:削除　false:削除しない
+
+				for (int e_count = 0; e_count < JANGEKI_MAX; e_count++)
+				{
+					if (enemy_jangeki[e_count] == nullptr) break;         //じゃん撃がない時は処理しない
+
+					if (player_jangeki[p_count]->Hit_Jangeki(enemy_jangeki[e_count]) == true)
+					{
+						//有利属性チェック
+						int result = player_jangeki[p_count]->CheckAdvantage(enemy_jangeki[e_count]);
+
+						switch (result)
+						{
+						case 0:             //playerのじゃん撃が不利
+
+							//player側のじゃん撃を削除
+							delete_player = true;
+
+							break;
+
+						case 1:             //playerのじゃん撃が有利
+
+							//enemy側のじゃん撃を削除
+							cannon[a]->DeleteJangeki(e_count);
+							e_count--;
+
+							break;
+
+						case 2:             //あいこ
+
+							//player側のじゃん撃を削除
+							delete_player = true;
+
+							//enemy側のじゃん撃を削除
+							cannon[a]->DeleteJangeki(e_count);
+							e_count--;
+
+							break;
+
+						default:
+							break;
+						}
+					}
+				}
+
+				//プレイヤーじゃん撃削除フラグがtrue
+				if (delete_player == true)
+				{
+					//player側のじゃん撃を削除
+					obj_player->DeleteJangeki(p_count);
+					p_count--;
+				}
+			}
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//playerじゃん撃とenemyの当たり判定
 	for (int i = 0; i < JANGEKI_MAX; i++)
 	{
