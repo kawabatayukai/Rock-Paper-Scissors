@@ -37,5 +37,5 @@ private:
 	int BlockImages ; //ブロック
 	int PlayerCutDamege ;//プレイヤーが勝った接触じゃんけん勝利時のダメージカット
 	int EnemyCutDamege; //エネミーが勝った接触じゃんけん勝利時のダメージカット
+	int SheeldEnduranse;//シールドの耐久力
 };
-
