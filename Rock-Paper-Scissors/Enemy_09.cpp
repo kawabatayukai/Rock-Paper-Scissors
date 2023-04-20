@@ -130,7 +130,7 @@ void Enemy_09::Update_Jangeki()
 			{
 				if (Spflg == false)
 				{
-					//obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
+					obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
 					count++;
 				}
 				else
@@ -396,7 +396,7 @@ void Enemy_09::frameUP()
 {
 	if (janFrame >= 55)
 	{
-		janFrame = janFrame - 5;
+		janFrame = janFrame - 10;
 	}
 }
 
