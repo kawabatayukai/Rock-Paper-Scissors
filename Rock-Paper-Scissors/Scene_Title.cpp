@@ -5,7 +5,8 @@
 #include"Scene_GameMain.h"
 #include"Scene_End.h"
 #include"Scene_Stage01.h"
-
+#include "Scene_Ranking.h"
+#include "Scene_Help.h"
 #include"GameData.h"
 
 //コンストラクタ
@@ -28,20 +29,24 @@ TitleScene::~TitleScene()
 void TitleScene::Update()
 {
 	//カーソルを合わせてボタンを押すと遷移
-	if (KeyManager::OnPadClicked(PAD_INPUT_UP) == true) {
+	if (KeyManager::OnPadClicked(PAD_INPUT_DOWN) == true) {
 
 		//上ボタンで上に
 		T_selectnum++;
 
-		if (T_selectnum > 1) T_selectnum = 0;
+		if (T_selectnum > 3) T_selectnum = 0;
+		/*if (T_selectnum > 2) T_selectnum = 1;
+		if (T_selectnum > 3) T_selectnum = 2;*/
 	}
 
-	if (KeyManager::OnPadClicked(PAD_INPUT_DOWN) == true) {
+	if (KeyManager::OnPadClicked(PAD_INPUT_UP) == true) {
 
 		//下ボタンで下に
 		T_selectnum--;
 
-		if (T_selectnum < 0) T_selectnum = 1;
+		if (T_selectnum < 0) T_selectnum = 3;
+		/*if (T_selectnum < 1) T_selectnum = 2;
+		if (T_selectnum < 2) T_selectnum = 3;*/
 
 	}
 
@@ -57,13 +62,15 @@ void TitleScene::Draw() const
 
 	DrawStringToHandle(70, 350, "START", 0xf, font_title);
 #else
-	DrawStringToHandle(70, 350, "GAMEMAIN", 0xf, font_title);
+	DrawStringToHandle(70, 340, "GAMEMAIN", 0xf, font_title);
+	DrawStringToHandle(70, 395, "HELP", 0xf, font_title);
+	DrawStringToHandle(70, 445, "RANKING", 0xf, font_title);
 #endif
 
-	DrawStringToHandle(70, 395, "END", 0xf, font_title);
+	DrawStringToHandle(70, 495, "END", 0xf, font_title);
 
 	//メニューカーソル
-	DrawTriangle(40, 355 + (T_selectnum * 52), 60, 370 + (T_selectnum * 52), 40, 385 + (T_selectnum * 52), GetColor(255, 0, 0), TRUE);
+	DrawTriangle(40, 355 + (T_selectnum * 50), 60, 370 + (T_selectnum * 50), 40, 385 + (T_selectnum * 50), GetColor(255, 0, 0), TRUE);
 }
 
 //シーンの変更
@@ -84,6 +91,21 @@ AbstractScene* TitleScene::ChangeScene()
 			return dynamic_cast<AbstractScene*> (new Scene_Stage01());
 #else
 			return dynamic_cast<AbstractScene*> (new GameMainScene());
+		case 1:
+			return dynamic_cast<AbstractScene*> (new HelpScene());
+			/*if (KeyManager::OnPadClicked(PAD_INPUT_A))
+			{
+
+			}*/
+			break;
+		case 2:
+			return dynamic_cast<AbstractScene*> (new Scene_Ranking());
+			break;
+		case 3:
+			return dynamic_cast<AbstractScene*> (new EndScene());
+			/*return dynamic_cast<AbstractScene*> (new HelpScene());
+			return dynamic_cast<AbstractScene*> (new Scene_Ranking());
+			return dynamic_cast<AbstractScene*> (new EndScene());*/
 #endif
 			break;
 
@@ -91,13 +113,11 @@ AbstractScene* TitleScene::ChangeScene()
 
 #ifdef  DEBUG_MODE_GAMEMAIN
 
-			case 1:
-				if (KeyManager::OnPadClicked(PAD_INPUT_A))
-				{
-					return dynamic_cast<AbstractScene*> (new EndScene());
-				}
-				break;
+
+			
 #endif
+				
+
 
 		default:
 			break;

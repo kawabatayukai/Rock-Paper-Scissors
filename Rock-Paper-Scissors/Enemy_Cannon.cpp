@@ -87,7 +87,7 @@ void Enemy_Cannon::Update_Jangeki()
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
 		float radius = 45.5f;   //半径
-		float speed = -13.0f;     //スピード
+		float speed = 13.0f;     //スピード
 
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));

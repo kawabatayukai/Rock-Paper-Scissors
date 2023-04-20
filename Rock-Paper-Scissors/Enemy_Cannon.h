@@ -1,7 +1,6 @@
 #pragma once
 #include"Enemy_Cannon.h"
 #include"EnemyBase.h"
-#include"Scene_Stage08.h"
 
 //8ステージ　敵キャラ
 class Enemy_Cannon : public EnemyBase

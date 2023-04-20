@@ -28,15 +28,15 @@ Scene_Stage06::Scene_Stage06(const Player* player)
 	obj_enemy = new Enemy_06(1200, 360, Jan_Type::SCISSORS);
 
 	//背景画像の読み込み
-	stage6_BackImage = LoadGraph("images/stage6/mori32-.png");
+	stage6_BackImage = LoadGraph("images/stage06/mori32-.png");
 
 	//床・壁の用意
 	Init_Floor(STAGE_06_FLOOR);
 
 	//一つずつ生成  STAGE_06_FLOOR 個分
 	obj_floor[0] = new Floor(0, 700, 1280, 20, 22822);        //床
-	obj_floor[1] = new Floor(0, 0 - 400, 20, 1720 + 400);           //壁（左）
-	obj_floor[2] = new Floor(1260, 0 - 400, 20, 1720 + 400);           //壁（右）
+	obj_floor[1] = new Floor(0, 0 - 420, 20, 1720 + 420);           //壁（左）
+	obj_floor[2] = new Floor(1260, 0 - 420, 20, 1720 + 420);           //壁（右）
 
 	obj_floor[3] = new Floor(81, 150, 120, 10, 22822);          //足場[3]～[15]
 	obj_floor[4] = new Floor(81, 350, 120, 10, 22822);
@@ -56,7 +56,7 @@ Scene_Stage06::Scene_Stage06(const Player* player)
 	obj_floor[14] = new Floor(1089, 350, 120, 10, 22822);
 	obj_floor[15] = new Floor(1089, 550, 120, 10, 22822);
 
-	obj_floor[16] = new Floor(0, -220, 1280, 20, 22822);        //天井
+	obj_floor[16] = new Floor(0, -420, 1280, 220, 22822);        //天井
 
 	//制限時間をセット
 	GameData::Set_TimeLimit(5460);
@@ -78,6 +78,9 @@ void Scene_Stage06::Update()
 
 		//プレイヤー座標を取得
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
+
+		//プレイヤー向きを取得
+		obj_enemy->SetPlayerDirection(obj_player->GetDirection());
 
 		//時間をカウント
 		GameData::Time_Update();
@@ -252,7 +255,7 @@ void Scene_Stage06::Update()
 void Scene_Stage06::Draw() const
 {
 	//背景の描画
-	DrawGraph(0, 0, stage6_BackImage, TRUE);
+	DrawGraph(0, 0, stage6_BackImage, FALSE);
 
 	//UIの描画
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
@@ -281,7 +284,7 @@ void Scene_Stage06::Draw() const
 		Draw_Janken();
 	}
 
-	DrawString(640, 360, "Stage06", 0xffffff);
+	/*DrawString(640, 360, "Stage06", 0xffffff);*/
 }
 
 //じゃんけん描画
@@ -292,14 +295,13 @@ void Scene_Stage06::Draw_Janken() const
 
 void Scene_Stage06::AfterJanken_WIN()
 {
-	//プレイヤーを指定座標に生成
-	obj_player = new Player(100, 600);
+	obj_player = new Player(100, 600);     //プレイヤーを指定座標に生成
 }
 
 void Scene_Stage06::AfterJanken_LOSE()
 {
-	//プレイヤーを指定座標に生成
-	obj_player = new Player(100, 600);
+	obj_player = new Player(100, 600);                            //プレイヤーを指定座標に生成
+	obj_enemy->SpeedUp();                                         //敵の特殊行動1
 }
 
 //シーンの変更

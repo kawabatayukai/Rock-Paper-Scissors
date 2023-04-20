@@ -20,7 +20,7 @@ public:
 	AbstractScene* ChangeScene()override;
 
 private:
-
+	int backimage = 0;            //背景画像
 	//RankingData dataRanking[RANKING_DATA];  // ランキングデータ変数宣言
 };
 

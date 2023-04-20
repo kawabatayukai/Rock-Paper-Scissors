@@ -1,5 +1,9 @@
 #pragma once
 #include"EnemyBase.h"
+#include"Jangeki_reflection.h"
+#include"Jangeki_Base.h"
+#include"Player.h"
+//#include "Scene_Stage10.h"
 
 const static float V = 1.f;
 
@@ -37,14 +41,30 @@ public:
 	/*敵の動き*/
 	void Move();
 
-	/*敵の動き*/
-	void Enemy10_Move();
-
 	/*画像の変更取得*/
 	void EnemySwitch();
 
 	/*画像の動作変更*/
 	void EnemyChangeMoveimg();
+
+	int Get_Enemy10Form();
+
+	void Interval();
+
+	void Jan_360degrees(int count, float rad, float speed, Jan_Type type);
+
+	void HP();
+
+	bool Getflg();
+	void Tflg();
+	void Fflg();
+
+	Jangeki_Reflection* reflection;
+
+	float Get_OldY();                   //old_yの取得関数
+	float Get_Y();                      //yの取得
+
+	//Scene_Stage10* obj_floor;
 
 private:
 	/********************   ジャンプ関係   ********************/
@@ -61,7 +81,12 @@ private:
 	float v = V;
 	float a = 0.6f;
 
+	int form;
+
 	int image[10]; //画像
+
+	int Rimage;
+	int Limage;
 
 	int jangeki_Set; //じゃん撃セット用変数
 
@@ -77,6 +102,14 @@ private:
 
 	int pCount; //最後の画像
 
+	bool rflg = false; //反射用
+
+	int locationNum; /*繰り返し移動用の座標の番号を示す*/
+
+	int current = 0; /*処理用番号の変数*/
+
+	int waitCount = 0; /*停滞時間*/
+
 	//向き（左右のみ）
 	enum class DIRECTION
 	{
@@ -86,6 +119,9 @@ private:
 
 	/*敵：移動, 目的地, NEXT, 待ち時間, 攻撃方法の配列*/
 	MoveInformation10 MoveInfo[10] = {};
+
+	/*敵：移動処理・攻撃の方法、パターンのファイル読み込み*/
+	void InputCSV(const char* passCSV);
 };
 
 

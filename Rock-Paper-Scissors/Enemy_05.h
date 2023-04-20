@@ -1,6 +1,7 @@
 #pragma once
 #include"EnemyBase.h"
 #include"MobEnemy_05.h"
+#include"Jangeki_reflection.h"
 
 //5ステージ　敵キャラ
 class Enemy_05 : public EnemyBase
@@ -20,6 +21,8 @@ public:
 
 	bool respawn_mobenemy();
 	void SetRespawn(bool flag);
+
+	Jangeki_Reflection* reflection;
 
 private:
 	/********************   ジャンプ関係   ********************/

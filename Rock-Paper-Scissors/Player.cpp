@@ -24,7 +24,7 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 
 	//‰æ‘œ“Ç‚İ‚İ
 	//image = LoadGraph("images/sd_body-1.png");
-	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ˜r–³‚µ.png", 10, 5, 2, 100, 100, image);
+	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ˜r–³‚µ2.png", 10, 5, 2, 100, 100, image);
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image_JanType);  //‚¶‚á‚ñŒ‚‰æ‘œ
 	image_setsumei = LoadGraph("images/Setumei.png");
 

@@ -6,10 +6,10 @@
 #include"Scene_GameClear.h"
 #include"Scene_GameOver.h"
 #include"Jangeki_Homing.h"
-#include"Scene_InputName.h"
 #include"GameData.h"
+#include"Enemy_10.h"
+#include"Jangeki_whole.h"
 #include"Scene_InputName.h"
-
 
 //デバッグモード
 #include"Debug_Manager.h"
@@ -45,8 +45,8 @@ Scene_Stage10::Scene_Stage10(const Player* player)
 
 	//obj_floor[3] = new Floor(1000, 100, 120, 50);      //足場	
 	//
-	obj_floor[3] = new Floor(100, 350, 120, 50);      //足場
-	obj_floor[4] = new Floor(1000, 350, 120, 50);      //足場
+
+	reflection = new Jangeki_Reflection(0, 0, 0, 0, Jan_Type::ROCK);
 }
 
 //デストラクタ
@@ -57,47 +57,133 @@ Scene_Stage10::~Scene_Stage10()
 //更新
 void Scene_Stage10::Update()
 {
-	//時間をカウント
-	GameData::Time_Update();
+	switch (obj_enemy->Get_Enemy10Form())
+	{
+		/***********
+		* 第一形態
+		***********/
+	case 1:
+		obj_floor[3] = new Floor(100, 350, 120, 50);      //足場
+		obj_floor[4] = new Floor(1000, 350, 120, 50);      //足場
+
+		obj_floor[5] = new Floor(0, 700, 1280, 20);        //床
+
+		obj_floor[6] = new Floor(0, 700, 1280, 20);        //床
+		obj_floor[7] = new Floor(0, 700, 1280, 20);        //床
+
+		obj_floor[8] = new Floor(0, 700, 1280, 20);        //床
+		obj_floor[9] = new Floor(0, 700, 1280, 20);        //床
+		obj_floor[10] = new Floor(0, 700, 1280, 20);        //床
+
+		obj_floor[11] = new Floor(0, 700, 1280, 20);        //床
+		obj_floor[12] = new Floor(0, 700, 1280, 20);        //床
+
+		obj_floor[13] = new Floor(0, 700, 1280, 20);        //床
+		obj_floor[14] = new Floor(0, 700, 1280, 20);        //床
+		obj_floor[15] = new Floor(0, 700, 1280, 20);        //床
+		break;
+
+		/***********
+		* 第二形態
+		***********/
+	case 2:
+		//obj_floor[3] = new Floor(81, 100, 120, 10, 22822);          //足場[3]～[15]
+		//obj_floor[4] = new Floor(81, 300, 120, 10, 22822);
+		//obj_floor[5] = new Floor(81, 500, 120, 10, 22822);
+
+		//obj_floor[6] = new Floor(333, 200, 120, 10, 22822);
+		//obj_floor[7] = new Floor(333, 400, 120, 10, 22822);
+
+		//obj_floor[8] = new Floor(585, 100, 120, 10, 22822);
+		//obj_floor[9] = new Floor(585, 300, 120, 10, 22822);
+		//obj_floor[10] = new Floor(585, 500, 120, 10, 22822);
+
+		
+		obj_floor[3] = new Floor(100, 500, 120, 20, 0xd2d2d2);//テレポート左位置
+		obj_floor[4] = new Floor(81, 300, 120, 10, 22822);
+		//obj_floor[4] = new Floor(0, 700, 1280, 20);
+		obj_floor[5] = new Floor(0, 700, 1280, 20);
+
+		//足場  
+		obj_floor[6] = new Floor(1050, 500, 120, 20, 0xd2d2d2);//テレポート右位置
+		obj_floor[7] = new Floor(333, 400, 120, 10, 22822);
+		obj_floor[8] = new Floor(585, 100, 120, 10, 22822);
+
+		//足場  
+		obj_floor[9] = new Floor(560, 420, 120, 20, 0xd2d2d2);//テレポート真ん中位置
+		obj_floor[10] = new Floor(0, 700, 1280, 20);
+		obj_floor[11] = new Floor(837, 200, 120, 10, 22822);
+		obj_floor[12] = new Floor(837, 400, 120, 10, 22822);
+
+		obj_floor[13] = new Floor(1089, 100, 120, 10, 22822);
+		obj_floor[14] = new Floor(1089, 300, 120, 10, 22822);
+		obj_floor[15] = new Floor(100, 100, 120, 10, 22822);
+		break;
+	default:
+		break;
+	}
 
 	//接触じゃんけんでない時
-	if (janken_flag == false)
+	//if (janken_flag == false)
+	//{
+	//	obj_player->Update();    // プレイヤー更新・操作可能
+	//	obj_enemy->Update();     //敵キャラ更新・内部処理
+	//
+	//	/*反射弾*/
+	//	//obj_enemy->reflection->Update_reflection();
+	//
+	//	/*ステージでの属性変化*/
+	//	//obj_enemy->SetType(Jan_Type::PAPER);
+	//
+	//	/*敵がプレイヤーの座標を返す*/
+	//	obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
+	//
+	//	//敵とプレイヤーの当たり判定  　ここで"接触じゃんけん"
+	//	if (obj_enemy->Hit_Character(obj_player) == true)
+	//	{
+	//		//敵が出す手をランダムに決める　　　（ランダムなint型の値(0～2)を Jan_Type型に変換）
+	//		Jan_Type enemy_janken = static_cast<Jan_Type> (GetRand(2));
+	//
+	//		//じゃんけん用オブジェクト生成
+	//		obj_janken = new Janken(enemy_janken);
+	//
+	//		//接触じゃんけん開始
+	//		janken_flag = true;
+	//	}
+	//}
+	//else
+	//{
+	//	//接触時じゃんけんの処理を実行
+	//	Update_Janken();
+	//}
+
+	//接触じゃんけん開始前
+	if (GetJanState() == Jan_State::BEFORE)
 	{
 		obj_player->Update();    // プレイヤー更新・操作可能
 		obj_enemy->Update();     //敵キャラ更新・内部処理
 
-		/*ステージでの属性変化*/
-		//obj_enemy->SetType(Jan_Type::PAPER);
-
-        /*敵がプレイヤーの座標を返す*/
+		//プレイヤー座標を取得
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
 
-		//敵とプレイヤーの当たり判定  　ここで"接触じゃんけん"
-		if (obj_enemy->Hit_Character(obj_player) == true)
-		{
-			//敵が出す手をランダムに決める　　　（ランダムなint型の値(0～2)を Jan_Type型に変換）
-			Jan_Type enemy_janken = static_cast<Jan_Type> (GetRand(2));
+		//プレイヤー向きを取得
+		//obj_enemy->SetPlayerDirection(obj_player->GetDirection());
 
-			//じゃんけん用オブジェクト生成
-			obj_janken = new Janken(enemy_janken);
-
-			//接触じゃんけん開始
-			janken_flag = true;
-
-		}
-	}
-	else
-	{
-		//接触時じゃんけんの処理を実行
-		Update_Janken();
+		//時間をカウント
+		GameData::Time_Update();
 	}
 
+	//接触じゃんけん処理
+	Touch_Janken(obj_enemy, this, 10);
 
 	//playerのじゃん撃をとってくる
 	Jangeki_Base** player_jangeki = obj_player->GetJangeki();
 
 	//enemyのじゃん撃をとってくる
 	Jangeki_Base** enemy_jangeki = obj_enemy->GetJangeki();
+
+	//反射されたじゃん撃をとってくる
+	//Jangeki_Base** reflection_jangeki = obj_enemy->reflection->GetJangeki();
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -213,9 +299,77 @@ void Scene_Stage10::Update()
 			default:
 				break;
 			}
+
+			/*反射弾*/
+			//if (player_jangeki[i]->GetR() == 35.f || obj_enemy->Getflg() == true)
+			//{
+			//	obj_enemy->ReceiveDamage(20);
+			//
+			//	//あたったじゃん撃を削除
+			//	obj_player->DeleteJangeki(i);
+			//	i--;
+			//	if (obj_enemy->Getflg() == true)obj_enemy->Fflg();
+			//}
+			//else
+			//{
+			//	obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
+			//	i--;
+			//	obj_enemy->reflection->trueFlg();
+			//}
+			//obj_enemy->HP();
 		}
 	}
 
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//反射じゃん撃当たり判定
+
+	//反射されたじゃん撃とplayerじゃん撃の当たり判定
+	//for (int p_count = 0; p_count < JANGEKI_MAX; p_count++)
+	//{
+	//	if (player_jangeki[p_count] == nullptr) break;         //じゃん撃がない時は処理しない
+	//	bool delete_player = false;       //プレイヤーじゃん撃削除フラグ　true:削除　false:削除しない
+	//	for (int r_count = 0; r_count < JANGEKI_MAX; r_count++)
+	//	{
+	//		if (reflection_jangeki[r_count] == nullptr) break;         //じゃん撃がない時は処理しない
+	//		if (player_jangeki[p_count]->Hit_Jangeki(reflection_jangeki[r_count]) == true)
+	//		{
+	//			//有利属性チェック
+	//			int result = player_jangeki[p_count]->CheckAdvantage(reflection_jangeki[r_count]);
+	//			switch (result)
+	//			{
+	//			case 0:             //playerのじゃん撃が不利
+	//				//player側のじゃん撃を削除
+	//				delete_player = true;
+	//				break;
+	//			case 1:             //playerのじゃん撃が有利
+	//				//enemy側のじゃん撃を削除
+	//				obj_enemy->reflection->Delete_reflectionJangeki(r_count);
+	//				r_count--;
+	//				//ホーミングを特殊生成
+	//				obj_player->Create_Homing(p_count, player_jangeki[p_count]->GetX(), player_jangeki[p_count]->GetY(), 35.f, 10, player_jangeki[p_count]->GetType());
+	//				break;
+	//			case 2:             //あいこ
+	//				//player側のじゃん撃を削除
+	//				delete_player = true;
+	//				//enemy側のじゃん撃を削除(反射弾)
+	//				obj_enemy->reflection->Delete_reflectionJangeki(r_count);
+	//				r_count--;
+	//				break;
+	//			default:
+	//				break;
+	//			}
+	//		}
+	//	}
+	//	//プレイヤーじゃん撃削除フラグがtrue
+	//	if (delete_player == true)
+	//	{
+	//		//player側のじゃん撃を削除
+	//		obj_player->DeleteJangeki(p_count);
+	//		p_count--;
+	//	}
+	//}
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//enemyじゃん撃とplayerの当たり判定
 	for (int i = 0; i < JANGEKI_MAX; i++)
@@ -231,14 +385,34 @@ void Scene_Stage10::Update()
 
 			//あたったじゃん撃を削除
 			obj_enemy->DeleteJangeki(i);
+
+			/*あたったじゃん撃を削除(反射弾)*/
+			//obj_enemy->reflection->Delete_reflectionJangeki(i);
 			i--;
 		}
 	}
 
 
-	HitCtrl_Floor(obj_player, STAGE_10_FLOOR);     // player　床・壁判定
-	HitCtrl_Floor(obj_enemy, STAGE_10_FLOOR);      // 敵　　　床・壁判定
+	//HitCtrl_Floor(obj_player, STAGE_10_FLOOR);     // player　床・壁判定
+	//HitCtrl_Floor(obj_enemy, STAGE_10_FLOOR);      // 敵　　　床・壁判定
 
+	//壁との当たり判定
+	if (obj_player->Get_X() <= 50 || obj_player->Get_X() >= 1220)
+	{
+		HitCtrl_Floor(obj_player, STAGE_10_FLOOR);     // player　床・壁判定
+	}
+
+	//プレイヤーのy座標が減少しない時のみ当たり判定を取得
+	if (obj_player->Get_Y() >= obj_player->Get_OldY() || obj_player->Get_Y() <= -200)
+	{
+		HitCtrl_Floor(obj_player, STAGE_10_FLOOR);     // player　床・壁判定
+	}
+
+	//敵のy座標が減少しない時のみ当たり判定を取得
+	if (obj_enemy->Get_Y() >= obj_enemy->Get_OldY() || obj_enemy->Get_Y() <= -200)
+	{
+		HitCtrl_Floor(obj_enemy, STAGE_10_FLOOR);      // 敵　　　床・壁判定
+	}
 
 }
 
@@ -246,10 +420,43 @@ void Scene_Stage10::Update()
 //描画
 void Scene_Stage10::Draw() const
 {
-	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+	//if (obj_enemy->GetHP() > 0) //HPがある時
+	//{
+	//	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+	//}
+	//
+	////接触じゃんけんでない時
+	//if (janken_flag == false)
+	//{
+	//
+	//	obj_player->Draw();  //プレイヤー描画
+	//	obj_enemy->Draw();   //敵キャラ描画
+	//	obj_enemy->reflection->Draw_reflectionJangeki(); //反射弾描画
+	//
+	//	//床・壁描画
+	//	for (int i = 0; i < STAGE_10_FLOOR; i++)
+	//	{
+	//		if (obj_floor[i] == nullptr) break;
+	//		obj_floor[i]->Draw();
+	//	}
+	//}
+	//else
+	//{
+	//	//接触時じゃんけん描画
+	//	Draw_Janken();
+	//}
+	//
+	//DrawString(640, 360, "Stage10", 0xffffff);
 
-	//接触じゃんけんでない時
-	if (janken_flag == false)
+	//背景の描画
+	DrawGraph(0, 0, 0, FALSE);
+
+	//UIの描画
+	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+	DrawUI_ON_Enemy(obj_enemy);
+
+	//接触じゃんけん開始前
+	if (GetJanState() == Jan_State::START || GetJanState() == Jan_State::BEFORE)
 	{
 
 		obj_player->Draw();  //プレイヤー描画
@@ -262,14 +469,14 @@ void Scene_Stage10::Draw() const
 			obj_floor[i]->Draw();
 		}
 
+		// 接触した瞬間の演出
+		if (GetJanState() == Jan_State::START) Draw_JankenStart();
 	}
 	else
 	{
 		//接触時じゃんけん描画
 		Draw_Janken();
 	}
-
-	DrawString(640, 360, "Stage10", 0xffffff);
 }
 
 //じゃんけん更新・内部処理
@@ -330,6 +537,16 @@ void Scene_Stage10::Draw_Janken() const
 	obj_janken->Draw();
 }
 
+void Scene_Stage10::AfterJanken_WIN()
+{
+	
+}
+
+void Scene_Stage10::AfterJanken_LOSE()
+{
+
+}
+
 //シーンの変更
 AbstractScene* Scene_Stage10::ChangeScene()
 {
@@ -337,12 +554,12 @@ AbstractScene* Scene_Stage10::ChangeScene()
 #ifdef DEBUG_OFF_10
 
 	//敵のHPが0以下
-	if (obj_enemy->GetHP() < 0)
+	if (obj_enemy->Get_Enemy10Form() == 2 && obj_enemy->GetHP() < 0)
 	{
 		//リザルトへ切り替え
-		//return dynamic_cast<AbstractScene*> (new Scene_InputName());
 		return dynamic_cast<AbstractScene*> (new Scene_InputName());
 	}
+
 
 	//プレイヤーのHPが0以下
 	if (obj_player->GetHP() < 0 || GameData::Get_Each_Time() <= 0)

@@ -32,4 +32,6 @@ void Jangeki_Spin::Update()
 	x = x + r * cos(angle);
 	y = y + r * sin(angle);
 
+	//エフェクト
+	Update_Effect(7.0);
 }

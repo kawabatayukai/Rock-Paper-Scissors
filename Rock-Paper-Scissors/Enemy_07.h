@@ -21,12 +21,17 @@ public:
 
 	void Change_JanType();           //ランダムに属性変化
 
+	int  MissileKick();              //ミサイルキック (着地/着地している)とreturn 1
+
 /*---------------------------- パターンでない行動 --------------------------------------*/
 
 	void Move_Controller();          //行動制御
 
 	//プレイヤーがリング上 
 	void Move_ON_RING(float& target_x, float& target_y);                            
+
+	//プレイヤーがリング上で動かない
+	void Move_ON_RING_LURK(float& target_x, float& target_y);
 
 	//プレイヤーが足場（空中）上
 	void Move_ON_FLOOR(float& target_x, float& target_y);
@@ -93,19 +98,21 @@ private:
 	//行動の種類
 	enum class ACT_TYPE
 	{
-		NO_ACT,             //行動なし
+		NO_ACT,              //行動なし
 		
-		LEFT_TO_RIGHT,      //左から右（最終的に右）
-		RIGHT_TO_LEFT,      //右から左（最終的に左）
-		CLIMB_CORNER_LEFT,  //コーナーに上る（左）
-		CLIMB_CORNER_RIGHT, //コーナーに上る（右）
-		CROSS_FLOOR_LEFT,   //足場を渡る（左から右）
-		CROSS_FLOOR_RIGHT,  //足場を渡る（右から左）
-		DIVE_OUT_LEFT,      //場外へダイブ（左）
-		DIVE_OUT_RIGHT,     //場外へダイブ（右）
+		LEFT_TO_RIGHT,       //左から右（最終的に右）
+		RIGHT_TO_LEFT,       //右から左（最終的に左）
+		JUMP_ON_CORNER_LEFT, //コーナーに飛び乗る（左）
+		JUMP_ON_CORNER_RIGHT,//コーナーに飛び乗る（右）
+		CLIMB_CORNER_LEFT,   //コーナーに上る（左）
+		CLIMB_CORNER_RIGHT,  //コーナーに上る（右）
+		CROSS_FLOOR_LEFT,    //足場を渡る（左から右）
+		CROSS_FLOOR_RIGHT,   //足場を渡る（右から左）
+		DIVE_OUT_LEFT,       //場外へダイブ（左）
+		DIVE_OUT_RIGHT,      //場外へダイブ（右）
 	};
-	ACT_TYPE Now_Action;    //実行中のAction（行動）
-	ACT_TYPE Pre_Action;    //１つ前のAction（行動）
+	ACT_TYPE Now_Action;     //実行中のAction（行動）
+	ACT_TYPE Pre_Action;     //１つ前のAction（行動）
 
 //------------------------ テスト ------------------------
 
