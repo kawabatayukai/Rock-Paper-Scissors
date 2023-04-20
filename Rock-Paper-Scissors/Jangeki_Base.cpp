@@ -6,6 +6,7 @@
 //コンストラクタ
 Jangeki_Base::Jangeki_Base(float x, float y, float r, float speed, Jan_Type type, bool ref)
 	: x(x), y(y), r(r), speed(speed), smoke_index(0.0), rate_turn(0.0), type(type), refrection(ref), rate_pct(200.0)
+	, effect_type(Jan_Result::_ERROR)
 {
 	for (int i = 0; i < 3; i++) image[i] = 0;
 
@@ -36,12 +37,12 @@ Jangeki_Base::Jangeki_Base(float x, float y, float r, float speed, Jan_Type type
 	default:
 		break;
 	}
-
 }
 
 //コンストラクタ（角度あり）
 Jangeki_Base::Jangeki_Base(float x, float y, float r, float speed, double angle, Jan_Type type, bool ref)
 	: x(x), y(y), r(r), smoke_index(0.0), rate_turn(0.0), type(type), refrection(ref), rate_pct(200.0)
+	, effect_type(Jan_Result::_ERROR)
 {
 	for (int i = 0; i < 3; i++) image[i] = 0;
 
@@ -92,7 +93,6 @@ void Jangeki_Base::Update()
 
 	//エフェクト
 	Update_Effect();
-	
 }
 
 //描画
@@ -108,6 +108,7 @@ void Jangeki_Base::Draw() const
 	//属性を変換
 	int type_num = static_cast<int>(type);
 	if (type_num > 2) type_num = 0;
+
 
 	//反射でないとき
 	if (refrection == false)
@@ -151,15 +152,13 @@ void Jangeki_Base::Update_Effect(double fp_rate)
 	if (rate_pct <= 100) rate_pct = 100;
 
 	//スモーク
-	static short frame_count;
+	static int frame_count;
 	if (++frame_count % 10 == 0)
 	{
 		smoke_index++;
 		frame_count = 0;
 
 		if (smoke_index > 3) smoke_index = 0;
-
-		//rate_turn = GetRand(360);
 	}
 	rate_turn += 0.008;
 }
@@ -201,19 +200,25 @@ int Jangeki_Base::CheckAdvantage(const Jangeki_Base* jangeki)
 	default:
 		break;
 	}
-	if (result_num == 1) //じゃんけん勝ち
+
+	//じゃんけん負け
+	if (result_num == 0)
+	{
+		effect_type = Jan_Result::LOSE;
+	}
+	//じゃんけん勝ち
+	if (result_num == 1) 
 	{
 		GameData::Add_Score(100);    //スコア加算
+
+		effect_type = Jan_Result::WIN;
 	}
-	if (result_num == 2) //じゃんけんあいこ
+	//じゃんけんあいこ
+	if (result_num == 2) 
 	{
 		GameData::Add_Score(100 / 2);    //スコア加算
-	}
 
-	//有利の時
-	if (result_num == 1)
-	{
-		GameData::Add_Score(100);    //スコア加算
+		effect_type = Jan_Result::ONEMORE;
 	}
 
 	return result_num;
@@ -256,3 +261,8 @@ bool Jangeki_Base::Hit_Jangeki(const Jangeki_Base* jangeki)
 	return false;
 }
 
+//発動すべきエフェクトを取得する
+Jan_Result Jangeki_Base::GetEffectType() const
+{
+	return effect_type;
+}

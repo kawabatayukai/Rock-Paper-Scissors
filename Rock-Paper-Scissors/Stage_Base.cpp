@@ -16,7 +16,7 @@ Stage_Base::Stage_Base() : blackout_time(0)
 
 	//エフェクト用意
 	obj_effect =  new Effect_Jangeki * [30];
-	for (int i = 0; i < 30; i++) obj_effect = nullptr;
+	for (int i = 0; i < 30; i++) obj_effect[i] = nullptr;
 }
 
 Stage_Base::~Stage_Base()
@@ -336,4 +336,98 @@ Jan_State Stage_Base::GetJanState() const
 	//else return j_state;
 
 	return j_state;
+}
+
+//エフェクト再生（エフェクト再生するスイッチ）
+void Stage_Base::Play_Effect(float play_x, float play_y,unsigned int effect_type)
+{
+	int e_jancount;
+
+	//空要素の先頭を探す(安全策)
+	for (e_jancount = 0; e_jancount < 30; e_jancount++)
+	{
+		if (obj_effect[e_jancount] == nullptr) break;  //空き
+	}
+
+	//エフェクトを生成
+	if (e_jancount <= 30 && obj_effect[e_jancount] == nullptr)
+	{
+		obj_effect[e_jancount] = new Effect_Jangeki(play_x, play_y,effect_type);
+	}
+}
+
+//エフェクトを動作させる
+void Stage_Base::Update_Effect()
+{
+	int effect_count;
+
+	//エフェクト動作
+	{
+		for (effect_count = 0; effect_count < 30; effect_count++)
+		{
+			//空の場合抜ける
+			if (obj_effect[effect_count] == nullptr) break;
+
+			obj_effect[effect_count]->Update();
+
+			//画面外で削除する
+			if (obj_effect[effect_count]->Check_PlayEnd() == true)
+			{
+				delete obj_effect[effect_count];     //削除
+				obj_effect[effect_count] = nullptr;  //初期化
+
+				//詰める
+				for (int i = effect_count; i < (30 - 1); i++)
+				{
+					//空の場合抜ける
+					if (obj_effect[effect_count] == nullptr) break;
+
+					obj_effect[effect_count] = obj_effect[effect_count + 1];
+					obj_effect[effect_count + 1] = nullptr;
+				}
+			}
+		}
+	}
+
+
+	////プレイヤーのじゃん撃を取得する
+	//Jangeki_Base** p_jangeki;
+	//if (obj_player != nullptr) p_jangeki = obj_player->GetJangeki();
+	//else return;
+	//
+	////じゃん撃配列の中からエフェクトを発動すべきじゃん撃を探す
+	//for (int i = 0; i < JANGEKI_MAX; i++)
+	//{
+	//	//空なら抜ける
+	//	if (p_jangeki[i] == nullptr) break;
+
+	//	//エフェクトを発生すべきじゃん撃
+	//	if (p_jangeki[i]->GetEffectType() != Jan_Result::_ERROR)
+	//	{
+	//		int e_jancount;
+	//		//空要素の先頭を探す(安全策)
+	//		for (e_jancount = 0; e_jancount < 30; e_jancount++)
+	//		{
+	//			if (obj_effect[e_jancount] == nullptr) break;  //空き
+	//		}
+
+	//		//エフェクトを生成
+	//		if (e_jancount <= 30 && obj_effect[e_jancount] == nullptr)
+	//		{
+	//			obj_effect[e_jancount] = new Effect_Jangeki(p_jangeki[i]->GetX(), p_jangeki[i]->GetY());
+	//		}
+	//	}
+	//}
+}
+
+//エフェクト描画
+void Stage_Base::Draw_Effect() const
+{
+	for (int effect_count = 0; effect_count < 30; effect_count++)
+	{
+		//空の場合抜ける
+		if (obj_effect[effect_count] == nullptr) break;
+
+		obj_effect[effect_count]->Draw();
+	}
 }
