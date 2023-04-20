@@ -28,7 +28,7 @@ Scene_Stage06::Scene_Stage06(const Player* player)
 	obj_enemy = new Enemy_06(1200, 360, Jan_Type::SCISSORS);
 
 	//”wŒi‰æ‘œ‚Ì“Ç‚Ýž‚Ý
-	stage6_BackImage = LoadGraph("images/stage6/mori32-.png");
+	stage6_BackImage = LoadGraph("images/stage06/mori32-.png");
 
 	//°E•Ç‚Ì—pˆÓ
 	Init_Floor(STAGE_06_FLOOR);
@@ -255,7 +255,7 @@ void Scene_Stage06::Update()
 void Scene_Stage06::Draw() const
 {
 	//”wŒi‚Ì•`‰æ
-	DrawGraph(0, 0, stage6_BackImage, TRUE);
+	DrawGraph(0, 0, stage6_BackImage, FALSE);
 
 	//UI‚Ì•`‰æ
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
@@ -284,7 +284,7 @@ void Scene_Stage06::Draw() const
 		Draw_Janken();
 	}
 
-	DrawString(640, 360, "Stage06", 0xffffff);
+	/*DrawString(640, 360, "Stage06", 0xffffff);*/
 }
 
 //‚¶‚á‚ñ‚¯‚ñ•`‰æ
