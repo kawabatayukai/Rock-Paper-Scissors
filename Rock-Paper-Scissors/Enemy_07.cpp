@@ -249,6 +249,8 @@ void Enemy_07::Move_Controller()
 	float move_x = x;
 	float move_y = y;
 
+	
+
 	//プレイヤーの状態によって行動を決める
 	switch (Player_State)
 	{
@@ -279,7 +281,7 @@ void Enemy_07::Move_Controller()
 
 	default:
 
-		target_x = 1280 / 2;
+		Player_State = PLAYER_STATE::ON_FLOOR;
 		break;
 	}
 
@@ -540,22 +542,50 @@ void Enemy_07::Move_ON_RING_LURK(float& target_x, float& target_y)
 		/*******************************　３  **++***************************/
 		{
 			//リング左を目指す
-			if (count_ari == 2) 
+			if (count_ari >= 2) 
 			{
 				target_x = _CONSTANTS_07::CORNER_LEFT;
 
-				//左コーナーに到達                             
-				if (x == _CONSTANTS_07::CORNER_LEFT )
+				if (++count_ari > 120)
 				{
 					Pre_Action = Now_Action;        //今回のActionを保存
 
 					Now_Action = ACT_TYPE::NO_ACT;  //Actionの完了
 					speed = init_speed;             //スピードを戻す
+
+					count_ari = 0;
 				}
+
+				////左コーナーに到達                             
+				//if (x == _CONSTANTS_07::CORNER_LEFT && y == (_CONSTANTS_07::RING_HEIGHT - (h / 2)))
+				//{
+				//	count_ari = 3;
+				//}
 			}
 		}
 		/*******************************************************************/
 
+				//左コーナーポストに乗る
+		/*******************************　４  **++***************************/
+		//{
+		//	//リング左を目指す
+		//	if (count_ari >= 3)
+		//	{
+		//		//target_x = _CONSTANTS_07::CORNER_LEFT;
+		//		count_ari++;
+
+		//		//if (count_ari == 20)
+		//		{
+		//			Pre_Action = Now_Action;        //今回のActionを保存
+
+		//			Now_Action = ACT_TYPE::NO_ACT;  //Actionの完了
+		//			speed = init_speed;             //スピードを戻す
+
+		//			count_ari = 0;
+		//		}
+		//	}
+		//}
+		/*******************************************************************/
 	}
 
 	//左→右→右コーナーに飛び乗る
