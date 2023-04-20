@@ -116,6 +116,8 @@ void Enemy_01::Update_Jangeki()
 
 	/*********************** «« ”­ËE¶¬ «« ***********************/
 
+	//static int frame_count;
+
 	////”z—ñ‚Ì‹ó—v‘f
 	//if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	//{
@@ -127,7 +129,7 @@ void Enemy_01::Update_Jangeki()
 
 
 	//	//¶¬
-	//	if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
+	//	if (frame_count++ % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
 	//}
 }
 

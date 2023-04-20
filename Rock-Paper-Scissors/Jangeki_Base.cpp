@@ -37,7 +37,6 @@ Jangeki_Base::Jangeki_Base(float x, float y, float r, float speed, Jan_Type type
 	default:
 		break;
 	}
-
 }
 
 //コンストラクタ（角度あり）
@@ -94,7 +93,6 @@ void Jangeki_Base::Update()
 
 	//エフェクト
 	Update_Effect();
-	
 }
 
 //描画
@@ -110,6 +108,7 @@ void Jangeki_Base::Draw() const
 	//属性を変換
 	int type_num = static_cast<int>(type);
 	if (type_num > 2) type_num = 0;
+
 
 	//反射でないとき
 	if (refrection == false)

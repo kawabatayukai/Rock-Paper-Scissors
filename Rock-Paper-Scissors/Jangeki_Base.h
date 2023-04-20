@@ -97,6 +97,4 @@ protected:
 
 	//発動すべきエフェクトの種類
 	Jan_Result effect_type; 
-	int* image_effect;             //画像
-	int index_effect;              //画像No
 };
