@@ -8,6 +8,7 @@
 #include <math.h>
 #include <corecrt_math_defines.h>
 #include "KeyManager.h"
+#include"Jangeki_Player.h"
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_10::Enemy_10(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
@@ -36,6 +37,44 @@ Enemy_10::Enemy_10(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 Enemy_10::~Enemy_10()
 {
 
+}
+
+/*敵：移動処理・攻撃の方法、パターンのファイル読み込み*/
+void Enemy_10::InputCSV(const char* passCSV)
+{
+	//FILE* fp; /*FILE型構造体*/
+	//errno_t error; /*fopen_sのエラー確認*/
+	//error = fopen_s(&fp, passCSV, "r");
+	///*(ブレイクポイントを付けて)ファイルの開閉テスト*/
+	//if (error != 0)
+	//{
+	//	return; //エラー発生
+	//}
+	//else //ファイルを開いた
+	//{
+	//	char line[100]; //行
+	//	/*fgets(line, 文字数, fp)*/
+	//	//fgets(line, 100, fp); 
+	//	//
+	//	for (int i = 0; fgets(line, 100, fp) != NULL; i++) {
+	//		//while (fgets(line[100], 100, fp) != NULL) //指定の文字数を取ってくる
+	//		//{
+	//		sscanf_s(
+	//			line, //行
+	//			"%d, %f, %f, %d, %d, %d",       //(int, float, float, int, int, int)
+	//			&MoveInfo[i].pattern,          /*方法・パターン*/
+	//			&MoveInfo[i].x, /*目的地.X座標*/
+	//			&MoveInfo[i].y, /*目的地.Y座標*/
+	//			&MoveInfo[i].next,             /*次の(配列)処理*/
+	//			&MoveInfo[i].waitTimeFlame,    /*(待ちなど)時間*/
+	//			&MoveInfo[i].attackPattern     /*攻撃方法*/
+	//		);
+	//		//}
+	//		//	
+	//	}
+	//	return;
+	//}
+	//fclose(fp); /*ファイルを閉じる*/
 }
 
 /*敵の動き*/
@@ -123,12 +162,159 @@ void  Enemy_10::Move()
 	case 2:
 		if (hp > 0)
 		{
+			static int interval;
+			interval++;
+			static int teleport = 150;
+			static int jump = GetRand(30);
+			static int h;
+			if (interval % teleport == 0) 
+			{
+				switch (GetRand(4))
+				{
+					//左側
+				case 1:
+					h = 1;
+					x = 160;
+					y = 430;
+					old_y = y;
+					break;
+				
+					//右側
+				case 2:
+					h = 2;
+					x = 1110;
+					y = 430;
+					old_y = y;
+					break;
+				
+					//真ん中
+				/*case 3:
+					h = 3;
+					x = 620;
+					y = 370;
+					old_y = y;
+					break;*/
+				}
+			}
+			else
+			{
+				switch (GetRand(3))
+				{
+				case 1: //始まり右に移動
+					
+					switch (h)
+					{
+					case 1: //右行く
+						if (x < 1050)
+						{
+							dir = static_cast<int>(DIRECTION::RIGHT);   //向きを設定（左）
+							x += 4/*GetRand(20)*/;
+						}
+						else if (x > 1050)
+						{
+							h == 2;
+						}
+						break;
+					case 2: //左行く
+						if (x > 0)
+						{
+							dir = static_cast<int>(DIRECTION::LEFT);   //向きを設定（左）
+							x -= 4/*GetRand(20)*/;
+						}
+						else if (x < 10)
+						{
+							h == 1;
+						}
+						break;
+					default:
+						break;
+					}
 
+					//ジャンプ
+					if (interval % jump == 0)
+					{
+						if (land_flg == true && y > 100) //ジャンプ
+						{
+							g_add = -25.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+							land_flg = false;  //地面についていない
+						}
+
+						if (land_flg == false) //ジャンプ中の加速
+						{
+							if (v < 15) //加速上限
+							{
+								v += a;
+							}
+							x += v;
+						}
+					}
+					enemyChange_Image = 1; //switch文の割り当て番号
+					break;
+
+				case 2: // 始まり左に移動
+					
+					switch (h)
+					{
+					case 1: //右行く
+						if (x < 1050)
+						{
+							dir = static_cast<int>(DIRECTION::RIGHT);   //向きを設定（左）
+							x += 4/*GetRand(20)*/;
+						}
+						else if (x > 1050)
+						{
+							h == 2;
+						}
+						break;
+
+					case 2: //左行く
+						if (x > 0)
+						{
+							dir = static_cast<int>(DIRECTION::LEFT);   //向きを設定（左）
+							x -= 4/*GetRand(20)*/;
+						}
+						else if (x < 10)
+						{
+							h == 1;
+						}
+						break;
+					default:
+						break;
+					}
+
+					//ジャンプ
+					if (interval % jump == 0)
+					{
+						if (land_flg == true && y > 100) //ジャンプ
+						{
+							g_add = -25.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+							land_flg = false;  //地面についていない
+						}
+
+						if (land_flg == false) //ジャンプ中の加速
+						{
+							if (v < 15) //加速上限
+							{
+								v -= a;
+							}
+							x -= v;
+						}
+					}
+					enemyChange_Image = 2; //switch文の割り当て番号
+					break;
+
+				//case 3: // 真ん中
+				//	if (h == 3)
+				//	{
+				//		x += GetRand(5);
+				//	}
+				//	break;
+				}
+			}
 		}
 		break;
 
-	default:
-		break;
+	
 	}
 
 	//画像の選択変更
@@ -237,6 +423,7 @@ void Enemy_10::Draw() const
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
 	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
 	DrawFormatString(500, 200, 0xffffffff, "%f", x);
+	DrawFormatString(500, 90, 0xffffffff, "%f", y);
 
 }
 
@@ -552,7 +739,7 @@ void Enemy_10::Update_Jangeki()
 
 				if (frame_count % 200 == 0)
 				{
-					Jan_360degrees(jan_count, radius, speed, type); //360度発射
+					//Jan_360degrees(jan_count, radius, speed, type); //360度発射
 				}
 				//            生成速度
 				//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_whole(x, y, radius, speed, type);
@@ -616,4 +803,16 @@ void Enemy_10::HP()
 	{
 		hp = 1;
 	}
+}
+
+//old_yの取得関数
+float Enemy_10::Get_OldY()
+{
+	return old_y;
+}
+
+//yの取得関数
+float Enemy_10::Get_Y()
+{
+	return y;
 }
