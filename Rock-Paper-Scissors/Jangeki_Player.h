@@ -16,6 +16,8 @@ public:
 	void Update() override;         //更新
 	void Draw() const override;     //描画
 
+	void Draw_Effect() const;       //貫通エフェクト描画
+
 private:
 
 	int image_jangeki[6];           //画像（グーorチョキorパー のいずれか）
@@ -23,7 +25,13 @@ private:
 
 	double rate_pct;                //拡大率(max100)
 
+	//--------------------  エフェクト  --------------------
 	unsigned short frame_count;     //フレームカウント
-
 	int image_lightning;            //雷的なもの
+
+	int index_effect;               //画像No
+	int index_max;
+
+	int image_effects[3][12];       //貫通時エフェクト
+	double turn_effect;             //回転率
 };

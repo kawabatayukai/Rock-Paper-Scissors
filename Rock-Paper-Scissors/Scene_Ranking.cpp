@@ -9,6 +9,7 @@ int g_WaitTime = 0;
 
 Scene_Ranking::Scene_Ranking(/*const RankingData* Data*/)
 {
+	backimage = LoadGraph("images/Rankingback.png");
 	/*for (int i = 0; i < RANKING_DATA; i++)
 	{
 		for (int j = 0; dataRanking[i].name[j] != '\0'; j++)
@@ -29,19 +30,21 @@ void Scene_Ranking::Update()
 //描画
 void Scene_Ranking::Draw() const
 {
+	//背景
+	DrawGraph(0, 0, backimage, FALSE);
 	//ランキング一覧を表示
 	SetFontSize(30);
 	for (int i = 0; i < 10; i++)
 	{
 		//DrawFormatString(80, 170 + i * 25, 0xFFFFFF, "%2d   %10s  %10d", dataRanking[i].rank, dataRanking[i].name, dataRanking[i].score);
-		DrawFormatString(80, 170 + i * 25, 0xFFFFFF, "%2d   %10s  %10d", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score);
+		DrawFormatString(400, 170 + i * 25, 0xFFFFFF, "%2d   %10s  %10d", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score);
 	}
 
 	SetFontSize(100);
 	//文字の表示(点滅)
 	if (++g_WaitTime < 30) {
 		SetFontSize(24);
-		DrawString(150, 450, "--  Press A ボタン  --", 0xFF0000);
+		DrawString(490, 455, "--  Press A ボタン  --", 0xFF0000);
 	}
 	else if (g_WaitTime > 60) {
 		g_WaitTime = 0;
