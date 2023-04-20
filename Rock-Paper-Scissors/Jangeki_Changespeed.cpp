@@ -19,4 +19,7 @@ void Jangeki_Changespeed::Update()
 {
 	acceleration += 0.2;
 	x -=acceleration;
+
+	//エフェクト
+	Update_Effect(6.0);
 }

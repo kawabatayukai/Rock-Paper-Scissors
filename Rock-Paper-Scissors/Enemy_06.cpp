@@ -32,38 +32,64 @@ Enemy_06::~Enemy_06()
 //更新
 void Enemy_06::Update()
 {
+	frame_count++;
+	TeleportTime++;
+	SpeedUpTime++;
+
 	//じゃん撃更新・生成
 	Update_Jangeki();
 
 	if (hp <= 0)hp = 0;
 
-	//if (x + (w / 2) == (1280 - 20))
-	//{
-	//	dir = -1;
-	//}
-	//else if (x - (w / 2) == (20))
-	//{
-	//	dir = 1;
-	//}
-
-	//x += dir * speed;
-
-	//攻撃パターン1
-	if (attack_pattern == 0)
+	if (TeleportFlg == false)
 	{
-		AttackPattern_1();
+		//攻撃パターン1
+		if (attack_pattern == 0)
+		{
+			AttackPattern_1();
+		}
+
+		//攻撃パターン2
+		if (attack_pattern == 1)
+		{
+			AttackPattern_2();
+		}
+
+		//攻撃パターン3
+		if (attack_pattern == 2)
+		{
+			AttackPattern_3();
+		}
 	}
-	
-	//攻撃パターン2
-	if (attack_pattern == 1)
+	else if (TeleportFlg == true && x > 0 && x < 1280)
 	{
-		AttackPattern_2();
+		//特殊行動2   プレイヤーの後方側に移動し、接近してくる
+		if (attack_pattern > 0)
+		{
+			Teleportation();
+		}
+		else
+		{
+			TeleportFlg = false;
+			TeleportInit = true;
+			speed = 5.0f;
+		}
+	}
+	else  //例外処理
+	{
+		TeleportFlg = false;
+		TeleportInit = true;
+		speed = 5.0f;
 	}
 
-	//攻撃パターン3
-	if (attack_pattern == 2)
+	//500フレームごとに瞬間移動接触フラグをtrueにする
+	if (TeleportTime == 500 && TeleportFlg == false && (player_x - 300) > 0 && (player_x + 300) < 1280)
 	{
-		AttackPattern_3();
+		TeleportFlg = true;
+	}
+	else if(TeleportTime > 500)
+	{
+		TeleportTime = 0;
 	}
 
 	/********************   ジャンプ関係   ********************/
@@ -109,11 +135,18 @@ void Enemy_06::Draw() const
 	Draw_Jangeki();
 
 	//テスト
-	if (hp > 0) DrawFormatString((int)(x - 50), (int)(y - 75), 0xffffff, "HP : %d", hp);
-	else DrawString((int)(x - 50), (int)(y - 75), "death!", 0xffffff);
+	if (hp > 0) DrawFormatString((int)(x - 50), (int)(y - 125), 0xffffff, "HP : %d", hp);
+	else DrawString((int)(x - 50), (int)(y - 125), "death!", 0xffffff);
+
+	////テスト
+	//DrawFormatString(600, 600, 0xffffff, "%d", player_dir);
 
 	//テスト
-	DrawFormatString(600, 600, 0xffffff, "%d", dir);
+	/*DrawFormatString(600, 600, 0xffffff, "フレームカウント  : %d", frame_count);
+	DrawFormatString(600, 620, 0xffffff, "瞬間移動接触開始  : %d", TeleportTime);
+	DrawFormatString(600, 640, 0xffffff, "特殊行動時間      : %d", SpeedUpTime);
+	DrawFormatString(600, 660, 0xffffff, "瞬間移動フラグ    : %d", TeleportFlg);
+	DrawFormatString(600, 680, 0xffffff, "speed             : %f", speed);*/
 }
 
 //じゃん撃生成・更新
@@ -141,7 +174,7 @@ void Enemy_06::Update_Jangeki()
 	}
 
 	/*********************** ↓↓ 発射・生成 ↓↓ ***********************/
-	frame_count++;
+	
 
 	//配列の空要素
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
@@ -156,24 +189,24 @@ void Enemy_06::Update_Jangeki()
 		if (attack_pattern == 0)
 		{
 			//プレイヤー方向に向かって発射されるジャン撃の生成
-			if (frame_count % 100 == 0) obj_jangeki[jan_count] = 
-				new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+			if (frame_count % 90 == 0) obj_jangeki[jan_count] = 
+				new Jangeki_Coming(x, y, radius, speed + 1.0f, type, player_x, player_y);
 		}
 
 		//行動パターン2の時の弾(speed = 3.0f  frame_count % 80)
 		if (attack_pattern == 1)
 		{
 			//プレイヤー方向に向かって発射されるジャン撃の生成
-			if (frame_count % 100 == 0) obj_jangeki[jan_count] =
-				new Jangeki_Coming(x, y, radius, speed + 1.0f, type, player_x, player_y);
+			if (frame_count % 75 == 0) obj_jangeki[jan_count] =
+				new Jangeki_Coming(x, y, radius, speed + 1.5f, type, player_x, player_y);
 		}
 
 		//行動パターン3の時の弾(speed = 3.0f  frame_count % 80)
 		if (attack_pattern == 2)
 		{
 			//プレイヤー方向に向かって発射されるジャン撃の生成
-			if (frame_count % 80 == 0) obj_jangeki[jan_count] =
-				new Jangeki_Coming(x, y, radius, speed + 1.0f, type, player_x, player_y);
+			if (frame_count % 65 == 0) obj_jangeki[jan_count] =
+				new Jangeki_Coming(x, y, radius, speed + 2.0f, type, player_x, player_y);
 		}
 	}
 }
@@ -216,22 +249,22 @@ void Enemy_06::AttackPattern_1()
 		{
 			jump_flg = true;
 		}
-		else if (x > 1160 && x < 1166)
+		else if (x > 1150 && x < 1156)
 		{
 			jump_flg = true;
 		}
 
 		low_jump();     //低ジャンプ
 
-		//接地しているかどうかで移動速度を可変   接地時(true)    : speed = 5.0f
-		//                                       非接地時(false) : speed = 8.0f
+		//接地しているかどうかで移動速度を可変   接地時(true)    : speed = 3.0f
+		//                                       非接地時(false) : speed = 7.0f
 		if (land_flg == true)
 		{
 			speed = 3.0f;
 		}
 		else if(land_flg == false)
 		{
-			speed = 8.0f;
+			speed = 7.0f;
 		}
 
 		if (x < 115)    //目標座標に到着したかのチェック
@@ -245,15 +278,15 @@ void Enemy_06::AttackPattern_1()
 	{
 		x += speed;      //1フレームの間に右へ進む距離
 
-		if (x > 114 && x < 120)   //目標座標に到着したかのチェック
+		if (x > 124 && x < 130)   //目標座標に到着したかのチェック
 		{
 			jump_flg = true;
 		}
-		else if (x > 404 && x < 410)
+		else if (x > 414 && x < 420)
 		{
 			jump_flg = true;
 		}
-		else if (x > 644 && x < 650)
+		else if (x > 664 && x < 670)
 		{
 			jump_flg = true;
 		}
@@ -264,15 +297,15 @@ void Enemy_06::AttackPattern_1()
 
 		low_jump();     //低ジャンプ
 
-		//接地しているかどうかで移動速度を可変   接地時(true)    : speed = 5.0f
-		//                                       非接地時(false) : speed = 8.0f
+		//接地しているかどうかで移動速度を可変   接地時(true)    : speed = 3.0f
+		//                                       非接地時(false) : speed = 7.0f
 		if (land_flg == true)
 		{
 			speed = 3.0f;
 		}
 		else if (land_flg == false)
 		{
-			speed = 8.0f;
+			speed = 7.0f;
 		}
 
 		if (x > 1180)   //目標座標に到着したかのチェック
@@ -298,7 +331,7 @@ void Enemy_06::AttackPattern_1()
 	if (hp <= 70)
 	{
 		attack_pattern = 1;    //攻撃パターンを変更
-		teleport_Flg = true;   //瞬間移動フラグをtrueにする
+		attack2_Flg = true;   //瞬間移動フラグをtrueにする
 	}
 }
 
@@ -306,14 +339,14 @@ void Enemy_06::AttackPattern_1()
 void Enemy_06::AttackPattern_2()
 {
 	//攻撃パターン2初期処理
-	if (teleport_Flg == true)
+	if (attack2_Flg == true)
 	{
 		x = 1149;
 		y = 480;
 		speed = 5.0f;
 		floor = 5;
 		dir = -1;
-		teleport_Flg = false;
+		attack2_Flg = false;
 		jump_cnt = 0;
 	}
 
@@ -334,6 +367,11 @@ void Enemy_06::AttackPattern_2()
 		if (y == 500)
 		{
 			jump_flg = true;
+		}
+
+		if (y == 650)
+		{
+			jump_flg = false;
 		}
 
 		//ジャンプ処理
@@ -357,6 +395,11 @@ void Enemy_06::AttackPattern_2()
 		if (dir == 1)
 		{
 			x += speed;
+		}
+
+		if (y == 650)
+		{
+			jump_flg = true;
 		}
 
 		//ジャンプ処理
@@ -398,6 +441,11 @@ void Enemy_06::AttackPattern_2()
 			jump_flg = true;
 		}
 
+		if (y == 650)
+		{
+			jump_flg = false;
+		}
+
 		//ジャンプ処理
 		jump();
 
@@ -425,6 +473,11 @@ void Enemy_06::AttackPattern_2()
 		if (dir == 1)
 		{
 			x += speed;
+		}
+
+		if (y == 650)
+		{
+			jump_flg = true;
 		}
 
 		//ジャンプ処理
@@ -460,6 +513,11 @@ void Enemy_06::AttackPattern_2()
 		if (y == 500)
 		{
 			jump_flg = true;
+		}
+
+		if (y == 650)
+		{
+			jump_flg = false;
 		}
 
 		//ジャンプ処理
@@ -493,7 +551,6 @@ void Enemy_06::AttackPattern_2()
 	if (hp <= 40)
 	{
 		attack_pattern = 2;
-		speed = 8.0f;
 	}
 }
 
@@ -519,6 +576,11 @@ void Enemy_06::AttackPattern_3()
 			jump_flg = true;
 		}
 
+		if (y == 650)
+		{
+			jump_flg = false;
+		}
+
 		//ジャンプ処理
 		jump();
 
@@ -540,6 +602,11 @@ void Enemy_06::AttackPattern_3()
 		if (dir == 1)
 		{
 			x += speed;
+		}
+
+		if (y == 650)
+		{
+			jump_flg = true;
 		}
 
 		//ジャンプ処理
@@ -581,6 +648,11 @@ void Enemy_06::AttackPattern_3()
 			jump_flg = true;
 		}
 
+		if (y == 650)
+		{
+			jump_flg = false;
+		}
+
 		//ジャンプ処理
 		jump();
 
@@ -608,6 +680,11 @@ void Enemy_06::AttackPattern_3()
 		if (dir == 1)
 		{
 			x += speed;
+		}
+
+		if (y == 650)
+		{
+			jump_flg = true;
 		}
 
 		//ジャンプ処理
@@ -647,6 +724,11 @@ void Enemy_06::AttackPattern_3()
 			jump_flg = true;
 		}
 
+		if (y == 650)
+		{
+			jump_flg = false;
+		}
+
 		//ジャンプ処理
 		jump();
 
@@ -673,7 +755,88 @@ void Enemy_06::AttackPattern_3()
 		old_type = GetType();
 		ChangeCnt = 0;
 	}
+
+	//数秒経過で元の速度 & 攻撃パターンへ遷移
+	if (SpeedUpTime % 600 == 0)
+	{
+		speed = 5.0f;
+		if (hp > 70)
+		{
+			attack_pattern = 0;
+			jump_cnt = 0;
+			dir = 1;
+			x = 1200;
+			y = 360;
+		}
+		else if (hp > 40)
+		{
+			attack_pattern = 1;
+		}
+	}
 }
+
+//特殊行動1   speed = 8.0f
+void Enemy_06::SpeedUp()
+{
+	attack_pattern = 2;
+	speed = 8.0f;
+	SpeedUpTime = 0;
+	TeleportFlg = false;
+	TeleportInit = true;
+}
+
+//特殊行動2   プレイヤーの後方側に移動し、接近してくる
+void Enemy_06::Teleportation()
+{
+	if (TeleportInit == true)
+	{
+		if (player_dir == 0)
+		{
+			dir = -1;
+			x = player_x + 300;
+			y = 650.0f;
+		}
+
+		if (player_dir == 1)
+		{
+			dir = 1;
+			x = player_x - 300;
+			y = 650.0f;
+		}
+
+		speed = 1.5f;
+		TeleportInit = false;
+	}
+	
+	speed += 0.2f;
+
+	if (dir == -1)
+	{
+		x -= speed;
+	}
+	
+	if (dir == 1)
+	{
+		x += speed;
+	}
+
+	if (x < 190)
+	{
+		TeleportFlg = false;
+		TeleportInit = true;
+		TeleportTime = 0;
+		speed = 5.0f;
+	}
+
+	if (x > 1100)
+	{
+		TeleportFlg = false;
+		TeleportInit = true;
+		TeleportTime = 0;
+		speed = 5.0f;
+	}
+}
+
 
 //旧行動ループ2(保存用)
 void Enemy_06::AttackPattern_00()

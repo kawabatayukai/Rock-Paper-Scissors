@@ -5,27 +5,74 @@
 
 //コンストラクタ
 Jangeki_Base::Jangeki_Base(float x, float y, float r, float speed, Jan_Type type, bool ref)
-	: x(x), y(y), r(r), speed(speed), type(type),refrection(ref)
+	: x(x), y(y), r(r), speed(speed), smoke_index(0.0), rate_turn(0.0), type(type), refrection(ref), rate_pct(200.0)
+	, effect_type(Jan_Result::_ERROR)
 {
 	for (int i = 0; i < 3; i++) image[i] = 0;
 
 	//画像読み込み
-	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image);
+	LoadDivGraph("images/Effect/enemy_jan2.png", 3, 3, 1, 100, 100, image);
 	
+	//反射じゃん撃
 	LoadDivGraph("images/stage09/Reflection_Jangeki.png", 3, 3, 1, 100, 100, reflection_image);
 
+	//エフェクト
+	switch (type)
+	{
+	case Jan_Type::ROCK:
+		LoadDivGraph("images/Effect/smoke_gu.png", 4, 4, 1, 170, 170, image_smoke);
+		break;
+
+	case Jan_Type::SCISSORS:
+		LoadDivGraph("images/Effect/smoke_tyoki.png", 4, 4, 1, 170, 170, image_smoke);
+		break;
+
+	case Jan_Type::PAPER:
+		LoadDivGraph("images/Effect/smoke_pa.png", 4, 4, 1, 170, 170, image_smoke);
+		break;
+
+	case Jan_Type::NONE:
+		break;
+
+	default:
+		break;
+	}
 }
 
 //コンストラクタ（角度あり）
 Jangeki_Base::Jangeki_Base(float x, float y, float r, float speed, double angle, Jan_Type type, bool ref)
-	: x(x), y(y), r(r), type(type), refrection(ref)
+	: x(x), y(y), r(r), smoke_index(0.0), rate_turn(0.0), type(type), refrection(ref), rate_pct(200.0)
+	, effect_type(Jan_Result::_ERROR)
 {
 	for (int i = 0; i < 3; i++) image[i] = 0;
 
 	//画像読み込み
-	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image);
+	LoadDivGraph("images/Effect/enemy_jan2.png", 3, 3, 1, 100, 100, image);
 
+	//反射じゃん撃
 	LoadDivGraph("images/stage09/Reflection_Jangeki.png", 3, 3, 1, 100, 100, reflection_image);
+
+	//エフェクト
+	switch (type)
+	{
+	case Jan_Type::ROCK:
+		LoadDivGraph("images/Effect/smoke_gu.png", 4, 4, 1, 170, 170, image_smoke);
+		break;
+
+	case Jan_Type::SCISSORS:
+		LoadDivGraph("images/Effect/smoke_tyoki.png", 4, 4, 1, 170, 170, image_smoke);
+		break;
+
+	case Jan_Type::PAPER:
+		LoadDivGraph("images/Effect/smoke_pa.png", 4, 4, 1, 170, 170, image_smoke);
+		break;
+
+	case Jan_Type::NONE:
+		break;
+
+	default:
+		break;
+	}
 
 	//x,y方向のスピードを決める
 	this->speed = fabsf(speed) * cosf(static_cast<float>(angle));
@@ -35,7 +82,7 @@ Jangeki_Base::Jangeki_Base(float x, float y, float r, float speed, double angle,
 //デストラクタ
 Jangeki_Base::~Jangeki_Base()
 {
-	//DrawRotaGraph(x, y, 1, 0, image[0], TRUE);
+	DrawRotaGraph(x, y, 1, 0, image[0], TRUE);
 }
 
 //更新
@@ -43,92 +90,48 @@ void Jangeki_Base::Update()
 {
 	x += speed;
 	y -= speed_y;
+
+	//エフェクト
+	Update_Effect();
 }
 
 //描画
 void Jangeki_Base::Draw() const
 {
-	//画像がないとき
-	if (image[0] == 0)
+	//拡大率
+	double rate = (static_cast<double>(r) * 2) / rate_pct;
+
+	//座標をint型に変換　（警告減らす）
+	int x = static_cast<int>(this->x);
+	int y = static_cast<int>(this->y);
+
+	//属性を変換
+	int type_num = static_cast<int>(type);
+	if (type_num > 2) type_num = 0;
+
+
+	//反射でないとき
+	if (refrection == false)
 	{
-		switch (type)
-		{
-		case Jan_Type::ROCK:         //グー
-			//水色
-			DrawCircle((int)x, (int)y, (int)r, 0xff0000, TRUE);
-			break;
+		//スモークエフェクト
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
+		DrawRotaGraph(x, y, rate * 0.75, rate_turn, image_smoke[2], TRUE);
+		DrawRotaGraph(x, y, rate * 0.75, -rate_turn, image_smoke[1], TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
-		case Jan_Type::SCISSORS:     //チョキ
-			//黄色
-			DrawCircle((int)x, (int)y, (int)r, 0xffff00, TRUE);
-			break;
-
-		case Jan_Type::PAPER:        //パー
-			//赤
-			DrawCircle((int)x, (int)y, (int)r, 0x00ffff, TRUE);
-			break;
-
-		default:
-			break;
-		}
+		//通常じゃん撃
+		DrawRotaGraph(x, y, rate, 0, image[type_num], TRUE);
 	}
 	else
 	{
-		//拡大率
-		double rate = (static_cast<double>(r) * 2) / 100;
+		//スモークエフェクト
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
+		DrawRotaGraph(x, y, rate * 0.75, rate_turn, image_smoke[2], TRUE);
+		DrawRotaGraph(x, y, rate * 0.75, -rate_turn, image_smoke[1], TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
-		//座標をint型に変換　（警告減らす）
-		int x = static_cast<int>(this->x);
-		int y = static_cast<int>(this->y);
-
-
-		if (refrection == false)
-		{
-			switch (type)
-			{
-			case Jan_Type::ROCK:         //グー
-
-				DrawRotaGraph(x, y, rate, 1, image[0], TRUE);
-				break;
-
-			case Jan_Type::SCISSORS:     //チョキ
-
-				DrawRotaGraph(x, y, rate, 1, image[1], TRUE);
-				break;
-
-			case Jan_Type::PAPER:        //パー
-
-				DrawRotaGraph(x, y, rate, 1, image[2], TRUE);
-				break;
-
-			default:
-				break;
-			}
-		}
-		else
-		{
-			switch (type)
-			{
-			case Jan_Type::ROCK:         //グー
-
-				DrawRotaGraph(x, y, rate, 1, reflection_image[0], TRUE);
-				break;
-
-			case Jan_Type::SCISSORS:     //チョキ
-
-				DrawRotaGraph(x, y, rate, 1, reflection_image[1], TRUE);
-				break;
-
-			case Jan_Type::PAPER:        //パー
-
-				DrawRotaGraph(x, y, rate, 1, reflection_image[2], TRUE);
-				break;
-
-			default:
-				break;
-			}
-		}
-
+		//反射じゃん撃
+		DrawRotaGraph(x, y, rate, 0, reflection_image[type_num], TRUE);
 	}
 }
 
@@ -139,6 +142,25 @@ bool Jangeki_Base::CheckScreenOut()
 	if (y > 780 || y < 0) return true;
 
 	return false;
+}
+
+//エフェクトを動作させる（全ての派生じゃん撃内・Updateで呼ぶ）引数：フレーム毎の拡大量
+void Jangeki_Base::Update_Effect(double fp_rate)
+{
+	//拡大率を徐々に上げる
+	rate_pct -= fp_rate;
+	if (rate_pct <= 100) rate_pct = 100;
+
+	//スモーク
+	static int frame_count;
+	if (++frame_count % 10 == 0)
+	{
+		smoke_index++;
+		frame_count = 0;
+
+		if (smoke_index > 3) smoke_index = 0;
+	}
+	rate_turn += 0.008;
 }
 
 
@@ -178,19 +200,25 @@ int Jangeki_Base::CheckAdvantage(const Jangeki_Base* jangeki)
 	default:
 		break;
 	}
-	if (result_num == 1) //じゃんけん勝ち
+
+	//じゃんけん負け
+	if (result_num == 0)
+	{
+		effect_type = Jan_Result::LOSE;
+	}
+	//じゃんけん勝ち
+	if (result_num == 1) 
 	{
 		GameData::Add_Score(100);    //スコア加算
+
+		effect_type = Jan_Result::WIN;
 	}
-	if (result_num == 2) //じゃんけんあいこ
+	//じゃんけんあいこ
+	if (result_num == 2) 
 	{
 		GameData::Add_Score(100 / 2);    //スコア加算
-	}
 
-	//有利の時
-	if (result_num == 1)
-	{
-		GameData::Add_Score(100);    //スコア加算
+		effect_type = Jan_Result::ONEMORE;
 	}
 
 	return result_num;
@@ -233,3 +261,8 @@ bool Jangeki_Base::Hit_Jangeki(const Jangeki_Base* jangeki)
 	return false;
 }
 
+//発動すべきエフェクトを取得する
+Jan_Result Jangeki_Base::GetEffectType() const
+{
+	return effect_type;
+}

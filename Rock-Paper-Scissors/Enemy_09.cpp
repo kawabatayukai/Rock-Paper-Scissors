@@ -137,6 +137,7 @@ void Enemy_09::Update_Jangeki()
 				{
 					Jan_360degrees();
 					count = 0;		 //リセット
+					SPcount++;
 				}
 				if (count == 5)		//五回目で特殊弾発射
 				{
@@ -159,22 +160,31 @@ void Enemy_09::Jan_360degrees()
 	{
 		//生成するじゃん撃の半径
 		float radius = 40.f;
-		int count = 0;
-
-		//ランダムな属性を生成
-		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
 		for (int i = jan_count; i < (jan_count + 14); i++)
 		{
+			//ランダムな属性を生成
+			Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 			double angle = static_cast<double>((30.0 * i) * (M_PI / 70));
 
 			obj_jangeki[i] = new Jangeki_Base(x, y, radius, speed, angle, type);
-			count++;
 
-			if (GetRand(3) == count)
+			if (Rand() == SPcount)
+			{
 				Spflg = false;
+				SPcount = 0;
+			}
 		}
 	}
+}
+
+int Enemy_09::Rand()
+{
+	int ran = GetRand(2);
+
+	if (ran == 0)return 2;
+	if (ran == 1)return 3;
+	if (ran == 2)return 4;
 }
 
 void Enemy_09::Jan_40degrees()
@@ -190,6 +200,8 @@ void Enemy_09::Jan_40degrees()
 
 		for (int i = jan_count; i < (jan_count + 8); i++)
 		{
+
+			if (GetHP() <= 51)type = static_cast<Jan_Type>(GetRand(2));
 			double angle = static_cast<double>((270.0 * i) * (M_PI / 120));
 
 			obj_jangeki[i] = new Jangeki_Base(x, y, radius, speed, angle, type);
@@ -201,7 +213,7 @@ void Enemy_09::Jan_40degrees()
 void Enemy_09::MoveEnmey_09()
 {
 	interval++;
-	if (GetHP() <= 51)teleport = 150;
+	if (GetHP() <= 51)teleport = 200;
 
 	if (GetHP() == 1)teleport = 500;
 
@@ -355,11 +367,11 @@ void Enemy_09::SpecialMoveEnmey()
 				//真ん中
 			case 10:
 				x = 620;
-				y = 400;
+				y = 420;
 				break;
 			case 11:
 				x = 620;
-				y = 80;
+				y = 110;
 				break;
 			case 12:
 				x = 620;

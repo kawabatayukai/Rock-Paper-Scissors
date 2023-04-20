@@ -52,9 +52,9 @@ Scene_Stage09::Scene_Stage09(const Player* player)
 	obj_floor[6] = new Floor(1050, 500, 120, 20, 0xd2d2d2);
 	obj_floor[7] = new Floor(850, 325, 120, 20, 0xd2d2d2);
 	obj_floor[8] = new Floor(1050, 150, 120, 20, 0xd2d2d2);
-	//足場   右側
-	obj_floor[9] = new Floor(560, 420, 120, 20, 0xd2d2d2);
-	obj_floor[10] = new Floor(560, 100, 120, 20, 0xd2d2d2);
+	//足場   中央
+	obj_floor[9] = new Floor(560, 450, 120, 20, 0xd2d2d2);
+	obj_floor[10] = new Floor(560, 130, 120, 20, 0xd2d2d2);
 
 }
 
@@ -83,8 +83,9 @@ void Scene_Stage09::Update()
 	}
 
 	//接触じゃんけん処理
-	if (obj_enemy->Spflg == false)
-	Touch_Janken(obj_enemy, this);
+	//特殊行動中とアニメーション再生中はなし
+	if (obj_enemy->Spflg == false && obj_enemy->animflg == false)
+		Touch_Janken(obj_enemy, this, 9);
 
 
 	//playerのじゃん撃をとってくる
@@ -289,10 +290,10 @@ void Scene_Stage09::Update()
 	{
 		//じゃん撃がない時は処理しない
 		if (reflection_jangeki[i] == nullptr) break;
-
 		//じゃん撃との当たり判定
 		if (obj_player->Hit_Jangeki(reflection_jangeki[i]) == true)
 		{
+			
 			//ダメージを受ける（プレイヤー）
 			obj_player->ReceiveDamage(30);
 
@@ -303,7 +304,17 @@ void Scene_Stage09::Update()
 	}
 
 
-	HitCtrl_Floor(obj_player, STAGE_09_FLOOR);     // player　床・壁判定
+	//壁との当たり判定
+	if (obj_player->Get_X() <= 50 || obj_player->Get_X() >= 1200)
+	{
+		HitCtrl_Floor(obj_player, STAGE_09_FLOOR);     // player　床・壁判定
+	}
+
+	//プレイヤーのy座標が減少しない時のみ当たり判定を取得
+	if (obj_player->Get_Y() >= obj_player->Get_OldY())
+	{
+		HitCtrl_Floor(obj_player, STAGE_09_FLOOR);     // player　床・壁判定
+	}
 	HitCtrl_Floor(obj_enemy, STAGE_09_FLOOR);      // 敵　　　床・壁判定
 }
 
@@ -319,7 +330,7 @@ void Scene_Stage09::Draw() const
 	DrawUI_ON_Enemy(obj_enemy);
 
 	//接触じゃんけんでない時
-	if (GetJanState() == Jan_State::BEFORE)
+	if (GetJanState() == Jan_State::START || GetJanState() == Jan_State::BEFORE)
 	{
 
 		obj_player->Draw();  //プレイヤー描画
@@ -333,8 +344,11 @@ void Scene_Stage09::Draw() const
 			if (obj_floor[i] == nullptr) break;
 			obj_floor[i]->Draw();
 		}
+		//接触した瞬間の演出
+		if (GetJanState() == Jan_State::START) Draw_JankenStart();
 
 	}
+
 	else
 	{
 		//接触時じゃんけん描画

@@ -52,4 +52,7 @@ void Jangeki_Homing::Update()
 	}
 	x += static_cast<float>(cos(angle)) * speed;      //cos(角度)　でｘ軸の移動量を計算
 	y += static_cast<float>(sin(angle)) * speed;      //sin(角度)　でｙ軸の移動量を計算
+
+	//エフェクト
+	Update_Effect();
 }

@@ -46,7 +46,7 @@ Scene_Stage04::Scene_Stage04(const Player* player)
 	obj_floor[8] = new Floor(467, 195, 10, 130, 0x493759);			//‘«ê(ãc)
 	obj_floor[9] = new Floor(850, 250, 150, 10, 0x493759);			//‘«ê(‰E‰¡)
 	obj_floor[10] = new Floor(917, 195, 10, 130, 0x493759);			//‘«ê(‰Ec)
-	obj_floor[11] = new Floor(80, 320, 150, 10, 0x493759);			//‘«ê•ÇÛ¶‡@
+	obj_floor[11] = new Floor(80, 300, 150, 10, 0x493759);			//‘«ê•ÇÛ¶‡@
 	obj_floor[12] = new Floor(80, 500, 120, 10, 0x493759);			//‘«ê•ÇÛ¶‡A
 	obj_floor[13] = new Floor(1100, 350, 100,  10, 0x493759);	    //‘«ê•ÇÛ‰E‡@
 	obj_floor[14] = new Floor(1050, 510, 130,  10, 0x493759);		//‘«ê•ÇÛ‰E‡A
@@ -303,6 +303,7 @@ AbstractScene* Scene_Stage04::ChangeScene()
 //‚¶‚á‚ñ‚¯‚ñI—¹Œã‚Ì‹““®iƒvƒŒƒCƒ„[Ÿ‚¿j
 void Scene_Stage04::AfterJanken_WIN()
 {
+	obj_player->Recover_HP(30);
 	obj_player->SetX(100);
 	obj_enemy->SetX(1180);
 }
