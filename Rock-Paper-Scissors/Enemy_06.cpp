@@ -142,11 +142,11 @@ void Enemy_06::Draw() const
 	//DrawFormatString(600, 600, 0xffffff, "%d", player_dir);
 
 	//テスト
-	/*DrawFormatString(600, 600, 0xffffff, "フレームカウント  : %d", frame_count);*/
+	/*DrawFormatString(600, 600, 0xffffff, "フレームカウント  : %d", frame_count);
 	DrawFormatString(600, 620, 0xffffff, "瞬間移動接触開始  : %d", TeleportTime);
-	/*DrawFormatString(600, 640, 0xffffff, "特殊行動時間      : %d", SpeedUpTime);*/
+	DrawFormatString(600, 640, 0xffffff, "特殊行動時間      : %d", SpeedUpTime);
 	DrawFormatString(600, 660, 0xffffff, "瞬間移動フラグ    : %d", TeleportFlg);
-	DrawFormatString(600, 680, 0xffffff, "speed             : %f", speed);
+	DrawFormatString(600, 680, 0xffffff, "speed             : %f", speed);*/
 }
 
 //じゃん撃生成・更新
@@ -794,14 +794,14 @@ void Enemy_06::Teleportation()
 		{
 			dir = -1;
 			x = player_x + 300;
-			y = player_y;
+			y = 650.0f;
 		}
 
 		if (player_dir == 1)
 		{
 			dir = 1;
 			x = player_x - 300;
-			y = player_y;
+			y = 650.0f;
 		}
 
 		speed = 1.5f;
