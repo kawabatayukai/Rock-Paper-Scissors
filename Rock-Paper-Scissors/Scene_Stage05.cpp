@@ -507,7 +507,18 @@ void Scene_Stage05::Update()
 		}
 	}
 
-	HitCtrl_Floor(obj_player, STAGE_05_FLOOR);     // player　床・壁判定
+	//壁との当たり判定
+	if (obj_player->Get_X() <= 50 || obj_player->Get_X() >= 1200)
+	{
+		HitCtrl_Floor(obj_player, STAGE_05_FLOOR);     // player　床・壁判定
+	}
+	//プレイヤーのy座標が減少しない時のみ当たり判定を取得
+	if (obj_player->Get_Y() >= obj_player->Get_OldY())
+	{
+		HitCtrl_Floor(obj_player, STAGE_05_FLOOR);     // player　床・壁判定
+	}
+
+	//HitCtrl_Floor(obj_player, STAGE_05_FLOOR);     // player　床・壁判定
 	HitCtrl_Floor(obj_enemy, STAGE_05_FLOOR);      // 敵　　　床・壁判定
 }
 
