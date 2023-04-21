@@ -9,7 +9,7 @@ private:
 	int TitleImage = 0;
 	int TitleBgm;
 	int SelectSE;
-
+	int ClickSE;
 	int T_selectnum = 0;
 
 	int font_title;   //フォントハンドル

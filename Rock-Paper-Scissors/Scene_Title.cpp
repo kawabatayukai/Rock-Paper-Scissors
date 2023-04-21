@@ -20,7 +20,12 @@ TitleScene::TitleScene()
 	ChangeVolumeSoundMem(150, TitleBgm);
 	//セレクトSE読込み
 	SelectSE = LoadSoundMem("Sound/Select.mp3");
+	//セレクトSE音量
 	ChangeVolumeSoundMem(230, SelectSE);
+	//決定SE読込み
+	ClickSE = LoadSoundMem("Sound/決定ボタンを押す24.mp3");
+	//決定SE音量
+	ChangeVolumeSoundMem(230, ClickSE);
 	//フォントデータを作成
 	font_title = CreateFontToHandle("Yu Gothic UI", 50, 3, DX_FONTTYPE_ANTIALIASING_4X4);
 }
@@ -87,6 +92,7 @@ AbstractScene* TitleScene::ChangeScene()
 	//Aボタンで決定
 	if (KeyManager::OnPadClicked(PAD_INPUT_A) == true)
 	{
+		PlaySoundMem(ClickSE, DX_PLAYTYPE_BACK, TRUE);
 		switch (T_selectnum)
 		{
 		case 0:
