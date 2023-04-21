@@ -16,6 +16,9 @@ public:
 
 	void Update_Jangeki() override;  //じゃん撃生成・更新
 
+	//前回の座標ｙ
+	float Get_OldY() const { return old_y; };
+
 	//ジャンプ（ジャンプ力）
 	void Jump_Enemy(float g_add = -21.5f);
 
