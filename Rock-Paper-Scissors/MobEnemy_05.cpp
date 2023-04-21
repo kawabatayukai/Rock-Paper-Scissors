@@ -6,6 +6,8 @@
 #include "Jangeki_Base.h"
 #include "Jangeki_Changespeed.h"
 #include "Jangeki_Zigzag.h" 
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 MobEnemy_05::MobEnemy_05(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
@@ -43,8 +45,6 @@ void MobEnemy_05::Draw() const
 
 void MobEnemy_05::Update_Jangeki()
 {
-	int rand = GetRand(1);
-	int jan_count;
 
 	//じゃん撃配列をひとつずつ
 	for (jan_count = 0; jan_count < JANGEKI_MAX; jan_count++)
@@ -79,7 +79,7 @@ void MobEnemy_05::Update_Jangeki()
 
 
 		//生成
-		switch (rand)
+		switch (GetRand(1))
 		{
 		case 0:
 			if (frame_count % 240 == 0) obj_jangeki[jan_count] = new Jangeki_Zigzag(x, y, radius, speed, type, player_x, player_y);
@@ -90,15 +90,78 @@ void MobEnemy_05::Update_Jangeki()
 			break;
 		}
 
+		losetimer++;
+
+		if (Jan_loseflg == true)
+		{
+			if (frame_count % 60 == 0) obj_jangeki[jan_count] = new Jangeki_Spin(x, y, radius, speed, type, player_x, player_y);
+		}
+		if (losetimer > 180)
+		{
+			Jan_loseflg = false;
+		}
 	}
 }
 
 void MobEnemy_05::Janken_lose()
 {
 	hp = 100;
+
+	Jan_360degrees();
+
+	//じゃん撃配列をひとつずつ
+	for (jan_count = 0; jan_count < JANGEKI_MAX; jan_count++)
+	{
+		//配列の jan_count 番目がnullptr（空要素）ならそれ以上処理しない
+		if (obj_jangeki[jan_count] == nullptr) break;
+
+		obj_jangeki[jan_count]->Update();
+
+		DeleteJangeki(jan_count);
+		jan_count--;
+	}
+	Jan_loseflg = true;
+	losetimer = 0;
 }
 
 void MobEnemy_05::Janken_win()
 {
 	hp = hp / 2;
+
+	//じゃん撃配列をひとつずつ
+	for (jan_count = 0; jan_count < JANGEKI_MAX; jan_count++)
+	{
+		//配列の jan_count 番目がnullptr（空要素）ならそれ以上処理しない
+		if (obj_jangeki[jan_count] == nullptr) break;
+
+		obj_jangeki[jan_count]->Update();
+
+		DeleteJangeki(jan_count);
+		jan_count--;
+	}
+
+}
+
+void MobEnemy_05::Jan_360degrees()
+{
+	if (Spflg == true)
+	{
+		//生成するじゃん撃の半径
+		float radius = 40.f;
+
+		for (int i = jan_count; i < (jan_count + 14); i++)
+		{
+			//ランダムな属性を生成
+			Jan_Type type = static_cast<Jan_Type>(GetRand(2));
+			double angle = static_cast<double>((30.0 * i) * (M_PI / 70));
+
+			obj_jangeki[i] = new Jangeki_Base(x, y, radius, speed, angle, type);
+
+			if (GetRand(2) == SPcount)
+			{
+				Spflg = false;
+				SPcount = 0;
+			}
+		}
+	}
 }

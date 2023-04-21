@@ -60,6 +60,7 @@ Scene_Stage01::~Scene_Stage01()
 void Scene_Stage01::Update()
 {
 
+
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
@@ -109,7 +110,8 @@ void Scene_Stage01::Update()
 
 					//player側のじゃん撃を削除
 					delete_player = true;
-
+					//エフェクト発動
+					//Play_Effect(player_jangeki[p_count]->GetX(), player_jangeki[p_count]->GetY(), 0);
 					break;
 
 				case 1:             //playerのじゃん撃が有利
@@ -118,6 +120,8 @@ void Scene_Stage01::Update()
 					obj_enemy->DeleteJangeki(e_count);
 					e_count--;
 
+					//エフェクト発動
+					//Play_Effect(player_jangeki[p_count]->GetX(), player_jangeki[p_count]->GetY(),1);
 					break;
 
 				case 2:             //あいこ
@@ -129,6 +133,8 @@ void Scene_Stage01::Update()
 					obj_enemy->DeleteJangeki(e_count);
 					e_count--;
 
+					//エフェクト発動
+					//Play_Effect(player_jangeki[p_count]->GetX(), player_jangeki[p_count]->GetY(),2);
 					break;
 
 				default:
@@ -226,17 +232,25 @@ void Scene_Stage01::Update()
 
 	HitCtrl_Floor(obj_player, STAGE_01_FLOOR);     // player　床・壁判定
 	HitCtrl_Floor(obj_enemy, STAGE_01_FLOOR);      // 敵　　　床・壁判定
+
+		//エフェクト
+	Update_Effect();
 }
 
 //描画
 void Scene_Stage01::Draw() const
 {
+
+
 	//背景
 	DrawGraph(0, 0, image_back, FALSE);
 
 	//UI
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
 	DrawUI_ON_Enemy(obj_enemy);
+
+	//エフェクト描画
+	Draw_Effect();
 
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::START || GetJanState() == Jan_State::BEFORE)

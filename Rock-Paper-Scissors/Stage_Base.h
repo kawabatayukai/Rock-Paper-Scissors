@@ -47,7 +47,13 @@ public:
 	Jan_State GetJanState() const;
 
 	//エフェクト再生（エフェクト再生するスイッチ）
-	void Play_Effect();
+	void Play_Effect(float play_x, float play_y, unsigned int effect_type = 0);
+
+	//エフェクトを動作させる
+	void Update_Effect();
+
+	//エフェクト描画
+	void Draw_Effect() const;
 
 protected:
 	Player* obj_player = nullptr;             //プレイヤー
@@ -63,6 +69,8 @@ private:
 
 	unsigned short blackout_time;             //暗転時間（接触直後演出）
 
+
 	Effect_Jangeki** obj_effect;              //エフェクト(じゃん撃同士の衝突)
+	unsigned short e_jancount = 0;            //エフェクト配列操作
 };
 

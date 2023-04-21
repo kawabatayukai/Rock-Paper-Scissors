@@ -9,7 +9,9 @@ struct Pattern_03 {
 	float location_y; //目指している座標y
 	int next_index; //次配列のパターンの番号
 	int enemywaitTime;//エネミーの待ち時間
-	int jumpflg; //ジャンプするかしないか
+	int jumpflg; //ジャンプするかしないか //0:する　//1:しない
+	
+
 
 };
 
@@ -35,6 +37,9 @@ public:
 
 	float Get_OldY() const { return old_y; } //Y座標の取得
 
+	//void MoveRunAway(float enemy_x, float enemy_y,int player_x,int player_y);//
+
+	//void EnemyHP();
 
 private:
 	/********************   ジャンプ関係   ********************/
@@ -48,6 +53,28 @@ private:
 	float g_add = 1.0f;//重力加速度
 	
 
+	//列挙体ステージ3
+	enum class ENEMY_STATE
+	{
+		STOP,
+		LEFTMOVE,
+		RIGHTMOVE,
+		JUMP,
+	};
+	ENEMY_STATE enemy_state = ENEMY_STATE::STOP;
+	
+
+	//列挙体ステージ3
+	/*enum class ENEMY_STATE1
+	{
+		STOP1,
+		LEFTMOVE1,
+		RIGHTMOVE1,
+		JUMP1,
+	};
+	ENEMY_STATE1 enemy_state1 = ENEMY_STATE1::STOP1;*/
+
+
 
 	/**********************************************************/
 	int frame_count ;       //じゃん撃発射用
@@ -58,9 +85,24 @@ private:
 	short current ; //現在のパターン配列添字
 
 
+	int frame_count_anim = 0;       //敵のアニメーション用
+	int frame_count_anim1 = 0;       //敵のアニメーション1用
 
-	int enemyimage[5];      //敵画像配列
+
+	int enemyimage[6];  //万全の時の画像
+	int enemyimage1[6]; //耐久値1の時の画像
+	int enemyimage2[6]; //耐久値2の時の画像
+	int enemyimage3[6]; //耐久値3の時の画像
+	int enemyimage4[6]; //やられかけの時の画像
+
+	int* now_image;//現在の画像情報取得
+
+	//int enemyimageMirror[6];//敵画像反転
 	int currentindex_st03 = 0;
+	int currentindex1_st03 = 0;
+	/*int screenWidth = 0;
+	int screenHeight = 0;*/
+	
 };
 
 

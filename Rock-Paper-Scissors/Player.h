@@ -36,6 +36,9 @@ public:
 	/*腕の描画・動き*/
 	void ArmDrawMove() const;
 
+	/*頭の描画・動き*/
+	void HeadDrawMove() const;
+
 	//プレイヤーのUI描画
 	void PlayerDrawUI(int hp) const;
 
@@ -56,6 +59,9 @@ private:
 	/**********************************************************/
 
 	int image[10]; //画像
+	int image_Jamp[2];
+
+	int head_Image[1];
 
 	int armL_Image[3];
 	int armR_Image[3];
@@ -91,4 +97,3 @@ private:
 
 	int ui_font;  //ui用フォントハンドル
 };
-

@@ -290,10 +290,10 @@ void Scene_Stage09::Update()
 	{
 		//じゃん撃がない時は処理しない
 		if (reflection_jangeki[i] == nullptr) break;
-
 		//じゃん撃との当たり判定
 		if (obj_player->Hit_Jangeki(reflection_jangeki[i]) == true)
 		{
+			
 			//ダメージを受ける（プレイヤー）
 			obj_player->ReceiveDamage(30);
 
@@ -411,6 +411,8 @@ void Scene_Stage09::AfterJanken_LOSE()
 	{
 		obj_enemy->SetHP(-hp);
 		hp = hp / 2;
+		if (GameData::Get_Total_Time() <= 3600)
+			GameData::Set_TimeLimit(5400);
 	}
 	
 	obj_player->SetX(100);

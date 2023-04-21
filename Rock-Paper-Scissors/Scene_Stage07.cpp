@@ -59,6 +59,7 @@ Scene_Stage07::~Scene_Stage07()
 //更新
 void Scene_Stage07::Update()
 {
+
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
@@ -118,8 +119,6 @@ void Scene_Stage07::Update()
 					//enemy側のじゃん撃を削除
 					obj_enemy->DeleteJangeki(e_count);
 					e_count--;
-
-					
 
 					break;
 
@@ -231,7 +230,24 @@ void Scene_Stage07::Update()
 		}
 	}
 
-	HitCtrl_Floor(obj_player, STAGE_07_FLOOR);     // player　床・壁判定
+	
+
+
+
+
+
+
+	////壁との当たり判定
+	//if (obj_player->GetX() <= 50 || obj_player->GetX() >= 1220)
+	//{
+	//	HitCtrl_Floor(obj_player, STAGE_06_FLOOR);     // player　床・壁判定
+	//}
+
+	//プレイヤーのy座標が減少しない時のみ当たり判定を取得
+	if (obj_player->GetY() >= obj_player->Get_OldY() || obj_player->GetY() <= -200)
+	{
+		HitCtrl_Floor(obj_player, STAGE_07_FLOOR);     // player　床・壁判定
+	}
 
 	//ﾄﾍﾟｺﾝﾋｰﾛ（ダイブ）中の場合、判定をとらない
 	if (obj_enemy->Is_Diving_Collision() != true)

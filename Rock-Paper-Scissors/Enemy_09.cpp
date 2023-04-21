@@ -200,6 +200,8 @@ void Enemy_09::Jan_40degrees()
 
 		for (int i = jan_count; i < (jan_count + 8); i++)
 		{
+
+			if (GetHP() <= 51)type = static_cast<Jan_Type>(GetRand(2));
 			double angle = static_cast<double>((270.0 * i) * (M_PI / 120));
 
 			obj_jangeki[i] = new Jangeki_Base(x, y, radius, speed, angle, type);
@@ -394,7 +396,7 @@ void Enemy_09::frameUP()
 {
 	if (janFrame >= 55)
 	{
-		janFrame = janFrame - 5;
+		janFrame = janFrame - 10;
 	}
 }
 

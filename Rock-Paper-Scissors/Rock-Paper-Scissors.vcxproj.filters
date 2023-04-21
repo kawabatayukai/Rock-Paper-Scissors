@@ -261,6 +261,9 @@
     <ClCompile Include="Scene_InputName.cpp">
       <Filter>ランキング</Filter>
     </ClCompile>
+    <ClCompile Include="Effect_Jangeki.cpp">
+      <Filter>ソース ファイル\Jangeki\kawabata</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -430,6 +433,9 @@
     </ClInclude>
     <ClInclude Include="Scene_InputName.h">
       <Filter>ランキング\ヘッダー</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_Jangeki.h">
+      <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
