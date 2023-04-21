@@ -14,6 +14,13 @@ TitleScene::TitleScene()
 {
 	TitleImage = LoadGraph("images/JankenWorldTitle.png");
 
+	//タイトルBGM読込み
+	TitleBgm = LoadSoundMem("Sound/TitleBGM.mp3");
+	//タイトルBGM音量
+	ChangeVolumeSoundMem(150, TitleBgm);
+	//セレクトSE読込み
+	SelectSE = LoadSoundMem("Sound/Select.mp3");
+	ChangeVolumeSoundMem(230, SelectSE);
 	//フォントデータを作成
 	font_title = CreateFontToHandle("Yu Gothic UI", 50, 3, DX_FONTTYPE_ANTIALIASING_4X4);
 }
@@ -30,7 +37,7 @@ void TitleScene::Update()
 {
 	//カーソルを合わせてボタンを押すと遷移
 	if (KeyManager::OnPadClicked(PAD_INPUT_DOWN) == true) {
-
+		PlaySoundMem(SelectSE, DX_PLAYTYPE_BACK, TRUE);
 		//上ボタンで上に
 		T_selectnum++;
 
@@ -40,6 +47,7 @@ void TitleScene::Update()
 	}
 
 	if (KeyManager::OnPadClicked(PAD_INPUT_UP) == true) {
+		PlaySoundMem(SelectSE, DX_PLAYTYPE_BACK, TRUE);
 
 		//下ボタンで下に
 		T_selectnum--;
@@ -56,7 +64,7 @@ void TitleScene::Update()
 void TitleScene::Draw() const
 {
 	DrawGraph(0,0,TitleImage,TRUE);
-	
+	PlaySoundMem(TitleBgm, DX_PLAYTYPE_LOOP, FALSE);
 	// 開発モード時はDebug_Manager.hの"DEBUG_MODE_GAMEMAIN"をコメントアウトする
 #ifdef  DEBUG_MODE_GAMEMAIN
 

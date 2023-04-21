@@ -7,6 +7,9 @@ class TitleScene : public AbstractScene
 private:
 
 	int TitleImage = 0;
+	int TitleBgm;
+	int SelectSE;
+
 	int T_selectnum = 0;
 
 	int font_title;   //フォントハンドル
