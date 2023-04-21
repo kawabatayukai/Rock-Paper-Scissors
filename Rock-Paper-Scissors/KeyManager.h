@@ -13,7 +13,6 @@ namespace Stick_Code
 	const int STICK_MIN_VALUE = -32768;    //スティック入力最小値
 };
 
-
 class KeyManager
 {
 public:
@@ -34,7 +33,13 @@ public:
 	static bool OnPadReleased(int key);      //離した瞬間
 	static bool OnPadPressed(int key);       //押している間
 
-	static int  Get_StickValue(const int& stick_code);  //スティック入力値取得
+	static int  Get_StickValue(const int& stick_code);     //スティック入力値取得
+
+	static bool OnPadClicked_LT();           //LT
+	static bool OnPadClicked_RT();           //RT
+
+	static int GetValue_LT();
+	static int GetValue_RT();
 
 private:
 	//privateにコンストラクタ→アクセスできない（オブジェクトが作れない）
@@ -53,8 +58,9 @@ private:
 	//---------   コントローラー（スティック入力値） ------------------------
 
 	static XINPUT_STATE input_Pad;      //コントローラーの入力情報
-	static int stick_value[4];          //入力値   0:左ｘ　1:左ｙ　2:右ｘ　3:右ｙ
+	static XINPUT_STATE input_Pad_old;  //前回のコントローラーの入力情報
 
+	static int stick_value[4];          //入力値   0:左ｘ　1:左ｙ　2:右ｘ　3:右ｙ
 
 	//無効範囲(デッドゾーン)・・・入力を受け付けない値
 	

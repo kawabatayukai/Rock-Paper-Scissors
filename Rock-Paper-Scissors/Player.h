@@ -86,6 +86,8 @@ private:
 
 	int image_JanType[3];     //選択じゃん撃画像
 	int image_setsumei;       //操作説明用　モロ
+	int image_set_circle;     //円
+	int image_set_LTRT;       //"LTRT"
 	int hpImage;
 
 	//向き（左右のみ）
