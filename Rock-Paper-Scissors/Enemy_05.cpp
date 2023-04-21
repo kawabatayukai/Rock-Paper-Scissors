@@ -216,6 +216,8 @@ void Enemy_05::Update()
 //描画
 void Enemy_05::Draw() const
 {
+	DrawFormatString(600, 600, 0x00ff00, "%f", player_x);
+
 	//中心から描画
 	DrawRotaGraphF(x, y, 1, 0, Enemy_image, TRUE);
 
@@ -234,6 +236,7 @@ void Enemy_05::Draw() const
 void Enemy_05::Update_Jangeki()
 {
 	int jan_count;
+	reflection->SetTargetLocation(player_x, player_y);
 
 	//じゃん撃配列をひとつずつ
 	for (jan_count = 0; jan_count < JANGEKI_MAX; jan_count++)
@@ -246,7 +249,7 @@ void Enemy_05::Update_Jangeki()
 		//ホーミングじゃん撃であればプレイヤーの座標をセットする
 		obj_jangeki[jan_count]->SetTargetLocation(player_x, player_y);
 
-		reflection->SetTargetLocation(player_x, player_y);
+
 
 		//画面外で削除する
 		if (obj_jangeki[jan_count]->CheckScreenOut() == true)
@@ -273,7 +276,7 @@ void Enemy_05::Update_Jangeki()
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Spin(x, y, radius, speed, type,player_x,player_y);
 
 		//反射じゃん撃生成
-		if (reflection->GetFlg() == true)reflection->obj_reflection[reflection->jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed, type, true);
+		if (reflection->GetFlg() == true)reflection->obj_reflection[reflection->jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed-2, type, true);
 		reflection->falseFlg();
 	}
 }
@@ -291,4 +294,22 @@ bool Enemy_05::respawn_mobenemy()
 void Enemy_05::SetRespawn(bool flag)
 {
 	respawn = flag;
+}
+
+void Enemy_05::Change_JanType()
+{
+	switch (GetRand(2))
+	{
+	case 0:
+		SetType(Jan_Type::ROCK);
+		break;
+	case 1:
+		SetType(Jan_Type::SCISSORS);
+		break;
+	case 2:
+		SetType(Jan_Type::PAPER);
+		break;
+	default:
+		break;
+	}
 }
