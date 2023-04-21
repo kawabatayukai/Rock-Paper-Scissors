@@ -32,6 +32,8 @@ public:
 
 	void Special_Action();			//特殊行動
 
+	void Jan_360degrees(int count, float rad, float speed, Jan_Type type);
+
 private:
 	/********************   ジャンプ関係   ********************/
 
@@ -49,7 +51,7 @@ private:
 	float enemy_x = 0;
 	float enemy_y = 0;
 
-	int enemy_image[9];			//画像用変数
+	int enemy_image[10];			//画像用変数
 	float angle;
 
 	int specialTime = 0;

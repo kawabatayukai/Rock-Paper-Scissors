@@ -11,10 +11,10 @@
 //コンストラクタ
 Scene_Stage04::Scene_Stage04(const Player* player)
 {
-	//制限時間をセット(1分間)
-	GameData::Set_TimeLimit(3600);
+	//制限時間をセット(5分間)
+	GameData::Set_TimeLimit(18000);
 
-	back_image = LoadGraph("images/Stage4/Stage_Image2.png");
+	back_image = LoadGraph("images/Stage04/Stage_Image2.png");
 
 	//プレイヤー情報が渡されていれば
 	if (player != nullptr)
@@ -60,19 +60,19 @@ Scene_Stage04::~Scene_Stage04()
 //更新
 void Scene_Stage04::Update()
 {
-	//時間をカウント
-	GameData::Time_Update();
-
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
 		obj_player->Update();    // プレイヤー更新・操作可能
 		obj_enemy->Update();     //敵キャラ更新・内部処理
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());	//プレイヤーの座標を取得
+
+		//時間をカウント
+		GameData::Time_Update();
 	}
 
 	//接触じゃんけん処理
-	Touch_Janken(obj_enemy, this);
+	Touch_Janken(obj_enemy, this, 4);
 
 	//playerのじゃん撃をとってくる
 	Jangeki_Base** player_jangeki = obj_player->GetJangeki();

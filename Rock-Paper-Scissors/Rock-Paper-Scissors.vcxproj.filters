@@ -55,9 +55,6 @@
     <Filter Include="ソース ファイル\GameMainScene\Stage_08">
       <UniqueIdentifier>{0320f16f-8190-4223-b410-1d0f886ae97c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\GameMainScene\Stage_09">
-      <UniqueIdentifier>{7ef79df2-836f-4819-ae65-ab302c52ec6a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\GameMainScene\Stage_10">
       <UniqueIdentifier>{ed7cc0a4-1181-43d9-80a4-cebc98f76936}</UniqueIdentifier>
     </Filter>
@@ -96,6 +93,9 @@
     </Filter>
     <Filter Include="ソース ファイル\GameMainScene\Stage_03">
       <UniqueIdentifier>{541f08c4-6dfa-4a35-a86b-63667d913571}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameMainScene\Stage_09">
+      <UniqueIdentifier>{7ef79df2-836f-4819-ae65-ab302c52ec6a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
