@@ -9,7 +9,7 @@ struct Pattern_03 {
 	float location_y; //目指している座標y
 	int next_index; //次配列のパターンの番号
 	int enemywaitTime;//エネミーの待ち時間
-	int jumpflg; //ジャンプするかしないか
+	int jumpflg; //ジャンプするかしないか //0:する　//1:しない
 	
 
 
