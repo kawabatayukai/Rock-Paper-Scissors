@@ -247,6 +247,11 @@ void Scene_Stage06::Update()
 	if (obj_enemy->Get_Y() >= obj_enemy->Get_OldY() || obj_enemy->Get_Y() <= -200)
 	{
 		HitCtrl_Floor(obj_enemy, STAGE_06_FLOOR);      // “G@@@°E•Ç”»’è
+
+		//(x - (w / 2))
+		//(y - (h / 2))
+		//(x + (w / 2))
+		//(y + (h / 2))
 	}
 }
 
@@ -283,8 +288,6 @@ void Scene_Stage06::Draw() const
 		//ÚG‚¶‚á‚ñ‚¯‚ñ•`‰æ
 		Draw_Janken();
 	}
-
-	/*DrawString(640, 360, "Stage06", 0xffffff);*/
 }
 
 //‚¶‚á‚ñ‚¯‚ñ•`‰æ
