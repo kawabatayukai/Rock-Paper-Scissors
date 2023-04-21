@@ -210,23 +210,22 @@ void Enemy_03::Update()
 	else {
 
 
+		if (x <= 100) {
 
-		if (70 > x ) {
+			//前回より加速する
+			speed = 2.5f;
+
+		}
+		else if (x <= 950 && x >= 475) {
 
 			//前回より加速する
 			speed = 3.5f;
 
 		}
-		else if (640 < x && 950 > x) {
+		else if (x >= 950) {
 
 			//前回より加速する
-			speed = 5.5f;
-
-		}
-		else if (1170 < x) {
-
-			//前回より加速する
-			speed = 7.5f;
+			speed = 4.5f;
 
 		}
 		else
