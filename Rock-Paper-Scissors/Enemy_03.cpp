@@ -175,7 +175,7 @@ void Enemy_03::Update()
 		e_type = Jan_Type::SCISSORS;
 	}*/
 
-	if (hp >= 40) {
+	if (hp > 40) {//HP40%より多いの間パターンの動きをする
 
 
 		//ステ03パターン用関数
@@ -209,25 +209,28 @@ void Enemy_03::Update()
 	}
 	else {
 
-
-		if (x <= 100) {
+		//enemyのxが475以下の時
+		if (x <= 475) {
 
 			//前回より加速する
 			speed = 2.5f;
 
 		}
+		//enemyのxが950以下で475以上の時
 		else if (x <= 950 && x >= 475) {
 
 			//前回より加速する
 			speed = 3.5f;
 
 		}
+		//enemyのxが950以上の時
 		else if (x >= 950) {
 
 			//前回より加速する
 			speed = 4.5f;
 
 		}
+		//それ以外は普通の動き
 		else
 		{
 
