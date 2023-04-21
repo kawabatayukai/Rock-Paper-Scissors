@@ -7,9 +7,9 @@
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
-	speed = 5.0f;
+	speed = 5.0f;             //デフォルト速度は5.0f
 	dir = -1;                 //-1なら左向き  +1なら右向き
-	hp = 100;
+	hp = 100;                 //HPは100
 
 	old_type = static_cast<Jan_Type>(1);  //チョキ属性で初期化
 
@@ -39,9 +39,10 @@ void Enemy_06::Update()
 	//じゃん撃更新・生成
 	Update_Jangeki();
 
+	//HP表示がマイナスにならないように調整
 	if (hp <= 0)hp = 0;
 
-	if (TeleportFlg == false)
+	if (TeleportFlg == false)   //瞬間移動接触フラグの判定
 	{
 		//攻撃パターン1
 		if (attack_pattern == 0)
@@ -64,11 +65,11 @@ void Enemy_06::Update()
 	else if (TeleportFlg == true && x > 0 && x < 1280)
 	{
 		//特殊行動2   プレイヤーの後方側に移動し、接近してくる
-		if (attack_pattern > 0)
+		if (attack_pattern > 0)  //行動ループ1以外の時
 		{
 			Teleportation();
 		}
-		else
+		else  //例外処理
 		{
 			TeleportFlg = false;
 			TeleportInit = true;
@@ -82,12 +83,12 @@ void Enemy_06::Update()
 		speed = 5.0f;
 	}
 
-	//500フレームごとに瞬間移動接触フラグをtrueにする
-	if (TeleportTime == 500 && TeleportFlg == false && (player_x - 300) > 0 && (player_x + 300) < 1280)
+	//750フレームごとに瞬間移動接触フラグをtrueにする
+	if (TeleportTime == 750 && TeleportFlg == false && (player_x - 300) > 0 && (player_x + 300) < 1280 && speed != 8.0f)
 	{
 		TeleportFlg = true;
 	}
-	else if(TeleportTime > 500)
+	else if(TeleportTime > 750)
 	{
 		TeleportTime = 0;
 	}
@@ -138,20 +139,13 @@ void Enemy_06::Draw() const
 	if (hp > 0) DrawFormatString((int)(x - 50), (int)(y - 125), 0xffffff, "HP : %d", hp);
 	else DrawString((int)(x - 50), (int)(y - 125), "death!", 0xffffff);
 
-	////テスト
-	//DrawFormatString(600, 600, 0xffffff, "%d", player_dir);
-
-	//テスト
-	/*DrawFormatString(600, 600, 0xffffff, "フレームカウント  : %d", frame_count);
-	DrawFormatString(600, 620, 0xffffff, "瞬間移動接触開始  : %d", TeleportTime);
-	DrawFormatString(600, 640, 0xffffff, "特殊行動時間      : %d", SpeedUpTime);
-	DrawFormatString(600, 660, 0xffffff, "瞬間移動フラグ    : %d", TeleportFlg);
-	DrawFormatString(600, 680, 0xffffff, "speed             : %f", speed);*/
+	/*DrawBox((x - (w / 2)), (y - (h / 2)), (x + (w / 2)), (y + (h / 2)), 0xffffff, TRUE);*/
 }
 
 //じゃん撃生成・更新
 void Enemy_06::Update_Jangeki()
 {
+	//ジャン撃数のカウント
 	int jan_count;
 
 	//じゃん撃配列をひとつずつ
@@ -160,6 +154,7 @@ void Enemy_06::Update_Jangeki()
 		//配列の jan_count 番目がnullptr（空要素）ならそれ以上処理しない
 		if (obj_jangeki[jan_count] == nullptr) break;
 
+		//ジャン撃の更新
 		obj_jangeki[jan_count]->Update();
 
 		//プレイヤーの座標をセットする
@@ -237,7 +232,9 @@ void Enemy_06::AttackPattern_1()
 	{
 		x -= speed;      //1フレームの間に左へ進む距離
 
-		if (x > 380 && x < 386)   //目標座標に到着したかのチェック
+		/********** 特定座標でジャンプ **********/
+
+		if (x > 380 && x < 386)
 		{
 			jump_flg = true;
 		}
@@ -254,6 +251,8 @@ void Enemy_06::AttackPattern_1()
 			jump_flg = true;
 		}
 
+		/****************************************/
+
 		low_jump();     //低ジャンプ
 
 		//接地しているかどうかで移動速度を可変   接地時(true)    : speed = 3.0f
@@ -267,18 +266,21 @@ void Enemy_06::AttackPattern_1()
 			speed = 7.0f;
 		}
 
-		if (x < 115)    //目標座標に到着したかのチェック
+		//目標座標に到着したかのチェック
+		if (x < 115)
 		{
 			jump_cnt = 0;          //ジャンプ回数のリセット
 			dir = 1;               //向いている向きの反転
-			ChangeCnt++;
+			ChangeCnt++;           //属性変化までのカウント
 		}
 	}
 	else if (jump_cnt >= 3 && dir == 1)    //右を向いている時の処理
 	{
 		x += speed;      //1フレームの間に右へ進む距離
 
-		if (x > 124 && x < 130)   //目標座標に到着したかのチェック
+		/********** 特定座標でジャンプ **********/
+
+		if (x > 124 && x < 130)
 		{
 			jump_flg = true;
 		}
@@ -294,6 +296,8 @@ void Enemy_06::AttackPattern_1()
 		{
 			jump_flg = true;
 		}
+
+		/****************************************/
 
 		low_jump();     //低ジャンプ
 
@@ -312,7 +316,7 @@ void Enemy_06::AttackPattern_1()
 		{
 			jump_cnt = 0;           //ジャンプ回数のリセット
 			dir = -1;               //向いている向きの反転
-			ChangeCnt++;
+			ChangeCnt++;            //属性変化までのカウント
 		}
 	}
 
@@ -331,7 +335,7 @@ void Enemy_06::AttackPattern_1()
 	if (hp <= 70)
 	{
 		attack_pattern = 1;    //攻撃パターンを変更
-		attack2_Flg = true;   //瞬間移動フラグをtrueにする
+		attack2_Flg = true;    //攻撃パターン2初期処理フラグをtrueにする
 	}
 }
 
@@ -341,13 +345,13 @@ void Enemy_06::AttackPattern_2()
 	//攻撃パターン2初期処理
 	if (attack2_Flg == true)
 	{
-		x = 1149;
-		y = 480;
-		speed = 5.0f;
-		floor = 5;
-		dir = -1;
-		attack2_Flg = false;
-		jump_cnt = 0;
+		x = 1149;                  //瞬間移動後のx座標
+		y = 480;                   //瞬間移動後のy座標
+		speed = 5.0f;              //スピードの初期化
+		floor = 5;                 //現在の床位置の初期化(5)
+		dir = -1;                  //向きの初期化(左向き)
+		attack2_Flg = false;       //初期化処理フラグをfalseにする
+		jump_cnt = 0;              //ジャンプカウントの初期化
 	}
 
 	//床ごとの処理
@@ -820,7 +824,7 @@ void Enemy_06::Teleportation()
 		x += speed;
 	}
 
-	if (x < 190)
+	if (x < 200)
 	{
 		TeleportFlg = false;
 		TeleportInit = true;
@@ -828,7 +832,7 @@ void Enemy_06::Teleportation()
 		speed = 5.0f;
 	}
 
-	if (x > 1100)
+	if (x > 1090)
 	{
 		TeleportFlg = false;
 		TeleportInit = true;
