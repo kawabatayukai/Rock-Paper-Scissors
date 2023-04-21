@@ -36,6 +36,9 @@ public:
 	/*˜r‚Ì•`‰æE“®‚«*/
 	void ArmDrawMove() const;
 
+	/*“ª‚Ì•`‰æE“®‚«*/
+	void HeadDrawMove() const;
+
 	//ƒvƒŒƒCƒ„[‚ÌUI•`‰æ
 	void PlayerDrawUI(int hp) const;
 
@@ -56,6 +59,8 @@ private:
 	/**********************************************************/
 
 	int image[10]; //‰æ‘œ
+
+	int head_Image[1];
 
 	int armL_Image[3];
 	int armR_Image[3];

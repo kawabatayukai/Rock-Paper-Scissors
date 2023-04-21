@@ -25,8 +25,12 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 	//‰æ‘œ“Ç‚İ‚İ
 	//image = LoadGraph("images/sd_body-1.png");
 	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ˜r–³‚µ3.png", 10, 5, 2, 100, 100, image);
+	//LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“‰æ‘œŠç–³‚µ.png", 10, 5, 2, 100, 100, image);
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image_JanType);  //‚¶‚á‚ñŒ‚‰æ‘œ
 	image_setsumei = LoadGraph("images/Setumei.png");
+
+	head_Image[0] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“Šç‚Ì‚İ.png");
+	head_Image[1] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“Šç‚Ì‚İ¶.png");
 
 	armL_Image[0] = LoadGraph("images/˜r‚Ì‚İ‚®[h¶.png");
 	armR_Image[0] = LoadGraph("images/˜r‚Ì‚İ‚®[h‰E.png");
@@ -257,6 +261,18 @@ void Player::Update()
 	//DrawFormatString(500, 360, 0xffffff, "Angle : %lf", jan_angle);
 
 //```````````````````````````````````````````````````````
+}
+
+/* “ª‚Ì•`‰æE“®‚«(ŠÔ‚ª‚ ‚Á‚½‚ç)*/
+void Player::HeadDrawMove() const
+{
+	///*********************
+	//*                    *
+	//*   “ª‚Ì•`‰æE“®‚«   *
+	//*                    *
+	//*********************/
+
+	//DrawRotaGraph(x + 3, y - 22, 1.0f, M_PI - jan_angle, head_Image[0], TRUE);
 }
 
 /*˜r‚Ì•`‰æE“®‚«*/
