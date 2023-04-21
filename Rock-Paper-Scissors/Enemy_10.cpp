@@ -724,7 +724,7 @@ void Enemy_10::Update_Jangeki()
 			/*********************** «« ¶¬( ’ÇÕ’e ) «« ***********************/
 
 			//            ¶¬‘¬“x
-			//if (frame_count % 150 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //’ÇÕ’e 
+			if (frame_count % 150 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //’ÇÕ’e 
 
 			/************************************************************************/
 
@@ -739,7 +739,7 @@ void Enemy_10::Update_Jangeki()
 
 				if (frame_count % 200 == 0)
 				{
-					//Jan_360degrees(jan_count, radius, speed, type); //360“x”­Ë
+					Jan_360degrees(jan_count, radius, speed, type); //360“x”­Ë
 				}
 				//            ¶¬‘¬“x
 				//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_whole(x, y, radius, speed, type);

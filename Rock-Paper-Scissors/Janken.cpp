@@ -34,7 +34,7 @@ Janken::Janken(Jan_Type enemy_jan, const int stage_num)
 		image_all_enemy[7] = LoadGraph("images/tyokitest.png");
 		image_all_enemy[8] = LoadGraph("images/stage08/Stage8_image100.png");
 		image_all_enemy[9] = LoadGraph("images/stage09/Stage9_100.png");
-		image_all_enemy[10] = LoadGraph("images/ステージ10敵の画像.png");
+		image_all_enemy[10] = LoadGraph("ステージ10敵の画像単体.png");
 	}
 
 	//背景
