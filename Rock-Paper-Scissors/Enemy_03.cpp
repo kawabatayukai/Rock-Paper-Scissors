@@ -389,7 +389,7 @@ void Enemy_03::Draw() const
 {
 	
 	////////////////////////
-	 //HPが86以上の時
+	 ///HPが86以上の時
 	///////////////////////
 	//エネミー停止時
 	if (/*hp <= 100 &&*/ hp >= 86 &&moveinfo[current].enemywaitTime > 0) {
