@@ -24,6 +24,9 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	LoadDivGraph("images/stage03/stage03SheeldEnduranse3.png", 6, 6, 1, 100, 100, enemyimage3);
 	LoadDivGraph("images/stage03/stage03SheeldEnduranse4.png", 6, 6, 1, 100, 100, enemyimage4);
 
+	LoadDivGraph("images/stage03/BreakSheeldAnim.png", 8, 8, 1, 220, 220,SheeldBreakAnim);
+	
+
 	//LoadDivGraph("images/stage03/stage03AnimMirror.png", 6, 6, 1, 100, 100, enemyimageMirror);
 
 	Init_Jangeki();       //‚¶‚á‚ñŒ‚‚ð—pˆÓ

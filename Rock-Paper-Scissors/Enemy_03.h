@@ -86,7 +86,7 @@ private:
 
 
 	int frame_count_anim = 0;       //敵のアニメーション用
-	int frame_count_anim1 = 0;       //敵のアニメーション1用
+	//int frame_count_anim1 = 0;       //敵のアニメーション1用
 
 
 	int enemyimage[6];  //万全の時の画像
@@ -94,6 +94,8 @@ private:
 	int enemyimage2[6]; //耐久値2の時の画像
 	int enemyimage3[6]; //耐久値3の時の画像
 	int enemyimage4[6]; //やられかけの時の画像
+	int SheeldBreakAnim[8];//盾が壊れた時のアニメーション
+
 
 	int* now_image;//現在の画像情報取得
 
