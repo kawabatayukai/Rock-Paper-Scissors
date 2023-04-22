@@ -19,6 +19,15 @@ enum class Jan_Result
 	_ERROR = 99      //エラー
 };
 
+//エフェクトの種類
+enum class EFFECT_TYPE
+{
+	WIN,         //勝ち
+	OFFSET,      //相殺
+
+	_NO_EFFECT,  //エフェクトなし
+};
+
 //じゃん撃
 class Jangeki_Base
 {
@@ -97,4 +106,11 @@ protected:
 
 	//発動すべきエフェクトの種類
 	Jan_Result effect_type; 
+
+
+	
+
+
+	EFFECT_TYPE player_effect;   //player側じゃん撃が発動するエフェクト
+	EFFECT_TYPE enemy_effect;    //enemy側じゃん撃が発動するエフェクト
 };

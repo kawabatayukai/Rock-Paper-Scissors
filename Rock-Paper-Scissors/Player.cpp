@@ -36,7 +36,7 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 
 	image_setsumei = LoadGraph("images/Setumei.png");
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image_JanType);  //‚¶‚á‚ñŒ‚‰æ‘œ
-	image_setsumei = LoadGraph("images/Janken/Setumei_Jangeki50.png");
+	image_setsumei = LoadGraph("images/Janken/Setumei50ptg.png");
 	image_set_circle = LoadGraph("images/Janken/Setumei_Select50.png");
 	image_set_LTRT = LoadGraph("images/Janken/Setumei_LTRT_235_105.png");
 
@@ -90,7 +90,7 @@ Player::Player(const Player& player) : CharaBase(player.x, player.y, player.w, p
 	this->jan_angle = player.jan_angle;              //‚¶‚á‚ñŒ‚Šp“x
 	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ˜r–³‚µ.png", 10, 5, 2, 100, 100, image);
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image_JanType);  //‚¶‚á‚ñŒ‚‰æ‘œ
-	image_setsumei = LoadGraph("images/Janken/Setumei_Jangeki50.png");
+	image_setsumei = LoadGraph("images/Janken/Setumei50ptg.png");
 	image_set_circle = LoadGraph("images/Janken/Setumei_Select50.png");
 	image_set_LTRT = LoadGraph("images/Janken/Setumei_LTRT_235_105.png");
 
@@ -489,9 +489,22 @@ void Player::Draw() const
 
 	//ƒeƒXƒg 110
 
-	int circle_x = static_cast<int>(select_JanType);
-	//if (circle_x == 0) circle_x = 2;
-	//if (circle_x == 2) circle_x = 0;
+	int circle_x = 0;
+	switch (select_JanType)
+	{
+	case Jan_Type::ROCK:
+		circle_x = 2;
+		break;
+	case Jan_Type::SCISSORS:
+		circle_x = 1;
+		break;
+	case Jan_Type::PAPER:
+		circle_x = 0;
+		break;
+	default:
+		circle_x = 0;
+		break;
+	}
 
 	DrawGraph(40, 40,  image_setsumei, TRUE);
 	DrawGraph(50 + (circle_x * 60), 50, image_set_circle, TRUE);
@@ -840,7 +853,25 @@ void Player::Update_Jangeki()
 	{
 
 	}
-	select_JanType = static_cast<Jan_Type>(select_num);
+	switch (select_num)
+	{
+	case 0:
+		select_JanType = Jan_Type::PAPER;
+		break;
+
+	case 1:
+		select_JanType = Jan_Type::SCISSORS;
+		break;
+
+	case 2:
+		select_JanType = Jan_Type::ROCK;
+		break;
+
+	default:
+		break;
+	}
+
+	//select_JanType = static_cast<Jan_Type>(select_num);
 
 	//”z—ñ‚Ì‹ó—v‘f
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)

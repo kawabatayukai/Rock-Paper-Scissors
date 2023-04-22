@@ -2,11 +2,6 @@
 
 /** じゃん撃ではない **/
 
-//エフェクトの種類
-enum class EFFECT_TYPE
-{
-
-};
 
 //エフェクトを発生させる(じゃん撃同士の衝突)
 class Effect_Jangeki

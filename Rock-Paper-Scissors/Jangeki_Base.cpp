@@ -1,3 +1,4 @@
+
 #include"DxLib.h"
 #include<math.h>
 #include "Jangeki_Base.h"
@@ -6,7 +7,7 @@
 //コンストラクタ
 Jangeki_Base::Jangeki_Base(float x, float y, float r, float speed, Jan_Type type, bool ref)
 	: x(x), y(y), r(r), speed(speed), smoke_index(0.0), rate_turn(0.0), type(type), refrection(ref), rate_pct(200.0)
-	, effect_type(Jan_Result::_ERROR)
+	, effect_type(Jan_Result::_ERROR), player_effect(EFFECT_TYPE::_NO_EFFECT), enemy_effect(EFFECT_TYPE::_NO_EFFECT)
 {
 	for (int i = 0; i < 3; i++) image[i] = 0;
 
@@ -42,7 +43,7 @@ Jangeki_Base::Jangeki_Base(float x, float y, float r, float speed, Jan_Type type
 //コンストラクタ（角度あり）
 Jangeki_Base::Jangeki_Base(float x, float y, float r, float speed, double angle, Jan_Type type, bool ref)
 	: x(x), y(y), r(r), smoke_index(0.0), rate_turn(0.0), type(type), refrection(ref), rate_pct(200.0)
-	, effect_type(Jan_Result::_ERROR)
+	, effect_type(Jan_Result::_ERROR), player_effect(EFFECT_TYPE::_NO_EFFECT), enemy_effect(EFFECT_TYPE::_NO_EFFECT)
 {
 	for (int i = 0; i < 3; i++) image[i] = 0;
 
@@ -205,6 +206,9 @@ int Jangeki_Base::CheckAdvantage(const Jangeki_Base* jangeki)
 	if (result_num == 0)
 	{
 		effect_type = Jan_Result::LOSE;
+
+		//enemy側のエフェクト発動
+		enemy_effect = EFFECT_TYPE::WIN;
 	}
 	//じゃんけん勝ち
 	if (result_num == 1) 
@@ -212,13 +216,18 @@ int Jangeki_Base::CheckAdvantage(const Jangeki_Base* jangeki)
 		GameData::Add_Score(100);    //スコア加算
 
 		effect_type = Jan_Result::WIN;
+
+		//player側のエフェクト発動
+		player_effect = EFFECT_TYPE::WIN;
 	}
 	//じゃんけんあいこ
 	if (result_num == 2) 
 	{
 		GameData::Add_Score(100 / 2);    //スコア加算
 
-		effect_type = Jan_Result::ONEMORE;
+		//相殺エフェクト発動
+		player_effect = EFFECT_TYPE::OFFSET;
+		enemy_effect = EFFECT_TYPE::OFFSET;
 	}
 
 	return result_num;

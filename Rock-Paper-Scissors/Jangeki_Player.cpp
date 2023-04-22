@@ -110,7 +110,9 @@ void Jangeki_Player::Update()
 	y -= speed_y;
 
 	//‚¶‚á‚ñŒ‚“¯m‚ÌÕ“Ë‚ÅŸ‚Á‚½‚Æ‚«‚Ì‚İ
-	if (effect_type == Jan_Result::WIN)
+	//if (effect_type == Jan_Result::WIN)
+
+	if(player_effect == EFFECT_TYPE::WIN)
 	{
 		frame_count++;
 		if (frame_count % 2 == 0) index_effect++;
@@ -119,7 +121,8 @@ void Jangeki_Player::Update()
 		if (index_effect > index_max)
 		{
 			index_effect = 0;
-			effect_type = Jan_Result::_ERROR;
+			//effect_type = Jan_Result::_ERROR;
+			player_effect == EFFECT_TYPE::_NO_EFFECT;
 			turn_effect = 0.0;
 		}
 	}
@@ -155,7 +158,8 @@ void Jangeki_Player::Draw() const
 void  Jangeki_Player::Draw_Effect() const
 {
 	//‚¶‚á‚ñŒ‚“¯m‚ÌÕ“Ë‚ÅŸ‚Á‚½‚Æ‚«‚Ì‚İ
-	if (effect_type == Jan_Result::WIN)
+	//if (effect_type == Jan_Result::WIN)
+	if(player_effect == EFFECT_TYPE::WIN)
 	{
 		int n = static_cast<int>(this->type);
 
