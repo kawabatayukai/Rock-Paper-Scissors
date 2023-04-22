@@ -61,7 +61,7 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	//obj_floor[16] = new Floor("images/stage03/BlockImages.png", 210, 405, 95, 10);//足場7//130, GetColor(193, 107, 68)
 
 	//制限時間をセット
-	GameData::Set_TimeLimit(18010); //5分　//2分 ←　7200 % 3600
+	GameData::Set_TimeLimit(10810); //3分　//2分 ←　7200 % 3600
 
 
 }
