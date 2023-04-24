@@ -191,12 +191,8 @@ void Player::Update()
 	if (right_y > 30000) right_y = 30000;
 	if (right_y < -30000) right_y = -30000;
 
-	if (right_x < 0 && right_y < 0) jan_angle = old_angle;
-	else
-	{
-		//‹t³Ú‚ÅÆ€‚ÌŠp“x‚ğ‹‚ß‚é
-		jan_angle = atan2(static_cast<double>(right_y - y), static_cast<double>(right_x - x));
-	}
+	//‹t³Ú‚ÅÆ€‚ÌŠp“x‚ğ‹‚ß‚é
+	jan_angle = atan2(static_cast<double>(right_y - y), static_cast<double>(right_x - x));
 
 
 	//Šp“x‚ğ§ŒÀ‚·‚é
