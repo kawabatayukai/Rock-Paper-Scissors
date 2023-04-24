@@ -88,7 +88,7 @@ void Enemy_04::Update()
 
 	if (specialFlg == true)
 	{
-		speed = 15.0f;
+		speed = 20.0f;
 		specialTime++;
 	}
 	else if (hp <= 50)
