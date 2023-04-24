@@ -139,6 +139,11 @@ void Enemy_06::Draw() const
 	if (hp > 0) DrawFormatString((int)(x - 50), (int)(y - 125), 0xffffff, "HP : %d", hp);
 	else DrawString((int)(x - 50), (int)(y - 125), "death!", 0xffffff);
 
+	if (speed == 8.0f)
+	{
+		DrawString((int)(x - 80), (int)(y - 75), "スピードアップ", GetColor(255, 0, 0));
+	}
+
 	/*DrawBox((x - (w / 2)), (y - (h / 2)), (x + (w / 2)), (y + (h / 2)), 0xffffff, TRUE);*/
 }
 
