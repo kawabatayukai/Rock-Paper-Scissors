@@ -465,6 +465,7 @@ void Enemy_03::Draw() const
 	/////////////////////
 	if (hp <= 85 && hp >= 71 && moveinfo[current].enemywaitTime > 0) {
 
+
 		DrawRotaGraphF(x, y, 1, 0, enemyimage1[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
 
 	}
@@ -540,6 +541,7 @@ void Enemy_03::Draw() const
 
 	}
 
+	
 	//////////////////////////
 	//HP40以下のとき
 	////////////////////////////
@@ -564,6 +566,19 @@ void Enemy_03::Draw() const
 	}
 
 	//}
+	////////////
+	//エフェクト
+	////////////
+	if (hp <= 85 && hp >= 71 && moveinfo[current].enemywaitTime > 0 || hp <= 85 && hp >= 71 && moveinfo[current].enemywaitTime < 200) {
+
+		if (st3_animflg == true)
+		{
+			if (st3_animcount == 0) DrawGraph(st3_before_x - 65, st3_animflg - 50, SheeldBreakAnim[st3_animtimer %25], TRUE);
+			//else DrawGraph(x - 50, y - 50, SheeldBreakAnim[st3_animtimer / 2 % 15], TRUE);
+		}
+
+
+	}
 
 	//じゃん撃描画
 	Draw_Jangeki();
