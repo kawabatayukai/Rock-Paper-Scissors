@@ -166,7 +166,7 @@ void  Enemy_10::Move()
 			interval++;
 			static int teleport = 150;
 			static int jump = GetRand(30);
-			static int h;
+			static int h = 2;
 			if (interval % teleport == 0) 
 			{
 				switch (GetRand(4))
@@ -226,10 +226,7 @@ void  Enemy_10::Move()
 							h == 1;
 						}
 						break;
-					default:
-						break;
 					}
-
 					//ジャンプ
 					if (interval % jump == 0)
 					{
@@ -278,10 +275,7 @@ void  Enemy_10::Move()
 							h == 1;
 						}
 						break;
-					default:
-						break;
 					}
-
 					//ジャンプ
 					if (interval % jump == 0)
 					{
@@ -303,18 +297,48 @@ void  Enemy_10::Move()
 					enemyChange_Image = 2; //switch文の割り当て番号
 					break;
 
+				 default:
+
+					// if (x > 0)
+					// {
+					//	 dir = static_cast<int>(DIRECTION::LEFT);   //向きを設定（左）
+					//	 x -= 4/*GetRand(20)*/;
+					// }
+					// else if (x < 10)
+					// {
+					//	 h == 1;
+					// }
+					//
+					////ジャンプ
+					//if (interval % jump == 0)
+					//{
+					//	if (land_flg == true && y > 100) //ジャンプ
+					//	{
+					//		g_add = -25.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+					//		land_flg = false;  //地面についていない
+					//	}
+					//	if (land_flg == false) //ジャンプ中の加速
+					//	{
+					//		if (v < 15) //加速上限
+					//		{
+					//			v -= a;
+					//		}
+					//		x -= v;
+					//	}
+					//}
+					//enemyChange_Image = 2; //switch文の割り当て番号
+					//break;
+
 				//case 3: // 真ん中
 				//	if (h == 3)
 				//	{
 				//		x += GetRand(5);
 				//	}
-				//	break;
+					break;
 				}
 			}
 		}
 		break;
-
-	
 	}
 
 	//画像の選択変更
@@ -323,24 +347,14 @@ void  Enemy_10::Move()
 	/*敵直接の属性変化*/
 	//e_type = Jan_Type::PAPER;
 
-	/********************   ジャンプ関係   ********************/
-
-	//if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
-	//{
-		//g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-		//land_flg = false;  //地面についていない
-	//}
-
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
-	//落下速度の制限
+			//落下速度の制限
 	if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
 
 	old_y = y;                    //1フレーム前のｙ座標
 	y += y_add;                   //落下距離をｙ座標に加算する
 	g_add = _GRAVITY;              //重力加速度を初期化する
-
-	/**********************************************************/
 }
 
 void Enemy_10::Interval()
@@ -360,6 +374,7 @@ void Enemy_10::Interval()
 	{
 		hp = 100;
 		x = 1100;
+		y = 430;
 		dir == static_cast<int>(DIRECTION::LEFT);
 		form = 2;
 	}
