@@ -101,7 +101,7 @@ void Enemy_04::Update()
 	}
 
 	//­‚µ‚¸‚ÂHP‰ñ•œ
-	if (hp < 50 && frame_count % 20 == 0) hp++;
+	if (hp < 50 && frame_count % 30 == 0) hp++;
 	else if (hp < 100 && frame_count % 40 == 0) hp++;
 
 	if (specialTime >= 240)
@@ -226,7 +226,7 @@ void Enemy_04::Update_Jangeki()
 		}
 		else if (specialFlg == true)
 		{
-			if (frame_count % 40 == 0) Jan_360degrees(jan_count, radius, speed * 1.5, type);
+			if (frame_count % 60 == 0) Jan_360degrees(jan_count, radius, speed * 1.5, type);
 			//if (frame_count % 30 == 0) Jan_360degrees(jan_count, radius, speed * 2, type);
 		}
 	}
@@ -346,8 +346,8 @@ void Enemy_04::Change_JanType()
 
 void Enemy_04::Special_Action()
 {
-	//specialFlg = true;
-	//current = 1;
+	specialFlg = true;
+	current = 1;
 }
 
 //360“x”­Ë
