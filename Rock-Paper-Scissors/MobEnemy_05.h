@@ -14,9 +14,20 @@ public:
 
 	void Janken_win();
 
+	void Jan_360degrees();
+
 private:
 	int frame_count = 0;       //じゃん撃発射用
 
 	int Mobenemy_image;			//画像用
 
+	int jan_count;
+
+	bool Spflg = true;  //特殊行動フラグ
+
+	int SPcount = 0;
+
+	bool Jan_loseflg = false;
+
+	int losetimer = 0;
 };

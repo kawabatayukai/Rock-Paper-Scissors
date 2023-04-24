@@ -112,7 +112,7 @@ void Enemy_09::Update_Jangeki()
 
 	{
 		float radius = 35.5f;   //半径
-		float speed = 3.5f;     //スピード
+		float speed = 4.5f;     //スピード
 
 		//if (GetHP() <= 51)speed=4.5f;
 
@@ -148,7 +148,7 @@ void Enemy_09::Update_Jangeki()
 			}
 
 			//反射じゃん撃生成
-			if (reflection->GetFlg() == true)reflection->obj_reflection[reflection->jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed, type, true);
+			if (reflection->GetFlg() == true)reflection->obj_reflection[reflection->jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed-0.3, type, true);
 			reflection->falseFlg();
 		//}
 	}
@@ -224,7 +224,7 @@ void Enemy_09::MoveEnmey_09()
 		before_x = x;
 		before_y = y;
 
-		switch (GetRand(12))
+		switch (GetRand(7))
 		{
 			//左側
 		case 0:
@@ -232,54 +232,34 @@ void Enemy_09::MoveEnmey_09()
 			y = 480;
 			break;
 		case 1:
-			x = 160;
-			y = 700;
-			break;
-		case 2:
 			x = 360;
 			y = 305;
 			break;
-		case 3:
-			x = 360;
-			y = 700;
-			break;
-		case 4:
+		case 2:
 			x = 160;
 			y = 130;
 			break;
 			//右側
-		case 5:
+		case 3:
 			x = 1110;
 			y = 480;
 			break;
-		case 6:
-			x = 1110;
-			y = 700;
-			break;
-		case 7:
+		case 4:
 			x = 910;
 			y = 305;
 			break;
-		case 8:
-			x = 910;
-			y = 700;
-			break;
-		case 9:
+		case 5:
 			x = 1110;
 			y = 130;
 			break;
 			//真ん中
-		case 10:
+		case 6:
 			x = 620;
 			y = 400;
 			break;
-		case 11:
+		case 7:
 			x = 620;
 			y = 80;
-			break;
-		case 12:
-			x = 620;
-			y = 700;
 			break;
 		}
 	}
@@ -320,7 +300,7 @@ void Enemy_09::SpecialMoveEnmey()
 			before_x = x;
 			before_y = y;
 
-			switch (GetRand(12))
+			switch (GetRand(7))
 			{
 				//左側
 			case 0:
@@ -328,54 +308,34 @@ void Enemy_09::SpecialMoveEnmey()
 				y = 480;
 				break;
 			case 1:
-				x = 160;
-				y = 700;
-				break;
-			case 2:
 				x = 360;
 				y = 305;
 				break;
-			case 3:
-				x = 360;
-				y = 700;
-				break;
-			case 4:
+			case 2:
 				x = 160;
 				y = 130;
 				break;
 				//右側
-			case 5:
+			case 3:
 				x = 1110;
 				y = 480;
 				break;
-			case 6:
-				x = 1110;
-				y = 700;
-				break;
-			case 7:
+			case 4:
 				x = 910;
 				y = 305;
 				break;
-			case 8:
-				x = 910;
-				y = 700;
-				break;
-			case 9:
+			case 5:
 				x = 1110;
 				y = 130;
 				break;
 				//真ん中
-			case 10:
+			case 6:
 				x = 620;
 				y = 420;
 				break;
-			case 11:
+			case 7:
 				x = 620;
 				y = 110;
-				break;
-			case 12:
-				x = 620;
-				y = 700;
 				break;
 			}
 		}

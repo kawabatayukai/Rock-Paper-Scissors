@@ -66,8 +66,7 @@ void Stage_Base::DrawUI(Jan_Type type, int hp) const
 	//ÉXÉRÉA
 	DrawFormatString(1050, 150, 0x00ff00, "Score : %d", GameData::Get_Score());
 
-	/*if (hp > 0) DrawFormatString(1000, 50, 0xffffff, "HP : %d", hp);
-	else DrawString(1100, 50, "death!", 0xffffff);*/
+	
 }
 
 //ìGÇÃè„Ç…UIï`âÊ

@@ -411,6 +411,8 @@ void Scene_Stage09::AfterJanken_LOSE()
 	{
 		obj_enemy->SetHP(-hp);
 		hp = hp / 2;
+		if (GameData::Get_Total_Time() <= 3600)
+			GameData::Set_TimeLimit(5400);
 	}
 	
 	obj_player->SetX(100);
