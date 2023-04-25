@@ -2,6 +2,7 @@
 #include"SceneManager.h"
 #include"Scene_GameMain.h"
 #include"Scene_Title.h"
+#include"Jangeki_Player.h"
 
 /*　　変数　　*/
 int g_OldKey;      // 前回の入力キー 
@@ -19,10 +20,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     if (DxLib_Init() == -1) return -1;     //DXライブラリの初期化処理
     SetDrawScreen(DX_SCREEN_BACK);         //描画先画面を裏にする
 
-    
-
     //シーンマネージャー     　　　　　　　　　　　　　　　タイトルを設定
     SceneManager sceneMng(dynamic_cast<AbstractScene*>(new TitleScene()));
+
+    //じゃん撃画像
+    Jangeki_Player::LoadJanImage();
+    Jangeki_Base::Input_Images();
 
     //ESCキーまたはコントローラーBackボタンで終了
     while (ProcessMessage() == 0 && !(g_NowKey & PAD_INPUT_9) && !(g_NowKey & PAD_INPUT_7))

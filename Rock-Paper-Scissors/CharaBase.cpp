@@ -157,13 +157,12 @@ void CharaBase::Hit_Floor(const Floor* floor)
 		// x² or y²‚Ì‚¤‚¿A·‚ªÅ‚à¬‚³‚¢•û‚ğ—Dæ‚µ‚Ä•â³
 		if (fabsf(dy) <= fabsf(dx))
 		{
-			
 			y += dy;
 			if (dy < 0 && dy > -1.5f) land_flg = true;  //character‰º•ûŒü‚É”»’è‚ª‚ ‚éAÚ’n
-			
 		}
 		else
 		{
+
 			x += dx;
 		}
 	}

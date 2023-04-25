@@ -19,6 +19,15 @@ enum class Jan_Result
 	_ERROR = 99      //エラー
 };
 
+//エフェクトの種類
+enum class EFFECT_TYPE
+{
+	WIN,         //勝ち
+	OFFSET,      //相殺
+
+	_NO_EFFECT,  //エフェクトなし
+};
+
 //じゃん撃
 class Jangeki_Base
 {
@@ -31,6 +40,9 @@ public:
 
 	//デストラクタ
 	~Jangeki_Base();
+
+	//画像読み込み
+	static void Input_Images(); 
 
 	virtual void Update();                    //更新
 	virtual void Draw() const;                //描画
@@ -45,7 +57,7 @@ public:
 	   ・自分の属性が有利（例　自分：グー　引数：チョキ）　return 1
 	   ・　　　あいこ　　（例　自分：グー　引数：グー）　　return 2
 	*/
-	int CheckAdvantage(const Jangeki_Base* jangeki);
+	int CheckAdvantage(Jangeki_Base* jangeki);
 
 	float GetX() const { return x; }           //ｘ座標取得
 	float GetY() const { return y; }           //ｙ座標取得
@@ -65,10 +77,17 @@ public:
 	//円形の当たり判定
 	bool Hit_CircleCircle(float c_x, float c_y, float c_r) const;
 
-	//発動すべきエフェクトを取得する
-	Jan_Result GetEffectType() const;
+	//発動するエフェクトの種類（player）
+	EFFECT_TYPE GetPlayerEffect() const { return player_effect; }
 
-	//
+	//あいこ相殺エフェクト（player側で行う）
+	void Update_OffsetEffect();
+
+	//あいこ相殺エフェクト描画（player側で行う）
+	void Draw_OffsetEffect() const;
+
+	float GetOffsetEffect_X() const { return effect_x; }
+	float GetOffsetEffect_Y() const { return effect_y; }
 
 protected:
 
@@ -78,9 +97,9 @@ protected:
 	float speed;        //スピード
 	float speed_y = 0;  //ｙ座標スピード
 
-	int image[3];       //じゃん撃画像
-	int image_smoke[4]; //スモークなエフェクト
-	short smoke_index;  //エフェクトアニメーション用
+	static int image[3];          //じゃん撃画像
+	static int image_smoke[3][4]; //スモークなエフェクト
+	short smoke_index;            //エフェクトアニメーション用
 
 	double rate_pct;    //拡大率
 	double rate_turn;   //回転率
@@ -95,6 +114,17 @@ protected:
 	float target_x = 0; //対象のｘ座標
 	float target_y = 0; //対象のｙ座標
 
-	//発動すべきエフェクトの種類
-	Jan_Result effect_type; 
+
+	int index_effect =0;              //画像No
+	int index_max = 0;
+
+	static int image_effects[3][12];  //貫通時エフェクト
+	double turn_effect =0.0;          //回転率
+
+
+	EFFECT_TYPE player_effect;   //player側じゃん撃が発動するエフェクト
+	EFFECT_TYPE enemy_effect;    //enemy側じゃん撃が発動するエフェクト
+
+	float effect_x;              //エフェクト描画ｘ（あいこ）
+	float effect_y;              //エフェクト描画ｙ（あいこ）
 };

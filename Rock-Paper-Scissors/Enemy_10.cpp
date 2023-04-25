@@ -17,7 +17,7 @@ Enemy_10::Enemy_10(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = 1;
 	hp = 100;
 
-	form = 1;
+	form = 2;
 
 	Rimage = LoadGraph("images/stage09/Stage9_1.png");	//反射ON
 	Limage = LoadGraph("images/stage09/Stage9.png");		//反射OFF
@@ -116,6 +116,7 @@ void  Enemy_10::Move()
 				}
 				else
 				{
+					e_type = static_cast<Jan_Type>(GetRand(2));
 					switchMove = 1; //次の処理へ
 				}
 				enemyChange_Image = 2; //switch文の割り当て番号
@@ -144,6 +145,7 @@ void  Enemy_10::Move()
 				}
 				else
 				{
+					e_type = static_cast<Jan_Type>(GetRand(2));
 					switchMove = 0; //次の処理へ
 				}
 				enemyChange_Image = 1; //switch文の割り当て番号
@@ -164,9 +166,9 @@ void  Enemy_10::Move()
 		{
 			static int interval;
 			interval++;
-			static int teleport = 150;
-			static int jump = GetRand(30);
-			static int h;
+			static int teleport = 200;
+			static int jump = 40;
+			static int h = 2;
 			if (interval % teleport == 0) 
 			{
 				switch (GetRand(4))
@@ -200,36 +202,33 @@ void  Enemy_10::Move()
 			{
 				switch (GetRand(3))
 				{
-				case 1: //始まり右に移動
+				case 1: //始まり位置が右
 					
 					switch (h)
 					{
 					case 1: //右行く
-						if (x < 1050)
+						if (x < 1210)
 						{
 							dir = static_cast<int>(DIRECTION::RIGHT);   //向きを設定（左）
 							x += 4/*GetRand(20)*/;
 						}
-						else if (x > 1050)
+						else if (x > 1210)
 						{
 							h == 2;
 						}
 						break;
 					case 2: //左行く
-						if (x > 0)
+						if (x > 70)
 						{
 							dir = static_cast<int>(DIRECTION::LEFT);   //向きを設定（左）
 							x -= 4/*GetRand(20)*/;
 						}
-						else if (x < 10)
+						else if (x < 70)
 						{
 							h == 1;
 						}
 						break;
-					default:
-						break;
 					}
-
 					//ジャンプ
 					if (interval % jump == 0)
 					{
@@ -251,17 +250,17 @@ void  Enemy_10::Move()
 					enemyChange_Image = 1; //switch文の割り当て番号
 					break;
 
-				case 2: // 始まり左に移動
+				case 2: // 始まり位置が左
 					
 					switch (h)
 					{
 					case 1: //右行く
-						if (x < 1050)
+						if (x < 1210)
 						{
 							dir = static_cast<int>(DIRECTION::RIGHT);   //向きを設定（左）
 							x += 4/*GetRand(20)*/;
 						}
-						else if (x > 1050)
+						else if (x > 1210)
 						{
 							h == 2;
 						}
@@ -273,15 +272,12 @@ void  Enemy_10::Move()
 							dir = static_cast<int>(DIRECTION::LEFT);   //向きを設定（左）
 							x -= 4/*GetRand(20)*/;
 						}
-						else if (x < 10)
+						else if (x < 70)
 						{
 							h == 1;
 						}
 						break;
-					default:
-						break;
 					}
-
 					//ジャンプ
 					if (interval % jump == 0)
 					{
@@ -303,18 +299,48 @@ void  Enemy_10::Move()
 					enemyChange_Image = 2; //switch文の割り当て番号
 					break;
 
+				 default:
+
+					// if (x > 0)
+					// {
+					//	 dir = static_cast<int>(DIRECTION::LEFT);   //向きを設定（左）
+					//	 x -= 4/*GetRand(20)*/;
+					// }
+					// else if (x < 10)
+					// {
+					//	 h == 1;
+					// }
+					//
+					////ジャンプ
+					//if (interval % jump == 0)
+					//{
+					//	if (land_flg == true && y > 100) //ジャンプ
+					//	{
+					//		g_add = -25.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+					//		land_flg = false;  //地面についていない
+					//	}
+					//	if (land_flg == false) //ジャンプ中の加速
+					//	{
+					//		if (v < 15) //加速上限
+					//		{
+					//			v -= a;
+					//		}
+					//		x -= v;
+					//	}
+					//}
+					//enemyChange_Image = 2; //switch文の割り当て番号
+					//break;
+
 				//case 3: // 真ん中
 				//	if (h == 3)
 				//	{
 				//		x += GetRand(5);
 				//	}
-				//	break;
+					break;
 				}
 			}
 		}
 		break;
-
-	
 	}
 
 	//画像の選択変更
@@ -323,24 +349,14 @@ void  Enemy_10::Move()
 	/*敵直接の属性変化*/
 	//e_type = Jan_Type::PAPER;
 
-	/********************   ジャンプ関係   ********************/
-
-	//if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
-	//{
-		//g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-		//land_flg = false;  //地面についていない
-	//}
-
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
-	//落下速度の制限
+			//落下速度の制限
 	if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
 
 	old_y = y;                    //1フレーム前のｙ座標
 	y += y_add;                   //落下距離をｙ座標に加算する
 	g_add = _GRAVITY;              //重力加速度を初期化する
-
-	/**********************************************************/
 }
 
 void Enemy_10::Interval()
@@ -360,6 +376,7 @@ void Enemy_10::Interval()
 	{
 		hp = 100;
 		x = 1100;
+		y = 430;
 		dir == static_cast<int>(DIRECTION::LEFT);
 		form = 2;
 	}
@@ -724,7 +741,7 @@ void Enemy_10::Update_Jangeki()
 			/*********************** ↓↓ 生成( 追跡弾 ) ↓↓ ***********************/
 
 			//            生成速度
-			if (frame_count % 150 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //追跡弾 
+			//if (frame_count % 150 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //追跡弾 
 
 			/************************************************************************/
 
@@ -737,10 +754,10 @@ void Enemy_10::Update_Jangeki()
 
 			/*********************** ↓↓ 生成( 中心円型拡散弾 ) ↓↓ ***********************/
 
-				if (frame_count % 200 == 0)
-				{
-					Jan_360degrees(jan_count, radius, speed, type); //360度発射
-				}
+				//if (frame_count % 200 == 0)
+				//{
+				//	Jan_360degrees(jan_count, radius, speed, type); //360度発射
+				//}
 				//            生成速度
 				//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_whole(x, y, radius, speed, type);
 

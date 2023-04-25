@@ -26,8 +26,19 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 	//image = LoadGraph("images/sd_body-1.png");
 	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ˜r–³‚µ3.png", 10, 5, 2, 100, 100, image);
 	//LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“‰æ‘œŠç–³‚µ.png", 10, 5, 2, 100, 100, image);
-	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image_JanType);  //‚¶‚á‚ñŒ‚‰æ‘œ
+
+	//LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ˜r–³‚µ3.png", 2, 1, 2, 126, 125, image_Jamp);
+
+	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ.png", 3, 3, 1, 100, 100, image_JanType);  //‚¶‚á‚ñŒ‚‰æ‘œ
+
+	image[4] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ‰E.png");
+	image[9] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ¶.png");
+
 	image_setsumei = LoadGraph("images/Setumei.png");
+	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image_JanType);  //‚¶‚á‚ñŒ‚‰æ‘œ
+	image_setsumei = LoadGraph("images/Janken/Setumei50ptg.png");
+	image_set_circle = LoadGraph("images/Janken/Setumei_Select50.png");
+	image_set_LTRT = LoadGraph("images/Janken/Setumei_LTRT_235_105.png");
 
 	head_Image[0] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“Šç‚Ì‚İ.png");
 	head_Image[1] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“Šç‚Ì‚İ¶.png");
@@ -79,7 +90,9 @@ Player::Player(const Player& player) : CharaBase(player.x, player.y, player.w, p
 	this->jan_angle = player.jan_angle;              //‚¶‚á‚ñŒ‚Šp“x
 	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ˜r–³‚µ.png", 10, 5, 2, 100, 100, image);
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image_JanType);  //‚¶‚á‚ñŒ‚‰æ‘œ
-	image_setsumei = LoadGraph("images/Setumei.png");
+	image_setsumei = LoadGraph("images/Janken/Setumei50ptg.png");
+	image_set_circle = LoadGraph("images/Janken/Setumei_Select50.png");
+	image_set_LTRT = LoadGraph("images/Janken/Setumei_LTRT_235_105.png");
 
 	armL_Image[0] = LoadGraph("images/˜r‚Ì‚İ‚®[h¶.png");
 	armR_Image[0] = LoadGraph("images/˜r‚Ì‚İ‚®[h‰E.png");
@@ -139,6 +152,10 @@ void Player::Update()
 
 	/********************   ƒWƒƒƒ“ƒvŠÖŒW   ********************/
 
+	
+
+	
+		//if (land_flg == true && KeyManager::OnPadClicked_LT())
 	if (land_flg == true && KeyManager::OnPadClicked(PAD_INPUT_5))
 	{
 		g_add = -21.5f;    //d—Í‰Á‘¬“x‚ğƒ}ƒCƒiƒX’l‚É
@@ -154,11 +171,15 @@ void Player::Update()
 	y += y_add;                   //—‰º‹——£‚ğ‚™À•W‚É‰ÁZ‚·‚é
 	g_add = _GRAVITY;              //d—Í‰Á‘¬“x‚ğ‰Šú‰»‚·‚é
 
+	if (y > old_y) land_flg = false;
+
 	/**********************************************************/
 
 
 
 //````````````````````````@Æ€@```````````````````````````
+
+	static double old_angle;
 
 	//‰EƒXƒeƒBƒbƒN‚ÌƒAƒiƒƒO“ü—Í‚ğæ“¾
 	double right_x = static_cast<double>(KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X));   //‚˜
@@ -179,44 +200,50 @@ void Player::Update()
 		//‰EŒü‚«‚Ì
 		if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true)
 		{
-			if (/*jan_angle < 0*/KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0) jan_angle = 0;
+			if (KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0)
+			{
+				//Šp“x‚ğ‚È‚µ‚É‚·‚é
+				jan_angle = 0;
+			}
 			if (jan_angle > (M_PI / 2) || jan_angle < (M_PI / -2))
 			{
-				//jan_angle = (M_PI / 2);
 				dir = static_cast<int>(DIRECTION::LEFT);
 			}
 		}
 		else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == false && 
 			    KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0)
 		{
+			//Šp“x‚ğ‚È‚µ‚É‚·‚é
 			jan_angle = 0;
 		}
 
 		if (jan_angle > (M_PI / 2) || jan_angle < (M_PI / -2))
 		{
-			//jan_angle = (M_PI / 2);
 			dir = static_cast<int>(DIRECTION::LEFT);
 		}
 
 		//¶Œü‚«‚Ì
 		if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true)
 		{
-			if (/*jan_angle < 0*/KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0) jan_angle = M_PI;
+			if (/*jan_angle < 0*/KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0)
+			{
+				//Šp“x‚ğ‚È‚µ‚É‚·‚é
+				jan_angle = M_PI;
+			}
 			if (jan_angle < (M_PI / 2) && jan_angle > (M_PI / -2))
 			{
-				//jan_angle = (M_PI / 2);
 				dir = static_cast<int>(DIRECTION::RIGHT);
 			}
 		}
 		else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == false && 
 			    KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0)
 		{
+			//Šp“x‚ğ‚È‚µ‚É‚·‚é
 			jan_angle = M_PI;
 		}
 
 		if (jan_angle < (M_PI / 2) && jan_angle > (M_PI / -2))
 		{
-			//jan_angle = (M_PI / 2);
 			dir = static_cast<int>(DIRECTION::RIGHT);
 		}
 
@@ -245,20 +272,12 @@ void Player::Update()
 		}
 	}
 
-
-
-	////ƒvƒŒƒCƒ„[À•W
-	//DrawFormatString(300, 200, 0xffffff, "Player_X : %f", x);
-	//DrawFormatString(300, 230, 0xffffff, "Player_Y : %f", y);
-
-	////‰EƒXƒeƒBƒbƒNƒAƒiƒƒO“ü—Í’l
-	//DrawFormatString(500, 300, 0xffffff, "Right_X : %d", static_cast<int>(right_x));
-	//DrawFormatString(500, 330, 0xffffff, "Right_Y : %d", static_cast<int>(right_y));
-
-	//DrawFormatString(500, 430, 0xffffff, "‹t³ÚÀ•W_X : %lf", static_cast<double>(right_x - x));
-	//DrawFormatString(500, 460, 0xffffff, "‹t³ÚÀ•W_Y : %lf", static_cast<double>(right_y - y));
-	//DrawFormatString(500, 490, 0xffffff, "‹t³Ú(ŒÊ“x–@) : %lf", jan_angle * 180 / M_PI);
-	//DrawFormatString(500, 360, 0xffffff, "Angle : %lf", jan_angle);
+	//Šp“x‚ğ•Û‚·‚é
+	if (old_angle != jan_angle)
+	{
+       old_angle = jan_angle;
+	}
+	
 
 //```````````````````````````````````````````````````````
 }
@@ -317,7 +336,7 @@ void Player::ArmDrawMove() const
 		}
 		else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == false) //ƒWƒƒƒ“ƒv‚Ì
 		{
-			DrawRotaGraph(x + 8, y - 5, 1.0f, M_PI - jan_angle, armR_Image[0], TRUE);
+			DrawRotaGraph(x + 14, y - 5, 1.0f, M_PI - jan_angle, armR_Image[0], TRUE);
 		}
 		break;
 
@@ -348,7 +367,7 @@ void Player::ArmDrawMove() const
 		}
 		else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == false) //ƒWƒƒƒ“ƒv‚Ì
 		{
-			DrawRotaGraph(x + 8, y - 5, 1.0f, M_PI - jan_angle, armR_Image[1], TRUE);
+			DrawRotaGraph(x + 14, y - 5, 1.0f, M_PI - jan_angle, armR_Image[1], TRUE);
 		}
 		break;
 
@@ -379,7 +398,7 @@ void Player::ArmDrawMove() const
 		}
 		else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == false) //ƒWƒƒƒ“ƒv‚Ì
 		{
-			DrawRotaGraph(x + 8, y - 5, 1.0f, M_PI - jan_angle, armR_Image[2], TRUE);
+			DrawRotaGraph(x + 14, y - 5, 1.0f, M_PI - jan_angle, armR_Image[2], TRUE);
 		}
 		break;
 	default:
@@ -459,14 +478,33 @@ void Player::Draw() const
 	PlayerDrawUI(GetHP());
 
 	//ƒeƒXƒg ‘I‘ğ‚¶‚á‚ñŒ‚
-	DrawStringToHandle(30, 105, "SELECT : ", 0xffffff, ui_font);
-	DrawRotaGraph(165, 115, 0.5, 0, image_JanType[static_cast<int>(select_JanType)], TRUE);
+	//DrawStringToHandle(30, 105, "SELECT : ", 0xffffff, ui_font);
+	//DrawRotaGraph(165, 115, 0.5, 0, image_JanType[static_cast<int>(select_JanType)], TRUE);
 	DrawStringToHandle(30, 150, "RB : ”­Ë", 0xffffff, ui_font);
 	DrawStringToHandle(30, 180, "LB : ƒWƒƒƒ“ƒv", 0xffffff, ui_font);
 
-	//ƒeƒXƒg
-	//DrawGraph(20, 80, image_setsumei, TRUE);
-	DrawRotaGraph(300, 130, 0.5, 0, image_setsumei, TRUE);
+	//ƒeƒXƒg 110
+
+	int circle_x = 0;
+	switch (select_JanType)
+	{
+	case Jan_Type::ROCK:
+		circle_x = 2;
+		break;
+	case Jan_Type::SCISSORS:
+		circle_x = 1;
+		break;
+	case Jan_Type::PAPER:
+		circle_x = 0;
+		break;
+	default:
+		circle_x = 0;
+		break;
+	}
+
+	DrawGraph(40, 40,  image_setsumei, TRUE);
+	DrawGraph(50 + (circle_x * 60), 50, image_set_circle, TRUE);
+	DrawGraph(13, 10, image_set_LTRT, TRUE);
 
 #endif // DEBUG_OFF_PLAYER
 
@@ -777,24 +815,59 @@ void Player::Update_Jangeki()
 
 	/*********************** «« ”­ËE¶¬ «« ***********************/
 
+			//LT,RT‚Å”­Ë‚·‚é‚¶‚á‚ñŒ‚‘®«‚ğ‘I‘ğiƒZƒbƒgj‚·‚é
+	static int select_num;
+
+	if (KeyManager::OnPadClicked_RT()) select_num++;
+	if (select_num > 2) select_num = 0;
+
+	if (KeyManager::OnPadClicked_LT()) select_num--;
+	if (select_num < 0) select_num = 2;
+
+	
+
 	// B,Y,X@ƒ{ƒ^ƒ“‚Å”­Ë‚·‚é‚¶‚á‚ñŒ‚‘®«‚ğ‘I‘ğiƒZƒbƒgj‚·‚é
 	if (KeyManager::OnPadClicked(PAD_INPUT_B))         //Bƒ{ƒ^ƒ“
 	{
 		//  ƒO[‚ğ‘I‘ğ 
 		select_JanType = Jan_Type::ROCK;
+		select_num = 2;
 	}
 	else if (KeyManager::OnPadClicked(PAD_INPUT_4))    //Yƒ{ƒ^ƒ“
 	{
 		//  ƒ`ƒ‡ƒL‚ğ‘I‘ğ 
 		select_JanType = Jan_Type::SCISSORS;
+		select_num = 1;
 	}
 	else if (KeyManager::OnPadClicked(PAD_INPUT_3))    //Xƒ{ƒ^ƒ“
 	{
 		//  ƒp[‚ğ‘I‘ğ 
 		select_JanType = Jan_Type::PAPER;
+		select_num = 0;
 	}
-	else {}
+	else
+	{
 
+	}
+	switch (select_num)
+	{
+	case 0:
+		select_JanType = Jan_Type::PAPER;
+		break;
+
+	case 1:
+		select_JanType = Jan_Type::SCISSORS;
+		break;
+
+	case 2:
+		select_JanType = Jan_Type::ROCK;
+		break;
+
+	default:
+		break;
+	}
+
+	//select_JanType = static_cast<Jan_Type>(select_num);
 
 	//”z—ñ‚Ì‹ó—v‘f
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)

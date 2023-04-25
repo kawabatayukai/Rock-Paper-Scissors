@@ -1,3 +1,4 @@
+
 #include"DxLib.h"
 #include<math.h>
 #include "Jangeki_Base.h"
@@ -6,83 +7,58 @@
 //コンストラクタ
 Jangeki_Base::Jangeki_Base(float x, float y, float r, float speed, Jan_Type type, bool ref)
 	: x(x), y(y), r(r), speed(speed), smoke_index(0.0), rate_turn(0.0), type(type), refrection(ref), rate_pct(200.0)
-	, effect_type(Jan_Result::_ERROR)
+	, player_effect(EFFECT_TYPE::_NO_EFFECT), enemy_effect(EFFECT_TYPE::_NO_EFFECT)
+	, effect_x(0.0f), effect_y(0.0f)
 {
-	for (int i = 0; i < 3; i++) image[i] = 0;
 
-	//画像読み込み
-	LoadDivGraph("images/Effect/enemy_jan2.png", 3, 3, 1, 100, 100, image);
-	
 	//反射じゃん撃
-	LoadDivGraph("images/stage09/Reflection_Jangeki.png", 3, 3, 1, 100, 100, reflection_image);
+	if (ref == true) LoadDivGraph("images/stage09/Reflection_Jangeki.png", 3, 3, 1, 100, 100, reflection_image);
 
-	//エフェクト
-	switch (type)
-	{
-	case Jan_Type::ROCK:
-		LoadDivGraph("images/Effect/smoke_gu.png", 4, 4, 1, 170, 170, image_smoke);
-		break;
-
-	case Jan_Type::SCISSORS:
-		LoadDivGraph("images/Effect/smoke_tyoki.png", 4, 4, 1, 170, 170, image_smoke);
-		break;
-
-	case Jan_Type::PAPER:
-		LoadDivGraph("images/Effect/smoke_pa.png", 4, 4, 1, 170, 170, image_smoke);
-		break;
-
-	case Jan_Type::NONE:
-		break;
-
-	default:
-		break;
-	}
+	index_max = 12;
 }
 
 //コンストラクタ（角度あり）
 Jangeki_Base::Jangeki_Base(float x, float y, float r, float speed, double angle, Jan_Type type, bool ref)
 	: x(x), y(y), r(r), smoke_index(0.0), rate_turn(0.0), type(type), refrection(ref), rate_pct(200.0)
-	, effect_type(Jan_Result::_ERROR)
+	, player_effect(EFFECT_TYPE::_NO_EFFECT), enemy_effect(EFFECT_TYPE::_NO_EFFECT)
+	, effect_x(0.0f), effect_y(0.0f)
 {
-	for (int i = 0; i < 3; i++) image[i] = 0;
-
-	//画像読み込み
-	LoadDivGraph("images/Effect/enemy_jan2.png", 3, 3, 1, 100, 100, image);
-
 	//反射じゃん撃
-	LoadDivGraph("images/stage09/Reflection_Jangeki.png", 3, 3, 1, 100, 100, reflection_image);
+	if (ref == true) LoadDivGraph("images/stage09/Reflection_Jangeki.png", 3, 3, 1, 100, 100, reflection_image);
 
-	//エフェクト
-	switch (type)
-	{
-	case Jan_Type::ROCK:
-		LoadDivGraph("images/Effect/smoke_gu.png", 4, 4, 1, 170, 170, image_smoke);
-		break;
-
-	case Jan_Type::SCISSORS:
-		LoadDivGraph("images/Effect/smoke_tyoki.png", 4, 4, 1, 170, 170, image_smoke);
-		break;
-
-	case Jan_Type::PAPER:
-		LoadDivGraph("images/Effect/smoke_pa.png", 4, 4, 1, 170, 170, image_smoke);
-		break;
-
-	case Jan_Type::NONE:
-		break;
-
-	default:
-		break;
-	}
+	index_max = 12;
 
 	//x,y方向のスピードを決める
 	this->speed = fabsf(speed) * cosf(static_cast<float>(angle));
-	speed_y     = fabsf(speed) * sinf(static_cast<float>(angle));
+	speed_y = fabsf(speed) * sinf(static_cast<float>(angle));
 }
 
 //デストラクタ
 Jangeki_Base::~Jangeki_Base()
 {
-	DrawRotaGraph(x, y, 1, 0, image[0], TRUE);
+}
+
+int Jangeki_Base::image[3];              //じゃん撃画像
+int Jangeki_Base::image_effects[3][12];  //貫通時エフェクト
+int Jangeki_Base::image_smoke[3][4];        //スモークなエフェクト
+
+//画像読み込み
+void Jangeki_Base::Input_Images()
+{
+	for (int i = 0; i < 3; i++) image[i] = 0;
+
+	//通常じゃん撃
+	LoadDivGraph("images/Effect/enemy_jan2.png", 3, 3, 1, 100, 100, image);
+
+	//エフェクト
+	LoadDivGraph("images/Effect/smoke_gu.png", 4, 4, 1, 170, 170, image_smoke[0]);
+	LoadDivGraph("images/Effect/smoke_tyoki.png", 4, 4, 1, 170, 170, image_smoke[1]);
+	LoadDivGraph("images/Effect/smoke_pa.png", 4, 4, 1, 170, 170, image_smoke[2]);
+
+
+	LoadDivGraph("images/Effect/win_gu.png", 12, 12, 1, 240, 240, image_effects[0]);
+	LoadDivGraph("images/Effect/win_tyoki.png", 12, 12, 1, 240, 240, image_effects[1]);
+	LoadDivGraph("images/Effect/win_pa.png", 12, 12, 1, 240, 240, image_effects[2]);
 }
 
 //更新
@@ -109,14 +85,26 @@ void Jangeki_Base::Draw() const
 	int type_num = static_cast<int>(type);
 	if (type_num > 2) type_num = 0;
 
+	//じゃん撃同士の衝突で勝ったときのみ
+	if (enemy_effect == EFFECT_TYPE::WIN)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ADD, 180);
+		DrawRotaGraphF(x, y, 1.2, turn_effect, image_effects[type_num][index_effect], TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+		DrawRotaGraph(x, y, 0.9, 0, image_effects[type_num][index_effect], TRUE);
+	}
+	else
+	{
+
+	}
 
 	//反射でないとき
 	if (refrection == false)
 	{
 		//スモークエフェクト
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
-		DrawRotaGraph(x, y, rate * 0.75, rate_turn, image_smoke[2], TRUE);
-		DrawRotaGraph(x, y, rate * 0.75, -rate_turn, image_smoke[1], TRUE);
+		DrawRotaGraph(x, y, rate * 0.75, rate_turn, image_smoke[type_num][2], TRUE);
+		DrawRotaGraph(x, y, rate * 0.75, -rate_turn, image_smoke[type_num][1], TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 		//通常じゃん撃
@@ -126,8 +114,8 @@ void Jangeki_Base::Draw() const
 	{
 		//スモークエフェクト
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
-		DrawRotaGraph(x, y, rate * 0.75, rate_turn, image_smoke[2], TRUE);
-		DrawRotaGraph(x, y, rate * 0.75, -rate_turn, image_smoke[1], TRUE);
+		DrawRotaGraph(x, y, rate * 0.75, rate_turn, image_smoke[type_num][2], TRUE);
+		DrawRotaGraph(x, y, rate * 0.75, -rate_turn, image_smoke[type_num][1], TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 		//反射じゃん撃
@@ -161,6 +149,24 @@ void Jangeki_Base::Update_Effect(double fp_rate)
 		if (smoke_index > 3) smoke_index = 0;
 	}
 	rate_turn += 0.008;
+
+	if (enemy_effect == EFFECT_TYPE::WIN)
+	{
+		static int frame;
+
+		if (++frame % 2 == 0) index_effect++;
+		turn_effect += 0.5;
+
+		if (index_effect > index_max)
+		{
+			index_effect = 0;
+			//effect_type = Jan_Result::_ERROR;
+			enemy_effect = EFFECT_TYPE::_NO_EFFECT;
+			turn_effect = 0.0;
+
+			frame = 0;
+		}
+	}
 }
 
 
@@ -169,16 +175,16 @@ void Jangeki_Base::Update_Effect(double fp_rate)
 // ・自分の属性が不利（例　自分：グー　引数：パー）　　return 0
 // ・自分の属性が有利（例　自分：グー　引数：チョキ）　return 1
 // ・　　　あいこ　　（例　自分：グー　引数：グー）　　return 2
-int Jangeki_Base::CheckAdvantage(const Jangeki_Base* jangeki)
+int Jangeki_Base::CheckAdvantage(Jangeki_Base* jangeki)
 {
-	int result_num = 0;    //結果を格納
+	int result_num = 99;    //結果を格納
 
 	// 引数のじゃん撃の属性が
 	switch (jangeki->GetType())
 	{
 	case Jan_Type::ROCK:         //グーの時
 
-		if (this->type == Jan_Type::SCISSORS) result_num= 0; //自分の属性がチョキの時　0(不利)
+		if (this->type == Jan_Type::SCISSORS) result_num = 0; //自分の属性がチョキの時　0(不利)
 		if (this->type == Jan_Type::PAPER) result_num = 1;    //自分の属性がパーの時　　1(有利)
 		if (this->type == Jan_Type::ROCK) result_num = 2;     //自分の属性がグーの時　　2(あいこ)
 		break;
@@ -204,21 +210,35 @@ int Jangeki_Base::CheckAdvantage(const Jangeki_Base* jangeki)
 	//じゃんけん負け
 	if (result_num == 0)
 	{
-		effect_type = Jan_Result::LOSE;
+		//enemy側のエフェクト発動
+		jangeki->enemy_effect = EFFECT_TYPE::WIN;
 	}
 	//じゃんけん勝ち
-	if (result_num == 1) 
+	if (result_num == 1)
 	{
 		GameData::Add_Score(100);    //スコア加算
 
-		effect_type = Jan_Result::WIN;
+		//player側のエフェクト発動
+		player_effect = EFFECT_TYPE::WIN;
 	}
 	//じゃんけんあいこ
-	if (result_num == 2) 
+	if (result_num == 2)
 	{
 		GameData::Add_Score(100 / 2);    //スコア加算
 
-		effect_type = Jan_Result::ONEMORE;
+		//相殺エフェクト発動
+		player_effect = EFFECT_TYPE::OFFSET;
+		jangeki->enemy_effect = EFFECT_TYPE::OFFSET;
+
+		//enemy側じゃん撃
+		float e_x = jangeki->GetX();
+		float e_y = jangeki->GetY();
+
+		//じゃん撃間の距離
+		float dis_x = e_x - this->x;
+		float dis_y = e_y - this->y;
+		effect_x = dis_x / 2;
+		effect_y = dis_y / 2;
 	}
 
 	return result_num;
@@ -261,8 +281,26 @@ bool Jangeki_Base::Hit_Jangeki(const Jangeki_Base* jangeki)
 	return false;
 }
 
-//発動すべきエフェクトを取得する
-Jan_Result Jangeki_Base::GetEffectType() const
+//あいこ相殺エフェクト（player側で行う）
+void Jangeki_Base::Update_OffsetEffect()
 {
-	return effect_type;
+	static int framecount;
+	if (player_effect == EFFECT_TYPE::OFFSET || enemy_effect == EFFECT_TYPE::OFFSET)
+	{
+		if (++framecount > 120)
+		{
+			player_effect = EFFECT_TYPE::_NO_EFFECT;
+			enemy_effect = EFFECT_TYPE::_NO_EFFECT;
+			framecount = 0;
+		}
+	}
+}
+
+//あいこ相殺エフェクト描画（player側で行う）
+void Jangeki_Base::Draw_OffsetEffect() const
+{
+	if (player_effect == EFFECT_TYPE::OFFSET)
+	{
+		DrawCircle(effect_x, effect_y, 30, 0xffffff, TRUE);
+	}
 }

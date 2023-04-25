@@ -3,7 +3,10 @@
 #include"Player.h"
 #include"Jangeki_Base.h"
 #include"Jangeki_Coming.h"
+#include "Jangeki_whole.h"
 #include <typeinfo>
+#define _USE_MATH_DEFINES
+#include<math.h>
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_04::Enemy_04(float x, float y, Jan_Type type) : EnemyBase(x, y, 150.0f, 150.0f, type)
@@ -12,15 +15,19 @@ Enemy_04::Enemy_04(float x, float y, Jan_Type type) : EnemyBase(x, y, 150.0f, 15
 	dir = 1;
 	hp = 100;
 
-	enemy_image[0] = LoadGraph("images/Stage4/stage_Boss04.png");
-	enemy_image[1] = LoadGraph("images/Stage4/stage_Boss04(上).png");
-	enemy_image[2] = LoadGraph("images/Stage4/stage_Boss04(右上).png");
-	enemy_image[3] = LoadGraph("images/Stage4/stage_Boss04(右).png");
-	enemy_image[4] = LoadGraph("images/Stage4/stage_Boss04(右下).png");
-	enemy_image[5] = LoadGraph("images/Stage4/stage_Boss04(下).png");
-	enemy_image[6] = LoadGraph("images/Stage4/stage_Boss04(左下).png");
-	enemy_image[7] = LoadGraph("images/Stage4/stage_Boss04(左).png");
-	enemy_image[8] = LoadGraph("images/Stage4/stage_Boss04(左上).png");
+	enemy_x = GetRand(1160) + 100;
+	enemy_y = GetRand(600) + 100;
+
+	enemy_image[0] = LoadGraph("images/Stage04/stage_Boss04.png");
+	enemy_image[1] = LoadGraph("images/Stage04/stage_Boss04(上).png");
+	enemy_image[2] = LoadGraph("images/Stage04/stage_Boss04(右上).png");
+	enemy_image[3] = LoadGraph("images/Stage04/stage_Boss04(右).png");
+	enemy_image[4] = LoadGraph("images/Stage04/stage_Boss04(右下).png");
+	enemy_image[5] = LoadGraph("images/Stage04/stage_Boss04(下).png");
+	enemy_image[6] = LoadGraph("images/Stage04/stage_Boss04(左下).png");
+	enemy_image[7] = LoadGraph("images/Stage04/stage_Boss04(左).png");
+	enemy_image[8] = LoadGraph("images/Stage04/stage_Boss04(左上).png");
+	enemy_image[9] = LoadGraph("images/Stage04/stage_Boss04(特殊行動).png");
 
 	Init_Jangeki();       //じゃん撃を用意
 }
@@ -42,8 +49,11 @@ void Enemy_04::Update()
 	angle = atan2f((player_x - x), (player_y - y));
 
 	//動きパターン
-	moveinfo[0] = { 1, player_x, player_y, 0, 1 };
-	moveinfo[1] = { 0,      0.f,      0.f, 0, 0 };
+	moveinfo[0] = { 1, player_x, player_y, 0, 0 };
+	//moveinfo[1] = { 0,      0.f,      0.f, 0, 0 };
+
+	moveinfo[1] = { 1,  enemy_x,  enemy_y, 0, 2 };
+	moveinfo[2] = { 0,      0.f,      0.f, 0, 1 };
 
 	switch (moveinfo[current].moveflg)
 	{
@@ -51,6 +61,11 @@ void Enemy_04::Update()
 		waitTime++;
 		if (moveinfo[current].waitFlameTime <= waitTime)
 		{
+			if (specialFlg == true)
+			{
+				enemy_x = GetRand(1160) + 100;
+				enemy_y = GetRand(600) + 100;
+			}
 			waitTime = 0;
 			current = moveinfo[current].next_index;
 		}
@@ -68,11 +83,33 @@ void Enemy_04::Update()
 	if (hp <= 0) hp = 0;
 	
 	//HP50％以下でスピードUP
-	if (hp <= 50) speed = 2.0f;
-	else speed = 1.0f;
+	//if (hp <= 50) speed = 2.0f;
+	//else speed = 1.0f;
+
+	if (specialFlg == true)
+	{
+		speed = 15.0f;
+		specialTime++;
+	}
+	else if (hp <= 50)
+	{
+		speed = 3.0f;
+	}
+	else
+	{
+		speed = 1.5f;
+	}
 
 	//少しずつHP回復
-	if (hp < 100 && frame_count % 25 == 0) hp++;
+	if (hp < 50 && frame_count % 30 == 0) hp++;
+	else if (hp < 100 && frame_count % 40 == 0) hp++;
+
+	if (specialTime >= 240)
+	{
+		specialTime = 0;
+		specialFlg = false;
+		current = 0;
+	}
 }
 
 //描画
@@ -131,6 +168,11 @@ void Enemy_04::Draw() const
 		DrawRotaGraphF(x, y, 1.5, 0, enemy_image[8], TRUE);
 	}
 
+	if (specialFlg == true)
+	{
+		DrawRotaGraphF(x, y, 1.5, 0, enemy_image[9], TRUE);
+	}
+
 	//じゃん撃描画
 	Draw_Jangeki();
 
@@ -176,26 +218,17 @@ void Enemy_04::Update_Jangeki()
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
-
-		//プレイヤーの角度へ発射するジャン撃生成
-		if (frame_count % 70 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
-
-		
-
-		//HPが50%以下で新たなジャン撃生成
-		//if (hp <= 50)
-		//{
-		//	//プレイヤーのx座標によって発射する方向を変える(左右)
-		//	if (player_x <= 640)
-		//	{
-		//		if (frame_count % 40 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius * 0.5, speed * -1.5, type);
-		//	}
-		//	else if (player_x > 640)
-		//	{
-		//		if (frame_count % 40 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius * 0.5, speed *  2, type);
-		//	}
-		//	
-		//}
+		//特殊行動状態かどうか
+		if (specialFlg == false)
+		{
+			//プレイヤーの角度へ発射するジャン撃生成
+			if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+		}
+		else if (specialFlg == true)
+		{
+			if (frame_count % 60 == 0) Jan_360degrees(jan_count, radius, speed * 1.5, type);
+			//if (frame_count % 30 == 0) Jan_360degrees(jan_count, radius, speed * 2, type);
+		}
 	}
 }
 
@@ -309,4 +342,22 @@ void Enemy_04::Change_JanType()
 	}
 
 	return;
+}
+
+void Enemy_04::Special_Action()
+{
+	specialFlg = true;
+	current = 1;
+}
+
+//360度発射
+void Enemy_04::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
+{
+	//36度ずつ10個生成
+	for (int i = count; i < (count + 10); i++)
+	{
+		double angle = static_cast<double>((36.0 * i) * (M_PI / 180));
+
+		obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
+	}
 }

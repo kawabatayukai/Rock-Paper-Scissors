@@ -12,10 +12,12 @@ int KeyManager::nowKey_Pad;       //今回の入力（コントローラー
 
 //---------   コントローラー（スティック入力値） ------------------------
 
-#define _DEAD_ZONE  2000              //デッドゾーン
+#define _DEAD_ZONE  2000                 //デッドゾーン
+#define _TORIGGER_MAX  40               //トリガー最大入力値（固定用）
 
-XINPUT_STATE KeyManager::input_Pad;    //コントローラーの入力情報
-int KeyManager::stick_value[4];        //入力値   0:左ｘ　1:左ｙ　2:右ｘ　3:右ｙ
+XINPUT_STATE KeyManager::input_Pad;      //コントローラーの入力情報
+XINPUT_STATE KeyManager::input_Pad_old;  //前回のコントローラーの入力情報
+int KeyManager::stick_value[4];          //入力値   0:左ｘ　1:左ｙ　2:右ｘ　3:右ｙ
 
 //左スティック
 short KeyManager::stickLX_DeadZoneMAX = _DEAD_ZONE;       //無効範囲最大値　x方向
@@ -50,7 +52,10 @@ void KeyManager::Update()
 	oldKey_Pad = nowKey_Pad;
 	nowKey_Pad = GetJoypadInputState(DX_INPUT_KEY_PAD1);   //DX_INPUT_PAD1  にすればコントローラーのみ(?)
 
-	// 入力状態を取得
+	//前回の入力情報を保持する
+	input_Pad_old = input_Pad;
+
+	// 最新の入力状態を取得
 	GetJoypadXInputState(DX_INPUT_KEY_PAD1, &input_Pad);
 
 	//スティック入力関係 ---------------------------------------------------
@@ -106,6 +111,15 @@ void KeyManager::Update()
 	}
 	// ---------------------------------------------------------------------
 
+	// トリガー入力関係 ----------------------------------------------------
+	
+	//トリガーの入力値を規制
+	if (input_Pad.LeftTrigger > _TORIGGER_MAX) input_Pad.LeftTrigger = _TORIGGER_MAX;
+	if (input_Pad.RightTrigger > _TORIGGER_MAX) input_Pad.RightTrigger = _TORIGGER_MAX;
+
+	if (input_Pad_old.LeftTrigger > _TORIGGER_MAX) input_Pad_old.LeftTrigger = _TORIGGER_MAX;
+	if (input_Pad_old.RightTrigger > _TORIGGER_MAX) input_Pad_old.RightTrigger = _TORIGGER_MAX;
+	// ---------------------------------------------------------------------
 }
 
 /*****************************  キーボード  *****************************/
@@ -132,6 +146,8 @@ bool KeyManager::OnKeyPressed(int key)
 	//
 	bool ret = (nowKey[key] == 1);
 	return ret;
+
+	
 }
 
 /************************************************************************/
@@ -199,6 +215,40 @@ bool KeyManager::OnPadPressed(int key)
 int  KeyManager::Get_StickValue(const int& stick_code)
 {
 	return stick_value[stick_code];
+}
+
+//LT
+bool KeyManager::OnPadClicked_LT()
+{
+	if (input_Pad_old.LeftTrigger == _TORIGGER_MAX && input_Pad.LeftTrigger == _TORIGGER_MAX)
+		return false;
+	else if (input_Pad.LeftTrigger == _TORIGGER_MAX)
+		return true;
+	else 
+		return false;
+}
+
+//RT
+bool KeyManager::OnPadClicked_RT()
+{
+	
+
+	if (input_Pad_old.RightTrigger == _TORIGGER_MAX && input_Pad.RightTrigger == _TORIGGER_MAX)
+		return false;
+	else if (input_Pad.RightTrigger == _TORIGGER_MAX)
+		return true;
+	else 
+		return false;
+}
+
+int KeyManager::GetValue_LT()
+{
+	return input_Pad.LeftTrigger;
+}
+
+int KeyManager::GetValue_RT()
+{
+	return input_Pad.RightTrigger;
 }
 
 /****************************************************************************/

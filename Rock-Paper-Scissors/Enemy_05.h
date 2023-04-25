@@ -22,6 +22,8 @@ public:
 	bool respawn_mobenemy();
 	void SetRespawn(bool flag);
 
+	void Change_JanType();
+
 	Jangeki_Reflection* reflection;
 
 private:
