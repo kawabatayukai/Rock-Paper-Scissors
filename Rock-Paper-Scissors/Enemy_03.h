@@ -60,6 +60,7 @@ private:
 		LEFTMOVE,
 		RIGHTMOVE,
 		JUMP,
+		//BREAK,
 	};
 	ENEMY_STATE enemy_state = ENEMY_STATE::STOP;
 	
@@ -85,8 +86,8 @@ private:
 	short current ; //現在のパターン配列添字
 
 
-	int frame_count_anim = 0;       //敵のアニメーション用
-	//int frame_count_anim1 = 0;       //敵のアニメーション1用
+	int Eframe_count_anim = 0;       //敵のアニメーション用
+	int Bframe_count_anim = 0;       //敵のアニメーション1用
 
 
 
@@ -99,6 +100,7 @@ private:
 	int SheeldBreakAnim[8];//盾が壊れた時のアニメーション
 	float st3_before_x = 0;
 	float st3_before_y = 0;
+
 	bool st3_animflg = false;
 	int st3_animtimer = 0;
 	int st3_animcount = 0;
@@ -106,10 +108,9 @@ private:
 	//int* now_image;//現在の画像情報取得
 
 	//int enemyimageMirror[6];//敵画像反転
-	int currentindex_st03 = 0;
-	int currentindex1_st03 = 0;
-	/*int screenWidth = 0;
-	int screenHeight = 0;*/
+	int Ecurrentindex_st03 = 0;
+	//int Bcurrentindex_st03 = 0;
+	
 	
 };
 
