@@ -90,6 +90,14 @@ private:
 	int image_set_LTRT;       //"LTRT"
 	int hpImage;
 
+	//プレイヤーの状態
+	enum class PLAYER_STATE
+	{
+		ALIVE,     //生きている
+   		DEATH,     //死んだ
+	};
+	PLAYER_STATE player_state;
+
 	//向き（左右のみ）
 	enum class DIRECTION
 	{

@@ -14,7 +14,7 @@
 
 //ƒRƒ“ƒXƒgƒ‰ƒNƒ^@@@@@@@@@@@@@  ‚˜@‚™@•@@@‚‚³
 Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ðŒÄ‚Ô
-, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0)
+, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0), player_state(PLAYER_STATE::ALIVE)
 {
 	speed = 7.0f;
 	hp = 100;
@@ -65,7 +65,7 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 
 //ƒRƒ“ƒXƒgƒ‰ƒNƒ^iƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^j
 Player::Player(const Player& player) : CharaBase(player.x, player.y, player.w, player.h)  //Šî’êƒNƒ‰ƒX‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ðŒÄ‚Ô
-, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0)
+, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0), player_state(PLAYER_STATE::ALIVE)
 {
 	//ƒƒ“ƒo•Ï”‚ðˆø”‚ÌƒIƒuƒWƒFƒNƒg‚Ì“à—e‚Å‰Šú‰»‚·‚é
 	// 
@@ -119,6 +119,9 @@ Player::~Player()
 //XV
 void Player::Update()
 {
+	//ƒvƒŒƒCƒ„[‚ÌHP‚ª0ˆÈ‰º‚ÌŽžA"Ž€‚ñ‚¾"ó‘Ô‚É
+	if (this->hp <= 0) player_state = PLAYER_STATE::DEATH;
+
 	//‘O‰ñ‚ÌÀ•W‚˜‚ð•Û‘¶
 	old_x = x;
 
