@@ -32,6 +32,6 @@ public:
 private:
 	Enemy_04* obj_enemy;            //“G
 
-	
+	int stage04_BGM;
 };
 
