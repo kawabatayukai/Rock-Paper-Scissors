@@ -17,7 +17,7 @@ Enemy_10::Enemy_10(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = 1;
 	hp = 100;
 
-	form = 2;
+	form = 1;
 
 	Rimage = LoadGraph("images/stage09/Stage9_1.png");	//”½ËON
 	Limage = LoadGraph("images/stage09/Stage9.png");		//”½ËOFF
@@ -653,7 +653,7 @@ void Enemy_10::Update_Jangeki()
 			/*********************** «« ¶¬( ’ÇÕ’e ) «« ***********************/
 
 			//            ¶¬‘¬“x
-			//if (frame_count % 150 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //’ÇÕ’e 
+			if (frame_count % 150 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //’ÇÕ’e 
 
 			/************************************************************************/
 
@@ -666,10 +666,10 @@ void Enemy_10::Update_Jangeki()
 
 			/*********************** «« ¶¬( ’†S‰~Œ^ŠgU’e ) «« ***********************/
 
-				//if (frame_count % 200 == 0)
-				//{
-				//	Jan_360degrees(jan_count, radius, speed, type); //360“x”­Ë
-				//}
+				if (frame_count % 200 == 0)
+				{
+					Jan_360degrees(jan_count, radius, speed, type); //360“x”­Ë
+				}
 				//            ¶¬‘¬“x
 				//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_whole(x, y, radius, speed, type);
 
