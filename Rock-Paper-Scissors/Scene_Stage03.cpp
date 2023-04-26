@@ -182,35 +182,35 @@ void Scene_Stage03::Update()
 				if (jangeki_type == Jan_Type::PAPER)
 				{
 
-					//HPが100以下で86以上の時
-					if (obj_enemy->GetHP() >= 86 && /*obj_enemy->GetHP() >= 86 &&*/ obj_enemy->GetWaitTime() > 0) {
+					//HP86以上の時
+					if (obj_enemy->GetHP() >= 86 &&  obj_enemy->GetWaitTime() > 0 || obj_enemy->GetHP() >= 86 &&  obj_enemy->GetWaitTime() < 200) {
 
 						SheeldEnduranse = 27;
 						obj_enemy->ReceiveDamage(30 - SheeldEnduranse-EnemyCutDamege); //軽減ダメージが入る
 
 					}
-					else if (obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 71  && obj_enemy->GetWaitTime() > 0) {
+					else if (obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 71  && obj_enemy->GetWaitTime() > 0 || obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 71 && obj_enemy->GetWaitTime() < 200) {
 
 						SheeldEnduranse = 24;
 						obj_enemy->ReceiveDamage(30 - SheeldEnduranse- EnemyCutDamege); //軽減ダメージが入る
 
 
 					}
-					else if (obj_enemy->GetHP() <= 70 && obj_enemy->GetHP() >= 56  &&obj_enemy->GetWaitTime() > 0) {
+					else if (obj_enemy->GetHP() <= 70 && obj_enemy->GetHP() >= 56  && obj_enemy->GetWaitTime() > 0 || obj_enemy->GetHP() <= 70 && obj_enemy->GetHP() >= 56 && obj_enemy->GetWaitTime() < 200) {
 
 						SheeldEnduranse = 21;
 						obj_enemy->ReceiveDamage(30 - SheeldEnduranse- EnemyCutDamege); //軽減ダメージが入る
 
 
 					}
-					else if (obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 41 && obj_enemy->GetWaitTime() > 0) {
+					else if (obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 41 && obj_enemy->GetWaitTime() > 0 || obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 41 && obj_enemy->GetWaitTime() <  200) {
 
 						SheeldEnduranse = 18;
 						obj_enemy->ReceiveDamage(30 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
 
 
 					}
-					else if (obj_enemy->GetHP() <= 40 /*&& obj_enemy->GetHP() >= 39*/ && obj_enemy->GetWaitTime() > 0) {
+					else if (obj_enemy->GetHP() <= 40  && obj_enemy->GetWaitTime() > 0 || obj_enemy->GetHP() <= 40 && obj_enemy->GetWaitTime() < 200) {
 
 						SheeldEnduranse = 15;
 						obj_enemy->ReceiveDamage(30 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
@@ -220,10 +220,10 @@ void Scene_Stage03::Update()
 
 					else {
 
-						if (obj_enemy->GetHP() <= 100 /*&& obj_enemy->GetWaitTime() < 200*/) {
+						if (obj_enemy->GetHP() >= 100 && obj_enemy->GetWaitTime() < 200 || obj_enemy->GetHP() >= 100 && obj_enemy->GetWaitTime() > 0 ) {
 
 							//SheeldEnduranse = 0;
-							obj_enemy->ReceiveDamage(3 - EnemyCutDamege); //ダメージが入る
+							obj_enemy->ReceiveDamage(1 - EnemyCutDamege); //ダメージが入る
 						}
 					}
 
