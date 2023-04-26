@@ -88,6 +88,7 @@ private:
 	int image_setsumei;       //操作説明用　モロ
 	int image_set_circle;     //円
 	int image_set_LTRT;       //"LTRT"
+	int image_set_GPT;
 	int hpImage;
 
 	//プレイヤーの状態

@@ -39,6 +39,7 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 	image_setsumei = LoadGraph("images/Janken/Setumei50ptg.png");
 	image_set_circle = LoadGraph("images/Janken/Setumei_Select50.png");
 	image_set_LTRT = LoadGraph("images/Janken/Setumei_LTRT_235_105.png");
+	image_set_GPT = LoadGraph("images/Janken/Setumei_GTP.png");
 
 	head_Image[0] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“Šç‚Ì‚İ.png");
 	head_Image[1] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“Šç‚Ì‚İ¶.png");
@@ -93,6 +94,7 @@ Player::Player(const Player& player) : CharaBase(player.x, player.y, player.w, p
 	image_setsumei = LoadGraph("images/Janken/Setumei50ptg.png");
 	image_set_circle = LoadGraph("images/Janken/Setumei_Select50.png");
 	image_set_LTRT = LoadGraph("images/Janken/Setumei_LTRT_235_105.png");
+	image_set_GPT = LoadGraph("images/Janken/Setumei_GTP.png");
 
 	armL_Image[0] = LoadGraph("images/˜r‚Ì‚İ‚®[h¶.png");
 	armR_Image[0] = LoadGraph("images/˜r‚Ì‚İ‚®[h‰E.png");
@@ -508,6 +510,14 @@ void Player::Draw() const
 	DrawGraph(40, 40,  image_setsumei, TRUE);
 	DrawGraph(50 + (circle_x * 60), 50, image_set_circle, TRUE);
 	DrawGraph(13, 10, image_set_LTRT, TRUE);
+	DrawGraph(55, 100, image_set_GPT, TRUE);
+
+	if (KeyManager::OnPadPressed(PAD_INPUT_3))
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ADD, 200);
+		DrawCircle(75, 125, 15, 0xffffff, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
 
 #endif // DEBUG_OFF_PLAYER
 
