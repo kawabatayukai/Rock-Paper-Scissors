@@ -24,6 +24,9 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	LoadDivGraph("images/stage03/stage03SheeldEnduranse3.png", 6, 6, 1, 100, 100, enemyimage3);
 	LoadDivGraph("images/stage03/stage03SheeldEnduranse4.png", 6, 6, 1, 100, 100, enemyimage4);
 
+	LoadDivGraph("images/stage03/BreakSheeldAnim.png", 8, 8, 1, 220, 220, SheeldBreakAnim);
+
+
 	//LoadDivGraph("images/stage03/stage03AnimMirror.png", 6, 6, 1, 100, 100, enemyimageMirror);
 
 	Init_Jangeki();       //じゃん撃を用意
@@ -175,7 +178,7 @@ void Enemy_03::Update()
 		e_type = Jan_Type::SCISSORS;
 	}*/
 
-	if (hp >= 40) {
+	if (hp > 40) {//HP40%より多いの間パターンの動きをする
 
 
 		//ステ03パターン用関数
@@ -207,27 +210,35 @@ void Enemy_03::Update()
 
 
 	}
+	else if (hp<=40 && st3_animcount < 8) {
+
+
+
+	}
 	else {
 
-
-		if (x <= 100) {
+		//enemyのxが475以下の時
+		if (x <= 475) {
 
 			//前回より加速する
-			speed = 2.5f;
+			speed = 7.5f;
 
 		}
+		//enemyのxが950以下で475以上の時
 		else if (x <= 950 && x >= 475) {
 
 			//前回より加速する
-			speed = 3.5f;
+			speed = 5.5f;
 
 		}
+		//enemyのxが950以上の時
 		else if (x >= 950) {
 
 			//前回より加速する
-			speed = 4.5f;
+			speed = 7.5f;
 
 		}
+		//それ以外は普通の動き
 		else
 		{
 
@@ -364,31 +375,26 @@ void Enemy_03::Update()
 
 
 	//配列0～2番目の画像のループ
-	if (++frame_count_anim % 40 == 0) {
+	if (++Eframe_count_anim % 40 == 0) {
 
-		currentindex_st03++;
-		if (currentindex_st03 >= 3)currentindex_st03 = 0;
-		frame_count_anim = 0;
+		Ecurrentindex_st03++;
+		if (Ecurrentindex_st03 >= 3)Ecurrentindex_st03 = 0;
+		Eframe_count_anim = 0;
 	}
-
-	//配列0～2番目の画像のループ耐久値1の時
-	/*if (++frame_count_anim1 % 40 == 0) {
-
-		currentindex_st03++;
-		if (currentindex1_st03 >= 3)currentindex1_st03 = 0;
-		frame_count_anim1 = 0;
-	}*/
-
-
 
 	//前回のｘ
 	old_x = x;
 
-	/*if (hp >= 86) now_image = enemyimage;
-	else if (hp >= 85 && hp <= 71) now_image = enemyimage1;
-	else if (hp >= 70 && hp <= 56) now_image = enemyimage2;
-	else if (hp >= 55 && hp <= 41) now_image = enemyimage3;
-	else if (hp <= 40) now_image = enemyimage4;*/
+	if (hp <= 40 && st3_animcount < 8) {
+
+		++st3_animtimer;
+		if (st3_animtimer % 8 == 0) {
+
+			st3_animcount++;
+			st3_animtimer = 0;
+		}
+
+	}
 
 
 }
@@ -419,143 +425,153 @@ void Enemy_03::Draw() const
 
 {
 
-	////////////////////////
-	 ///HPが86以上の時
-	///////////////////////
-	//エネミー停止時
-	if (/*hp <= 100 &&*/ hp >= 86 && moveinfo[current].enemywaitTime > 0) {
+	if (hp >= 86) {
 
-		//ガード時の画像描画							
-		DrawRotaGraphF(x, y, 1, 0, enemyimage[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
+		////////////////////////
+		 ///HPが86以上の時
+		///////////////////////
+		//エネミー停止時
+		if (moveinfo[current].enemywaitTime > 0) {
 
+
+			//ガード時の画像描画							
+			DrawRotaGraphF(x, y, 1, 0, enemyimage[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
+
+
+		}
+
+		//ジャンプ時
+		else if (moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200) {
+
+			//ジャンプ時の画像描画							
+			DrawRotaGraphF(x, y, 1, 0, enemyimage[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
+
+		}
+		//そうじゃないとき
+		//動いているとき
+		else {
+
+			//エネミーの構造体と一致したときに     エネミーが左または右に動く
+			if (enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE && moveinfo[current].enemywaitTime < 200) {
+
+				//攻撃時の画像描画								//向きを変える
+				DrawRotaGraphF(x, y, 1, 0, enemyimage[Ecurrentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
+			}
+
+
+		}
 
 	}
+	else if (hp <= 85 && hp >= 71) {
 
-	//ジャンプ時
-	else if (/*hp <= 100*/  hp >= 86 && moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200) {
+		//////////////////////
+		//HP85以下で70以上のとき
+		/////////////////////
+		if (moveinfo[current].enemywaitTime > 0) {
 
-		////ガード時の画像描画							
-		//DrawRotaGraphF(x, y, 0, 0, enemyimage[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
+			DrawRotaGraphF(x, y, 1, 0, enemyimage1[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
 
-		//ジャンプ時の画像描画							
-		DrawRotaGraphF(x, y, 1, 0, enemyimage[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
+		}
+		else if (moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200) {
 
-	}
-	//そうじゃないとき
-	//動いているとき
-	else {
 
-		//エネミーの構造体と一致したときに     エネミーが左または右に動く
-		if (/*hp <= 100*/   hp >= 86 && enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE && moveinfo[current].enemywaitTime < 200) {
-			//攻撃時の画像描画								//向きを変える
-			DrawRotaGraphF(x, y, 1, 0, enemyimage[currentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
+
+			//ジャンプ時の画像描画							
+			DrawRotaGraphF(x, y, 1, 0, enemyimage1[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
+
+		}
+
+		else {
+
+			//エネミーの構造体と一致したときにエネミーが左または右に動く
+			if ((enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE && moveinfo[current].enemywaitTime < 200)) {
+				//攻撃時の画像描画								//向きを変える
+				DrawRotaGraphF(x, y, 1, 0, enemyimage1[Ecurrentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
+			}
+
+
 		}
 
 
-	}
-
-	//////////////////////
-	//HP85以下で70以上のとき
-	/////////////////////
-	if (hp <= 85 && hp >= 71 && moveinfo[current].enemywaitTime > 0) {
-
-		DrawRotaGraphF(x, y, 1, 0, enemyimage1[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
 
 	}
-	else if (hp <= 85 && hp >= 71 && moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200) {
+	else if (hp <= 70 && hp >= 56) {
+		////////////////////////
+		//HP70以下で 55以上のとき
+		////////////////////////
+		if (moveinfo[current].enemywaitTime > 0) {
 
+			DrawRotaGraphF(x, y, 1, 0, enemyimage2[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
 
-		//ガード時の画像描画							
-		DrawRotaGraphF(x, y, 0, 0, enemyimage[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
+		}
+		else if (moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200) {
 
+			//ジャンプ時の画像描画							
+			DrawRotaGraphF(x, y, 1, 0, enemyimage2[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
 
-		//ジャンプ時の画像描画							
-		DrawRotaGraphF(x, y, 1, 0, enemyimage1[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
+		}
+		else {
 
-	}
-	else {
-
-		//エネミーの構造体と一致したときにエネミーが左または右に動く
-		if ((hp <= 85 && hp >= 71 && enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE && moveinfo[current].enemywaitTime < 200)) {
-			//攻撃時の画像描画								//向きを変える
-			DrawRotaGraphF(x, y, 1, 0, enemyimage1[currentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
+			//エネミーの構造体と一致したときにエネミーが左または右に動く
+			if ((enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE && moveinfo[current].enemywaitTime < 200)) {
+				//攻撃時の画像描画								//向きを変える
+				DrawRotaGraphF(x, y, 1, 0, enemyimage2[Ecurrentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
+			}
 		}
 
-
 	}
+	else if(hp <= 55 && hp >= 41){
+		//////////////////////////
+			//HP55以下で41以上のとき
+			//////////////////////////
+		if ( moveinfo[current].enemywaitTime > 0) {
 
-	////////////////////////
-	//HP70以下で 55以上のとき
-	////////////////////////
-	if (hp <= 70 && hp >= 56 && moveinfo[current].enemywaitTime > 0) {
 
-		DrawRotaGraphF(x, y, 1, 0, enemyimage2[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
+			DrawRotaGraphF(x, y, 1, 0, enemyimage3[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
 
-	}
-	else if (hp <= 70 && hp >= 56 && moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200) {
+		}
+		else if (moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200) {
 
-		//ジャンプ時の画像描画							
-		DrawRotaGraphF(x, y, 1, 0, enemyimage2[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
+			//ジャンプ時の画像描画							
+			DrawRotaGraphF(x, y, 1, 0, enemyimage3[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
 
-	}
-	else {
+		}
+		else {
 
-		//エネミーの構造体と一致したときにエネミーが左または右に動く
-		if ((hp <= 70 && hp >= 56 && enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE && moveinfo[current].enemywaitTime < 200)) {
-			//攻撃時の画像描画								//向きを変える
-			DrawRotaGraphF(x, y, 1, 0, enemyimage2[currentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
+			//エネミーの構造体と一致したときにエネミーが左または右に動く
+			if ((enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE && moveinfo[current].enemywaitTime < 200)) {
+				//攻撃時の画像描画								//向きを変える
+				DrawRotaGraphF(x, y, 1, 0, enemyimage3[Ecurrentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
+			}
+
+
 		}
 	}
-
-
-	//////////////////////////
-	//HP55以下で41以上のとき
-	//////////////////////////
-	if (hp <= 55 && hp >= 41 && moveinfo[current].enemywaitTime > 0) {
-
-
-		DrawRotaGraphF(x, y, 1, 0, enemyimage3[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
-
-	}
-	else if (hp <= 55 && hp >= 41 && moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200) {
-
-		//ジャンプ時の画像描画							
-		DrawRotaGraphF(x, y, 1, 0, enemyimage3[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
-
-	}
 	else {
-
-		//エネミーの構造体と一致したときにエネミーが左または右に動く
-		if ((hp <= 55 && hp >= 41 && enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE && moveinfo[current].enemywaitTime < 200)) {
+		//////////////////////////
+		//HP40以下のとき
+		////////////////////////////
+			//エネミーの構造体と一致したときにエネミーが左または右に動く
+		if ((hp <= 40 /*&& hp >= 39*/ && enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE && moveinfo[current].enemywaitTime < 200)) {
 			//攻撃時の画像描画								//向きを変える
-			DrawRotaGraphF(x, y, 1, 0, enemyimage3[currentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
+			DrawRotaGraphF(x, y, 1, 0, enemyimage4[Ecurrentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
+			if (st3_animcount < 8) {
+
+				SetDrawBlendMode(DX_BLENDMODE_ADD,255);
+				DrawRotaGraphF(x, y, 1, 0, SheeldBreakAnim[st3_animcount],TRUE);
+				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
+			}
 		}
 
-
 	}
 
-	//////////////////////////
-	//HP40以下のとき
-	////////////////////////////
-	//if (hp <= 40 /*&& hp <= 39*/ && moveinfo[current].enemywaitTime > 0) {
+	////////////
+	//エフェクト
+	////////////
+	//if (hp <= 85 && hp >= 71 && moveinfo[current].enemywaitTime > 0 || hp <= 85 && hp >= 71 && enemy_state == ENEMY_STATE::BREAK && moveinfo[current].enemywaitTime < 200) {
 
-
-	//	DrawRotaGraphF(x, y, 1, 0, enemyimage4[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
-
-	//}
-	//else if (hp <= 40 /*&& hp >= 39*/ && moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200) {
-
-	//	//ジャンプ時の画像描画							
-	//	DrawRotaGraphF(x, y, 1, 0, enemyimage4[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
-
-	//}
-	//else {
-
-		//エネミーの構造体と一致したときにエネミーが左または右に動く
-	if ((hp <= 40 /*&& hp >= 39*/ && enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE && moveinfo[current].enemywaitTime < 200)) {
-		//攻撃時の画像描画								//向きを変える
-		DrawRotaGraphF(x, y, 1, 0, enemyimage4[currentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
-	}
+	//	//攻撃時の画像描画								//向きを変える
+	//	//DrawRotaGraphF(x, y, 1, 0,SheeldBreakAnim[Bcurrentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
 
 	//}
 
@@ -718,39 +734,3 @@ void Enemy_03::ChangeDir(float enemy_x)
 	else dir = 1;
 }
 
-//void Enemy_03::MoveRunAway(float enemy_x, float enemy_y, int player_x, int player_y) {//
-//
-//	screenWidth = 1280;
-//	screenHeight = 720;
-//
-//	 enemy_x = rand() % screenWidth;
-//	 enemy_y = rand() % screenHeight;
-//	player_x = 0.0f;
-//	player_y = 0.0f;
-//
-//	if (enemy_x < player_x) {
-//
-//		enemy_x++;
-//
-//	}
-//	else if (enemy_x > player_x) {
-//
-//		enemy_x--;
-//	}
-//	if (enemy_y < player_y) {
-//
-//		enemy_y++;
-//	}
-//	else if (enemy_y > player_y) {
-//
-//		enemy_y--;
-//	}
-//
-//	int distance = sqrt(pow(player_x - enemy_x, 2) + pow(player_y - enemy_y, 2));
-//
-//	if (distance < 50) {
-//
-//		enemy_x += rand() % 10 - 5;
-//		enemy_y += rand() % 10 - 5;
-//	}
-//}
