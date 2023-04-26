@@ -13,6 +13,8 @@ public:
 
 	~Jangeki_Player();             //デストラクタ
 	 
+	static void LoadJanImage();     //画像読み込み
+
 	void Update() override;         //更新
 	void Draw() const override;     //描画
 
@@ -20,18 +22,18 @@ public:
 
 private:
 
-	int image_jangeki[6];           //画像（グーorチョキorパー のいずれか）
+	static int image_jangeki[3][6]; //画像（グーorチョキorパー のいずれか）
 	int index_jangeki;              //配列添字
 
 	double rate_pct;                //拡大率(max100)
 
 	//--------------------  エフェクト  --------------------
 	unsigned short frame_count;     //フレームカウント
-	int image_lightning;            //雷的なもの
+	static int image_lightning[3];  //雷的なもの
 
 	int index_effect;               //画像No
 	int index_max;
 
-	int image_effects[3][12];       //貫通時エフェクト
+	static int image_effects[3][12];//貫通時エフェクト
 	double turn_effect;             //回転率
 };

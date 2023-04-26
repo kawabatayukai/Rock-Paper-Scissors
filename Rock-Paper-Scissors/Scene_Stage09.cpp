@@ -295,7 +295,7 @@ void Scene_Stage09::Update()
 		{
 			
 			//ダメージを受ける（プレイヤー）
-			obj_player->ReceiveDamage(30);
+			obj_player->ReceiveDamage(20);
 
 			//あたったじゃん撃を削除
 			obj_enemy->reflection->Delete_reflectionJangeki(i);
