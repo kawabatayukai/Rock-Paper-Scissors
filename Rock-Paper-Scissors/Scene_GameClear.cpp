@@ -2,6 +2,7 @@
 #include"KeyManager.h"
 #include "Scene_GameClear.h"
 #include"Scene_GameMain.h"
+#include"Scene_Title.h"
 
 #include"Scene_Stage00.h"
 #include"Scene_Stage01.h"
@@ -58,8 +59,7 @@ AbstractScene* GameClearScene::ChangeScene()
 	//Aƒ{ƒ^ƒ“‚Å–ß‚é
 	if (KeyManager::OnPadClicked(PAD_INPUT_A))
 	{
-		return dynamic_cast<AbstractScene*> (new GameMainScene());
-		//return dynamic_cast<AbstractScene*> (new Scene_Stage00());
+		return dynamic_cast<AbstractScene*> (new TitleScene());
 	}
 	if (KeyManager::OnPadClicked(PAD_INPUT_B))
 	{
