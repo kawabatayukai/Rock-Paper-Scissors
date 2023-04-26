@@ -483,8 +483,6 @@ void Player::Draw() const
 	PlayerDrawUI(GetHP());
 
 	//テスト 選択じゃん撃
-	//DrawStringToHandle(30, 105, "SELECT : ", 0xffffff, ui_font);
-	//DrawRotaGraph(165, 115, 0.5, 0, image_JanType[static_cast<int>(select_JanType)], TRUE);
 	DrawStringToHandle(30, 150, "RB : 発射", 0xffffff, ui_font);
 	DrawStringToHandle(30, 180, "LB : ジャンプ", 0xffffff, ui_font);
 
@@ -512,10 +510,40 @@ void Player::Draw() const
 	DrawGraph(13, 10, image_set_LTRT, TRUE);
 	DrawGraph(55, 100, image_set_GPT, TRUE);
 
-	if (KeyManager::OnPadPressed(PAD_INPUT_3))
+	//選択の演出 XYB
+	if (KeyManager::OnPadPressed(PAD_INPUT_3))      //X
 	{
-		SetDrawBlendMode(DX_BLENDMODE_ADD, 200);
-		DrawCircle(75, 125, 15, 0xffffff, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_ADD, 100);
+		DrawCircle(75, 120, 15, 0xffffff, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+	else if (KeyManager::OnPadPressed(PAD_INPUT_4))  //Y
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ADD, 120);
+		DrawCircle(135, 120, 15, 0xffffff, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+	else if (KeyManager::OnPadPressed(PAD_INPUT_B))  //B
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ADD, 120);
+		DrawCircle(195, 120, 15, 0xffffff, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+	else {}
+
+	// LT RT
+	if (KeyManager::GetValue_LT() > 30)
+	{
+		//SetDrawBlendMode(DX_BLENDMODE_ADD, 30);
+		DrawTriangleAA(33.f, 17.f, 33.f, 39.f, 23.f, 28.f, 0xffa500, TRUE);
+		DrawBoxAA(33.f, 24.f, 60.f, 32.f, 0xffa500, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+	else if (KeyManager::GetValue_RT() > 30)
+	{
+		//SetDrawBlendMode(DX_BLENDMODE_ADD, 30);
+		DrawTriangleAA(234.f, 17.f, 234.f, 39.f, 244.f, 28.f, 0xffa500, TRUE);
+		DrawBoxAA(207.f, 24.f, 234.f, 32.f, 0xffa500, TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 
@@ -523,7 +551,6 @@ void Player::Draw() const
 
 	//中心から描画
 	DrawRotaGraphF(x, y, 1, 0, image[player_Image], TRUE);
-	//DrawRotaGraphF(x, y, 1, 0, image[9], TRUE);
 }
 
 /*画像の変更取得*/

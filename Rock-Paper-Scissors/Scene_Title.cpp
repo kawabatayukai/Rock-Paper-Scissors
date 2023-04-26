@@ -16,7 +16,7 @@ TitleScene::TitleScene()
 
 	//フォントデータを作成
 	font_title = CreateFontToHandle("Yu Gothic UI", 50, 3, DX_FONTTYPE_ANTIALIASING_4X4);
-	font_debug = CreateFontToHandle("Yu Gothic UI", 12, 2, DX_FONTTYPE_ANTIALIASING_4X4);
+	font_debug = CreateFontToHandle("Yu Gothic UI", 20, 2, DX_FONTTYPE_ANTIALIASING_4X4);
 
 	//データの初期化
 	GameData::Init_Data();   
@@ -67,7 +67,7 @@ void TitleScene::Draw() const
 	DrawTriangle(40, 355 + (T_selectnum * 50), 60, 370 + (T_selectnum * 50), 40, 385 + (T_selectnum * 50), GetColor(255, 0, 0), TRUE);
 
 	//デバッグ
-	DrawStringToHandle(10, 700, "RT + A で選択画面(開発)", 0xf, font_debug);
+	DrawStringToHandle(10, 650, "RT + A で選択画面(開発)", 0xf, font_debug);
 }
 
 //シーンの変更
