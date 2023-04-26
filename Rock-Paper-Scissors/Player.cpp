@@ -14,7 +14,7 @@
 
 //ƒRƒ“ƒXƒgƒ‰ƒNƒ^@@@@@@@@@@@@@  ‚˜@‚™@•@@@‚‚³
 Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ðŒÄ‚Ô
-, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0)
+, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0), player_state(PLAYER_STATE::ALIVE)
 {
 	speed = 7.0f;
 	hp = 100;
@@ -39,6 +39,7 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 	image_setsumei = LoadGraph("images/Janken/Setumei50ptg.png");
 	image_set_circle = LoadGraph("images/Janken/Setumei_Select50.png");
 	image_set_LTRT = LoadGraph("images/Janken/Setumei_LTRT_235_105.png");
+	image_set_GPT = LoadGraph("images/Janken/Setumei_GTP.png");
 
 	head_Image[0] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“Šç‚Ì‚Ý.png");
 	head_Image[1] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“Šç‚Ì‚Ý¶.png");
@@ -65,7 +66,7 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 
 //ƒRƒ“ƒXƒgƒ‰ƒNƒ^iƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^j
 Player::Player(const Player& player) : CharaBase(player.x, player.y, player.w, player.h)  //Šî’êƒNƒ‰ƒX‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ðŒÄ‚Ô
-, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0)
+, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0), player_state(PLAYER_STATE::ALIVE)
 {
 	//ƒƒ“ƒo•Ï”‚ðˆø”‚ÌƒIƒuƒWƒFƒNƒg‚Ì“à—e‚Å‰Šú‰»‚·‚é
 	// 
@@ -93,6 +94,7 @@ Player::Player(const Player& player) : CharaBase(player.x, player.y, player.w, p
 	image_setsumei = LoadGraph("images/Janken/Setumei50ptg.png");
 	image_set_circle = LoadGraph("images/Janken/Setumei_Select50.png");
 	image_set_LTRT = LoadGraph("images/Janken/Setumei_LTRT_235_105.png");
+	image_set_GPT = LoadGraph("images/Janken/Setumei_GTP.png");
 
 	armL_Image[0] = LoadGraph("images/˜r‚Ì‚Ý‚®[h¶.png");
 	armR_Image[0] = LoadGraph("images/˜r‚Ì‚Ý‚®[h‰E.png");
@@ -119,6 +121,9 @@ Player::~Player()
 //XV
 void Player::Update()
 {
+	//ƒvƒŒƒCƒ„[‚ÌHP‚ª0ˆÈ‰º‚ÌŽžA"Ž€‚ñ‚¾"ó‘Ô‚É
+	if (this->hp <= 0) player_state = PLAYER_STATE::DEATH;
+
 	//‘O‰ñ‚ÌÀ•W‚˜‚ð•Û‘¶
 	old_x = x;
 
@@ -505,6 +510,14 @@ void Player::Draw() const
 	DrawGraph(40, 40,  image_setsumei, TRUE);
 	DrawGraph(50 + (circle_x * 60), 50, image_set_circle, TRUE);
 	DrawGraph(13, 10, image_set_LTRT, TRUE);
+	DrawGraph(55, 100, image_set_GPT, TRUE);
+
+	if (KeyManager::OnPadPressed(PAD_INPUT_3))
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ADD, 200);
+		DrawCircle(75, 125, 15, 0xffffff, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
 
 #endif // DEBUG_OFF_PLAYER
 

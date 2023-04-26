@@ -88,7 +88,16 @@ private:
 	int image_setsumei;       //操作説明用　モロ
 	int image_set_circle;     //円
 	int image_set_LTRT;       //"LTRT"
+	int image_set_GPT;
 	int hpImage;
+
+	//プレイヤーの状態
+	enum class PLAYER_STATE
+	{
+		ALIVE,     //生きている
+   		DEATH,     //死んだ
+	};
+	PLAYER_STATE player_state;
 
 	//向き（左右のみ）
 	enum class DIRECTION
