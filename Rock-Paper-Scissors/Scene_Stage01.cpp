@@ -13,7 +13,7 @@ Scene_Stage01::Scene_Stage01(const Player* player)
 	: Now_Tut_State(TUTORIAL_STATE::START_TUTORIAL)
 {
 	//制限時間をセット
-	GameData::Set_TimeLimit(600);
+	GameData::Set_TimeLimit(6000);
 
 	//プレイヤー情報が渡されていれば
 	if (player != nullptr)
