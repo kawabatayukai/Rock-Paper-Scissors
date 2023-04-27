@@ -26,6 +26,10 @@ public:
 
 	static void PlaySE(const SE& se_type);       //SE再生
 	static void PlayBGM(const BGM& bgm_type);    //BGM再生
+	
+	static void StopSE(const SE& se_type);
+	static void StopBGM(const BGM& bgm_type);
+
 private:
 	SoundSystem();   //オブジェクトを作らない
 

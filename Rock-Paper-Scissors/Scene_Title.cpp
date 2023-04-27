@@ -80,6 +80,7 @@ AbstractScene* TitleScene::ChangeScene()
 	if (KeyManager::GetValue_RT() >= 40 && KeyManager::OnPadClicked(PAD_INPUT_A) == true)
 	{
 		return dynamic_cast<AbstractScene*> (new GameMainScene());
+		SoundSystem::StopBGM(BGM::TITLE);
 	}
 	//Aƒ{ƒ^ƒ“‚ÅŒˆ’è
 	else if (KeyManager::OnPadClicked(PAD_INPUT_A) == true)
@@ -88,15 +89,19 @@ AbstractScene* TitleScene::ChangeScene()
 		{
 		case 0:
 			return dynamic_cast<AbstractScene*> (new Scene_Stage01());
+			SoundSystem::StopBGM(BGM::TITLE);
 			break;
 		case 1:
 			return dynamic_cast<AbstractScene*> (new HelpScene());
+			SoundSystem::StopBGM(BGM::TITLE);
 			break;
 		case 2:
 			return dynamic_cast<AbstractScene*> (new Scene_Ranking());
+			SoundSystem::StopBGM(BGM::TITLE);
 			break;
 		case 3:
 			return dynamic_cast<AbstractScene*> (new EndScene());
+			SoundSystem::StopBGM(BGM::TITLE);
 			break;	
 
 

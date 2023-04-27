@@ -47,3 +47,26 @@ void SoundSystem::PlayBGM(const BGM& bgm_type)
 		PlaySoundMem(plays, DX_PLAYTYPE_BACK);
 	}
 }
+
+//SEí‚é~
+void SoundSystem::StopSE(const SE& se_type)
+{
+	int plays = se_sounds[static_cast<int> (se_type)];
+
+	if (1)
+	{
+		StopSoundMem(plays);
+	}
+}
+
+//BGMí‚é~
+void SoundSystem::StopBGM(const BGM& bgm_type)
+{
+	int plays = bgm_sounds[static_cast<int> (bgm_type)];
+
+	//çƒê∂íÜÇ©Åi1Ç≈çƒê∂íÜÅj
+	if (1)
+	{
+		StopSoundMem(plays);
+	}
+}
