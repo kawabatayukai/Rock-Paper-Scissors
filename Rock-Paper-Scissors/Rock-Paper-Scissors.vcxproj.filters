@@ -97,6 +97,9 @@
     <Filter Include="ソース ファイル\GameMainScene\Stage_09">
       <UniqueIdentifier>{7ef79df2-836f-4819-ae65-ab302c52ec6a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Sound">
+      <UniqueIdentifier>{305c3d51-5374-4ef5-b4dc-53c801fe0160}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

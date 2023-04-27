@@ -1,6 +1,14 @@
 #pragma once
 #include "CharaBase.h"
 
+//プレイヤーの状態
+enum class PLAYER_STATE
+{
+	ALIVE,     //生きている
+	DEATH,     //死んだ
+	DEATH_END, //死んだ→演出終わり
+};
+
 //プレイヤークラス　CharaBaseを継承
 class Player : public CharaBase
 {
@@ -48,6 +56,9 @@ public:
 	//向き取得 0:左　1:右
 	int GetDirection() const { return dir; }
 
+	//プレイヤーが死亡しているか
+	bool IsDeathPlayer() const;
+
 private:
 	/********************   ジャンプ関係   ********************/
 
@@ -60,21 +71,22 @@ private:
 
 	int image[10]; //画像
 	int image_Jamp[2];
+	int image_death;          //死亡時
 
-	int head_Image[1];
+	int head_Image[1];        //手
 
-	int armL_Image[3];
-	int armR_Image[3];
+	int armL_Image[3];        //左手
+	int armR_Image[3];        //右手
 
-	int player_Image; //画像の配列保持
+	int player_Image;         //画像の配列保持
 
-	int playerGetMove;   //移動保持
+	int playerGetMove;        //移動保持
 
-	int playerCount; //画像のフレームカウント
+	int playerCount;          //画像のフレームカウント
 
-	int playerChange_Image; //画像変更
+	int playerChange_Image;   //画像変更
 
-	int pCount; //最後の画像
+	int pCount;               //最後の画像
 
 	Jan_Type select_JanType;  //選択した"手"
 
@@ -91,12 +103,7 @@ private:
 	int image_set_GPT;
 	int hpImage;
 
-	//プレイヤーの状態
-	enum class PLAYER_STATE
-	{
-		ALIVE,     //生きている
-   		DEATH,     //死んだ
-	};
+
 	PLAYER_STATE player_state;
 
 	//向き（左右のみ）
