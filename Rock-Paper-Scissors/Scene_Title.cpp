@@ -29,6 +29,7 @@ TitleScene::~TitleScene()
 	//フォントデータを削除
 	DeleteFontToHandle(font_title);
 	DeleteFontToHandle(font_debug);
+	SoundSystem::StopBGM(BGM::TITLE);
 }
 
 //更新
