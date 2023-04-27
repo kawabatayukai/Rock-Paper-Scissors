@@ -13,7 +13,7 @@ Scene_Stage01::Scene_Stage01(const Player* player)
 	: Now_Tut_State(TUTORIAL_STATE::START_TUTORIAL)
 {
 	//制限時間をセット
-	GameData::Set_TimeLimit(6000);
+	GameData::Set_TimeLimit(600);
 
 	//プレイヤー情報が渡されていれば
 	if (player != nullptr)
@@ -295,7 +295,8 @@ AbstractScene* Scene_Stage01::ChangeScene()
 	}
 
 	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() < 0 || GameData::Get_Each_Time() <= 0)
+	//if (obj_player->GetHP() < 0 || GameData::Get_Each_Time() <= 0)
+	if (obj_player->IsDeathPlayer() == true)
 	{
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(1));
