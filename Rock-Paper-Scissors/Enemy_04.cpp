@@ -48,10 +48,10 @@ void Enemy_04::Update()
 	//プレイヤーとの角度
 	angle = atan2f((player_x - x), (player_y - y));
 
-	//動きパターン
+	//動きパターン(通常時)
 	moveinfo[0] = { 1, player_x, player_y, 0, 0 };
-	//moveinfo[1] = { 0,      0.f,      0.f, 0, 0 };
 
+	//動きパターン(特殊行動時)
 	moveinfo[1] = { 1,  enemy_x,  enemy_y, 0, 2 };
 	moveinfo[2] = { 0,      0.f,      0.f, 0, 1 };
 
@@ -88,7 +88,7 @@ void Enemy_04::Update()
 
 	if (specialFlg == true)
 	{
-		speed = 15.0f;
+		speed = 20.0f;
 		specialTime++;
 	}
 	else if (hp <= 50)

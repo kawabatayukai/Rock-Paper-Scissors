@@ -60,8 +60,7 @@ void GameData::Time_Update()
 	total_time++;
 
 	//§ŒÀŠÔ‚ÍŒ¸Z
-	each_stage_time--;
-	if (each_stage_time < 0) each_stage_time = 0;
+	if (--each_stage_time <= 0) each_stage_time = 0;
 }
 
 //(ŠeƒXƒe[ƒW‚Ì)§ŒÀŠÔ‚ğæ“¾iƒ~ƒŠ•bj
@@ -76,21 +75,35 @@ unsigned int GameData::Get_Each_Time_Sec()
 	//•ª(3600ƒ~ƒŠ•b)‚ÅŠ„‚Á‚½—]‚è
 	unsigned int ret = each_stage_time % 3600;
 
-	//0œZ–h~
-	if (ret < 60) 
+	if (each_stage_time < 1)
+	{
 		return 0;
-	else          
-		return ret / 60;
+	}
+	else
+	{
+		//0œZ–h~
+		if (ret < 60)
+			return 0;
+		else
+			return ret / 60;
+	}
 }
 
 //(ŠeƒXƒe[ƒW‚Ì)§ŒÀŠÔ‚ğæ“¾i•ªj
 unsigned int GameData::Get_Each_Time_Min()
 {
-	//0œZ–h~
-	if (each_stage_time < 3600) 
+	if (each_stage_time < 1)
+	{
 		return 0;
-	else 
-		return each_stage_time / 3600;
+	}
+	else
+	{
+		//0œZ–h~
+		if (each_stage_time < 3600)
+			return 0;
+		else
+			return each_stage_time / 3600;
+	}
 }
 
 //‘‡ŠÔ‚ğæ“¾

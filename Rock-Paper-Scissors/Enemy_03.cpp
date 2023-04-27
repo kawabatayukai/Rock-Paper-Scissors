@@ -385,6 +385,7 @@ void Enemy_03::Update()
 	//前回のｘ
 	old_x = x;
 
+	//HPが40%以下Animcountが8より小さい時アニメーション実装
 	if (hp <= 40 && st3_animcount < 8) {
 
 		++st3_animtimer;
@@ -424,12 +425,13 @@ void Enemy_03::Update()
 void Enemy_03::Draw() const
 
 {
+	////////////////////////
+	///HPが86以上の時
+	///////////////////////
 
 	if (hp >= 86) {
 
-		////////////////////////
-		 ///HPが86以上の時
-		///////////////////////
+		
 		//エネミー停止時
 		if (moveinfo[current].enemywaitTime > 0) {
 
@@ -462,11 +464,13 @@ void Enemy_03::Draw() const
 		}
 
 	}
+
+	//////////////////////
+	//HP85以下で70以上のとき
+	/////////////////////
 	else if (hp <= 85 && hp >= 71) {
 
-		//////////////////////
-		//HP85以下で70以上のとき
-		/////////////////////
+		
 		if (moveinfo[current].enemywaitTime > 0) {
 
 			DrawRotaGraphF(x, y, 1, 0, enemyimage1[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
@@ -495,10 +499,11 @@ void Enemy_03::Draw() const
 
 
 	}
+	////////////////////////
+	//HP70以下で 55以上のとき
+	////////////////////////
 	else if (hp <= 70 && hp >= 56) {
-		////////////////////////
-		//HP70以下で 55以上のとき
-		////////////////////////
+		
 		if (moveinfo[current].enemywaitTime > 0) {
 
 			DrawRotaGraphF(x, y, 1, 0, enemyimage2[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
@@ -520,10 +525,12 @@ void Enemy_03::Draw() const
 		}
 
 	}
+
+	//////////////////////////
+	//HP55以下で41以上のとき
+	//////////////////////////
 	else if(hp <= 55 && hp >= 41){
-		//////////////////////////
-			//HP55以下で41以上のとき
-			//////////////////////////
+		
 		if ( moveinfo[current].enemywaitTime > 0) {
 
 
@@ -547,17 +554,23 @@ void Enemy_03::Draw() const
 
 		}
 	}
+
+	//////////////////////////
+	//HP40以下のとき
+	////////////////////////////
 	else {
-		//////////////////////////
-		//HP40以下のとき
-		////////////////////////////
+		
 			//エネミーの構造体と一致したときにエネミーが左または右に動く
 		if ((hp <= 40 /*&& hp >= 39*/ && enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE && moveinfo[current].enemywaitTime < 200)) {
 			//攻撃時の画像描画								//向きを変える
+			
 			DrawRotaGraphF(x, y, 1, 0, enemyimage4[Ecurrentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
+			////////////
+			//エフェクト
+			////////////
 			if (st3_animcount < 8) {
 
-				SetDrawBlendMode(DX_BLENDMODE_ADD,255);
+				SetDrawBlendMode(DX_BLENDMODE_ADD,155);
 				DrawRotaGraphF(x, y, 1, 0, SheeldBreakAnim[st3_animcount],TRUE);
 				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 			}
@@ -565,15 +578,8 @@ void Enemy_03::Draw() const
 
 	}
 
-	////////////
-	//エフェクト
-	////////////
-	//if (hp <= 85 && hp >= 71 && moveinfo[current].enemywaitTime > 0 || hp <= 85 && hp >= 71 && enemy_state == ENEMY_STATE::BREAK && moveinfo[current].enemywaitTime < 200) {
-
-	//	//攻撃時の画像描画								//向きを変える
-	//	//DrawRotaGraphF(x, y, 1, 0,SheeldBreakAnim[Bcurrentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
-
-	//}
+	
+	
 
 	//じゃん撃描画
 	Draw_Jangeki();
