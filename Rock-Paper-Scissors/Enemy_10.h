@@ -122,6 +122,19 @@ private:
 
 	/*敵：移動処理・攻撃の方法、パターンのファイル読み込み*/
 	void InputCSV(const char* passCSV);
+
+	bool animflg = false;	//アニメーションフラグ
+
+	int animtimer = 0; //アニメーションタイム
+
+	//アニメーション用画像変数
+	int img_teleport[15];	//再生
+	int img_teleport2[15];	//逆再生
+
+	float before_x = 0; //テレポート前のX座標
+	float before_y = 0; //テレポート前のY座標
+
+	int anim_count = 0;  //アニメーション回数
 };
 
 

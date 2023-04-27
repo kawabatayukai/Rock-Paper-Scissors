@@ -25,6 +25,9 @@ Enemy_10::Enemy_10(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	//image = LoadGraph("images/tyokitest.png");
 	if (LoadDivGraph("images/ステージ10敵の画像.png", 10, 5, 2, 100, 100, image) == -1);
 
+	LoadDivGraph("images/stage09/teleport2.png", 15, 15, 1, 120, 150, img_teleport);
+	LoadDivGraph("images/stage09/teleport22.png", 15, 15, 1, 120, 150, img_teleport2);
+
 	Init_Jangeki();       //じゃん撃を用意
 
 	/*反射弾*/
@@ -178,6 +181,10 @@ void  Enemy_10::Move()
 					//左側
 				case 1:
 					h = 1;
+					animflg = true;
+
+					before_x = x;
+					before_y = y;
 					x = 160;
 					y = 430;
 					old_y = y;
@@ -186,18 +193,38 @@ void  Enemy_10::Move()
 					//右側
 				case 2:
 					h = 2;
+					animflg = true;
+
+					before_x = x;
+					before_y = y;
 					x = 1110;
 					y = 430;
 					old_y = y;
 					break;
 				
-					//真ん中
-				/*case 3:
-					h = 3;
+					//真ん中右行く
+				case 3:
+					h = 1;
+					animflg = true;
+
+					before_x = x;
+					before_y = y;
 					x = 620;
 					y = 370;
 					old_y = y;
-					break;*/
+					break;
+
+					//真ん中左行く
+				case 4:
+					h = 2;
+					animflg = true;
+
+					before_x = x;
+					before_y = y;
+					x = 620;
+					y = 370;
+					old_y = y;
+					break;
 				}
 			}
 			else
@@ -269,6 +296,29 @@ void  Enemy_10::Move()
 	old_y = y;                    //1フレーム前のｙ座標
 	y += y_add;                   //落下距離をｙ座標に加算する
 	g_add = _GRAVITY;              //重力加速度を初期化する
+
+	/*テレポートの処理*/
+	if (animflg == true)
+	{
+		animtimer++;
+
+		if (animtimer / 3 % 15 == 14) 
+		{
+
+			if (anim_count == 0)
+			{
+				animtimer = 0;
+				anim_count = 1;
+			}
+			else
+			{
+				animtimer = 0;
+				animflg = false;
+				anim_count = 0;
+			}
+
+		}
+	}
 }
 
 void Enemy_10::Interval()
@@ -347,6 +397,13 @@ void Enemy_10::Draw() const
 	//じゃん撃描画
 	Draw_Jangeki();
 	reflection->Draw_reflectionJangeki(); //反射弾描画
+
+	/*テレポート時のアニメーション*/
+	if (animflg == true)
+	{
+		if (anim_count == 0) DrawGraph(before_x - 65, before_y - 50, img_teleport[animtimer / 3 % 15], TRUE);
+		else DrawGraph(x - 50, y - 50, img_teleport2[animtimer / 2 % 15], TRUE);
+	}
 
 	//テスト
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
@@ -653,7 +710,7 @@ void Enemy_10::Update_Jangeki()
 			/*********************** ↓↓ 生成( 追跡弾 ) ↓↓ ***********************/
 
 			//            生成速度
-			if (frame_count % 150 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //追跡弾 
+			//if (frame_count % 150 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //追跡弾 
 
 			/************************************************************************/
 
@@ -670,6 +727,7 @@ void Enemy_10::Update_Jangeki()
 				{
 					Jan_360degrees(jan_count, radius, speed, type); //360度発射
 				}
+
 				//            生成速度
 				//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_whole(x, y, radius, speed, type);
 
