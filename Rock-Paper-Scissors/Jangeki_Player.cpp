@@ -6,46 +6,9 @@ Jangeki_Player::Jangeki_Player(float x, float y, float r, float speed, Jan_Type 
 	:Jangeki_Base(x, y, r, speed, type),
 	frame_count(0), index_jangeki(1), rate_pct(200.0), index_effect(0), index_max(0), turn_effect(0.0)
 {
-	//属性に応じた画像
-	switch (type)
-	{
-	case Jan_Type::ROCK:
-
-		LoadDivGraph("images/Effect/jan100_gu.png", 6, 6, 1, 100, 100, image_jangeki);
-		image_lightning = LoadGraph("images/Effect/lightning_gu_120.png");
-		break;
-
-	case Jan_Type::SCISSORS:
-
-		LoadDivGraph("images/Effect/jan100_tyoki.png", 6, 6, 1, 100, 100, image_jangeki);
-		image_lightning = LoadGraph("images/Effect/lightning_tyoki_120.png");
-		break;
-
-	case Jan_Type::PAPER:
-
-		LoadDivGraph("images/Effect/jan100_pa.png", 6, 6, 1, 100, 100, image_jangeki);
-		image_lightning = LoadGraph("images/Effect/lightning_pa_120.png");
-		break;
-
-	default:
-		break;
-	}
 
 	//エフェクトを読み込んでおく
-	//index_max = 10;     //無印
-	//index_max = 15;     //2
 	index_max = 12;     //3
-	//index_max = 12;       //4
-
-
-	//LoadDivGraph("images/Effect/test_jan.png", 10, 10, 1, 180, 180, image_effect);
-	//LoadDivGraph("images/Effect/test_jan2.png", 15, 15, 1, 156, 156, image_effect);
-	//LoadDivGraph("images/Effect/test_jan3.png", 12, 12, 1, 240, 240, image_effect);
-	//LoadDivGraph("images/Effect/test_jan4.png", 12, 12, 1, 210, 210, image_effect);
-
-	LoadDivGraph("images/Effect/win_gu.png", 12, 12, 1, 240, 240, image_effects[0]);
-	LoadDivGraph("images/Effect/win_tyoki.png", 12, 12, 1, 240, 240, image_effects[1]);
-	LoadDivGraph("images/Effect/win_pa.png", 12, 12, 1, 240, 240, image_effects[2]);
 }
 
 //コンストラクタ（角度付き）
@@ -53,54 +16,35 @@ Jangeki_Player::Jangeki_Player(float x, float y, float r, float speed, double an
 	:Jangeki_Base(x, y, r, speed, angle, type),
 	 frame_count(0), index_jangeki(1), rate_pct(200.0), index_effect(0), index_max(0), turn_effect(0.0)
 {
-	//属性に応じた画像
-	switch (type)
-	{
-	case Jan_Type::ROCK:
-
-		LoadDivGraph("images/Effect/jan100_gu.png", 6, 6, 1, 100, 100, image_jangeki);
-		image_lightning = LoadGraph("images/Effect/lightning_gu_120.png");
-		//image_lightning = LoadGraph("images/Effect/effect_gu.png");
-		break;
-
-	case Jan_Type::SCISSORS:
-
-		LoadDivGraph("images/Effect/jan100_tyoki.png", 6, 6, 1, 100, 100, image_jangeki);
-		image_lightning = LoadGraph("images/Effect/lightning_tyoki_120.png");
-		//image_lightning = LoadGraph("images/Effect/effect_tyoki.png");
-		break;
-
-	case Jan_Type::PAPER:
-
-		LoadDivGraph("images/Effect/jan100_pa.png", 6, 6, 1, 100, 100, image_jangeki);
-		image_lightning = LoadGraph("images/Effect/lightning_pa_120.png");
-		//image_lightning = LoadGraph("images/Effect/effect_pa.png");
-		break;
-
-	default:
-		break;
-	}
-
 	//エフェクトを読み込んでおく
-	//index_max = 10;     //無印
-	//index_max = 15;     //2
 	index_max = 12;     //3
-	//index_max = 12;       //4
-
-	//LoadDivGraph("images/Effect/test_jan.png", 10, 10, 1, 180, 180, image_effect);
-	//LoadDivGraph("images/Effect/test_jan2.png", 15, 15, 1, 156, 156, image_effect);
-	//LoadDivGraph("images/Effect/test_jan3.png", 12, 12, 1, 240, 240, image_effect);
-	//LoadDivGraph("images/Effect/test_jan4.png", 12, 12, 1, 210, 210, image_effect);
-
-	LoadDivGraph("images/Effect/win_gu.png", 12, 12, 1, 240, 240, image_effects[0]);
-	LoadDivGraph("images/Effect/win_tyoki.png", 12, 12, 1, 240, 240, image_effects[1]);
-	LoadDivGraph("images/Effect/win_pa.png", 12, 12, 1, 240, 240, image_effects[2]);
 }
 
 //デストラクタ
 Jangeki_Player::~Jangeki_Player()
 {
-	
+}
+
+int Jangeki_Player::image_jangeki[3][6];    //画像（グーorチョキorパー のいずれか）
+int Jangeki_Player::image_lightning[3];     //雷的なもの
+int Jangeki_Player::image_effects[3][12];   //貫通時エフェクト
+
+//画像読み込み
+void Jangeki_Player::LoadJanImage()
+{
+	LoadDivGraph("images/Effect/jan100_gu.png", 6, 6, 1, 100, 100, image_jangeki[0]);
+	LoadDivGraph("images/Effect/jan100_tyoki.png", 6, 6, 1, 100, 100, image_jangeki[1]);
+	LoadDivGraph("images/Effect/jan100_pa.png", 6, 6, 1, 100, 100, image_jangeki[2]);
+
+	//雷的な
+	image_lightning[0] = LoadGraph("images/Effect/lightning_gu_120.png");
+	image_lightning[1] = LoadGraph("images/Effect/lightning_tyoki_120.png");
+	image_lightning[2] = LoadGraph("images/Effect/lightning_pa_120.png");
+
+	//勝ったときエフェクト
+	LoadDivGraph("images/Effect/win_gu.png", 12, 12, 1, 240, 240, image_effects[0]);
+	LoadDivGraph("images/Effect/win_tyoki.png", 12, 12, 1, 240, 240, image_effects[1]);
+	LoadDivGraph("images/Effect/win_pa.png", 12, 12, 1, 240, 240, image_effects[2]);
 }
 
 //更新（オーバーライド）
@@ -110,8 +54,6 @@ void Jangeki_Player::Update()
 	y -= speed_y;
 
 	//じゃん撃同士の衝突で勝ったときのみ
-	//if (effect_type == Jan_Result::WIN)
-
 	if(player_effect == EFFECT_TYPE::WIN)
 	{
 		frame_count++;
@@ -142,15 +84,17 @@ void Jangeki_Player::Draw() const
 	int x = static_cast<int>(this->x);
 	int y = static_cast<int>(this->y);
 
+	int type_num = static_cast<int>(type);
+
 	//エフェクト(雷的ななにか)
 	SetDrawBlendMode(DX_BLENDMODE_ADD, 255);                       //加算合成モード
-	DrawRotaGraph(x, y, 0.65, GetRand(360), image_lightning, TRUE);
+	DrawRotaGraph(x, y, 0.65, GetRand(360), image_lightning[type_num], TRUE);
 	SetDrawBlendMode(DX_BLENDGRAPHTYPE_NORMAL, 255);               //ブレンドモードをリセット
 
 	Draw_Effect();
 
 	//描画
-	DrawRotaGraph(x, y, rate, 0, image_jangeki[2], TRUE);
+	DrawRotaGraph(x, y, rate, 0, image_jangeki[type_num][2], TRUE);
 }  
 
 

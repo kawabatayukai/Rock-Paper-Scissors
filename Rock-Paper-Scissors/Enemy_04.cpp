@@ -48,10 +48,10 @@ void Enemy_04::Update()
 	//プレイヤーとの角度
 	angle = atan2f((player_x - x), (player_y - y));
 
-	//動きパターン
+	//動きパターン(通常時)
 	moveinfo[0] = { 1, player_x, player_y, 0, 0 };
-	//moveinfo[1] = { 0,      0.f,      0.f, 0, 0 };
 
+	//動きパターン(特殊行動時)
 	moveinfo[1] = { 1,  enemy_x,  enemy_y, 0, 2 };
 	moveinfo[2] = { 0,      0.f,      0.f, 0, 1 };
 
@@ -88,7 +88,7 @@ void Enemy_04::Update()
 
 	if (specialFlg == true)
 	{
-		speed = 15.0f;
+		speed = 20.0f;
 		specialTime++;
 	}
 	else if (hp <= 50)
@@ -101,7 +101,7 @@ void Enemy_04::Update()
 	}
 
 	//少しずつHP回復
-	if (hp < 50 && frame_count % 20 == 0) hp++;
+	if (hp < 50 && frame_count % 30 == 0) hp++;
 	else if (hp < 100 && frame_count % 40 == 0) hp++;
 
 	if (specialTime >= 240)
@@ -226,7 +226,7 @@ void Enemy_04::Update_Jangeki()
 		}
 		else if (specialFlg == true)
 		{
-			if (frame_count % 40 == 0) Jan_360degrees(jan_count, radius, speed * 1.5, type);
+			if (frame_count % 60 == 0) Jan_360degrees(jan_count, radius, speed * 1.5, type);
 			//if (frame_count % 30 == 0) Jan_360degrees(jan_count, radius, speed * 2, type);
 		}
 	}
@@ -346,8 +346,8 @@ void Enemy_04::Change_JanType()
 
 void Enemy_04::Special_Action()
 {
-	//specialFlg = true;
-	//current = 1;
+	specialFlg = true;
+	current = 1;
 }
 
 //360度発射
