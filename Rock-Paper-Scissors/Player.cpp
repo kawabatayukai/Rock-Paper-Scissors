@@ -25,11 +25,11 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 	//‰æ‘œ“Ç‚İ‚İ
 	//image = LoadGraph("images/sd_body-1.png");
 	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ˜r–³‚µ3.png", 10, 5, 2, 100, 100, image);
-	//LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“‰æ‘œŠç–³‚µ.png", 10, 5, 2, 100, 100, image);
+	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“‰æ‘œŠç–³‚µ.png", 10, 5, 2, 100, 100, image);
 
 	//LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ˜r–³‚µ3.png", 2, 1, 2, 126, 125, image_Jamp);
 
-	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ.png", 3, 3, 1, 100, 100, image_JanType);  //‚¶‚á‚ñŒ‚‰æ‘œ
+	//LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ.png", 3, 3, 1, 100, 100, image_JanType);  //‚¶‚á‚ñŒ‚‰æ‘œ
 
 	image[4] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ‰E.png");
 	image[9] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ¶.png");
@@ -292,6 +292,15 @@ void Player::HeadDrawMove() const
 	//*********************/
 
 	//DrawRotaGraph(x + 3, y - 22, 1.0f, M_PI - jan_angle, head_Image[0], TRUE);
+
+	if (dir == static_cast<int>(DIRECTION::RIGHT))
+	{
+		DrawGraph(x + 3, y - 22, 1.0f, head_Image[0]);
+	}
+	if (dir == static_cast<int>(DIRECTION::LEFT))
+	{
+		DrawGraph(x + 3, y - 22, 1.0f, head_Image[1]);
+	}
 }
 
 /*˜r‚Ì•`‰æE“®‚«*/
