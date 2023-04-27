@@ -22,6 +22,8 @@ Enemy_10::Enemy_10(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	Rimage = LoadGraph("images/stage09/Stage9_1.png");	//反射ON
 	Limage = LoadGraph("images/stage09/Stage9.png");		//反射OFF
 
+	ded_Image = LoadGraph("images/ステージ10敵の倒れ顔だけ画像.png");
+
 	//image = LoadGraph("images/tyokitest.png");
 	if (LoadDivGraph("images/ステージ10敵の画像.png", 10, 5, 2, 100, 100, image) == -1);
 
@@ -91,7 +93,8 @@ void  Enemy_10::Move()
 		* 第一形態
 		***********/
 	case 1:
-		if (hp > 0)
+		//死亡時以外
+		if (enemy_state == ENEMY_STATE10::ALIVE)
 		{
 			/*左右の足場にジャンプ移動の処理*/
 			switch (switchMove)
@@ -117,7 +120,7 @@ void  Enemy_10::Move()
 						x -= v;
 					}
 				}
-				else
+				else 
 				{
 					e_type = static_cast<Jan_Type>(GetRand(2));
 					switchMove = 1; //次の処理へ
@@ -155,7 +158,7 @@ void  Enemy_10::Move()
 				break;
 			}
 		}
-		else
+		else if (enemy_state == ENEMY_STATE10::DEATH)
 		{
 			Interval();
 		}
@@ -165,7 +168,8 @@ void  Enemy_10::Move()
 		* 第二形態
 		***********/
 	case 2:
-		if (hp > 0)
+		//死亡時以外
+		if (enemy_state == ENEMY_STATE10::ALIVE)
 		{
 			static int interval;
 			interval++;
@@ -339,6 +343,7 @@ void Enemy_10::Interval()
 	}
 	else
 	{
+		enemy_state = ENEMY_STATE10::ALIVE;
 		hp = 100;
 		x = 1100;
 		y = 430;
@@ -350,13 +355,52 @@ void Enemy_10::Interval()
 //更新
 void Enemy_10::Update()
 {
+	//敵のHPが0より上の時、"生きた"状態に
+	if (this->hp > 0)
+	{
+		enemy_state = ENEMY_STATE10::ALIVE;
+
+		//当たり判定を付ける
+		w = 100; 
+		h = 100;
+	}
+
+	//敵のHPが0以下の時、"死んだ"状態に
+	if (this->hp <= 0)enemy_state = ENEMY_STATE10::DEATH;
+
+
+
 	//じゃん撃更新・生成
 	Update_Jangeki();
 
 	//じゃん撃更新・生成(反射弾)
 	reflection->Update_reflection();
 
-	Move();
+	Move(); //敵の動き
+
+	/*死亡時の処理*/
+	if (enemy_state == ENEMY_STATE10::DEATH)
+	{
+		static bool isJumped = false;
+
+		if (land_flg == false && isJumped == false) land_flg = true;
+
+		if (land_flg == true)
+		{
+			isJumped = true;
+			g_add = -23.5f;    //重力加速度をマイナス値に
+			land_flg = false;  //地面についていない
+		}
+
+		w = 0;
+		h = 0;
+
+		if (y > 730.f)
+		{
+			enemy_state = ENEMY_STATE10::DEATH_END;
+		}
+
+	 }
 
 	//if (x + (w / 2) == (1280 - 20))
 	//{
@@ -393,27 +437,34 @@ void Enemy_10::Update()
 //描画
 void Enemy_10::Draw() const
 {
-	//中心から描画
-	DrawRotaGraphF(x, y, 1, 0, image[enemy_Image], TRUE);
-	//DrawRotaGraphF(x, y, 1, 0, image, TRUE);
-
-	//じゃん撃描画
-	Draw_Jangeki();
-	reflection->Draw_reflectionJangeki(); //反射弾描画
-
-	/*テレポート時のアニメーション*/
-	if (animflg == true)
+	if (enemy_state == ENEMY_STATE10::ALIVE)
 	{
-		if (anim_count == 0) DrawGraph(before_x - 65, before_y - 50, img_teleport[animtimer / 3 % 15], TRUE);
-		else DrawGraph(x - 50, y - 50, img_teleport2[animtimer / 2 % 15], TRUE);
+		//中心から描画
+		DrawRotaGraphF(x, y, 1, 0, image[enemy_Image], TRUE);
+		//DrawRotaGraphF(x, y, 1, 0, image, TRUE);
+
+		//じゃん撃描画
+		Draw_Jangeki();
+		reflection->Draw_reflectionJangeki(); //反射弾描画
+
+		/*テレポート時のアニメーション*/
+		if (animflg == true)
+		{
+			if (anim_count == 0) DrawGraph(before_x - 65, before_y - 50, img_teleport[animtimer / 3 % 15], TRUE);
+			else DrawGraph(x - 50, y - 50, img_teleport2[animtimer / 2 % 15], TRUE);
+		}
+
+		//テスト
+		if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
+		else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
+		DrawFormatString(500, 200, 0xffffffff, "%f", x);
+		DrawFormatString(500, 90, 0xffffffff, "%f", y);
 	}
-
-	//テスト
-	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
-	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
-	DrawFormatString(500, 200, 0xffffffff, "%f", x);
-	DrawFormatString(500, 90, 0xffffffff, "%f", y);
-
+	else
+	{
+		//死亡画像
+		DrawRotaGraphF(x, y, 1, 0, ded_Image, TRUE);
+	}
 }
 
 /*画像の変更取得*/
@@ -805,4 +856,14 @@ float Enemy_10::Get_OldY()
 float Enemy_10::Get_Y()
 {
 	return y;
+}
+
+//敵が死亡しているか
+bool Enemy_10::IsDeathEnemy10() const
+{
+	if (enemy_state == ENEMY_STATE10::DEATH_END)
+	{
+		return true;
+	}
+	return false;
 }

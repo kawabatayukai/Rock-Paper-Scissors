@@ -7,6 +7,14 @@
 
 const static float V = 1.f;
 
+//敵の状態
+enum class ENEMY_STATE10
+{
+	ALIVE,     //生きている
+	DEATH,     //死んだ
+	DEATH_END, //死んだ→演出終わり
+};
+
 /*敵：移動・動きの情報*/
 struct MoveInformation10
 {
@@ -64,6 +72,9 @@ public:
 	float Get_OldY();                   //old_yの取得関数
 	float Get_Y();                      //yの取得
 
+	//敵が死亡しているか
+	bool IsDeathEnemy10() const;
+
 	//Scene_Stage10* obj_floor;
 
 private:
@@ -87,6 +98,8 @@ private:
 
 	int Rimage;
 	int Limage;
+
+	int ded_Image;
 
 	int jangeki_Set; //じゃん撃セット用変数
 
@@ -135,6 +148,6 @@ private:
 	float before_y = 0; //テレポート前のY座標
 
 	int anim_count = 0;  //アニメーション回数
+
+	ENEMY_STATE10 enemy_state;
 };
-
-
