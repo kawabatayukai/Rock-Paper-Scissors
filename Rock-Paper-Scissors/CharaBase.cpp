@@ -184,7 +184,7 @@ bool CharaBase::Hit_Character(const CharaBase* character) const
 }
 
 //じゃん撃とキャラクターの当たり判定
-bool CharaBase::Hit_Jangeki(const Jangeki_Base* jangeki)
+bool CharaBase::Hit_Jangeki(const Jangeki_Base* jangeki) const
 {
 	float j_x = jangeki->GetX();    //じゃん撃のｘ  取得
 	float j_y = jangeki->GetY();    //じゃん撃のｙ　取得
@@ -231,7 +231,7 @@ bool CharaBase::CheckHitBox_Box(int box_x, int box_y, int box_w, int box_h) cons
 }
 
 //矩形と円形の当たり判定
-bool CharaBase::CheckHitBox_Circle(float c_x, float c_y, float c_r)
+bool CharaBase::CheckHitBox_Circle(float c_x, float c_y, float c_r) const
 {
 	//Enemyの矩形
 	float n_lx = x - (w / 2);       //左端(Left
