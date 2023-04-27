@@ -8,6 +8,7 @@
 #include "Scene_Ranking.h"
 #include "Scene_Help.h"
 #include"GameData.h"
+#include"SoundSystem.h"
 
 //コンストラクタ
 TitleScene::TitleScene()
@@ -33,6 +34,8 @@ TitleScene::~TitleScene()
 //更新
 void TitleScene::Update()
 {
+	SoundSystem::PlayBGM(BGM::TITLE);
+
 	//カーソルを合わせてボタンを押すと遷移
 	if (KeyManager::OnPadClicked(PAD_INPUT_DOWN) == true) {
 

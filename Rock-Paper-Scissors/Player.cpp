@@ -8,6 +8,7 @@
 #include"Jangeki_Homing.h"
 #include"Jangeki_Player.h"
 #include"GameData.h"
+#include"SoundSystem.h"
 
 //じゃん撃発射間隔　（1秒）
 #define PLAYER_JAN_INTERVAL 30
@@ -164,6 +165,9 @@ void Player::Update()
 		{
 			g_add = -21.5f;    //重力加速度をマイナス値に
 			land_flg = false;  //地面についていない
+
+			//SE
+			SoundSystem::PlaySE(SE::PLAYER_JUMP);
 		}
 	}
 	else if(player_state == PLAYER_STATE::DEATH)

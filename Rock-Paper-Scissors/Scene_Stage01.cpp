@@ -295,7 +295,6 @@ AbstractScene* Scene_Stage01::ChangeScene()
 	}
 
 	//プレイヤーのHPが0以下
-	//if (obj_player->GetHP() < 0 || GameData::Get_Each_Time() <= 0)
 	if (obj_player->IsDeathPlayer() == true)
 	{
 		//ゲームオーバーシーンへ切り替え
