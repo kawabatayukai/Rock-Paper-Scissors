@@ -14,6 +14,8 @@ void  SoundSystem::LoadSounds_SE()
 	//SE
 	// se_sounds.push_back(LoadSoundMem("サウンドへのパス"));
 	se_sounds.push_back (LoadSoundMem("Sound/jump_player.mp3"));
+	se_sounds.push_back(LoadSoundMem("Sound/st03/SlightlyBrokenSE.wav"));
+	se_sounds.push_back(LoadSoundMem("Sound/st03/BrokenSE.wav"));
 }
 
 void  SoundSystem::LoadSounds_BGM()

@@ -5,7 +5,7 @@
 #include "Scene_GameOver.h"
 #include "Stage_Base.h"
 #include "GameData.h"
-
+#include "SoundSystem.h"
 
 
 //デバッグモード
@@ -17,8 +17,7 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	stage = LoadGraph("images/stage03/stage03back.png");
 	GroundImages = LoadGraph("images/stage03/GroundImages.png");
 	BlockImages = LoadGraph("images/stage03/BlockImages.png");
-
-
+	
 
 	//プレイヤー情報が渡されていれば
 	if (player != nullptr)
@@ -54,6 +53,8 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	obj_floor[10] = new Floor("images/stage03/BlockImages.png", 60, 340, 95, 1);//足場8//100, GetColor(193, 107, 68)
 	obj_floor[11] = new Floor("images/stage03/BlockImages.png", 60, 500, 95, 1);//足場9//130, GetColor(193, 107, 68)
 
+
+	
 	//obj_floor[12] = new Floor("images/stage03/BlockImages.png", 970, 405, 95, 10);//足場3, GetColor(193, 107, 68)
 	//obj_floor[12] = new Floor("images/stage03/BlockImages.png", 790, 360, 95, 10);//足場4//130, GetColor(193, 107, 68)
 	//obj_floor[13] = new Floor("images/stage03/BlockImages.png", 595, 425, 95, 10);//足場5//100, GetColor(193, 107, 68)
@@ -185,36 +186,49 @@ void Scene_Stage03::Update()
 					//HP86以上の時
 					if (obj_enemy->GetHP() >= 86 &&  obj_enemy->GetWaitTime() > 0 || obj_enemy->GetHP() >= 86 &&  obj_enemy->GetWaitTime() < 200) {
 
+						
 						SheeldEnduranse = 27;
 						obj_enemy->ReceiveDamage(35 - SheeldEnduranse-EnemyCutDamege); //軽減ダメージが入る
 
 					}
 					else if (obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 71  && obj_enemy->GetWaitTime() > 0 || obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 71 && obj_enemy->GetWaitTime() < 200) {
-
+						
+						if(obj_enemy->GetHP() <= 85){
+						//SE
+						SoundSystem::PlaySE(SE::ENEMY_SLIGHTLYBROKEN);
 						SheeldEnduranse = 24;
 						obj_enemy->ReceiveDamage(35 - SheeldEnduranse- EnemyCutDamege); //軽減ダメージが入る
-
+						}
 
 					}
 					else if (obj_enemy->GetHP() <= 70 && obj_enemy->GetHP() >= 56  && obj_enemy->GetWaitTime() > 0 || obj_enemy->GetHP() <= 70 && obj_enemy->GetHP() >= 56 && obj_enemy->GetWaitTime() < 200) {
-
+						
+						if(obj_enemy->GetHP() <= 70){
+						//SE
+						SoundSystem::PlaySE(SE::ENEMY_SLIGHTLYBROKEN);
 						SheeldEnduranse = 21;
 						obj_enemy->ReceiveDamage(35 - SheeldEnduranse- EnemyCutDamege); //軽減ダメージが入る
-
+						}
 
 					}
 					else if (obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 41 && obj_enemy->GetWaitTime() > 0 || obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 41 && obj_enemy->GetWaitTime() <  200) {
 
-						SheeldEnduranse = 18;
-						obj_enemy->ReceiveDamage(35 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
-
+						if (obj_enemy->GetHP() <= 55) {
+							//SE
+							SoundSystem::PlaySE(SE::ENEMY_SLIGHTLYBROKEN);
+							SheeldEnduranse = 18;
+							obj_enemy->ReceiveDamage(35 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
+						}
 
 					}
 					else if (obj_enemy->GetHP() <= 40  && obj_enemy->GetWaitTime() > 0 || obj_enemy->GetHP() <= 40 && obj_enemy->GetWaitTime() < 200) {
 
-						SheeldEnduranse = 15;
-						obj_enemy->ReceiveDamage(35 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
-
+						if (obj_enemy->GetHP() <= 40) {
+							//SE
+							SoundSystem::PlaySE(SE::ENEMY_SHIELDBROKEN);
+							SheeldEnduranse = 15;
+							obj_enemy->ReceiveDamage(35 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
+						}
 
 					}
 
@@ -473,7 +487,8 @@ AbstractScene* Scene_Stage03::ChangeScene()
 	}
 
 	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() < 0 || GameData::Get_Each_Time() <= 0){
+					//死亡演出//
+	if (obj_player->IsDeathPlayer() == true){
 		 
 
 		//ゲームオーバーシーンへ切り替え
