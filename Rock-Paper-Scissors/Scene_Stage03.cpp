@@ -184,60 +184,64 @@ void Scene_Stage03::Update()
 				{
 
 					//HP86以上の時
-					if (obj_enemy->GetHP() >= 86 &&  obj_enemy->GetWaitTime() > 0 || obj_enemy->GetHP() >= 86 &&  obj_enemy->GetWaitTime() < 200) {
+					if (obj_enemy->GetHP() >= 86) {
 
-						
+						if(obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200){
 						SheeldEnduranse = 27;
 						obj_enemy->ReceiveDamage(35 - SheeldEnduranse-EnemyCutDamege); //軽減ダメージが入る
-
-					}
-					else if (obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 71  && obj_enemy->GetWaitTime() > 0 || obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 71 && obj_enemy->GetWaitTime() < 200) {
-						
-						if(obj_enemy->GetHP() <= 85){
-						//SE
-						SoundSystem::PlaySE(SE::ENEMY_SLIGHTLYBROKEN);
-						SheeldEnduranse = 24;
-						obj_enemy->ReceiveDamage(35 - SheeldEnduranse- EnemyCutDamege); //軽減ダメージが入る
 						}
-
 					}
-					else if (obj_enemy->GetHP() <= 70 && obj_enemy->GetHP() >= 56  && obj_enemy->GetWaitTime() > 0 || obj_enemy->GetHP() <= 70 && obj_enemy->GetHP() >= 56 && obj_enemy->GetWaitTime() < 200) {
+
+					else if (obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 71) {
 						
-						if(obj_enemy->GetHP() <= 70){
+						
+						if(obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200) {
+							//SE
+							//SoundSystem::PlaySE(SE::ENEMY_SLIGHTLYBROKEN);
+							SheeldEnduranse = 24;
+							obj_enemy->ReceiveDamage(35 - SheeldEnduranse- EnemyCutDamege); //軽減ダメージが入る
+						}
+					
+					}
+					else if (obj_enemy->GetHP() <= 70 && obj_enemy->GetHP() >= 56) {
+					
+
+						if(obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200){
 						//SE
-						SoundSystem::PlaySE(SE::ENEMY_SLIGHTLYBROKEN);
+						//SoundSystem::PlaySE(SE::ENEMY_SLIGHTLYBROKEN);
 						SheeldEnduranse = 21;
 						obj_enemy->ReceiveDamage(35 - SheeldEnduranse- EnemyCutDamege); //軽減ダメージが入る
 						}
-
+						
 					}
-					else if (obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 41 && obj_enemy->GetWaitTime() > 0 || obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 41 && obj_enemy->GetWaitTime() <  200) {
+					else if (obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 41) {
 
-						if (obj_enemy->GetHP() <= 55) {
-							//SE
-							SoundSystem::PlaySE(SE::ENEMY_SLIGHTLYBROKEN);
-							SheeldEnduranse = 18;
-							obj_enemy->ReceiveDamage(35 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
+			
+						if(obj_enemy->GetWaitTime() > 0 ||  obj_enemy->GetWaitTime() < 200){
+						//SE
+						//SoundSystem::PlaySE(SE::ENEMY_SLIGHTLYBROKEN);
+						SheeldEnduranse = 18;
+						obj_enemy->ReceiveDamage(35 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
 						}
-
+						
 					}
-					else if (obj_enemy->GetHP() <= 40  && obj_enemy->GetWaitTime() > 0 || obj_enemy->GetHP() <= 40 && obj_enemy->GetWaitTime() < 200) {
+					else if (obj_enemy->GetHP() <= 40) {
 
-						if (obj_enemy->GetHP() <= 40) {
+
+						if (obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200) {
 							//SE
-							SoundSystem::PlaySE(SE::ENEMY_SHIELDBROKEN);
+							//SoundSystem::PlaySE(SE::ENEMY_SHIELDBROKEN);
 							SheeldEnduranse = 15;
 							obj_enemy->ReceiveDamage(35 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
 						}
-
 					}
 
 					else {
 
-						if (obj_enemy->GetWaitTime() < 200  && obj_enemy->GetWaitTime() > 0){
+						if (obj_enemy->GetWaitTime() < 200 || obj_enemy->GetWaitTime() > 0){
 							
 							
-							obj_enemy->ReceiveDamage(8 - EnemyCutDamege); //ダメージが入る
+							obj_enemy->ReceiveDamage(5 - EnemyCutDamege); //ダメージが入る
 						}
 					}
 
