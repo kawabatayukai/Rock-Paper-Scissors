@@ -113,5 +113,6 @@ private:
 		RIGHT,
 	};
 
+	
 	int ui_font;  //ui用フォントハンドル
 };
