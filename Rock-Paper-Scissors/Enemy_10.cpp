@@ -180,6 +180,9 @@ void  Enemy_10::Move()
 					h = 1;
 					x = 160;
 					y = 430;
+
+					
+
 					old_y = y;
 					break;
 				

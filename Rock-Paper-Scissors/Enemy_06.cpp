@@ -18,6 +18,9 @@ Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	images[1] = LoadGraph("images/tyokitest.png");   //チョキ属性
 	images[2] = LoadGraph("images/pa-test.png");     //パー属性
 
+	//煙エフェクト読み込み
+	LoadDivGraph("images/stage06/pipo-charachip_smoke01a-s..png", 12, 4, 5, 135, 150, smokeImage);
+
 	Init_Jangeki();       //じゃん撃を用意
 
 }
@@ -35,6 +38,15 @@ void Enemy_06::Update()
 	frame_count++;
 	TeleportTime++;
 	SpeedUpTime++;
+	if (smokeCnt < 3)
+	{
+		smokeCnt++;
+	}
+	else
+	{
+		smokeCnt = 0;
+	}
+	
 
 	//じゃん撃更新・生成
 	Update_Jangeki();
@@ -131,6 +143,9 @@ void Enemy_06::Draw() const
 		//中心から描画
 		DrawRotaGraphF(x, y, 1, 0, images[2], TRUE, dir == -1 ? 0 : 1);
 	}
+
+	//煙アニメーション
+	DrawGraph(1089, 550, smokeImage[0], TRUE);
 
 	//じゃん撃描画
 	Draw_Jangeki();

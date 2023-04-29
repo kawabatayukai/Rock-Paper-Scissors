@@ -7,6 +7,8 @@
 #include"Debug_Manager.h"
 #include"Jangeki_Homing.h"
 #include"Jangeki_Player.h"
+#include"GameData.h"
+#include"SoundSystem.h"
 
 //‚¶‚á‚ñŒ‚”­ËŠÔŠu@i1•bj
 #define PLAYER_JAN_INTERVAL 30
@@ -33,6 +35,9 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 
 	image[4] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ‰E.png");
 	image[9] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ¶.png");
+
+	//€–S
+	image_death = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“Šç‚Ì‚İ.png");
 
 	image_setsumei = LoadGraph("images/Setumei.png");
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image_JanType);  //‚¶‚á‚ñŒ‚‰æ‘œ
@@ -121,56 +126,88 @@ Player::~Player()
 //XV
 void Player::Update()
 {
-	//ƒvƒŒƒCƒ„[‚ÌHP‚ª0ˆÈ‰º‚ÌA"€‚ñ‚¾"ó‘Ô‚É
-	if (this->hp <= 0) player_state = PLAYER_STATE::DEATH;
+	//ƒvƒŒƒCƒ„[‚ÌHP‚ª0ˆÈ‰º‚Ì‚Ü‚½‚ÍŠÔØ‚êA"€‚ñ‚¾"ó‘Ô‚É
+	if (this->hp <= 0 || GameData::Get_Each_Time() <= 0) player_state = PLAYER_STATE::DEATH;
 
 	//‘O‰ñ‚ÌÀ•W‚˜‚ğ•Û‘¶
 	old_x = x;
 
-	//¶
-	if (KeyManager::OnPadPressed(PAD_INPUT_LEFT))
+	//€–SˆÈŠO
+	if (player_state == PLAYER_STATE::ALIVE)
 	{
-		x -= speed;
-		if (KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0) //‰EƒXƒeƒBƒbƒN‚ª‰Ÿ‚³‚ê‚Ä‚È‚¢
+		//¶
+		if (KeyManager::OnPadPressed(PAD_INPUT_LEFT))
 		{
-			dir = static_cast<int>(DIRECTION::LEFT);   //Œü‚«‚ğİ’èi¶j
+			x -= speed;
+			if (KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0) //‰EƒXƒeƒBƒbƒN‚ª‰Ÿ‚³‚ê‚Ä‚È‚¢
+			{
+				dir = static_cast<int>(DIRECTION::LEFT);   //Œü‚«‚ğİ’èi¶j
+			}
+		}
+		playerChange_Image = 2; //switch•¶‚ÌŠ„‚è“–‚Ä”Ô†
+
+		//‰E
+		if (KeyManager::OnPadPressed(PAD_INPUT_RIGHT))
+		{
+			x += speed;
+			if (KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0) //‰EƒXƒeƒBƒbƒN‚ª‰Ÿ‚³‚ê‚Ä‚È‚¢
+			{
+				dir = static_cast<int>(DIRECTION::RIGHT);   //Œü‚«‚ğİ’èi‰Ej
+			}
+		}
+		playerChange_Image = 1; //switch•¶‚ÌŠ„‚è“–‚Ä”Ô†
+
+		//‰æ‘œ‚Ì‘I‘ğ•ÏX
+		PlayerSwitch();
+
+		//if (land_flg == true && KeyManager::OnPadClicked_LT())
+		if (land_flg == true && KeyManager::OnPadClicked(PAD_INPUT_5))
+		{
+			g_add = -21.5f;    //d—Í‰Á‘¬“x‚ğƒ}ƒCƒiƒX’l‚É
+			land_flg = false;  //’n–Ê‚É‚Â‚¢‚Ä‚¢‚È‚¢
+
+			//SE
+			SoundSystem::PlaySE(SE::PLAYER_JUMP);
 		}
 	}
-	playerChange_Image = 2; //switch•¶‚ÌŠ„‚è“–‚Ä”Ô†
-
-	//‰E
-	if (KeyManager::OnPadPressed(PAD_INPUT_RIGHT))
+	else if(player_state == PLAYER_STATE::DEATH)
 	{
-		x += speed;
-		if (KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0) //‰EƒXƒeƒBƒbƒN‚ª‰Ÿ‚³‚ê‚Ä‚È‚¢
+		static bool isJumped;
+		jan_angle = 0.0;
+
+		if (land_flg == false && isJumped == false) 
 		{
-			dir = static_cast<int>(DIRECTION::RIGHT);   //Œü‚«‚ğİ’èi‰Ej
+			land_flg = true;
+		}
+
+		if (land_flg == true)
+		{
+			isJumped = true;
+			g_add = -24.5f;    //d—Í‰Á‘¬“x‚ğƒ}ƒCƒiƒX’l‚É
+			land_flg = false;  //’n–Ê‚É‚Â‚¢‚Ä‚¢‚È‚¢
+		}
+		w = 0;
+		h = 0;
+
+		if (y > 780.f)
+		{
+			player_state = PLAYER_STATE::DEATH_END;
 		}
 	}
-	playerChange_Image = 1; //switch•¶‚ÌŠ„‚è“–‚Ä”Ô†
-
-	//‰æ‘œ‚Ì‘I‘ğ•ÏX
-	PlayerSwitch();
 
 	//‚¶‚á‚ñŒ‚
 	Update_Jangeki();
 
 	/********************   ƒWƒƒƒ“ƒvŠÖŒW   ********************/
 
-	
-
-	
-		//if (land_flg == true && KeyManager::OnPadClicked_LT())
-	if (land_flg == true && KeyManager::OnPadClicked(PAD_INPUT_5))
-	{
-		g_add = -21.5f;    //d—Í‰Á‘¬“x‚ğƒ}ƒCƒiƒX’l‚É
-		land_flg = false;  //’n–Ê‚É‚Â‚¢‚Ä‚¢‚È‚¢
-	}
-
 	y_add = (y - old_y) + g_add;  //¡‰ñ‚Ì—‰º‹——£‚ğİ’è
 
 	//—‰º‘¬“x‚Ì§ŒÀ
-	if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
+	if (player_state != PLAYER_STATE::DEATH)
+	{
+		if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
+	}
+
 
 	old_y = y;                    //1ƒtƒŒ[ƒ€‘O‚Ì‚™À•W
 	y += y_add;                   //—‰º‹——£‚ğ‚™À•W‚É‰ÁZ‚·‚é
@@ -414,71 +451,85 @@ void Player::ArmDrawMove() const
 //ƒvƒŒƒCƒ„[‚ÌUI•`‰æ
 void Player::PlayerDrawUI(int hp) const
 {
-	/*switch (type)
-	{
-	case Jan_Type::ROCK:
-		DrawRotaGraph(810, 60, 0.5, 0, typeImage[0], TRUE);
-		break;
-	case Jan_Type::SCISSORS:
-
-		DrawRotaGraph(810, 60, 0.5, 0, typeImage[1], TRUE);
-		break;
-	case Jan_Type::PAPER:
-		DrawRotaGraph(950, 60, 0.5, 0, typeImage[2], TRUE);
-		break;
-	default:
-		break;
-	}*/
-
-	//DrawRotaGraph(200, 50, 0.5, 0, hpImage, TRUE);			//‘Ì—ÍƒQ[ƒW˜g
-	//DrawBox(115, 33, 120 + static_cast<int>(hp * 2.54), 67, 0x00ff00, TRUE);	//‘Ì—ÍƒQ[ƒW
-	//DrawFormatString(200, 40, 0x0000ff, "c‚è:%d", hp);	//c‚è‘Ì—Í(”’l)
-
 	float draw_x = x - 50;  //•`‰æ‚˜
 	float draw_y = y - 100; //•`‰æ‚™
 
 	int bar_color = 0x00ff00;
+	if (hp <= 30) 
+	{
+		bar_color = 0xff0000;
 
-	//˜g
-	DrawBoxAA(draw_x - 3, draw_y - 3, draw_x + 103, draw_y + 13, 0xffffff, TRUE);
-	DrawBoxAA(draw_x, draw_y, (draw_x + 100), draw_y + 10, 0x000000, TRUE);
-	//HP
-	DrawBoxAA(draw_x, draw_y, (draw_x + hp), draw_y + 10, bar_color, TRUE);
+		static int flash_count;       //“_–Å‰ñ”
+		if (flash_count < 4)
+		{
+			static int frame_count;
+			if (++frame_count < 10)
+			{
+				//˜g
+				DrawBoxAA(draw_x - 3, draw_y - 3, draw_x + 103, draw_y + 13, 0xffffff, TRUE);
+				DrawBoxAA(draw_x, draw_y, (draw_x + 100), draw_y + 10, 0x000000, TRUE);
+				//HP
+				DrawBoxAA(draw_x, draw_y, (draw_x + hp), draw_y + 10, bar_color, TRUE);
+			}
+			else if (frame_count > 20)
+			{
+				frame_count = 0;
+				flash_count++;
+			}
+		}
+		else
+		{
+			//˜g
+			DrawBoxAA(draw_x - 3, draw_y - 3, draw_x + 103, draw_y + 13, 0xffffff, TRUE);
+			DrawBoxAA(draw_x, draw_y, (draw_x + 100), draw_y + 10, 0x000000, TRUE);
+			//HP
+			DrawBoxAA(draw_x, draw_y, (draw_x + hp), draw_y + 10, bar_color, TRUE);
+		}
+	}
+	else
+	{
+		//˜g
+		DrawBoxAA(draw_x - 3, draw_y - 3, draw_x + 103, draw_y + 13, 0xffffff, TRUE);
+		DrawBoxAA(draw_x, draw_y, (draw_x + 100), draw_y + 10, 0x000000, TRUE);
+		//HP
+		DrawBoxAA(draw_x, draw_y, (draw_x + hp), draw_y + 10, bar_color, TRUE);
+	}
 }
 
 //•`‰æ
 void Player::Draw() const
 {
-	//’†S‚©‚ç•`‰æ
-	//DrawRotaGraphF(x, y, 1, 0, image, TRUE,
-		//dir == static_cast<int>(DIRECTION::RIGHT) ? TRUE : FALSE);  //Œü‚«‚É‚æ‚Á‚Ä”½“]
-
 	//‚¶‚á‚ñŒ‚•`‰æ
 	Draw_Jangeki();
 
-	//Æ€ü        ‰EƒXƒeƒBƒbƒN‚É“ü—Í‚ª‚ ‚é
-	if (  KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 &&
-		  KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0 )
+	//€–SˆÈŠO
+	if (player_state == PLAYER_STATE::ALIVE)
 	{
-		/*˜r‚Ì•`‰æ‚¾‚¯*/
-		ArmDrawMove();
+		//Æ€ü        ‰EƒXƒeƒBƒbƒN‚É“ü—Í‚ª‚ ‚é
+		if (KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 &&
+			KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0)
+		{
+			/*˜r‚Ì•`‰æ‚¾‚¯*/
+			ArmDrawMove();
+		}
+		else
+		{
+			int vx = static_cast<int>(550 * cos(jan_angle));
+			int vy = static_cast<int>(550 * sin(jan_angle));
+
+			DrawLineAA(x, y, x + vx, y - vy, 0xffff00, 3);
+
+			/*˜r‚Ì•`‰æE“®‚«*/
+			ArmDrawMove();
+		}
+		//’†S‚©‚ç•`‰æ
+		DrawRotaGraphF(x, y, 1, 0, image[player_Image], TRUE);
 	}
 	else
 	{
-		int vx = static_cast<int>(550 * cos(jan_angle));
-		int vy = static_cast<int>(550 * sin(jan_angle));
-
-		DrawLineAA(x, y, x + vx, y - vy, 0xffff00, 3);
-
-		/*˜r‚Ì•`‰æE“®‚«*/
-		ArmDrawMove();
+		//€–S‰æ‘œ
+		DrawRotaGraphF(x, y, 1, 0, image_death, TRUE);
 	}
-
-#ifdef DEBUG_OFF_PLAYER
-
-	//ƒeƒXƒg HP•\¦
-	//if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
-	//DrawFormatString((int)(x), (int)(y - 100), 0xffffff, "%s", dir == 0 ? "L" : "R");
 
 	PlayerDrawUI(GetHP());
 
@@ -487,7 +538,6 @@ void Player::Draw() const
 	DrawStringToHandle(30, 180, "LB : ƒWƒƒƒ“ƒv", 0xffffff, ui_font);
 
 	//ƒeƒXƒg 110
-
 	int circle_x = 0;
 	switch (select_JanType)
 	{
@@ -546,11 +596,6 @@ void Player::Draw() const
 		DrawBoxAA(207.f, 24.f, 234.f, 32.f, 0xffa500, TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
-
-#endif // DEBUG_OFF_PLAYER
-
-	//’†S‚©‚ç•`‰æ
-	DrawRotaGraphF(x, y, 1, 0, image[player_Image], TRUE);
 }
 
 /*‰æ‘œ‚Ì•ÏXæ“¾*/
@@ -995,4 +1040,14 @@ void Player::Recover_HP(const unsigned int recovery)
 
 	this->hp += recovery;
 	if (hp > max_hp) hp = max_hp;
+}
+
+//ƒvƒŒƒCƒ„[‚ª€–S‚µ‚Ä‚¢‚é‚©
+bool Player::IsDeathPlayer() const
+{
+	if (player_state == PLAYER_STATE::DEATH_END)
+	{
+		return true;
+	}
+	return false;
 }
