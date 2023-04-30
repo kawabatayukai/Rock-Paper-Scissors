@@ -9,6 +9,7 @@
 #include "Scene_Help.h"
 #include"GameData.h"
 #include"SoundSystem.h"
+#include"Scene_Story.h"
 
 //コンストラクタ
 TitleScene::TitleScene()
@@ -89,7 +90,7 @@ AbstractScene* TitleScene::ChangeScene()
 		switch (T_selectnum)
 		{
 		case 0:
-			return dynamic_cast<AbstractScene*> (new Scene_Stage01());
+			return dynamic_cast<AbstractScene*> (new Scene_Story());
 			SoundSystem::StopBGM(BGM::TITLE);
 			break;
 		case 1:

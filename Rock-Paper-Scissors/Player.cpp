@@ -168,21 +168,24 @@ void Player::Update()
 	}
 	else if(player_state == PLAYER_STATE::DEATH)
 	{
-		static bool isJumped = false;
+		static bool isJumped;
 		jan_angle = 0.0;
 
-		if (land_flg == false && isJumped == false) land_flg = true;
+		if (land_flg == false && isJumped == false) 
+		{
+			land_flg = true;
+		}
 
 		if (land_flg == true)
 		{
 			isJumped = true;
-			g_add = -23.5f;    //重力加速度をマイナス値に
+			g_add = -24.5f;    //重力加速度をマイナス値に
 			land_flg = false;  //地面についていない
 		}
 		w = 0;
 		h = 0;
 
-		if (y > 730.f)
+		if (y > 780.f)
 		{
 			player_state = PLAYER_STATE::DEATH_END;
 		}
@@ -488,36 +491,49 @@ void Player::ArmDrawMove() const
 //プレイヤーのUI描画
 void Player::PlayerDrawUI(int hp) const
 {
-	/*switch (type)
-	{
-	case Jan_Type::ROCK:
-		DrawRotaGraph(810, 60, 0.5, 0, typeImage[0], TRUE);
-		break;
-	case Jan_Type::SCISSORS:
-
-		DrawRotaGraph(810, 60, 0.5, 0, typeImage[1], TRUE);
-		break;
-	case Jan_Type::PAPER:
-		DrawRotaGraph(950, 60, 0.5, 0, typeImage[2], TRUE);
-		break;
-	default:
-		break;
-	}*/
-
-	//DrawRotaGraph(200, 50, 0.5, 0, hpImage, TRUE);			//体力ゲージ枠
-	//DrawBox(115, 33, 120 + static_cast<int>(hp * 2.54), 67, 0x00ff00, TRUE);	//体力ゲージ
-	//DrawFormatString(200, 40, 0x0000ff, "残り:%d", hp);	//残り体力(数値)
-
 	float draw_x = x - 50;  //描画ｘ
 	float draw_y = y - 100; //描画ｙ
 
 	int bar_color = 0x00ff00;
+	if (hp <= 30) 
+	{
+		bar_color = 0xff0000;
 
-	//枠
-	DrawBoxAA(draw_x - 3, draw_y - 3, draw_x + 103, draw_y + 13, 0xffffff, TRUE);
-	DrawBoxAA(draw_x, draw_y, (draw_x + 100), draw_y + 10, 0x000000, TRUE);
-	//HP
-	DrawBoxAA(draw_x, draw_y, (draw_x + hp), draw_y + 10, bar_color, TRUE);
+		static int flash_count;       //点滅回数
+		if (flash_count < 4)
+		{
+			static int frame_count;
+			if (++frame_count < 10)
+			{
+				//枠
+				DrawBoxAA(draw_x - 3, draw_y - 3, draw_x + 103, draw_y + 13, 0xffffff, TRUE);
+				DrawBoxAA(draw_x, draw_y, (draw_x + 100), draw_y + 10, 0x000000, TRUE);
+				//HP
+				DrawBoxAA(draw_x, draw_y, (draw_x + hp), draw_y + 10, bar_color, TRUE);
+			}
+			else if (frame_count > 20)
+			{
+				frame_count = 0;
+				flash_count++;
+			}
+		}
+		else
+		{
+			//枠
+			DrawBoxAA(draw_x - 3, draw_y - 3, draw_x + 103, draw_y + 13, 0xffffff, TRUE);
+			DrawBoxAA(draw_x, draw_y, (draw_x + 100), draw_y + 10, 0x000000, TRUE);
+			//HP
+			DrawBoxAA(draw_x, draw_y, (draw_x + hp), draw_y + 10, bar_color, TRUE);
+		}
+	}
+	else
+	{
+		//枠
+		DrawBoxAA(draw_x - 3, draw_y - 3, draw_x + 103, draw_y + 13, 0xffffff, TRUE);
+		DrawBoxAA(draw_x, draw_y, (draw_x + 100), draw_y + 10, 0x000000, TRUE);
+		//HP
+		DrawBoxAA(draw_x, draw_y, (draw_x + hp), draw_y + 10, bar_color, TRUE);
+	}
 }
 
 //描画

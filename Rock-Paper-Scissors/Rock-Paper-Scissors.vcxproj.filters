@@ -270,6 +270,9 @@
     <ClCompile Include="SoundSystem.cpp">
       <Filter>ソース ファイル\Sound</Filter>
     </ClCompile>
+    <ClCompile Include="Scene_Story.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -445,6 +448,9 @@
     </ClInclude>
     <ClInclude Include="SoundSystem.h">
       <Filter>ソース ファイル\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Story.h">
+      <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
