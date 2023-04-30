@@ -25,12 +25,18 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 	dir = static_cast<int>(DIRECTION::RIGHT);//LEFT
 	 
 	//‰æ‘œ“Ç‚İ‚İ
-	//image = LoadGraph("images/sd_body-1.png");
-	//LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ˜r–³‚µ3.png", 10, 5, 2, 100, 100, image);
-	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“‰æ‘œŠç–³‚µ.png", 10, 5, 2, 100, 100, image[0]);
+	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“‰æ‘œŠç–³‚µƒO[.png", 10, 5, 2, 100, 100, image[0]);
+	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“‰æ‘œŠç–³‚µƒ`ƒ‡ƒL.png", 10, 5, 2, 100, 100, image[1]);
+	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“‰æ‘œŠç–³‚µƒp[.png", 10, 5, 2, 100, 100, image[2]);
 
-	image[0][4] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ‰E.png");
-	image[0][9] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ¶.png");
+	image[0][4] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ‰EƒO[.png");
+	image[0][9] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ¶ƒO[.png");
+
+	image[1][4] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ‰Eƒ`ƒ‡ƒL.png");
+	image[1][9] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ¶ƒ`ƒ‡ƒL.png");
+
+	image[2][4] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ‰Eƒp[.png");
+	image[2][9] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ¶ƒp[.png");
 
 	//€–S
 	image_death = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“Šç‚Ì‚İ.png");
@@ -488,6 +494,29 @@ void Player::ArmDrawMove() const
 	}
 }
 
+/*‘Ì‚Ì•`‰æE“®‚«*/
+void Player::BodyDrawMove() const
+{
+	//’†S‚©‚ç•`‰æ
+	switch (select_JanType)
+	{
+	case Jan_Type::ROCK:
+		DrawRotaGraphF(x, y, 1, 0, image[0][player_Image], TRUE);
+		//DrawRotaGraphF(x, y, 1, 0, image[3], TRUE);
+		break;
+	case Jan_Type::SCISSORS:
+		DrawRotaGraphF(x, y, 1, 0, image[1][player_Image], TRUE);
+		break;
+	case Jan_Type::PAPER:
+		DrawRotaGraphF(x, y, 1, 0, image[2][player_Image], TRUE);
+		break;
+	case Jan_Type::NONE:
+		break;
+	default:
+		break;
+	}
+}
+
 //ƒvƒŒƒCƒ„[‚ÌUI•`‰æ
 void Player::PlayerDrawUI(int hp) const
 {
@@ -563,8 +592,7 @@ void Player::Draw() const
 			ArmDrawMove();
 		}
 		//’†S‚©‚ç•`‰æ
-		DrawRotaGraphF(x, y, 1, 0, image[0][player_Image], TRUE);
-		//DrawRotaGraphF(x, y, 1, 0, image[3], TRUE);
+		BodyDrawMove();
 
 		/*Šç*/
 		HeadDrawMove();

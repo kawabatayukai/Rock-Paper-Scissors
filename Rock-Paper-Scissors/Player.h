@@ -47,6 +47,9 @@ public:
 	/*頭の描画・動き*/
 	void HeadDrawMove() const;
 
+	/*体の描画・動き*/
+	void BodyDrawMove() const;
+
 	//プレイヤーのUI描画
 	void PlayerDrawUI(int hp) const;
 
