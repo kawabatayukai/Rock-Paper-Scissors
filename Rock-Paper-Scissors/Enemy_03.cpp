@@ -16,11 +16,11 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	//“G‰æ‘œ
 	LoadDivGraph("images/stage03/stage03Anim.png", 6, 6, 1, 100, 100, enemyimage);
-	LoadDivGraph("images/stage03/stage03SheeldEnduranse1.png", 6, 6, 1, 100, 100, enemyimage1);
-	LoadDivGraph("images/stage03/stage03SheeldEnduranse2.png", 6, 6, 1, 100, 100, enemyimage2);
-	LoadDivGraph("images/stage03/stage03SheeldEnduranse3.png", 6, 6, 1, 100, 100, enemyimage3);
-	LoadDivGraph("images/stage03/stage03SheeldEnduranse4.png", 6, 6, 1, 100, 100, enemyimage4);
-	LoadDivGraph("images/stage03/BreakSheeldAnim.png", 8, 8, 1, 220, 220, ShieldBreakAnim);
+	LoadDivGraph("images/stage03/stage03ShieldEnduranse1.png", 6, 6, 1, 100, 100, enemyimage1);
+	LoadDivGraph("images/stage03/stage03ShieldEnduranse2.png", 6, 6, 1, 100, 100, enemyimage2);
+	LoadDivGraph("images/stage03/stage03ShieldEnduranse3.png", 6, 6, 1, 100, 100, enemyimage3);
+	LoadDivGraph("images/stage03/stage03ShieldEnduranse4.png", 6, 6, 1, 100, 100, enemyimage4);
+	LoadDivGraph("images/stage03/BreakShieldAnim.png", 8, 8, 1, 220, 220, ShieldBreakAnim);
 
 	Init_Jangeki();       //‚¶‚á‚ñŒ‚‚ð—pˆÓ
 
@@ -345,6 +345,8 @@ void Enemy_03::Update()
 	if (hp <= 0)hp = 0;
 
 
+	
+	
 	//if (x + (w / 2) == (1280 - 20))
 	//{
 	//	dir = -1;
@@ -383,7 +385,7 @@ void Enemy_03::Update()
 	if (hp <= 40 && st3_animcount < 8) {
 
 		++st3_animtimer;
-		if (st3_animtimer % 8 == 0) {
+		if (st3_animtimer % 10 == 0) {
 
 			st3_animcount++;
 			st3_animtimer = 0;
