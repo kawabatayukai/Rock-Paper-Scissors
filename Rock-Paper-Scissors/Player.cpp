@@ -26,15 +26,11 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 	 
 	//‰æ‘œ“Ç‚İ‚İ
 	//image = LoadGraph("images/sd_body-1.png");
-	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ˜r–³‚µ3.png", 10, 5, 2, 100, 100, image);
-	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“‰æ‘œŠç–³‚µ.png", 10, 5, 2, 100, 100, image);
+	//LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ˜r–³‚µ3.png", 10, 5, 2, 100, 100, image);
+	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“‰æ‘œŠç–³‚µ.png", 10, 5, 2, 100, 100, image[0]);
 
-	//LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ˜r–³‚µ3.png", 2, 1, 2, 126, 125, image_Jamp);
-
-	//LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ.png", 3, 3, 1, 100, 100, image_JanType);  //‚¶‚á‚ñŒ‚‰æ‘œ
-
-	image[4] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ‰E.png");
-	image[9] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ¶.png");
+	image[0][4] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ‰E.png");
+	image[0][9] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ¶.png");
 
 	//€–S
 	image_death = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“Šç‚Ì‚İ.png");
@@ -46,7 +42,7 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 	image_set_LTRT = LoadGraph("images/Janken/Setumei_LTRT_235_105.png");
 	image_set_GPT = LoadGraph("images/Janken/Setumei_GTP.png");
 
-	head_Image[0] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“Šç‚Ì‚İ.png");
+	head_Image[0] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“Šç‚Ì‚İ‰E.png");
 	head_Image[1] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“Šç‚Ì‚İ¶.png");
 
 	armL_Image[0] = LoadGraph("images/˜r‚Ì‚İ‚®[h¶.png");
@@ -94,7 +90,7 @@ Player::Player(const Player& player) : CharaBase(player.x, player.y, player.w, p
 	//this->image = player.image;             //ƒvƒŒƒCƒ„[‰æ‘œ
 	this->select_JanType = player.select_JanType;    //‘I‘ğ‚µ‚½"è"
 	this->jan_angle = player.jan_angle;              //‚¶‚á‚ñŒ‚Šp“x
-	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ˜r–³‚µ.png", 10, 5, 2, 100, 100, image);
+	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ˜r–³‚µ.png", 10, 5, 2, 100, 100, image[0]);
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image_JanType);  //‚¶‚á‚ñŒ‚‰æ‘œ
 	image_setsumei = LoadGraph("images/Janken/Setumei50ptg.png");
 	image_set_circle = LoadGraph("images/Janken/Setumei_Select50.png");
@@ -332,14 +328,49 @@ void Player::HeadDrawMove() const
 
 	//DrawRotaGraph(x + 3, y - 22, 1.0f, M_PI - jan_angle, head_Image[0], TRUE);
 
-	if (dir == static_cast<int>(DIRECTION::RIGHT))
+	/*‰EŒü‚«*/
+	if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 0)
 	{
-		DrawGraph(x + 3, y - 22, 1.0f, head_Image[0]);
+		DrawRotaGraph(x + 3, y - 22, 1.0f, M_PI, head_Image[0], TRUE);
 	}
-	if (dir == static_cast<int>(DIRECTION::LEFT))
+	else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 1)
 	{
-		DrawGraph(x + 3, y - 22, 1.0f, head_Image[1]);
+		DrawRotaGraph(x + 3, y - 19, 1.0f, M_PI, head_Image[0], TRUE);
 	}
+	else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 2)
+	{
+		DrawRotaGraph(x - 7, y - 19, 1.0f, M_PI, head_Image[0], TRUE);
+	}
+	else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 3)
+	{
+		DrawRotaGraph(x + 5, y - 17, 1.0f, M_PI, head_Image[0], TRUE);
+	}
+	/*else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == false) //ƒWƒƒƒ“ƒv‚Ì
+	{
+		DrawRotaGraph(x + 3, y - 22, 1.0f, M_PI, head_Image[0], TRUE);
+	}*/
+
+	/*¶Œü‚«*/
+	if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 5)
+	{
+		DrawRotaGraph(x - 3, y - 22, 1.0f, 0, head_Image[1], TRUE);
+	}
+	else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 6)
+	{
+		DrawRotaGraph(x - 3, y - 19, 1.0f, 0, head_Image[1], TRUE);
+	}
+	else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 7)
+	{
+		DrawRotaGraph(x + 7, y - 19, 1.0f, 0, head_Image[1], TRUE);
+	}
+	else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 8)
+	{
+		DrawRotaGraph(x - 5, y - 17, 1.0f, 0, head_Image[1], TRUE);
+	}
+	/*else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == false) //ƒWƒƒƒ“ƒv‚Ì
+	{
+		DrawRotaGraph(x - 3, y - 22, 1.0f, 0, head_Image[1], TRUE);
+	}*/
 }
 
 /*˜r‚Ì•`‰æE“®‚«*/
@@ -516,7 +547,11 @@ void Player::Draw() const
 			ArmDrawMove();
 		}
 		//’†S‚©‚ç•`‰æ
-		DrawRotaGraphF(x, y, 1, 0, image[player_Image], TRUE);
+		DrawRotaGraphF(x, y, 1, 0, image[0][player_Image], TRUE);
+		//DrawRotaGraphF(x, y, 1, 0, image[3], TRUE);
+
+		/*Šç*/
+		HeadDrawMove();
 	}
 	else
 	{
