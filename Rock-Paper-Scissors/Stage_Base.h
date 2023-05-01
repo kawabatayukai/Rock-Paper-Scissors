@@ -11,7 +11,6 @@ class Stage_Base : public AbstractScene
 {
 private:
 	int typeImage[3];
-	int hpImage;
 public:
 	Stage_Base();
 	~Stage_Base();
@@ -68,5 +67,11 @@ private:
 	unsigned short blackout_time;             //暗転時間（接触直後演出）
 
 	Effect_Jangeki** obj_effect;              //エフェクト
+
+	int image_circle[3];                      //時計用円
+
+	int image_clock;                          //時計
+	int image_clockhand;                      //時計の針
+	int image_clockchar;                      //時計の文字盤
 };
 

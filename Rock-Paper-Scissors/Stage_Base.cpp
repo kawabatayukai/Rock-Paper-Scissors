@@ -12,12 +12,15 @@ namespace _CONSTANTS_SB
 {
 	//エフェクト最大生成数
 	const int EFFECT_MAX = 20;
+	
+	//時計座標
+	const int CLOCK_X = 640;
+	const int CLOCK_Y = 60;
 }
 
 Stage_Base::Stage_Base() : blackout_time(0)
 {
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, typeImage);
-	hpImage = LoadGraph("images/HitPoint.png");
 
 	//                           サイズ 幅              外枠
 	font = CreateFontToHandle(NULL, 60, 3, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
@@ -25,6 +28,12 @@ Stage_Base::Stage_Base() : blackout_time(0)
 	//エフェクト初期化
 	obj_effect = new Effect_Jangeki * [_CONSTANTS_SB::EFFECT_MAX];
 	for (int i = 0; i < _CONSTANTS_SB::EFFECT_MAX; i++) obj_effect[i] = nullptr;
+
+	//画像
+	LoadDivGraph("images/Clock/color_circles.png", 3, 3, 1, 120, 120, image_circle);
+	image_clock = LoadGraph("images/Clock/clockback_wood.png");
+	image_clockhand = LoadGraph("images/Clock/clockhand_wood.png");
+	image_clockchar = LoadGraph("images/Clock/clock_str.png");
 }
 
 Stage_Base::~Stage_Base()
@@ -35,6 +44,8 @@ Stage_Base::~Stage_Base()
 //UI描画
 void Stage_Base::DrawUI(Jan_Type type, int hp) const
 {
+	using namespace _CONSTANTS_SB;
+
 	int color = 0x00ff00;    //HPバーの色
 
 	//制限時間描画
@@ -47,7 +58,26 @@ void Stage_Base::DrawUI(Jan_Type type, int hp) const
 	//スコア
 	DrawFormatString(1050, 150, 0x00ff00, "Score : %d", GameData::Get_Score());
 
+	// ------------------------------ 時計 ------------------------------------
+	//現在のパーセンテージ(扇形)
+	double circle_rate = (100 * static_cast<double>(GameData::Get_Each_Time())) / static_cast<double>(GameData::Get_ConstTimeLimit());
+	//針の角度
+	double hand_angle = ((360 * circle_rate) / 100) * static_cast<double>(3.14 / 180);
+
+	//色が変わる
+	int circle_index = 0;
+	if (circle_rate <= 66 && circle_rate > 33) circle_index = 1;
+	else if (circle_rate < 33) circle_index = 2;
+	else {};
+
 	
+	DrawRotaGraph(CLOCK_X, CLOCK_Y, 1, 0, image_clock, TRUE);
+	
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 250);
+	DrawCircleGauge(CLOCK_X, CLOCK_Y, circle_rate, image_circle[circle_index], 0.0, 0.85, 1);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	DrawRotaGraph(CLOCK_X, CLOCK_Y, 1, 0, image_clockchar, TRUE);
+	DrawRotaGraph(CLOCK_X, CLOCK_Y, 1, -hand_angle, image_clockhand, TRUE);
 }
 
 //敵の上にUI描画
