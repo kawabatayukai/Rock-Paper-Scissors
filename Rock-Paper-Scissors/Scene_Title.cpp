@@ -8,6 +8,8 @@
 #include "Scene_Ranking.h"
 #include "Scene_Help.h"
 #include"GameData.h"
+#include"SoundSystem.h"
+#include"Scene_Story.h"
 
 //コンストラクタ
 TitleScene::TitleScene()
@@ -28,11 +30,14 @@ TitleScene::~TitleScene()
 	//フォントデータを削除
 	DeleteFontToHandle(font_title);
 	DeleteFontToHandle(font_debug);
+	SoundSystem::StopBGM(BGM::TITLE);
 }
 
 //更新
 void TitleScene::Update()
 {
+	SoundSystem::PlayBGM(BGM::TITLE);
+
 	//カーソルを合わせてボタンを押すと遷移
 	if (KeyManager::OnPadClicked(PAD_INPUT_DOWN) == true) {
 
@@ -77,6 +82,7 @@ AbstractScene* TitleScene::ChangeScene()
 	if (KeyManager::GetValue_RT() >= 40 && KeyManager::OnPadClicked(PAD_INPUT_A) == true)
 	{
 		return dynamic_cast<AbstractScene*> (new GameMainScene());
+		SoundSystem::StopBGM(BGM::TITLE);
 	}
 	//Aボタンで決定
 	else if (KeyManager::OnPadClicked(PAD_INPUT_A) == true)
@@ -84,16 +90,20 @@ AbstractScene* TitleScene::ChangeScene()
 		switch (T_selectnum)
 		{
 		case 0:
-			return dynamic_cast<AbstractScene*> (new Scene_Stage01());
+			return dynamic_cast<AbstractScene*> (new Scene_Story());
+			SoundSystem::StopBGM(BGM::TITLE);
 			break;
 		case 1:
 			return dynamic_cast<AbstractScene*> (new HelpScene());
+			SoundSystem::StopBGM(BGM::TITLE);
 			break;
 		case 2:
 			return dynamic_cast<AbstractScene*> (new Scene_Ranking());
+			SoundSystem::StopBGM(BGM::TITLE);
 			break;
 		case 3:
 			return dynamic_cast<AbstractScene*> (new EndScene());
+			SoundSystem::StopBGM(BGM::TITLE);
 			break;	
 
 

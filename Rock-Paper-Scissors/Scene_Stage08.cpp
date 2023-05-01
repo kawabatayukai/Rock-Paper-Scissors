@@ -4,7 +4,7 @@
 #include"KeyManager.h"
 #include"DxLib.h"
 #include"Enemy_Cannon.h"
-
+#include"GameData.h"
 #define PI    3.1415926535897932384626433832795f
 
 //デバッグモード
@@ -37,7 +37,7 @@ Scene_Stage08::Scene_Stage08(const Player* player)
 
 	//床・壁の用意
 	Init_Floor(STAGE_08_FLOOR);
-
+	GameData::Set_TimeLimit();
 	//一つずつ生成  STAGE_08_FLOOR 個分
 	obj_floor[0] = new Floor(0, 700, 1280, 20,0x00ff00);        //床
 	obj_floor[1] = new Floor(0, -300, 20, 1720);           //壁（左）
@@ -94,7 +94,7 @@ void Scene_Stage08::Update()
 		}	
 
 		//cannon[a]->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());	//プレイヤーの座標を取得
-
+		GameData::Time_Update();
 	}
 
 	//接触じゃんけん処理

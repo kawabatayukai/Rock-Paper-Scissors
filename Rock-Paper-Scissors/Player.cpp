@@ -8,6 +8,7 @@
 #include"Jangeki_Homing.h"
 #include"Jangeki_Player.h"
 #include"GameData.h"
+#include"SoundSystem.h"
 
 //‚¶‚á‚ñŒ‚”­ËŠÔŠu@i1•bj
 #define PLAYER_JAN_INTERVAL 30
@@ -24,19 +25,21 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 	dir = static_cast<int>(DIRECTION::RIGHT);//LEFT
 	 
 	//‰æ‘œ“Ç‚İ‚İ
-	//image = LoadGraph("images/sd_body-1.png");
-	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ˜r–³‚µ3.png", 10, 5, 2, 100, 100, image);
-	//LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“‰æ‘œŠç–³‚µ.png", 10, 5, 2, 100, 100, image);
+	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“‰æ‘œŠç–³‚µƒO[.png", 10, 5, 2, 100, 100, image[0]);
+	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“‰æ‘œŠç–³‚µƒ`ƒ‡ƒL.png", 10, 5, 2, 100, 100, image[1]);
+	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“‰æ‘œŠç–³‚µƒp[.png", 10, 5, 2, 100, 100, image[2]);
 
-	//LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ˜r–³‚µ3.png", 2, 1, 2, 126, 125, image_Jamp);
+	image[0][4] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ‰EƒO[.png");
+	image[0][9] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ¶ƒO[.png");
 
-	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ.png", 3, 3, 1, 100, 100, image_JanType);  //‚¶‚á‚ñŒ‚‰æ‘œ
+	image[1][4] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ‰Eƒ`ƒ‡ƒL.png");
+	image[1][9] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ¶ƒ`ƒ‡ƒL.png");
 
-	image[4] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ‰E.png");
-	image[9] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ¶.png");
+	image[2][4] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ‰Eƒp[.png");
+	image[2][9] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ¶ƒp[.png");
 
 	//€–S
-	image_death = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“Šç‚Ì‚İ.png");
+	image_death = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“Šç‚Ì‚İ¶.png");
 
 	image_setsumei = LoadGraph("images/Setumei.png");
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image_JanType);  //‚¶‚á‚ñŒ‚‰æ‘œ
@@ -45,7 +48,7 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 	image_set_LTRT = LoadGraph("images/Janken/Setumei_LTRT_235_105.png");
 	image_set_GPT = LoadGraph("images/Janken/Setumei_GTP.png");
 
-	head_Image[0] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“Šç‚Ì‚İ.png");
+	head_Image[0] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“Šç‚Ì‚İ‰E.png");
 	head_Image[1] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“Šç‚Ì‚İ¶.png");
 
 	armL_Image[0] = LoadGraph("images/˜r‚Ì‚İ‚®[h¶.png");
@@ -93,7 +96,7 @@ Player::Player(const Player& player) : CharaBase(player.x, player.y, player.w, p
 	//this->image = player.image;             //ƒvƒŒƒCƒ„[‰æ‘œ
 	this->select_JanType = player.select_JanType;    //‘I‘ğ‚µ‚½"è"
 	this->jan_angle = player.jan_angle;              //‚¶‚á‚ñŒ‚Šp“x
-	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ˜r–³‚µ.png", 10, 5, 2, 100, 100, image);
+	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ˜r–³‚µ.png", 10, 5, 2, 100, 100, image[0]);
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image_JanType);  //‚¶‚á‚ñŒ‚‰æ‘œ
 	image_setsumei = LoadGraph("images/Janken/Setumei50ptg.png");
 	image_set_circle = LoadGraph("images/Janken/Setumei_Select50.png");
@@ -164,25 +167,31 @@ void Player::Update()
 		{
 			g_add = -21.5f;    //d—Í‰Á‘¬“x‚ğƒ}ƒCƒiƒX’l‚É
 			land_flg = false;  //’n–Ê‚É‚Â‚¢‚Ä‚¢‚È‚¢
+
+			//SE
+			SoundSystem::PlaySE(SE::PLAYER_JUMP);
 		}
 	}
 	else if(player_state == PLAYER_STATE::DEATH)
 	{
-		static bool isJumped = false;
+		static bool isJumped;
 		jan_angle = 0.0;
 
-		if (land_flg == false && isJumped == false) land_flg = true;
+		if (land_flg == false && isJumped == false) 
+		{
+			land_flg = true;
+		}
 
 		if (land_flg == true)
 		{
 			isJumped = true;
-			g_add = -23.5f;    //d—Í‰Á‘¬“x‚ğƒ}ƒCƒiƒX’l‚É
+			g_add = -24.5f;    //d—Í‰Á‘¬“x‚ğƒ}ƒCƒiƒX’l‚É
 			land_flg = false;  //’n–Ê‚É‚Â‚¢‚Ä‚¢‚È‚¢
 		}
 		w = 0;
 		h = 0;
 
-		if (y > 730.f)
+		if (y > 780.f)
 		{
 			player_state = PLAYER_STATE::DEATH_END;
 		}
@@ -327,6 +336,50 @@ void Player::HeadDrawMove() const
 	//*********************/
 
 	//DrawRotaGraph(x + 3, y - 22, 1.0f, M_PI - jan_angle, head_Image[0], TRUE);
+
+	/*‰EŒü‚«*/
+	if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 0)
+	{
+		DrawRotaGraph(x + 3, y - 22, 1.0f, M_PI, head_Image[0], TRUE);
+	}
+	else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 1)
+	{
+		DrawRotaGraph(x + 3, y - 19, 1.0f, M_PI, head_Image[0], TRUE);
+	}
+	else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 2)
+	{
+		DrawRotaGraph(x - 7, y - 19, 1.0f, M_PI, head_Image[0], TRUE);
+	}
+	else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 3)
+	{
+		DrawRotaGraph(x + 5, y - 17, 1.0f, M_PI, head_Image[0], TRUE);
+	}
+	/*else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == false) //ƒWƒƒƒ“ƒv‚Ì
+	{
+		DrawRotaGraph(x + 3, y - 22, 1.0f, M_PI, head_Image[0], TRUE);
+	}*/
+
+	/*¶Œü‚«*/
+	if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 5)
+	{
+		DrawRotaGraph(x - 3, y - 22, 1.0f, 0, head_Image[1], TRUE);
+	}
+	else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 6)
+	{
+		DrawRotaGraph(x - 3, y - 19, 1.0f, 0, head_Image[1], TRUE);
+	}
+	else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 7)
+	{
+		DrawRotaGraph(x + 7, y - 19, 1.0f, 0, head_Image[1], TRUE);
+	}
+	else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 8)
+	{
+		DrawRotaGraph(x - 5, y - 17, 1.0f, 0, head_Image[1], TRUE);
+	}
+	/*else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == false) //ƒWƒƒƒ“ƒv‚Ì
+	{
+		DrawRotaGraph(x - 3, y - 22, 1.0f, 0, head_Image[1], TRUE);
+	}*/
 }
 
 /*˜r‚Ì•`‰æE“®‚«*/
@@ -441,39 +494,75 @@ void Player::ArmDrawMove() const
 	}
 }
 
-//ƒvƒŒƒCƒ„[‚ÌUI•`‰æ
-void Player::PlayerDrawUI(int hp) const
+/*‘Ì‚Ì•`‰æE“®‚«*/
+void Player::BodyDrawMove() const
 {
-	/*switch (type)
+	//’†S‚©‚ç•`‰æ
+	switch (select_JanType)
 	{
 	case Jan_Type::ROCK:
-		DrawRotaGraph(810, 60, 0.5, 0, typeImage[0], TRUE);
+		DrawRotaGraphF(x, y, 1, 0, image[0][player_Image], TRUE);
+		//DrawRotaGraphF(x, y, 1, 0, image[3], TRUE);
 		break;
 	case Jan_Type::SCISSORS:
-
-		DrawRotaGraph(810, 60, 0.5, 0, typeImage[1], TRUE);
+		DrawRotaGraphF(x, y, 1, 0, image[1][player_Image], TRUE);
 		break;
 	case Jan_Type::PAPER:
-		DrawRotaGraph(950, 60, 0.5, 0, typeImage[2], TRUE);
+		DrawRotaGraphF(x, y, 1, 0, image[2][player_Image], TRUE);
+		break;
+	case Jan_Type::NONE:
 		break;
 	default:
 		break;
-	}*/
+	}
+}
 
-	//DrawRotaGraph(200, 50, 0.5, 0, hpImage, TRUE);			//‘Ì—ÍƒQ[ƒW˜g
-	//DrawBox(115, 33, 120 + static_cast<int>(hp * 2.54), 67, 0x00ff00, TRUE);	//‘Ì—ÍƒQ[ƒW
-	//DrawFormatString(200, 40, 0x0000ff, "c‚è:%d", hp);	//c‚è‘Ì—Í(”’l)
-
+//ƒvƒŒƒCƒ„[‚ÌUI•`‰æ
+void Player::PlayerDrawUI(int hp) const
+{
 	float draw_x = x - 50;  //•`‰æ‚˜
 	float draw_y = y - 100; //•`‰æ‚™
 
 	int bar_color = 0x00ff00;
+	if (hp <= 30) 
+	{
+		bar_color = 0xff0000;
 
-	//˜g
-	DrawBoxAA(draw_x - 3, draw_y - 3, draw_x + 103, draw_y + 13, 0xffffff, TRUE);
-	DrawBoxAA(draw_x, draw_y, (draw_x + 100), draw_y + 10, 0x000000, TRUE);
-	//HP
-	DrawBoxAA(draw_x, draw_y, (draw_x + hp), draw_y + 10, bar_color, TRUE);
+		static int flash_count;       //“_–Å‰ñ”
+		if (flash_count < 4)
+		{
+			static int frame_count;
+			if (++frame_count < 10)
+			{
+				//˜g
+				DrawBoxAA(draw_x - 3, draw_y - 3, draw_x + 103, draw_y + 13, 0xffffff, TRUE);
+				DrawBoxAA(draw_x, draw_y, (draw_x + 100), draw_y + 10, 0x000000, TRUE);
+				//HP
+				DrawBoxAA(draw_x, draw_y, (draw_x + hp), draw_y + 10, bar_color, TRUE);
+			}
+			else if (frame_count > 20)
+			{
+				frame_count = 0;
+				flash_count++;
+			}
+		}
+		else
+		{
+			//˜g
+			DrawBoxAA(draw_x - 3, draw_y - 3, draw_x + 103, draw_y + 13, 0xffffff, TRUE);
+			DrawBoxAA(draw_x, draw_y, (draw_x + 100), draw_y + 10, 0x000000, TRUE);
+			//HP
+			DrawBoxAA(draw_x, draw_y, (draw_x + hp), draw_y + 10, bar_color, TRUE);
+		}
+	}
+	else
+	{
+		//˜g
+		DrawBoxAA(draw_x - 3, draw_y - 3, draw_x + 103, draw_y + 13, 0xffffff, TRUE);
+		DrawBoxAA(draw_x, draw_y, (draw_x + 100), draw_y + 10, 0x000000, TRUE);
+		//HP
+		DrawBoxAA(draw_x, draw_y, (draw_x + hp), draw_y + 10, bar_color, TRUE);
+	}
 }
 
 //•`‰æ
@@ -503,7 +592,10 @@ void Player::Draw() const
 			ArmDrawMove();
 		}
 		//’†S‚©‚ç•`‰æ
-		DrawRotaGraphF(x, y, 1, 0, image[player_Image], TRUE);
+		BodyDrawMove();
+
+		/*Šç*/
+		HeadDrawMove();
 	}
 	else
 	{

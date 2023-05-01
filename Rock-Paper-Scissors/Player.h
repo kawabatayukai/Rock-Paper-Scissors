@@ -47,6 +47,9 @@ public:
 	/*頭の描画・動き*/
 	void HeadDrawMove() const;
 
+	/*体の描画・動き*/
+	void BodyDrawMove() const;
+
 	//プレイヤーのUI描画
 	void PlayerDrawUI(int hp) const;
 
@@ -69,11 +72,10 @@ private:
 
 	/**********************************************************/
 
-	int image[10]; //画像
-	int image_Jamp[2];
+	int image[3][10]; //画像
 	int image_death;          //死亡時
 
-	int head_Image[1];        //手
+	int head_Image[2];        //手
 
 	int armL_Image[3];        //左手
 	int armR_Image[3];        //右手
@@ -113,5 +115,6 @@ private:
 		RIGHT,
 	};
 
+	
 	int ui_font;  //ui用フォントハンドル
 };
