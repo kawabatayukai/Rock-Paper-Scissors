@@ -117,4 +117,13 @@ private:
 
 	
 	int ui_font;  //ui用フォントハンドル
+
+	bool animflg = false;	//アニメーションフラグ
+
+	int animtimer = 0; //アニメーションタイム
+
+	//アニメーション用画像変数
+	int img_Playeranim[15];	//再生
+
+	int anim_count = 0;  //アニメーション回数
 };

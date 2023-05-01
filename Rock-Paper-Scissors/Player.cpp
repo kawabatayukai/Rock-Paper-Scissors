@@ -69,6 +69,8 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 
 	//ƒtƒHƒ“ƒg‚ğì¬
 	ui_font = CreateFontToHandle("ƒƒCƒŠƒI", 20, 4, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
+
+	LoadDivGraph("images/stage09/teleport2.png", 15, 15, 1, 120, 150, img_Playeranim); //img_Playeranim
 }
 
 //ƒRƒ“ƒXƒgƒ‰ƒNƒ^iƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^j
@@ -668,6 +670,12 @@ void Player::Draw() const
 		DrawBoxAA(207.f, 24.f, 234.f, 32.f, 0xffa500, TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
+
+	/*ƒeƒŒƒ|[ƒg‚ÌƒAƒjƒ[ƒVƒ‡ƒ“*/
+	if (animflg == true)
+	{
+		if(DrawGraph(x - 50, y - 50, img_Playeranim[animtimer / 2 % 15], TRUE));
+	}
 }
 
 /*‰æ‘œ‚Ì•ÏXæ“¾*/
@@ -975,10 +983,10 @@ void Player::Update_Jangeki()
 			//LT,RT‚Å”­Ë‚·‚é‚¶‚á‚ñŒ‚‘®«‚ğ‘I‘ğiƒZƒbƒgj‚·‚é
 	static int select_num;
 
-	if (KeyManager::OnPadClicked_RT()) select_num++;
+	if (KeyManager::OnPadClicked_RT()) select_num++, animflg = true; //ƒAƒjƒ[ƒVƒ‡ƒ“ŠJn;
 	if (select_num > 2) select_num = 0;
 
-	if (KeyManager::OnPadClicked_LT()) select_num--;
+	if (KeyManager::OnPadClicked_LT()) select_num--, animflg = true; //ƒAƒjƒ[ƒVƒ‡ƒ“ŠJn;
 	if (select_num < 0) select_num = 2;
 
 	
@@ -989,18 +997,21 @@ void Player::Update_Jangeki()
 		//  ƒO[‚ğ‘I‘ğ 
 		select_JanType = Jan_Type::ROCK;
 		select_num = 2;
+		animflg = true; //ƒAƒjƒ[ƒVƒ‡ƒ“ŠJn
 	}
 	else if (KeyManager::OnPadClicked(PAD_INPUT_4))    //Yƒ{ƒ^ƒ“
 	{
 		//  ƒ`ƒ‡ƒL‚ğ‘I‘ğ 
 		select_JanType = Jan_Type::SCISSORS;
 		select_num = 1;
+		animflg = true; //ƒAƒjƒ[ƒVƒ‡ƒ“ŠJn
 	}
 	else if (KeyManager::OnPadClicked(PAD_INPUT_3))    //Xƒ{ƒ^ƒ“
 	{
 		//  ƒp[‚ğ‘I‘ğ 
 		select_JanType = Jan_Type::PAPER;
 		select_num = 0;
+		animflg = true; //ƒAƒjƒ[ƒVƒ‡ƒ“ŠJn
 	}
 	else
 	{
@@ -1022,6 +1033,29 @@ void Player::Update_Jangeki()
 
 	default:
 		break;
+	}
+
+	/*ƒAƒjƒ[ƒVƒ‡ƒ“‚Ìˆ—*/
+	if (animflg == true)
+	{
+		animtimer++;
+
+		if (animtimer / 3 % 15 == 14)
+		{
+
+			if (anim_count == 0)
+			{
+				animtimer = 0;
+				anim_count = 1;
+			}
+			else
+			{
+				animtimer = 0;
+				animflg = false;
+				anim_count = 0;
+			}
+
+		}
 	}
 
 	//select_JanType = static_cast<Jan_Type>(select_num);
