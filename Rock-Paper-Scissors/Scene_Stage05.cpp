@@ -3,6 +3,7 @@
 #include "DxLib.h"
 #include"Scene_GameOver.h"
 #include "Scene_GameClear.h"
+#include"GameData.h"
 #define PI    3.1415926535897932384626433832795f
 
 //デバッグモード
@@ -43,7 +44,7 @@ Scene_Stage05::Scene_Stage05(const Player* player)
 		mob[2] = new MobEnemy_05(1230, 420, Jan_Type::ROCK);
 	}
 
-
+	GameData::Set_TimeLimit();
 	//床・壁の用意
 	Init_Floor(STAGE_05_FLOOR);
 
@@ -102,7 +103,7 @@ void Scene_Stage05::Update()
 			mob[i]->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
 		}
 
-
+		GameData::Time_Update();
 
 		//プレイヤーの座標を取得
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
