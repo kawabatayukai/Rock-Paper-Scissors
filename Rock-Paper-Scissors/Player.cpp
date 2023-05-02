@@ -16,7 +16,8 @@
 
 //ƒRƒ“ƒXƒgƒ‰ƒNƒ^@@@@@@@@@@@@@  ‚˜@‚™@•@@@‚‚³
 Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ô
-, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0), player_state(PLAYER_STATE::ALIVE)
+, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0), player_state(PLAYER_STATE::ALIVE), Prev_recoveryScore(0)
+, obj_effect(nullptr)
 {
 	speed = 7.0f;
 	hp = 100;
@@ -73,7 +74,8 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 
 //ƒRƒ“ƒXƒgƒ‰ƒNƒ^iƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^j
 Player::Player(const Player& player) : CharaBase(player.x, player.y, player.w, player.h)  //Šî’êƒNƒ‰ƒX‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ô
-, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0), player_state(PLAYER_STATE::ALIVE)
+, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0), player_state(PLAYER_STATE::ALIVE), Prev_recoveryScore(0)
+, obj_effect(nullptr)
 {
 	//ƒƒ“ƒo•Ï”‚ğˆø”‚ÌƒIƒuƒWƒFƒNƒg‚Ì“à—e‚Å‰Šú‰»‚·‚é
 	// 
@@ -131,9 +133,37 @@ void Player::Update()
 	//ƒvƒŒƒCƒ„[‚ÌHP‚ª0ˆÈ‰º‚Ì‚Ü‚½‚ÍŠÔØ‚êA"€‚ñ‚¾"ó‘Ô‚É
 	if (this->hp <= 0 || GameData::Get_Each_Time() <= 0) player_state = PLAYER_STATE::DEATH;
 
+	//ƒXƒRƒA1000–ˆ‚ÉHP‰ñ•œ
+	int _score = GameData::Get_MaxScore();
+	if (_score % 300 == 0 && _score != Prev_recoveryScore)
+	{
+		Prev_recoveryScore = _score;
+		Recover_HP(20);
+
+
+		//ƒGƒtƒFƒNƒg¶¬
+		//delete obj_effect;
+		//obj_effect = nullptr;
+		if (obj_effect == nullptr) obj_effect = new Effect_Player(x, y);
+	}
+
+	//ƒGƒtƒFƒNƒg
+	if (obj_effect != nullptr) 
+	{
+		obj_effect->SetPlayerLocation(x, y);
+		obj_effect->Update();
+
+		//Ä¶I—¹
+		if (obj_effect->IsEffectFinished() == true)
+		{
+			delete obj_effect;
+			obj_effect = nullptr;
+		}
+	}
+
 	//‘O‰ñ‚ÌÀ•W‚˜‚ğ•Û‘¶
 	old_x = x;
-
+	
 	//€–SˆÈŠO
 	if (player_state == PLAYER_STATE::ALIVE)
 	{
@@ -563,47 +593,6 @@ void Player::PlayerDrawUI(int hp) const
 		//HP
 		DrawBoxAA(draw_x, draw_y, (draw_x + hp), draw_y + 10, bar_color, TRUE);
 	}
-}
-
-//•`‰æ
-void Player::Draw() const
-{
-	//‚¶‚á‚ñŒ‚•`‰æ
-	Draw_Jangeki();
-
-	//€–SˆÈŠO
-	if (player_state == PLAYER_STATE::ALIVE)
-	{
-		//Æ€ü        ‰EƒXƒeƒBƒbƒN‚É“ü—Í‚ª‚ ‚é
-		if (KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 &&
-			KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0)
-		{
-			/*˜r‚Ì•`‰æ‚¾‚¯*/
-			ArmDrawMove();
-		}
-		else
-		{
-			int vx = static_cast<int>(550 * cos(jan_angle));
-			int vy = static_cast<int>(550 * sin(jan_angle));
-
-			DrawLineAA(x, y, x + vx, y - vy, 0xffff00, 3);
-
-			/*˜r‚Ì•`‰æE“®‚«*/
-			ArmDrawMove();
-		}
-		//’†S‚©‚ç•`‰æ
-		BodyDrawMove();
-
-		/*Šç*/
-		HeadDrawMove();
-	}
-	else
-	{
-		//€–S‰æ‘œ
-		DrawRotaGraphF(x, y, 1, 0, image_death, TRUE);
-	}
-
-	PlayerDrawUI(GetHP());
 
 	//ƒeƒXƒg ‘I‘ğ‚¶‚á‚ñŒ‚
 	DrawStringToHandle(30, 150, "RB : ”­Ë", 0xffffff, ui_font);
@@ -627,7 +616,7 @@ void Player::Draw() const
 		break;
 	}
 
-	DrawGraph(40, 40,  image_setsumei, TRUE);
+	DrawGraph(40, 40, image_setsumei, TRUE);
 	DrawGraph(50 + (circle_x * 60), 50, image_set_circle, TRUE);
 	DrawGraph(13, 10, image_set_LTRT, TRUE);
 	DrawGraph(55, 100, image_set_GPT, TRUE);
@@ -668,6 +657,61 @@ void Player::Draw() const
 		DrawBoxAA(207.f, 24.f, 234.f, 32.f, 0xffa500, TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
+}
+
+//•`‰æ
+void Player::Draw() const
+{
+	//‚¶‚á‚ñŒ‚•`‰æ
+	Draw_Jangeki();
+
+	//€–SˆÈŠO
+	if (player_state == PLAYER_STATE::ALIVE)
+	{
+		//ƒGƒtƒFƒNƒg
+		if (obj_effect != nullptr)
+		{
+			obj_effect->Draw_Back();
+		}
+		else {};
+
+		//Æ€ü        ‰EƒXƒeƒBƒbƒN‚É“ü—Í‚ª‚ ‚é
+		if (KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 &&
+			KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0)
+		{
+			/*˜r‚Ì•`‰æ‚¾‚¯*/
+			ArmDrawMove();
+		}
+		else
+		{
+			int vx = static_cast<int>(550 * cos(jan_angle));
+			int vy = static_cast<int>(550 * sin(jan_angle));
+
+			DrawLineAA(x, y, x + vx, y - vy, 0xffff00, 3);
+
+			/*˜r‚Ì•`‰æE“®‚«*/
+			ArmDrawMove();
+		}
+		//’†S‚©‚ç•`‰æ
+		BodyDrawMove();
+
+		/*Šç*/
+		HeadDrawMove();
+
+		//ƒGƒtƒFƒNƒg
+		if (obj_effect != nullptr)
+		{
+			obj_effect->Draw_Front();
+		}
+		else {};
+	}
+	else
+	{
+		//€–S‰æ‘œ
+		DrawRotaGraphF(x, y, 1, 0, image_death, TRUE);
+	}
+
+	PlayerDrawUI(GetHP());
 }
 
 /*‰æ‘œ‚Ì•ÏXæ“¾*/
