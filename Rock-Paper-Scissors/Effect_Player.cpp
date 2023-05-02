@@ -28,7 +28,7 @@ void Effect_Player::Update()
 void Effect_Player::Draw() const
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 150);
-	DrawRotaGraph(effect_x, effect_y + 20, 2, 0, image_effect[index_effect], TRUE);
+	DrawRotaGraphF(effect_x, effect_y + 20, 2, 0, image_effect[index_effect], TRUE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
@@ -36,7 +36,7 @@ void Effect_Player::Draw() const
 void Effect_Player::Draw_Back() const
 {
 	SetDrawBlendMode(DX_BLENDMODE_ADD, 150);
-	DrawRotaGraph(effect_x, effect_y -10 , 1.3, 0, image_effect[index_effect], TRUE);
+	DrawRotaGraphF(effect_x, effect_y -10 , 1.3, 0, image_effect[index_effect], TRUE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
@@ -44,7 +44,7 @@ void Effect_Player::Draw_Back() const
 void Effect_Player::Draw_Front() const
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
-	DrawRotaGraph(effect_x, effect_y - 10, 1.3, 0, image_effect[index_effect], TRUE);
+	DrawRotaGraphF(effect_x, effect_y - 10, 1.3, 0, image_effect[index_effect], TRUE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
