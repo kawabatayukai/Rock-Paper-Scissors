@@ -80,9 +80,8 @@ private:
 
 	int head_Image[2];        //頭
 
-	int eye_ImageR;          //目
-
-	int eye_ImageL;          //目
+	int eye_ImageR[2];          //目
+	int eye_ImageL[2];          //目
 
 	int armL_Image[3];        //左手
 	int armR_Image[3];        //右手
@@ -92,6 +91,8 @@ private:
 	int playerGetMove;        //移動保持
 
 	int playerCount;          //画像のフレームカウント
+
+	int playerCount2;          //画像のフレームカウント
 
 	int playerChange_Image;   //画像変更
 
