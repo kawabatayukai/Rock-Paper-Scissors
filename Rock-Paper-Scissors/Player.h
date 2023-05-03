@@ -47,6 +47,9 @@ public:
 	/*“ª‚Ì•`‰æE“®‚«*/
 	void HeadDrawMove() const;
 
+	/*–Ú‚Ì•`‰æE“®‚«*/
+	void EyeDrawMove() const;
+
 	/*‘Ì‚Ì•`‰æE“®‚«*/
 	void BodyDrawMove() const;
 
@@ -75,7 +78,11 @@ private:
 	int image[3][10]; //‰æ‘œ
 	int image_death;          //€–S
 
-	int head_Image[2];        //è
+	int head_Image[2];        //“ª
+
+	int eye_ImageR;          //–Ú
+
+	int eye_ImageL;          //–Ú
 
 	int armL_Image[3];        //¶è
 	int armR_Image[3];        //‰Eè
@@ -113,6 +120,8 @@ private:
 	{
 		LEFT,
 		RIGHT,
+		UP,
+		DOWN,
 	};
 
 	
