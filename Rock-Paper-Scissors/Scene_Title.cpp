@@ -12,7 +12,7 @@
 //コンストラクタ
 TitleScene::TitleScene()
 {
-	TitleImage = LoadGraph("images/JankenWorldTitle.png");
+	TitleImage = LoadGraph("images/JankenWorldTitle1.png");
 
 	//タイトルBGM読込み
 	TitleBgm = LoadSoundMem("Sound/TitleBGM.mp3");
@@ -75,15 +75,15 @@ void TitleScene::Draw() const
 
 	DrawStringToHandle(70, 350, "START", 0xf, font_title);
 #else
-	DrawStringToHandle(70, 340, "GAMEMAIN", 0xf, font_title);
-	DrawStringToHandle(70, 395, "HELP", 0xf, font_title);
-	DrawStringToHandle(70, 445, "RANKING", 0xf, font_title);
+	DrawStringToHandle(70, 140, "GAMEMAIN", 0xf, font_title);
+	DrawStringToHandle(70, 195, "HELP", 0xf, font_title);
+	DrawStringToHandle(70, 245, "RANKING", 0xf, font_title);
 #endif
 
-	DrawStringToHandle(70, 495, "END", 0xf, font_title);
+	DrawStringToHandle(70, 295, "END", 0xf, font_title);
 
 	//メニューカーソル
-	DrawTriangle(40, 355 + (T_selectnum * 50), 60, 370 + (T_selectnum * 50), 40, 385 + (T_selectnum * 50), GetColor(255, 0, 0), TRUE);
+	DrawTriangle(40, 155 + (T_selectnum * 50), 60, 170 + (T_selectnum * 50), 40, 185 + (T_selectnum * 50), GetColor(255, 0, 0), TRUE);
 }
 
 //シーンの変更
