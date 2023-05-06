@@ -114,3 +114,11 @@ void SortSave::setScore(int i, int score)
 		g_Ranking[i].score = GameData::Get_Score();
 	}
 }
+
+void SortSave::setTimer(int i, int time)
+{
+	if (0 <= time)
+	{
+		g_Ranking[i].time = GameData::Get_Total_Time();
+	}
+}
