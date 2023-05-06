@@ -155,10 +155,16 @@ void Player::Update()
 		if (KeyManager::OnPadPressed(PAD_INPUT_LEFT))
 		{
 			x -= speed;
-			if (KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0) //右スティックが押されてない時
+
+			if (KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 
+				&& KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0 /*|| x < old_x*/) //右スティックが押されてない時
 			{
 				dir = static_cast<int>(DIRECTION::LEFT);   //向きを設定（左）
 			}
+		}
+		else
+		{
+			x++;
 		}
 		playerChange_Image = 2; //switch文の割り当て番号
 
@@ -166,11 +172,16 @@ void Player::Update()
 		if (KeyManager::OnPadPressed(PAD_INPUT_RIGHT))
 		{
 			x += speed;
-			if (KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 && KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0) //右スティックが押されてない時
+			if (KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 
+				&& KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0 /*|| x > old_x*/) //右スティックが押されてない時
 			{
 				dir = static_cast<int>(DIRECTION::RIGHT);   //向きを設定（右）
 			}
 		}
+		/*else
+		{
+			x--;
+		}*/
 		playerChange_Image = 1; //switch文の割り当て番号
 
 		//画像の選択変更
@@ -1060,7 +1071,7 @@ void Player::Draw() const
 	//テスト 選択じゃん撃
 	DrawStringToHandle(30, 150, "RB : 発射", 0xffffff, ui_font);
 	DrawStringToHandle(30, 180, "LB : ジャンプ", 0xffffff, ui_font);
-	DrawFormatString(50, 200,0x000000, "%d", M_PI - jan_angle);
+	//DrawFormatString(50, 200,0x000000, "%d", M_PI - jan_angle);
 
 	//テスト 110
 	int circle_x = 0;
@@ -1135,10 +1146,14 @@ void  Player::PlayerSwitch()
 	/*プレイヤーの画像変更*/
 	switch (playerChange_Image)
 	{
-		/*左右移動*/
+
+	/***********
+	* 左右移動 *
+	************/
+
 	case 1: //右移動
 	   /*                右向き            接地                   右・押されてる                      */
-		if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && KeyManager::OnPadPressed(PAD_INPUT_RIGHT))
+		if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && KeyManager::OnPadPressed(PAD_INPUT_RIGHT) /*|| x > old_x*/)
 		{
 			playerGetMove = 1;      //画像を取得
 			playerCount++;          //フレームカウントを増やす
@@ -1148,7 +1163,7 @@ void  Player::PlayerSwitch()
 			break;
 		}
 		/*               左向き            接地                   右・押されてる                     */
-		else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && KeyManager::OnPadPressed(PAD_INPUT_RIGHT))
+		else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && KeyManager::OnPadPressed(PAD_INPUT_RIGHT) /*|| x > old_x*/)
 		{
 			playerGetMove = 6;      //画像を取得
 			playerCount++;          //フレームカウントを増やす
@@ -1157,6 +1172,26 @@ void  Player::PlayerSwitch()
 			playerChange_Image = 0; //動いてないとき用
 			break;
 		}
+
+		/*自動画像変更*/
+		//if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && x > old_x)
+		//{
+		//	playerGetMove = 1;      //画像を取得
+		//	playerCount++;          //フレームカウントを増やす
+		//	PlayerChangeMoveimg();  //画像変更へ
+		//	pCount = 0;             //動いてないとき用
+		//	playerChange_Image = 0; //動いてないとき用
+		//	break;
+		//}
+		//else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && x > old_x)
+		//{
+		//	playerGetMove = 6;      //画像を取得
+		//	playerCount++;          //フレームカウントを増やす
+		//	PlayerChangeMoveimg();  //画像変更へ
+		//	pCount = 5;             //動いてないとき用
+		//	playerChange_Image = 0; //動いてないとき用
+		//	break;
+		//}
 
 		/*ジャンプの時*/
 		/*         右向き         非接地     */
@@ -1168,7 +1203,7 @@ void  Player::PlayerSwitch()
 
 	case 2: //左移動の時
 	   /*               左向き            接地                   左・押されてる                     */
-		if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && KeyManager::OnPadPressed(PAD_INPUT_LEFT))
+		if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && KeyManager::OnPadPressed(PAD_INPUT_LEFT) /*|| x < old_x*/)
 		{
 			playerGetMove = 6;      //画像を取得
 			playerCount++;          //フレームカウントを増やす
@@ -1178,7 +1213,7 @@ void  Player::PlayerSwitch()
 			break;
 		}
 		/*               右向き            接地                   左・押されてる                     */
-		else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && KeyManager::OnPadPressed(PAD_INPUT_LEFT))
+		else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && KeyManager::OnPadPressed(PAD_INPUT_LEFT) /*|| x < old_x*/)
 		{
 			playerGetMove = 1;      //画像を取得
 			playerCount++;          //フレームカウントを増やす
@@ -1303,7 +1338,7 @@ void  Player::PlayerChangeMoveimg()
 	{
 		/*右移動*/
 		/*右向き && 照準が反対を向いてない && 右・押されている*/
-		if (dir == static_cast<int>(DIRECTION::RIGHT) /*&& jan_angle < (M_PI / 2)*/ && KeyManager::OnPadPressed(PAD_INPUT_RIGHT))
+		if (dir == static_cast<int>(DIRECTION::RIGHT) /*&& jan_angle < (M_PI / 2)*/ && KeyManager::OnPadPressed(PAD_INPUT_RIGHT)/* || x > old_x*/)
 		{
 			if (std == 1 && 2 > player_Image) // 画像 1
 			{
@@ -1328,7 +1363,7 @@ void  Player::PlayerChangeMoveimg()
 			playerCount = 0;
 		}
 		/*左向き && 右・押されている*/
-		else if (dir == static_cast<int>(DIRECTION::LEFT) && KeyManager::OnPadPressed(PAD_INPUT_RIGHT))
+		else if (dir == static_cast<int>(DIRECTION::LEFT) && KeyManager::OnPadPressed(PAD_INPUT_RIGHT)/* || x > old_x*/)
 		{
 			if (std == 6 && 7 > player_Image) // 画像 6
 			{
@@ -1355,7 +1390,7 @@ void  Player::PlayerChangeMoveimg()
 
 		/*左移動*/
 		/*左向き && 照準が反対を向いてない && 左・押されている*/
-		if (dir == static_cast<int>(DIRECTION::LEFT) /*&& jan_angle > (M_PI / 2)*/ && KeyManager::OnPadPressed(PAD_INPUT_LEFT))
+		if (dir == static_cast<int>(DIRECTION::LEFT) /*&& jan_angle > (M_PI / 2)*/ && KeyManager::OnPadPressed(PAD_INPUT_LEFT)/* || x < old_x*/)
 		{
 			if (std == 6 && 7 > player_Image) // 画像 6
 			{
@@ -1380,7 +1415,7 @@ void  Player::PlayerChangeMoveimg()
 			playerCount = 0;
 		}
 		/*右向き && 左・押されている*/
-		else if (dir == static_cast<int>(DIRECTION::RIGHT) && KeyManager::OnPadPressed(PAD_INPUT_LEFT))
+		else if (dir == static_cast<int>(DIRECTION::RIGHT) && KeyManager::OnPadPressed(PAD_INPUT_LEFT)/* || x > old_x*/)
 		{
 			if (std == 1 && 2 > player_Image) // 画像 1
 			{
