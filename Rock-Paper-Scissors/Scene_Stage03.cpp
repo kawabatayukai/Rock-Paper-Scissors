@@ -190,7 +190,7 @@ void Scene_Stage03::Update()
 						if(obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200){
 
 							SheeldEnduranse = 27;
-							obj_enemy->ReceiveDamage(35 - SheeldEnduranse-EnemyCutDamege); //軽減ダメージが入る
+							obj_enemy->ReceiveDamage(34 - SheeldEnduranse-EnemyCutDamege); //軽減ダメージが入る
 
 						}
 
@@ -198,14 +198,13 @@ void Scene_Stage03::Update()
 
 					}
 
-				
 					else if (obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 71) {
 
-		
+
 						if(obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200) {
 
 							SheeldEnduranse = 24;
-							obj_enemy->ReceiveDamage(35 - SheeldEnduranse- EnemyCutDamege); //軽減ダメージが入る
+							obj_enemy->ReceiveDamage(34 - SheeldEnduranse- EnemyCutDamege); //軽減ダメージが入る
 							
 						}
 
@@ -217,7 +216,7 @@ void Scene_Stage03::Update()
 						if(obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200){
 
 							SheeldEnduranse = 21;
-							obj_enemy->ReceiveDamage(35 - SheeldEnduranse- EnemyCutDamege); //軽減ダメージが入る
+							obj_enemy->ReceiveDamage(34 - SheeldEnduranse- EnemyCutDamege); //軽減ダメージが入る
 
 						}
 
@@ -231,7 +230,7 @@ void Scene_Stage03::Update()
 
 							
 							SheeldEnduranse = 18;
-							obj_enemy->ReceiveDamage(35 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
+							obj_enemy->ReceiveDamage(34 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
 						
 						}
 
@@ -244,7 +243,7 @@ void Scene_Stage03::Update()
 
 							
 							SheeldEnduranse = 15;
-							obj_enemy->ReceiveDamage(35 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
+							obj_enemy->ReceiveDamage(34 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
 						}
 						
 
@@ -254,7 +253,7 @@ void Scene_Stage03::Update()
 
 						if (obj_enemy->GetWaitTime() < 200 || obj_enemy->GetWaitTime() > 0){
 							
-							obj_enemy->ReceiveDamage(5 - EnemyCutDamege); //ダメージが入る
+							obj_enemy->ReceiveDamage(1 - EnemyCutDamege); //ダメージが入る
 
 
 						}
@@ -535,7 +534,7 @@ void Scene_Stage03::AfterJanken_LOSE()
 {
 
 	//じゃんけん敗北時
-	EnemyCutDamege = 5;
+	EnemyCutDamege = 6;
 
 	obj_player->SetX(200);
 	//obj_enemy->SetX(1150);
