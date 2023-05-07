@@ -21,7 +21,7 @@ Scene_Stage00::Scene_Stage00(const Player* player) : frame_count(0)
 	enemy_03 = LoadGraph("images/stage03/stage03gard.png");
 	enemy_04 = LoadGraph("images/Stage4/stage_Boss04.png");
 	enemy_05 = LoadGraph("images/stage05/Stage5_Enemy_NoMove_Left.png");
-	enemy_06 = LoadGraph("images/stage06/NINJA.png");
+	enemy_06 = LoadGraph("images/stage06/NINJA2.png");
 	enemy_07 = LoadGraph("images/tyokitest.png");
 	enemy_08 = LoadGraph("images/stage08/Stage8_image100.png");
 	enemy_09 = LoadGraph("images/stage09/Stage9_100.png");
@@ -59,7 +59,7 @@ void Scene_Stage00::Draw() const
 	DrawGraph(350, 0, enemy_03, TRUE);
 	DrawGraph(500, 0, enemy_04, TRUE);
 	DrawGraph(650, 0, enemy_05, TRUE);
-	DrawRotaGraphF(150, 200, 5, 0, enemy_06, TRUE, 0);
+	DrawRotaGraph(125, 200, 4.2, 0, enemy_06, TRUE, 0);
 	DrawGraph(200, 150, enemy_07, TRUE);
 	DrawGraph(350, 150, enemy_08, TRUE);
 	DrawGraph(500, 150, enemy_09, TRUE);

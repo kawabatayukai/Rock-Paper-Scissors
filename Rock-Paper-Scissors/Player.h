@@ -48,6 +48,9 @@ public:
 	/*頭の描画・動き*/
 	void HeadDrawMove() const;
 
+	/*目の描画・動き*/
+	void EyeDrawMove() const;
+
 	/*体の描画・動き*/
 	void BodyDrawMove() const;
 
@@ -76,7 +79,10 @@ private:
 	int image[3][10]; //画像
 	int image_death;          //死亡時
 
-	int head_Image[2];        //手
+	int head_Image[4];        //頭
+
+	int eye_ImageR[2];          //目
+	int eye_ImageL[2];          //目
 
 	int armL_Image[3];        //左手
 	int armR_Image[3];        //右手
@@ -86,6 +92,8 @@ private:
 	int playerGetMove;        //移動保持
 
 	int playerCount;          //画像のフレームカウント
+
+	int playerCount2;          //画像のフレームカウント
 
 	int playerChange_Image;   //画像変更
 
@@ -114,8 +122,19 @@ private:
 	{
 		LEFT,
 		RIGHT,
+		UP,
+		DOWN,
 	};
 
 	Effect_Player* obj_effect;  //エフェクト
 	int ui_font;  //ui用フォントハンドル
+
+	bool animflg = false;	//アニメーションフラグ
+
+	int animtimer = 0; //アニメーションタイム
+
+	//アニメーション用画像変数
+	int img_Playeranim[15];	//再生
+
+	int anim_count = 0;  //アニメーション回数
 };
