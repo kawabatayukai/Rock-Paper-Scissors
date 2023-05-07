@@ -16,7 +16,7 @@
 
 //ƒRƒ“ƒXƒgƒ‰ƒNƒ^@@@@@@@@@@@@@  ‚˜@‚™@•@@@‚‚³
 Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ô
-, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0), player_state(PLAYER_STATE::ALIVE)
+, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0), player_state(PLAYER_STATE::ALIVE), playerCount2(0)
 {
 	speed = 7.0f;
 	hp = 100;
@@ -29,6 +29,8 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 	//Šç
 	head_Image[0] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“–Ú‚È‚µ‰E.png");
 	head_Image[1] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“–Ú‚È‚µ¶.png");
+	head_Image[2] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“–Ú‚È‚µ‰Eã.png");
+	head_Image[3] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“–Ú‚È‚µ¶ã.png");
 	//head_Image[0] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“Šç‚Ì‚İ‰E.png");
 	//head_Image[1] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“Šç‚Ì‚İ¶.png");
 
@@ -63,7 +65,7 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 	armR_Image[2] = LoadGraph("images/˜r‚Ì‚İ‚Ï[‰E.png");
 
 	//€–S
-	image_death = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“Šç‚Ì‚İ¶.png");
+	image_death = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“Šç‚Ì‚İ¶ã.png");
 
 	image_setsumei = LoadGraph("images/Setumei.png");
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image_JanType);  //‚¶‚á‚ñŒ‚‰æ‘œ
@@ -87,7 +89,7 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 
 //ƒRƒ“ƒXƒgƒ‰ƒNƒ^iƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^j
 Player::Player(const Player& player) : CharaBase(player.x, player.y, player.w, player.h)  //Šî’êƒNƒ‰ƒX‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ô
-, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0), player_state(PLAYER_STATE::ALIVE)
+, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0), player_state(PLAYER_STATE::ALIVE), playerCount2(0)
 {
 	//ƒƒ“ƒo•Ï”‚ğˆø”‚ÌƒIƒuƒWƒFƒNƒg‚Ì“à—e‚Å‰Šú‰»‚·‚é
 	// 
@@ -161,10 +163,6 @@ void Player::Update()
 			{
 				dir = static_cast<int>(DIRECTION::LEFT);   //Œü‚«‚ğİ’èi¶j
 			}
-		}
-		else
-		{
-			x++;
 		}
 		playerChange_Image = 2; //switch•¶‚ÌŠ„‚è“–‚Ä”Ô†
 
@@ -362,101 +360,192 @@ void Player::HeadDrawMove() const
 
 	//DrawRotaGraph(x + 3, y - 22, 1.0f, M_PI - jan_angle, head_Image[0], TRUE);
 
-	/*‰EŒü‚«*/
-	if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 0)
+	/*HP‚ª”¼•ªˆÈã‚Ì*/
+	if (this->hp > 50)
 	{
-		//DrawRotaGraph(x + 3, y - 22, 1.0f, M_PI, head_Image[0], TRUE);
-
-		/*–ô“®Š´*/
-		static int st = 0;
-		switch (st)
+		/*‰EŒü‚«*/
+		if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 0)
 		{
-		case 0:
-			if (playerCount % 200 != 0) //“ªƒtƒŒ[ƒ€‚Ìˆ—
+			//DrawRotaGraph(x + 3, y - 22, 1.0f, M_PI, head_Image[0], TRUE);
+
+			/*–ô“®Š´*/
+			static int st = 0;
+			switch (st)
 			{
-				DrawRotaGraph(x + 3, y - 22, 1.0f, M_PI, head_Image[0], TRUE);
+			case 0:
+				if (playerCount % 200 != 0) //“ªƒtƒŒ[ƒ€‚Ìˆ—
+				{
+					DrawRotaGraph(x + 3, y - 22, 1.0f, M_PI, head_Image[0], TRUE);
+				}
+				else
+				{
+					st = 1;
+				}
+				break;
+			case 1:
+				if (playerCount % 50 != 0) //“ªƒtƒŒ[ƒ€‚Ìˆ—
+				{
+					DrawRotaGraph(x + 3, y - 18, 1.0f, M_PI, head_Image[0], TRUE);
+				}
+				else
+				{
+					st = 0;
+				}
+				break;
 			}
-			else
+		}
+		else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 1)
+		{
+			DrawRotaGraph(x + 3, y - 19, 1.0f, M_PI, head_Image[0], TRUE);
+		}
+		else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 2)
+		{
+			DrawRotaGraph(x - 7, y - 19, 1.0f, M_PI, head_Image[0], TRUE);
+		}
+		else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 3)
+		{
+			DrawRotaGraph(x + 5, y - 17, 1.0f, M_PI, head_Image[0], TRUE);
+		}
+		/*else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == false) //ƒWƒƒƒ“ƒv‚Ì
+		{
+			DrawRotaGraph(x + 3, y - 22, 1.0f, M_PI, head_Image[0], TRUE);
+		}*/
+
+		/*¶Œü‚«*/
+		if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 5)
+		{
+			//DrawRotaGraph(x - 3, y - 22, 1.0f, 0, head_Image[1], TRUE);
+
+			/*–ô“®Š´*/
+			static int st = 0;
+			switch (st)
 			{
-				st = 1;
+			case 0:
+				if (playerCount % 200 != 0) //“ªƒtƒŒ[ƒ€‚Ìˆ—
+				{
+					DrawRotaGraph(x - 3, y - 22, 1.0f, 0, head_Image[1], TRUE);
+				}
+				else
+				{
+					st = 1;
+				}
+				break;
+			case 1:
+				if (playerCount % 50 != 0) //“ªƒtƒŒ[ƒ€‚Ìˆ—
+				{
+					DrawRotaGraph(x - 3, y - 18, 1.0f, 0, head_Image[1], TRUE);
+				}
+				else
+				{
+					st = 0;
+				}
+				break;
 			}
-			break;
-		case 1:
-			if (playerCount % 50 != 0) //“ªƒtƒŒ[ƒ€‚Ìˆ—
+		}
+		else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 6)
+		{
+			DrawRotaGraph(x - 3, y - 19, 1.0f, 0, head_Image[1], TRUE);
+		}
+		else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 7)
+		{
+			DrawRotaGraph(x + 7, y - 19, 1.0f, 0, head_Image[1], TRUE);
+		}
+		else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 8)
+		{
+			DrawRotaGraph(x - 5, y - 17, 1.0f, 0, head_Image[1], TRUE);
+		}
+		/*else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == false) //ƒWƒƒƒ“ƒv‚Ì
+		{
+			DrawRotaGraph(x - 3, y - 22, 1.0f, 0, head_Image[1], TRUE);
+		}*/
+	}
+	/*HP‚ª”¼•ªˆÈ‰º‚Ì*/
+	else if (this->hp < 50)
+	{
+		/*‰EŒü‚«*/
+		if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 0)
+		{
+			/*–ô“®Š´*/
+			static int st = 0;
+			switch (st)
 			{
-				DrawRotaGraph(x + 3, y - 18, 1.0f, M_PI, head_Image[0], TRUE);
+			case 0:
+				if (playerCount % 200 != 0) //“ªƒtƒŒ[ƒ€‚Ìˆ—
+				{
+					DrawRotaGraph(x + 3, y - 22, 1.0f, M_PI, head_Image[2], TRUE);
+				}
+				else
+				{
+					st = 1;
+				}
+				break;
+			case 1:
+				if (playerCount % 50 != 0) //“ªƒtƒŒ[ƒ€‚Ìˆ—
+				{
+					DrawRotaGraph(x + 3, y - 18, 1.0f, M_PI, head_Image[2], TRUE);
+				}
+				else
+				{
+					st = 0;
+				}
+				break;
 			}
-			else
+		}
+		else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 1)
+		{
+			DrawRotaGraph(x + 3, y - 19, 1.0f, M_PI, head_Image[2], TRUE);
+		}
+		else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 2)
+		{
+			DrawRotaGraph(x - 7, y - 19, 1.0f, M_PI, head_Image[2], TRUE);
+		}
+		else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 3)
+		{
+			DrawRotaGraph(x + 5, y - 17, 1.0f, M_PI, head_Image[2], TRUE);
+		}
+
+		/*¶Œü‚«*/
+		if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 5)
+		{
+			/*–ô“®Š´*/
+			static int st = 0;
+			switch (st)
 			{
-				st = 0;
+			case 0:
+				if (playerCount % 200 != 0) //“ªƒtƒŒ[ƒ€‚Ìˆ—
+				{
+					DrawRotaGraph(x - 3, y - 22, 1.0f, 0, head_Image[3], TRUE);
+				}
+				else
+				{
+					st = 1;
+				}
+				break;
+			case 1:
+				if (playerCount % 50 != 0) //“ªƒtƒŒ[ƒ€‚Ìˆ—
+				{
+					DrawRotaGraph(x - 3, y - 18, 1.0f, 0, head_Image[3], TRUE);
+				}
+				else
+				{
+					st = 0;
+				}
+				break;
 			}
-			break;
+		}
+		else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 6)
+		{
+			DrawRotaGraph(x - 3, y - 19, 1.0f, 0, head_Image[3], TRUE);
+		}
+		else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 7)
+		{
+			DrawRotaGraph(x + 7, y - 19, 1.0f, 0, head_Image[3], TRUE);
+		}
+		else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 8)
+		{
+			DrawRotaGraph(x - 5, y - 17, 1.0f, 0, head_Image[3], TRUE);
 		}
 	}
-	else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 1)
-	{
-		DrawRotaGraph(x + 3, y - 19, 1.0f, M_PI, head_Image[0], TRUE);
-	}
-	else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 2)
-	{
-		DrawRotaGraph(x - 7, y - 19, 1.0f, M_PI, head_Image[0], TRUE);
-	}
-	else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 3)
-	{
-		DrawRotaGraph(x + 5, y - 17, 1.0f, M_PI, head_Image[0], TRUE);
-	}
-	/*else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == false) //ƒWƒƒƒ“ƒv‚Ì
-	{
-		DrawRotaGraph(x + 3, y - 22, 1.0f, M_PI, head_Image[0], TRUE);
-	}*/
-
-	/*¶Œü‚«*/
-	if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 5)
-	{
-		//DrawRotaGraph(x - 3, y - 22, 1.0f, 0, head_Image[1], TRUE);
-
-		/*–ô“®Š´*/
-		static int st = 0;
-		switch (st)
-		{
-		case 0:
-			if (playerCount % 200 != 0) //“ªƒtƒŒ[ƒ€‚Ìˆ—
-			{
-				DrawRotaGraph(x - 3, y - 22, 1.0f, 0, head_Image[1], TRUE);
-			}
-			else
-			{
-				st = 1;
-			}
-			break;
-		case 1:
-			if (playerCount % 50 != 0) //“ªƒtƒŒ[ƒ€‚Ìˆ—
-			{
-				DrawRotaGraph(x - 3, y - 18, 1.0f, 0, head_Image[1], TRUE);
-			}
-			else
-			{
-				st = 0;
-			}
-			break;
-		}
-	}
-	else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 6)
-	{
-		DrawRotaGraph(x - 3, y - 19, 1.0f, 0, head_Image[1], TRUE);
-	}
-	else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 7)
-	{
-		DrawRotaGraph(x + 7, y - 19, 1.0f, 0, head_Image[1], TRUE);
-	}
-	else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 8)
-	{
-		DrawRotaGraph(x - 5, y - 17, 1.0f, 0, head_Image[1], TRUE);
-	}
-	/*else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == false) //ƒWƒƒƒ“ƒv‚Ì
-	{
-		DrawRotaGraph(x - 3, y - 22, 1.0f, 0, head_Image[1], TRUE);
-	}*/
 
 	///*********************
 	//*                    *
@@ -624,60 +713,10 @@ void Player::EyeDrawMove() const
 	else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 2)
 	{
 		DrawRotaGraph(x - 3, y - 25, 1.0f, M_PI, eye_ImageR[0], TRUE);
-		/*u‚«Š´*/
-		//static int st = 0;
-		//switch (st)
-		//{
-		//case 0:
-		//	if (playerCount % 100 != 0) //10ƒtƒŒ[ƒ€–ˆ‚Ìˆ—
-		//	{
-		//		DrawRotaGraph(x - 3, y - 25, 1.0f, M_PI, eye_ImageR[0], TRUE);
-		//	}
-		//	else
-		//	{
-		//		st = 1;
-		//	}
-		//	break;
-		//case 1:
-		//	if (playerCount % 10 != 0) //10ƒtƒŒ[ƒ€–ˆ‚Ìˆ—
-		//	{
-		//		DrawRotaGraph(x - 3, y - 25, 1.0f, M_PI, eye_ImageR[1], TRUE);
-		//	}
-		//	else
-		//	{
-		//		st = 0;
-		//	}
-		//	break;
-		//}
 	}
 	else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 3)
 	{
 		DrawRotaGraph(x + 9, y - 23, 1.0f, M_PI, eye_ImageR[0], TRUE);
-		/*u‚«Š´*/
-		//static int st = 0;
-		//switch (st)
-		//{
-		//case 0:
-		//	if (playerCount % 100 != 0) //10ƒtƒŒ[ƒ€–ˆ‚Ìˆ—
-		//	{
-		//		DrawRotaGraph(x + 9, y - 23, 1.0f, M_PI, eye_ImageR[0], TRUE);
-		//	}
-		//	else
-		//	{
-		//		st = 1;
-		//	}
-		//	break;
-		//case 1:
-		//	if (playerCount % 10 != 0) //10ƒtƒŒ[ƒ€–ˆ‚Ìˆ—
-		//	{
-		//		DrawRotaGraph(x + 9, y - 23, 1.0f, M_PI, eye_ImageR[1], TRUE);
-		//	}
-		//	else
-		//	{
-		//		st = 0;
-		//	}
-		//	break;
-		//}
 	}
 
 	/*¶Œü‚«*/
@@ -757,90 +796,272 @@ void Player::EyeDrawMove() const
 	else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 6)
 	{
 		DrawRotaGraph(x - 6, y - 25, 1.0f, 0, eye_ImageL[0], TRUE);
-		/*u‚«Š´*/
-		//static int st = 0;
-		//switch (st)
-		//{
-		//case 0:
-		//	if (playerCount % 100 != 0) //10ƒtƒŒ[ƒ€–ˆ‚Ìˆ—
-		//	{
-		//		DrawRotaGraph(x - 6, y - 25, 1.0f, 0, eye_ImageL[0], TRUE);
-		//	}
-		//	else
-		//	{
-		//		st = 1;
-		//	}
-		//	break;
-		//case 1:
-		//	if (playerCount % 10 != 0) //10ƒtƒŒ[ƒ€–ˆ‚Ìˆ—
-		//	{
-		//		DrawRotaGraph(x - 6, y - 25, 1.0f, 0, eye_ImageL[1], TRUE);
-		//	}
-		//	else
-		//	{
-		//		st = 0;
-		//	}
-		//	break;
-		//}
 	}
 	else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 7)
 	{
 		DrawRotaGraph(x + 3, y - 25, 1.0f, 0, eye_ImageL[0], TRUE);
-		/*u‚«Š´*/
-		//static int st = 0;
-		//switch (st)
-		//{
-		//case 0:
-		//	if (playerCount % 100 != 0) //10ƒtƒŒ[ƒ€–ˆ‚Ìˆ—
-		//	{
-		//		DrawRotaGraph(x + 3, y - 25, 1.0f, 0, eye_ImageL[0], TRUE);
-		//	}
-		//	else
-		//	{
-		//		st = 1;
-		//	}
-		//	break;
-		//case 1:
-		//	if (playerCount % 10 != 0) //10ƒtƒŒ[ƒ€–ˆ‚Ìˆ—
-		//	{
-		//		DrawRotaGraph(x + 3, y - 25, 1.0f, 0, eye_ImageL[1], TRUE);
-		//	}
-		//	else
-		//	{
-		//		st = 0;
-		//	}
-		//	break;
-		//}
 	}
 	else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 8)
 	{
 		DrawRotaGraph(x - 9, y - 23, 1.0f, 0, eye_ImageL[0], TRUE);
-		/*u‚«Š´*/
-		//static int st = 0;
-		//switch (st)
-		//{
-		//case 0:
-		//	if (playerCount % 100 != 0) //10ƒtƒŒ[ƒ€–ˆ‚Ìˆ—
-		//	{
-		//		DrawRotaGraph(x - 9, y - 23, 1.0f, 0, eye_ImageL[0], TRUE);
-		//	}
-		//	else
-		//	{
-		//		st = 1;
-		//	}
-		//	break;
-		//case 1:
-		//	if (playerCount % 10 != 0) //10ƒtƒŒ[ƒ€–ˆ‚Ìˆ—
-		//	{
-		//		DrawRotaGraph(x - 9, y - 23, 1.0f, 0, eye_ImageL[1], TRUE);
-		//	}
-		//	else
-		//	{
-		//		st = 0;
-		//	}
-		//	break;
-		//}
 	}
+
+	///*********************
+	//*                    *
+	//*       u‚«‚±‚İ     *
+	//*                    *
+	//*********************/
+
+	/*static int st = 0;
+	static int stk = 0;
+	static int stky = 0;*/
+
+	/*‰EŒü‚«*/
+	//if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true)
+	//{
+	//	//static int st = 0;
+	//	//static int stk = 0;
+	//	if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 0)
+	//	{
+	//		/*u‚«Š´*/
+	//		switch (st)
+	//		{
+	//		case 0:
+	//			if (playerCount % 200 != 0) //“ªƒtƒŒ[ƒ€‚Ìˆ—
+	//			{
+	//				switch (stk)
+	//				{
+	//				case 0:
+	//					if (playerCount % 120 != 0) //–ÚƒtƒŒ[ƒ€‚Ìˆ—
+	//					{
+	//						DrawRotaGraph(x + 6, y - 28, 1.0f, M_PI, eye_ImageR[0], TRUE);
+	//					}
+	//					else
+	//					{
+	//						stk = 1;
+	//					}
+	//					break;
+	//				case 1:
+	//					if (playerCount % 10 != 0) //–ÚƒtƒŒ[ƒ€‚Ìˆ—
+	//					{
+	//						DrawRotaGraph(x + 6, y - 28, 1.0f, M_PI, eye_ImageR[1], TRUE);
+	//					}
+	//					else
+	//					{
+	//						stk = 0;
+	//					}
+	//					break;
+	//				}
+	//			}
+	//			else
+	//			{
+	//				st = 1;
+	//			}
+	//			break;
+	//		case 1:
+	//			if (playerCount % 50 != 0) //“ªƒtƒŒ[ƒ€‚Ìˆ—
+	//			{
+	//				switch (stk)
+	//				{
+	//				case 0:
+	//					if (playerCount % 120 != 0) //–ÚƒtƒŒ[ƒ€‚Ìˆ—
+	//					{
+	//						DrawRotaGraph(x + 6, y - 24, 1.0f, M_PI, eye_ImageR[0], TRUE);
+	//					}
+	//					else
+	//					{
+	//						stk = 1;
+	//					}
+	//					break;
+	//				case 1:
+	//					if (playerCount % 10 != 0) //–ÚƒtƒŒ[ƒ€‚Ìˆ—
+	//					{
+	//						DrawRotaGraph(x + 6, y - 24, 1.0f, M_PI, eye_ImageR[1], TRUE);
+	//					}
+	//					else
+	//					{
+	//						stk = 0;
+	//					}
+	//					break;
+	//				}
+	//			}
+	//			else
+	//			{
+	//				st = 0;
+	//			}
+	//			break;
+	//		}
+	//	}
+	//	switch (stky)
+	//	{
+	//	case 0:
+	//		if (playerCount2 % 120 != 0) //–ÚƒtƒŒ[ƒ€‚Ìˆ—
+	//		{
+	//			if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 1)
+	//			{
+	//				DrawRotaGraph(x + 6, y - 25, 1.0f, M_PI, eye_ImageR[0], TRUE);
+	//			}
+	//			if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 2)
+	//			{
+	//				DrawRotaGraph(x - 3, y - 25, 1.0f, M_PI, eye_ImageR[0], TRUE);
+	//			}
+	//			if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 3)
+	//			{
+	//				DrawRotaGraph(x + 9, y - 23, 1.0f, M_PI, eye_ImageR[0], TRUE);
+	//			}
+	//		}
+	//		else
+	//		{
+	//			stky = 1;
+	//		}
+	//		break;
+	//	case 1:
+	//		if (playerCount2 % 10 != 0) //–ÚƒtƒŒ[ƒ€‚Ìˆ—
+	//		{
+	//			if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 1)
+	//			{
+	//				DrawRotaGraph(x + 6, y - 25, 1.0f, M_PI, eye_ImageR[1], TRUE);
+	//			}
+	//			if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 2)
+	//			{
+	//				DrawRotaGraph(x - 3, y - 25, 1.0f, M_PI, eye_ImageR[1], TRUE);
+	//			}
+	//			if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 3)
+	//			{
+	//				DrawRotaGraph(x + 9, y - 23, 1.0f, M_PI, eye_ImageR[1], TRUE);
+	//			}
+	//		}
+	//		else
+	//		{
+	//			stky = 0;
+	//		}
+	//		break;
+	//	}
+	//}
+	///*¶Œü‚«*/
+	//if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true)
+	//{
+	//	//static int st = 0;
+	//	//static int stk = 0;
+	//	if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 5)
+	//	{
+	//		/*u‚«Š´*/
+	//		static int st = 0;
+	//		static int stk = 0;
+	//		switch (st)
+	//		{
+	//		case 0:
+	//			if (playerCount % 200 != 0) //“ªƒtƒŒ[ƒ€‚Ìˆ—
+	//			{
+	//				switch (stk)
+	//				{
+	//				case 0:
+	//					if (playerCount % 120 != 0) //–ÚƒtƒŒ[ƒ€‚Ìˆ—
+	//					{
+	//						DrawRotaGraph(x - 6, y - 28, 1.0f, 0, eye_ImageL[0], TRUE);
+	//					}
+	//					else
+	//					{
+	//						stk = 1;
+	//					}
+	//					break;
+	//				case 1:
+	//					if (playerCount % 10 != 0) //–ÚƒtƒŒ[ƒ€‚Ìˆ—
+	//					{
+	//						DrawRotaGraph(x - 6, y - 28, 1.0f, 0, eye_ImageL[1], TRUE);
+	//					}
+	//					else
+	//					{
+	//						stk = 0;
+	//					}
+	//					break;
+	//				}
+	//			}
+	//			else
+	//			{
+	//				st = 1;
+	//			}
+	//			break;
+	//		case 1:
+	//			if (playerCount % 50 != 0) //“ªƒtƒŒ[ƒ€‚Ìˆ—
+	//			{
+	//				switch (stk)
+	//				{
+	//				case 0:
+	//					if (playerCount % 120 != 0) //–ÚƒtƒŒ[ƒ€‚Ìˆ—
+	//					{
+	//						DrawRotaGraph(x - 6, y - 24, 1.0f, 0, eye_ImageL[0], TRUE);
+	//					}
+	//					else
+	//					{
+	//						stk = 1;
+	//					}
+	//					break;
+	//				case 1:
+	//					if (playerCount % 10 != 0) //–ÚƒtƒŒ[ƒ€‚Ìˆ—
+	//					{
+	//						DrawRotaGraph(x - 6, y - 24, 1.0f, 0, eye_ImageL[1], TRUE);
+	//					}
+	//					else
+	//					{
+	//						stk = 0;
+	//					}
+	//					break;
+	//				}
+	//			}
+	//			else
+	//			{
+	//				st = 0;
+	//			}
+	//			break;
+	//		}
+	//	}
+	//	switch (stky)
+	//	{
+	//	case 0:
+	//		if (playerCount2 % 120 != 0) //–ÚƒtƒŒ[ƒ€‚Ìˆ—
+	//		{
+	//			if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 6)
+	//			{
+	//				DrawRotaGraph(x - 6, y - 25, 1.0f, 0, eye_ImageL[0], TRUE);
+	//			}
+	//			if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 7)
+	//			{
+	//				DrawRotaGraph(x + 3, y - 25, 1.0f, 0, eye_ImageL[0], TRUE);
+	//			}
+	//			if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 8)
+	//			{
+	//				DrawRotaGraph(x - 9, y - 23, 1.0f, 0, eye_ImageL[0], TRUE);
+	//			}
+	//		}
+	//		else
+	//		{
+	//			stky = 1;
+	//		}
+	//		break;
+	//	case 1:
+	//		if (playerCount2 % 10 != 0) //–ÚƒtƒŒ[ƒ€‚Ìˆ—
+	//		{
+	//			if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 6)
+	//			{
+	//				DrawRotaGraph(x - 6, y - 25, 1.0f, 0, eye_ImageL[1], TRUE);
+	//			}
+	//			if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 7)
+	//			{
+	//				DrawRotaGraph(x + 3, y - 25, 1.0f, 0, eye_ImageL[1], TRUE);
+	//			}
+	//			if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 8)
+	//			{
+	//				DrawRotaGraph(x - 9, y - 23, 1.0f, 0, eye_ImageL[1], TRUE);
+	//			}
+	//		}
+	//		else
+	//		{
+	//			stky = 0;
+	//		}
+	//		break;
+	//	}
+	//}
 }
 
 /*˜r‚Ì•`‰æE“®‚«*/

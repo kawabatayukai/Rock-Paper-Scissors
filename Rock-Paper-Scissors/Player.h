@@ -78,7 +78,7 @@ private:
 	int image[3][10]; //‰æ‘œ
 	int image_death;          //Ž€–SŽž
 
-	int head_Image[2];        //“ª
+	int head_Image[4];        //“ª
 
 	int eye_ImageR[2];          //–Ú
 	int eye_ImageL[2];          //–Ú
