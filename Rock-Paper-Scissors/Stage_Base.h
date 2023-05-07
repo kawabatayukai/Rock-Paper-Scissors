@@ -5,6 +5,7 @@
 #include"Janken.h"
 #include"EnemyBase.h"
 #include"Effect_Jangeki.h"
+#include"Effect_Enemy.h"
 
 //ステージのベース
 class Stage_Base : public AbstractScene
@@ -66,10 +67,12 @@ private:
 
 	unsigned short blackout_time;             //暗転時間（接触直後演出）
 
-	Effect_Jangeki** obj_effect;              //エフェクト
+	Effect_Jangeki** obj_effect;              //エフェクト（じゃん撃hit）
+	
+	Jan_Type Prev_EnemyType;                  //敵の属性変化前の属性
+	Effect_Enemy* obj_effectEnemy;            //エフェクト（属性変化s）
 
 	int image_circle[3];                      //時計用円
-
 	int image_clock;                          //時計
 	int image_clockhand;                      //時計の針
 	int image_clockchar;                      //時計の文字盤

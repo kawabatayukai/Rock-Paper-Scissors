@@ -152,7 +152,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CharaBase.cpp" />
+    <ClCompile Include="Effect_Enemy.cpp" />
     <ClCompile Include="Effect_Jangeki.cpp" />
+    <ClCompile Include="Effect_Player.cpp" />
     <ClCompile Include="EnemyBase.cpp" />
     <ClCompile Include="Enemy_00.cpp" />
     <ClCompile Include="Enemy_01.cpp" />
@@ -214,7 +216,9 @@
     <ClInclude Include="CharaBase.h" />
     <ClInclude Include="comon.h" />
     <ClInclude Include="Debug_Manager.h" />
+    <ClInclude Include="Effect_Enemy.h" />
     <ClInclude Include="Effect_Jangeki.h" />
+    <ClInclude Include="Effect_Player.h" />
     <ClInclude Include="EnemyBase.h" />
     <ClInclude Include="Enemy_00.h" />
     <ClInclude Include="Enemy_01.h" />
