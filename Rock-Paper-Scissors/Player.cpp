@@ -1294,15 +1294,15 @@ void Player::Draw() const
 	if (player_state == PLAYER_STATE::ALIVE)
 	{
 		//エフェクト
-		if (obj_effect != nullptr)
-		{
-			obj_effect->Draw_Back();
-		}
-		else {};
-		//エフェクト
 		if (obj_effectchange != nullptr)
 		{
 			obj_effectchange->Draw_Back();
+		}
+		else {};
+		//エフェクト
+		if (obj_effect != nullptr)
+		{
+			obj_effect->Draw_Back();
 		}
 		else {};
 
@@ -1333,16 +1333,16 @@ void Player::Draw() const
 		EyeDrawMove();
 
 		//エフェクト
-		if (obj_effect != nullptr)
-		{
-			obj_effect->Draw_Front();
-		}
-		//エフェクト
 		if (obj_effectchange != nullptr)
 		{
 			obj_effectchange->Draw_Front();
 		}
 		else {};
+		//エフェクト
+		if (obj_effect != nullptr)
+		{
+			obj_effect->Draw_Front();
+		}
 	}
 	else
 	{
