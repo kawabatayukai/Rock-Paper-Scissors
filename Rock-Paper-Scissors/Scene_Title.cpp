@@ -10,7 +10,6 @@
 #include"GameData.h"
 #include"SoundSystem.h"
 #include"Scene_Story.h"
-#include "Scene_Title_GameLevel.h"
 
 //コンストラクタ
 TitleScene::TitleScene()
@@ -91,9 +90,8 @@ AbstractScene* TitleScene::ChangeScene()
 		switch (T_selectnum)
 		{
 		case 0:
-			/*return dynamic_cast<AbstractScene*> (new Scene_Story());
-			SoundSystem::StopBGM(BGM::TITLE);*/
-			return dynamic_cast<AbstractScene*> (new Scene_Title_GameLevel());
+			return dynamic_cast<AbstractScene*> (new Scene_Story());
+			SoundSystem::StopBGM(BGM::TITLE);
 			break;
 		case 1:
 			return dynamic_cast<AbstractScene*> (new HelpScene());

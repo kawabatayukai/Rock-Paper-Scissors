@@ -61,7 +61,7 @@ Scene_Stage04::~Scene_Stage04()
 //更新
 void Scene_Stage04::Update()
 {
-	//PlaySoundMem(stage04_BGM, DX_PLAYTYPE_BACK);
+	PlaySoundMem(stage04_BGM, DX_PLAYTYPE_BACK);
 
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)

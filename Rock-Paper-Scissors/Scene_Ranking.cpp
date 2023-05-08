@@ -37,7 +37,7 @@ void Scene_Ranking::Draw() const
 	for (int i = 0; i < 10; i++)
 	{
 		//DrawFormatString(80, 170 + i * 25, 0xFFFFFF, "%2d   %10s  %10d", dataRanking[i].rank, dataRanking[i].name, dataRanking[i].score);
-		DrawFormatString(200, 170 + i * 25, 0xFFFFFF, "%2d位   %10s  スコア：%10d  時間： %10d", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score, sortSave.getRankingData(i).time);
+		DrawFormatString(400, 170 + i * 25, 0xFFFFFF, "%2d位   %10s  スコア：%10d", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score);
 	}
 
 	SetFontSize(100);

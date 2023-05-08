@@ -11,8 +11,6 @@ struct RankingData {
 	char name[11];
 
 	long score;
-
-	int time;
 };
 
 
@@ -39,7 +37,5 @@ public:
 	void setName(int i, char name[11]);
 
 	void setScore(int i, int score);
-
-	void setTimer(int i, int time);
 };
 extern SortSave sortSave;

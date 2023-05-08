@@ -4,7 +4,6 @@
 #include"Scene_Title.h"
 #include"Jangeki_Player.h"
 #include"SoundSystem.h"
-#include "Scne_TitleInterval.h"
 
 /*　　変数　　*/
 int g_OldKey;      // 前回の入力キー 
@@ -23,7 +22,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     SetDrawScreen(DX_SCREEN_BACK);         //描画先画面を裏にする
 
     //シーンマネージャー     　　　　　　　　　　　　　　　タイトルを設定
-    SceneManager sceneMng(dynamic_cast<AbstractScene*>(new Scne_TitleInterval()));
+    SceneManager sceneMng(dynamic_cast<AbstractScene*>(new TitleScene()));
 
     //じゃん撃画像
     Jangeki_Player::LoadJanImage();

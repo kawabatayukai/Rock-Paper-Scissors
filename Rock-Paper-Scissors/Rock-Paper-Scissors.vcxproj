@@ -193,8 +193,6 @@
     <ClCompile Include="Scene_GameMain.cpp" />
     <ClCompile Include="Scene_GameOver.cpp" />
     <ClCompile Include="Scene_Story.cpp" />
-    <ClCompile Include="Scene_Title_GameLevel.cpp" />
-    <ClCompile Include="Scne_TitleInterval.cpp" />
     <ClCompile Include="SortSave.cpp" />
     <ClCompile Include="Scene_Ranking.cpp" />
     <ClCompile Include="Scene_InputName.cpp" />
@@ -258,8 +256,6 @@
     <ClInclude Include="Scene_GameMain.h" />
     <ClInclude Include="Scene_GameOver.h" />
     <ClInclude Include="Scene_Story.h" />
-    <ClInclude Include="Scene_Title_GameLevel.h" />
-    <ClInclude Include="Scne_TitleInterval.h" />
     <ClInclude Include="SortSave.h" />
     <ClInclude Include="Scene_Ranking.h" />
     <ClInclude Include="Scene_InputName.h" />

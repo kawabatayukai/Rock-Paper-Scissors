@@ -52,6 +52,8 @@ Scene_Story::~Scene_Story()
 
 	//ƒtƒHƒ“ƒg‚ğíœ
 	DeleteFontToHandle(font_text);
+
+	SetBackgroundColor(0, 0, 0);
 }
 
 void Scene_Story::Update()

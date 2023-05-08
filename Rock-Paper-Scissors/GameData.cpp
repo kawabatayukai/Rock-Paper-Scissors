@@ -27,7 +27,7 @@ void GameData::Add_Score(unsigned int score)
 }
 
 //ƒXƒRƒAæ“¾
-unsigned int GameData::Get_Score()
+unsigned int GameData::Get_Score() 
 {
 	return g_score;
 }
