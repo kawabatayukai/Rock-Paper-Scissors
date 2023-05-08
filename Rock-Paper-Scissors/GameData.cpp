@@ -1,25 +1,13 @@
 #include"DxLib.h"
 #include"GameData.h"
 
-namespace TIME_LIMIT
-{
-	//各ステージの制限時間
 
-	const int LIMIT_STAGE_02 = 999;
-	const int LIMIT_STAGE_03 = 999;
-	const int LIMIT_STAGE_04 = 3600;
-	const int LIMIT_STAGE_05 = 999;
-	const int LIMIT_STAGE_06 = 999;
-	const int LIMIT_STAGE_07 = 600;
-	const int LIMIT_STAGE_08 = 999;
-	const int LIMIT_STAGE_09 = 999;
-	const int LIMIT_STAGE_10 = 999;
-}
 
 unsigned int GameData::g_score;           //スコア（ゲームプレイ中ずっと保持）
-unsigned int GameData::total_time;        //総合時間
+int GameData::total_time;        //総合時間
 
-unsigned int GameData::each_stage_time;   //各ステージの制限時間
+int GameData::each_stage_time;   //各ステージの制限時間
+int GameData::c_time_limit;      //制限時間（固定）
 
 //初期化
 void GameData::Init_Data()
@@ -41,16 +29,20 @@ unsigned int GameData::Get_Score()
 }
 
 
-//制限時間を設定（各ステージの番号）
-void GameData::Set_TimeLimit(const unsigned int time_limit)
+//制限時間を設定（各ステージの制限時間）
+void GameData::Set_TimeLimit(const int time_limit)
 {
+	//強制3分
+
 	//0以下の場合は処理しない
 	if (time_limit < 0)
 	{
 		each_stage_time = 999;
 	}
 
+	//each_stage_time = 10800;
 	each_stage_time = time_limit;
+	c_time_limit = each_stage_time;
 }
 
 //時間カウンター
@@ -64,37 +56,57 @@ void GameData::Time_Update()
 	if (each_stage_time < 0) each_stage_time = 0;
 }
 
+//制限時間（設定値）取得
+int GameData::Get_ConstTimeLimit()
+{
+	return c_time_limit;
+}
+
 //(各ステージの)制限時間を取得（ミリ秒）
-unsigned int GameData::Get_Each_Time()
+int GameData::Get_Each_Time()
 {
 	return each_stage_time;
 }
 
 //(各ステージの)制限時間を取得（秒）
-unsigned int GameData::Get_Each_Time_Sec()
+int GameData::Get_Each_Time_Sec()
 {
 	//分(3600ミリ秒)で割った余り
 	unsigned int ret = each_stage_time % 3600;
 
-	//0除算防止
-	if (ret < 60) 
+	if (each_stage_time < 1)
+	{
 		return 0;
-	else          
-		return ret / 60;
+	}
+	else
+	{
+		//0除算防止
+		if (ret < 60)
+			return 0;
+		else
+			return ret / 60;
+	}
 }
 
 //(各ステージの)制限時間を取得（分）
-unsigned int GameData::Get_Each_Time_Min()
+int GameData::Get_Each_Time_Min()
 {
-	//0除算防止
-	if (each_stage_time < 3600) 
+	if (each_stage_time < 1)
+	{
 		return 0;
-	else 
-		return each_stage_time / 3600;
+	}
+	else
+	{
+		//0除算防止
+		if (each_stage_time < 3600)
+			return 0;
+		else
+			return each_stage_time / 3600;
+	}
 }
 
 //総合時間を取得
-unsigned int GameData::Get_Total_Time()
+int GameData::Get_Total_Time()
 {
 	return total_time;
 }

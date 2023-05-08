@@ -553,16 +553,20 @@ AbstractScene* Scene_Stage10::ChangeScene()
 	//"Debug_Manager.h" の #define DEBUG_OFF_10 をコメントアウトすると開発モード
 #ifdef DEBUG_OFF_10
 
-	//敵のHPが0以下
-	if (obj_enemy->Get_Enemy10Form() == 2 && obj_enemy->GetHP() < 0)
+	/*敵のHPが0以下*/
+	//if (obj_enemy->Get_Enemy10Form() == 2 && obj_enemy->GetHP() < 0)
+	//
+	if(obj_enemy->Get_Enemy10Form() == 2 && obj_enemy->IsDeathEnemy10() == true)
 	{
 		//リザルトへ切り替え
 		return dynamic_cast<AbstractScene*> (new Scene_InputName());
 	}
 
 
-	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() < 0 || GameData::Get_Each_Time() <= 0)
+	/*プレイヤーのHPが0以下*/
+	//if (obj_player->GetHP() < 0 || GameData::Get_Each_Time() <= 0)
+	//
+	 	   if (obj_player->IsDeathPlayer() == true)
 	{
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(10));

@@ -11,7 +11,6 @@ class Stage_Base : public AbstractScene
 {
 private:
 	int typeImage[3];
-	int hpImage;
 public:
 	Stage_Base();
 	~Stage_Base();
@@ -35,6 +34,13 @@ public:
 	//敵とプレイヤーの当たり判定→接触じゃんけん処理    敵へのポインタ、"this" を引数に
 	void Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_StageNum = 0);
 
+	//じゃん撃ヒット時エフェクト 処理
+	void Effect_Update_HitJangeki(const EnemyBase* enemy);
+
+	//じゃん撃ヒット時エフェクト 描画
+	void Effect_Draw_HitJangeki() const;
+
+
 	//じゃんけん描画
 	void Draw_Janken() const;   
 
@@ -45,15 +51,6 @@ public:
 
 	//じゃんけんの状態取得
 	Jan_State GetJanState() const;
-
-	//エフェクト再生（エフェクト再生するスイッチ）
-	void Play_Effect(float play_x, float play_y, unsigned int effect_type = 0);
-
-	//エフェクトを動作させる
-	void Update_Effect();
-
-	//エフェクト描画
-	void Draw_Effect() const;
 
 protected:
 	Player* obj_player = nullptr;             //プレイヤー
@@ -69,8 +66,12 @@ private:
 
 	unsigned short blackout_time;             //暗転時間（接触直後演出）
 
+	Effect_Jangeki** obj_effect;              //エフェクト
 
-	Effect_Jangeki** obj_effect;              //エフェクト(じゃん撃同士の衝突)
-	unsigned short e_jancount = 0;            //エフェクト配列操作
+	int image_circle[3];                      //時計用円
+
+	int image_clock;                          //時計
+	int image_clockhand;                      //時計の針
+	int image_clockchar;                      //時計の文字盤
 };
 
