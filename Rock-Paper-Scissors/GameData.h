@@ -11,11 +11,7 @@ public:
 	//スコア加算
 	static void Add_Score(unsigned int score);
 
-	//スコア取得(描画用)
 	static unsigned int Get_Score() ;
-
-	//スコア取得(本来)
-	static unsigned int Get_MaxScore();
 
 	//制限時間を設定（各ステージの番号）
 	static void Set_TimeLimit(const int time_limit = 10800);
@@ -41,9 +37,7 @@ public:
 private:
 	GameData();     //オブジェクトは作れない
 
-	static unsigned int g_score;       //スコア（描画用　1ずつ増える)
-	static unsigned int max_score;     //スコア
-
+	static unsigned int g_score;       //スコア（ゲームプレイ中ずっと保持）
 	static int total_time;    //総合時間
 
 
