@@ -194,7 +194,7 @@ void Scene_Stage03::Update()
 
 						}
 
-						SoundSystem::PlaySE(SE::ENEMY_SLIGHTLYBROKEN);
+						//SoundSystem::PlaySE(SE::ENEMY_SLIGHTLYBROKEN);
 
 					}
 
@@ -527,6 +527,8 @@ void Scene_Stage03::AfterJanken_WIN()
 
 	obj_player->SetX(200);
 	//obj_enemy->SetX(1150);
+
+	if (obj_player->GetHP() >= 86 /*&& obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200*/) DrawFormatString((int)(obj_player->GetX() - 50), (int)(obj_player->GetY() - 70), GetColor(255, 0, 0), " 防御UP↑", obj_enemy->GetHP());
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）
@@ -538,6 +540,8 @@ void Scene_Stage03::AfterJanken_LOSE()
 
 	obj_player->SetX(200);
 	//obj_enemy->SetX(1150);
+
+	if (obj_enemy->GetHP() >= 86 && obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200) DrawFormatString((int)(obj_enemy->GetX() - 35), (int)(obj_enemy->GetY() - 50), GetColor(0, 0, 255), "さらに防御UP↑", obj_enemy->GetWaitTime());
 }
 
 
