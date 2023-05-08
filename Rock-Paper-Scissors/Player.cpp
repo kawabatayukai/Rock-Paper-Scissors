@@ -158,10 +158,6 @@ void Player::Update()
 		Prev_recoveryScore = _score;
 		Recover_HP(20);
 
-
-		//エフェクト生成
-		//delete obj_effect;
-		//obj_effect = nullptr;
 		if (obj_effect == nullptr) obj_effect = new Effect_Player(x, y);
 	}
 
