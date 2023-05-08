@@ -22,6 +22,7 @@ Scene_Title_GameLevel::Scene_Title_GameLevel()
 
 	//データの初期化
 	GameData::Init_Data();
+	SetBackgroundColor(255, 255, 255);
 }
 
 //デストラクタ
@@ -31,6 +32,7 @@ Scene_Title_GameLevel::~Scene_Title_GameLevel()
 	DeleteFontToHandle(font_title);
 	DeleteFontToHandle(font_debug);
 	SoundSystem::StopBGM(BGM::TITLE);
+	SetBackgroundColor(0, 0, 0);
 }
 
 //更新
@@ -61,7 +63,7 @@ void Scene_Title_GameLevel::Update()
 //描画
 void Scene_Title_GameLevel::Draw() const
 {
-	SetBackgroundColor(0, 64, 0);
+	
 
 	DrawStringToHandle(70, 200, "難易度選択", 0xf, font_title);
 	DrawStringToHandle(70, 350, "NOMAL", 0xf, font_title); 
