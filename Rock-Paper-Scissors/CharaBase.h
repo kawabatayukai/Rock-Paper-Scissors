@@ -48,14 +48,14 @@ public:
 	bool Hit_Character(const CharaBase* character) const;
 
 	//じゃん撃とキャラクターの当たり判定
-	bool Hit_Jangeki(const Jangeki_Base* jangeki);
+	bool Hit_Jangeki(const Jangeki_Base* jangeki) const;
 
 //private:
 	//矩形と矩形の当たり判定
 	bool CheckHitBox_Box(int box_x, int box_y, int box_w, int box_h) const;
 
 	//矩形と円形の当たり判定
-	bool CheckHitBox_Circle(float c_x, float c_y, float c_r);
+	bool CheckHitBox_Circle(float c_x, float c_y, float c_r) const;
 
 	/****************************************************/
 

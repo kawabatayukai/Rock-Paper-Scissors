@@ -11,10 +11,11 @@
 //コンストラクタ
 Scene_Stage04::Scene_Stage04(const Player* player)
 {
-	//制限時間をセット(5分間)
-	GameData::Set_TimeLimit(18000);
+	//制限時間をセット(3分間)
+	GameData::Set_TimeLimit(10800);
 
 	back_image = LoadGraph("images/Stage04/Stage_Image2.png");
+	stage04_BGM = LoadSoundMem("Sound/stage04/stage04_BGM.wav");
 
 	//プレイヤー情報が渡されていれば
 	if (player != nullptr)
@@ -60,6 +61,8 @@ Scene_Stage04::~Scene_Stage04()
 //更新
 void Scene_Stage04::Update()
 {
+	//PlaySoundMem(stage04_BGM, DX_PLAYTYPE_BACK);
+
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{

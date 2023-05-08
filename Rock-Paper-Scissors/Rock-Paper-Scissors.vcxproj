@@ -152,7 +152,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CharaBase.cpp" />
+    <ClCompile Include="Effect_Enemy.cpp" />
     <ClCompile Include="Effect_Jangeki.cpp" />
+    <ClCompile Include="Effect_Player.cpp" />
     <ClCompile Include="EnemyBase.cpp" />
     <ClCompile Include="Enemy_00.cpp" />
     <ClCompile Include="Enemy_01.cpp" />
@@ -190,6 +192,9 @@
     <ClCompile Include="Scene_GameClear.cpp" />
     <ClCompile Include="Scene_GameMain.cpp" />
     <ClCompile Include="Scene_GameOver.cpp" />
+    <ClCompile Include="Scene_Story.cpp" />
+    <ClCompile Include="Scene_Title_GameLevel.cpp" />
+    <ClCompile Include="Scne_TitleInterval.cpp" />
     <ClCompile Include="SortSave.cpp" />
     <ClCompile Include="Scene_Ranking.cpp" />
     <ClCompile Include="Scene_InputName.cpp" />
@@ -205,6 +210,7 @@
     <ClCompile Include="Scene_Stage09.cpp" />
     <ClCompile Include="Scene_Stage10.cpp" />
     <ClCompile Include="Scene_Title.cpp" />
+    <ClCompile Include="SoundSystem.cpp" />
     <ClCompile Include="Stage_Base.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -212,7 +218,9 @@
     <ClInclude Include="CharaBase.h" />
     <ClInclude Include="comon.h" />
     <ClInclude Include="Debug_Manager.h" />
+    <ClInclude Include="Effect_Enemy.h" />
     <ClInclude Include="Effect_Jangeki.h" />
+    <ClInclude Include="Effect_Player.h" />
     <ClInclude Include="EnemyBase.h" />
     <ClInclude Include="Enemy_00.h" />
     <ClInclude Include="Enemy_01.h" />
@@ -249,6 +257,9 @@
     <ClInclude Include="Scene_GameClear.h" />
     <ClInclude Include="Scene_GameMain.h" />
     <ClInclude Include="Scene_GameOver.h" />
+    <ClInclude Include="Scene_Story.h" />
+    <ClInclude Include="Scene_Title_GameLevel.h" />
+    <ClInclude Include="Scne_TitleInterval.h" />
     <ClInclude Include="SortSave.h" />
     <ClInclude Include="Scene_Ranking.h" />
     <ClInclude Include="Scene_InputName.h" />
@@ -264,6 +275,7 @@
     <ClInclude Include="Scene_Stage09.h" />
     <ClInclude Include="Scene_Stage10.h" />
     <ClInclude Include="Scene_Title.h" />
+    <ClInclude Include="SoundSystem.h" />
     <ClInclude Include="Stage_Base.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

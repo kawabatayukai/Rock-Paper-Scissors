@@ -1,5 +1,14 @@
 #pragma once
 #include "CharaBase.h"
+#include"Effect_Player.h"
+
+//プレイヤーの状態
+enum class PLAYER_STATE
+{
+	ALIVE,     //生きている
+	DEATH,     //死んだ
+	DEATH_END, //死んだ→演出終わり
+};
 
 //プレイヤークラス　CharaBaseを継承
 class Player : public CharaBase
@@ -39,6 +48,12 @@ public:
 	/*頭の描画・動き*/
 	void HeadDrawMove() const;
 
+	/*目の描画・動き*/
+	void EyeDrawMove() const;
+
+	/*体の描画・動き*/
+	void BodyDrawMove() const;
+
 	//プレイヤーのUI描画
 	void PlayerDrawUI(int hp) const;
 
@@ -47,6 +62,9 @@ public:
 
 	//向き取得 0:左　1:右
 	int GetDirection() const { return dir; }
+
+	//プレイヤーが死亡しているか
+	bool IsDeathPlayer() const;
 
 private:
 	/********************   ジャンプ関係   ********************/
@@ -58,23 +76,28 @@ private:
 
 	/**********************************************************/
 
-	int image[10]; //画像
-	int image_Jamp[2];
+	int image[3][10]; //画像
+	int image_death;          //死亡時
 
-	int head_Image[1];
+	int head_Image[4];        //頭
 
-	int armL_Image[3];
-	int armR_Image[3];
+	int eye_ImageR[2];          //目
+	int eye_ImageL[2];          //目
 
-	int player_Image; //画像の配列保持
+	int armL_Image[3];        //左手
+	int armR_Image[3];        //右手
 
-	int playerGetMove;   //移動保持
+	int player_Image;         //画像の配列保持
 
-	int playerCount; //画像のフレームカウント
+	int playerGetMove;        //移動保持
 
-	int playerChange_Image; //画像変更
+	int playerCount;          //画像のフレームカウント
 
-	int pCount; //最後の画像
+	int playerCount2;          //画像のフレームカウント
+
+	int playerChange_Image;   //画像変更
+
+	int pCount;               //最後の画像
 
 	Jan_Type select_JanType;  //選択した"手"
 
@@ -88,14 +111,30 @@ private:
 	int image_setsumei;       //操作説明用　モロ
 	int image_set_circle;     //円
 	int image_set_LTRT;       //"LTRT"
+	int image_set_GPT;
 	int hpImage;
+
+	int Prev_recoveryScore;   //前回回復した時のスコア
+	PLAYER_STATE player_state;
 
 	//向き（左右のみ）
 	enum class DIRECTION
 	{
 		LEFT,
 		RIGHT,
+		UP,
+		DOWN,
 	};
 
+	Effect_Player* obj_effect;  //エフェクト
 	int ui_font;  //ui用フォントハンドル
+
+	bool animflg = false;	//アニメーションフラグ
+
+	int animtimer = 0; //アニメーションタイム
+
+	//アニメーション用画像変数
+	int img_Playeranim[15];	//再生
+
+	int anim_count = 0;  //アニメーション回数
 };

@@ -31,10 +31,14 @@ Janken::Janken(Jan_Type enemy_jan, const int stage_num)
 		image_all_enemy[4] = LoadGraph("images/Stage04/stage_Boss04.png");
 		image_all_enemy[5] = LoadGraph("images/stage05/Stage5_Enemy_NoMove_Left.png");
 		image_all_enemy[6] = LoadGraph("images/tyokitest.png");
-		image_all_enemy[7] = LoadGraph("images/tyokitest.png");
+
+		int images[9];
+		LoadDivGraph("images/stage07/wrestler_test39ver2.png", 9, 9, 1, 38, 38, images);
+
+		image_all_enemy[7] = images[2];
 		image_all_enemy[8] = LoadGraph("images/stage08/Stage8_image100.png");
 		image_all_enemy[9] = LoadGraph("images/stage09/Stage9_100.png");
-		image_all_enemy[10] = LoadGraph("ステージ10敵の画像単体.png");
+		image_all_enemy[10] = LoadGraph("images/ステージ10敵の画像単体.png");
 	}
 
 	//背景
@@ -128,15 +132,25 @@ void Janken::Draw() const
 	//プレイヤー
 	DrawRotaGraph(p_image_x, 300, 2, 0, image_player, TRUE);
 
-	//画像読み込みに失敗していなければ
-	if (image_all_enemy[stage_num] != -1)
+	//ステージ7だけ
+	if (stage_num == 7)
 	{
-		DrawRotaGraph(e_image_x, 600, 2, 0, image_all_enemy[stage_num], TRUE);
+		DrawRotaGraph(e_image_x, 600, 5.2, 0, image_all_enemy[stage_num], TRUE);
 	}
 	else
 	{
-		DrawRotaGraph(e_image_x, 600, 2, 0, image_enemy, TRUE);
+		//画像読み込みに失敗していなければ
+		if (image_all_enemy[stage_num] != -1)
+		{
+			DrawRotaGraph(e_image_x, 600, 2, 0, image_all_enemy[stage_num], TRUE);
+		}
+		else
+		{
+			DrawRotaGraph(e_image_x, 600, 2, 0, image_enemy, TRUE);
+		}
 	}
+
+
 
 
 	//40フレーム後
