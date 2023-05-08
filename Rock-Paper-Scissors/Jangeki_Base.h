@@ -89,6 +89,10 @@ public:
 	float GetOffsetEffect_X() const { return effect_x; }
 	float GetOffsetEffect_Y() const { return effect_y; }
 
+	//自身は反射されたじゃん撃に当たることで生成されるプレイヤーホーミングじゃん撃である
+	bool IsGetPlayerHoming() const { return player_homing; }
+	void SetPlayerHoming() { player_homing = true; }
+
 protected:
 
 	float x;            //ｘ
@@ -107,6 +111,10 @@ protected:
 	//反射専用
 	int reflection_image[3];
 	bool refrection;    //trueの時、自身は反射である
+
+	//自身は反射されたじゃん撃に当たることで生成されるプレイヤーホーミングじゃん撃である
+	bool player_homing = false;
+	
 
 	Jan_Type type;      //タイプ　グーorチョキorパー
 

@@ -237,8 +237,6 @@ void Scene_Stage01::Update()
 //•`‰æ
 void Scene_Stage01::Draw() const
 {
-
-
 	//”wŒi
 	DrawGraph(0, 0, image_back, FALSE);
 
