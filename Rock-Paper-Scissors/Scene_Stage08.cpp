@@ -110,9 +110,9 @@ void Scene_Stage08::Update()
 	Jangeki_Base** cannon_jangeki = obj_cannon->GetJangeki();
 
 
-	Jangeki_Base** cannon_jangeki[2];
-	cannon_jangeki[0] = cannon[0]->GetJangeki();
-	cannon_jangeki[1] = cannon[1]->GetJangeki();
+	//Jangeki_Base** cannon_jangeki[2];
+	//cannon_jangeki[0] = cannon[0]->GetJangeki();
+	//cannon_jangeki[1] = cannon[1]->GetJangeki();
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -392,10 +392,10 @@ void Scene_Stage08::Update()
 		}
 	}
 
-	for (int a = 0; a < 2; a++)
-	{
-		EnemyBase** enemy_jangeki=
-	}
+	//for (int a = 0; a < 2; a++)
+	//{
+	//	EnemyBase** enemy_jangeki=
+	//}
 	//enemy‚¶‚á‚ñŒ‚‚Æplayer‚Ì“–‚½‚è”»’è
 	for (int i = 0; i < JANGEKI_MAX; i++)
 	{
