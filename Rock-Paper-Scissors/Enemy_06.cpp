@@ -14,9 +14,17 @@ Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	old_type = static_cast<Jan_Type>(1);  //チョキ属性で初期化
 
 	//画像読み込み
-	images[0] = LoadGraph("images/stage06/赤NINJA.png");     //グー属性
-	images[1] = LoadGraph("images/stage06/黄NINJA.png");   //チョキ属性
-	images[2] = LoadGraph("images/stage06/青NINJA.png");     //パー属性
+	images[0] = LoadGraph("images/stage06/赤NINJA_通常.png");     //グー属性
+	images[1] = LoadGraph("images/stage06/黄NINJA_通常.png");   //チョキ属性
+	images[2] = LoadGraph("images/stage06/青NINJA_通常.png");     //パー属性
+
+	images[3] = LoadGraph("images/stage06/赤NINJA_走.png");     //グー属性
+	images[4] = LoadGraph("images/stage06/黄NINJA_走.png");   //チョキ属性
+	images[5] = LoadGraph("images/stage06/青NINJA_走.png");     //パー属性
+
+	images[6] = LoadGraph("images/stage06/赤NINJA_跳.png");     //グー属性
+	images[7] = LoadGraph("images/stage06/黄NINJA_跳.png");   //チョキ属性
+	images[8] = LoadGraph("images/stage06/青NINJA_跳.png");     //パー属性
 
 	////煙エフェクト読み込み
 	//LoadDivGraph("images/stage06/pipo-charachip_smoke01a-s..png", 12, 4, 5, 135, 150, smokeImage);
@@ -38,6 +46,7 @@ void Enemy_06::Update()
 	frame_count++;
 	TeleportTime++;
 	SpeedUpTime++;
+	old_x = x;
 	if (smokeCnt < 3)
 	{
 		smokeCnt++;
@@ -46,7 +55,6 @@ void Enemy_06::Update()
 	{
 		smokeCnt = 0;
 	}
-	
 
 	//じゃん撃更新・生成
 	Update_Jangeki();
@@ -126,22 +134,61 @@ void Enemy_06::Draw() const
 	//グー属性の時、赤いキャラ画像を表示
 	if (GetType() == static_cast<Jan_Type>(0))
 	{
-		//中心から描画
-		DrawRotaGraphF(x, y, 4.2, 0, images[0], TRUE, dir == -1 ? 0 : 1);
+		if (y != old_y)
+		{
+			//中心から描画
+			DrawRotaGraphF(x, y, 4.2, 0, images[6], TRUE, dir == -1 ? 0 : 1);
+		}
+		else if (x != old_x)
+		{
+			//中心から描画
+			DrawRotaGraphF(x, y, 4.2, 0, images[3], TRUE, dir == -1 ? 0 : 1);
+		}
+		else
+		{
+			//中心から描画
+			DrawRotaGraphF(x, y, 4.2, 0, images[0], TRUE, dir == -1 ? 0 : 1);
+		}
 	}
 
 	//チョキ属性の時、黄色いキャラ画像を表示
 	if (GetType() == static_cast<Jan_Type>(1))
 	{
-		//中心から描画
-		DrawRotaGraphF(x, y, 4.2, 0, images[1], TRUE, dir == -1 ? 0 : 1);
+		if (y != old_y)
+		{
+			//中心から描画
+			DrawRotaGraphF(x, y, 4.2, 0, images[7], TRUE, dir == -1 ? 0 : 1);
+		}
+		else if (x != old_x)
+		{
+			//中心から描画
+			DrawRotaGraphF(x, y, 4.2, 0, images[4], TRUE, dir == -1 ? 0 : 1);
+		}
+		else
+		{
+			//中心から描画
+			DrawRotaGraphF(x, y, 4.2, 0, images[1], TRUE, dir == -1 ? 0 : 1);
+		}
 	}
 
 	//パー属性の時、青いキャラ画像を表示
 	if (GetType() == static_cast<Jan_Type>(2))
 	{
-		//中心から描画
-		DrawRotaGraphF(x, y, 4.2, 0, images[2], TRUE, dir == -1 ? 0 : 1);
+		if (y != old_y)
+		{
+			//中心から描画
+			DrawRotaGraphF(x, y, 4.2, 0, images[8], TRUE, dir == -1 ? 0 : 1);
+		}
+		else if (x != old_x)
+		{
+			//中心から描画
+			DrawRotaGraphF(x, y, 4.2, 0, images[5], TRUE, dir == -1 ? 0 : 1);
+		}
+		else
+		{
+			//中心から描画
+			DrawRotaGraphF(x, y, 4.2, 0, images[2], TRUE, dir == -1 ? 0 : 1);
+		}
 	}
 
 	////煙アニメーション
@@ -159,6 +206,8 @@ void Enemy_06::Draw() const
 		DrawString((int)(x - 80), (int)(y - 75), "スピードアップ", GetColor(255, 0, 0));
 	}
 
+	DrawFormatString(600, 600, 0xffffff, "x   : %f", x);
+	DrawFormatString(600, 620, 0xffffff, "old : %f", old_x);
 	/*DrawBox((x - (w / 2)), (y - (h / 2)), (x + (w / 2)), (y + (h / 2)), 0xffffff, TRUE);*/
 }
 
