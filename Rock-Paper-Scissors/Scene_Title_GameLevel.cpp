@@ -61,19 +61,13 @@ void Scene_Title_GameLevel::Update()
 //描画
 void Scene_Title_GameLevel::Draw() const
 {
-	//DrawGraph(0, 0, TitleImage, FALSE);
-
 	SetBackgroundColor(0, 64, 0);
 
-	//DrawStringToHandle(70, 350, "START", 0xf, font_title); 
 	DrawStringToHandle(70, 200, "難易度選択", 0xf, font_title);
 	DrawStringToHandle(70, 350, "NOMAL", 0xf, font_title); 
-	DrawStringToHandle(70, 400, "HARD", 0xf, font_title);
+	DrawStringToHandle(70, 400, "REAL JANKEN", 0xf, font_title);
 	DrawStringToHandle(70, 500, "Bボタンで戻る", 0xf, font_title);
-	//DrawStringToHandle(70, 395, "HELP", 0xf, font_title);
-	//DrawStringToHandle(70, 445, "RANKING", 0xf, font_title);
-	//DrawStringToHandle(70, 495, "END", 0xf, font_title);
-
+	
 	//メニューカーソル
 	DrawTriangle(40, 355 + (T_selectnum * 50), 60, 370 + (T_selectnum * 50), 40, 385 + (T_selectnum * 50), GetColor(255, 0, 0), TRUE);
 
@@ -95,11 +89,15 @@ AbstractScene* Scene_Title_GameLevel::ChangeScene()
 	{
 		switch (T_selectnum)
 		{
-		case 0:
+		case 0:/*通常モード*/
+			GameData::Set_DIFFICULTY(GAME_DIFFICULTY::NOMAL);
 			return dynamic_cast<AbstractScene*> (new Scene_Story());
 			SoundSystem::StopBGM(BGM::TITLE);
 			break;
-		case 1:
+		case 1:/*即死モード*/
+			GameData::Set_DIFFICULTY(GAME_DIFFICULTY::HARD);
+			return dynamic_cast<AbstractScene*> (new Scene_Story());
+			SoundSystem::StopBGM(BGM::TITLE);
 			break;
 		default:
 			break;

@@ -1,5 +1,12 @@
 #pragma once
 
+//難易度
+enum class GAME_DIFFICULTY
+{
+	NOMAL,/*通常モード*/
+	HARD,/*即死モード*/
+};
+
 //データを保持する
 class GameData
 {
@@ -38,6 +45,10 @@ public:
 	//総合時間を取得
 	static int Get_Total_Time();
 
+	static GAME_DIFFICULTY Get_DIFFICULTY();
+
+	static void Set_DIFFICULTY(GAME_DIFFICULTY game_diff);
+
 private:
 	GameData();     //オブジェクトは作れない
 
@@ -46,6 +57,7 @@ private:
 
 	static int total_time;    //総合時間
 
+	static GAME_DIFFICULTY game_Diff; //難易度
 
 	static int each_stage_time;   //各ステージの制限時間
 	static int c_time_limit;      //制限時間（最大）

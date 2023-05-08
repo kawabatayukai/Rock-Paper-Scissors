@@ -241,8 +241,15 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 
 			case Jan_Result::LOSE:    //負け
 
-				//オーバーライドされたAfterJanken_LOSE()を呼び出す
-				stage_ptr->AfterJanken_LOSE();
+				if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
+				{
+					obj_player->ReceiveDamage(100);
+				}
+				else
+				{
+					//オーバーライドされたAfterJanken_LOSE()を呼び出す
+					stage_ptr->AfterJanken_LOSE();
+				}
 
 				//じゃん撃を初期化する
 				enemy->Init_Jangeki();
