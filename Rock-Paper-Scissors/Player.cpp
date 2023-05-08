@@ -16,7 +16,8 @@
 
 //コンストラクタ　　　　　　　　　　　　　  ｘ　ｙ　幅　　　高さ
 Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //基底クラスのコンストラクタを呼ぶ
-, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0), player_state(PLAYER_STATE::ALIVE), playerCount2(0)
+, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0), player_state(PLAYER_STATE::ALIVE), playerCount2(0), Prev_recoveryScore(0)
+, obj_effect(nullptr)
 {
 	speed = 7.0f;
 	hp = 100;
@@ -149,6 +150,34 @@ void Player::Update()
 
 	//前回の座標ｘを保存
 	old_x = x;
+
+	//スコア1000毎にHP回復
+	int _score = GameData::Get_MaxScore();
+	if (_score % 300 == 0 && _score != Prev_recoveryScore)
+	{
+		Prev_recoveryScore = _score;
+		Recover_HP(20);
+
+
+		//エフェクト生成
+		//delete obj_effect;
+		//obj_effect = nullptr;
+		if (obj_effect == nullptr) obj_effect = new Effect_Player(x, y);
+	}
+
+	//エフェクト
+	if (obj_effect != nullptr)
+	{
+		obj_effect->SetPlayerLocation(x, y);
+		obj_effect->Update();
+
+		//再生終了
+		if (obj_effect->IsEffectFinished() == true)
+		{
+			delete obj_effect;
+			obj_effect = nullptr;
+		}
+	}
 
 	//死亡時以外
 	if (player_state == PLAYER_STATE::ALIVE)
@@ -1255,6 +1284,13 @@ void Player::Draw() const
 	//死亡時以外
 	if (player_state == PLAYER_STATE::ALIVE)
 	{
+		//エフェクト
+		if (obj_effect != nullptr)
+		{
+			obj_effect->Draw_Back();
+		}
+		else {};
+
 		//照準線        右スティックに入力がある時
 		if (KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) == 0 &&
 			KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) == 0)
