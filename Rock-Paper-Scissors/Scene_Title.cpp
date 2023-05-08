@@ -64,13 +64,15 @@ void TitleScene::Draw() const
 {
 	DrawGraph(0, 0, TitleImage, FALSE);
 
-	DrawStringToHandle(70, 350, "START", 0xf, font_title);
-	DrawStringToHandle(70, 395, "HELP", 0xf, font_title);
-	DrawStringToHandle(70, 445, "RANKING", 0xf, font_title);
-	DrawStringToHandle(70, 495, "END", 0xf, font_title);
+	DrawStringToHandle(70, 150, "START", 0xf, font_title);
+	DrawStringToHandle(70, 195, "HELP", 0xf, font_title);
+	DrawStringToHandle(70, 245, "RANKING", 0xf, font_title);
+	DrawStringToHandle(70, 295, "END", 0xf, font_title);
+
+	
 
 	//メニューカーソル
-	DrawTriangle(40, 355 + (T_selectnum * 50), 60, 370 + (T_selectnum * 50), 40, 385 + (T_selectnum * 50), GetColor(255, 0, 0), TRUE);
+	DrawTriangle(40, 155 + (T_selectnum * 50), 60, 170 + (T_selectnum * 50), 40, 185 + (T_selectnum * 50), GetColor(255, 0, 0), TRUE);
 
 	//デバッグ
 	DrawStringToHandle(10, 650, "RT + A で選択画面(開発)", 0xf, font_debug);
