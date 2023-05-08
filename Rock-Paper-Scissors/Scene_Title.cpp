@@ -12,7 +12,7 @@
 //コンストラクタ
 TitleScene::TitleScene()
 {
-	TitleImage = LoadGraph("images/JankenWorldTitle1.png");
+	TitleImage = LoadGraph("images/JankenWorldTitle.png");
 
 	//タイトルBGM読込み
 	TitleBgm = LoadSoundMem("Sound/TitleBGM.mp3");
