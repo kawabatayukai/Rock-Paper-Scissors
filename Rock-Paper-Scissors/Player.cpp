@@ -386,7 +386,7 @@ void Player::HeadDrawMove() const
 	//DrawRotaGraph(x + 3, y - 22, 1.0f, M_PI - jan_angle, head_Image[0], TRUE);
 
 	/*HP‚ª”¼•ªˆÈã‚ÌŽž*/
-	if (this->hp > 50)
+	if (this->hp >= 50)
 	{
 		/*‰EŒü‚«*/
 		if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 0)
