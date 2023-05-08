@@ -94,6 +94,8 @@ void Scene_Stage03::Update()
 	//ÚG‚¶‚á‚ñ‚¯‚ñˆ—
 	Touch_Janken(obj_enemy, this, 3);
 
+	Effect_Update_HitJangeki(obj_enemy);
+
 	//player‚Ì‚¶‚á‚ñŒ‚‚ğ‚Æ‚Á‚Ä‚­‚é
 	Jangeki_Base** player_jangeki = obj_player->GetJangeki();
 
@@ -480,6 +482,9 @@ void Scene_Stage03::Draw() const
 	}
 
 	//DrawString(640, 360, "Stage03", 0xffff);
+	
+	//ÚG‚¶‚á‚ñ‚¯‚ñEffect
+	Effect_Draw_HitJangeki();
 }
 
 
