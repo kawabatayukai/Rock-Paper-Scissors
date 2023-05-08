@@ -59,7 +59,11 @@ private:
 
 	int frame_count = 0;          //じゃん撃発射用
 	int images[3];                //敵画像
+<<<<<<< HEAD
 	//int smokeImage[12];           //煙画像
+=======
+	int smokeImage[12];           //煙画像
+>>>>>>> master
 	int smokeCnt = 0;             //煙用カウント変数
 	Jan_Type old_type;            //前回の敵ジャンケン属性
 };

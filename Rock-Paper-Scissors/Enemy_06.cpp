@@ -14,9 +14,18 @@ Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	old_type = static_cast<Jan_Type>(2);  //パー属性で初期化
 
 	//画像読み込み
+<<<<<<< HEAD
 	images[0] = LoadGraph("images/stage06/赤NINJA.png");    //グー属性
 	images[1] = LoadGraph("images/stage06/黄NINJA2.png");   //チョキ属性
 	images[2] = LoadGraph("images/stage06/青NINJA2.png");   //パー属性
+=======
+	images[0] = LoadGraph("images/gu-test.png");     //グー属性
+	images[1] = LoadGraph("images/tyokitest.png");   //チョキ属性
+	images[2] = LoadGraph("images/pa-test.png");     //パー属性
+
+	//煙エフェクト読み込み
+	LoadDivGraph("images/stage06/pipo-charachip_smoke01a-s..png", 12, 4, 5, 135, 150, smokeImage);
+>>>>>>> master
 
 	Init_Jangeki();       //じゃん撃を用意
 
@@ -125,22 +134,37 @@ void Enemy_06::Draw() const
 	if (GetType() == static_cast<Jan_Type>(0))
 	{
 		//中心から描画
+<<<<<<< HEAD
 		DrawRotaGraphF(x, y, 4.2, 0, images[0], TRUE, dir == -1 ? 0 : 1);
+=======
+		DrawRotaGraphF(x, y, 1, 0, images[0], TRUE, dir == -1 ? 0 : 1);
+>>>>>>> master
 	}
 
 	//チョキ属性の時、黄色いキャラ画像を表示
 	if (GetType() == static_cast<Jan_Type>(1))
 	{
 		//中心から描画
+<<<<<<< HEAD
 		DrawRotaGraphF(x, y, 4.2, 0, images[1], TRUE, dir == -1 ? 0 : 1);
+=======
+		DrawRotaGraphF(x, y, 1, 0, images[1], TRUE, dir == -1 ? 0 : 1);
+>>>>>>> master
 	}
 
 	//パー属性の時、青いキャラ画像を表示
 	if (GetType() == static_cast<Jan_Type>(2))
 	{
 		//中心から描画
+<<<<<<< HEAD
 		DrawRotaGraphF(x, y, 4.2, 0, images[2], TRUE, dir == -1 ? 0 : 1);
+=======
+		DrawRotaGraphF(x, y, 1, 0, images[2], TRUE, dir == -1 ? 0 : 1);
+>>>>>>> master
 	}
+
+	//煙アニメーション
+	DrawGraph(1089, 550, smokeImage[0], TRUE);
 
 	//じゃん撃描画
 	Draw_Jangeki();

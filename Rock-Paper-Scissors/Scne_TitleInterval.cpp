@@ -1,9 +1,9 @@
+#include "Scne_TitleInterval.h"
 #include"DxLib.h"
-#include"Scene_Story.h"
-#include"Scene_Stage01.h"
 #include<fstream>
 #include<string>
 #include"KeyManager.h"
+#include"Scene_Title.h"
 
 //定数
 namespace _C_STORY
@@ -16,7 +16,7 @@ namespace _C_STORY
 }
 
 //コンストラクタ
-Scene_Story::Scene_Story() :
+Scne_TitleInterval::Scne_TitleInterval() :
 	isLoadFailed(false), str_end(false)
 	, scroll_y(0), scroll_speed(_C_STORY::MIN_SPEED), skipflash_count(0)
 {
@@ -45,16 +45,18 @@ Scene_Story::Scene_Story() :
 }
 
 //デストラクタ
-Scene_Story::~Scene_Story()
+Scne_TitleInterval::~Scne_TitleInterval()
 {
 	//テキストを削除
 	delete text;
 
 	//フォントを削除
 	DeleteFontToHandle(font_text);
+
+	SetBackgroundColor(0, 0, 0);
 }
 
-void Scene_Story::Update()
+void Scne_TitleInterval::Update()
 {
 	using namespace _C_STORY;
 
@@ -104,7 +106,7 @@ void Scene_Story::Update()
 }
 
 //描画
-void Scene_Story::Draw() const
+void Scne_TitleInterval::Draw() const
 {
 	using namespace _C_STORY;
 
@@ -141,7 +143,7 @@ void Scene_Story::Draw() const
 	{
 		if (scroll_speed <= _C_STORY::MIN_SPEED)
 		{
-			DrawStringToHandle(1050, 700, "Press B To Skip", 0xffffff, font_skip);
+			DrawStringToHandle(1050, 700, "Press A or B To Skip", 0xffffff, font_skip);
 		}
 		else if (scroll_speed > _C_STORY::MIN_SPEED)
 		{
@@ -152,14 +154,16 @@ void Scene_Story::Draw() const
 }
 
 //シーンの変更
-AbstractScene* Scene_Story::ChangeScene()
+AbstractScene* Scne_TitleInterval::ChangeScene()
 {
-	if(str_end == true && KeyManager::OnPadClicked(PAD_INPUT_A))
-		return dynamic_cast<AbstractScene*> (new Scene_Stage01());
+	//if (str_end == true && KeyManager::OnPadClicked(PAD_INPUT_A))
+		//return dynamic_cast<AbstractScene*> (new TitleScene());
+	if (KeyManager::OnPadClicked(PAD_INPUT_A) || KeyManager::OnPadClicked(PAD_INPUT_B))
+		return dynamic_cast<AbstractScene*> (new TitleScene());
 
 	//テキストファイル読み込み失敗でステージ1へ
-	if (isLoadFailed == true)  
-		return dynamic_cast<AbstractScene*> (new Scene_Stage01());
+	if (isLoadFailed == true)
+		return dynamic_cast<AbstractScene*> (new TitleScene());
 	//更新なし
 	return this;
 }

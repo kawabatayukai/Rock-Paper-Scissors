@@ -46,7 +46,7 @@ void GameClearScene::Draw() const
 	DrawGraph(0, 0, clearImage, TRUE);
 
 	SetFontSize(30);
-	DrawFormatString(400,200, 0xFFFFFF,"スコア：&d ・ 時間：&d", GameData::Get_Score(), GameData::Get_Each_Time_Min());
+	DrawFormatString(400,200, 0xFFFFFF,"スコア：%d ・ 時間：%d", GameData::Get_Score(), GameData::Get_Each_Time_Min());
 	SetFontSize(20);
 
 	/*SetFontSize(200);
