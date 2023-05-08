@@ -12,7 +12,7 @@ public:
 	static void Add_Score(unsigned int score);
 
 	//スコア取得(描画用)
-	static unsigned int Get_Score() ;
+	static unsigned int Get_Score();
 
 	//スコア取得(本来)
 	static unsigned int Get_MaxScore();
