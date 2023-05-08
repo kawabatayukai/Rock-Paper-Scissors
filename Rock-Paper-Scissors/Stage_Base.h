@@ -73,4 +73,3 @@ private:
 	Effect_Jangeki** obj_effect;              //エフェクト(じゃん撃同士の衝突)
 	unsigned short e_jancount = 0;            //エフェクト配列操作
 };
-

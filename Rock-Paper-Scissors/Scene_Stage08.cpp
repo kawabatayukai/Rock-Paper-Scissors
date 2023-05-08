@@ -3,7 +3,7 @@
 #include"Scene_GameClear.h"
 #include"KeyManager.h"
 #include"DxLib.h"
-#include"Enemy_Cannon.h"
+//#include"Enemy_Cannon.h
 
 #define PI    3.1415926535897932384626433832795f
 
@@ -108,6 +108,12 @@ void Scene_Stage08::Update()
 	Jangeki_Base** enemy_jangeki = obj_enemy->GetJangeki();
 	
 	Jangeki_Base** cannon_jangeki = obj_cannon->GetJangeki();
+
+
+	Jangeki_Base** cannon_jangeki[2];
+	cannon_jangeki[0] = cannon[0]->GetJangeki();
+	cannon_jangeki[1] = cannon[1]->GetJangeki();
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//じゃん撃同士の当たり判定（プレイヤーじゃん撃目線）
@@ -312,26 +318,6 @@ void Scene_Stage08::Update()
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//playerじゃん撃とenemyの当たり判定
 	for (int i = 0; i < JANGEKI_MAX; i++)
@@ -406,6 +392,27 @@ void Scene_Stage08::Update()
 		}
 	}
 
+	for (int a = 0; a < 2; a++)
+	{
+		EnemyBase** enemy_jangeki=
+	}
+	//enemyじゃん撃とplayerの当たり判定
+	for (int i = 0; i < JANGEKI_MAX; i++)
+	{
+		//じゃん撃がない時は処理しない
+		if (enemy_jangeki[i] == nullptr) break;
+
+		//じゃん撃との当たり判定
+		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
+		{
+			//ダメージを受ける（プレイヤー）
+			obj_player->ReceiveDamage(30);
+
+			//あたったじゃん撃を削除
+			obj_cannon->DeleteJangeki(i);
+			i--;
+		}
+	}
 
 	HitCtrl_Floor(obj_player, STAGE_08_FLOOR);     // player　床・壁判定
 	HitCtrl_Floor(obj_enemy, STAGE_08_FLOOR);      // 敵　　　床・壁判定
