@@ -17,7 +17,7 @@
 //コンストラクタ　　　　　　　　　　　　　  ｘ　ｙ　幅　　　高さ
 Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //基底クラスのコンストラクタを呼ぶ
 , player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0), player_state(PLAYER_STATE::ALIVE), playerCount2(0), Prev_recoveryScore(0)
-, obj_effect(nullptr)
+, obj_effect(nullptr), obj_effectchange(nullptr)
 {
 	speed = 7.0f;
 	hp = 100;
@@ -172,6 +172,19 @@ void Player::Update()
 		{
 			delete obj_effect;
 			obj_effect = nullptr;
+		}
+	}
+	//エフェクト
+	if (obj_effectchange != nullptr)
+	{
+		obj_effectchange->SetPlayerLocation(x, y);
+		obj_effectchange->Update();
+
+		//再生終了
+		if (obj_effectchange->IsEffectFinished() == true)
+		{
+			delete obj_effectchange;
+			obj_effectchange = nullptr;
 		}
 	}
 
@@ -1281,6 +1294,12 @@ void Player::Draw() const
 	if (player_state == PLAYER_STATE::ALIVE)
 	{
 		//エフェクト
+		if (obj_effectchange != nullptr)
+		{
+			obj_effectchange->Draw_Back();
+		}
+		else {};
+		//エフェクト
 		if (obj_effect != nullptr)
 		{
 			obj_effect->Draw_Back();
@@ -1312,6 +1331,18 @@ void Player::Draw() const
 
 		//目
 		EyeDrawMove();
+
+		//エフェクト
+		if (obj_effectchange != nullptr)
+		{
+			obj_effectchange->Draw_Front();
+		}
+		else {};
+		//エフェクト
+		if (obj_effect != nullptr)
+		{
+			obj_effect->Draw_Front();
+		}
 	}
 	else
 	{
@@ -1386,11 +1417,11 @@ void Player::Draw() const
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 
-	/*テレポート時のアニメーション*/
-	if (animflg == true)
-	{
-		if(DrawGraph(x - 50, y - 50, img_Playeranim[animtimer / 2 % 15], TRUE));
-	}
+	///*テレポート時のアニメーション*/
+	//if (animflg == true)
+	//{
+	//	if(DrawGraph(x - 50, y - 50, img_Playeranim[animtimer / 2 % 15], TRUE));
+	//}
 }
 
 /*画像の変更取得*/
@@ -1728,7 +1759,8 @@ void Player::Update_Jangeki()
 	if (KeyManager::OnPadClicked_LT()) select_num--, animflg = true; //アニメーション開始;
 	if (select_num < 0) select_num = 2;
 
-	
+	//前回の属性
+	Jan_Type old_type = select_JanType;
 
 	// B,Y,X　ボタンで発射するじゃん撃属性を選択（セット）する
 	if (KeyManager::OnPadClicked(PAD_INPUT_B))         //Bボタン
@@ -1760,14 +1792,17 @@ void Player::Update_Jangeki()
 	{
 	case 0:
 		select_JanType = Jan_Type::PAPER;
+
 		break;
 
 	case 1:
 		select_JanType = Jan_Type::SCISSORS;
+
 		break;
 
 	case 2:
 		select_JanType = Jan_Type::ROCK;
+
 		break;
 
 	default:
@@ -1795,6 +1830,17 @@ void Player::Update_Jangeki()
 			}
 
 		}
+	}
+
+	if (old_type != select_JanType)
+	{
+		//エフェクト生成
+		if (obj_effectchange != nullptr)
+		{
+			delete obj_effectchange;
+			obj_effectchange = nullptr;
+		}
+		if (obj_effectchange == nullptr)obj_effectchange = new Effect_ChangePlayer(select_JanType, x, y);
 	}
 
 	//select_JanType = static_cast<Jan_Type>(select_num);
@@ -1844,6 +1890,7 @@ void Player::Create_Homing(int jan_count, float x, float y, float r, float speed
 	
 	//ホーミングを生成
 	obj_jangeki[jan_count] = new Jangeki_Homing(x, y, r, speed, type);
+	obj_jangeki[jan_count]->SetPlayerHoming();
 }
 
 //敵の座標を取得
