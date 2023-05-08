@@ -18,7 +18,7 @@ namespace _CONSTANTS_SB
 	const int CLOCK_Y = 60;
 }
 
-Stage_Base::Stage_Base() : blackout_time(0)
+Stage_Base::Stage_Base() : blackout_time(0), Prev_EnemyType(Jan_Type::NONE), obj_effectEnemy(nullptr)
 {
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, typeImage);
 
@@ -196,9 +196,6 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 		//敵とプレイヤーが接触
 		if (enemy->Hit_Character(obj_player) == true && nhit_time == 0)
 		{
-			//じゃんけん開始
-			//j_state = Jan_State::PROGRESS;
-
 			//接触した!
 			j_state = Jan_State::START;
 			blackout_time = 0;
@@ -282,14 +279,11 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 				//じゃん撃を初期化する
 				enemy->Init_Jangeki();
 
-				//delete obj_janken;
 				obj_janken->OneMore_Init();
 
 				//じゃんけん開始
 				j_state = Jan_State::PROGRESS;
 
-				//じゃんけんオブジェクト生成
-				//obj_janken = new Janken(again_type);
 				break;
 
 			default:
@@ -440,6 +434,28 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 		}
 	}
 	//----------------------------------------------------------------------------------
+
+		//前回の属性と違っていればエフェクト生成
+	if (enemy->GetType() != Prev_EnemyType && Prev_EnemyType != Jan_Type::NONE)
+	{
+		if (obj_effectEnemy == nullptr)
+		{
+			obj_effectEnemy = new Effect_Enemy(enemy->GetX(), enemy->GetY(), enemy->GetType());
+		}
+	}
+	//敵の属性変化
+	Prev_EnemyType = enemy->GetType();
+
+	if (obj_effectEnemy != nullptr)
+	{
+		obj_effectEnemy->Update();
+		obj_effectEnemy->SetEnemyLocation(enemy->GetX(), enemy->GetY());
+		if (obj_effectEnemy->IsEffectFinished() == true)
+		{
+			delete obj_effectEnemy;
+			obj_effectEnemy = nullptr;
+		}
+	}
 }
 
 //じゃん撃ヒット時エフェクト 描画
@@ -452,6 +468,8 @@ void Stage_Base::Effect_Draw_HitJangeki() const
 		if (obj_effect[i] == nullptr) break;
 		obj_effect[i]->Draw();
 	}
+
+	if (obj_effectEnemy != nullptr) obj_effectEnemy->Draw();
 }
 
 
