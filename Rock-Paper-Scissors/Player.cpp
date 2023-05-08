@@ -1318,7 +1318,8 @@ void Player::Draw() const
 			int vx = static_cast<int>(550 * cos(jan_angle));
 			int vy = static_cast<int>(550 * sin(jan_angle));
 
-			DrawLineAA(x, y, x + vx, y - vy, 0xffff00, 3);
+			/*^‚Á’¼‚®‚Èü‚ÌÆ€æ*/
+			//DrawLineAA(x, y, x + vx, y - vy, 0xffff00, 3); 
 
 			/*˜r‚Ì•`‰æE“®‚«*/
 			ArmDrawMove();
