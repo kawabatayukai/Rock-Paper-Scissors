@@ -11,17 +11,12 @@ Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = -1;                 //-1なら左向き  +1なら右向き
 	hp = 100;                 //HPは100
 
-	old_type = static_cast<Jan_Type>(1);  //チョキ属性で初期化
+	old_type = static_cast<Jan_Type>(2);  //パー属性で初期化
 
 	//画像読み込み
-	images[0] = LoadGraph("images/gu-test.png");     //グー属性
-	images[1] = LoadGraph("images/tyokitest.png");   //チョキ属性
-	images[2] = LoadGraph("images/pa-test.png");     //パー属性
-
-	////煙エフェクト読み込み
-	//LoadDivGraph("images/stage06/pipo-charachip_smoke01a-s..png", 12, 4, 5, 135, 150, smokeImage);
-
-	enemy_images = LoadGraph("images/stage06/NINJA2.png");
+	images[0] = LoadGraph("images/stage06/赤NINJA.png");    //グー属性
+	images[1] = LoadGraph("images/stage06/黄NINJA2.png");   //チョキ属性
+	images[2] = LoadGraph("images/stage06/青NINJA2.png");   //パー属性
 
 	Init_Jangeki();       //じゃん撃を用意
 
@@ -40,14 +35,15 @@ void Enemy_06::Update()
 	frame_count++;
 	TeleportTime++;
 	SpeedUpTime++;
-	if (smokeCnt < 3)
+
+	/*if (smokeCnt < 3)
 	{
 		smokeCnt++;
 	}
 	else
 	{
 		smokeCnt = 0;
-	}
+	}*/
 	
 
 	//じゃん撃更新・生成
@@ -129,21 +125,21 @@ void Enemy_06::Draw() const
 	if (GetType() == static_cast<Jan_Type>(0))
 	{
 		//中心から描画
-		DrawRotaGraphF(x, y, 4.2, 0, enemy_images, TRUE, dir == -1 ? 0 : 1);
+		DrawRotaGraphF(x, y, 4.2, 0, images[0], TRUE, dir == -1 ? 0 : 1);
 	}
 
 	//チョキ属性の時、黄色いキャラ画像を表示
 	if (GetType() == static_cast<Jan_Type>(1))
 	{
 		//中心から描画
-		DrawRotaGraphF(x, y, 4.2, 0, enemy_images, TRUE, dir == -1 ? 0 : 1);
+		DrawRotaGraphF(x, y, 4.2, 0, images[1], TRUE, dir == -1 ? 0 : 1);
 	}
 
 	//パー属性の時、青いキャラ画像を表示
 	if (GetType() == static_cast<Jan_Type>(2))
 	{
 		//中心から描画
-		DrawRotaGraphF(x, y, 4.2, 0, enemy_images, TRUE, dir == -1 ? 0 : 1);
+		DrawRotaGraphF(x, y, 4.2, 0, images[2], TRUE, dir == -1 ? 0 : 1);
 	}
 
 	//じゃん撃描画
@@ -157,8 +153,6 @@ void Enemy_06::Draw() const
 	{
 		DrawString((int)(x - 80), (int)(y - 75), "スピードアップ", GetColor(255, 0, 0));
 	}
-
-	/*DrawBox((x - (w / 2)), (y - (h / 2)), (x + (w / 2)), (y + (h / 2)), 0xffffff, TRUE);*/
 }
 
 //じゃん撃生成・更新
@@ -199,7 +193,7 @@ void Enemy_06::Update_Jangeki()
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
-		//行動パターン1の時の弾(speed = 3.0f  frame_count % 80)
+		//行動パターン1の時の弾(speed = 4.0f  frame_count % 90)
 		if (attack_pattern == 0)
 		{
 			//プレイヤー方向に向かって発射されるジャン撃の生成
@@ -207,7 +201,7 @@ void Enemy_06::Update_Jangeki()
 				new Jangeki_Coming(x, y, radius, speed + 1.0f, type, player_x, player_y);
 		}
 
-		//行動パターン2の時の弾(speed = 3.0f  frame_count % 80)
+		//行動パターン2の時の弾(speed = 4.5f  frame_count % 75)
 		if (attack_pattern == 1)
 		{
 			//プレイヤー方向に向かって発射されるジャン撃の生成
@@ -215,7 +209,7 @@ void Enemy_06::Update_Jangeki()
 				new Jangeki_Coming(x, y, radius, speed + 1.5f, type, player_x, player_y);
 		}
 
-		//行動パターン3の時の弾(speed = 3.0f  frame_count % 80)
+		//行動パターン3の時の弾(speed = 5.0f  frame_count % 65)
 		if (attack_pattern == 2)
 		{
 			//プレイヤー方向に向かって発射されるジャン撃の生成
