@@ -13,6 +13,7 @@ private:
 	int T_selectnum = 0;
 
 	int font_title;   //フォントハンドル
+	int font_debug;   //デバッグ用フォント
 public:
 
 	//コンストラクタ

@@ -48,10 +48,10 @@ void Enemy_04::Update()
 	//プレイヤーとの角度
 	angle = atan2f((player_x - x), (player_y - y));
 
-	//動きパターン
+	//動きパターン(通常時)
 	moveinfo[0] = { 1, player_x, player_y, 0, 0 };
-	//moveinfo[1] = { 0,      0.f,      0.f, 0, 0 };
 
+	//動きパターン(特殊行動時)
 	moveinfo[1] = { 1,  enemy_x,  enemy_y, 0, 2 };
 	moveinfo[2] = { 0,      0.f,      0.f, 0, 1 };
 
@@ -81,11 +81,8 @@ void Enemy_04::Update()
 
 	//体力ゲージがマイナスにならないように
 	if (hp <= 0) hp = 0;
-	
-	//HP50％以下でスピードUP
-	//if (hp <= 50) speed = 2.0f;
-	//else speed = 1.0f;
 
+	//特殊行動時や残りHPによってスピードが変わる
 	if (specialFlg == true)
 	{
 		speed = 15.0f;
@@ -93,7 +90,7 @@ void Enemy_04::Update()
 	}
 	else if (hp <= 50)
 	{
-		speed = 3.0f;
+		speed = 2.5f;
 	}
 	else
 	{
@@ -101,9 +98,9 @@ void Enemy_04::Update()
 	}
 
 	//少しずつHP回復
-	if (hp < 50 && frame_count % 20 == 0) hp++;
-	else if (hp < 100 && frame_count % 40 == 0) hp++;
+	if (hp < 100 && frame_count % 35 == 0) hp++;
 
+	//特殊行動時間(4秒間)
 	if (specialTime >= 240)
 	{
 		specialTime = 0;
@@ -222,12 +219,11 @@ void Enemy_04::Update_Jangeki()
 		if (specialFlg == false)
 		{
 			//プレイヤーの角度へ発射するジャン撃生成
-			if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+			if (frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 		}
 		else if (specialFlg == true)
 		{
-			if (frame_count % 40 == 0) Jan_360degrees(jan_count, radius, speed * 1.5, type);
-			//if (frame_count % 30 == 0) Jan_360degrees(jan_count, radius, speed * 2, type);
+			if (frame_count % 60 == 0) Jan_360degrees(jan_count, radius, speed * 1.5, type);
 		}
 	}
 }
@@ -346,8 +342,8 @@ void Enemy_04::Change_JanType()
 
 void Enemy_04::Special_Action()
 {
-	//specialFlg = true;
-	//current = 1;
+	specialFlg = true;
+	current = 1;
 }
 
 //360度発射

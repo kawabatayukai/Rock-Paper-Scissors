@@ -4,7 +4,7 @@
 #include"KeyManager.h"
 #include"DxLib.h"
 #include"Enemy_Cannon.h"
-
+#include"GameData.h"
 #define PI    3.1415926535897932384626433832795f
 
 //デバッグモード
@@ -37,7 +37,7 @@ Scene_Stage08::Scene_Stage08(const Player* player)
 
 	//床・壁の用意
 	Init_Floor(STAGE_08_FLOOR);
-
+	GameData::Set_TimeLimit();
 	//一つずつ生成  STAGE_08_FLOOR 個分
 	obj_floor[0] = new Floor(0, 700, 1280, 20,0x00ff00);        //床
 	obj_floor[1] = new Floor(0, -300, 20, 1720);           //壁（左）
@@ -94,7 +94,7 @@ void Scene_Stage08::Update()
 		}	
 
 		//cannon[a]->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());	//プレイヤーの座標を取得
-
+		GameData::Time_Update();
 	}
 
 	//接触じゃんけん処理
@@ -108,6 +108,12 @@ void Scene_Stage08::Update()
 	Jangeki_Base** enemy_jangeki = obj_enemy->GetJangeki();
 	
 	Jangeki_Base** cannon_jangeki = obj_cannon->GetJangeki();
+
+
+	//Jangeki_Base** cannon_jangeki[2];
+	//cannon_jangeki[0] = cannon[0]->GetJangeki();
+	//cannon_jangeki[1] = cannon[1]->GetJangeki();
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	//じゃん撃同士の当たり判定（プレイヤーじゃん撃目線）
@@ -312,26 +318,6 @@ void Scene_Stage08::Update()
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//playerじゃん撃とenemyの当たり判定
 	for (int i = 0; i < JANGEKI_MAX; i++)
@@ -406,6 +392,27 @@ void Scene_Stage08::Update()
 		}
 	}
 
+	//for (int a = 0; a < 2; a++)
+	//{
+	//	EnemyBase** enemy_jangeki=
+	//}
+	//enemyじゃん撃とplayerの当たり判定
+	for (int i = 0; i < JANGEKI_MAX; i++)
+	{
+		//じゃん撃がない時は処理しない
+		if (enemy_jangeki[i] == nullptr) break;
+
+		//じゃん撃との当たり判定
+		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
+		{
+			//ダメージを受ける（プレイヤー）
+			obj_player->ReceiveDamage(30);
+
+			//あたったじゃん撃を削除
+			obj_cannon->DeleteJangeki(i);
+			i--;
+		}
+	}
 
 	HitCtrl_Floor(obj_player, STAGE_08_FLOOR);     // player　床・壁判定
 	HitCtrl_Floor(obj_enemy, STAGE_08_FLOOR);      // 敵　　　床・壁判定

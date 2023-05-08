@@ -13,7 +13,7 @@ Scene_Stage01::Scene_Stage01(const Player* player)
 	: Now_Tut_State(TUTORIAL_STATE::START_TUTORIAL)
 {
 	//制限時間をセット
-	GameData::Set_TimeLimit(6000);
+	GameData::Set_TimeLimit();
 
 	//プレイヤー情報が渡されていれば
 	if (player != nullptr)
@@ -78,7 +78,7 @@ void Scene_Stage01::Update()
 
 	//接触じゃんけん処理
 	Touch_Janken(obj_enemy, this, 1);
-
+	Effect_Update_HitJangeki(obj_enemy);
 
 	//playerのじゃん撃をとってくる
 	Jangeki_Base** player_jangeki = obj_player->GetJangeki();
@@ -232,25 +232,17 @@ void Scene_Stage01::Update()
 
 	HitCtrl_Floor(obj_player, STAGE_01_FLOOR);     // player　床・壁判定
 	HitCtrl_Floor(obj_enemy, STAGE_01_FLOOR);      // 敵　　　床・壁判定
-
-		//エフェクト
-	Update_Effect();
 }
 
 //描画
 void Scene_Stage01::Draw() const
 {
-
-
 	//背景
 	DrawGraph(0, 0, image_back, FALSE);
 
 	//UI
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
 	DrawUI_ON_Enemy(obj_enemy);
-
-	//エフェクト描画
-	Draw_Effect();
 
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::START || GetJanState() == Jan_State::BEFORE)
@@ -272,8 +264,9 @@ void Scene_Stage01::Draw() const
 		//接触時じゃんけん描画
 		Draw_Janken();
 	}
-
-
+			
+	//Effect
+	Effect_Draw_HitJangeki();
 }
 
 //じゃんけん描画
@@ -295,7 +288,7 @@ AbstractScene* Scene_Stage01::ChangeScene()
 	}
 
 	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() < 0 || GameData::Get_Each_Time() <= 0)
+	if (obj_player->IsDeathPlayer() == true)
 	{
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(1));

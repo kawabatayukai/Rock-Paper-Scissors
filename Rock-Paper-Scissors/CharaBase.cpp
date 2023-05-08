@@ -71,55 +71,13 @@ void CharaBase::DeleteJangeki(int jan_count)
 //Floor(床)との当たり処理
 void CharaBase::Hit_Floor(const Floor* floor)
 {
+	//幅、高さが0の時は判定をとらない（死亡演出）
+	if (this->h <= 0 && this->w <= 0) return;
+
 	int box_x = floor->GetX();   //floorのｘ座標
 	int box_y = floor->GetY();   //floorのｙ座標
 	int box_w = floor->GetW();   //floorの幅
 	int box_h = floor->GetH();   //floorの高さ
-
-	////矩形と矩形の当たり判定
-	//if ( CheckHitBox_Box(box_x, box_y, box_w, box_h) == true )
-	//{
-
-	//	//キャラクター側　（キャラクターの座標は中心基準）
-	//	int cX_Min = static_cast<int>(x - (w / 2));     //最小ｘ（左）
-	//	int cX_Max = static_cast<int>(x + (w / 2)) - 1; //最大ｘ（右）
-	//	int cY_Min = static_cast<int>(y - (h / 2));     //最小ｙ（上）
-	//	int cY_Max = static_cast<int>(y + (h / 2)) - 1; //最大ｙ（下）
-
-	//	//floor側 　　　　（floorの座標は左上基準）
-	//	int fX_Min = box_x;                //最小ｘ（左）
-	//	int fX_Max = box_x + box_w;        //最大ｘ（右）
-	//	int fY_Min = box_y;                //最小ｙ（上）
-	//	int fY_Max = box_y + box_h;        //最大ｙ（下）
-
-
-	//	////キャラクター下方向    床にめりこまない
-	//	//if (cY_Max - fY_Min < MAX_LENGTH)  //キャラクターの下端とfloorの上端を比較
-	//	//{
-	//	//	y = static_cast<float>(fY_Min) - (h / 2);
-	//	//	land_flg = true;   //接地
-	//	//}
-
-	//	////キャラクター上方向　　天井にめり込まない
-	//	//if (fY_Max - cY_Min < MAX_LENGTH)
-	//	//{
-	//	//	y = static_cast<float>(fY_Max) + (h / 2);
-	//	//}
-	//	//
-	//	////キャラクター右方向
-	//	//if (cY_Max - fX_Min < MAX_LENGTH)
-	//	//{
-	//	//	x = static_cast<float>(fX_Min) - (w / 2);
-	//	//}
-
-	//	////キャラクター左方向
-	//	//if (fX_Max - cY_Min < MAX_LENGTH)
-	//	//{
-	//	//	x = static_cast<float>(fX_Max) + (w / 2);
-	//	//}
-
-	//	
-	//}
 
 		//矩形と矩形の当たり判定
 	if (CheckHitBox_Box(box_x, box_y, box_w, box_h) == true)
@@ -157,13 +115,12 @@ void CharaBase::Hit_Floor(const Floor* floor)
 		// x軸 or y軸のうち、差が最も小さい方を優先して補正
 		if (fabsf(dy) <= fabsf(dx))
 		{
-			
 			y += dy;
 			if (dy < 0 && dy > -1.5f) land_flg = true;  //character下方向に判定がある時、接地
-			
 		}
 		else
 		{
+
 			x += dx;
 		}
 	}
@@ -172,6 +129,9 @@ void CharaBase::Hit_Floor(const Floor* floor)
 //キャラクター同士の当たり判定  Hit:true
 bool CharaBase::Hit_Character(const CharaBase* character) const
 {
+	//幅、高さが0の時は判定をとらない（死亡演出）
+	if (this->h <= 0 && this->w <= 0) return false;
+
 	//（int型に変換）
 	int c_w = static_cast<int> (character->GetW());   //幅　
 	int c_h = static_cast<int> (character->GetH());   //高さ
@@ -185,8 +145,11 @@ bool CharaBase::Hit_Character(const CharaBase* character) const
 }
 
 //じゃん撃とキャラクターの当たり判定
-bool CharaBase::Hit_Jangeki(const Jangeki_Base* jangeki)
+bool CharaBase::Hit_Jangeki(const Jangeki_Base* jangeki) const
 {
+	//幅、高さが0の時は判定をとらない（死亡演出）
+	if (this->h <= 0 && this->w <= 0) return false;
+
 	float j_x = jangeki->GetX();    //じゃん撃のｘ  取得
 	float j_y = jangeki->GetY();    //じゃん撃のｙ　取得
 	float j_r = jangeki->GetR();    //じゃん撃の半径取得
@@ -232,7 +195,7 @@ bool CharaBase::CheckHitBox_Box(int box_x, int box_y, int box_w, int box_h) cons
 }
 
 //矩形と円形の当たり判定
-bool CharaBase::CheckHitBox_Circle(float c_x, float c_y, float c_r)
+bool CharaBase::CheckHitBox_Circle(float c_x, float c_y, float c_r) const
 {
 	//Enemyの矩形
 	float n_lx = x - (w / 2);       //左端(Left

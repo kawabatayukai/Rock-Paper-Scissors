@@ -5,7 +5,7 @@
 #include "Scene_GameOver.h"
 #include "Stage_Base.h"
 #include "GameData.h"
-
+#include"SoundSystem.h"
 
 
 //デバッグモード
@@ -17,8 +17,7 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	stage = LoadGraph("images/stage03/stage03back.png");
 	GroundImages = LoadGraph("images/stage03/GroundImages.png");
 	BlockImages = LoadGraph("images/stage03/BlockImages.png");
-
-
+	
 
 	//プレイヤー情報が渡されていれば
 	if (player != nullptr)
@@ -54,6 +53,8 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	obj_floor[10] = new Floor("images/stage03/BlockImages.png", 60, 340, 95, 1);//足場8//100, GetColor(193, 107, 68)
 	obj_floor[11] = new Floor("images/stage03/BlockImages.png", 60, 500, 95, 1);//足場9//130, GetColor(193, 107, 68)
 
+
+	
 	//obj_floor[12] = new Floor("images/stage03/BlockImages.png", 970, 405, 95, 10);//足場3, GetColor(193, 107, 68)
 	//obj_floor[12] = new Floor("images/stage03/BlockImages.png", 790, 360, 95, 10);//足場4//130, GetColor(193, 107, 68)
 	//obj_floor[13] = new Floor("images/stage03/BlockImages.png", 595, 425, 95, 10);//足場5//100, GetColor(193, 107, 68)
@@ -61,7 +62,7 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	//obj_floor[16] = new Floor("images/stage03/BlockImages.png", 210, 405, 95, 10);//足場7//130, GetColor(193, 107, 68)
 
 	//制限時間をセット
-	GameData::Set_TimeLimit(7200); //2分 ←　7200 % 3600
+	GameData::Set_TimeLimit(10810); //3分　//2分 ←　7200 % 3600
 
 
 }
@@ -182,173 +183,204 @@ void Scene_Stage03::Update()
 				if (jangeki_type == Jan_Type::PAPER)
 				{
 
-					//HPが100以下で86以上の時
-					if (obj_enemy->GetHP() >= 86 && /*obj_enemy->GetHP() >= 86 &&*/ obj_enemy->GetWaitTime() > 0) {
-
-						SheeldEnduranse = 27;
-						obj_enemy->ReceiveDamage(30 - SheeldEnduranse-EnemyCutDamege); //軽減ダメージが入る
-
-					}
-					else if (obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 71  && obj_enemy->GetWaitTime() > 0) {
-
-						SheeldEnduranse = 24;
-						obj_enemy->ReceiveDamage(30 - SheeldEnduranse- EnemyCutDamege); //軽減ダメージが入る
+					//HP86以上の時
+					if (obj_enemy->GetHP() >= 86) {
 
 
-					}
-					else if (obj_enemy->GetHP() <= 70 && obj_enemy->GetHP() >= 56  &&obj_enemy->GetWaitTime() > 0) {
-
-						SheeldEnduranse = 21;
-						obj_enemy->ReceiveDamage(30 - SheeldEnduranse- EnemyCutDamege); //軽減ダメージが入る
-
-
-					}
-					else if (obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 41 && obj_enemy->GetWaitTime() > 0) {
-
-						SheeldEnduranse = 18;
-						obj_enemy->ReceiveDamage(30 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
-
-
-					}
-					else if (obj_enemy->GetHP() <= 40 /*&& obj_enemy->GetHP() >= 39*/ && obj_enemy->GetWaitTime() > 0) {
-
-						SheeldEnduranse = 15;
-						obj_enemy->ReceiveDamage(30 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
-
-
-					}
-
-					else {
-
-						if (obj_enemy->GetHP() <= 100 /*&& obj_enemy->GetWaitTime() < 200*/) {
-
-							//SheeldEnduranse = 0;
-							obj_enemy->ReceiveDamage(10 - EnemyCutDamege); //ダメージが入る
-						}
-					}
-
-
-					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
-					i--;
-
-				}
-
-				break;
-
-			case Jan_Type::SCISSORS:                       //敵の属性　チョキ
-
-				//グーのじゃん撃のみ有効
-				if (jangeki_type == Jan_Type::ROCK)
-				{
-
-					//HPが100以下で85以上の時
-					if (obj_enemy->GetHP() >= 86 && obj_enemy->GetWaitTime() > 0) {
-
-						SheeldEnduranse = 27;
-						obj_enemy->ReceiveDamage(30 - (SheeldEnduranse)-EnemyCutDamege); //軽減ダメージが入る
-
-					}
-					else if (obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 71 && obj_enemy->GetWaitTime() > 0) {
-
-						SheeldEnduranse = 24;
-						obj_enemy->ReceiveDamage(30 - (SheeldEnduranse)-EnemyCutDamege); //軽減ダメージが入る
-
-
-					}
-					else if (obj_enemy->GetHP() <= 70 && obj_enemy->GetHP() >= 56 && obj_enemy->GetWaitTime() > 0) {
-
-						SheeldEnduranse = 21;
-						obj_enemy->ReceiveDamage(30 - (SheeldEnduranse)-EnemyCutDamege); //軽減ダメージが入る
-
-
-					}
-					else if (obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 41 && obj_enemy->GetWaitTime() > 0) {
-
-						SheeldEnduranse = 18;
-						obj_enemy->ReceiveDamage(30 - (SheeldEnduranse)-EnemyCutDamege); //軽減ダメージが入る
-
-
-					}
-					else if (obj_enemy->GetHP() <= 40 && obj_enemy->GetWaitTime() > 0) {
-
-						SheeldEnduranse = 15;
-						obj_enemy->ReceiveDamage(30 - (SheeldEnduranse)-EnemyCutDamege); //軽減ダメージが入る
-
-
-					}
-
-					//}
-					else {
-
-						SheeldEnduranse = 0;
-						obj_enemy->ReceiveDamage(10 - EnemyCutDamege); //ダメージが入る
-
-					}
-
-
-					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
-					i--;
-				}
-				break;
-
-			case Jan_Type::PAPER:                          //敵の属性　パー
-
-				//チョキのじゃん撃のみ有効
-				if (jangeki_type == Jan_Type::SCISSORS)
-				{
-					//if (obj_enemy->GetWaitTime() > 0) {
-
-						//HPに応じて食らうダメージが変化する
-						
-						//HPが100以下で85以上の時
-						if (obj_enemy->GetHP() >= 86 && obj_enemy->GetWaitTime() > 0) {
+						if(obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200){
 
 							SheeldEnduranse = 27;
-							obj_enemy->ReceiveDamage(30 -(SheeldEnduranse)- EnemyCutDamege); //軽減ダメージが入る
+							obj_enemy->ReceiveDamage(34 - SheeldEnduranse-EnemyCutDamege); //軽減ダメージが入る
 
 						}
-						else if (obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 71 &&obj_enemy->GetWaitTime() > 0) {
+
+						SoundSystem::PlaySE(SE::ENEMY_SLIGHTLYBROKEN);
+
+					}
+
+					else if (obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 71) {
+
+
+						if(obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200) {
 
 							SheeldEnduranse = 24;
-							obj_enemy->ReceiveDamage(30 - (SheeldEnduranse)-EnemyCutDamege); //軽減ダメージが入る
-
-
+							obj_enemy->ReceiveDamage(34 - SheeldEnduranse- EnemyCutDamege); //軽減ダメージが入る
+							
 						}
-						else if (obj_enemy->GetHP() <= 70 && obj_enemy->GetHP() >= 56 && obj_enemy->GetWaitTime() > 0) {
+
+						SoundSystem::PlaySE(SE::ENEMY_SLIGHTLYBROKEN);
+					
+					}
+					else if (obj_enemy->GetHP() <= 70 && obj_enemy->GetHP() >= 56) {
+					
+						if(obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200){
 
 							SheeldEnduranse = 21;
-							obj_enemy->ReceiveDamage(30 - (SheeldEnduranse)-EnemyCutDamege); //軽減ダメージが入る
-
+							obj_enemy->ReceiveDamage(34 - SheeldEnduranse- EnemyCutDamege); //軽減ダメージが入る
 
 						}
-						else if (obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 41 && obj_enemy->GetWaitTime() > 0) {
 
+						SoundSystem::PlaySE(SE::ENEMY_SLIGHTLYBROKEN);
+						
+					}
+					else if (obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 41) {
+
+			
+						if(obj_enemy->GetWaitTime() > 0 ||  obj_enemy->GetWaitTime() < 200){
+
+							
 							SheeldEnduranse = 18;
-							obj_enemy->ReceiveDamage(30 - (SheeldEnduranse)-EnemyCutDamege); //軽減ダメージが入る
-
-
+							obj_enemy->ReceiveDamage(34 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
+						
 						}
-						else if (obj_enemy->GetHP() <= 40 && obj_enemy->GetWaitTime() > 0) {
 
+						SoundSystem::PlaySE(SE::ENEMY_SHIELDBROKEN);
+					}
+					else if (obj_enemy->GetHP() <= 40) {
+
+
+						if (obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200) {
+
+							
 							SheeldEnduranse = 15;
-							obj_enemy->ReceiveDamage(30 - (SheeldEnduranse)-EnemyCutDamege); //軽減ダメージが入る
-
-
+							obj_enemy->ReceiveDamage(34 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
 						}
+						
 
-					//}
+					}
+
 					else {
 
-							SheeldEnduranse = 0;
-						obj_enemy->ReceiveDamage(10 - EnemyCutDamege); //ダメージが入る
+						if (obj_enemy->GetWaitTime() < 200 || obj_enemy->GetWaitTime() > 0){
+							
+							obj_enemy->ReceiveDamage(1 - EnemyCutDamege); //ダメージが入る
 
+
+						}
 					}
 
 
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
+
 				}
+
 				break;
+
+			//case Jan_Type::SCISSORS:                       //敵の属性　チョキ
+
+			//	//グーのじゃん撃のみ有効
+			//	if (jangeki_type == Jan_Type::ROCK)
+			//	{
+
+			//		//HPが100以下で85以上の時
+			//		if (obj_enemy->GetHP() >= 86 && obj_enemy->GetWaitTime() > 0) {
+
+			//			SheeldEnduranse = 27;
+			//			obj_enemy->ReceiveDamage(30 - (SheeldEnduranse)-EnemyCutDamege); //軽減ダメージが入る
+
+			//		}
+			//		else if (obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 71 && obj_enemy->GetWaitTime() > 0) {
+
+			//			SheeldEnduranse = 24;
+			//			obj_enemy->ReceiveDamage(30 - (SheeldEnduranse)-EnemyCutDamege); //軽減ダメージが入る
+
+
+			//		}
+			//		else if (obj_enemy->GetHP() <= 70 && obj_enemy->GetHP() >= 56 && obj_enemy->GetWaitTime() > 0) {
+
+			//			SheeldEnduranse = 21;
+			//			obj_enemy->ReceiveDamage(30 - (SheeldEnduranse)-EnemyCutDamege); //軽減ダメージが入る
+
+
+			//		}
+			//		else if (obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 41 && obj_enemy->GetWaitTime() > 0) {
+
+			//			SheeldEnduranse = 18;
+			//			obj_enemy->ReceiveDamage(30 - (SheeldEnduranse)-EnemyCutDamege); //軽減ダメージが入る
+
+
+			//		}
+			//		else if (obj_enemy->GetHP() <= 40 && obj_enemy->GetWaitTime() > 0) {
+
+			//			SheeldEnduranse = 15;
+			//			obj_enemy->ReceiveDamage(30 - (SheeldEnduranse)-EnemyCutDamege); //軽減ダメージが入る
+
+
+			//		}
+
+			//		//}
+			//		else {
+
+			//			SheeldEnduranse = 0;
+			//			obj_enemy->ReceiveDamage(8 - EnemyCutDamege); //ダメージが入る
+
+			//		}
+
+
+			//		obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
+			//		i--;
+			//	}
+			//	break;
+
+			//case Jan_Type::PAPER:                          //敵の属性　パー
+
+			//	//チョキのじゃん撃のみ有効
+			//	if (jangeki_type == Jan_Type::SCISSORS)
+			//	{
+			//		//if (obj_enemy->GetWaitTime() > 0) {
+
+			//			//HPに応じて食らうダメージが変化する
+			//			
+			//			//HPが100以下で85以上の時
+			//			if (obj_enemy->GetHP() >= 86 && obj_enemy->GetWaitTime() > 0) {
+
+			//				SheeldEnduranse = 27;
+			//				obj_enemy->ReceiveDamage(30 -(SheeldEnduranse)- EnemyCutDamege); //軽減ダメージが入る
+
+			//			}
+			//			else if (obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 71 &&obj_enemy->GetWaitTime() > 0) {
+
+			//				SheeldEnduranse = 24;
+			//				obj_enemy->ReceiveDamage(30 - (SheeldEnduranse)-EnemyCutDamege); //軽減ダメージが入る
+
+
+			//			}
+			//			else if (obj_enemy->GetHP() <= 70 && obj_enemy->GetHP() >= 56 && obj_enemy->GetWaitTime() > 0) {
+
+			//				SheeldEnduranse = 21;
+			//				obj_enemy->ReceiveDamage(30 - (SheeldEnduranse)-EnemyCutDamege); //軽減ダメージが入る
+
+
+			//			}
+			//			else if (obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 41 && obj_enemy->GetWaitTime() > 0) {
+
+			//				SheeldEnduranse = 18;
+			//				obj_enemy->ReceiveDamage(30 - (SheeldEnduranse)-EnemyCutDamege); //軽減ダメージが入る
+
+
+			//			}
+			//			else if (obj_enemy->GetHP() <= 40 && obj_enemy->GetWaitTime() > 0) {
+
+			//				SheeldEnduranse = 15;
+			//				obj_enemy->ReceiveDamage(30 - (SheeldEnduranse)-EnemyCutDamege); //軽減ダメージが入る
+
+
+			//			}
+
+			//		//}zz
+			//		else {
+
+			//				SheeldEnduranse = 0;
+			//			obj_enemy->ReceiveDamage(8 - EnemyCutDamege); //ダメージが入る
+
+			//		}
+
+
+			//		obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
+			//		i--;
+			//	}
+			//	break;
 
 			default:
 				break;
@@ -473,7 +505,8 @@ AbstractScene* Scene_Stage03::ChangeScene()
 	}
 
 	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() < 0 || GameData::Get_Each_Time() <= 0){
+					//死亡演出//
+	if (obj_player->IsDeathPlayer() == true){
 		 
 
 		//ゲームオーバーシーンへ切り替え
@@ -501,7 +534,7 @@ void Scene_Stage03::AfterJanken_LOSE()
 {
 
 	//じゃんけん敗北時
-	EnemyCutDamege = 5;
+	EnemyCutDamege = 6;
 
 	obj_player->SetX(200);
 	//obj_enemy->SetX(1150);

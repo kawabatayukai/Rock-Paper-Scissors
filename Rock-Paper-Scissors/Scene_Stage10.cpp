@@ -113,7 +113,7 @@ void Scene_Stage10::Update()
 		obj_floor[9] = new Floor(560, 420, 120, 20, 0xd2d2d2);//テレポート真ん中位置
 		obj_floor[10] = new Floor(0, 700, 1280, 20);
 		obj_floor[11] = new Floor(837, 200, 120, 10, 22822);
-		obj_floor[12] = new Floor(837, 400, 120, 10, 22822);
+		obj_floor[12] = new Floor(800, 500, 120, 10, 22822);
 
 		obj_floor[13] = new Floor(1089, 100, 120, 10, 22822);
 		obj_floor[14] = new Floor(1089, 300, 120, 10, 22822);
@@ -553,16 +553,20 @@ AbstractScene* Scene_Stage10::ChangeScene()
 	//"Debug_Manager.h" の #define DEBUG_OFF_10 をコメントアウトすると開発モード
 #ifdef DEBUG_OFF_10
 
-	//敵のHPが0以下
-	if (obj_enemy->Get_Enemy10Form() == 2 && obj_enemy->GetHP() < 0)
+	/*敵のHPが0以下*/
+	//if (obj_enemy->Get_Enemy10Form() == 2 && obj_enemy->GetHP() < 0)
+	//
+	if(obj_enemy->Get_Enemy10Form() == 2 && obj_enemy->IsDeathEnemy10() == true)
 	{
 		//リザルトへ切り替え
 		return dynamic_cast<AbstractScene*> (new Scene_InputName());
 	}
 
 
-	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() < 0 || GameData::Get_Each_Time() <= 0)
+	/*プレイヤーのHPが0以下*/
+	//if (obj_player->GetHP() < 0 || GameData::Get_Each_Time() <= 0)
+	//
+	 	   if (obj_player->IsDeathPlayer() == true)
 	{
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(10));

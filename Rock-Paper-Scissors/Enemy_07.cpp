@@ -4,7 +4,7 @@
 #include"Jangeki_Base.h"
 #include"Jangeki_Homing.h"
 #include"Jangeki_Vertical.h"
-#include<typeinfo>
+#include"Jangeki_Coming.h"
 
 #define _USE_MATH_DEFINES
 #include<math.h>
@@ -556,36 +556,18 @@ void Enemy_07::Move_ON_RING_LURK(float& target_x, float& target_y)
 					count_ari = 0;
 				}
 
-				////左コーナーに到達                             
-				//if (x == _CONSTANTS_07::CORNER_LEFT && y == (_CONSTANTS_07::RING_HEIGHT - (h / 2)))
-				//{
-				//	count_ari = 3;
-				//}
+				//じゃん撃発射
+				if (count_ari % 61 == 0)
+				{
+					float r = radius + 3.0f;
+					float sp = this->speed + 3.0f;
+					float p_x = player_x + static_cast<float>(GetRand(10));
+					float p_y = player_y + static_cast<float>(GetRand(10));
+
+					obj_jangeki[jan_count] = new Jangeki_Coming(x, y, r, sp, type, p_x, p_y);
+				}
 			}
 		}
-		/*******************************************************************/
-
-				//左コーナーポストに乗る
-		/*******************************　４  **++***************************/
-		//{
-		//	//リング左を目指す
-		//	if (count_ari >= 3)
-		//	{
-		//		//target_x = _CONSTANTS_07::CORNER_LEFT;
-		//		count_ari++;
-
-		//		//if (count_ari == 20)
-		//		{
-		//			Pre_Action = Now_Action;        //今回のActionを保存
-
-		//			Now_Action = ACT_TYPE::NO_ACT;  //Actionの完了
-		//			speed = init_speed;             //スピードを戻す
-
-		//			count_ari = 0;
-		//		}
-		//	}
-		//}
-		/*******************************************************************/
 	}
 
 	//左→右→右コーナーに飛び乗る

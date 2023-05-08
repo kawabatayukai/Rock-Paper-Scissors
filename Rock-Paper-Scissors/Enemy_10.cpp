@@ -22,8 +22,13 @@ Enemy_10::Enemy_10(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	Rimage = LoadGraph("images/stage09/Stage9_1.png");	//反射ON
 	Limage = LoadGraph("images/stage09/Stage9.png");		//反射OFF
 
+	ded_Image = LoadGraph("images/ステージ10敵の倒れ顔だけ画像.png");
+
 	//image = LoadGraph("images/tyokitest.png");
 	if (LoadDivGraph("images/ステージ10敵の画像.png", 10, 5, 2, 100, 100, image) == -1);
+
+	LoadDivGraph("images/stage09/teleport2.png", 15, 15, 1, 120, 150, img_teleport);
+	LoadDivGraph("images/stage09/teleport22.png", 15, 15, 1, 120, 150, img_teleport2);
 
 	Init_Jangeki();       //じゃん撃を用意
 
@@ -88,7 +93,8 @@ void  Enemy_10::Move()
 		* 第一形態
 		***********/
 	case 1:
-		if (hp > 0)
+		//死亡時以外
+		if (enemy_state == ENEMY_STATE10::ALIVE)
 		{
 			/*左右の足場にジャンプ移動の処理*/
 			switch (switchMove)
@@ -114,8 +120,9 @@ void  Enemy_10::Move()
 						x -= v;
 					}
 				}
-				else
+				else 
 				{
+					e_type = static_cast<Jan_Type>(GetRand(2));
 					switchMove = 1; //次の処理へ
 				}
 				enemyChange_Image = 2; //switch文の割り当て番号
@@ -144,13 +151,14 @@ void  Enemy_10::Move()
 				}
 				else
 				{
+					e_type = static_cast<Jan_Type>(GetRand(2));
 					switchMove = 0; //次の処理へ
 				}
 				enemyChange_Image = 1; //switch文の割り当て番号
 				break;
 			}
 		}
-		else
+		else if (enemy_state == ENEMY_STATE10::DEATH)
 		{
 			Interval();
 		}
@@ -160,161 +168,125 @@ void  Enemy_10::Move()
 		* 第二形態
 		***********/
 	case 2:
-		if (hp > 0)
+		//死亡時以外
+		if (enemy_state == ENEMY_STATE10::ALIVE)
 		{
 			static int interval;
 			interval++;
-			static int teleport = 150;
-			static int jump = GetRand(30);
-			static int h;
+			static int teleport = 200;
+			static int jump = 40;
+			static int h = 2;
 			if (interval % teleport == 0) 
 			{
+				e_type = static_cast<Jan_Type>(GetRand(2));
+
 				switch (GetRand(4))
 				{
 					//左側
 				case 1:
 					h = 1;
+					animflg = true;
+
+					before_x = x;
+					before_y = y;
 					x = 160;
 					y = 430;
+
+					
+
 					old_y = y;
 					break;
 				
 					//右側
 				case 2:
 					h = 2;
+					animflg = true;
+
+					before_x = x;
+					before_y = y;
 					x = 1110;
 					y = 430;
 					old_y = y;
 					break;
 				
-					//真ん中
-				/*case 3:
-					h = 3;
+					//真ん中右行く
+				case 3:
+					h = 1;
+					animflg = true;
+
+					before_x = x;
+					before_y = y;
 					x = 620;
 					y = 370;
 					old_y = y;
-					break;*/
+					break;
+
+					//真ん中左行く
+				case 4:
+					h = 2;
+					animflg = true;
+
+					before_x = x;
+					before_y = y;
+					x = 620;
+					y = 370;
+					old_y = y;
+					break;
 				}
 			}
 			else
-			{
-				switch (GetRand(3))
+			{	
+				switch (h)
 				{
-				case 1: //始まり右に移動
-					
-					switch (h)
+				case 1: //右行く
+					if (x < 1210)
 					{
-					case 1: //右行く
-						if (x < 1050)
-						{
-							dir = static_cast<int>(DIRECTION::RIGHT);   //向きを設定（左）
-							x += 4/*GetRand(20)*/;
-						}
-						else if (x > 1050)
-						{
-							h == 2;
-						}
-						break;
-					case 2: //左行く
-						if (x > 0)
-						{
-							dir = static_cast<int>(DIRECTION::LEFT);   //向きを設定（左）
-							x -= 4/*GetRand(20)*/;
-						}
-						else if (x < 10)
-						{
-							h == 1;
-						}
-						break;
-					default:
-						break;
+						dir = static_cast<int>(DIRECTION::RIGHT);   //向きを設定（左）
+						x += 4/*GetRand(20)*/;
 					}
-
-					//ジャンプ
-					if (interval % jump == 0)
+					else 
 					{
-						if (land_flg == true && y > 100) //ジャンプ
-						{
-							g_add = -25.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-							land_flg = false;  //地面についていない
-						}
-
-						if (land_flg == false) //ジャンプ中の加速
-						{
-							if (v < 15) //加速上限
-							{
-								v += a;
-							}
-							x += v;
-						}
+						e_type = static_cast<Jan_Type>(GetRand(2));
+						h = 2;
 					}
 					enemyChange_Image = 1; //switch文の割り当て番号
 					break;
-
-				case 2: // 始まり左に移動
-					
-					switch (h)
+				case 2: //左行く
+					if (x > 70)
 					{
-					case 1: //右行く
-						if (x < 1050)
-						{
-							dir = static_cast<int>(DIRECTION::RIGHT);   //向きを設定（左）
-							x += 4/*GetRand(20)*/;
-						}
-						else if (x > 1050)
-						{
-							h == 2;
-						}
-						break;
-
-					case 2: //左行く
-						if (x > 0)
-						{
-							dir = static_cast<int>(DIRECTION::LEFT);   //向きを設定（左）
-							x -= 4/*GetRand(20)*/;
-						}
-						else if (x < 10)
-						{
-							h == 1;
-						}
-						break;
-					default:
-						break;
+						dir = static_cast<int>(DIRECTION::LEFT);   //向きを設定（左）
+						x -= 4/*GetRand(20)*/;
 					}
-
-					//ジャンプ
-					if (interval % jump == 0)
+					else 
 					{
-						if (land_flg == true && y > 100) //ジャンプ
-						{
-							g_add = -25.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-							land_flg = false;  //地面についていない
-						}
-
-						if (land_flg == false) //ジャンプ中の加速
-						{
-							if (v < 15) //加速上限
-							{
-								v -= a;
-							}
-							x -= v;
-						}
+						e_type = static_cast<Jan_Type>(GetRand(2));
+						h = 1;
 					}
 					enemyChange_Image = 2; //switch文の割り当て番号
 					break;
-
-				//case 3: // 真ん中
-				//	if (h == 3)
-				//	{
-				//		x += GetRand(5);
-				//	}
-				//	break;
 				}
+				//ジャンプ
+				if (interval % jump == 0)
+				{
+					if (land_flg == true && y > 100) //ジャンプ
+					{
+						g_add = -25.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+						land_flg = false;  //地面についていない
+					}
+
+					if (land_flg == false) //ジャンプ中の加速
+					{
+						if (v < 15) //加速上限
+						{
+							v += a;
+						}
+						x += v;
+					}
+				}
+				break;
 			}
 		}
 		break;
-
-	
 	}
 
 	//画像の選択変更
@@ -323,24 +295,37 @@ void  Enemy_10::Move()
 	/*敵直接の属性変化*/
 	//e_type = Jan_Type::PAPER;
 
-	/********************   ジャンプ関係   ********************/
-
-	//if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
-	//{
-		//g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-		//land_flg = false;  //地面についていない
-	//}
-
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
-	//落下速度の制限
+			//落下速度の制限
 	if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
 
 	old_y = y;                    //1フレーム前のｙ座標
 	y += y_add;                   //落下距離をｙ座標に加算する
 	g_add = _GRAVITY;              //重力加速度を初期化する
 
-	/**********************************************************/
+	/*テレポートの処理*/
+	if (animflg == true)
+	{
+		animtimer++;
+
+		if (animtimer / 3 % 15 == 14) 
+		{
+
+			if (anim_count == 0)
+			{
+				animtimer = 0;
+				anim_count = 1;
+			}
+			else
+			{
+				animtimer = 0;
+				animflg = false;
+				anim_count = 0;
+			}
+
+		}
+	}
 }
 
 void Enemy_10::Interval()
@@ -358,8 +343,10 @@ void Enemy_10::Interval()
 	}
 	else
 	{
+		enemy_state = ENEMY_STATE10::ALIVE;
 		hp = 100;
 		x = 1100;
+		y = 430;
 		dir == static_cast<int>(DIRECTION::LEFT);
 		form = 2;
 	}
@@ -368,13 +355,52 @@ void Enemy_10::Interval()
 //更新
 void Enemy_10::Update()
 {
+	//敵のHPが0より上の時、"生きた"状態に
+	if (this->hp > 0)
+	{
+		enemy_state = ENEMY_STATE10::ALIVE;
+
+		//当たり判定を付ける
+		w = 100; 
+		h = 100;
+	}
+
+	//敵のHPが0以下の時、"死んだ"状態に
+	if (this->hp <= 0)enemy_state = ENEMY_STATE10::DEATH;
+
+
+
 	//じゃん撃更新・生成
 	Update_Jangeki();
 
 	//じゃん撃更新・生成(反射弾)
 	reflection->Update_reflection();
 
-	Move();
+	Move(); //敵の動き
+
+	/*死亡時の処理*/
+	if (enemy_state == ENEMY_STATE10::DEATH)
+	{
+		static bool isJumped = false;
+
+		if (land_flg == false && isJumped == false) land_flg = true;
+
+		if (land_flg == true)
+		{
+			isJumped = true;
+			g_add = -23.5f;    //重力加速度をマイナス値に
+			land_flg = false;  //地面についていない
+		}
+
+		w = 0;
+		h = 0;
+
+		if (y > 730.f)
+		{
+			enemy_state = ENEMY_STATE10::DEATH_END;
+		}
+
+	 }
 
 	//if (x + (w / 2) == (1280 - 20))
 	//{
@@ -411,20 +437,34 @@ void Enemy_10::Update()
 //描画
 void Enemy_10::Draw() const
 {
-	//中心から描画
-	DrawRotaGraphF(x, y, 1, 0, image[enemy_Image], TRUE);
-	//DrawRotaGraphF(x, y, 1, 0, image, TRUE);
+	if (enemy_state == ENEMY_STATE10::ALIVE)
+	{
+		//中心から描画
+		DrawRotaGraphF(x, y, 1, 0, image[enemy_Image], TRUE);
+		//DrawRotaGraphF(x, y, 1, 0, image, TRUE);
 
-	//じゃん撃描画
-	Draw_Jangeki();
-	reflection->Draw_reflectionJangeki(); //反射弾描画
+		//じゃん撃描画
+		Draw_Jangeki();
+		reflection->Draw_reflectionJangeki(); //反射弾描画
 
-	//テスト
-	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
-	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
-	DrawFormatString(500, 200, 0xffffffff, "%f", x);
-	DrawFormatString(500, 90, 0xffffffff, "%f", y);
+		/*テレポート時のアニメーション*/
+		if (animflg == true)
+		{
+			if (anim_count == 0) DrawGraph(before_x - 65, before_y - 50, img_teleport[animtimer / 3 % 15], TRUE);
+			else DrawGraph(x - 50, y - 50, img_teleport2[animtimer / 2 % 15], TRUE);
+		}
 
+		//テスト
+		if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
+		else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
+		DrawFormatString(500, 200, 0xffffffff, "%f", x);
+		DrawFormatString(500, 90, 0xffffffff, "%f", y);
+	}
+	else
+	{
+		//死亡画像
+		DrawRotaGraphF(x, y, 1, 0, ded_Image, TRUE);
+	}
 }
 
 /*画像の変更取得*/
@@ -724,7 +764,7 @@ void Enemy_10::Update_Jangeki()
 			/*********************** ↓↓ 生成( 追跡弾 ) ↓↓ ***********************/
 
 			//            生成速度
-			if (frame_count % 150 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //追跡弾 
+			//if (frame_count % 150 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //追跡弾 
 
 			/************************************************************************/
 
@@ -741,6 +781,7 @@ void Enemy_10::Update_Jangeki()
 				{
 					Jan_360degrees(jan_count, radius, speed, type); //360度発射
 				}
+
 				//            生成速度
 				//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_whole(x, y, radius, speed, type);
 
@@ -815,4 +856,14 @@ float Enemy_10::Get_OldY()
 float Enemy_10::Get_Y()
 {
 	return y;
+}
+
+//敵が死亡しているか
+bool Enemy_10::IsDeathEnemy10() const
+{
+	if (enemy_state == ENEMY_STATE10::DEATH_END)
+	{
+		return true;
+	}
+	return false;
 }

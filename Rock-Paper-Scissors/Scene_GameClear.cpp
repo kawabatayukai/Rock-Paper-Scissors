@@ -2,6 +2,7 @@
 #include"KeyManager.h"
 #include "Scene_GameClear.h"
 #include"Scene_GameMain.h"
+#include"Scene_Title.h"
 
 #include"Scene_Stage00.h"
 #include"Scene_Stage01.h"
@@ -17,6 +18,8 @@
 
 #include"Scene_End.h"
 #include"Scene_Help.h"
+#include"SortSave.h"
+#include"GameData.h"
 
 //コンストラクタ
 GameClearScene::GameClearScene(int Next):Next(Next)
@@ -42,6 +45,10 @@ void GameClearScene::Draw() const
 	//背景
 	DrawGraph(0, 0, clearImage, TRUE);
 
+	SetFontSize(30);
+	DrawFormatString(400,200, 0xFFFFFF,"スコア：%d ・ 時間：%d", GameData::Get_Score(), GameData::Get_Each_Time_Min());
+	SetFontSize(20);
+
 	/*SetFontSize(200);
 	DrawString(200, 100, "StageClear", 0xffffff);
 
@@ -58,8 +65,7 @@ AbstractScene* GameClearScene::ChangeScene()
 	//Aボタンで戻る
 	if (KeyManager::OnPadClicked(PAD_INPUT_A))
 	{
-		return dynamic_cast<AbstractScene*> (new GameMainScene());
-		//return dynamic_cast<AbstractScene*> (new Scene_Stage00());
+		return dynamic_cast<AbstractScene*> (new TitleScene());
 	}
 	if (KeyManager::OnPadClicked(PAD_INPUT_B))
 	{

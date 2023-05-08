@@ -86,6 +86,14 @@ void GameMainScene::Draw() const
 
 	obj_floor[0]->Draw();
 	obj_player->Draw();
+
+	if (KeyManager::OnPadClicked_LT()) DrawString(300, 400, "aaaaa", 0xffffff);
+	if (KeyManager::OnPadClicked_LT()) DrawString(300, 400, "bbbbb", 0xffffff);
+	
+	//DrawFormatString(400, 500, 0xffffff, "LT %d", KeyManager::GetValue_LT());
+	//DrawFormatString(400, 600, 0xffffff, "LR %d", KeyManager::GetValue_RT());
+
+	//DrawBox(0, 0, 100 * 3, 350, 0xff00ff, TRUE);
 }
 
 //ÉVÅ[ÉìÇÃïœçX
