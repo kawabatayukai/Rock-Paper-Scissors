@@ -1,6 +1,7 @@
 #pragma once
 #include "CharaBase.h"
 #include"Effect_Player.h"
+#include"Effect_ChangePlayer.h"
 
 //プレイヤーの状態
 enum class PLAYER_STATE
@@ -126,7 +127,10 @@ private:
 		DOWN,
 	};
 
-	Effect_Player* obj_effect;  //エフェクト
+	//エフェクト(回復)
+	Effect_Player* obj_effect;
+	//エフェクト(属性)
+	Effect_ChangePlayer* obj_effectchange;
 	int ui_font;  //ui用フォントハンドル
 
 	bool animflg = false;	//アニメーションフラグ
