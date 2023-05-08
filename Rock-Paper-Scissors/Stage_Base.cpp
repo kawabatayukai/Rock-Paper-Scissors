@@ -403,6 +403,19 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 					}
 					break;
 
+				case Jan_Type::NONE:                            //属性なし
+
+					//反射じゃん撃に当てることで生成されるホーミングじゃん撃のみ有効
+					if (p_jan[i]->IsGetPlayerHoming() == true)
+					{
+						//エフェクト生成
+						if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
+						{
+							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y);
+						}
+					}
+					break;
+
 				default:
 					break;
 				}

@@ -1890,6 +1890,7 @@ void Player::Create_Homing(int jan_count, float x, float y, float r, float speed
 	
 	//ホーミングを生成
 	obj_jangeki[jan_count] = new Jangeki_Homing(x, y, r, speed, type);
+	obj_jangeki[jan_count]->SetPlayerHoming();
 }
 
 //敵の座標を取得
