@@ -1,4 +1,4 @@
-#include"DxLib.h"
+#include "Scene_Title_GameLevel.h"
 #include"KeyManager.h"
 #include"Debug_Manager.h"
 #include"Scene_Title.h"
@@ -10,10 +10,9 @@
 #include"GameData.h"
 #include"SoundSystem.h"
 #include"Scene_Story.h"
-#include "Scene_Title_GameLevel.h"
 
 //コンストラクタ
-TitleScene::TitleScene()
+Scene_Title_GameLevel::Scene_Title_GameLevel()
 {
 	TitleImage = LoadGraph("images/JankenWorldTitle.png");
 
@@ -22,11 +21,11 @@ TitleScene::TitleScene()
 	font_debug = CreateFontToHandle("Yu Gothic UI", 20, 2, DX_FONTTYPE_ANTIALIASING_4X4);
 
 	//データの初期化
-	GameData::Init_Data();   
+	GameData::Init_Data();
 }
 
 //デストラクタ
-TitleScene::~TitleScene()
+Scene_Title_GameLevel::~Scene_Title_GameLevel()
 {
 	//フォントデータを削除
 	DeleteFontToHandle(font_title);
@@ -35,9 +34,9 @@ TitleScene::~TitleScene()
 }
 
 //更新
-void TitleScene::Update()
+void Scene_Title_GameLevel::Update()
 {
-	SoundSystem::PlayBGM(BGM::TITLE);
+	//SoundSystem::PlayBGM(BGM::TITLE);
 
 	//カーソルを合わせてボタンを押すと遷移
 	if (KeyManager::OnPadClicked(PAD_INPUT_DOWN) == true) {
@@ -45,7 +44,7 @@ void TitleScene::Update()
 		//上ボタンで上に
 		T_selectnum++;
 
-		if (T_selectnum > 3) T_selectnum = 0;
+		if (T_selectnum > 1) T_selectnum = 0;
 	}
 
 	if (KeyManager::OnPadClicked(PAD_INPUT_UP) == true) {
@@ -53,21 +52,27 @@ void TitleScene::Update()
 		//下ボタンで下に
 		T_selectnum--;
 
-		if (T_selectnum < 0) T_selectnum = 3;
+		if (T_selectnum < 0) T_selectnum = 1;
 
 	}
 
 }
 
 //描画
-void TitleScene::Draw() const
+void Scene_Title_GameLevel::Draw() const
 {
-	DrawGraph(0,0,TitleImage,FALSE);
-	
-	DrawStringToHandle(70, 350, "START", 0xf, font_title);
-	DrawStringToHandle(70, 395, "HELP", 0xf, font_title);
-	DrawStringToHandle(70, 445, "RANKING", 0xf, font_title);
-	DrawStringToHandle(70, 495, "END", 0xf, font_title);
+	//DrawGraph(0, 0, TitleImage, FALSE);
+
+	SetBackgroundColor(0, 64, 0);
+
+	//DrawStringToHandle(70, 350, "START", 0xf, font_title); 
+	DrawStringToHandle(70, 200, "難易度選択", 0xf, font_title);
+	DrawStringToHandle(70, 350, "NOMAL", 0xf, font_title); 
+	DrawStringToHandle(70, 400, "HARD", 0xf, font_title);
+	DrawStringToHandle(70, 500, "Bボタンで戻る", 0xf, font_title);
+	//DrawStringToHandle(70, 395, "HELP", 0xf, font_title);
+	//DrawStringToHandle(70, 445, "RANKING", 0xf, font_title);
+	//DrawStringToHandle(70, 495, "END", 0xf, font_title);
 
 	//メニューカーソル
 	DrawTriangle(40, 355 + (T_selectnum * 50), 60, 370 + (T_selectnum * 50), 40, 385 + (T_selectnum * 50), GetColor(255, 0, 0), TRUE);
@@ -77,7 +82,7 @@ void TitleScene::Draw() const
 }
 
 //シーンの変更
-AbstractScene* TitleScene::ChangeScene()
+AbstractScene* Scene_Title_GameLevel::ChangeScene()
 {
 	// RT + A でセレクト画面
 	if (KeyManager::GetValue_RT() >= 40 && KeyManager::OnPadClicked(PAD_INPUT_A) == true)
@@ -91,27 +96,19 @@ AbstractScene* TitleScene::ChangeScene()
 		switch (T_selectnum)
 		{
 		case 0:
-			/*return dynamic_cast<AbstractScene*> (new Scene_Story());
-			SoundSystem::StopBGM(BGM::TITLE);*/
-			return dynamic_cast<AbstractScene*> (new Scene_Title_GameLevel());
+			return dynamic_cast<AbstractScene*> (new Scene_Story());
+			SoundSystem::StopBGM(BGM::TITLE);
 			break;
 		case 1:
-			return dynamic_cast<AbstractScene*> (new HelpScene());
-			SoundSystem::StopBGM(BGM::TITLE);
 			break;
-		case 2:
-			return dynamic_cast<AbstractScene*> (new Scene_Ranking());
-			SoundSystem::StopBGM(BGM::TITLE);
-			break;
-		case 3:
-			return dynamic_cast<AbstractScene*> (new EndScene());
-			SoundSystem::StopBGM(BGM::TITLE);
-			break;	
-
-
 		default:
 			break;
 		}
+	}
+
+	if (KeyManager::OnPadClicked(PAD_INPUT_B))
+	{
+		return dynamic_cast<AbstractScene*> (new TitleScene());
 	}
 
 	return this;  //更新なし
