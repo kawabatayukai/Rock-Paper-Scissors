@@ -3,7 +3,9 @@
 
 
 
-unsigned int GameData::g_score;           //スコア（ゲームプレイ中ずっと保持）
+unsigned int GameData::g_score;     //スコア
+unsigned int GameData::max_score;   //スコア
+
 int GameData::total_time;        //総合時間
 
 int GameData::each_stage_time;   //各ステージの制限時間
@@ -13,6 +15,7 @@ int GameData::c_time_limit;      //制限時間（固定）
 void GameData::Init_Data()
 {
 	g_score = 0;
+	max_score = 0;
 	total_time = 0;
 }
 
@@ -20,12 +23,19 @@ void GameData::Init_Data()
 void GameData::Add_Score(unsigned int score)
 {
 	if (score < 0) return;
-	g_score += score;
+	max_score += score;
 }
 
-unsigned int GameData::Get_Score() 
+//スコア取得
+unsigned int GameData::Get_Score()
 {
 	return g_score;
+}
+
+//スコア取得(本来)
+unsigned int GameData::Get_MaxScore()
+{
+	return max_score;
 }
 
 
@@ -54,6 +64,9 @@ void GameData::Time_Update()
 	//制限時間は減算
 	each_stage_time--;
 	if (each_stage_time < 0) each_stage_time = 0;
+
+	if (g_score < max_score) g_score++;
+	if (g_score > max_score) g_score = max_score;
 }
 
 //制限時間（設定値）取得

@@ -12,13 +12,13 @@ namespace _CONSTANTS_SB
 {
 	//エフェクト最大生成数
 	const int EFFECT_MAX = 20;
-	
+
 	//時計座標
 	const int CLOCK_X = 640;
 	const int CLOCK_Y = 60;
 }
 
-Stage_Base::Stage_Base() : blackout_time(0)
+Stage_Base::Stage_Base() : blackout_time(0), Prev_EnemyType(Jan_Type::NONE), obj_effectEnemy(nullptr)
 {
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, typeImage);
 
@@ -50,7 +50,7 @@ void Stage_Base::DrawUI(Jan_Type type, int hp) const
 
 	//制限時間描画
 	//DrawFormatStringToHandle(500, 20, 0x00ff00, font, "%d分%d秒", GameData::Get_Each_Time() / 3600, GameData::Get_Each_Time() / 60);
-	DrawFormatStringToHandle(500, 20, 0x00ff00, font, "%d : %d", GameData::Get_Each_Time_Min(), GameData::Get_Each_Time_Sec(),0xffffff);
+	DrawFormatStringToHandle(500, 20, 0x00ff00, font, "%d : %d", GameData::Get_Each_Time_Min(), GameData::Get_Each_Time_Sec(), 0xffffff);
 
 	//スコア表示
 	DrawFormatString(20, 220, 0xffffff, "スコア：%d", GameData::Get_Score());
@@ -70,9 +70,9 @@ void Stage_Base::DrawUI(Jan_Type type, int hp) const
 	else if (circle_rate < 33) circle_index = 2;
 	else {};
 
-	
+
 	DrawRotaGraph(CLOCK_X, CLOCK_Y, 1, 0, image_clock, TRUE);
-	
+
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 250);
 	DrawCircleGauge(CLOCK_X, CLOCK_Y, circle_rate, image_circle[circle_index], 0.0, 0.85, 1);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
@@ -85,7 +85,7 @@ void Stage_Base::DrawUI_ON_Enemy(const EnemyBase* enemy) const
 {
 	//情報を取得
 	Jan_Type type = enemy->GetType();
-	int enemy_hp  = enemy->GetHP();
+	int enemy_hp = enemy->GetHP();
 	float enemy_x = enemy->GetX();
 	float enemy_y = enemy->GetY();
 	float enemy_h = enemy->GetH();
@@ -123,7 +123,7 @@ void Stage_Base::DrawUI_ON_Enemy(const EnemyBase* enemy) const
 	float draw_y = enemy_y - 100; //描画ｙ
 
 	//属性
-	if(type != Jan_Type::NONE)DrawRotaGraph(draw_x - 20, draw_y + 5, 0.3, 1, typeImage[index], TRUE);
+	if (type != Jan_Type::NONE)DrawRotaGraph(draw_x - 20, draw_y + 5, 0.3, 1, typeImage[index], TRUE);
 	//枠
 	DrawBoxAA(draw_x - 3, draw_y - 3, draw_x + 103, draw_y + 13, 0xffffff, TRUE);
 	DrawBoxAA(draw_x, draw_y, (draw_x + 100), draw_y + 10, 0x000000, TRUE);
@@ -196,9 +196,6 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 		//敵とプレイヤーが接触
 		if (enemy->Hit_Character(obj_player) == true && nhit_time == 0)
 		{
-			//じゃんけん開始
-			//j_state = Jan_State::PROGRESS;
-
 			//接触した!
 			j_state = Jan_State::START;
 			blackout_time = 0;
@@ -282,14 +279,11 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 				//じゃん撃を初期化する
 				enemy->Init_Jangeki();
 
-				//delete obj_janken;
 				obj_janken->OneMore_Init();
 
 				//じゃんけん開始
 				j_state = Jan_State::PROGRESS;
 
-				//じゃんけんオブジェクト生成
-				//obj_janken = new Janken(again_type);
 				break;
 
 			default:
@@ -440,6 +434,28 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 		}
 	}
 	//----------------------------------------------------------------------------------
+
+		//前回の属性と違っていればエフェクト生成
+	if (enemy->GetType() != Prev_EnemyType && Prev_EnemyType != Jan_Type::NONE)
+	{
+		if (obj_effectEnemy == nullptr)
+		{
+			obj_effectEnemy = new Effect_Enemy(enemy->GetX(), enemy->GetY(), enemy->GetType());
+		}
+	}
+	//敵の属性変化
+	Prev_EnemyType = enemy->GetType();
+
+	if (obj_effectEnemy != nullptr)
+	{
+		obj_effectEnemy->Update();
+		obj_effectEnemy->SetEnemyLocation(enemy->GetX(), enemy->GetY());
+		if (obj_effectEnemy->IsEffectFinished() == true)
+		{
+			delete obj_effectEnemy;
+			obj_effectEnemy = nullptr;
+		}
+	}
 }
 
 //じゃん撃ヒット時エフェクト 描画
@@ -452,6 +468,8 @@ void Stage_Base::Effect_Draw_HitJangeki() const
 		if (obj_effect[i] == nullptr) break;
 		obj_effect[i]->Draw();
 	}
+
+	if (obj_effectEnemy != nullptr) obj_effectEnemy->Draw();
 }
 
 
