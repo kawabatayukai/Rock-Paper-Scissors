@@ -5,9 +5,18 @@
 //SEの種類   seを追加した際にここに追加
 enum class SE
 {
+	/*プレイヤー↓*/
+
 	PLAYER_JUMP,
+
+	/*プレイヤー↑*/
+
+	/*敵↓*/
+
 	ENEMY_SLIGHTLYBROKEN,
 	ENEMY_SHIELDBROKEN,
+
+	/*敵↑*/
 	
 };
 
