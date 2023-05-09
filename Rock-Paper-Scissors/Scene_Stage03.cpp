@@ -490,19 +490,20 @@ void Scene_Stage03::Draw() const
 
   
 
-//じゃんけん負けた時
-if (/*obj_enemy->GetHP() >= 86 || obj_enemy->GetHP() <= 40*/Enemy_Janwin == 0){
+	//じゃんけん負けた時
+	if (/*obj_enemy->GetHP() >= 86 || obj_enemy->GetHP() <= 40*/Enemy_Janwin == 0){
 	
-	if(obj_enemy->GetWaitTime() > 0){
+		if(obj_enemy->GetWaitTime() > 0){
 		//エネミー特殊効果テキスト表示
 
-		 DrawFormatString((int)(obj_enemy->GetX() - 35), (int)(obj_enemy->GetY() - 70), GetColor(0, 0, 255), "さらに防御UP↑", obj_enemy->GetWaitTime());
+			 DrawFormatString((int)(obj_enemy->GetX() - 35), (int)(obj_enemy->GetY() - 85), GetColor(0, 0, 255), "さらに防御UP↑", obj_enemy->GetWaitTime());
+		}
+		/*else {
+
+			Enemy_Janwin;
+
+		}*/
 	}
-	/*else {
-
-		Enemy_Janwin;
-
-	}*/
 }
 
 
