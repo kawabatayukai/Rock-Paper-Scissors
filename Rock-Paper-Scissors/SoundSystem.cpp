@@ -21,9 +21,9 @@ void  SoundSystem::LoadSounds_SE()
 	/*ƒvƒŒƒCƒ„[ª*/
 
 	/*“G«*/
-
 	se_sounds.push_back(LoadSoundMem("Sound/st03/SlightlyBrokenSE.wav"));
 	se_sounds.push_back(LoadSoundMem("Sound/st03/BrokenSE.wav"));
+
 
 	/*“Gª*/
 
@@ -37,6 +37,7 @@ void  SoundSystem::LoadSounds_BGM()
 	bgm_sounds.push_back(LoadSoundMem("Sound/TitleBGM.mp3"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/st03/St03BGM.wav"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/stage04/stage04_BGM.wav"));
+
 }
 
 
