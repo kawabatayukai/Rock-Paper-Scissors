@@ -9,6 +9,7 @@
 #include <corecrt_math_defines.h>
 #include "KeyManager.h"
 #include"Jangeki_Player.h"
+#include "SoundSystem.h"
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_10::Enemy_10(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
@@ -123,6 +124,24 @@ void  Enemy_10::Move()
 				else 
 				{
 					e_type = static_cast<Jan_Type>(GetRand(2));
+
+					/*HP回復*/
+					if (hp > 100)
+					{
+						hp = 100;
+					}
+					if (hp <= 100)
+					{
+						hp += 5;
+					}
+					if (hp > 100)
+					{
+						hp = 100;
+					}
+
+					//SE
+					SoundSystem::PlaySE(SE::ENEMY10_HAHAHA);
+
 					switchMove = 1; //次の処理へ
 				}
 				enemyChange_Image = 2; //switch文の割り当て番号
@@ -152,6 +171,24 @@ void  Enemy_10::Move()
 				else
 				{
 					e_type = static_cast<Jan_Type>(GetRand(2));
+
+					/*HP回復*/
+					if (hp > 100)
+					{
+						hp = 100;
+					}
+					if (hp <= 100)
+					{
+						hp += 5;
+					}
+					if (hp > 100)
+					{
+						hp = 100;
+					}
+
+					//SE
+					SoundSystem::PlaySE(SE::ENEMY10_HAHAHA);
+
 					switchMove = 0; //次の処理へ
 				}
 				enemyChange_Image = 1; //switch文の割り当て番号
@@ -178,8 +215,26 @@ void  Enemy_10::Move()
 			static int h = 2;
 			if (interval % teleport == 0) 
 			{
+				//SE
+				SoundSystem::PlaySE(SE::ENEMY10_Tepepo);
+				SoundSystem::PlaySE(SE::ENEMY10_HAHAHA);
+			
 				e_type = static_cast<Jan_Type>(GetRand(2));
 
+				/*HP回復*/
+				if (hp > 100)
+				{
+					hp = 100;
+				}
+				if (hp <= 100)
+				{
+					hp += 30;
+				}
+				if (hp > 100)
+				{
+					hp = 100;
+				}
+			
 				switch (GetRand(4))
 				{
 					//左側
@@ -221,7 +276,7 @@ void  Enemy_10::Move()
 					old_y = y;
 					break;
 
-					//真ん中左行く
+					//真ん中
 				case 4:
 					h = 2;
 					animflg = true;
@@ -247,6 +302,21 @@ void  Enemy_10::Move()
 					else 
 					{
 						e_type = static_cast<Jan_Type>(GetRand(2));
+
+						/*HP回復*/
+						if (hp > 100)
+						{
+							hp = 100;
+						}
+						if (hp <= 100)
+						{
+							hp += 10;
+						}
+						 if (hp > 100)
+						{
+							hp = 100;
+						}
+							
 						h = 2;
 					}
 					enemyChange_Image = 1; //switch文の割り当て番号
@@ -260,6 +330,21 @@ void  Enemy_10::Move()
 					else 
 					{
 						e_type = static_cast<Jan_Type>(GetRand(2));
+
+						/*HP回復*/
+						if (hp > 100)
+						{
+							hp = 100;
+						}
+						if (hp <= 100)
+						{
+							hp += 10;
+						}
+						 if (hp > 100)
+						{
+							hp = 100;
+						}
+
 						h = 1;
 					}
 					enemyChange_Image = 2; //switch文の割り当て番号

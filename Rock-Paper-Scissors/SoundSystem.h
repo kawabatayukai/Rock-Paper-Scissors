@@ -15,6 +15,8 @@ enum class SE
 
 	ENEMY_SLIGHTLYBROKEN,
 	ENEMY_SHIELDBROKEN,
+	ENEMY10_HAHAHA,
+	ENEMY10_Tepepo,
 
 	/*ìGÅ™*/
 	
@@ -27,6 +29,10 @@ enum class BGM
 	TITLE,
 	ST03_BGM,
 	STAGE04_BGM,
+	ENEMY_10_Form2BGM,
+	ENEMY_10_Marry,
+	ENEMY_10_Arupus,
+	ENEMY_10_London,
 };
 
 
