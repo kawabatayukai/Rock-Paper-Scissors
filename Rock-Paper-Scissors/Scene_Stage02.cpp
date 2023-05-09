@@ -53,7 +53,7 @@ void Scene_Stage02::Update()
 
 	//時間をカウント
 	GameData::Time_Update();
-
+	Effect_Update_HitJangeki(obj_enemy);
 	obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
 
 	//接触じゃんけん開始前
@@ -254,6 +254,8 @@ void Scene_Stage02::Draw() const
 	}
 
 	DrawString(640, 360, "Stage02", 0xffffff);
+	//Effect
+	Effect_Draw_HitJangeki();
 }
 
 //じゃんけん描画
