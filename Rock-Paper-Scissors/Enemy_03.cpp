@@ -14,20 +14,13 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = 1;//エネミーの向き
 	hp = 100;
 
-	/*enemyimage[0] = LoadGraph("images/stage03/stage03attack.png");
-	enemyimage[1] = LoadGraph("images/stage03/stage03gard.png");
-	enemyimage[2] = LoadGraph("images/stage03/stage03jump.png");*/
-
+	//敵画像
 	LoadDivGraph("images/stage03/stage03Anim.png", 6, 6, 1, 100, 100, enemyimage);
-	LoadDivGraph("images/stage03/stage03SheeldEnduranse1.png", 6, 6, 1, 100, 100, enemyimage1);
-	LoadDivGraph("images/stage03/stage03SheeldEnduranse2.png", 6, 6, 1, 100, 100, enemyimage2);
-	LoadDivGraph("images/stage03/stage03SheeldEnduranse3.png", 6, 6, 1, 100, 100, enemyimage3);
-	LoadDivGraph("images/stage03/stage03SheeldEnduranse4.png", 6, 6, 1, 100, 100, enemyimage4);
-
-	LoadDivGraph("images/stage03/BreakSheeldAnim.png", 8, 8, 1, 220, 220, SheeldBreakAnim);
-
-
-	//LoadDivGraph("images/stage03/stage03AnimMirror.png", 6, 6, 1, 100, 100, enemyimageMirror);
+	LoadDivGraph("images/stage03/stage03ShieldEnduranse1.png", 6, 6, 1, 100, 100, enemyimage1);
+	LoadDivGraph("images/stage03/stage03ShieldEnduranse2.png", 6, 6, 1, 100, 100, enemyimage2);
+	LoadDivGraph("images/stage03/stage03ShieldEnduranse3.png", 6, 6, 1, 100, 100, enemyimage3);
+	LoadDivGraph("images/stage03/stage03ShieldEnduranse4.png", 6, 6, 1, 100, 100, enemyimage4);
+	LoadDivGraph("images/stage03/BreakShieldAnim.png", 8, 8, 1, 220, 220, ShieldBreakAnim);
 
 	Init_Jangeki();       //じゃん撃を用意
 
@@ -177,6 +170,7 @@ void Enemy_03::Update()
 
 		e_type = Jan_Type::SCISSORS;
 	}*/
+
 
 	if (hp > 40) {//HP40%より多いの間パターンの動きをする
 
@@ -351,6 +345,8 @@ void Enemy_03::Update()
 	if (hp <= 0)hp = 0;
 
 
+	
+	
 	//if (x + (w / 2) == (1280 - 20))
 	//{
 	//	dir = -1;
@@ -389,7 +385,7 @@ void Enemy_03::Update()
 	if (hp <= 40 && st3_animcount < 8) {
 
 		++st3_animtimer;
-		if (st3_animtimer % 8 == 0) {
+		if (st3_animtimer % 10 == 0) {
 
 			st3_animcount++;
 			st3_animtimer = 0;
@@ -470,7 +466,7 @@ void Enemy_03::Draw() const
 	/////////////////////
 	else if (hp <= 85 && hp >= 71) {
 
-		
+
 		if (moveinfo[current].enemywaitTime > 0) {
 
 			DrawRotaGraphF(x, y, 1, 0, enemyimage1[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
@@ -503,7 +499,8 @@ void Enemy_03::Draw() const
 	//HP70以下で 55以上のとき
 	////////////////////////
 	else if (hp <= 70 && hp >= 56) {
-		
+
+	
 		if (moveinfo[current].enemywaitTime > 0) {
 
 			DrawRotaGraphF(x, y, 1, 0, enemyimage2[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
@@ -530,6 +527,7 @@ void Enemy_03::Draw() const
 	//HP55以下で41以上のとき
 	//////////////////////////
 	else if(hp <= 55 && hp >= 41){
+		
 		
 		if ( moveinfo[current].enemywaitTime > 0) {
 
@@ -571,7 +569,7 @@ void Enemy_03::Draw() const
 			if (st3_animcount < 8) {
 
 				SetDrawBlendMode(DX_BLENDMODE_ADD,155);
-				DrawRotaGraphF(x, y, 1, 0, SheeldBreakAnim[st3_animcount],TRUE);
+				DrawRotaGraphF(x, y, 1, 0, ShieldBreakAnim[st3_animcount],TRUE);
 				SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 			}
 		}
@@ -591,6 +589,7 @@ void Enemy_03::Draw() const
 	if (hp <= 40) DrawFormatString((int)(x - 50), (int)(y - 70), GetColor(255, 0, 0), " 攻撃UP↑", hp);
 
 	if (hp <= 0)DrawString((int)(x - 100), (int)(y - 120), "death!", 0xff0000);
+	
 
 }
 

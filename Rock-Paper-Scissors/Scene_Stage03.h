@@ -38,4 +38,8 @@ private:
 	int PlayerCutDamege ;//プレイヤーが勝った接触じゃんけん勝利時のダメージカット
 	int EnemyCutDamege; //エネミーが勝った接触じゃんけん勝利時のダメージカット
 	int SheeldEnduranse;//シールドの耐久力
+	
+	int ShieldBrokenSE; //完全に壊れた時
+	int SlightlyBrokenSE;//少し壊れているとき
+
 };

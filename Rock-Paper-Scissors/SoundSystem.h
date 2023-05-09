@@ -6,6 +6,9 @@
 enum class SE
 {
 	PLAYER_JUMP,
+	ENEMY_SLIGHTLYBROKEN,
+	ENEMY_SHIELDBROKEN,
+	
 };
 
 //BGM‚ÌŽí—Þ  bgm‚ð’Ç‰Á‚µ‚½Û‚É‚±‚±‚É’Ç‰Á

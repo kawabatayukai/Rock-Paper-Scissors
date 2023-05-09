@@ -31,7 +31,7 @@ public:
 private:
 	int Back_image;
 	Enemy_08* obj_enemy;            //“G
-	EnemyBase* obj_cannon;
+	Enemy_Cannon* obj_cannon;
 	Enemy_Cannon** cannon;
 };
 
