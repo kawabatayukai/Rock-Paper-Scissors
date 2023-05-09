@@ -373,6 +373,8 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 			{
 				Jan_Type p_type = p_jan[i]->GetType();  //当たったじゃん撃の属性
 
+				
+
 				//不利属性のみ
 				switch (enemy->GetType())
 				{
@@ -423,7 +425,7 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 						//エフェクト生成
 						if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
 						{
-							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y, p_type, _CHAR_TYPE::ENEMY);
+							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y, p_type, _CHAR_TYPE::PLAYER);
 						}
 					}
 					break;

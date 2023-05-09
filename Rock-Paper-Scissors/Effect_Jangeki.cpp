@@ -59,7 +59,7 @@ Effect_Jangeki::Effect_Jangeki(float play_x, float play_y, Jan_Type type, _CHAR_
 //デストラクタ
 Effect_Jangeki::~Effect_Jangeki()
 {
-
+	delete[] image_effect;
 }
 
 //更新
@@ -82,8 +82,6 @@ void Effect_Jangeki::Draw() const
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 230);
 	DrawRotaGraph(play_x, play_y, 1.0, 0, image_effect[index_effect], TRUE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-
-	
 }
 
 //再生終了 true
