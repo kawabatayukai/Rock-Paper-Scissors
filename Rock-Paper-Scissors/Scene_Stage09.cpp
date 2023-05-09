@@ -87,6 +87,7 @@ void Scene_Stage09::Update()
 	if (obj_enemy->Spflg == false && obj_enemy->animflg == false)
 		Touch_Janken(obj_enemy, this, 9);
 
+	Effect_Update_HitJangeki(obj_enemy);
 
 	//player‚Ì‚¶‚á‚ñŒ‚‚ð‚Æ‚Á‚Ä‚­‚é
 	Jangeki_Base** player_jangeki = obj_player->GetJangeki();
@@ -356,6 +357,7 @@ void Scene_Stage09::Draw() const
 	}
 
 	DrawString(640, 360, "Stage09", 0xffffff);
+	Effect_Draw_HitJangeki();
 }
 
 
