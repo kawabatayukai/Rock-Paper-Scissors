@@ -13,9 +13,21 @@ void  SoundSystem::LoadSounds_SE()
 {
 	//SE
 	// se_sounds.push_back(LoadSoundMem("サウンドへのパス"));
+
+	/*プレイヤー↓*/
+
 	se_sounds.push_back (LoadSoundMem("Sound/jump_player.mp3"));
+
+	/*プレイヤー↑*/
+
+	/*敵↓*/
+
 	se_sounds.push_back(LoadSoundMem("Sound/st03/SlightlyBrokenSE.wav"));
 	se_sounds.push_back(LoadSoundMem("Sound/st03/BrokenSE.wav"));
+
+	/*敵↑*/
+
+	/*それ以外↓*/
 }
 
 void  SoundSystem::LoadSounds_BGM()
@@ -23,6 +35,7 @@ void  SoundSystem::LoadSounds_BGM()
 	//BGM
 	// bgm_sounds.push_back(LoadSoundMem("サウンドへのパス"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/TitleBGM.mp3"));
+	bgm_sounds.push_back(LoadSoundMem("Sound/st03/St03BGM.wav"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/stage04/stage04_BGM.wav"));
 }
 

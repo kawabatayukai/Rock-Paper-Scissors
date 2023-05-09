@@ -75,10 +75,11 @@ Scene_Stage03::~Scene_Stage03()
 //更新
 void Scene_Stage03::Update()
 {
+	//BGMを鳴らす
+	SoundSystem::PlayBGM(BGM::ST03_BGM);
 
 	//時間をカウント
 	GameData::Time_Update();
-
 
 	//接触じゃんけん開始前
 	if (GetJanState()  == Jan_State::BEFORE)
@@ -93,6 +94,8 @@ void Scene_Stage03::Update()
 
 	//接触じゃんけん処理
 	Touch_Janken(obj_enemy, this, 3);
+
+	Effect_Update_HitJangeki(obj_enemy);
 
 	//playerのじゃん撃をとってくる
 	Jangeki_Base** player_jangeki = obj_player->GetJangeki();
@@ -194,7 +197,7 @@ void Scene_Stage03::Update()
 
 						}
 
-						SoundSystem::PlaySE(SE::ENEMY_SLIGHTLYBROKEN);
+						
 
 					}
 
@@ -480,6 +483,9 @@ void Scene_Stage03::Draw() const
 	}
 
 	//DrawString(640, 360, "Stage03", 0xffff);
+	
+	//接触じゃんけん時Effect
+	Effect_Draw_HitJangeki();
 }
 
 
@@ -499,6 +505,8 @@ AbstractScene* Scene_Stage03::ChangeScene()
 	//敵のHP0
 	if (obj_enemy->GetHP() < 0) {
 
+		//BGM停止
+		SoundSystem::StopBGM(BGM::ST03_BGM);
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(4));
 
@@ -508,7 +516,8 @@ AbstractScene* Scene_Stage03::ChangeScene()
 					//死亡演出//
 	if (obj_player->IsDeathPlayer() == true){
 		 
-
+		//BGM停止
+		SoundSystem::StopBGM(BGM::ST03_BGM);
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(3));
 	}
@@ -527,6 +536,8 @@ void Scene_Stage03::AfterJanken_WIN()
 
 	obj_player->SetX(200);
 	//obj_enemy->SetX(1150);
+
+	if (obj_player->GetHP() >= 86 /*&& obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200*/) DrawFormatString((int)(obj_player->GetX() - 50), (int)(obj_player->GetY() - 70), GetColor(255, 0, 0), " 防御UP↑", obj_enemy->GetHP());
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）
@@ -538,6 +549,8 @@ void Scene_Stage03::AfterJanken_LOSE()
 
 	obj_player->SetX(200);
 	//obj_enemy->SetX(1150);
+
+	if (obj_enemy->GetHP() >= 86 && obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200) DrawFormatString((int)(obj_enemy->GetX() - 35), (int)(obj_enemy->GetY() - 50), GetColor(0, 0, 255), "さらに防御UP↑", obj_enemy->GetWaitTime());
 }
 
 
