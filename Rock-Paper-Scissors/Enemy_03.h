@@ -76,8 +76,9 @@ private:
 	int enemyimage3[6]; //耐久値3の時の画像
 	int enemyimage4[6]; //やられかけの時の画像
 
-	int SheeldBreakAnim[8];//盾が壊れた時のアニメーション
+	int ShieldBreakAnim[8];//盾が壊れた時のアニメーション
 	
+
 	bool st3_animflg = false;
 	int st3_animtimer = 0;
 	int st3_animcount = 0;
