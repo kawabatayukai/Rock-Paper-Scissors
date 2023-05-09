@@ -300,7 +300,7 @@ AbstractScene* Scene_Stage04::ChangeScene()
 	}
 
 	//ÉvÉåÉCÉÑÅ[ÇÃHPÇ™0à»â∫
-	if (obj_player->GetHP() <= 0 || GameData::Get_Each_Time() <= 0)
+	if (obj_player->IsDeathPlayer() == true)
 	{
 		//BGMí‚é~
 		SoundSystem::StopBGM(BGM::STAGE04_BGM);
