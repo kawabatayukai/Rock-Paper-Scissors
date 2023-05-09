@@ -198,9 +198,9 @@ void Scene_Stage09::Update()
 				}
 			}
 			obj_enemy->HP();
-
 		}
 	}
+	
 
 
 	//enemy‚¶‚á‚ñŒ‚‚Æplayer‚Ì“–‚½‚è”»’è

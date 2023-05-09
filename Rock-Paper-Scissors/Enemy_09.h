@@ -63,6 +63,7 @@ private:
 	bool rflg = false; //”½ŽË—p
 	
 	int animtimer = 0;
+
 	
 	int jan_count;
 	
