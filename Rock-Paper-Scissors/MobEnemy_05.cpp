@@ -11,7 +11,7 @@
 
 MobEnemy_05::MobEnemy_05(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
-	hp = 100;
+	hp = 0;
 
 	Mobenemy_image = LoadGraph("images/stage05/Mobenemy_image.png", TRUE);
 
