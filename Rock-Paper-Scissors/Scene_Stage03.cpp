@@ -196,7 +196,7 @@ void Scene_Stage03::Update()
 
 						}
 
-						//SoundSystem::PlaySE(SE::ENEMY_SLIGHTLYBROKEN);
+						
 
 					}
 

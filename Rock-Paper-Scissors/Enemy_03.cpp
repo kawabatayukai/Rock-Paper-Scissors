@@ -4,11 +4,16 @@
 #include"Jangeki_Base.h"
 #include"Jangeki_Coming.h"
 #include <typeinfo>
-
+#include "SoundSystem.h"
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
+
+
+
+
+
 
 	speed = 1.5f;//1.5f //前回1.85f
 	dir = 1;//エネミーの向き
@@ -140,7 +145,7 @@ Enemy_03::~Enemy_03()
 //更新
 void Enemy_03::Update()
 {
-
+	SoundSystem::PlayBGM(BGM::ST03_BGM);
 
 	if (land_flg == true && moveinfo[current].enemywaitTime == 0 && moveinfo[current].jumpflg == 0)    //GetRand(30) == 3　のところがジャンプの条件
 	{

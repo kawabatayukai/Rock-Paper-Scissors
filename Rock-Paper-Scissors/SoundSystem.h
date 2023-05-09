@@ -15,6 +15,7 @@ enum class SE
 enum class BGM
 {
 	TITLE,
+	ST03_BGM,
 };
 
 
