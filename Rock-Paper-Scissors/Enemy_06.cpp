@@ -26,8 +26,8 @@ Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	images[7] = LoadGraph("images/stage06/黄NINJA_跳3.png");   //チョキ属性
 	images[8] = LoadGraph("images/stage06/青NINJA_跳3.png");     //パー属性
 
-	////煙エフェクト読み込み
-	//LoadDivGraph("images/stage06/pipo-charachip_smoke01a-s..png", 12, 4, 5, 135, 150, smokeImage);
+	//煙エフェクト読み込み
+	LoadDivGraph("images/stage06/pipo-btleffect059.png", 10, 10, 1, 120, 120, smokeImage);
 
 	Init_Jangeki();       //じゃん撃を用意
 
@@ -49,7 +49,7 @@ void Enemy_06::Update()
 	bef_x = x;
 	bef_y = y;
 
-	if (smokeCnt < 3)
+	if (smokeCnt < 10)
 	{
 		smokeCnt++;
 	}
@@ -193,8 +193,8 @@ void Enemy_06::Draw() const
 		}
 	}
 
-	////煙アニメーション
-	//DrawGraph(1089, 550, smokeImage[0], TRUE);
+	//煙アニメーション
+	DrawGraph((x - 63), (y - 70), smokeImage[smokeCnt], TRUE);
 
 	//じゃん撃描画
 	Draw_Jangeki();
