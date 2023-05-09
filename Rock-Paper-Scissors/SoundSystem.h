@@ -5,10 +5,20 @@
 //SEの種類   seを追加した際にここに追加
 enum class SE
 {
+	/*プレイヤー↓*/
+
 	PLAYER_JUMP,
+
+	/*プレイヤー↑*/
+
+	/*敵↓*/
+
 	ENEMY_SLIGHTLYBROKEN,
 	ENEMY_SHIELDBROKEN,
+
+	/*敵↑*/
 	
+	/*それ以外↓*/
 };
 
 //BGMの種類  bgmを追加した際にここに追加
