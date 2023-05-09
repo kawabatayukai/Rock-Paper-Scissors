@@ -26,6 +26,8 @@ void  SoundSystem::LoadSounds_SE()
 	se_sounds.push_back(LoadSoundMem("Sound/st03/BrokenSE.wav"));
 	se_sounds.push_back(LoadSoundMem("Sound/stage04/specialSE.wav"));
 	se_sounds.push_back(LoadSoundMem("Sound/stage04/specialAttackSE.wav"));
+	se_sounds.push_back(LoadSoundMem("Sound/Î‚¢º2.mp3"));
+	se_sounds.push_back(LoadSoundMem("Sound/ƒsƒ‡ƒ‡ƒ‡2.mp3"));
 
 	/*“Gª*/
 
@@ -39,6 +41,10 @@ void  SoundSystem::LoadSounds_BGM()
 	bgm_sounds.push_back(LoadSoundMem("Sound/TitleBGM.mp3"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/st03/St03BGM.wav"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/stage04/stage04_BGM.wav"));
+	bgm_sounds.push_back(LoadSoundMem("Sound/sento.mp3"));
+	bgm_sounds.push_back(LoadSoundMem("Sound/VSQPD_0077_Mary_Had_a_Little_Lamb_FC.mp3"));
+	bgm_sounds.push_back(LoadSoundMem("Sound/VSQPD_0046_Yankee_Doodle.mp3"));
+	bgm_sounds.push_back(LoadSoundMem("Sound/VSQPD_0048_London_Bridge.mp3"));
 }
 
 
