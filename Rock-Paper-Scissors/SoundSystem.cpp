@@ -24,6 +24,7 @@ void  SoundSystem::LoadSounds_BGM()
 	// bgm_sounds.push_back(LoadSoundMem("サウンドへのパス"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/TitleBGM.mp3"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/St03BGM.wav"));
+	bgm_sounds.push_back(LoadSoundMem("Sound/stage04/stage04_BGM.wav"));
 }
 
 

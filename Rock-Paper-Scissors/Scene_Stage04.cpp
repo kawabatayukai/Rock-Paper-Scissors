@@ -4,6 +4,7 @@
 #include"Scene_GameOver.h"
 #include"Scene_GameClear.h"
 #include"GameData.h"
+#include"SoundSystem.h"
 
 //デバッグモード
 #include"Debug_Manager.h"
@@ -15,7 +16,6 @@ Scene_Stage04::Scene_Stage04(const Player* player)
 	GameData::Set_TimeLimit(10800);
 
 	back_image = LoadGraph("images/Stage04/Stage_Image2.png");
-	stage04_BGM = LoadSoundMem("Sound/stage04/stage04_BGM.wav");
 
 	//プレイヤー情報が渡されていれば
 	if (player != nullptr)
@@ -61,7 +61,8 @@ Scene_Stage04::~Scene_Stage04()
 //更新
 void Scene_Stage04::Update()
 {
-	//PlaySoundMem(stage04_BGM, DX_PLAYTYPE_BACK);
+	//BGM再生
+	SoundSystem::PlayBGM(BGM::STAGE04_BGM);
 
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
@@ -76,6 +77,8 @@ void Scene_Stage04::Update()
 
 	//接触じゃんけん処理
 	Touch_Janken(obj_enemy, this, 4);
+
+	Effect_Update_HitJangeki(obj_enemy);
 
 	//playerのじゃん撃をとってくる
 	Jangeki_Base** player_jangeki = obj_player->GetJangeki();
@@ -270,6 +273,9 @@ void Scene_Stage04::Draw() const
 		//接触時じゃんけん描画
 		Draw_Janken();
 	}
+
+	//Effect
+	Effect_Draw_HitJangeki();
 }
 
 //じゃんけん描画
@@ -287,6 +293,8 @@ AbstractScene* Scene_Stage04::ChangeScene()
 	//敵のHPが0以下
 	if (obj_enemy->GetHP() <= 0)
 	{
+		//BGM停止
+		SoundSystem::StopBGM(BGM::STAGE04_BGM);
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(5));
 	}
@@ -294,6 +302,8 @@ AbstractScene* Scene_Stage04::ChangeScene()
 	//プレイヤーのHPが0以下
 	if (obj_player->GetHP() <= 0 || GameData::Get_Each_Time() <= 0)
 	{
+		//BGM停止
+		SoundSystem::StopBGM(BGM::STAGE04_BGM);
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(4));
 	}

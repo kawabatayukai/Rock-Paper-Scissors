@@ -16,6 +16,7 @@ enum class BGM
 {
 	TITLE,
 	ST03_BGM,
+	STAGE04_BGM,
 };
 
 
