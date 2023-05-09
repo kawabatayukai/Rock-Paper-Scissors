@@ -24,6 +24,8 @@ void  SoundSystem::LoadSounds_SE()
 
 	se_sounds.push_back(LoadSoundMem("Sound/st03/SlightlyBrokenSE.wav"));
 	se_sounds.push_back(LoadSoundMem("Sound/st03/BrokenSE.wav"));
+	se_sounds.push_back(LoadSoundMem("Sound/stage04/specialSE.wav"));
+	se_sounds.push_back(LoadSoundMem("Sound/stage04/specialAttackSE.wav"));
 
 	/*“Gª*/
 
