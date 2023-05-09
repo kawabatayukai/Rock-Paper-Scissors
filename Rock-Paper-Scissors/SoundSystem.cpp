@@ -26,6 +26,8 @@ void  SoundSystem::LoadSounds_SE()
 	se_sounds.push_back(LoadSoundMem("Sound/st03/BrokenSE.wav"));
 
 	/*“Gª*/
+
+	/*‚»‚êˆÈŠO«*/
 }
 
 void  SoundSystem::LoadSounds_BGM()
