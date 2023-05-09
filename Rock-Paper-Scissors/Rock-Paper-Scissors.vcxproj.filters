@@ -285,6 +285,9 @@
     <ClCompile Include="Effect_Enemy.cpp">
       <Filter>ソース ファイル\EnemyBase</Filter>
     </ClCompile>
+    <ClCompile Include="Effect_ChagePlayer.cpp">
+      <Filter>ソース ファイル\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -475,6 +478,9 @@
     </ClInclude>
     <ClInclude Include="Effect_Enemy.h">
       <Filter>ソース ファイル\EnemyBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_ChangePlayer.h">
+      <Filter>ソース ファイル\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

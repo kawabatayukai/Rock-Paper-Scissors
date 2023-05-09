@@ -22,6 +22,7 @@ Enemy_05::Enemy_05(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	Init_Jangeki();       //‚¶‚á‚ñŒ‚‚ð—pˆÓ
 
 	Enemy_image = LoadGraph("images/stage05/Stage5_Enemy_NoMove_Left.png", TRUE);
+	Enemy_barrier = LoadGraph("images/stage05/Stage5_EnemyBarrier.png", TRUE);
 	reflection = new Jangeki_Reflection(x, y, h, w, Jan_Type::ROCK);
 	reflection->Init_reflectionJangeki();
 }
@@ -220,6 +221,14 @@ void Enemy_05::Draw() const
 
 	//’†S‚©‚ç•`‰æ
 	DrawRotaGraphF(x, y, 1, 0, Enemy_image, TRUE);
+	if (mob[0]->GetHP() <= 0 && mob[1]->GetHP() <= 0 && mob[2]->GetHP() <= 0)
+	{
+	}
+	else
+	{
+		DrawRotaGraphF(x, y, 1, 0, Enemy_barrier, TRUE);
+	}
+
 
 	//‚¶‚á‚ñŒ‚•`‰æ
 	Draw_Jangeki();
@@ -312,4 +321,10 @@ void Enemy_05::Change_JanType()
 	default:
 		break;
 	}
+}
+
+void Enemy_05::MoveReset()
+{
+	Movepattern = 1;
+	Movetimer = 0;
 }

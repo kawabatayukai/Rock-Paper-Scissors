@@ -589,6 +589,7 @@ void Enemy_03::Draw() const
 	if (hp <= 40) DrawFormatString((int)(x - 50), (int)(y - 70), GetColor(255, 0, 0), " UŒ‚UPª", hp);
 
 	if (hp <= 0)DrawString((int)(x - 100), (int)(y - 120), "death!", 0xff0000);
+	
 
 }
 

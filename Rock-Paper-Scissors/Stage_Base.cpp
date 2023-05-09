@@ -241,8 +241,15 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 
 			case Jan_Result::LOSE:    //負け
 
-				//オーバーライドされたAfterJanken_LOSE()を呼び出す
-				stage_ptr->AfterJanken_LOSE();
+				if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
+				{
+					obj_player->ReceiveDamage(100);
+				}
+				else
+				{
+					//オーバーライドされたAfterJanken_LOSE()を呼び出す
+					stage_ptr->AfterJanken_LOSE();
+				}
 
 				//じゃん撃を初期化する
 				enemy->Init_Jangeki();
@@ -394,6 +401,19 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 
 					//チョキのみ有効
 					if (p_type == Jan_Type::ROCK)
+					{
+						//エフェクト生成
+						if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
+						{
+							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y);
+						}
+					}
+					break;
+
+				case Jan_Type::NONE:                            //属性なし
+
+					//反射じゃん撃に当てることで生成されるホーミングじゃん撃のみ有効
+					if (p_jan[i]->IsGetPlayerHoming() == true)
 					{
 						//エフェクト生成
 						if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)

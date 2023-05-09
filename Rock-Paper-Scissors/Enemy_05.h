@@ -24,6 +24,8 @@ public:
 
 	void Change_JanType();
 
+	void MoveReset();
+
 	Jangeki_Reflection* reflection;
 
 private:
@@ -39,6 +41,7 @@ private:
 	int frame_count = 0;       //じゃん撃発射用
 
 	int Enemy_image;		   //敵画像用
+	int Enemy_barrier;
 	int Enemy_jamp_image;	   //敵ジャンプ時画像用
 	int Movepattern;			//動きのパターン
 	int Movetimer;				//動き用のタイマー
