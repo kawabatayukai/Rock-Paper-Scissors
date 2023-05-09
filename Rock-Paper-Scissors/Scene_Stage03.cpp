@@ -75,10 +75,11 @@ Scene_Stage03::~Scene_Stage03()
 //更新
 void Scene_Stage03::Update()
 {
+	//BGMを鳴らす
+	SoundSystem::PlayBGM(BGM::ST03_BGM);
 
 	//時間をカウント
 	GameData::Time_Update();
-
 
 	//接触じゃんけん開始前
 	if (GetJanState()  == Jan_State::BEFORE)
@@ -504,6 +505,8 @@ AbstractScene* Scene_Stage03::ChangeScene()
 	//敵のHP0
 	if (obj_enemy->GetHP() < 0) {
 
+		//BGM停止
+		SoundSystem::StopBGM(BGM::ST03_BGM);
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(4));
 
@@ -513,7 +516,8 @@ AbstractScene* Scene_Stage03::ChangeScene()
 					//死亡演出//
 	if (obj_player->IsDeathPlayer() == true){
 		 
-
+		//BGM停止
+		SoundSystem::StopBGM(BGM::ST03_BGM);
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(3));
 	}
