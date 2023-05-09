@@ -241,11 +241,12 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 
 			case Jan_Result::LOSE:    //負け
 
+				/*難易度が即死モードなら*/
 				if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
 				{
-					obj_player->ReceiveDamage(100);
+					obj_player->ReceiveDamage(100); //即死
 				}
-				else
+				else /*普通のモード*/
 				{
 					//オーバーライドされたAfterJanken_LOSE()を呼び出す
 					stage_ptr->AfterJanken_LOSE();
