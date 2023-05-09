@@ -34,6 +34,9 @@ public:
 
 	bool Spflg = true;  //特殊行動フラグ
 	bool animflg = false;	//アニメーションフラグ
+	bool ranimflg = false; //反射アニメーション
+	bool Ranimflg = false;	//再再生用
+
 
 	Jangeki_Reflection* reflection;
 
@@ -70,6 +73,8 @@ private:
 	float before_x = 0;
 	float before_y = 0;
 	int anim_count = 0;  //アニメーション回数
+
+	int refanim[15];
 
 };
 
