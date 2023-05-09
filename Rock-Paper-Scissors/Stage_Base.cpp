@@ -241,8 +241,16 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 
 			case Jan_Result::LOSE:    //負け
 
-				//オーバーライドされたAfterJanken_LOSE()を呼び出す
-				stage_ptr->AfterJanken_LOSE();
+				/*難易度が即死モードなら*/
+				if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
+				{
+					obj_player->ReceiveDamage(100); //即死
+				}
+				else /*普通のモード*/
+				{
+					//オーバーライドされたAfterJanken_LOSE()を呼び出す
+					stage_ptr->AfterJanken_LOSE();
+				}
 
 				//じゃん撃を初期化する
 				enemy->Init_Jangeki();
@@ -325,6 +333,10 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 
 		obj_effect[effect_count]->Update();
 
+		if (obj_effect[effect_count]->GetCharacterType() == _CHAR_TYPE::ENEMY)
+			obj_effect[effect_count]->SetCharacterLocation(obj_player->GetX(), obj_player->GetY());
+		else if (obj_effect[effect_count]->GetCharacterType() == _CHAR_TYPE::PLAYER)
+			obj_effect[effect_count]->SetCharacterLocation(enemy->GetX(), enemy->GetY());
 		//削除
 		if (obj_effect[effect_count]->Check_PlayEnd() == true)
 		{
@@ -372,7 +384,7 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 						//エフェクト生成
 						if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
 						{
-							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y);
+							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y, Jan_Type::PAPER, _CHAR_TYPE::PLAYER);
 						}
 					}
 					break;
@@ -385,7 +397,7 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 						//エフェクト生成
 						if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
 						{
-							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y);
+							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y, Jan_Type::ROCK,_CHAR_TYPE::PLAYER);
 						}
 					}
 					break;
@@ -393,12 +405,12 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 				case Jan_Type::PAPER:                          //敵の属性　パー
 
 					//チョキのみ有効
-					if (p_type == Jan_Type::ROCK)
+					if (p_type == Jan_Type::SCISSORS)
 					{
 						//エフェクト生成
 						if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
 						{
-							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y);
+							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y, Jan_Type::SCISSORS, _CHAR_TYPE::PLAYER);
 						}
 					}
 					break;
@@ -411,7 +423,7 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 						//エフェクト生成
 						if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
 						{
-							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y);
+							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y, p_type, _CHAR_TYPE::ENEMY);
 						}
 					}
 					break;
@@ -441,11 +453,13 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 				//エフェクト生成
 				if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
 				{
-					obj_effect[effect_count] = new Effect_Jangeki(p_x, p_y);
+					obj_effect[effect_count] = new Effect_Jangeki(p_x, p_y, e_jan[i]->GetType(), _CHAR_TYPE::ENEMY);
 				}
 			}
 		}
 	}
+
+
 	//----------------------------------------------------------------------------------
 
 		//前回の属性と違っていればエフェクト生成

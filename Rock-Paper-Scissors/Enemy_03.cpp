@@ -5,7 +5,6 @@
 #include"Jangeki_Coming.h"
 #include <typeinfo>
 
-
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
@@ -140,7 +139,7 @@ Enemy_03::~Enemy_03()
 //更新
 void Enemy_03::Update()
 {
-
+	
 
 	if (land_flg == true && moveinfo[current].enemywaitTime == 0 && moveinfo[current].jumpflg == 0)    //GetRand(30) == 3　のところがジャンプの条件
 	{
@@ -421,6 +420,7 @@ void Enemy_03::Update()
 void Enemy_03::Draw() const
 
 {
+	
 	////////////////////////
 	///HPが86以上の時
 	///////////////////////
@@ -589,6 +589,7 @@ void Enemy_03::Draw() const
 	if (hp <= 40) DrawFormatString((int)(x - 50), (int)(y - 70), GetColor(255, 0, 0), " 攻撃UP↑", hp);
 
 	if (hp <= 0)DrawString((int)(x - 100), (int)(y - 120), "death!", 0xff0000);
+	
 
 }
 

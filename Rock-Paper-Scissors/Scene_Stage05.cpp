@@ -618,4 +618,7 @@ void Scene_Stage05::AfterJanken_LOSE()
 		mob[a]->Janken_lose();
 	}
 	obj_player->SetX(200);
+	obj_enemy->MoveReset();
+	obj_enemy->SetX(1000);
+	obj_enemy->SetY(160);
 }
