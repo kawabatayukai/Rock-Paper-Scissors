@@ -21,7 +21,7 @@ Enemy_05::Enemy_05(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	Init_Jangeki();       //‚¶‚á‚ñŒ‚‚ð—pˆÓ
 
-	Enemy_image = LoadGraph("images/stage05/Stage5_Enemy_NoMove_Left.png", TRUE);
+	Enemy_image = LoadGraph("images/stage05/Stage5_Enemy_NoMove_L.png", TRUE);
 	Enemy_barrier = LoadGraph("images/stage05/Stage5_EnemyBarrier.png", TRUE);
 	reflection = new Jangeki_Reflection(x, y, h, w, Jan_Type::ROCK);
 	reflection->Init_reflectionJangeki();
