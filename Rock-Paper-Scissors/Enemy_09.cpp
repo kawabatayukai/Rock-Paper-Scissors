@@ -22,6 +22,8 @@ Enemy_09::Enemy_09(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	LoadDivGraph("images/stage09/teleport2.png", 15, 15, 1, 120, 150, img_teleport);
 	LoadDivGraph("images/stage09/teleport22.png", 15, 15, 1, 120, 150, img_teleport2);
+	
+	LoadDivGraph("images/stage09/ref2.png", 15, 5, 3, 200, 200, refanim);
 
 
 	//じゃん撃を用意
@@ -45,8 +47,8 @@ void Enemy_09::Update()
 	Update_Jangeki();
 	reflection->Update_reflection();
 
-	if(Spflg==false)MoveEnmey_09();
-	else  SpecialMoveEnmey();
+	/*if(Spflg==false)MoveEnmey_09();
+	else  SpecialMoveEnmey();*/
 	
 
 }
@@ -59,7 +61,7 @@ void Enemy_09::Draw() const
 	if (animflg == false)
 	{
 		if (rflg == false)DrawRotaGraphF(x, y, 1, 0, Rimage, TRUE);
-		if (rflg == true)DrawRotaGraphF(GetX(), GetY(), 1, 0, image, TRUE);
+		if (rflg == true)DrawRotaGraphF(x, y, 1, 0, image, TRUE);
 	}
 
 	if (animflg == true)
@@ -67,7 +69,11 @@ void Enemy_09::Draw() const
 		if (anim_count == 0) DrawGraph(before_x - 65, before_y - 50, img_teleport[animtimer / 3 % 15], TRUE);
 		else DrawGraph(x - 50, y - 50, img_teleport2[animtimer / 2 % 15], TRUE);
 	}
-		
+
+	if (ranimflg == true)
+	{
+		DrawGraph(x - 130, y - 80, refanim[animtimer / 3 % 15], TRUE);
+	}
 
 	//じゃん撃描画
 	Draw_Jangeki();
@@ -77,11 +83,12 @@ void Enemy_09::Draw() const
 	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
 	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
 
+
 }
 
 //じゃん撃生成・更新
 void Enemy_09::Update_Jangeki()
-{	
+{
 
 	//じゃん撃配列をひとつずつ
 	for (jan_count = 0; jan_count < JANGEKI_MAX; jan_count++)
@@ -90,7 +97,7 @@ void Enemy_09::Update_Jangeki()
 		if (obj_jangeki[jan_count] == nullptr) break;
 
 		obj_jangeki[jan_count]->Update();
-		
+
 		//ホーミングじゃん撃であればプレイヤーの座標をセットする
 		obj_jangeki[jan_count]->SetTargetLocation(player_x, player_y);
 		reflection->SetTargetLocation(player_x, player_y);
@@ -124,30 +131,54 @@ void Enemy_09::Update_Jangeki()
 		//アニメーション再生中でなければ生成
 		//if (animflg == false)
 		//{
-			if (frame_count % janFrame == 0)
-			{
-				if (Spflg == false)
-				{
-					obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
-					count++;
-				}
-				else
-				{
-					Jan_360degrees();
-					count = 0;		 //リセット
-					SPcount++;
-				}
-				if (count == 5)		//五回目で特殊弾発射
-				{
-					Jan_40degrees();
-					count = 0;		 //リセット
-				}
+		//	if (frame_count % janFrame == 0)
+		//	{
+		//		if (Spflg == false)
+		//		{
+		//			obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
+		//			count++;
+		//		}
+		//		else
+		//		{
+		//			Jan_360degrees();
+		//			count = 0;		 //リセット
+		//			SPcount++;
+		//		}
+		//		if (count == 5)		//五回目で特殊弾発射
+		//		{
+		//			Jan_40degrees();
+		//			count = 0;		 //リセット
+		//		}
 
+		//	}
+
+		if (ranimflg == true)
+		{
+			animtimer++;
+
+			if (animtimer / 3 % 15 == 14)
+			{
+				animtimer = 0;
+				ranimflg = false;
+				Ranimflg = false;
+			}
+
+			//再生中にあたると初めから再生
+			if(Ranimflg == true) 
+			{
+				animtimer = 0;
+				Ranimflg = false;
+				
 			}
 
 			//反射じゃん撃生成
-			if (reflection->GetFlg() == true)reflection->obj_reflection[reflection->jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed-0.3, type, true);
-			reflection->falseFlg();
+			if (reflection->GetFlg() == true)
+			{
+
+				reflection->obj_reflection[reflection->jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed - 0.3, type, true);
+				reflection->falseFlg();
+			}
+		}
 		//}
 	}
 }
