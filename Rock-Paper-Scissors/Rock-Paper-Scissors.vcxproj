@@ -213,6 +213,7 @@
     <ClCompile Include="Scene_Title.cpp" />
     <ClCompile Include="SoundSystem.cpp" />
     <ClCompile Include="Stage_Base.cpp" />
+    <ClCompile Include="Jangeki_Bounds.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h" />
@@ -279,6 +280,7 @@
     <ClInclude Include="Scene_Title.h" />
     <ClInclude Include="SoundSystem.h" />
     <ClInclude Include="Stage_Base.h" />
+    <ClInclude Include="Jangeki_Bounds.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
