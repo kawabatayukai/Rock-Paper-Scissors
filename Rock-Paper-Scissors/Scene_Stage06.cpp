@@ -295,8 +295,11 @@ void Scene_Stage06::Draw() const
 		Draw_Janken();
 	}
 
-	//Effect
-	Effect_Draw_HitJangeki();
+	if (obj_enemy->Get_smokeflg() == false)
+	{
+		//Effect
+		Effect_Draw_HitJangeki();
+	}
 }
 
 //‚¶‚á‚ñ‚¯‚ñ•`‰æ
