@@ -91,6 +91,7 @@ void Enemy_06::Update()
 				TeleportFlg = false;
 				TeleportInit = true;
 				speed = 5.0f;
+				smokeFlg = false;
 			}
 		}
 		else  //例外処理
@@ -98,13 +99,17 @@ void Enemy_06::Update()
 			TeleportFlg = false;
 			TeleportInit = true;
 			speed = 5.0f;
+			smokeFlg = false;
 		}
 
 		//750フレームごとに瞬間移動接触フラグをtrueにする
-		if (TeleportTime == 750 && TeleportFlg == false && (player_x - 300) > 0 && (player_x + 300) < 1280 && speed != 8.0f)
+		if (TeleportTime == 750 && TeleportFlg == false && (player_x - 300) > 50 && (player_x + 300) < 1230 && speed != 8.0f)
 		{
 			TeleportFlg = true;
-			smokeFlg = true;
+			if (attack_pattern != 0 && hp <= 70)
+			{
+				smokeFlg = true;
+			}
 		}
 		else if (TeleportTime > 750)
 		{
@@ -208,6 +213,8 @@ void Enemy_06::Draw() const
 
 	//じゃん撃描画
 	Draw_Jangeki();
+
+	DrawFormatString(600, 600, 0xffffff, "player_x : %f", player_x);
 }
 
 //じゃん撃生成・更新
@@ -1056,11 +1063,15 @@ void Enemy_06::low_jump()
 //煙エフェクト関数
 void Enemy_06::smoke()
 {
-	if (smokeCnt < 10 && frame_count % 2 == 0)
+	if (smokeCnt < 10 && frame_count % 2 == 0 && smokeFlg == true)
 	{
+		if (smokeCnt == 0)
+		{
+			PlaySoundFile("Sound/stage06/bomb.mp3", DX_PLAYTYPE_BACK);
+		}
 		smokeCnt++;
 	}
-	else if(smokeCnt > 9 && frame_count % 2 == 0)
+	else if(smokeCnt > 9 && frame_count % 2 == 0 && smokeFlg == true)
 	{
 		smokeFlg = false;
 		smokeCnt = 0;

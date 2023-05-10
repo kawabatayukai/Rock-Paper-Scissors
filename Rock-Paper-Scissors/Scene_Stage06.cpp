@@ -30,6 +30,12 @@ Scene_Stage06::Scene_Stage06(const Player* player)
 	//背景画像の読み込み
 	stage6_BackImage = LoadGraph("images/stage06/mori32-.png");
 
+	//BGMの読み込み
+	stage6_BGM = LoadSoundMem("Sound/stage06/RPG_Battle_03.mp3");
+
+	////被弾SEの読み込み
+	//damageSE = LoadSoundMem("Sound/stage06/damage6.mp3");
+
 	//床・壁の用意
 	Init_Floor(STAGE_06_FLOOR);
 
@@ -70,6 +76,9 @@ Scene_Stage06::~Scene_Stage06()
 //更新
 void Scene_Stage06::Update()
 {
+	//BGM再生
+	PlaySoundMem(stage6_BGM, DX_PLAYTYPE_LOOP, FALSE);
+
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
@@ -183,6 +192,7 @@ void Scene_Stage06::Update()
 				//パーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::PAPER)
 				{
+					//PlaySoundMem(damageSE, DX_PLAYTYPE_NORMAL, FALSE);   //被弾SE
 					obj_enemy->ReceiveDamage(10);     //ダメージが入る
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
@@ -195,6 +205,7 @@ void Scene_Stage06::Update()
 				//グーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::ROCK)
 				{
+					//PlaySoundMem(damageSE, DX_PLAYTYPE_NORMAL, FALSE);   //被弾SE
 					obj_enemy->ReceiveDamage(10);     //ダメージが入る
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
@@ -206,6 +217,7 @@ void Scene_Stage06::Update()
 				//チョキのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::SCISSORS)
 				{
+					//PlaySoundMem(damageSE, DX_PLAYTYPE_NORMAL, FALSE);   //被弾SE
 					obj_enemy->ReceiveDamage(10);     //ダメージが入る
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
@@ -328,6 +340,9 @@ AbstractScene* Scene_Stage06::ChangeScene()
 	//敵のHPが0以下
 	if (obj_enemy->GetHP() <= 0)
 	{
+		//BGM停止
+		StopSoundMem(stage6_BGM);
+
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(7));
 	}
@@ -335,6 +350,9 @@ AbstractScene* Scene_Stage06::ChangeScene()
 	//プレイヤーのHPが0以下
 	if (obj_player->IsDeathPlayer() == true)
 	{
+		//BGM停止
+		StopSoundMem(stage6_BGM);
+
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(6));
 	}
