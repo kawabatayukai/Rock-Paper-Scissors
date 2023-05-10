@@ -89,8 +89,11 @@ void Scene_Stage06::Update()
 	//ÚG‚¶‚á‚ñ‚¯‚ñˆ—
 	Touch_Janken(obj_enemy, this, 6);
 
-	//Effect
-	Effect_Update_HitJangeki(obj_enemy);
+	if (obj_enemy->Get_smokeflg() == false)
+	{
+		//Effect
+		Effect_Update_HitJangeki(obj_enemy);
+	}
 
 	//player‚Ì‚¶‚á‚ñŒ‚‚ð‚Æ‚Á‚Ä‚­‚é
 	Jangeki_Base** player_jangeki = obj_player->GetJangeki();
@@ -164,7 +167,7 @@ void Scene_Stage06::Update()
 	//player‚¶‚á‚ñŒ‚‚Æenemy‚Ì“–‚½‚è”»’è
 	for (int i = 0; i < JANGEKI_MAX; i++)
 	{
-		if (player_jangeki[i] == nullptr) break;         //‚¶‚á‚ñŒ‚‚ª‚È‚¢Žž‚Íˆ—‚µ‚È‚¢
+		if (player_jangeki[i] == nullptr || obj_enemy->Get_smokeflg() == true) break;         //‚¶‚á‚ñŒ‚‚ª‚È‚¢Žž‚Íˆ—‚µ‚È‚¢
 
 		//‚¶‚á‚ñŒ‚‚Æ‚Ì“–‚½‚è”»’è
 		if (obj_enemy->Hit_Jangeki(player_jangeki[i]) == true)
