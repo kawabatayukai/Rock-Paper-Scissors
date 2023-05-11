@@ -2,7 +2,7 @@
 #include"KeyManager.h"
 #include"DxLib.h"
 #include"GameData.h"
-
+#include"MobEnemy_05.h"
 #include<vector>
 
 //衝突判定なし時間   5秒
@@ -312,7 +312,7 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 
 
 //じゃん撃ヒット時エフェクト 処理
-void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
+void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy, const Jangeki_Reflection* ref)
 {
 	//敵の座標
 	float e_x = enemy->GetX();
@@ -330,7 +330,6 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 	{
 		//空なら終了
 		if (obj_effect[effect_count] == nullptr) break;
-
 		obj_effect[effect_count]->Update();
 
 		if (obj_effect[effect_count]->GetCharacterType() == _CHAR_TYPE::ENEMY)
@@ -362,7 +361,7 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 	Jangeki_Base** e_jan = enemy->GetJangeki();
 
 	//--------------------  playerじゃん撃とenemy  -------------------------------------
-	{
+	
 		//playerじゃん撃とenemyの当たり判定
 		for (int i = 0; i < JANGEKI_MAX; i++)
 		{
@@ -440,13 +439,11 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 				}
 			}
 		}
-	}
+	
 	//----------------------------------------------------------------------------------
 
 	//--------------------  enemyじゃん撃とplayer  -------------------------------------
 	{
-
-
 		//enemyじゃん撃とplayerの当たり判定
 		for (int i = 0; i < JANGEKI_MAX; i++)
 		{
@@ -464,6 +461,29 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 				}
 			}
 		}
+
+		//反射
+		if (ref != nullptr)
+		{
+			Jangeki_Base** r_jan = ref->GetJangeki();
+
+			for (int r = 0; r < JANGEKI_MAX; r++)
+			{
+				//空要素なら終了
+				if (r_jan[r] == nullptr) break;
+
+				//当たり判定
+				if (obj_player->Hit_Jangeki(r_jan[r]) == true)
+				{
+					//エフェクト生成
+					if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
+					{
+						obj_effect[effect_count] = new Effect_Jangeki(p_x, p_y, r_jan[r]->GetType(), _CHAR_TYPE::ENEMY);
+						//effect_count++;
+					}
+				}
+			}
+		}
 	}
 	//----------------------------------------------------------------------------------
 
@@ -473,6 +493,7 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 	{
 		if (p_jan[p] == nullptr) break;                  //なければ抜ける
 
+		//enemy
 		for (int e = 0; e < JANGEKI_MAX; e++)
 		{
 			if (e_jan[e] == nullptr) break;              //なければ抜ける
@@ -491,6 +512,32 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 
 					obj_effect[effect_count] = new Effect_Jangeki(jan_x, jan_y, e_jan[e]->GetType(), _CHAR_TYPE::NOT_CHARA);
 					effect_count++;
+				}
+			}
+
+			//ref反射
+			if (ref != nullptr)
+			{
+				Jangeki_Base** r_jan = ref->GetJangeki();
+				for (int r = 0; r < JANGEKI_MAX; r++)
+				{
+					if (r_jan[r] == nullptr) break;              //抜ける
+					if (p_jan[p]->Hit_Jangeki(r_jan[r]) == true) //当たり
+					{
+						//あいこの場合
+						if (p_jan[p]->CheckAdvantage(r_jan[r]) == 2)
+						{
+							//じゃん撃間の距離
+							float dx = r_jan[r]->GetX() - p_jan[p]->GetX();
+							float dy = r_jan[r]->GetY() - p_jan[p]->GetY();
+
+							float jan_x = p_jan[p]->GetX() + (dx / 2);
+							float jan_y = p_jan[p]->GetY() + (dy / 2);
+
+							obj_effect[effect_count] = new Effect_Jangeki(jan_x, jan_y, r_jan[r]->GetType(), _CHAR_TYPE::NOT_CHARA);
+							effect_count++;
+						}
+					}
 				}
 			}
 		}

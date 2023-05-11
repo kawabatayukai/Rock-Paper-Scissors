@@ -88,8 +88,7 @@ void Scene_Stage09::Update()
 	{
 		Touch_Janken(obj_enemy, this, 9);
 	}
-	if(obj_enemy->animflg == false)
-	Effect_Update_HitJangeki(obj_enemy);
+	Effect_Update_HitJangeki(obj_enemy, obj_enemy->reflection);
 
 
 	//player‚Ì‚¶‚á‚ñŒ‚‚ð‚Æ‚Á‚Ä‚­‚é
@@ -361,7 +360,6 @@ void Scene_Stage09::Draw() const
 		//ÚGŽž‚¶‚á‚ñ‚¯‚ñ•`‰æ
 		Draw_Janken();
 	}
-	if (obj_enemy->animflg == false)
 	Effect_Draw_HitJangeki();
 }
 

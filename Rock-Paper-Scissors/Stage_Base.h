@@ -6,6 +6,7 @@
 #include"EnemyBase.h"
 #include"Effect_Jangeki.h"
 #include"Effect_Enemy.h"
+#include"Jangeki_reflection.h"
 
 //ステージのベース
 class Stage_Base : public AbstractScene
@@ -36,7 +37,7 @@ public:
 	void Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_StageNum = 0);
 
 	//じゃん撃ヒット時エフェクト 処理
-	void Effect_Update_HitJangeki(const EnemyBase* enemy);
+	void Effect_Update_HitJangeki(const EnemyBase* enemy, const Jangeki_Reflection* ref = nullptr);
 
 	//じゃん撃ヒット時エフェクト 描画
 	void Effect_Draw_HitJangeki() const;

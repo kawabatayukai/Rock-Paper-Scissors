@@ -173,6 +173,7 @@
     <ClCompile Include="FPS_Controll.cpp" />
     <ClCompile Include="GameData.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Item_stage08.cpp" />
     <ClCompile Include="Jangeki_Changespeed.cpp" />
     <ClCompile Include="Jangeki_Coming.cpp" />
     <ClCompile Include="Jangeki_Player.cpp" />
@@ -242,6 +243,7 @@
     <ClInclude Include="FPS_Controll.h" />
     <ClInclude Include="GameData.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="Item_stage08.h" />
     <ClInclude Include="Jangeki_Changespeed.h" />
     <ClInclude Include="Jangeki_Coming.h" />
     <ClInclude Include="Jangeki_Player.h" />
