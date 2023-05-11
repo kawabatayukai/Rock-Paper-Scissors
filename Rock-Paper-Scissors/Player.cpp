@@ -9,6 +9,7 @@
 #include"Jangeki_Player.h"
 #include"GameData.h"
 #include"SoundSystem.h"
+#include"SortSave.h"
 
 //‚¶‚á‚ñŒ‚”­ËŠÔŠu@i1•bj
 #define PLAYER_JAN_INTERVAL 30
@@ -387,7 +388,7 @@ void Player::Update()
 //```````````````````````````````````````````````````````
 }
 
-/* “ª‚Ì•`‰æE“®‚«(ŠÔ‚ª‚ ‚Á‚½‚ç)*/
+/* “ª‚Ì•`‰æE“®‚«)*/
 void Player::HeadDrawMove() const
 {
 	///*********************
@@ -1356,7 +1357,11 @@ void Player::Draw() const
 	//ƒeƒXƒg ‘I‘ğ‚¶‚á‚ñŒ‚
 	DrawStringToHandle(30, 150, "RB : ”­Ë", 0xffffff, ui_font);
 	DrawStringToHandle(30, 180, "LB : ƒWƒƒƒ“ƒv", 0xffffff, ui_font);
-	//DrawFormatString(50, 200,0x000000, "%d", M_PI - jan_angle);
+
+	for (int i = 0; i < 10; i++)
+	{
+		DrawFormatString(x - 100, y - 80, 0x000000, "%10s", sortSave.getRankingData(i).name);
+	}
 
 	//ƒeƒXƒg 110
 	int circle_x = 0;
@@ -1944,3 +1949,4 @@ bool Player::IsDeathPlayer() const
 	}
 	return false;
 }
+

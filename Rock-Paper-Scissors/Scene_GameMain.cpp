@@ -19,6 +19,7 @@
 #include"Scene_GameClear.h"
 #include"Scene_GameOver.h"
 
+#include"Scene_InputNameRanking.h"
 
 
 //コンストラクタ
@@ -54,14 +55,14 @@ void GameMainScene::Update()
 	{
 		select_num++;
 
-		if (select_num > 14) select_num = 0;
+		if (select_num > 15) select_num = 0;
 	}
 
 	if (KeyManager::OnPadClicked(PAD_INPUT_LEFT) == true)
 	{
 		select_num--;
 
-		if (select_num < 0) select_num = 14;
+		if (select_num < 0) select_num = 15;
 	}
 
 	obj_player->Update();
@@ -80,7 +81,7 @@ void GameMainScene::Draw() const
 	DrawString(340, 300, "自分の担当ステージを選んでください", 0xffffff);
 	DrawString(340, 350, "Aボタンで決定", 0xffffff);
 
-	DrawString(100, 400, " 画 1  2  3  4  5  6  7  8  9 10  E H GO GC", 0xffffff);
+	DrawString(100, 400, " 画 1  2  3  4  5  6  7  8  9 10  E H GO GC INR", 0xffffff);
 
 	DrawCircle(140 + (select_num * 60), 415, 30, 0xffff00, FALSE, 3);
 
@@ -163,6 +164,10 @@ AbstractScene* GameMainScene::ChangeScene()
 
 		case 14:
 			return dynamic_cast<AbstractScene*> (new GameClearScene(1));
+			break;
+
+		case 15:
+			return dynamic_cast<AbstractScene*> (new Scene_InputNameRanking());
 			break;
 
 

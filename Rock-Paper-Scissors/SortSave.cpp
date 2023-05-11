@@ -1,5 +1,5 @@
 #include"GameData.h"
-#include"Scene_InputName.h"
+#include"Scene_InputNameRanking.h"
 #include "SortSave.h"
 
 SortSave sortSave;

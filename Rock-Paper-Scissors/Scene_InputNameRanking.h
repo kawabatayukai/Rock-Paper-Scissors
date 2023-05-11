@@ -11,13 +11,13 @@ enum class CURSOR_TYPE
 	MISS = 99
 };
 
-class Scene_InputName : public AbstractScene
+class Scene_InputNameRanking : public AbstractScene
 {
 public:
-	Scene_InputName();
+	Scene_InputNameRanking();
 
 	/*コンストラクタ*/
-	virtual ~Scene_InputName() {};
+	virtual ~Scene_InputNameRanking() {};
 
 	char name[11];
 
