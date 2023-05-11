@@ -4,7 +4,7 @@
 #include"Jangeki_Base.h"
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
-Enemy_08::Enemy_08(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
+Enemy_08::Enemy_08(float x, float y, Jan_Type type) : EnemyBase(x, y, 90.0f, 90.0f, type)
 {	
 	speed = 7.0f;
 	dir = 1;
@@ -30,16 +30,14 @@ void Enemy_08::Update()
 	//じゃん撃更新・生成
 	Update_Jangeki();
 
-	//if (x + (w / 2) == (1280 - 20))
-	//{
-	//	dir = -1;
-	//}
-	//else if (x - (w / 2) == (20))
-	//{
-	//	dir = 1;
-	//}
+	static bool move;
+	if (x <= 20 + w / 2) move = true;
+	if (x >= 1280 - 20 - w / 2) move = false;
 
-	//x += dir * speed;
+	if (move == true) x+=speed;
+	else x-=speed;
+
+	
 
 	/********************   ジャンプ関係   ********************/
 
