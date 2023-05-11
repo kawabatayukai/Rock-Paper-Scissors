@@ -576,20 +576,18 @@ void Enemy_03::Draw() const
 
 	}
 
-	
-	
-
 	//じゃん撃描画
 	Draw_Jangeki();
 
 
-	//テスト                                                      //赤色
+	//テキスト表示                                                      //赤色
 	if (hp <= 85 && moveinfo[current].enemywaitTime > 0) DrawFormatString((int)(x - 35), (int)(y - 50), GetColor(0, 0, 255), "防御DOWN↓", moveinfo[current].enemywaitTime);
 
 	if (hp <= 40) DrawFormatString((int)(x - 50), (int)(y - 70), GetColor(255, 0, 0), " 攻撃UP↑", hp);
 
 	if (hp <= 0)DrawString((int)(x - 100), (int)(y - 120), "death!", 0xff0000);
 	
+
 
 }
 

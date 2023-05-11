@@ -586,8 +586,6 @@ AbstractScene* Scene_Stage10::ChangeScene()
 #ifdef DEBUG_OFF_10
 
 	/*“G‚ÌHP‚ª0ˆÈ‰º*/
-	//if (obj_enemy->Get_Enemy10Form() == 2 && obj_enemy->GetHP() < 0)
-	//
 	if (obj_enemy->Get_Enemy10Form() == 1 && obj_enemy->IsDeathEnemy10() == true)
 	{
 		SoundSystem::StopBGM(BGM::ENEMY_10_Marry);

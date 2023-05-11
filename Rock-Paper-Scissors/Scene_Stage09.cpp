@@ -360,7 +360,6 @@ void Scene_Stage09::Draw() const
 		//ÚG‚¶‚á‚ñ‚¯‚ñ•`‰æ
 		Draw_Janken();
 	}
-
 	Effect_Draw_HitJangeki();
 }
 
