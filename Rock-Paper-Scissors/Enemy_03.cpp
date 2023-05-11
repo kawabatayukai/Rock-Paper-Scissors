@@ -249,7 +249,7 @@ void Enemy_03::Update()
 		//それ以外は普通の動き
 		else
 		{
-			SoundSystem::PlaySE(SE::ENEMY_RUNNING);
+			//SoundSystem::PlaySE(SE::ENEMY_RUNNING);
 			speed = 1.5f;
 
 
@@ -467,6 +467,7 @@ void Enemy_03::Draw() const
 			//エネミーの構造体と一致したときに     エネミーが左または右に動く
 			if (enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE && moveinfo[current].enemywaitTime < 200) {
 
+
 				//攻撃時の画像描画								//向きを変える
 				DrawRotaGraphF(x, y, 1, 0, enemyimage[Ecurrentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
 				SoundSystem::PlaySE(SE::ENEMY_WORKING);
@@ -624,8 +625,6 @@ void Enemy_03::Draw() const
 
 	if (hp <= 0)DrawString((int)(x - 100), (int)(y - 120), "death!", 0xff0000);
 	
-
-
 }
 
 //じゃん撃生成・更新
