@@ -110,7 +110,7 @@ void Scene_Stage05::Update()
 	}
 	//ÚG‚¶‚á‚ñ‚¯‚ñˆ—
 	Touch_Janken(obj_enemy, this, 5);
-
+	Effect_Update_HitJangeki(obj_enemy);
 
 
 	//player‚Ì‚¶‚á‚ñŒ‚‚ğ‚Æ‚Á‚Ä‚­‚é
@@ -563,6 +563,8 @@ void Scene_Stage05::Draw() const
 
 
 	DrawString(640, 360, "Stage05", 0xffffff);
+	//Effect
+	Effect_Draw_HitJangeki();
 }
 
 
