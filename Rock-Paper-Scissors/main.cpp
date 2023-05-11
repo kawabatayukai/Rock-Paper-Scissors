@@ -17,7 +17,7 @@ int g_KeyFlg;      // 入力キー情報
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
     SetOutApplicationLogValidFlag(FALSE);	// ログテキスト出力しない
-    SetMainWindowText("Neko");       //タイトルを設定
+    SetMainWindowText("JankenWorld");       //タイトルを設定
     ChangeWindowMode(TRUE);                //ウィンドウモードで起動
     //SetWindowSize(1280, 720);
     SetGraphMode(1280, 720, 32);           //ウィンドウサイズを設定

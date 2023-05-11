@@ -69,6 +69,11 @@ void  SoundSystem::LoadSounds_BGM()
 	bgm_sounds.push_back(LoadSoundMem("Sound/VSQPD_0077_Mary_Had_a_Little_Lamb_FC.mp3"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/VSQPD_0046_Yankee_Doodle.mp3"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/VSQPD_0048_London_Bridge.mp3"));
+
+	//for (int i = 0; i < bgm_sounds.size(); i++)
+	//{
+	//	SetVolumeSoundMem(200, bgm_sounds[i]);
+	//}
 }
 
 
