@@ -78,8 +78,7 @@ void Scene_Stage03::Update()
 	//BGMを鳴らす
 	SoundSystem::PlayBGM(BGM::ST03_BGM);
 
-	//時間をカウント
-	GameData::Time_Update();
+	
 
 	//接触じゃんけん開始前
 	if (GetJanState()  == Jan_State::BEFORE)
@@ -89,7 +88,8 @@ void Scene_Stage03::Update()
 		obj_enemy->ChangeDir(obj_player->GetX());//プレイヤーがx < 640だったらエネミーの弾の向きを変える
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());	//プレイヤーの座標を取得
 		
-		
+		//時間をカウント
+		GameData::Time_Update();
 	}
 
 	//接触じゃんけん処理
@@ -405,7 +405,7 @@ void Scene_Stage03::Update()
 			//エネミーのHPが40以下の場合25ダメージ食らう
 			if (obj_enemy->GetHP() <= 40) {
 
-				//半径が90.0fの場合のダメージ
+				//半径が50.0fの場合のダメージ
 				float radius = 50.0f;
 
 				if (radius >= 50.0f) {
@@ -413,7 +413,17 @@ void Scene_Stage03::Update()
 					obj_player->ReceiveDamage(25 - PlayerCutDamege) ;
 				}
 			}
+			else if (obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 41) {
 
+				//半径が50.0fの場合のダメージ
+				float radius = 25.5f;
+
+				if (radius >= 25.5f) {
+
+					obj_player->ReceiveDamage(10 - PlayerCutDamege);
+				}
+
+			}
 			//それ以外
 			//通常時のダメージを受ける（プレイヤー）
 			else obj_player->ReceiveDamage(15 - PlayerCutDamege);
