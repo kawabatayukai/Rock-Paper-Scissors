@@ -6,66 +6,91 @@ Effect_Jangeki::Effect_Jangeki(float play_x, float play_y, Jan_Type type, _CHAR_
 	: play_x(play_x), play_y(play_y), character(character)
 	, frame_count(0), index_effect(0), index_max(0), image_effect(nullptr), finish_effect(false)
 {
-	//最大数セット
-	index_max = 10;
-	image_effect = new int[index_max];
-
-	int image_size = 120;
-
-	//エフェクト
-	switch (type)
+	if (character != _CHAR_TYPE::NOT_CHARA)
 	{
-	case Jan_Type::ROCK:
+		//最大数セット
+		index_max = 10;
+		image_effect = new int[index_max];
+		int image_size = 120;
 
-		LoadDivGraph("images/Effect/janeffectRed.png", 10, 10, 1, image_size, image_size, image_effect);
-		if (character == _CHAR_TYPE::PLAYER) 
-			image_sub = LoadGraph("images/Effect/lightning_gu_120.png");
-		else
-			image_sub = LoadGraph("images/Effect/smoke_120_red.png");
+		//エフェクト
+		switch (type)
+		{
+		case Jan_Type::ROCK:
 
-		break;
+			LoadDivGraph("images/Effect/janeffectRed.png", 10, 10, 1, image_size, image_size, image_effect);
+			if (character == _CHAR_TYPE::PLAYER)
+				image_sub = LoadGraph("images/Effect/lightning_gu_120.png");
+			else if (character == _CHAR_TYPE::ENEMY)
+				image_sub = LoadGraph("images/Effect/smoke_120_red.png");
 
-	case Jan_Type::SCISSORS:
+			break;
 
-		LoadDivGraph("images/Effect/janeffectYellow.png", 10, 10, 1, image_size, image_size, image_effect);
-		if (character == _CHAR_TYPE::PLAYER)
-			image_sub = LoadGraph("images/Effect/lightning_tyoki_120.png");
-		else
-			image_sub = LoadGraph("images/Effect/smoke_120_yellow.png");
-		break;
+		case Jan_Type::SCISSORS:
 
-	case Jan_Type::PAPER:
+			LoadDivGraph("images/Effect/janeffectYellow.png", 10, 10, 1, image_size, image_size, image_effect);
+			if (character == _CHAR_TYPE::PLAYER)
+				image_sub = LoadGraph("images/Effect/lightning_tyoki_120.png");
+			else if (character == _CHAR_TYPE::ENEMY)
+				image_sub = LoadGraph("images/Effect/smoke_120_yellow.png");
+			break;
 
-		LoadDivGraph("images/Effect/janeffectBlue.png", 10, 10, 1, image_size, image_size, image_effect);
-		if (character == _CHAR_TYPE::PLAYER)
-			image_sub = LoadGraph("images/Effect/lightning_pa_120.png");
-		else
-			image_sub = LoadGraph("images/Effect/smoke_120_blue.png");
-		break;
+		case Jan_Type::PAPER:
 
-	case Jan_Type::NONE:
-		LoadDivGraph("images/Effect/janeffectYellow.png", 10, 10, 1, image_size, image_size, image_effect);
-		break;
+			LoadDivGraph("images/Effect/janeffectBlue.png", 10, 10, 1, image_size, image_size, image_effect);
+			if (character == _CHAR_TYPE::PLAYER)
+				image_sub = LoadGraph("images/Effect/lightning_pa_120.png");
+			else if (character == _CHAR_TYPE::ENEMY)
+				image_sub = LoadGraph("images/Effect/smoke_120_blue.png");
+			break;
 
-	default:
-		break;
+		case Jan_Type::NONE:
+			LoadDivGraph("images/Effect/janeffectYellow.png", 10, 10, 1, image_size, image_size, image_effect);
+			break;
+
+		default:
+			break;
+		}
 	}
-	
+	else
+	{ 
+		//最大数セット
+		index_max = 10;
+		image_effect = new int[index_max];
+		int image_size = 192;
 
-	//分割読み込み
-	
+		switch (type)
+		{
+		case Jan_Type::ROCK:
+			LoadDivGraph("images/Effect/again_red.png", 10, 5, 2, 192, 192, image_effect);
+			break;
+		case Jan_Type::SCISSORS:
+			LoadDivGraph("images/Effect/again_yellow.png", 10, 5, 2, 192, 192, image_effect);
+			break;
+		case Jan_Type::PAPER:
+			LoadDivGraph("images/Effect/again_blue.png", 10, 5, 2, 192, 192, image_effect);
+			break;
+		case Jan_Type::NONE:
+			LoadDivGraph("images/Effect/pipo-btleffect159.png", 10, 5, 2, 192, 192, image_effect);
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 //デストラクタ
 Effect_Jangeki::~Effect_Jangeki()
 {
-
+	delete[] image_effect;
 }
 
 //更新
 void Effect_Jangeki::Update()
 {
-	if (++frame_count % 3 == 0)
+	int pct = character == _CHAR_TYPE::NOT_CHARA ? 2 : 3;
+
+	if (++frame_count % pct == 0)
 	{
 		//最後まで再生
 		if (++index_effect > index_max) finish_effect = true;
@@ -75,15 +100,23 @@ void Effect_Jangeki::Update()
 //描画
 void Effect_Jangeki::Draw() const
 {
-	//エフェクト
-	SetDrawBlendMode(DX_BLENDMODE_ADD, GetRand(55) + 200);
-	DrawRotaGraph(play_x, play_y, 1, GetRand(360), image_sub, TRUE);
+	if (character != _CHAR_TYPE::NOT_CHARA)
+	{
+		//エフェクト
+		SetDrawBlendMode(DX_BLENDMODE_ADD, GetRand(55) + 200);
+		DrawRotaGraph(play_x, play_y, 1, GetRand(360), image_sub, TRUE);
 
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 230);
-	DrawRotaGraph(play_x, play_y, 1.0, 0, image_effect[index_effect], TRUE);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-
-	
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 230);
+		DrawRotaGraph(play_x, play_y, 1.0, 0, image_effect[index_effect], TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+	else
+	{
+		//エフェクト
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 230);
+		DrawRotaGraph(play_x, play_y, 1.0, 0, image_effect[index_effect], TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
 }
 
 //再生終了 true

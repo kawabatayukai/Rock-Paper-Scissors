@@ -8,11 +8,11 @@
 class Effect_Jangeki
 {
 public:
-	Effect_Jangeki(float play_x, float play_y, Jan_Type type = Jan_Type::PAPER, _CHAR_TYPE character = _CHAR_TYPE::PLAYER);
+	Effect_Jangeki(float play_x, float play_y, Jan_Type type = Jan_Type::PAPER, _CHAR_TYPE character = _CHAR_TYPE::NOT_CHARA);
 	~Effect_Jangeki();
 
-	void Update();
-	void Draw() const;
+	virtual void Update();
+	virtual void Draw() const;
 
 	bool Check_PlayEnd();          //再生終了 true
 
@@ -21,7 +21,7 @@ public:
 
 	_CHAR_TYPE GetCharacterType() const { return character; }
 
-private:
+protected:
 	float play_x;            //エフェクト再生座標ｘ
 	float play_y;            //エフェクト再生座標ｙ
 
