@@ -22,7 +22,8 @@ Enemy_02::Enemy_02(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	enemy_y = GetRand(600) + 100;
 
 	image = LoadGraph("images/stage02/junp4.png");
-
+	//BGMの読み込み
+	stage2_SE = LoadSoundMem("Sound/enemy(Jump).mp3");
 	Init_Jangeki();       //じゃん撃を用意
 
 }
@@ -48,18 +49,23 @@ void Enemy_02::Update()
 	//ジャンプする処理
 	if (jump_cnt < 1)
 	{
+		
 		if (GetRand(1) == 1)  //乱数でjump_flgをtrueにする
 		{
+			
 			jump_flg = true;
 		}
 
 		if (land_flg == true && jump_flg == true)    //jump_flgがジャンプの条件
 		{
+			
 			//g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 			land_flg = false;  //地面についていない
 			jump_flg = false;  //ジャンプ用フラグのリセット
 			jump_cnt++;
+			
 		}
+		
 	}
 	
 	//左に行く
@@ -77,6 +83,7 @@ void Enemy_02::Update()
 		
 		if (land_flg == true && GetRand(1) == 1)    //GetRand(30) == 3　のところがジャンプの条件
 		{
+			PlaySoundMem(stage2_SE, DX_PLAYTYPE_BACK, TRUE);
 			g_add = -30.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 			land_flg = false;  //地面についていない
 			
@@ -99,6 +106,7 @@ void Enemy_02::Update()
 
 		if (land_flg == true && GetRand(1) == 1)    //GetRand(30) == 3　のところがジャンプの条件
 		{
+			PlaySoundMem(stage2_SE, DX_PLAYTYPE_BACK, TRUE);
 			g_add = -30.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 			land_flg = false;  //地面についていない
 
