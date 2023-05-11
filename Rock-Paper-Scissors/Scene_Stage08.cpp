@@ -12,7 +12,7 @@
 #include"Debug_Manager.h"
 
 //コンストラクタ
-Scene_Stage08::Scene_Stage08(const Player* player)
+Scene_Stage08::Scene_Stage08(const Player* player) : damage(5)
 {
 	//プレイヤー情報が渡されていれば
 	if (player != nullptr)
@@ -286,7 +286,7 @@ void Scene_Stage08::Update()
 				//パーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::PAPER)
 				{
-					obj_enemy->ReceiveDamage(5);     //ダメージが入る
+					obj_enemy->ReceiveDamage(damage);     //元のダメージ
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -298,7 +298,7 @@ void Scene_Stage08::Update()
 				//グーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::ROCK)
 				{
-					obj_enemy->ReceiveDamage(5);     //ダメージが入る
+					obj_enemy->ReceiveDamage(damage);     //元のダメージ
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -309,7 +309,7 @@ void Scene_Stage08::Update()
 				//チョキのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::SCISSORS)
 				{
-					obj_enemy->ReceiveDamage(5);     //ダメージが入る
+					obj_enemy->ReceiveDamage(damage);     //元のダメージ
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -371,7 +371,7 @@ void Scene_Stage08::Update()
 		if (obj_player->Hit_Jangeki(Item[i]) == true)
 		{
 			//当たった時
-
+			damage += 10;
 
 			delete Item[i];
 			Item[i] = nullptr;
@@ -383,6 +383,7 @@ void Scene_Stage08::Update()
 				Item[j + 1] = nullptr;
 			}
 			i--;
+			
 		}
 
 
@@ -399,11 +400,14 @@ void Scene_Stage08::Update()
 //描画
 void Scene_Stage08::Draw() const
 {	
-		//HP表示
-		DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+	
+	DrawUI_ON_Enemy(obj_enemy);
+	DrawRotaGraph(640, 360, 1.f, 0, Back_image,TRUE);
 
-		DrawUI_ON_Enemy(obj_enemy);
-		DrawRotaGraph(640, 360, 1.f, 0, Back_image,TRUE);
+		//HP表示
+	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+	DrawUI_ON_Enemy(obj_enemy);
+
 
 	//接触じゃんけんでない時
 	if (GetJanState() == Jan_State::START || GetJanState() == Jan_State::BEFORE)
@@ -458,7 +462,7 @@ AbstractScene* Scene_Stage08::ChangeScene()
 #ifdef DEBUG_OFF_08
 
 	//敵のHPが0以下
-	if (obj_enemy->GetHP() < 0)
+	if (obj_enemy->GetHP() <= 0)
 	{
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(9));

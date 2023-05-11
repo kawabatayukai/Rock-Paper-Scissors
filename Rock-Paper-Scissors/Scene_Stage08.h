@@ -36,6 +36,8 @@ private:
 	Enemy_Cannon** cannon;
 
 	Jangeki_Base** Item;
+
+	int damage;
 };
 
 
