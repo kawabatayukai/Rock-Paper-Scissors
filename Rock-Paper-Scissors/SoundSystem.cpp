@@ -59,6 +59,7 @@ void  SoundSystem::LoadSounds_BGM()
 	//BGM
 	// bgm_sounds.push_back(LoadSoundMem("サウンドへのパス"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/TitleBGM.mp3"));
+	bgm_sounds.push_back(LoadSoundMem("Sound/stage01/maou_game_battle37.mp3"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/st03/St03BGM.wav"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/stage04/stage04_BGM.wav"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/stage06/RPG_Battle_03.mp3"));

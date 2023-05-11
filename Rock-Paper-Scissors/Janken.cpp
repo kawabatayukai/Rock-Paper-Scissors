@@ -25,7 +25,11 @@ Janken::Janken(Jan_Type enemy_jan, const int stage_num)
 	//“G‚Ì‰æ‘œ
 	{
 		image_all_enemy[0] = LoadGraph("images/tyokitest.png");
-		image_all_enemy[1] = LoadGraph("images/tyokitest.png");
+
+		int enemy01[3];
+		LoadDivGraph("images/stage01/stage01_chicken.png", 3, 3, 1, 96, 78, enemy01);
+		image_all_enemy[1] = enemy01[1];
+
 		image_all_enemy[2] = LoadGraph("images/stage02/ex.png");
 		image_all_enemy[3] = LoadGraph("images/stage03/stage03attack.png");
 		image_all_enemy[4] = LoadGraph("images/Stage04/stage_Boss04.png");
@@ -140,6 +144,10 @@ void Janken::Draw() const
 	else if (stage_num == 6)
 	{
 		DrawRotaGraph(e_image_x, 600, 8.6, 0, image_all_enemy[stage_num], TRUE);
+	}
+	else if (stage_num == 1)
+	{
+		DrawRotaGraph(e_image_x, 600, 1.7, 0, image_all_enemy[stage_num], TRUE, TRUE);
 	}
 	else
 	{

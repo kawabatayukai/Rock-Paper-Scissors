@@ -58,6 +58,7 @@ enum class SE
 enum class BGM
 {
 	TITLE,
+	STAGE01_BGM,
 	ST03_BGM,
 	STAGE04_BGM,
 	STAGE06_BGM,
