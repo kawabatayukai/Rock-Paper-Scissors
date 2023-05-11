@@ -146,7 +146,7 @@ void Scene_Stage08::Update()
 					obj_enemy->DeleteJangeki(e_count);
 					e_count--;
 
-					break;
+				break;
 
 				case 2:             //‚ ‚¢‚±
 
@@ -173,7 +173,7 @@ void Scene_Stage08::Update()
 			p_count--;
 		}
 	}
-
+	
 	//‚¶‚á‚ñŒ‚“¯Žm
 	for (int a = 0; a < 2; a++)
 	{

@@ -5,6 +5,8 @@
 #include"Jangeki_Player.h"
 #include"SoundSystem.h"
 #include "Scne_TitleInterval.h"
+#include"KeyManager.h"
+#include"FPS_Controll.h"
 
 /*　　変数　　*/
 int g_OldKey;      // 前回の入力キー 
@@ -33,8 +35,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     SoundSystem::LoadSounds_SE();
     SoundSystem::LoadSounds_BGM();
 
+    //FPS固定用
+    FPS_Controll fps_ctrl(60);
+
     //ESCキーまたはコントローラーBackボタンで終了
-    while (ProcessMessage() == 0 && !(g_NowKey & PAD_INPUT_9) && !(g_NowKey & PAD_INPUT_7))
+    while (ProcessMessage() == 0 && !KeyManager::OnKeyClicked(KEY_INPUT_ESCAPE) && !(g_NowKey & PAD_INPUT_7))
     {
         // 画面の初期化 
         ClearDrawScreen();
@@ -48,6 +53,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
             DxLib_End();  //DxLib終了処理
             return 0;
         }
+
+        //FPS固定処理
+        fps_ctrl.Get();
+        fps_ctrl.Wait();
+        //fps_ctrl.Disp();
+        //DrawFormatString(0, 50, 0xff0000, "%f", GetFPS());
 
         //裏画面の内容を表画面に反映
         ScreenFlip();

@@ -4,6 +4,7 @@
 #include"Jangeki_Base.h"
 #include"Jangeki_Coming.h"
 #include "Jangeki_whole.h"
+#include"SoundSystem.h"
 #include <typeinfo>
 #define _USE_MATH_DEFINES
 #include<math.h>
@@ -85,7 +86,7 @@ void Enemy_04::Update()
 	//特殊行動時や残りHPによってスピードが変わる
 	if (specialFlg == true)
 	{
-		speed = 15.0f;
+		speed = 20.0f;
 		specialTime++;
 	}
 	else if (hp <= 50)
@@ -98,7 +99,7 @@ void Enemy_04::Update()
 	}
 
 	//少しずつHP回復
-	if (hp < 100 && frame_count % 35 == 0) hp++;
+	if (hp < 100 && frame_count % 40 == 0) hp++;
 
 	//特殊行動時間(4秒間)
 	if (specialTime >= 240)
@@ -106,6 +107,7 @@ void Enemy_04::Update()
 		specialTime = 0;
 		specialFlg = false;
 		current = 0;
+		SoundSystem::StopSE(SE::ENEMY_SPECIAL);
 	}
 }
 
@@ -115,7 +117,7 @@ void Enemy_04::Draw() const
 	//中心から描画
 	DrawRotaGraphF(x, y, 1.5, 0, enemy_image[0], TRUE);
 
-	/************* ↓↓ 黒目の位置をプレイヤーとの角度によって変える ↓↓ *************/
+	/************* ↓↓ 黒目をプレイヤーの角度へ向ける ↓↓ *************/
 
 	//上向きの画像
 	if (angle > 2.625 && angle <= 3.15 || angle <= -2.625 && angle > -3)
@@ -173,7 +175,14 @@ void Enemy_04::Draw() const
 	//じゃん撃描画
 	Draw_Jangeki();
 
-	if (hp > 0) DrawFormatString((int)(x - 45), (int)(y - 130), 0xffffff, "HP : %d", hp);
+	//残りHP表示
+	if (hp > 0) DrawFormatString((int)(x - 45), (int)(y - 130), GetColor(0, 255, 0), "HP : %d", hp);
+
+	//残りHP50以下の時に表示
+	if (hp <= 50) DrawFormatString((int)(x - 60), (int)(y - 160), GetColor(30, 30, 255), "スピードUP↑", hp);
+
+	//特殊効果時に表示
+	if (specialFlg == true) DrawFormatString((int)(x - 50), (int)(y - 160), GetColor(255, 30, 30), "特殊効果", hp);
 }
 
 //じゃん撃生成・更新
@@ -223,7 +232,11 @@ void Enemy_04::Update_Jangeki()
 		}
 		else if (specialFlg == true)
 		{
-			if (frame_count % 60 == 0) Jan_360degrees(jan_count, radius, speed * 1.5, type);
+			if (frame_count % 60 == 0)
+			{
+				Jan_360degrees(jan_count, radius, speed * 1.5, type);
+				SoundSystem::PlaySE(SE::ENEMY_SPECIAL_ATTACK);
+			}
 		}
 	}
 }
@@ -344,6 +357,7 @@ void Enemy_04::Special_Action()
 {
 	specialFlg = true;
 	current = 1;
+	SoundSystem::PlaySE(SE::ENEMY_SPECIAL);
 }
 
 //360度発射

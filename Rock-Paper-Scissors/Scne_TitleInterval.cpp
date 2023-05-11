@@ -24,7 +24,7 @@ Scne_TitleInterval::Scne_TitleInterval() :
 	std::ifstream read_file;
 
 	//ŠJ‚­
-	read_file.open("textdata/Arasuzi.txt", std::ios::in);
+	read_file.open("textdata/start.txt", std::ios::in);
 
 	//Ž¸”s!
 	if (read_file.fail() == true) isLoadFailed = true;
