@@ -192,7 +192,7 @@ void Scene_Stage03::Update()
 
 						if(obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200){
 
-							SheeldEnduranse = 27;				//3 - じゃんけん負けた時 2
+							SheeldEnduranse = 27;				//3 - じゃんけん負けた時 1
 							obj_enemy->ReceiveDamage(30 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
 
 						}
@@ -491,18 +491,19 @@ void Scene_Stage03::Draw() const
   
 
 	//じゃんけん負けた時
-	if (/*obj_enemy->GetHP() >= 86 || obj_enemy->GetHP() <= 40*/Enemy_Janwin == 0){
+	
+	if (/*obj_enemy->GetHP() >= 86 || obj_enemy->GetHP() <= 40*/Enemy_Janwin == 1){
 	
 		if(obj_enemy->GetWaitTime() > 0){
 		//エネミー特殊効果テキスト表示
 
-			 DrawFormatString((int)(obj_enemy->GetX() - 35), (int)(obj_enemy->GetY() - 85), GetColor(0, 0, 255), "さらに防御UP↑", obj_enemy->GetWaitTime());
+			 DrawFormatString((int)(obj_enemy->GetX() - 40), (int)(obj_enemy->GetY() - 90), GetColor(0, 0, 255), "さらに防御UP↑", obj_enemy->GetWaitTime());
 		}
-		/*else {
+		else {
 
-			Enemy_Janwin;
+			int Enemy_Janwin = 0;
 
-		}*/
+		}
 	}
 }
 
@@ -563,8 +564,8 @@ void Scene_Stage03::AfterJanken_WIN()
 void Scene_Stage03::AfterJanken_LOSE()
 {
 
-	//負けたら0
-	Enemy_Janwin = 0;
+	//負けたら1
+	Enemy_Janwin = 1;
 
 
 	if(obj_enemy->GetHP() >= 86){
