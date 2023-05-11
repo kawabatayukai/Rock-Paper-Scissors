@@ -134,6 +134,8 @@ private:
 	//エフェクト(属性)
 	Effect_ChangePlayer* obj_effectchange;
 
+	int name_font;
+
 	int ui_font;  //ui用フォントハンドル
 
 	bool animflg = false;	//アニメーションフラグ
