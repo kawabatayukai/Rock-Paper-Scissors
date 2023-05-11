@@ -6,8 +6,7 @@
 //コンストラクタ
 HelpScene::HelpScene()
 {
-	HelpImage = LoadGraph("images/Help.png");
-	HelpImage1 = LoadGraph("images/kontorora2.png");
+	HelpImage = LoadGraph("images/Help2.png");
 }
 
 //デストラクタ
@@ -27,7 +26,6 @@ void HelpScene::Draw() const
 {
 
 	DrawGraph(0, 0, HelpImage, TRUE);
-	DrawGraph(400, 200, HelpImage1, TRUE);
 	SetFontSize(30);
 	//DrawString(100, 100, "赤色のBボタンでグー属性に変更", 0x000000);
 	//DrawString(100, 500, "ヘルプシーン Bボタンでチュートリアル", 0xffffff);
