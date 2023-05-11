@@ -85,7 +85,10 @@ void Scene_Stage09::Update()
 	//接触じゃんけん処理
 	//特殊行動中とアニメーション再生中はなし
 	if (obj_enemy->Spflg == false && obj_enemy->animflg == false)
+	{
 		Touch_Janken(obj_enemy, this, 9);
+	}
+	Effect_Update_HitJangeki(obj_enemy);
 
 
 	//playerのじゃん撃をとってくる
@@ -189,12 +192,15 @@ void Scene_Stage09::Update()
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 					obj_enemy->reflection->trueFlg();
+					obj_enemy->ranimflg = true;
+					if (obj_enemy->ranimflg == true)
+						obj_enemy->Ranimflg = true;
 				}
 			}
 			obj_enemy->HP();
-
 		}
 	}
+	
 
 
 	//enemyじゃん撃とplayerの当たり判定
@@ -355,7 +361,7 @@ void Scene_Stage09::Draw() const
 		Draw_Janken();
 	}
 
-	DrawString(640, 360, "Stage09", 0xffffff);
+	Effect_Draw_HitJangeki();
 }
 
 

@@ -21,9 +21,32 @@ void  SoundSystem::LoadSounds_SE()
 	/*プレイヤー↑*/
 
 	/*敵↓*/
+
+	/*ステージ1*/
+
+	/*ステージ2*/
+
+	/*ステージ3*/
 	se_sounds.push_back(LoadSoundMem("Sound/st03/SlightlyBrokenSE.wav"));
 	se_sounds.push_back(LoadSoundMem("Sound/st03/BrokenSE.wav"));
 
+	/*ステージ4*/
+	se_sounds.push_back(LoadSoundMem("Sound/stage04/specialSE.wav"));
+	se_sounds.push_back(LoadSoundMem("Sound/stage04/specialAttackSE.wav"));
+
+	/*ステージ5*/
+
+	/*ステージ6*/
+
+	/*ステージ7*/
+
+	/*ステージ8*/
+
+	/*ステージ9*/
+
+	/*ステージ10*/
+	se_sounds.push_back(LoadSoundMem("Sound/笑い声2.mp3"));
+	se_sounds.push_back(LoadSoundMem("Sound/ピョョョ2.mp3"));
 
 	/*敵↑*/
 
@@ -37,7 +60,10 @@ void  SoundSystem::LoadSounds_BGM()
 	bgm_sounds.push_back(LoadSoundMem("Sound/TitleBGM.mp3"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/st03/St03BGM.wav"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/stage04/stage04_BGM.wav"));
-
+	bgm_sounds.push_back(LoadSoundMem("Sound/sento.mp3"));
+	bgm_sounds.push_back(LoadSoundMem("Sound/VSQPD_0077_Mary_Had_a_Little_Lamb_FC.mp3"));
+	bgm_sounds.push_back(LoadSoundMem("Sound/VSQPD_0046_Yankee_Doodle.mp3"));
+	bgm_sounds.push_back(LoadSoundMem("Sound/VSQPD_0048_London_Bridge.mp3"));
 }
 
 

@@ -333,6 +333,10 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 
 		obj_effect[effect_count]->Update();
 
+		if (obj_effect[effect_count]->GetCharacterType() == _CHAR_TYPE::ENEMY)
+			obj_effect[effect_count]->SetCharacterLocation(obj_player->GetX(), obj_player->GetY());
+		else if (obj_effect[effect_count]->GetCharacterType() == _CHAR_TYPE::PLAYER)
+			obj_effect[effect_count]->SetCharacterLocation(enemy->GetX(), enemy->GetY());
 		//削除
 		if (obj_effect[effect_count]->Check_PlayEnd() == true)
 		{
@@ -352,12 +356,13 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 		}
 	}
 
+	//playerのじゃん撃をとってくる
+	Jangeki_Base** p_jan = obj_player->GetJangeki();
+	//enemyのじゃん撃をとってくる
+	Jangeki_Base** e_jan = enemy->GetJangeki();
 
 	//--------------------  playerじゃん撃とenemy  -------------------------------------
 	{
-		//playerのじゃん撃をとってくる
-		Jangeki_Base** p_jan = obj_player->GetJangeki();
-
 		//playerじゃん撃とenemyの当たり判定
 		for (int i = 0; i < JANGEKI_MAX; i++)
 		{
@@ -368,6 +373,8 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 			if (enemy->Hit_Jangeki(p_jan[i]) == true)
 			{
 				Jan_Type p_type = p_jan[i]->GetType();  //当たったじゃん撃の属性
+
+				
 
 				//不利属性のみ
 				switch (enemy->GetType())
@@ -380,7 +387,8 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 						//エフェクト生成
 						if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
 						{
-							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y);
+							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y, Jan_Type::PAPER, _CHAR_TYPE::PLAYER);
+							//effect_count++;
 						}
 					}
 					break;
@@ -393,7 +401,8 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 						//エフェクト生成
 						if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
 						{
-							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y);
+							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y, Jan_Type::ROCK,_CHAR_TYPE::PLAYER);
+							//effect_count++;
 						}
 					}
 					break;
@@ -401,12 +410,13 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 				case Jan_Type::PAPER:                          //敵の属性　パー
 
 					//チョキのみ有効
-					if (p_type == Jan_Type::ROCK)
+					if (p_type == Jan_Type::SCISSORS)
 					{
 						//エフェクト生成
 						if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
 						{
-							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y);
+							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y, Jan_Type::SCISSORS, _CHAR_TYPE::PLAYER);
+							//effect_count++;
 						}
 					}
 					break;
@@ -419,7 +429,8 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 						//エフェクト生成
 						if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
 						{
-							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y);
+							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y, p_type, _CHAR_TYPE::PLAYER);
+							//effect_count++;
 						}
 					}
 					break;
@@ -434,8 +445,7 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 
 	//--------------------  enemyじゃん撃とplayer  -------------------------------------
 	{
-		//enemyのじゃん撃をとってくる
-		Jangeki_Base** e_jan = enemy->GetJangeki();
+
 
 		//enemyじゃん撃とplayerの当たり判定
 		for (int i = 0; i < JANGEKI_MAX; i++)
@@ -449,13 +459,47 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 				//エフェクト生成
 				if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
 				{
-					obj_effect[effect_count] = new Effect_Jangeki(p_x, p_y);
+					obj_effect[effect_count] = new Effect_Jangeki(p_x, p_y, e_jan[i]->GetType(), _CHAR_TYPE::ENEMY);
+					//effect_count++;
 				}
 			}
 		}
 	}
 	//----------------------------------------------------------------------------------
 
+	//-------------------  enemyじゃん撃とplayerじゃん撃  ------------------------------
+
+	for (int p = 0; p < JANGEKI_MAX; p++)
+	{
+		if (p_jan[p] == nullptr) break;                  //なければ抜ける
+
+		for (int e = 0; e < JANGEKI_MAX; e++)
+		{
+			if (e_jan[e] == nullptr) break;              //なければ抜ける
+
+			if (p_jan[p]->Hit_Jangeki(e_jan[e]) == true) //当たり
+			{
+				//あいこの場合
+				if (p_jan[p]->CheckAdvantage(e_jan[e]) == 2)
+				{
+					//じゃん撃間の距離
+					float dx = e_jan[e]->GetX() - p_jan[p]->GetX();
+					float dy = e_jan[e]->GetY() - p_jan[p]->GetY();
+
+					float jan_x = p_jan[p]->GetX() + (dx / 2);
+					float jan_y = p_jan[p]->GetY() + (dy / 2);
+
+					obj_effect[effect_count] = new Effect_Jangeki(jan_x, jan_y, e_jan[e]->GetType(), _CHAR_TYPE::NOT_CHARA);
+					effect_count++;
+				}
+			}
+		}
+	}
+
+	//----------------------------------------------------------------------------------
+	
+
+	//----------------------------------　属性変化　------------------------------------
 		//前回の属性と違っていればエフェクト生成
 	if (enemy->GetType() != Prev_EnemyType && Prev_EnemyType != Jan_Type::NONE)
 	{
