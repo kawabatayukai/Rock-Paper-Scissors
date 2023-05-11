@@ -10,6 +10,7 @@
 #include"GameData.h"
 #include"SoundSystem.h"
 #include"Scene_Story.h"
+#include "Scene_InputNameRanking.h"
 
 //コンストラクタ
 Scene_Title_GameLevel::Scene_Title_GameLevel()
@@ -93,12 +94,16 @@ AbstractScene* Scene_Title_GameLevel::ChangeScene()
 		{
 		case 0:/*通常モード*/
 			GameData::Set_DIFFICULTY(GAME_DIFFICULTY::NOMAL);
-			return dynamic_cast<AbstractScene*> (new Scene_Story());
+			//return dynamic_cast<AbstractScene*> (new Scene_Story());
+			//return dynamic_cast<AbstractScene*> (new Scene_InputNamePlayer());
+			return dynamic_cast<AbstractScene*> (new Scene_InputNameRanking());
 			SoundSystem::StopBGM(BGM::TITLE);
 			break;
 		case 1:/*即死モード*/
 			GameData::Set_DIFFICULTY(GAME_DIFFICULTY::HARD);
-			return dynamic_cast<AbstractScene*> (new Scene_Story());
+			//return dynamic_cast<AbstractScene*> (new Scene_Story());
+			//return dynamic_cast<AbstractScene*> (new Scene_InputNamePlayer());
+			return dynamic_cast<AbstractScene*> (new Scene_InputNameRanking());
 			SoundSystem::StopBGM(BGM::TITLE);
 			break;
 		default:

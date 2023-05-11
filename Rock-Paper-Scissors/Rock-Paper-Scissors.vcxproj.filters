@@ -261,7 +261,7 @@
     <ClCompile Include="SortSave.cpp">
       <Filter>ランキング</Filter>
     </ClCompile>
-    <ClCompile Include="Scene_InputName.cpp">
+    <ClCompile Include="Scene_InputNameRanking.cpp">
       <Filter>ランキング</Filter>
     </ClCompile>
     <ClCompile Include="Effect_Jangeki.cpp">
@@ -272,12 +272,6 @@
     </ClCompile>
     <ClCompile Include="Scene_Story.cpp">
       <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scne_TitleInterval.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene_Title_GameLevel.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Effect_Player.cpp">
       <Filter>ソース ファイル\Player</Filter>
@@ -290,6 +284,12 @@
     </ClCompile>
     <ClCompile Include="Item_stage08.cpp">
       <Filter>ソース ファイル\GameMainScene\Stage_08</Filter>
+    </ClCompile>
+    <ClCompile Include="Scne_TitleInterval.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Title_GameLevel.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -458,7 +458,7 @@
     <ClInclude Include="SortSave.h">
       <Filter>ランキング\ヘッダー</Filter>
     </ClInclude>
-    <ClInclude Include="Scene_InputName.h">
+    <ClInclude Include="Scene_InputNameRanking.h">
       <Filter>ランキング\ヘッダー</Filter>
     </ClInclude>
     <ClInclude Include="Effect_Jangeki.h">
@@ -469,12 +469,6 @@
     </ClInclude>
     <ClInclude Include="Scene_Story.h">
       <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scne_TitleInterval.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene_Title_GameLevel.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Effect_Player.h">
       <Filter>ソース ファイル\Player</Filter>
@@ -487,6 +481,12 @@
     </ClInclude>
     <ClInclude Include="Item_stage08.h">
       <Filter>ソース ファイル\GameMainScene\Stage_08</Filter>
+    </ClInclude>
+    <ClInclude Include="Scne_TitleInterval.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Title_GameLevel.h">
+      <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

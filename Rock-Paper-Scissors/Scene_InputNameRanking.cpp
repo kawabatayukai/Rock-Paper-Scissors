@@ -1,7 +1,9 @@
-#include "Scene_InputName.h"
+#include "Scene_InputNameRanking.h"
 #include"Scene_Ranking.h"
 #include <DxLib.h>
 #include "KeyManager.h"
+#include"GameData.h"
+#include"Scene_Story.h"
 
 //#define ALPHA_MAX 26      //アルファベット総数
 //#define OUT_WIDTH 45      //画面左端～キーボードまでの幅
@@ -32,14 +34,14 @@ const char AllStr[5][ALPHA_MAX / 2 + 1] = {
 
 int a = 0;
 
-Scene_InputName::Scene_InputName()
+Scene_InputNameRanking::Scene_InputNameRanking()
 {
 	KeyBoardInit();
 	LoadKeyBoardImgaes();
 }
 
 //更新
-void  Scene_InputName::Update()
+void  Scene_InputNameRanking::Update()
 {
 	// フォントサイズの設定
 	//SetFontSize(20);
@@ -64,7 +66,7 @@ void  Scene_InputName::Update()
 	
 }
 //描画
-void  Scene_InputName::Draw() const
+void  Scene_InputNameRanking::Draw() const
 {
 	// フォントサイズの設定
 	//SetFontSize(20);
@@ -81,7 +83,7 @@ void  Scene_InputName::Draw() const
 }
 
 //初期処理
-void Scene_InputName::KeyBoardInit()
+void Scene_InputNameRanking::KeyBoardInit()
 {
 	//カーソルの初期位置は"A"
 	movekeyX = 0;             //ｘ方向0番目
@@ -101,7 +103,7 @@ void Scene_InputName::KeyBoardInit()
 }
 
 //画像読み込み
-int Scene_InputName::LoadKeyBoardImgaes()
+int Scene_InputNameRanking::LoadKeyBoardImgaes()
 {
 	//背景
 	if ((backimage = LoadGraph("images/KeyBoard/back04.png")) == -1) return -1;
@@ -118,13 +120,13 @@ int Scene_InputName::LoadKeyBoardImgaes()
 }
 
 //効果音読み込み
-//int Scene_InputName::LoadSounds()
+//int Scene_InputNameRanking::LoadSounds()
 //{
 
 //}
 
 //描画
-void Scene_InputName::KeyBoard_Draw()const
+void Scene_InputNameRanking::KeyBoard_Draw()const
 {
 	//背景
 	DrawGraph(0, 0, backimage, FALSE);
@@ -154,7 +156,7 @@ void Scene_InputName::KeyBoard_Draw()const
 }
 
 //更新
-void Scene_InputName::KeyBoard_Update()
+void Scene_InputNameRanking::KeyBoard_Update()
 {
 	//フレーム数カウント
 	frame++;
@@ -214,7 +216,7 @@ void Scene_InputName::KeyBoard_Update()
 }
 
 //カーソルの移動・ボタンの長押しを調整
-bool Scene_InputName::CursorControl()
+bool Scene_InputNameRanking::CursorControl()
 {
 	int timing = 8;
 	if (frame % timing == 0) return true;
@@ -223,7 +225,7 @@ bool Scene_InputName::CursorControl()
 }
 
 //Aボタンが押された時の処理  入力が終わると 1 が返ってくる
-int Scene_InputName::KeyBoard_PushA(char* name)       //keyflg　 は"押された瞬間"キー
+int Scene_InputNameRanking::KeyBoard_PushA(char* name)       //keyflg　 は"押された瞬間"キー
 {
 	//　Aボタンを押している間
 	if (KeyManager::OnPadPressed(PAD_INPUT_A))
@@ -265,10 +267,13 @@ int Scene_InputName::KeyBoard_PushA(char* name)       //keyflg　 は"押された瞬間
 					//ランキングにセット
 					DrawString(0, 0, "Ranking", 0xffffff);
 
+					/*ランキング：名前登録*/
 					sortSave.setName(9, name);
-					sortSave.setScore(9, 10);	// ランキングデータの１０番目にスコアを登録
-					sortSave.SortRanking();		// ランキング並べ替え
-					sortSave.SaveRanking();		// ランキングデータの保存
+					//sortSave.setScore(9, 10);	// ランキングデータの１０番目にスコアを登録
+					//sortSave.SortRanking();		// ランキング並べ替え
+					//sortSave.SaveRanking();		// ランキングデータの保存
+
+					
 
 					return 1;   //終了
 				}
@@ -287,7 +292,7 @@ int Scene_InputName::KeyBoard_PushA(char* name)       //keyflg　 は"押された瞬間
 }
 
 //入力情報表示
-void Scene_InputName::DrawInputInfo()const
+void Scene_InputNameRanking::DrawInputInfo()const
 {
 	if (name[0] == 0)
 	{
@@ -303,7 +308,7 @@ void Scene_InputName::DrawInputInfo()const
 }
 
 //シーンの変更処理
-AbstractScene* Scene_InputName::ChangeScene()
+AbstractScene* Scene_InputNameRanking::ChangeScene()
 {
 	if (KeyBoard_PushA(name) != 1)
 	{
@@ -311,8 +316,8 @@ AbstractScene* Scene_InputName::ChangeScene()
 	}
 	else
 	{
-		//Scene_sortSave();
-		return new Scene_Ranking();
+		//return new Scene_Ranking();
+		return dynamic_cast<AbstractScene*> (new Scene_Story());
 
 	}
 	return this;
@@ -323,7 +328,7 @@ AbstractScene* Scene_InputName::ChangeScene()
 
 
 //初期処理
-//void Scene_InputName::KeyBoardInit()
+//void Scene_InputNameRanking::KeyBoardInit()
 //{
 //	//移動量
 //	movekeyX = 0;
@@ -341,7 +346,7 @@ AbstractScene* Scene_InputName::ChangeScene()
 //	PushFlg = FALSE;
 //}
 ////画像読み込み
-//int Scene_InputName::LoadImgae()
+//int Scene_InputNameRanking::LoadImgae()
 //{
 //	//背景
 //	if ((backimage = LoadGraph("images/KeyBoard/back02.png")) == -1) return -1;
@@ -356,7 +361,7 @@ AbstractScene* Scene_InputName::ChangeScene()
 //	if ((LoadDivGraph("images/KeyBoard/N_Link_Space.png", 2, 2, 1, 200, 40, OKimage)) == -1) return -1;
 //}
 ////効果音読み込み
-//int Scene_InputName::LoadSounds()
+//int Scene_InputNameRanking::LoadSounds()
 //{
 //	//if ((SE_push = LoadSoundMem("BGM/SE_Key_push.wav")) == -1) return -1;
 //	//if ((SE_cancel = LoadSoundMem("BGM/SE_Key_cancel.wav")) == -1) return -1;
@@ -365,7 +370,7 @@ AbstractScene* Scene_InputName::ChangeScene()
 //	return 0;
 //}
 ////描画
-//void Scene_InputName::DrawKeyBoard()
+//void Scene_InputNameRanking::DrawKeyBoard()
 //{
 //	//背景
 //	DrawGraph(0, 0, backimage, FALSE);
@@ -392,7 +397,7 @@ AbstractScene* Scene_InputName::ChangeScene()
 //	}
 //}
 ////移動
-//void Scene_InputName::KeyBoardControl(int NowKey)
+//void Scene_InputNameRanking::KeyBoardControl(int NowKey)
 //{
 //	//フレーム数カウント
 //	frame++;
@@ -452,7 +457,7 @@ AbstractScene* Scene_InputName::ChangeScene()
 //	//testPush_B_Key2(NowKey);
 //}
 ////Aボタンが押された時の処理　引数はrankingで使います
-//void Scene_InputName::Push_A_Key(int NowKey, int* GameState, int Score)
+//void Scene_InputNameRanking::Push_A_Key(int NowKey, int* GameState, int Score)
 //{
 //	//"押した瞬間"を判定
 //	static int push_B;
@@ -523,7 +528,7 @@ AbstractScene* Scene_InputName::ChangeScene()
 //	}
 //}
 ////入力情報表示
-//void Scene_InputName::DrawInputInfo()
+//void Scene_InputNameRanking::DrawInputInfo()
 //{
 //	if (InputName[0] == 0)
 //	{
@@ -538,13 +543,13 @@ AbstractScene* Scene_InputName::ChangeScene()
 //	}
 //}
 ////コントローラー調整
-//int Scene_InputName::InputControl()
+//int Scene_InputNameRanking::InputControl()
 //{
 //	int timing = 8;
 //	return frame % timing;
 //}
 ////＊test用＊　各種情報表示
-//void Scene_InputName::DrawTestInfo()
+//void Scene_InputNameRanking::DrawTestInfo()
 //{
 //	//InputNameチェック
 //	//if (InputName[0] == 0) InputName[0] = '|';
