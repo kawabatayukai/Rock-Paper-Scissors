@@ -79,13 +79,11 @@ private:
 	int ShieldBreakAnim[8];//盾が壊れた時のアニメーション
 	
 
-	bool st3_animflg = false;
-	int st3_animtimer = 0;
-	int st3_animcount = 0;
+	bool st3_animflg = false;//エネミーのアニメフラグ
+	int st3_animtimer = 0;//エネミーアニメーションの時間
+	int st3_animcount = 0;//エネミーアニメーションのカウント
 
-	int Ecurrentindex_st03 = 0;
-	
-	
+	int Ecurrentindex_st03 = 0;//エネミーアニメーションの配列
 	
 };
 

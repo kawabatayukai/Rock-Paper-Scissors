@@ -192,12 +192,10 @@ void Scene_Stage03::Update()
 
 						if(obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200){
 
-							SheeldEnduranse = 27;
-							obj_enemy->ReceiveDamage(34 - SheeldEnduranse-EnemyCutDamege); //軽減ダメージが入る
+							SheeldEnduranse = 27;				//3 - じゃんけん負けた時 1
+							obj_enemy->ReceiveDamage(30 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
 
 						}
-
-						
 
 					}
 
@@ -206,8 +204,8 @@ void Scene_Stage03::Update()
 
 						if(obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200) {
 
-							SheeldEnduranse = 24;
-							obj_enemy->ReceiveDamage(34 - SheeldEnduranse- EnemyCutDamege); //軽減ダメージが入る
+							SheeldEnduranse = 24;			//6 - じゃんけん負けた時 3
+							obj_enemy->ReceiveDamage(30 - SheeldEnduranse- EnemyCutDamege); //軽減ダメージが入る
 							
 						}
 
@@ -218,8 +216,8 @@ void Scene_Stage03::Update()
 					
 						if(obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200){
 
-							SheeldEnduranse = 21;
-							obj_enemy->ReceiveDamage(34 - SheeldEnduranse- EnemyCutDamege); //軽減ダメージが入る
+							SheeldEnduranse = 21;			//9 - じゃんけん負けた時 5
+							obj_enemy->ReceiveDamage(30 - SheeldEnduranse- EnemyCutDamege); //軽減ダメージが入る
 
 						}
 
@@ -232,8 +230,8 @@ void Scene_Stage03::Update()
 						if(obj_enemy->GetWaitTime() > 0 ||  obj_enemy->GetWaitTime() < 200){
 
 							
-							SheeldEnduranse = 18;
-							obj_enemy->ReceiveDamage(34 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
+							SheeldEnduranse = 18;				//12 - じゃんけん負けた時 6
+							obj_enemy->ReceiveDamage(30 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
 						
 						}
 
@@ -245,8 +243,8 @@ void Scene_Stage03::Update()
 						if (obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200) {
 
 							
-							SheeldEnduranse = 15;
-							obj_enemy->ReceiveDamage(34 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
+							SheeldEnduranse = 15;				//15 - じゃんけん負けた時 8
+							obj_enemy->ReceiveDamage(30 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
 						}
 						
 
@@ -255,7 +253,10 @@ void Scene_Stage03::Update()
 					else {
 
 						if (obj_enemy->GetWaitTime() < 200 || obj_enemy->GetWaitTime() > 0){
-							
+															 
+
+															//1 - じゃんけん負けた時 1
+
 							obj_enemy->ReceiveDamage(1 - EnemyCutDamege); //ダメージが入る
 
 
@@ -401,7 +402,7 @@ void Scene_Stage03::Update()
 		//じゃん撃との当たり判定
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
-			//エネミーのHPが40以下の場合35ダメージ食らう
+			//エネミーのHPが40以下の場合25ダメージ食らう
 			if (obj_enemy->GetHP() <= 40) {
 
 				//半径が90.0fの場合のダメージ
@@ -486,6 +487,24 @@ void Scene_Stage03::Draw() const
 	
 	//接触じゃんけん時Effect
 	Effect_Draw_HitJangeki();
+
+  
+
+	//じゃんけん負けた時
+	
+	if (/*obj_enemy->GetHP() >= 86 || obj_enemy->GetHP() <= 40*/Enemy_Janwin == 1){
+	
+		if(obj_enemy->GetWaitTime() > 0){
+		//エネミー特殊効果テキスト表示
+
+			 DrawFormatString((int)(obj_enemy->GetX() - 40), (int)(obj_enemy->GetY() - 90), GetColor(0, 0, 255), "さらに防御UP↑", obj_enemy->GetWaitTime());
+		}
+		else {
+
+			int Enemy_Janwin = 0;
+
+		}
+	}
 }
 
 
@@ -531,26 +550,66 @@ AbstractScene* Scene_Stage03::ChangeScene()
 
 void Scene_Stage03::AfterJanken_WIN()
 {
+
 	//じゃんけん勝利時
 	PlayerCutDamege = 10;
-
+	
 	obj_player->SetX(200);
-	//obj_enemy->SetX(1150);
-
-	if (obj_player->GetHP() >= 86 /*&& obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200*/) DrawFormatString((int)(obj_player->GetX() - 50), (int)(obj_player->GetY() - 70), GetColor(255, 0, 0), " 防御UP↑", obj_enemy->GetHP());
+	
+	//プレイヤー特殊効果テキスト表示
+	if (obj_player->GetHP() >= 86 || obj_player ->GetHP() <= 40) DrawFormatString((int)(obj_player->GetX() - 50), (int)(obj_player->GetY() - 70), GetColor(255, 0, 0), " 防御UP↑", obj_enemy->GetHP());
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）
 void Scene_Stage03::AfterJanken_LOSE()
 {
 
-	//じゃんけん敗北時
-	EnemyCutDamege = 6;
+	//負けたら1
+	Enemy_Janwin = 1;
+
+
+	if(obj_enemy->GetHP() >= 86){
+
+	    //じゃんけん敗北時
+	    EnemyCutDamege = 2;
+	}
+	else if(obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 71) {
+
+		//じゃんけん敗北時
+		EnemyCutDamege = 3;
+
+	}
+	else if (obj_enemy->GetHP() <= 70 && obj_enemy->GetHP() >= 56) {
+
+		//じゃんけん敗北時
+		EnemyCutDamege = 5;
+
+	}
+	else if (obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 41) {
+
+		//じゃんけん敗北時
+		EnemyCutDamege = 6;
+
+	}
+	else if (obj_enemy->GetHP() <= 40) {
+
+
+		//じゃんけん敗北時
+		EnemyCutDamege = 8;
+
+
+	}
+	else {
+
+		//じゃんけん敗北時
+		EnemyCutDamege = 1;
+
+	}
 
 	obj_player->SetX(200);
-	//obj_enemy->SetX(1150);
-
-	if (obj_enemy->GetHP() >= 86 && obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200) DrawFormatString((int)(obj_enemy->GetX() - 35), (int)(obj_enemy->GetY() - 50), GetColor(0, 0, 255), "さらに防御UP↑", obj_enemy->GetWaitTime());
+	
+	//エネミー特殊効果テキスト表示
+	//if (obj_enemy->GetHP() >= 86 || obj_enemy->GetHP() <= 40 /*&& obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200*/) DrawFormatString((int)(obj_enemy->GetX() - 35), (int)(obj_enemy->GetY() - 50), GetColor(0, 0, 255), "さらに防御UP↑", obj_enemy->GetWaitTime());
 }
 
 
