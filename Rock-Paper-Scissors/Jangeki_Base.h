@@ -46,7 +46,7 @@ public:
 
 	virtual void Update();                    //更新
 	virtual void Draw() const;                //描画
-	bool CheckScreenOut();                    //画面外にいるか　true:画面外　false:画面内
+	virtual bool CheckScreenOut();            //画面外にいるか　true:画面外　false:画面内
 
 	//エフェクトを動作させる（全ての派生じゃん撃内・Updateで呼ぶ）引数：フレーム毎の拡大量
 	void Update_Effect(double fp_rate = 5.0);

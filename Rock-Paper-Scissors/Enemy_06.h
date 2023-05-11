@@ -27,9 +27,11 @@ public:
 	void jump_Direction();           //ジャンプするかを乱数で決める関数
 	void jump();                     //ジャンプ
 	void low_jump();                 //低いジャンプ
+	void smoke();                    //煙エフェクト関数
 
 	float Get_OldY();                   //old_yの取得関数
 	float Get_Y();                      //yの取得
+	int   Get_smokeflg();               //煙エフェクトのフラグの取得
 
 private:
 	/********************   ジャンプ関係   ********************/
@@ -55,14 +57,16 @@ private:
 	bool TeleportInit = true;     //瞬間移動接触処理初期化フラグ     初期化:true  初期化終了:false
 	int  TeleportTime = 0;        //瞬間移動開始までのカウント
 
+	bool smokeFlg = true;         //煙エフェクトのフラグ
+	int  smokeImage[10];          //煙画像
+	int  smokeCnt = 0;            //煙用カウント変数
+
 	/**********************************************************/
 
 	int frame_count = 0;          //じゃん撃発射用
 	int images[9];                //敵画像
-	//int smokeImage[12];           //煙画像
-	int smokeCnt = 0;             //煙用カウント変数
-	float bef_x = 0;                   //前回のx座標(画像表示用)
-	float bef_y = 0;                   //前回のy座標(画像表示用)
+	float bef_x = 0;              //前回のx座標(画像表示用)
+	float bef_y = 0;              //前回のy座標(画像表示用)
 	Jan_Type old_type;            //前回の敵ジャンケン属性
 };
 

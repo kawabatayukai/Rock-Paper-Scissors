@@ -10,8 +10,9 @@
 //キャラの種類
 enum class _CHAR_TYPE
 {
-	PLAYER,
-	ENEMY
+	PLAYER,     
+	ENEMY,
+	NOT_CHARA
 };
 
 //キャラクターの基底クラス　　プレイヤー・敵キャラのベース

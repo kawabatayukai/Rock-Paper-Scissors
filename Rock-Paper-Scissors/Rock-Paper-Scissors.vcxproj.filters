@@ -288,6 +288,12 @@
     <ClCompile Include="Effect_ChagePlayer.cpp">
       <Filter>ソース ファイル\Player</Filter>
     </ClCompile>
+    <ClCompile Include="Jangeki_Bounds.cpp">
+      <Filter>ソース ファイル\Jangeki\kawabata</Filter>
+    </ClCompile>
+    <ClCompile Include="FPS_Controll.cpp">
+      <Filter>ソース ファイル\Key</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -481,6 +487,12 @@
     </ClInclude>
     <ClInclude Include="Effect_ChangePlayer.h">
       <Filter>ソース ファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_Bounds.h">
+      <Filter>ソース ファイル\Jangeki\kawabata</Filter>
+    </ClInclude>
+    <ClInclude Include="FPS_Controll.h">
+      <Filter>ソース ファイル\Key</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

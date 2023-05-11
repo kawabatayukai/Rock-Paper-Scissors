@@ -13,8 +13,38 @@ enum class SE
 
 	/*敵↓*/
 
+	/*ステージ1*/
+
+
+	/*ステージ2*/
+
+
+	/*ステージ3*/
 	ENEMY_SLIGHTLYBROKEN,
 	ENEMY_SHIELDBROKEN,
+
+
+	/*ステージ4*/
+	ENEMY_SPECIAL,
+	ENEMY_SPECIAL_ATTACK,
+
+
+	/*ステージ5*/
+
+
+	/*ステージ6*/
+
+
+	/*ステージ7*/
+
+
+	/*ステージ8*/
+
+
+	/*ステージ9*/
+
+
+	/*ステージ10*/
 	ENEMY10_HAHAHA,
 	ENEMY10_Tepepo,
 

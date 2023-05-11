@@ -4,6 +4,7 @@
 #include"Jangeki_Base.h"
 #include"Jangeki_Coming.h"
 #include "Jangeki_whole.h"
+#include"SoundSystem.h"
 #include <typeinfo>
 #define _USE_MATH_DEFINES
 #include<math.h>
@@ -106,6 +107,7 @@ void Enemy_04::Update()
 		specialTime = 0;
 		specialFlg = false;
 		current = 0;
+		SoundSystem::StopSE(SE::ENEMY_SPECIAL);
 	}
 }
 
@@ -230,7 +232,11 @@ void Enemy_04::Update_Jangeki()
 		}
 		else if (specialFlg == true)
 		{
-			if (frame_count % 60 == 0) Jan_360degrees(jan_count, radius, speed * 1.5, type);
+			if (frame_count % 60 == 0)
+			{
+				Jan_360degrees(jan_count, radius, speed * 1.5, type);
+				SoundSystem::PlaySE(SE::ENEMY_SPECIAL_ATTACK);
+			}
 		}
 	}
 }
@@ -351,6 +357,7 @@ void Enemy_04::Special_Action()
 {
 	specialFlg = true;
 	current = 1;
+	SoundSystem::PlaySE(SE::ENEMY_SPECIAL);
 }
 
 //360“x”­ŽË

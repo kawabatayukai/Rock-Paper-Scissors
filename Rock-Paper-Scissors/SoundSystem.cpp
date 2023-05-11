@@ -22,8 +22,29 @@ void  SoundSystem::LoadSounds_SE()
 
 	/*敵↓*/
 
+	/*ステージ1*/
+
+	/*ステージ2*/
+
+	/*ステージ3*/
 	se_sounds.push_back(LoadSoundMem("Sound/st03/SlightlyBrokenSE.wav"));
 	se_sounds.push_back(LoadSoundMem("Sound/st03/BrokenSE.wav"));
+
+	/*ステージ4*/
+	se_sounds.push_back(LoadSoundMem("Sound/stage04/specialSE.wav"));
+	se_sounds.push_back(LoadSoundMem("Sound/stage04/specialAttackSE.wav"));
+
+	/*ステージ5*/
+
+	/*ステージ6*/
+
+	/*ステージ7*/
+
+	/*ステージ8*/
+
+	/*ステージ9*/
+
+	/*ステージ10*/
 	se_sounds.push_back(LoadSoundMem("Sound/笑い声2.mp3"));
 	se_sounds.push_back(LoadSoundMem("Sound/ピョョョ2.mp3"));
 

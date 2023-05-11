@@ -64,7 +64,12 @@ private:
 	};
 	ACT_TYPE Now_Action;
 
-	int current_action;        //現在のアクション
+	int current_action;      //現在のアクション
+
+	int* image_enemy;        //画像
+	int image_index;
+	int max_index;
+	int framecount;
 };
 
 

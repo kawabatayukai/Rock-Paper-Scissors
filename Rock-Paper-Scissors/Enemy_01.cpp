@@ -33,14 +33,17 @@ namespace _CONSTANTS_01
 
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
-Enemy_01::Enemy_01(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
-, Now_Action(ACT_TYPE::NOT_ACT), jan_count(0), current_action(0)
+Enemy_01::Enemy_01(float x, float y, Jan_Type type) : EnemyBase(x, y, 96.0f, 78.0f, type)
+, Now_Action(ACT_TYPE::NOT_ACT), jan_count(0), current_action(0), image_index(0), framecount(0)
 {
 	speed = 4.0f;
 	dir = 1;
 	hp = 100;
 
-	image = LoadGraph("images/tyokitest.png");
+	//画像の用意
+	max_index = 3;
+	image_enemy = new int[3];
+	LoadDivGraph("images/stage01/stage01_chicken.png", 3, 3, 1, 96, 78, image_enemy);;
 
 	Init_Jangeki();       //じゃん撃を用意
 }
@@ -61,13 +64,6 @@ void Enemy_01::Update()
 	Move_Controller();
 
 	/********************   ジャンプ関係   ********************/
-
-	//if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
-	//{
-	//	g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-	//	land_flg = false;  //地面についていない
-	//}
-
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
 	//落下速度の制限
@@ -79,20 +75,22 @@ void Enemy_01::Update()
 
 	/**********************************************************/
 
+	if (++framecount % 10 == 0)
+	{
+		image_index++;
+		if (image_index >= max_index) image_index = 0;
+	}
+
 }
 
 //描画
 void Enemy_01::Draw() const
 {
 	//中心から描画
-	DrawRotaGraphF(x, y, 1, 0, image, TRUE);
+	DrawRotaGraphF(x, y, 1, 0, image_enemy[image_index], TRUE,dir == 0 ? 1 : 0);
 
 	//じゃん撃描画
 	Draw_Jangeki();
-
-
-	//DrawFormatString(50, 100, 0xff00ff, "Current : %d", current_action);
-
 }
 
 //じゃん撃生成・更新
@@ -189,6 +187,7 @@ void Enemy_01::Move_Controller()
 		if (x < target_x)
 		{
 			move_x += speed;      //右移動（正の値）
+			dir = 1;
 
 			//目標を超えた場合
 			if (x <= target_x && target_x <= move_x)
@@ -199,6 +198,7 @@ void Enemy_01::Move_Controller()
 		else
 		{
 			move_x -= speed; //左移動（負の値）
+			dir = 0;
 
 			//目標を超えた場合
 			if (move_x <= target_x && target_x <= x)
