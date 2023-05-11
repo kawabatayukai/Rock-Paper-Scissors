@@ -91,11 +91,11 @@ void Enemy_04::Update()
 	}
 	else if (hp <= 50)
 	{
-		speed = 2.5f;
+		speed = 2.3f;
 	}
 	else
 	{
-		speed = 1.5f;
+		speed = 1.3f;
 	}
 
 	//­‚µ‚¸‚ÂHP‰ñ•œ
@@ -234,7 +234,7 @@ void Enemy_04::Update_Jangeki()
 		{
 			if (frame_count % 60 == 0)
 			{
-				Jan_360degrees(jan_count, radius, speed * 1.5, type);
+				Jan_360degrees(jan_count, radius, speed * 1.2, type);
 				SoundSystem::PlaySE(SE::ENEMY_SPECIAL_ATTACK);
 			}
 		}

@@ -108,7 +108,7 @@ void Scene_Story::Draw() const
 {
 	using namespace _C_STORY;
 
-	DrawLine(CENTER_X, 0, CENTER_X, 720, 0xffffff, 3);
+	//DrawLine(CENTER_X, 0, CENTER_X, 720, 0xffffff, 3);
 	SetBackgroundColor(0, 64, 0);
 
 	//static bool str_end;

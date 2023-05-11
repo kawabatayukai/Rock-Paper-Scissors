@@ -27,4 +27,6 @@ private:
 	int index_effect;    //配列操作
 	const int max_index; //画像最大数
 	int frame_count;     //フレームカウンター
+
+	int se_change;       //変身
 };

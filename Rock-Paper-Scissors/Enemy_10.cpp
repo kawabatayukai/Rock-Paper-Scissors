@@ -229,7 +229,7 @@ void  Enemy_10::Move()
 				}
 				if (hp <= 100)
 				{
-					hp += 30;
+					hp += 5;
 				}
 				if (hp > 100)
 				{
@@ -311,7 +311,7 @@ void  Enemy_10::Move()
 						}
 						if (hp <= 100)
 						{
-							hp += 10;
+							hp += 4;
 						}
 						 if (hp > 100)
 						{
@@ -339,7 +339,7 @@ void  Enemy_10::Move()
 						}
 						if (hp <= 100)
 						{
-							hp += 10;
+							hp += 4;
 						}
 						 if (hp > 100)
 						{
@@ -485,7 +485,7 @@ void Enemy_10::Update()
 		{
 			enemy_state = ENEMY_STATE10::DEATH_END;
 		}
-
+		Init_Jangeki(); //ÉWÉÉÉìåÇÇè¡Ç∑
 	 }
 
 	//if (x + (w / 2) == (1280 - 20))

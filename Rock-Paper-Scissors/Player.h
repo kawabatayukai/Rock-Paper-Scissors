@@ -67,6 +67,8 @@ public:
 	//プレイヤーが死亡しているか
 	bool IsDeathPlayer() const;
 
+	void setName(int i, char name[11]);
+
 private:
 	/********************   ジャンプ関係   ********************/
 

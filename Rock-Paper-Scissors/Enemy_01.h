@@ -39,6 +39,9 @@ public:
 	//ƒvƒŒƒCƒ„[–ÚŠ|‚¯‚Ä‚¶‚á‚ñŒ‚‚ğ”­Ë‚·‚é
 	void Fire_JanTakeAim(const float& player_x, const float& player_y);
 
+	float Get_OldY();                   //old_y‚Ìæ“¾ŠÖ”
+	float Get_Y();                      //y‚Ìæ“¾
+
 /*--------------------------------------------------------------------------------*/
 
 private:

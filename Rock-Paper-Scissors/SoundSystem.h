@@ -35,6 +35,7 @@ enum class SE
 
 
 	/*ステージ6*/
+	ENEMY06_SMOKE,
 
 
 	/*ステージ7*/
@@ -59,8 +60,10 @@ enum class SE
 enum class BGM
 {
 	TITLE,
+	STAGE01_BGM,
 	ST03_BGM,
 	STAGE04_BGM,
+	STAGE06_BGM,
 	ENEMY_10_Form2BGM,
 	ENEMY_10_Marry,
 	ENEMY_10_Arupus,

@@ -39,6 +39,7 @@ void  SoundSystem::LoadSounds_SE()
 	/*ステージ5*/
 
 	/*ステージ6*/
+	se_sounds.push_back(LoadSoundMem("Sound/stage06/bomb.mp3"));
 
 	/*ステージ7*/
 
@@ -60,8 +61,10 @@ void  SoundSystem::LoadSounds_BGM()
 	//BGM
 	// bgm_sounds.push_back(LoadSoundMem("サウンドへのパス"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/TitleBGM.mp3"));
+	bgm_sounds.push_back(LoadSoundMem("Sound/stage01/maou_game_battle37.mp3"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/st03/St03BGM.wav"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/stage04/stage04_BGM.wav"));
+	bgm_sounds.push_back(LoadSoundMem("Sound/stage06/RPG_Battle_03.mp3"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/sento.mp3"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/VSQPD_0077_Mary_Had_a_Little_Lamb_FC.mp3"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/VSQPD_0046_Yankee_Doodle.mp3"));

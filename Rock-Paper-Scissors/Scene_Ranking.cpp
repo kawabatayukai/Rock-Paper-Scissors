@@ -3,7 +3,6 @@
 #include"Scene_Title.h"
 #include "KeyManager.h"
 #include"SortSave.h"
-#include"SortSave.h"
 
 int g_WaitTime = 0;
 

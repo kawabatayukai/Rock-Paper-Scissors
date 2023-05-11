@@ -173,6 +173,7 @@
     <ClCompile Include="FPS_Controll.cpp" />
     <ClCompile Include="GameData.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Item_stage08.cpp" />
     <ClCompile Include="Jangeki_Changespeed.cpp" />
     <ClCompile Include="Jangeki_Coming.cpp" />
     <ClCompile Include="Jangeki_Player.cpp" />
@@ -199,7 +200,7 @@
     <ClCompile Include="Scne_TitleInterval.cpp" />
     <ClCompile Include="SortSave.cpp" />
     <ClCompile Include="Scene_Ranking.cpp" />
-    <ClCompile Include="Scene_InputName.cpp" />
+    <ClCompile Include="Scene_InputNameRanking.cpp" />
     <ClCompile Include="Scene_Stage00.cpp" />
     <ClCompile Include="Scene_Stage01.cpp" />
     <ClCompile Include="Scene_Stage02.cpp" />
@@ -242,6 +243,7 @@
     <ClInclude Include="FPS_Controll.h" />
     <ClInclude Include="GameData.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="Item_stage08.h" />
     <ClInclude Include="Jangeki_Changespeed.h" />
     <ClInclude Include="Jangeki_Coming.h" />
     <ClInclude Include="Jangeki_Player.h" />
@@ -267,7 +269,7 @@
     <ClInclude Include="Scne_TitleInterval.h" />
     <ClInclude Include="SortSave.h" />
     <ClInclude Include="Scene_Ranking.h" />
-    <ClInclude Include="Scene_InputName.h" />
+    <ClInclude Include="Scene_InputNameRanking.h" />
     <ClInclude Include="Scene_Stage00.h" />
     <ClInclude Include="Scene_Stage01.h" />
     <ClInclude Include="Scene_Stage02.h" />

@@ -22,12 +22,17 @@ Effect_ChangePlayer::Effect_ChangePlayer(Jan_Type type, const float& x, const fl
 	default:
 		break;
 	}
+
+	//se
+	se_change = LoadSoundMem("Sound/Player/change.wav");
+	SetVolumeSoundMem(255, se_change);
 }
 
 //デストラクタ
 Effect_ChangePlayer::~Effect_ChangePlayer()
 {
 	delete[] image_effect;
+	DeleteSoundMem(se_change);
 }
 
 //更新
@@ -37,6 +42,8 @@ void Effect_ChangePlayer::Update()
 	{
 		if (index_effect < max_index) index_effect++;
 	}
+
+	if (CheckSoundMem(se_change) == 0) PlaySoundMem(se_change, DX_PLAYTYPE_BACK);
 }
 
 //描画
