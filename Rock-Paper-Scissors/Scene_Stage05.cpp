@@ -31,17 +31,17 @@ Scene_Stage05::Scene_Stage05(const Player* player)
 	for (int i = 0; i < 3; i++) mob[i] = nullptr;
 
 
-	mob[0] = new MobEnemy_05(640, 220, Jan_Type::PAPER);
-	mob[1] = new MobEnemy_05(150, 420, Jan_Type::SCISSORS);
-	mob[2] = new MobEnemy_05(1130, 420, Jan_Type::ROCK);
+	mob[0] = new MobEnemy_05(640, 100, Jan_Type::PAPER);
+	mob[1] = new MobEnemy_05(50, 420, Jan_Type::SCISSORS);
+	mob[2] = new MobEnemy_05(1230, 420, Jan_Type::ROCK);
 
 	reflection = new Jangeki_Reflection(0, 0, 0, 0, Jan_Type::ROCK);
 
 	if (mob[0]->GetHP() <= 0 && mob[1]->GetHP() <= 0 && mob[2]->GetHP() <= 0)
 	{
-		mob[0] = new MobEnemy_05(640, 220, Jan_Type::PAPER);
-		mob[1] = new MobEnemy_05(150, 420, Jan_Type::SCISSORS);
-		mob[2] = new MobEnemy_05(1130, 420, Jan_Type::ROCK);
+		mob[0] = new MobEnemy_05(640, 100, Jan_Type::PAPER);
+		mob[1] = new MobEnemy_05(50, 420, Jan_Type::SCISSORS);
+		mob[2] = new MobEnemy_05(1230, 420, Jan_Type::ROCK);
 	}
 
 	GameData::Set_TimeLimit();
