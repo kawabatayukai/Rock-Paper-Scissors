@@ -281,7 +281,7 @@ AbstractScene* Scene_Stage02::ChangeScene()
 #ifdef DEBUG_OFF_02
 
 	//“G‚ÌHP‚ª0ˆÈ‰º
-	if (obj_enemy->GetHP() < 0)
+	if (obj_enemy->GetHP() <= 0)
 	{
 		//BGM’âŽ~
 		StopSoundMem(stage2_BGM);
