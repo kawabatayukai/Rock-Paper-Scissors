@@ -5,6 +5,7 @@
 #include"Jangeki_Coming.h"
 #include"Jangeki_Bounds.h"
 #include <typeinfo>
+#include "SoundSystem.h"
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
@@ -147,7 +148,9 @@ void Enemy_03::Update()
 		g_add = -23.f;    //初期-21.5f,重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 		land_flg = false;  //地面についていない
 
+		SoundSystem::PlaySE(SE::PLAYER_JUMP);
 		speed = 2.8f;
+
 	}
 
 
@@ -173,6 +176,8 @@ void Enemy_03::Update()
 
 
 	if (hp > 40) {//HP40%より多いの間パターンの動きをする
+
+
 
 
 		//ステ03パターン用関数
@@ -211,8 +216,13 @@ void Enemy_03::Update()
 	}
 	else {
 
+		SoundSystem::StopSE(SE::ENEMY_WORKING);
+		
 		//enemyのxが475以下の時
 		if (x <= 475) {
+			
+			
+			SoundSystem::PlaySE(SE::ENEMY_RUNNING);
 
 			//前回より加速する
 			speed = 7.5f;
@@ -221,12 +231,16 @@ void Enemy_03::Update()
 		//enemyのxが950以下で475以上の時
 		else if (x <= 950 && x >= 475) {
 
+			SoundSystem::PlaySE(SE::ENEMY_RUNNING);
+
 			//前回より加速する
 			speed = 5.5f;
 
 		}
 		//enemyのxが950以上の時
 		else if (x >= 950) {
+
+			SoundSystem::PlaySE(SE::ENEMY_RUNNING);
 
 			//前回より加速する
 			speed = 7.5f;
@@ -235,11 +249,13 @@ void Enemy_03::Update()
 		//それ以外は普通の動き
 		else
 		{
-
+			SoundSystem::PlaySE(SE::ENEMY_RUNNING);
 			speed = 1.5f;
 
 
 		}
+
+		SoundSystem::StopSE(SE::ENEMY_RUNNING);
 
 		//目標座標
 		static float target_x = 0;
@@ -274,6 +290,7 @@ void Enemy_03::Update()
 		//x座標が目標と不一致
 		if (x != target_x)
 		{
+
 			//目標の方が大きい（目標は右方向）
 			if (x < target_x)
 			{
@@ -336,9 +353,6 @@ void Enemy_03::Update()
 
 		}
 
-
-
-
 	}
 
 	//HPが0以下だったらHPに0を代入
@@ -368,7 +382,7 @@ void Enemy_03::Update()
 	old_y = y;              //1フレーム前のｙ座標
 	y += y_add;            //落下距離をｙ座標に加算する
 	g_add = _GRAVITY;     //重力加速度を初期化する
-
+	
 
 	//配列0～2番目の画像のループ
 	if (++Eframe_count_anim % 40 == 0) {
@@ -432,11 +446,11 @@ void Enemy_03::Draw() const
 		//エネミー停止時
 		if (moveinfo[current].enemywaitTime > 0) {
 
+			SoundSystem::PlaySE(SE::ENEMY_GARDSTANCE);
 
 			//ガード時の画像描画							
 			DrawRotaGraphF(x, y, 1, 0, enemyimage[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
-
-
+			
 		}
 
 		//ジャンプ時
@@ -444,7 +458,7 @@ void Enemy_03::Draw() const
 
 			//ジャンプ時の画像描画							
 			DrawRotaGraphF(x, y, 1, 0, enemyimage[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
-
+			
 		}
 		//そうじゃないとき
 		//動いているとき
@@ -455,11 +469,13 @@ void Enemy_03::Draw() const
 
 				//攻撃時の画像描画								//向きを変える
 				DrawRotaGraphF(x, y, 1, 0, enemyimage[Ecurrentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
+				SoundSystem::PlaySE(SE::ENEMY_WORKING);
+
 			}
 
-
+			SoundSystem::StopSE(SE::ENEMY_WORKING);
 		}
-
+		
 	}
 
 	//////////////////////
@@ -470,13 +486,13 @@ void Enemy_03::Draw() const
 
 		if (moveinfo[current].enemywaitTime > 0) {
 
+		
+			SoundSystem::PlaySE(SE::ENEMY_GARDSTANCE);
+
 			DrawRotaGraphF(x, y, 1, 0, enemyimage1[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
 
 		}
 		else if (moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200) {
-
-
-
 			//ジャンプ時の画像描画							
 			DrawRotaGraphF(x, y, 1, 0, enemyimage1[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
 
@@ -486,13 +502,18 @@ void Enemy_03::Draw() const
 
 			//エネミーの構造体と一致したときにエネミーが左または右に動く
 			if ((enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE && moveinfo[current].enemywaitTime < 200)) {
+				
+				SoundSystem::PlaySE(SE::ENEMY_WORKING);
+				
 				//攻撃時の画像描画								//向きを変える
 				DrawRotaGraphF(x, y, 1, 0, enemyimage1[Ecurrentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
-			}
 
+				
+			}
+			SoundSystem::StopSE(SE::ENEMY_WORKING);
 
 		}
-
+		
 
 
 	}
@@ -504,10 +525,14 @@ void Enemy_03::Draw() const
 	
 		if (moveinfo[current].enemywaitTime > 0) {
 
+			SoundSystem::PlaySE(SE::ENEMY_GARDSTANCE);
+
 			DrawRotaGraphF(x, y, 1, 0, enemyimage2[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
 
 		}
 		else if (moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200) {
+
+
 
 			//ジャンプ時の画像描画							
 			DrawRotaGraphF(x, y, 1, 0, enemyimage2[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
@@ -517,11 +542,15 @@ void Enemy_03::Draw() const
 
 			//エネミーの構造体と一致したときにエネミーが左または右に動く
 			if ((enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE && moveinfo[current].enemywaitTime < 200)) {
+				
+				SoundSystem::PlaySE(SE::ENEMY_WORKING);
+				
 				//攻撃時の画像描画								//向きを変える
 				DrawRotaGraphF(x, y, 1, 0, enemyimage2[Ecurrentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
 			}
+			SoundSystem::StopSE(SE::ENEMY_WORKING);
 		}
-
+		
 	}
 
 	//////////////////////////
@@ -532,11 +561,15 @@ void Enemy_03::Draw() const
 		
 		if ( moveinfo[current].enemywaitTime > 0) {
 
+			SoundSystem::PlaySE(SE::ENEMY_GARDSTANCE);
 
 			DrawRotaGraphF(x, y, 1, 0, enemyimage3[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
 
 		}
+
 		else if (moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200) {
+
+
 
 			//ジャンプ時の画像描画							
 			DrawRotaGraphF(x, y, 1, 0, enemyimage3[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
@@ -546,10 +579,13 @@ void Enemy_03::Draw() const
 
 			//エネミーの構造体と一致したときにエネミーが左または右に動く
 			if ((enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE && moveinfo[current].enemywaitTime < 200)) {
+				
+				SoundSystem::PlaySE(SE::ENEMY_WORKING);
+
 				//攻撃時の画像描画								//向きを変える
 				DrawRotaGraphF(x, y, 1, 0, enemyimage3[Ecurrentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
 			}
-
+			SoundSystem::StopSE(SE::ENEMY_WORKING);
 
 		}
 	}

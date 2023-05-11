@@ -78,8 +78,7 @@ void Scene_Stage03::Update()
 	//BGMを鳴らす
 	SoundSystem::PlayBGM(BGM::ST03_BGM);
 
-	//時間をカウント
-	GameData::Time_Update();
+	
 
 	//接触じゃんけん開始前
 	if (GetJanState()  == Jan_State::BEFORE)
@@ -89,7 +88,8 @@ void Scene_Stage03::Update()
 		obj_enemy->ChangeDir(obj_player->GetX());//プレイヤーがx < 640だったらエネミーの弾の向きを変える
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());	//プレイヤーの座標を取得
 		
-		
+		//時間をカウント
+		GameData::Time_Update();
 	}
 
 	//接触じゃんけん処理
