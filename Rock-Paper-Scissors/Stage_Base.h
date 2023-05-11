@@ -77,5 +77,6 @@ private:
 	int image_clock;                          //時計
 	int image_clockhand;                      //時計の針
 	int image_clockchar;                      //時計の文字盤
+	int font_score;                           //Score描画用フォント
 };
 

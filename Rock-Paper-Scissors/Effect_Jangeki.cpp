@@ -117,7 +117,11 @@ void Effect_Jangeki::Update()
 	rotation += 0.05;
 
 	//se
-	if (CheckSoundMem(se) == 0) PlaySoundMem(se, DX_PLAYTYPE_BACK);
+	if (character == _CHAR_TYPE::NOT_CHARA)
+	{
+		if (CheckSoundMem(se) == 0) PlaySoundMem(se, DX_PLAYTYPE_BACK);
+	}
+	
 }
 
 //•`‰æ
