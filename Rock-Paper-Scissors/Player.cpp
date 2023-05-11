@@ -86,6 +86,9 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 	//ƒtƒHƒ“ƒg‚ğì¬
 	ui_font = CreateFontToHandle("ƒƒCƒŠƒI", 20, 4, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
 
+	//ƒtƒHƒ“ƒg‚ğì¬
+	name_font = CreateFontToHandle("ƒƒCƒŠƒI", 20, 4, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
+
 	LoadDivGraph("images/stage09/teleport2.png", 15, 15, 1, 120, 150, img_Playeranim); //img_Playeranim
 }
 
@@ -1358,9 +1361,10 @@ void Player::Draw() const
 	DrawStringToHandle(30, 150, "RB : ”­Ë", 0xffffff, ui_font);
 	DrawStringToHandle(30, 180, "LB : ƒWƒƒƒ“ƒv", 0xffffff, ui_font);
 
+	//–¼‘O•\¦
 	for (int i = 0; i < 10; i++)
 	{
-		DrawFormatString(x - 100, y - 80, 0x000000, "%10s", sortSave.getRankingData(i).name);
+		DrawFormatStringToHandle(x - 80, y - 80, 0x00ff00, name_font, "%10s", sortSave.getRankingData(i).name);
 	}
 
 	//ƒeƒXƒg 110
