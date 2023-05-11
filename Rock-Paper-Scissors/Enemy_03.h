@@ -85,6 +85,8 @@ private:
 
 	int Ecurrentindex_st03 = 0;//エネミーアニメーションの配列
 	
+	int se_run;    //走るse
+	int se_walk;   //歩く
 };
 
 

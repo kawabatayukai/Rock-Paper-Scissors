@@ -76,7 +76,7 @@ Scene_Stage03::~Scene_Stage03()
 void Scene_Stage03::Update()
 {
 	//BGMを鳴らす
-	SoundSystem::PlayBGM(BGM::ST03_BGM);
+	//SoundSystem::PlayBGM(BGM::ST03_BGM);
 
 	
 
@@ -94,6 +94,7 @@ void Scene_Stage03::Update()
 
 	//接触じゃんけん処理
 	Touch_Janken(obj_enemy, this, 3);
+	SoundSystem::StopSE(SE::ENEMY_RUNNING);
 
 	Effect_Update_HitJangeki(obj_enemy);
 
@@ -483,6 +484,29 @@ void Scene_Stage03::Draw() const
 			obj_floor[i]->Draw();
 		}
 
+		//じゃんけん負けた時
+		if (1)
+		{
+			float p_x = obj_player->GetX();
+			float p_y = obj_player->GetY();
+
+			DrawString(p_x, p_y - 80, "防御力UP", 0xffffff);
+		}
+
+		if (/*obj_enemy->GetHP() >= 86 || obj_enemy->GetHP() <= 40*/Enemy_Janwin == 1) {
+
+			if (obj_enemy->GetWaitTime() > 0) {
+				//エネミー特殊効果テキスト表示
+
+				DrawFormatString((int)(obj_enemy->GetX() - 40), (int)(obj_enemy->GetY() - 90), GetColor(0, 0, 255), "さらに防御UP↑", obj_enemy->GetWaitTime());
+			}
+			else {
+
+				int Enemy_Janwin = 0;
+
+			}
+		}
+
 		//接触した瞬間の演出
 		if (GetJanState() == Jan_State::START) Draw_JankenStart();
 
@@ -500,21 +524,7 @@ void Scene_Stage03::Draw() const
 
   
 
-	//じゃんけん負けた時
-	
-	if (/*obj_enemy->GetHP() >= 86 || obj_enemy->GetHP() <= 40*/Enemy_Janwin == 1){
-	
-		if(obj_enemy->GetWaitTime() > 0){
-		//エネミー特殊効果テキスト表示
 
-			 DrawFormatString((int)(obj_enemy->GetX() - 40), (int)(obj_enemy->GetY() - 90), GetColor(0, 0, 255), "さらに防御UP↑", obj_enemy->GetWaitTime());
-		}
-		else {
-
-			int Enemy_Janwin = 0;
-
-		}
-	}
 }
 
 
@@ -536,6 +546,8 @@ AbstractScene* Scene_Stage03::ChangeScene()
 
 		//BGM停止
 		SoundSystem::StopBGM(BGM::ST03_BGM);
+		SoundSystem::StopSE(SE::ENEMY_RUNNING);
+
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(4));
 
@@ -547,6 +559,8 @@ AbstractScene* Scene_Stage03::ChangeScene()
 		 
 		//BGM停止
 		SoundSystem::StopBGM(BGM::ST03_BGM);
+		SoundSystem::StopSE(SE::ENEMY_RUNNING);
+
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(3));
 	}
@@ -618,8 +632,7 @@ void Scene_Stage03::AfterJanken_LOSE()
 
 	obj_player->SetX(200);
 	
-	//エネミー特殊効果テキスト表示
-	//if (obj_enemy->GetHP() >= 86 || obj_enemy->GetHP() <= 40 /*&& obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200*/) DrawFormatString((int)(obj_enemy->GetX() - 35), (int)(obj_enemy->GetY() - 50), GetColor(0, 0, 255), "さらに防御UP↑", obj_enemy->GetWaitTime());
+
 }
 
 

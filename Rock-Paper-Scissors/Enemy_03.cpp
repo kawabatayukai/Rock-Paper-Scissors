@@ -128,6 +128,9 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	moveinfo[38] = { 1,  0 ,   0.f , 0, 200 ,1 };//Xが900で停止し配列[0]に戻る
 
+	se_run = LoadSoundMem("Sound/st03/RunningSt03.wav");
+	se_walk = LoadSoundMem("Sound/st03/WorkingSt03.wav");
+	
 }
 
 
@@ -141,8 +144,6 @@ Enemy_03::~Enemy_03()
 //更新
 void Enemy_03::Update()
 {
-	
-
 	if (land_flg == true && moveinfo[current].enemywaitTime == 0 && moveinfo[current].jumpflg == 0)    //GetRand(30) == 3　のところがジャンプの条件
 	{
 		g_add = -23.f;    //初期-21.5f,重力加速度をマイナス値に　　下げるほどジャンプ力アップ
@@ -176,8 +177,6 @@ void Enemy_03::Update()
 
 
 	if (hp > 40) {//HP40%より多いの間パターンの動きをする
-
-
 
 
 		//ステ03パターン用関数
@@ -216,13 +215,12 @@ void Enemy_03::Update()
 	}
 	else {
 
-		SoundSystem::StopSE(SE::ENEMY_WORKING);
+		//SoundSystem::StopSE(SE::ENEMY_WORKING);
 		
 		//enemyのxが475以下の時
 		if (x <= 475) {
 			
-			
-			SoundSystem::PlaySE(SE::ENEMY_RUNNING);
+			//SoundSystem::PlaySE(SE::ENEMY_RUNNING);
 
 			//前回より加速する
 			speed = 7.5f;
@@ -240,7 +238,9 @@ void Enemy_03::Update()
 		//enemyのxが950以上の時
 		else if (x >= 950) {
 
-			SoundSystem::PlaySE(SE::ENEMY_RUNNING);
+			//SoundSystem::PlaySE(SE::ENEMY_RUNNING);
+
+			if (CheckSoundMem(se_run) == 0) PlaySoundMem(se_run, DX_PLAYTYPE_BACK);
 
 			//前回より加速する
 			speed = 7.5f;
@@ -249,14 +249,13 @@ void Enemy_03::Update()
 		//それ以外は普通の動き
 		else
 		{
-			//SoundSystem::PlaySE(SE::ENEMY_RUNNING);
+			//SoundSystem::PlaySE(SE::ENEMY_WORKING);
 			speed = 1.5f;
 
 
 		}
 
-		SoundSystem::StopSE(SE::ENEMY_RUNNING);
-
+	
 		//目標座標
 		static float target_x = 0;
 		static float target_y = 0;
@@ -290,6 +289,7 @@ void Enemy_03::Update()
 		//x座標が目標と不一致
 		if (x != target_x)
 		{
+
 
 			//目標の方が大きい（目標は右方向）
 			if (x < target_x)
@@ -470,11 +470,13 @@ void Enemy_03::Draw() const
 
 				//攻撃時の画像描画								//向きを変える
 				DrawRotaGraphF(x, y, 1, 0, enemyimage[Ecurrentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
-				SoundSystem::PlaySE(SE::ENEMY_WORKING);
-
+				//SoundSystem::PlaySE(SE::ENEMY_WORKING);
+				//SetVolumeSoundMem(255, se_walk);
+				if (CheckSoundMem(se_walk) == 0) PlaySoundMem(se_walk, DX_PLAYTYPE_BACK, 0);
 			}
 
-			SoundSystem::StopSE(SE::ENEMY_WORKING);
+			//SoundSystem::StopSE(SE::ENEMY_WORKING);
+			//StopSoundMem(se_walk);
 		}
 		
 	}
@@ -709,6 +711,7 @@ void Enemy_03::Move_Pattern() {
 
 		current = moveinfo[current].next_index; //次のパターン
 
+		StopSoundMem(se_walk);
 		//speedがup
 		speed = 2.8f;
 	}
