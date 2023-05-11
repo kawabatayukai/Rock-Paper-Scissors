@@ -405,7 +405,7 @@ void Scene_Stage03::Update()
 			//エネミーのHPが40以下の場合25ダメージ食らう
 			if (obj_enemy->GetHP() <= 40) {
 
-				//半径が90.0fの場合のダメージ
+				//半径が50.0fの場合のダメージ
 				float radius = 50.0f;
 
 				if (radius >= 50.0f) {
@@ -413,7 +413,17 @@ void Scene_Stage03::Update()
 					obj_player->ReceiveDamage(25 - PlayerCutDamege) ;
 				}
 			}
+			else if (obj_enemy->GetHP() <= 55) {
 
+				//半径が50.0fの場合のダメージ
+				float radius = 25.0f;
+
+				if (radius >= 25.0f) {
+
+					obj_player->ReceiveDamage(15 - PlayerCutDamege);
+				}
+
+			}
 			//それ以外
 			//通常時のダメージを受ける（プレイヤー）
 			else obj_player->ReceiveDamage(15 - PlayerCutDamege);

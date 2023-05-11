@@ -3,6 +3,7 @@
 #include"Player.h"
 #include"Jangeki_Base.h"
 #include"Jangeki_Coming.h"
+#include"Jangeki_Bounds.h"
 #include <typeinfo>
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
@@ -631,7 +632,10 @@ void Enemy_03::Update_Jangeki()
 		//プレイヤー方向へのジャン撃生成
 
 		if (hp >= 41) {
+
+			//尾行弾
 			if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+			
 		}
 		////通常弾生成
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
@@ -642,11 +646,18 @@ void Enemy_03::Update_Jangeki()
 			float radius = 50.0f;
 			float speed = 4.5f;
 
+			//尾行弾
 			if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
-
+			
 		}
+		else if (hp <= 55){
 
+			float radius = 25.0f;
+			float speed = 5.5f;
 
+			//バウンド弾
+			if(frame_count % 85 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
+		}
 	}
 }
 
