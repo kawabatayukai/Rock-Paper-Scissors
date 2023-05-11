@@ -628,20 +628,11 @@ void Enemy_03::Update_Jangeki()
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));//2 //主に属性時のジャン撃を繰り出す
 
-
-		//プレイヤー方向へのジャン撃生成
-
-		if (hp >= 41) {
-
-			//尾行弾
-			if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
-			
-		}
 		////通常弾生成
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
-
+	 
 		//攻撃UP時のジャン撃
-		else if (hp <= 40) {
+		 if (hp <= 40) {
 
 			float radius = 50.0f;
 			float speed = 4.5f;
@@ -649,14 +640,25 @@ void Enemy_03::Update_Jangeki()
 			//尾行弾
 			if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 			
-		}
-		else if (hp <= 55){
+		 }
+		//HPが70下回ったら
+		else if (hp <= 85 && hp >= 41){
 
-			float radius = 25.0f;
+			//尾行弾
+			if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+
+			float radius = 25.5f;
 			float speed = 5.5f;
-
 			//バウンド弾
-			if(frame_count % 85 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
+			if(frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
+		}
+		
+		//プレイヤー方向へのジャン撃生成
+		else  {//(hp <= 86 && hp >= 71)
+
+			//尾行弾
+			if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+			
 		}
 	}
 }

@@ -413,12 +413,12 @@ void Scene_Stage03::Update()
 					obj_player->ReceiveDamage(25 - PlayerCutDamege) ;
 				}
 			}
-			else if (obj_enemy->GetHP() <= 55) {
+			else if (obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 41) {
 
 				//”¼Œa‚ª50.0f‚Ìê‡‚Ìƒ_ƒ[ƒW
-				float radius = 25.0f;
+				float radius = 25.5f;
 
-				if (radius >= 25.0f) {
+				if (radius >= 25.5f) {
 
 					obj_player->ReceiveDamage(15 - PlayerCutDamege);
 				}

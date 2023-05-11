@@ -29,7 +29,9 @@ void  SoundSystem::LoadSounds_SE()
 	/*ステージ3*/
 	se_sounds.push_back(LoadSoundMem("Sound/st03/SlightlyBrokenSE.wav"));
 	se_sounds.push_back(LoadSoundMem("Sound/st03/BrokenSE.wav"));
-
+	se_sounds.push_back(LoadSoundMem("Sound/st03/Gard.wav"));
+	se_sounds.push_back(LoadSoundMem("Sound/st03/RunningSt03.wav"));
+	se_sounds.push_back(LoadSoundMem("Sound/st03/WorkingSt03.wav"));
 	/*ステージ4*/
 	se_sounds.push_back(LoadSoundMem("Sound/stage04/specialSE.wav"));
 	se_sounds.push_back(LoadSoundMem("Sound/stage04/specialAttackSE.wav"));
