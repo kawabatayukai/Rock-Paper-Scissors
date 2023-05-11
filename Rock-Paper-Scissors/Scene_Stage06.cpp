@@ -5,6 +5,7 @@
 #include "Scene_GameClear.h"
 #include "Enemy_02.h"
 #include"GameData.h"
+#include"SoundSystem.h"
 
 //デバッグモード
 #include"Debug_Manager.h"
@@ -29,9 +30,6 @@ Scene_Stage06::Scene_Stage06(const Player* player)
 
 	//背景画像の読み込み
 	stage6_BackImage = LoadGraph("images/stage06/mori32-.png");
-
-	//BGMの読み込み
-	stage6_BGM = LoadSoundMem("Sound/stage06/RPG_Battle_03.mp3");
 
 	////被弾SEの読み込み
 	//damageSE = LoadSoundMem("Sound/stage06/damage6.mp3");
@@ -77,7 +75,7 @@ Scene_Stage06::~Scene_Stage06()
 void Scene_Stage06::Update()
 {
 	//BGM再生
-	PlaySoundMem(stage6_BGM, DX_PLAYTYPE_LOOP, FALSE);
+	SoundSystem::PlayBGM(BGM::STAGE06_BGM);
 
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
@@ -341,7 +339,7 @@ AbstractScene* Scene_Stage06::ChangeScene()
 	if (obj_enemy->GetHP() <= 0)
 	{
 		//BGM停止
-		StopSoundMem(stage6_BGM);
+		SoundSystem::StopBGM(BGM::STAGE06_BGM);
 
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(7));
@@ -351,7 +349,7 @@ AbstractScene* Scene_Stage06::ChangeScene()
 	if (obj_player->IsDeathPlayer() == true)
 	{
 		//BGM停止
-		StopSoundMem(stage6_BGM);
+		SoundSystem::StopBGM(BGM::STAGE06_BGM);
 
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(6));
