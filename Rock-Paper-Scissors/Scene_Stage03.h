@@ -41,6 +41,6 @@ private:
 	
 	int ShieldBrokenSE; //完全に壊れた時
 	int SlightlyBrokenSE;//少し壊れているとき
-	int Enemy_Janwin ;//エネミーのじゃんけん結果保持用
-
+	int Enemy_Janwin ;//エネミーのじゃんけん結果用
+	int Player_Janwin;//プレイヤーのじゃんけん結果用
 };

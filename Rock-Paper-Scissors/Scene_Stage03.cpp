@@ -76,9 +76,8 @@ Scene_Stage03::~Scene_Stage03()
 void Scene_Stage03::Update()
 {
 	//BGMを鳴らす
-	//SoundSystem::PlayBGM(BGM::ST03_BGM);
+	SoundSystem::PlayBGM(BGM::ST03_BGM);
 
-	
 
 	//接触じゃんけん開始前
 	if (GetJanState()  == Jan_State::BEFORE)
@@ -92,9 +91,15 @@ void Scene_Stage03::Update()
 		GameData::Time_Update();
 	}
 
+	
+	
 	//接触じゃんけん処理
 	Touch_Janken(obj_enemy, this, 3);
-	SoundSystem::StopSE(SE::ENEMY_RUNNING);
+
+	//走るSE停止
+	StopSoundMem(obj_enemy->GetRunSE());
+	//歩くSE停止
+	StopSoundMem(obj_enemy->GetWalkSE());
 
 	Effect_Update_HitJangeki(obj_enemy);
 
@@ -373,7 +378,7 @@ void Scene_Stage03::Update()
 
 			//			}
 
-			//		//}zz
+			//		//}
 			//		else {
 
 			//				SheeldEnduranse = 0;
@@ -473,6 +478,7 @@ void Scene_Stage03::Draw() const
 	if (GetJanState() == Jan_State::START || GetJanState() == Jan_State::BEFORE)
 	{
 
+
 		obj_player->Draw();  //プレイヤー描画
 		obj_enemy->Draw();   //敵キャラ描画
 
@@ -485,15 +491,18 @@ void Scene_Stage03::Draw() const
 		}
 
 		//じゃんけん負けた時
-		if (1)
+		if (Player_Janwin == 1)
 		{
 			float p_x = obj_player->GetX();
 			float p_y = obj_player->GetY();
 
-			DrawString(p_x, p_y - 80, "防御力UP", 0xffffff);
+			DrawString(p_x, p_y - 80, "防御力UP↑", 0xfff);
+		}
+		else {
+			int Player_Janwin = 0;
 		}
 
-		if (/*obj_enemy->GetHP() >= 86 || obj_enemy->GetHP() <= 40*/Enemy_Janwin == 1) {
+		if (Enemy_Janwin == 1) {
 
 			if (obj_enemy->GetWaitTime() > 0) {
 				//エネミー特殊効果テキスト表示
@@ -546,8 +555,10 @@ AbstractScene* Scene_Stage03::ChangeScene()
 
 		//BGM停止
 		SoundSystem::StopBGM(BGM::ST03_BGM);
-		SoundSystem::StopSE(SE::ENEMY_RUNNING);
-
+		//走るSE停止
+		StopSoundMem(obj_enemy->GetRunSE());
+		//歩くSE停止
+		StopSoundMem(obj_enemy->GetWalkSE());
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(4));
 
@@ -559,8 +570,10 @@ AbstractScene* Scene_Stage03::ChangeScene()
 		 
 		//BGM停止
 		SoundSystem::StopBGM(BGM::ST03_BGM);
-		SoundSystem::StopSE(SE::ENEMY_RUNNING);
-
+		//走るSE停止
+		StopSoundMem(obj_enemy->GetRunSE());
+		//歩くSE停止
+		StopSoundMem(obj_enemy->GetWalkSE());
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(3));
 	}
@@ -575,13 +588,16 @@ AbstractScene* Scene_Stage03::ChangeScene()
 void Scene_Stage03::AfterJanken_WIN()
 {
 
+	//勝ったら1
+	Player_Janwin = 1;
+
+
 	//じゃんけん勝利時
 	PlayerCutDamege = 10;
 	
 	obj_player->SetX(200);
 	
-	//プレイヤー特殊効果テキスト表示
-	if (obj_player->GetHP() >= 86 || obj_player ->GetHP() <= 40) DrawFormatString((int)(obj_player->GetX() - 50), (int)(obj_player->GetY() - 70), GetColor(255, 0, 0), " 防御UP↑", obj_enemy->GetHP());
+	
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）

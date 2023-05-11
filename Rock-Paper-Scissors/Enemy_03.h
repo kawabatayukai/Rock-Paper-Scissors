@@ -37,6 +37,10 @@ public:
 
 	float Get_OldY() const { return old_y; } //YÀ•W‚Ìæ“¾
 
+	int GetRunSE()const;//‘–‚éSEæ“¾
+
+	int GetWalkSE()const;//•à‚­SEæ“¾
+
 
 private:
 	/********************   ƒWƒƒƒ“ƒvŠÖŒW   ********************/
@@ -87,6 +91,7 @@ private:
 	
 	int se_run;    //‘–‚ése
 	int se_walk;   //•à‚­
+	
 };
 
 
