@@ -53,11 +53,16 @@ Scene_Stage02::~Scene_Stage02()
 //更新
 void Scene_Stage02::Update()
 {
+	if (CheckSoundMem(stage2_BGM) == 0) {
+		//メニュー選択中のSE
+		ChangeVolumeSoundMem(115, stage2_BGM);
+		//さっきはここにSE1のPlaySoundMemを書いてたけど…//
+	}
 	//BGM再生
 	PlaySoundMem(stage2_BGM, DX_PLAYTYPE_LOOP, FALSE);
 	//時間をカウント
 	GameData::Time_Update();
-	Effect_Update_HitJangeki(obj_enemy);
+	
 	obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
 
 	//接触じゃんけん開始前
@@ -69,8 +74,9 @@ void Scene_Stage02::Update()
 
 	//接触じゃんけん処理
 	Touch_Janken(obj_enemy, this, 2);
-
-
+	
+		//Effect
+		Effect_Update_HitJangeki(obj_enemy);
 	
 
 
