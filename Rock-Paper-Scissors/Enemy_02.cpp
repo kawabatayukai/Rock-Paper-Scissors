@@ -22,8 +22,9 @@ Enemy_02::Enemy_02(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	enemy_y = GetRand(600) + 100;
 
 	image = LoadGraph("images/stage02/junp4.png");
-	//BGM‚Ì“Ç‚İ‚İ
+	//SE‚Ì“Ç‚İ‚İ
 	stage2_SE = LoadSoundMem("Sound/enemy(Jump).mp3");
+	stage2_SE2 = LoadSoundMem("Sound/zyangeki.mp3");
 	Init_Jangeki();       //‚¶‚á‚ñŒ‚‚ğ—pˆÓ
 
 }
@@ -200,7 +201,7 @@ void Enemy_02::Update_Jangeki()
 		////¶¬
 		if (frame_count % 75 == 0)
 		{
-			
+			PlaySoundMem(stage2_SE2, DX_PLAYTYPE_BACK, TRUE);
 			if (SpecialTime <= 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 			else if (frame_count % 15 == 0)
 			{

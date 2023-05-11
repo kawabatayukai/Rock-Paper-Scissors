@@ -73,6 +73,7 @@ private:
 	Pattern_02 moveinfo[2];	    //行動パターン
 
 	int stage2_SE;
+	int stage2_SE2;
 };
 
 
