@@ -30,7 +30,6 @@ public:
 private:
 	Enemy_06* obj_enemy;            //“G
 	int stage6_BackImage;           //”wŒi
-	int stage6_BGM;                 //BGM
 	//int damageSE;                   //”í’eSE
 };
 

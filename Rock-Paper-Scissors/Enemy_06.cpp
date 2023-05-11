@@ -3,6 +3,7 @@
 #include"Player.h"
 #include"Jangeki_Base.h"
 #include"Jangeki_Coming.h"
+#include"SoundSystem.h"
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
@@ -213,8 +214,6 @@ void Enemy_06::Draw() const
 
 	//じゃん撃描画
 	Draw_Jangeki();
-
-	DrawFormatString(600, 600, 0xffffff, "player_x : %f", player_x);
 }
 
 //じゃん撃生成・更新
@@ -1067,7 +1066,8 @@ void Enemy_06::smoke()
 	{
 		if (smokeCnt == 0)
 		{
-			PlaySoundFile("Sound/stage06/bomb.mp3", DX_PLAYTYPE_BACK);
+			//BGM再生
+			SoundSystem::PlaySE(SE::ENEMY06_SMOKE);
 		}
 		smokeCnt++;
 	}
