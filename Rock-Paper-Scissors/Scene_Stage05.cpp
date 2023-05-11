@@ -110,7 +110,7 @@ void Scene_Stage05::Update()
 	}
 	//接触じゃんけん処理
 	Touch_Janken(obj_enemy, this, 5);
-
+	Effect_Update_HitJangeki(obj_enemy);
 
 
 	//playerのじゃん撃をとってくる
@@ -563,6 +563,8 @@ void Scene_Stage05::Draw() const
 
 
 	DrawString(640, 360, "Stage05", 0xffffff);
+	//Effect
+	Effect_Draw_HitJangeki();
 }
 
 
@@ -587,7 +589,7 @@ AbstractScene* Scene_Stage05::ChangeScene()
 	}
 
 	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() < 0)
+	if (obj_player->IsDeathPlayer() == true)
 	{
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(5));
@@ -620,5 +622,5 @@ void Scene_Stage05::AfterJanken_LOSE()
 	obj_player->SetX(200);
 	obj_enemy->MoveReset();
 	obj_enemy->SetX(1000);
-	obj_enemy->SetY(160);
+	obj_enemy->SetY(140);
 }
