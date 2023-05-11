@@ -40,6 +40,9 @@ Scene_Stage02::Scene_Stage02(const Player* player)
 	//obj_floor[3] = new Floor(0, 200, 120, 20);      //足場
 
 	image_back = LoadGraph("images/stage02/mizuumi01.png");
+
+	//BGMの読み込み
+	stage2_BGM = LoadSoundMem("Sound/MusMus-BGM-134.mp3");
 }
 
 //デストラクタ
@@ -50,7 +53,8 @@ Scene_Stage02::~Scene_Stage02()
 //更新
 void Scene_Stage02::Update()
 {
-
+	//BGM再生
+	PlaySoundMem(stage2_BGM, DX_PLAYTYPE_LOOP, FALSE);
 	//時間をカウント
 	GameData::Time_Update();
 	Effect_Update_HitJangeki(obj_enemy);
@@ -273,6 +277,8 @@ AbstractScene* Scene_Stage02::ChangeScene()
 	//敵のHPが0以下
 	if (obj_enemy->GetHP() < 0)
 	{
+		//BGM停止
+		StopSoundMem(stage2_BGM);
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(3));
 	}
@@ -280,6 +286,8 @@ AbstractScene* Scene_Stage02::ChangeScene()
 	//プレイヤーのHPが0以下
 	if (obj_player->IsDeathPlayer() == true)
 	{
+		//BGM停止
+		StopSoundMem(stage2_BGM);
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(2));
 		
