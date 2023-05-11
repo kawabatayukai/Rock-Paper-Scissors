@@ -113,7 +113,7 @@ void Scene_Stage05::Update()
 	}
 	//ÚG‚¶‚á‚ñ‚¯‚ñˆ—
 	Touch_Janken(obj_enemy, this, 5);
-	Effect_Update_HitJangeki(obj_enemy);
+	Effect_Update_HitJangeki(obj_enemy, obj_enemy->reflection);
 
 	if (mob[0]->GetHP() > 0) mob[0]->Effect_MobEnemy(obj_player);
 	if (mob[1]->GetHP() > 0) mob[1]->Effect_MobEnemy(obj_player);
