@@ -71,6 +71,10 @@ void Enemy_05::Update()
 
 	if (mob[0]->GetHP() <= 0 && mob[1]->GetHP() <= 0 && mob[2]->GetHP() <= 0)
 	{
+		mob[0]->Init_Jangeki();
+		mob[1]->Init_Jangeki();
+		mob[2]->Init_Jangeki();
+
 		Movetimer++;
 		//“G‚ÌˆÚ“®
 		switch (Movepattern)

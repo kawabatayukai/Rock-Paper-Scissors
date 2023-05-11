@@ -2,7 +2,7 @@
 #include"KeyManager.h"
 #include"DxLib.h"
 #include"GameData.h"
-
+#include"MobEnemy_05.h"
 #include<vector>
 
 //Õ“Ë”»’è‚È‚µŽžŠÔ   5•b
@@ -330,7 +330,6 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 	{
 		//‹ó‚È‚çI—¹
 		if (obj_effect[effect_count] == nullptr) break;
-
 		obj_effect[effect_count]->Update();
 
 		if (obj_effect[effect_count]->GetCharacterType() == _CHAR_TYPE::ENEMY)
@@ -362,7 +361,7 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 	Jangeki_Base** e_jan = enemy->GetJangeki();
 
 	//--------------------  player‚¶‚á‚ñŒ‚‚Æenemy  -------------------------------------
-	{
+	
 		//player‚¶‚á‚ñŒ‚‚Æenemy‚Ì“–‚½‚è”»’è
 		for (int i = 0; i < JANGEKI_MAX; i++)
 		{
@@ -440,13 +439,11 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 				}
 			}
 		}
-	}
+	
 	//----------------------------------------------------------------------------------
 
 	//--------------------  enemy‚¶‚á‚ñŒ‚‚Æplayer  -------------------------------------
 	{
-
-
 		//enemy‚¶‚á‚ñŒ‚‚Æplayer‚Ì“–‚½‚è”»’è
 		for (int i = 0; i < JANGEKI_MAX; i++)
 		{
@@ -473,6 +470,7 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 	{
 		if (p_jan[p] == nullptr) break;                  //‚È‚¯‚ê‚Î”²‚¯‚é
 
+		//enemy
 		for (int e = 0; e < JANGEKI_MAX; e++)
 		{
 			if (e_jan[e] == nullptr) break;              //‚È‚¯‚ê‚Î”²‚¯‚é
