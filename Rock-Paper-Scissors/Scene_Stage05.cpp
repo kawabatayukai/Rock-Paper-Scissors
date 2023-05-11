@@ -37,12 +37,12 @@ Scene_Stage05::Scene_Stage05(const Player* player)
 
 	reflection = new Jangeki_Reflection(0, 0, 0, 0, Jan_Type::ROCK);
 
-	if (mob[0]->GetHP() <= 0 && mob[1]->GetHP() <= 0 && mob[2]->GetHP() <= 0)
-	{
-		mob[0] = new MobEnemy_05(640, 100, Jan_Type::PAPER);
-		mob[1] = new MobEnemy_05(50, 420, Jan_Type::SCISSORS);
-		mob[2] = new MobEnemy_05(1230, 420, Jan_Type::ROCK);
-	}
+	//if (mob[0]->GetHP() <= 0 && mob[1]->GetHP() <= 0 && mob[2]->GetHP() <= 0)
+	//{
+	//	mob[0] = new MobEnemy_05(640, 100, Jan_Type::PAPER);
+	//	mob[1] = new MobEnemy_05(50, 420, Jan_Type::SCISSORS);
+	//	mob[2] = new MobEnemy_05(1230, 420, Jan_Type::ROCK);
+	//}
 
 	GameData::Set_TimeLimit();
 	//床・壁の用意
@@ -97,10 +97,13 @@ void Scene_Stage05::Update()
 
 		for (int i = 0; i < 3; i++)
 		{
-			mob[i]->Update();
+			if (mob[i]->GetHP() > 0)
+			{
+				mob[i]->Update();
 
-			//プレイヤーの座標を取得
-			mob[i]->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
+				//プレイヤーの座標を取得
+				mob[i]->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
+			}
 		}
 
 		GameData::Time_Update();
@@ -110,8 +113,11 @@ void Scene_Stage05::Update()
 	}
 	//接触じゃんけん処理
 	Touch_Janken(obj_enemy, this, 5);
-	Effect_Update_HitJangeki(obj_enemy);
+	Effect_Update_HitJangeki(obj_enemy, obj_enemy->reflection);
 
+	if (mob[0]->GetHP() > 0) mob[0]->Effect_MobEnemy(obj_player);
+	if (mob[1]->GetHP() > 0) mob[1]->Effect_MobEnemy(obj_player);
+	if (mob[2]->GetHP() > 0) mob[2]->Effect_MobEnemy(obj_player);
 
 	//playerのじゃん撃をとってくる
 	Jangeki_Base** player_jangeki = obj_player->GetJangeki();
@@ -359,6 +365,7 @@ void Scene_Stage05::Update()
 						if (jangeki_type == Jan_Type::PAPER)
 						{
 							mob[a]->ReceiveDamage(20);     //ダメージが入る
+							if(mob[a]->GetHP() > 0)mob[a]->CreateEffect(_CHAR_TYPE::PLAYER, jangeki_type);
 							obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 							i--;
 						}
@@ -371,6 +378,7 @@ void Scene_Stage05::Update()
 						if (jangeki_type == Jan_Type::ROCK)
 						{
 							mob[a]->ReceiveDamage(20);     //ダメージが入る
+							if (mob[a]->GetHP() > 0)mob[a]->CreateEffect(_CHAR_TYPE::PLAYER, jangeki_type);
 							obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 							i--;
 						}
@@ -382,6 +390,7 @@ void Scene_Stage05::Update()
 						if (jangeki_type == Jan_Type::SCISSORS)
 						{
 							mob[a]->ReceiveDamage(20);     //ダメージが入る
+							if (mob[a]->GetHP() > 0)mob[a]->CreateEffect(_CHAR_TYPE::PLAYER, jangeki_type);
 							obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 							i--;
 						}

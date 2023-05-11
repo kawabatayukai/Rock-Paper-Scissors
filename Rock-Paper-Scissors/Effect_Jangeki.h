@@ -31,8 +31,12 @@ protected:
 	
 	int* image_effect;             //エフェクト画像
 	int image_sub;                 //サブエフェクト
+	double rotation;               //回転率
 
-	const _CHAR_TYPE character;
+	const _CHAR_TYPE character;    //呼び出し元のキャラ
 
 	bool finish_effect;            //エフェクト完了
+
+	//--------- sounds ----------
+	int se;                        //効果音
 };

@@ -395,3 +395,15 @@ void Enemy_01::Fire_JanTakeAim(const float& player_x, const float& player_y)
 		obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 	}
 }
+
+//old_y‚Ìæ“¾ŠÖ”
+float Enemy_01::Get_OldY()
+{
+	return old_y;
+}
+
+//y‚Ìæ“¾
+float Enemy_01::Get_Y()
+{
+	return y;
+}
