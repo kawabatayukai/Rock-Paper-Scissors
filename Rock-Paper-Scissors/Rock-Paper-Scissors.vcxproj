@@ -170,8 +170,10 @@
     <ClCompile Include="Enemy_10.cpp" />
     <ClCompile Include="Enemy_Cannon.cpp" />
     <ClCompile Include="Floor.cpp" />
+    <ClCompile Include="FPS_Controll.cpp" />
     <ClCompile Include="GameData.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Item_stage08.cpp" />
     <ClCompile Include="Jangeki_Changespeed.cpp" />
     <ClCompile Include="Jangeki_Coming.cpp" />
     <ClCompile Include="Jangeki_Player.cpp" />
@@ -213,6 +215,7 @@
     <ClCompile Include="Scene_Title.cpp" />
     <ClCompile Include="SoundSystem.cpp" />
     <ClCompile Include="Stage_Base.cpp" />
+    <ClCompile Include="Jangeki_Bounds.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h" />
@@ -237,8 +240,10 @@
     <ClInclude Include="Enemy_10.h" />
     <ClInclude Include="Enemy_Cannon.h" />
     <ClInclude Include="Floor.h" />
+    <ClInclude Include="FPS_Controll.h" />
     <ClInclude Include="GameData.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="Item_stage08.h" />
     <ClInclude Include="Jangeki_Changespeed.h" />
     <ClInclude Include="Jangeki_Coming.h" />
     <ClInclude Include="Jangeki_Player.h" />
@@ -279,6 +284,7 @@
     <ClInclude Include="Scene_Title.h" />
     <ClInclude Include="SoundSystem.h" />
     <ClInclude Include="Stage_Base.h" />
+    <ClInclude Include="Jangeki_Bounds.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

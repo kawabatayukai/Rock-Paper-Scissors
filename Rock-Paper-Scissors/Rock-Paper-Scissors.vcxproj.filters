@@ -288,6 +288,9 @@
     <ClCompile Include="Effect_ChagePlayer.cpp">
       <Filter>ソース ファイル\Player</Filter>
     </ClCompile>
+    <ClCompile Include="Item_stage08.cpp">
+      <Filter>ソース ファイル\GameMainScene\Stage_08</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -481,6 +484,9 @@
     </ClInclude>
     <ClInclude Include="Effect_ChangePlayer.h">
       <Filter>ソース ファイル\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Item_stage08.h">
+      <Filter>ソース ファイル\GameMainScene\Stage_08</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

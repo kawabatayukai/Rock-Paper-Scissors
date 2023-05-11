@@ -10,6 +10,7 @@
 #include "KeyManager.h"
 #include"Jangeki_Player.h"
 #include "SoundSystem.h"
+#include"Jangeki_Bounds.h"
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_10::Enemy_10(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
@@ -802,15 +803,15 @@ void Enemy_10::Update_Jangeki()
 				/*********************** ↓↓ 生成( 追跡弾 ) ↓↓ ***********************/
 
 				//            生成速度
-				//if (frame_count % 50 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //追跡弾 
+				if (frame_count % 50 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //追跡弾 
 
 				/************************************************************************/
 
 				/*********************** ↓↓ 生成( プレイヤー向き通常弾 ) ↓↓ ***********************/
 
 				//            生成速度
-				if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
-
+				//if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+				
 				/************************************************************************/
 
 				/*********************** ↓↓ 生成( 中心円型拡散弾 ) ↓↓ ***********************/
@@ -821,6 +822,13 @@ void Enemy_10::Update_Jangeki()
 				}*/
 				//            生成速度
 				//if (frame_count % 10 == 0) obj_jangeki[jan_count] = new Jangeki_whole(x, y, radius, speed, type);
+
+				/************************************************************************/
+
+				/*********************** ↓↓ 生成( 飛び跳ね弾 ) ↓↓ ***********************/
+
+				//飛び跳ねじゃん撃生成
+				//if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
 
 				/************************************************************************/
 
@@ -869,7 +877,13 @@ void Enemy_10::Update_Jangeki()
 				//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_whole(x, y, radius, speed, type);
 
 				/************************************************************************/
-				break;
+
+				/*********************** ↓↓ 生成( 飛び跳ね弾 ) ↓↓ ***********************/
+
+				//飛び跳ねじゃん撃生成
+				if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
+
+				/************************************************************************/
 
 				/*********************** ↓↓ 生成( 反射弾 ) ↓↓ ***********************/
 
@@ -896,17 +910,12 @@ int Enemy_10::Get_Enemy10Form()
 //360度発射
 void Enemy_10::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
 {
-	//45度ずつ8個生成
-	//if (hp <= 50)
-	//{
 	for (int i = count; i < (count + 18); i++)
 	{
 		double angle = static_cast<double>((20.0 * i) * (M_PI / 180));
 
 		obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
 	}
-
-	//}
 }
 
 bool Enemy_10::Getflg()

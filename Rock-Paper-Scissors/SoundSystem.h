@@ -13,10 +13,39 @@ enum class SE
 
 	/*敵↓*/
 
+	/*ステージ1*/
+
+
+	/*ステージ2*/
+
+
+	/*ステージ3*/
 	ENEMY_SLIGHTLYBROKEN,
 	ENEMY_SHIELDBROKEN,
+
+
+	/*ステージ4*/
 	ENEMY_SPECIAL,
 	ENEMY_SPECIAL_ATTACK,
+
+
+	/*ステージ5*/
+
+
+	/*ステージ6*/
+	ENEMY06_SMOKE,
+
+
+	/*ステージ7*/
+
+
+	/*ステージ8*/
+
+
+	/*ステージ9*/
+
+
+	/*ステージ10*/
 	ENEMY10_HAHAHA,
 	ENEMY10_Tepepo,
 
@@ -29,8 +58,10 @@ enum class SE
 enum class BGM
 {
 	TITLE,
+	STAGE01_BGM,
 	ST03_BGM,
 	STAGE04_BGM,
+	STAGE06_BGM,
 	ENEMY_10_Form2BGM,
 	ENEMY_10_Marry,
 	ENEMY_10_Arupus,
