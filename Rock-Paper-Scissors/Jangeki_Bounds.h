@@ -12,11 +12,13 @@ public:
 
 	virtual void Update() override;              //更新　オーバーライド（再定義）
 
-	//bool CheckScreenOut() override;
+	bool CheckScreenOut() override;
 
 private:
 	double angle;             //角度
 
 	float move_x; //移動量
 	float move_y; //移動量
+
+	int count;
 };

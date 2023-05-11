@@ -803,7 +803,7 @@ void Enemy_10::Update_Jangeki()
 				/*********************** «« ¶¬( ’ÇÕ’e ) «« ***********************/
 
 				//            ¶¬‘¬“x
-				//if (frame_count % 50 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //’ÇÕ’e 
+				if (frame_count % 50 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //’ÇÕ’e 
 
 				/************************************************************************/
 
@@ -811,7 +811,7 @@ void Enemy_10::Update_Jangeki()
 
 				//            ¶¬‘¬“x
 				//if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
-				if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
+				
 				/************************************************************************/
 
 				/*********************** «« ¶¬( ’†S‰~Œ^ŠgU’e ) «« ***********************/
@@ -822,6 +822,13 @@ void Enemy_10::Update_Jangeki()
 				}*/
 				//            ¶¬‘¬“x
 				//if (frame_count % 10 == 0) obj_jangeki[jan_count] = new Jangeki_whole(x, y, radius, speed, type);
+
+				/************************************************************************/
+
+				/*********************** «« ¶¬( ”ò‚Ñ’µ‚Ë’e ) «« ***********************/
+
+				//”ò‚Ñ’µ‚Ë‚¶‚á‚ñŒ‚¶¬
+				//if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
 
 				/************************************************************************/
 
@@ -870,7 +877,13 @@ void Enemy_10::Update_Jangeki()
 				//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_whole(x, y, radius, speed, type);
 
 				/************************************************************************/
-				break;
+
+				/*********************** «« ¶¬( ”ò‚Ñ’µ‚Ë’e ) «« ***********************/
+
+				//”ò‚Ñ’µ‚Ë‚¶‚á‚ñŒ‚¶¬
+				if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
+
+				/************************************************************************/
 
 				/*********************** «« ¶¬( ”½Ë’e ) «« ***********************/
 
@@ -897,17 +910,12 @@ int Enemy_10::Get_Enemy10Form()
 //360“x”­Ë
 void Enemy_10::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
 {
-	//45“x‚¸‚Â8ŒÂ¶¬
-	//if (hp <= 50)
-	//{
 	for (int i = count; i < (count + 18); i++)
 	{
 		double angle = static_cast<double>((20.0 * i) * (M_PI / 180));
 
 		obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
 	}
-
-	//}
 }
 
 bool Enemy_10::Getflg()
