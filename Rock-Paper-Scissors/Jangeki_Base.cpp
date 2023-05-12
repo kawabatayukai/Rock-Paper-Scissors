@@ -281,26 +281,3 @@ bool Jangeki_Base::Hit_Jangeki(const Jangeki_Base* jangeki)
 	return false;
 }
 
-//あいこ相殺エフェクト（player側で行う）
-void Jangeki_Base::Update_OffsetEffect()
-{
-	static int framecount;
-	if (player_effect == EFFECT_TYPE::OFFSET || enemy_effect == EFFECT_TYPE::OFFSET)
-	{
-		if (++framecount > 120)
-		{
-			player_effect = EFFECT_TYPE::_NO_EFFECT;
-			enemy_effect = EFFECT_TYPE::_NO_EFFECT;
-			framecount = 0;
-		}
-	}
-}
-
-//あいこ相殺エフェクト描画（player側で行う）
-void Jangeki_Base::Draw_OffsetEffect() const
-{
-	if (player_effect == EFFECT_TYPE::OFFSET)
-	{
-		DrawCircle(effect_x, effect_y, 30, 0xffffff, TRUE);
-	}
-}
