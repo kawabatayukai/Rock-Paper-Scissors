@@ -426,7 +426,7 @@ void Scene_Stage03::Update()
 
 				if (radius >= 25.5f) {
 
-					obj_player->ReceiveDamage(10 - PlayerCutDamege);
+					obj_player->ReceiveDamage(15 - PlayerCutDamege);
 				}
 
 			}
