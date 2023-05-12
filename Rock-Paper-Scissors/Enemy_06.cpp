@@ -12,7 +12,7 @@ Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = -1;                 //-1なら左向き  +1なら右向き
 	hp = 100;                 //HPは100
 
-	old_type = static_cast<Jan_Type>(1);  //チョキ属性で初期化
+	old_type = static_cast<Jan_Type>(2);  //パー属性で初期化
 
 	//画像読み込み
 	images[0] = LoadGraph("images/stage06/赤NINJA_通常.png");     //グー属性
@@ -29,6 +29,12 @@ Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	//煙エフェクト読み込み
 	LoadDivGraph("images/stage06/pipo-btleffect059.png", 10, 10, 1, 120, 120, smokeImage);
+
+	////ジャン撃SE読み込み
+	//attackSE = LoadSoundMem("Sound/stage06/nc263537.wav");
+
+	////移動SE読み込み
+	//dashSE = LoadSoundMem("Sound/stage06/下駄で走る.mp3");
 
 	Init_Jangeki();       //じゃん撃を用意
 
@@ -51,6 +57,19 @@ void Enemy_06::Update()
 	bef_y = y;
 
 	smoke();
+
+	////SE再生
+	//if (y == bef_y && hp > 0)
+	//{
+	//	if (CheckSoundMem(dashSE) == FALSE)
+	//	{
+	//		PlaySoundMem(dashSE, DX_PLAYTYPE_BACK, TRUE);
+	//	}
+	//}
+	//else
+	//{
+	//	StopSoundMem(dashSE);
+	//}
 
 	//じゃん撃更新・生成
 	Update_Jangeki();
@@ -103,8 +122,8 @@ void Enemy_06::Update()
 			smokeFlg = false;
 		}
 
-		//750フレームごとに瞬間移動接触フラグをtrueにする
-		if (TeleportTime == 750 && TeleportFlg == false && (player_x - 300) > 50 && (player_x + 300) < 1230 && speed != 8.0f)
+		//500フレームごとに瞬間移動接触フラグをtrueにする
+		if (TeleportTime == 500 && TeleportFlg == false && (player_x - 250) > 50 && (player_x + 250) < 1230 && speed != 8.0f)
 		{
 			TeleportFlg = true;
 			if (attack_pattern != 0 && hp <= 70)
@@ -112,7 +131,7 @@ void Enemy_06::Update()
 				smokeFlg = true;
 			}
 		}
-		else if (TeleportTime > 750)
+		else if (TeleportTime > 500)
 		{
 			TeleportTime = 0;
 		}
@@ -824,17 +843,31 @@ void Enemy_06::AttackPattern_3()
 		break;
 	}
 
-
-
-	//敵の属性変化処理
-	if (ChangeCnt > 4)
+	if (speed == 8.0f)
 	{
-		while (GetType() == old_type)
+		//敵の属性変化処理
+		if (ChangeCnt > 0)
 		{
-			SetType(static_cast<Jan_Type>(GetRand(2)));
+			while (GetType() == old_type)
+			{
+				SetType(static_cast<Jan_Type>(GetRand(2)));
+			}
+			old_type = GetType();
+			ChangeCnt = 0;
 		}
-		old_type = GetType();
-		ChangeCnt = 0;
+	}
+	else
+	{
+		//敵の属性変化処理
+		if (ChangeCnt > 4)
+		{
+			while (GetType() == old_type)
+			{
+				SetType(static_cast<Jan_Type>(GetRand(2)));
+			}
+			old_type = GetType();
+			ChangeCnt = 0;
+		}
 	}
 
 	//数秒経過で元の速度 & 攻撃パターンへ遷移
@@ -874,14 +907,14 @@ void Enemy_06::Teleportation()
 		if (player_dir == 0)
 		{
 			dir = -1;
-			x = player_x + 300;
+			x = player_x + 250;
 			y = 650.0f;
 		}
 
 		if (player_dir == 1)
 		{
 			dir = 1;
-			x = player_x - 300;
+			x = player_x - 250;
 			y = 650.0f;
 		}
 
@@ -1031,6 +1064,7 @@ void Enemy_06::jump()
 	//ジャンプ処理
 	if (jump_flg == true && land_flg == true)
 	{
+		SoundSystem::PlaySE(SE::PLAYER_JUMP);
 		g_add = -19.9f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 		land_flg = false;  //地面についていない
 		jump_flg = false;  //ジャンプ用フラグのリセット
@@ -1053,6 +1087,7 @@ void Enemy_06::low_jump()
 	//ジャンプ処理
 	if (jump_flg == true && land_flg == true)
 	{
+		SoundSystem::PlaySE(SE::PLAYER_JUMP);
 		g_add = -8.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 		land_flg = false;  //地面についていない
 		jump_flg = false;  //ジャンプ用フラグのリセット
