@@ -7,6 +7,7 @@
 #include"Effect_Jangeki.h"
 #include"Effect_Enemy.h"
 #include"Jangeki_reflection.h"
+#include"Sound_Jangeki.h"
 
 //ステージのベース
 class Stage_Base : public AbstractScene
@@ -78,5 +79,7 @@ private:
 	int image_clockhand;                      //時計の針
 	int image_clockchar;                      //時計の文字盤
 	int font_score;                           //Score描画用フォント
+
+	Sound_Jangeki** obj_sejan;                //SE
 };
 

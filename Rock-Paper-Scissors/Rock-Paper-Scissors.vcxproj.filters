@@ -297,6 +297,9 @@
     <ClCompile Include="Jangeki_Bounds.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Sound_Jangeki.cpp">
+      <Filter>ソース ファイル\Jangeki\kawabata</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -499,6 +502,9 @@
     </ClInclude>
     <ClInclude Include="Jangeki_Bounds.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound_Jangeki.h">
+      <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
