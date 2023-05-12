@@ -37,9 +37,9 @@ void Scene_Ranking::Draw() const
 	for (int i = 0; i < 10; i++)
 	{
 		/*通常モード*/
-		if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::NOMAL)
+		if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::NORMAL)
 		{
-			DrawFormatString(100, 170 + i * 25, 0xFFFFFF, "%2d位   %10s  スコア：%10d  総合時間： %10d NOMAL", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score, GameData::Get_Total_Time());
+			DrawFormatString(100, 170 + i * 25, 0xFFFFFF, "%2d位   %10s  スコア：%10d  総合時間： %10d NORMAL", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score, GameData::Get_Total_Time());
 		}
 
 		/*即死モード*/

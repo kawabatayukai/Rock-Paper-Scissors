@@ -55,7 +55,7 @@ void GameOverScene::Draw() const
 AbstractScene* GameOverScene::ChangeScene()
 {
 	/*通常モード*/
-	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::NOMAL)
+	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::NORMAL)
 	{
 		//Aボタンで戻る
 		if (KeyManager::OnPadClicked(PAD_INPUT_A))
