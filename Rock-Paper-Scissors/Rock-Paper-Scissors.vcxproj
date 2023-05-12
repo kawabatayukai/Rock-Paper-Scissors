@@ -286,6 +286,9 @@
     <ClInclude Include="Stage_Base.h" />
     <ClInclude Include="Jangeki_Bounds.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="window\Resource.rc" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
