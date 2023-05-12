@@ -17,7 +17,8 @@ enum class SE
 
 
 	/*ステージ2*/
-
+	ENEMY02_JUMP,
+	ENEMY02_ZYANGEKI,
 
 	/*ステージ3*/
 	ENEMY_SLIGHTLYBROKEN,
@@ -61,6 +62,7 @@ enum class BGM
 {
 	TITLE,
 	STAGE01_BGM,
+	STAGE02_BGM,
 	ST03_BGM,
 	STAGE04_BGM,
 	STAGE06_BGM,

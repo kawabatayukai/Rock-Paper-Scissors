@@ -54,10 +54,10 @@ Effect_Jangeki::Effect_Jangeki(float play_x, float play_y, Jan_Type type, _CHAR_
 		}
 
 		//SE
-		se = LoadSoundMem("Sound/Jangeki/damage.wav");
+		se = LoadSoundMem("Sound/Jangeki/shoot.wav");
 
 				//‰¹—Ê
-		ChangeVolumeSoundMem(255, se);
+		//ChangeVolumeSoundMem(255, se);
 	}
 	else
 	{ 
@@ -85,7 +85,7 @@ Effect_Jangeki::Effect_Jangeki(float play_x, float play_y, Jan_Type type, _CHAR_
 		}
 
 		//SE
-		se = LoadSoundMem("Sound/Jangeki/Jangeki_aiko_Test.wav");
+		se = LoadSoundMem("Sound/Jangeki/aiko.wav");
 
 		//‰¹—Ê
 		ChangeVolumeSoundMem(255, se);
@@ -117,7 +117,7 @@ void Effect_Jangeki::Update()
 	rotation += 0.05;
 
 	//se
-	if (character == _CHAR_TYPE::NOT_CHARA)
+	//if (character == _CHAR_TYPE::NOT_CHARA)
 	{
 		if (CheckSoundMem(se) == 0) PlaySoundMem(se, DX_PLAYTYPE_BACK);
 	}

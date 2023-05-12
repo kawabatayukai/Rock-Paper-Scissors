@@ -214,6 +214,7 @@
     <ClCompile Include="Scene_Stage10.cpp" />
     <ClCompile Include="Scene_Title.cpp" />
     <ClCompile Include="SoundSystem.cpp" />
+    <ClCompile Include="Sound_Jangeki.cpp" />
     <ClCompile Include="Stage_Base.cpp" />
     <ClCompile Include="Jangeki_Bounds.cpp" />
   </ItemGroup>
@@ -283,6 +284,7 @@
     <ClInclude Include="Scene_Stage10.h" />
     <ClInclude Include="Scene_Title.h" />
     <ClInclude Include="SoundSystem.h" />
+    <ClInclude Include="Sound_Jangeki.h" />
     <ClInclude Include="Stage_Base.h" />
     <ClInclude Include="Jangeki_Bounds.h" />
   </ItemGroup>
