@@ -3,6 +3,7 @@
 #include"Scene_Title.h"
 #include "KeyManager.h"
 #include"SortSave.h"
+#include"GameData.h"
 
 int g_WaitTime = 0;
 
@@ -35,8 +36,17 @@ void Scene_Ranking::Draw() const
 	SetFontSize(30);
 	for (int i = 0; i < 10; i++)
 	{
-		//DrawFormatString(80, 170 + i * 25, 0xFFFFFF, "%2d   %10s  %10d", dataRanking[i].rank, dataRanking[i].name, dataRanking[i].score);
-		DrawFormatString(200, 170 + i * 25, 0xFFFFFF, "%2d位   %10s  スコア：%10d  時間： %10d", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score, sortSave.getRankingData(i).time);
+		/*通常モード*/
+		if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::NOMAL)
+		{
+			DrawFormatString(100, 170 + i * 25, 0xFFFFFF, "%2d位   %10s  スコア：%10d  総合時間： %10d NOMAL", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score, GameData::Get_Total_Time());
+		}
+
+		/*即死モード*/
+		if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
+		{
+			DrawFormatString(100, 170 + i * 25, 0xFFFFFF, "%2d位   %10s  スコア：%10d  総合時間： %10d REAL JANKEN", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score, GameData::Get_Total_Time());
+		}
 	}
 
 	SetFontSize(100);

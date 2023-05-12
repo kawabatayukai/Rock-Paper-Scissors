@@ -5,6 +5,7 @@
 #include"DxLib.h"
 #include"GameData.h"
 #include"SoundSystem.h"
+#include"Scene_Ranking.h"
 
 //デバッグモード
 #include"Debug_Manager.h"
@@ -310,6 +311,10 @@ AbstractScene* Scene_Stage01::ChangeScene()
 
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(2));
+		//sortSave.setScore(9, 10);	// ランキングデータの１０番目にスコアを登録
+		//sortSave.SortRanking();		// ランキング並べ替え
+		//sortSave.SaveRanking();		// ランキングデータの保存
+		//return new Scene_Ranking();
 	}
 
 	//プレイヤーのHPが0以下
