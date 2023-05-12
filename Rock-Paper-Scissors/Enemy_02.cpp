@@ -8,7 +8,7 @@
 #include "Scene_Stage02.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
-
+#include "SoundSystem.h"
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_02::Enemy_02(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
@@ -23,8 +23,8 @@ Enemy_02::Enemy_02(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	image = LoadGraph("images/stage02/junp4.png");
 	//SEの読み込み
-	stage2_SE = LoadSoundMem("Sound/enemy(Jump).mp3");
-	stage2_SE2 = LoadSoundMem("Sound/zyangeki.mp3");
+	/*stage2_SE = LoadSoundMem("Sound/enemy(Jump).mp3");
+	stage2_SE2 = LoadSoundMem("Sound/zyangeki.mp3");*/
 	Init_Jangeki();       //じゃん撃を用意
 
 }
@@ -84,7 +84,8 @@ void Enemy_02::Update()
 		
 		if (land_flg == true && GetRand(1) == 1)    //GetRand(30) == 3　のところがジャンプの条件
 		{
-			PlaySoundMem(stage2_SE, DX_PLAYTYPE_BACK, TRUE);
+			SoundSystem::PlaySE(SE::ENEMY02_JUMP);
+			//PlaySoundMem(stage2_SE, DX_PLAYTYPE_BACK, TRUE);
 			g_add = -30.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 			land_flg = false;  //地面についていない
 			
@@ -107,7 +108,8 @@ void Enemy_02::Update()
 
 		if (land_flg == true && GetRand(1) == 1)    //GetRand(30) == 3　のところがジャンプの条件
 		{
-			PlaySoundMem(stage2_SE, DX_PLAYTYPE_BACK, TRUE);
+			//PlaySoundMem(stage2_SE, DX_PLAYTYPE_BACK, TRUE);
+			SoundSystem::PlaySE(SE::ENEMY02_JUMP);
 			g_add = -30.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 			land_flg = false;  //地面についていない
 
@@ -201,7 +203,8 @@ void Enemy_02::Update_Jangeki()
 		////生成
 		if (frame_count % 75 == 0)
 		{
-			PlaySoundMem(stage2_SE2, DX_PLAYTYPE_BACK, TRUE);
+			//PlaySoundMem(stage2_SE2, DX_PLAYTYPE_BACK, TRUE);
+			SoundSystem::PlaySE(SE::ENEMY02_ZYANGEKI);
 			if (SpecialTime <= 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 			else if (frame_count % 15 == 0)
 			{
