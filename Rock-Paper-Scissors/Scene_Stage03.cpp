@@ -426,7 +426,7 @@ void Scene_Stage03::Update()
 
 				if (radius >= 25.5f) {
 
-					obj_player->ReceiveDamage(10 - PlayerCutDamege);
+					obj_player->ReceiveDamage(15 - PlayerCutDamege);
 				}
 
 			}
@@ -551,7 +551,7 @@ AbstractScene* Scene_Stage03::ChangeScene()
 #ifdef DEBUG_OFF_03
 
 	//“G‚ÌHP0
-	if (obj_enemy->GetHP() < 0) {
+	if (obj_enemy->GetHP() <= 0) {
 
 		//BGM’âŽ~
 		SoundSystem::StopBGM(BGM::ST03_BGM);
