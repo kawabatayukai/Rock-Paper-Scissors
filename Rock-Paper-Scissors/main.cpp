@@ -21,6 +21,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     ChangeWindowMode(TRUE);                //ウィンドウモードで起動
     //SetWindowSize(1280, 720);
     SetGraphMode(1280, 720, 32);           //ウィンドウサイズを設定
+    SetWindowIconID(123);
     if (DxLib_Init() == -1) return -1;     //DXライブラリの初期化処理
     SetDrawScreen(DX_SCREEN_BACK);         //描画先画面を裏にする
 
