@@ -14,7 +14,7 @@ Enemy_09::Enemy_09(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	speed = 7.0f;
 	dir = 1;
-	hp = 100;
+	hp = 1;
 
 	
 	Rimage = LoadGraph("images/stage09/Stage9_1.png");	//”½ŽËON
