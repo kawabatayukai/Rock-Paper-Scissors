@@ -24,7 +24,7 @@ Effect_ChangePlayer::Effect_ChangePlayer(Jan_Type type, const float& x, const fl
 	}
 
 	//se
-	se_change = LoadSoundMem("Sound/Player/change.wav");
+	se_change = LoadSoundMem("Sound/Player/change2.wav");
 	//SetVolumeSoundMem(255, se_change);
 }
 

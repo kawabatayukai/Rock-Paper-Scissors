@@ -80,11 +80,6 @@ public:
 	//発動するエフェクトの種類（player）
 	EFFECT_TYPE GetPlayerEffect() const { return player_effect; }
 
-	//あいこ相殺エフェクト（player側で行う）
-	void Update_OffsetEffect();
-
-	//あいこ相殺エフェクト描画（player側で行う）
-	void Draw_OffsetEffect() const;
 
 	float GetOffsetEffect_X() const { return effect_x; }
 	float GetOffsetEffect_Y() const { return effect_y; }

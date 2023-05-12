@@ -12,6 +12,8 @@ namespace _CONSTANTS_SB
 {
 	//エフェクト最大生成数
 	const int EFFECT_MAX = 20;
+	//SE Max
+	const int SE_MAX = 5;
 
 	//時計座標
 	const int CLOCK_X = 640;
@@ -35,11 +37,16 @@ Stage_Base::Stage_Base() : blackout_time(0), Prev_EnemyType(Jan_Type::NONE), obj
 	image_clock = LoadGraph("images/Clock/clockback_wood.png");
 	image_clockhand = LoadGraph("images/Clock/clockhand_wood.png");
 	image_clockchar = LoadGraph("images/Clock/clock_str.png");
+
+	//SE
+	Sound_Jangeki::LoadSounds();
+	obj_sejan = new Sound_Jangeki * [_CONSTANTS_SB::SE_MAX];
+	for (int i = 0; i < _CONSTANTS_SB::SE_MAX; i++) obj_sejan[i] = nullptr;
 }
 
 Stage_Base::~Stage_Base()
 {
-
+	Sound_Jangeki::DeleteSounds();
 }
 
 //UI描画
@@ -350,6 +357,28 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy, const Jangeki_
 		}
 	}
 
+	//SEを生成する配列の要素番号
+	int se_count;
+	for (se_count = 0; se_count < _CONSTANTS_SB::SE_MAX; se_count++)
+	{
+		if (obj_sejan[se_count] == nullptr) break;
+		obj_sejan[se_count]->Play();
+
+		//削除
+		if (obj_sejan[se_count]->CheckPlayEnd() == true)
+		{
+			delete obj_sejan[se_count];
+			obj_sejan[se_count] = nullptr;
+		}
+		for (int j = 0; j < (_CONSTANTS_SB::SE_MAX - 1); j++)
+		{
+			if (obj_sejan[j + 1] == nullptr) break;
+			obj_sejan[j] = obj_sejan[j + 1];
+			obj_sejan[j + 1] = nullptr;
+		}
+		se_count--;
+	}
+
 	//playerのじゃん撃をとってくる
 	Jangeki_Base** p_jan = obj_player->GetJangeki();
 	//enemyのじゃん撃をとってくる
@@ -495,8 +524,10 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy, const Jangeki_
 
 			if (p_jan[p]->Hit_Jangeki(e_jan[e]) == true) //当たり
 			{
+				int result = p_jan[p]->CheckAdvantage(e_jan[e]);
+
 				//あいこの場合
-				if (p_jan[p]->CheckAdvantage(e_jan[e]) == 2)
+				if (result == 2)
 				{
 					//じゃん撃間の距離
 					float dx = e_jan[e]->GetX() - p_jan[p]->GetX();
@@ -508,6 +539,17 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy, const Jangeki_
 					obj_effect[effect_count] = new Effect_Jangeki(jan_x, jan_y, e_jan[e]->GetType(), _CHAR_TYPE::NOT_CHARA);
 					effect_count++;
 				}
+				else if (result == 1)   //勝ち
+				{
+					// SE
+					obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::PLAYER_WIN);
+				}
+				else if (result == 0)   //負け
+				{
+					// SE
+					obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::ENEMY_WIN);
+				}
+				else {};
 			}
 
 			//ref反射

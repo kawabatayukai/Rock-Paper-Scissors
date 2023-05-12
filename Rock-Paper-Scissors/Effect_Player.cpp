@@ -7,7 +7,7 @@ Effect_Player::Effect_Player(const float& x, const float& y)
 {
 	image_effect = new int[max_index];
 	LoadDivGraph("images/Effect/recovery2.png", 15, 5, 3, 120, 120, image_effect);
-	se_rec = LoadSoundMem("Sound/Player/kaihuku.wav");
+	se_rec = LoadSoundMem("Sound/Player/recovery.wav");
 	//SetVolumeSoundMem(255, se_rec);
 }
 
