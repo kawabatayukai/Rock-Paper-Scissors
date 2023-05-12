@@ -291,6 +291,12 @@
     <ClCompile Include="Scene_Title_GameLevel.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="FPS_Controll.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Jangeki_Bounds.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -488,5 +494,16 @@
     <ClInclude Include="Scene_Title_GameLevel.h">
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="FPS_Controll.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_Bounds.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="window\Resource.rc">
+      <Filter>ソース ファイル</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
