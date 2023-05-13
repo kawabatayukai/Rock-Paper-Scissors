@@ -15,7 +15,7 @@
 //コンストラクタ
 TitleScene::TitleScene()
 {
-	TitleImage = LoadGraph("images/JankenWorldTitle.png");
+	TitleImage = LoadGraph("images/JankenWorldTitle仮.png");
 
 	//フォントデータを作成
 	font_title = CreateFontToHandle("Yu Gothic UI", 50, 3, DX_FONTTYPE_ANTIALIASING_4X4);
@@ -64,18 +64,18 @@ void TitleScene::Draw() const
 {
 	DrawGraph(0, 0, TitleImage, FALSE);
 
-	DrawStringToHandle(70, 150, "START", 0xf, font_title);
-	DrawStringToHandle(70, 195, "HELP", 0xf, font_title);
-	DrawStringToHandle(70, 245, "RANKING", 0xf, font_title);
-	DrawStringToHandle(70, 295, "END", 0xf, font_title);
+	DrawStringToHandle(70, 250, "START", 0xf, font_title);
+	DrawStringToHandle(70, 295, "HELP", 0xf, font_title);
+	DrawStringToHandle(70, 345, "RANKING", 0xf, font_title);
+	DrawStringToHandle(70, 395, "END", 0xf, font_title);
 
 	
 
 	//メニューカーソル
-	DrawTriangle(40, 155 + (T_selectnum * 50), 60, 170 + (T_selectnum * 50), 40, 185 + (T_selectnum * 50), GetColor(255, 0, 0), TRUE);
+	DrawTriangle(40, 255 + (T_selectnum * 50), 60, 270 + (T_selectnum * 50), 40, 285 + (T_selectnum * 50), GetColor(255, 0, 0), TRUE);
 
 	//デバッグ
-	DrawStringToHandle(10, 650, "RT + A で選択画面(開発)", 0xf, font_debug);
+	DrawStringToHandle(10, 670, "RT + A で選択画面(開発)", 0xf, font_debug);
 }
 
 //シーンの変更
