@@ -111,21 +111,21 @@ void Effect_Jangeki::Draw() const
 	{
 		//エフェクト
 		SetDrawBlendMode(DX_BLENDMODE_ADD, GetRand(55) + 200);
-		DrawRotaGraph(play_x, play_y, 1, GetRand(360), image_sub, TRUE);
+		DrawRotaGraphF(play_x, play_y, 1, GetRand(360), image_sub, TRUE);
 
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 230);
-		DrawRotaGraph(play_x, play_y, 1.0, 0, image_effect[index_effect], TRUE);
+		DrawRotaGraphF(play_x, play_y, 1.0, 0, image_effect[index_effect], TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 	else
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ADD, 200);
-		DrawRotaGraph(play_x, play_y, 0.6, rotation, image_effect[index_effect], TRUE);
+		DrawRotaGraphF(play_x, play_y, 0.6, rotation, image_effect[index_effect], TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 		//エフェクト
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 230);
-		DrawRotaGraph(play_x, play_y, 0.7, rotation, image_effect[index_effect], TRUE);
+		DrawRotaGraphF(play_x, play_y, 0.7, rotation, image_effect[index_effect], TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 }

@@ -4,7 +4,7 @@
 
 
 //seÇÃçƒê∂éûä‘
-namespace SE_TIME
+namespace SE_TIME_JAN
 {
 	const int PLAYER_WIN = 80;
 	const int ENEMY_WIN = 90;
@@ -20,27 +20,27 @@ Sound_Jangeki::Sound_Jangeki(SE_JAN se_type) :se_type(se_type),play_se(0),play_t
 	{
 	case SE_JAN::PLAYER_WIN:
 		play_se = LoadSoundMem("Sound/Jangeki/win1.wav");
-		play_time = SE_TIME::PLAYER_WIN;
+		play_time = SE_TIME_JAN::PLAYER_WIN;
 		break;
 
 	case SE_JAN::ENEMY_WIN:
 		play_se = LoadSoundMem("Sound/Jangeki/win2.wav");
-		play_time = SE_TIME::ENEMY_WIN;
+		play_time = SE_TIME_JAN::ENEMY_WIN;
 		break;
 
 	case SE_JAN::ONEMORE:
 		play_se = LoadSoundMem("Sound/Jangeki/aiko.wav");
-		play_time = SE_TIME::ONEMORE;
+		play_time = SE_TIME_JAN::ONEMORE;
 		break;
 
 	case SE_JAN::HIT_JAN:
 		play_se = LoadSoundMem("Sound/Jangeki/shoot.wav");
-		play_time = SE_TIME::HIT_JANGEKI;
+		play_time = SE_TIME_JAN::HIT_JANGEKI;
 		break;
 
 	case SE_JAN::FIRE_JAN:
 		play_se = LoadSoundMem("Sound/Jangeki/jan_fire1.wav");
-		play_time = SE_TIME::FIRE_JANGEKI;
+		play_time = SE_TIME_JAN::FIRE_JANGEKI;
 		break;
 
 	default:

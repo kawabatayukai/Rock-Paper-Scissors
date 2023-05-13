@@ -5,6 +5,7 @@
 #include"MobEnemy_05.h"
 #include<vector>
 
+
 //è’ìÀîªíËÇ»Çµéûä‘   5ïb
 #define NOT_COLLISION_TIME  300
 
@@ -41,10 +42,15 @@ Stage_Base::Stage_Base() : blackout_time(0), Prev_EnemyType(Jan_Type::NONE), obj
 	//SE
 	obj_sejan = new Sound_Jangeki * [_CONSTANTS_SB::SE_MAX];
 	for (int i = 0; i < _CONSTANTS_SB::SE_MAX; i++) obj_sejan[i] = nullptr;
+
+	//SE Player
+	Sound_Player::LoadPlayerSound();
 }
 
 Stage_Base::~Stage_Base()
 {
+	//ÉTÉEÉìÉhÇçÌèú
+	Sound_Player::DeletePlayerSound();
 }
 
 //UIï`âÊ

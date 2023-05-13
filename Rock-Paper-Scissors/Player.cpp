@@ -90,6 +90,9 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 	//SE
 	obj_se = new Sound_Jangeki * [10];
 	for (int i = 0; i < 10; i++) obj_se[i] = nullptr;
+
+	obj_pse = new Sound_Player * [5];
+	for (int i = 0; i < 5; i++) obj_pse[i] = nullptr;
 }
 
 //ƒfƒXƒgƒ‰ƒNƒ^
@@ -116,6 +119,7 @@ void Player::Update()
 		Recover_HP(20);
 
 		if (obj_effect == nullptr) obj_effect = new Effect_Player(x, y);
+		Create_SEPlayer(SE_PLAYER::RECOVERY);  //se
 	}
 
 	//ƒGƒtƒFƒNƒg
@@ -1741,6 +1745,7 @@ void Player::Update_Jangeki()
 			obj_effectchange = nullptr;
 		}
 		if (obj_effectchange == nullptr)obj_effectchange = new Effect_ChangePlayer(select_JanType, x, y);
+		Create_SEPlayer(SE_PLAYER::CHANGE);  //se
 	}
 
 	//”z—ñ‚Ì‹ó—v‘f
@@ -1767,7 +1772,7 @@ void Player::Update_Jangeki()
 				obj_jangeki[jan_count] = new Jangeki_Player(x, y, radius, speed, select_JanType);
 			}
 
-			Create_SE();  //SE¶¬
+			Create_SEJan();  //SE¶¬
 
 			//ŠÔŠuÝ’è
 			jan_interval = PLAYER_JAN_INTERVAL;
@@ -1847,8 +1852,8 @@ bool Player::IsDeathPlayer() const
 //SEÄ¶
 void Player::Play_SE()
 {
-	int se_count;
-	for (se_count = 0; se_count < 10; se_count++)
+	//jan
+	for (int se_count = 0; se_count < 10; se_count++)
 	{
 		if (obj_se[se_count] == nullptr) break;
 		obj_se[se_count]->Play();
@@ -1868,10 +1873,32 @@ void Player::Play_SE()
 			se_count--;
 		}
 	}
+
+	//player
+	for (int se_count = 0; se_count < 5; se_count++)
+	{
+		if (obj_pse[se_count] == nullptr) break;
+		obj_pse[se_count]->Play();
+
+		if (obj_pse[se_count]->CheckPlayEnd() == true)
+		{
+			delete obj_pse[se_count];
+			obj_pse[se_count] = nullptr;
+
+			for (int i = se_count; i < (5 - 1); i++)
+			{
+				if (obj_pse[i + 1] == nullptr) break;
+
+				obj_pse[i] = obj_pse[i + 1];
+				obj_pse[i + 1] = nullptr;
+			}
+			se_count--;
+		}
+	}
 }
 
 //SE¶¬
-void Player::Create_SE()
+void Player::Create_SEJan()
 {
 	int se_count;
 	for (se_count = 0; se_count < 10; se_count++)
@@ -1879,5 +1906,16 @@ void Player::Create_SE()
 		if (obj_se[se_count] == nullptr) break;
 	}
 	obj_se[se_count] = new Sound_Jangeki(SE_JAN::FIRE_JAN);
+}
+
+//SE¶¬(player)
+void Player::Create_SEPlayer(const SE_PLAYER& se_type)
+{
+	int se_count;
+	for (se_count = 0; se_count < 5; se_count++)
+	{
+		if (obj_pse[se_count] == nullptr) break;
+	}
+	obj_pse[se_count] = new Sound_Player(se_type);
 }
 

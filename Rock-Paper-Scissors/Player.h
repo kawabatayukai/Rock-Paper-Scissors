@@ -3,7 +3,7 @@
 #include"Effect_Player.h"
 #include"Effect_ChangePlayer.h"
 #include"Sound_Jangeki.h"
-#include<vector>
+#include"Sound_Player.h"
 
 //プレイヤーの状態
 enum class PLAYER_STATE
@@ -72,8 +72,10 @@ public:
 
 	//SE再生
 	void Play_SE();
-	//SE生成
-	void Create_SE();
+	//SE生成(jan)
+	void Create_SEJan();
+	//SE生成(player)
+	void Create_SEPlayer(const SE_PLAYER& se_type);
 
 private:
 	/********************   ジャンプ関係   ********************/
@@ -140,8 +142,8 @@ private:
 	//エフェクト(属性)
 	Effect_ChangePlayer* obj_effectchange;
 	//SE
-	
 	Sound_Jangeki** obj_se;
+	Sound_Player** obj_pse;
 
 	int name_font;
 

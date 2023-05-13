@@ -7,15 +7,12 @@ Effect_Player::Effect_Player(const float& x, const float& y)
 {
 	image_effect = new int[max_index];
 	LoadDivGraph("images/Effect/recovery2.png", 15, 5, 3, 120, 120, image_effect);
-	se_rec = LoadSoundMem("Sound/Player/recovery.wav");
-	//SetVolumeSoundMem(255, se_rec);
 }
 
 //デストラクタ
 Effect_Player::~Effect_Player()
 {
 	delete image_effect;
-	DeleteSoundMem(se_rec);
 }
 
 //更新
@@ -25,7 +22,6 @@ void Effect_Player::Update()
 	{
 		if (index_effect < max_index) index_effect++;
 	}
-	if(CheckSoundMem(se_rec)==0)PlaySoundMem(se_rec, DX_PLAYTYPE_BACK);
 }
 
 //描画
