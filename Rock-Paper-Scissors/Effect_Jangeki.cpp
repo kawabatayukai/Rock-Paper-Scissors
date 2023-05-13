@@ -5,7 +5,7 @@
 Effect_Jangeki::Effect_Jangeki(float play_x, float play_y, Jan_Type type, _CHAR_TYPE character)
 	: play_x(play_x), play_y(play_y), character(character)
 	, frame_count(0), index_effect(0), index_max(0), image_effect(nullptr), finish_effect(false)
-	, rotation(0.0), se(0)
+	, rotation(0.0)
 {
 	if (character != _CHAR_TYPE::NOT_CHARA)
 	{
@@ -52,12 +52,6 @@ Effect_Jangeki::Effect_Jangeki(float play_x, float play_y, Jan_Type type, _CHAR_
 		default:
 			break;
 		}
-
-		//SE
-		se = LoadSoundMem("Sound/Jangeki/shoot.wav");
-
-				//âπó 
-		//ChangeVolumeSoundMem(255, se);
 	}
 	else
 	{ 
@@ -83,12 +77,6 @@ Effect_Jangeki::Effect_Jangeki(float play_x, float play_y, Jan_Type type, _CHAR_
 		default:
 			break;
 		}
-
-		//SE
-		se = LoadSoundMem("Sound/Jangeki/aiko.wav");
-
-		//âπó 
-		ChangeVolumeSoundMem(255, se);
 	}
 }
 
@@ -96,7 +84,6 @@ Effect_Jangeki::Effect_Jangeki(float play_x, float play_y, Jan_Type type, _CHAR_
 Effect_Jangeki::~Effect_Jangeki()
 {
 	delete[] image_effect;
-	DeleteSoundMem(se);
 }
 
 //çXêV
@@ -115,13 +102,6 @@ void Effect_Jangeki::Update()
 	}
 
 	rotation += 0.05;
-
-	//se
-	//if (character == _CHAR_TYPE::NOT_CHARA)
-	{
-		if (CheckSoundMem(se) == 0) PlaySoundMem(se, DX_PLAYTYPE_BACK);
-	}
-	
 }
 
 //ï`âÊ
