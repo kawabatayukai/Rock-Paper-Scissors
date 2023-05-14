@@ -66,8 +66,8 @@ void Scene_Title_GameLevel::Draw() const
 {
 	
 
-	DrawStringToHandle(70, 200, "難易度選択", 0xf, font_title);
-	DrawStringToHandle(70, 350, "NORMAL", 0xf, font_title); 
+	DrawStringToHandle(70, 200, "ゲームモード選択選択", 0xf, font_title);
+	DrawStringToHandle(70, 350, "STANDARD", 0xf, font_title); 
 	DrawStringToHandle(70, 400, "EXTRA JANKEN", 0xf, font_title);
 	DrawStringToHandle(70, 500, "Bボタンで戻る", 0xf, font_title);
 	

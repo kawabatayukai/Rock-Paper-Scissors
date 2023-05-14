@@ -268,8 +268,16 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 
 			case Jan_Result::WIN:     //勝ち
 
-				//オーバーライドされたAfterJanken_WIN()を呼び出す
-				stage_ptr->AfterJanken_WIN();
+				/*難易度が即死モードなら*/
+				if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
+				{
+					enemy->ReceiveDamage(100);
+				}
+				else /*普通のモード*/
+				{
+					//オーバーライドされたAfterJanken_WIN()を呼び出す
+					stage_ptr->AfterJanken_WIN();
+				}
 
 				//じゃん撃を初期化する
 				enemy->Init_Jangeki();

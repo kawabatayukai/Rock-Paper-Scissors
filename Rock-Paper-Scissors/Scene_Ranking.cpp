@@ -39,13 +39,13 @@ void Scene_Ranking::Draw() const
 		/*通常モード*/
 		if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::NORMAL)
 		{
-			DrawFormatString(100, 170 + i * 25, 0xFFFFFF, "%2d位   %10s  スコア：%10d  総合時間： %10d NORMAL", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score, GameData::Get_Total_Time());
+			DrawFormatString(80, 170 + i * 50, 0xFFFFFF, "%2d位   %10s  スコア：%10d  総合時間： %10d NORMAL", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score, GameData::Get_Total_Time());
 		}
 
 		/*即死モード*/
 		if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
 		{
-			DrawFormatString(100, 170 + i * 25, 0xFFFFFF, "%2d位   %10s  スコア：%10d  総合時間： %10d REAL JANKEN", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score, GameData::Get_Total_Time());
+			DrawFormatString(80, 170 + i * 50, 0xFFFFFF, "%2d位   %10s  スコア：%10d  総合時間： %10d EXTRA JANKEN", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score, GameData::Get_Total_Time());
 		}
 	}
 
