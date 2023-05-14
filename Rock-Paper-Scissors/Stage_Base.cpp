@@ -5,6 +5,7 @@
 #include"MobEnemy_05.h"
 #include<vector>
 
+
 //衝突判定なし時間   5秒
 #define NOT_COLLISION_TIME  300
 
@@ -13,7 +14,7 @@ namespace _CONSTANTS_SB
 	//エフェクト最大生成数
 	const int EFFECT_MAX = 20;
 	//SE Max
-	const int SE_MAX = 5;
+	const int SE_MAX = 15;
 
 	//時計座標
 	const int CLOCK_X = 640;
@@ -39,14 +40,17 @@ Stage_Base::Stage_Base() : blackout_time(0), Prev_EnemyType(Jan_Type::NONE), obj
 	image_clockchar = LoadGraph("images/Clock/clock_str.png");
 
 	//SE
-	Sound_Jangeki::LoadSounds();
 	obj_sejan = new Sound_Jangeki * [_CONSTANTS_SB::SE_MAX];
 	for (int i = 0; i < _CONSTANTS_SB::SE_MAX; i++) obj_sejan[i] = nullptr;
+
+	//SE Player
+	Sound_Player::LoadPlayerSound();
 }
 
 Stage_Base::~Stage_Base()
 {
-	Sound_Jangeki::DeleteSounds();
+	//サウンドを削除
+	Sound_Player::DeletePlayerSound();
 }
 
 //UI描画
@@ -125,7 +129,7 @@ void Stage_Base::DrawUI_ON_Enemy(const EnemyBase* enemy) const
 	float draw_y = enemy_y - 100; //描画ｙ
 
 	//属性
-	if (type != Jan_Type::NONE)DrawRotaGraph(draw_x - 20, draw_y + 5, 0.3, 1, typeImage[index], TRUE);
+	if (type != Jan_Type::NONE)DrawRotaGraphF(draw_x - 20, draw_y + 5, 0.3, 1, typeImage[index], TRUE);
 	//枠
 	DrawBoxAA(draw_x - 3, draw_y - 3, draw_x + 103, draw_y + 13, 0xffffff, TRUE);
 	DrawBoxAA(draw_x, draw_y, (draw_x + 100), draw_y + 10, 0x000000, TRUE);
@@ -377,14 +381,17 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy, const Jangeki_
 		{
 			delete obj_sejan[se_count];
 			obj_sejan[se_count] = nullptr;
+
+			//詰める
+			for (int j = 0; j < (_CONSTANTS_SB::SE_MAX - 1); j++)
+			{
+				if (obj_sejan[j + 1] == nullptr) break;
+				obj_sejan[j] = obj_sejan[j + 1];
+				obj_sejan[j + 1] = nullptr;
+			}
+			se_count--;
 		}
-		for (int j = 0; j < (_CONSTANTS_SB::SE_MAX - 1); j++)
-		{
-			if (obj_sejan[j + 1] == nullptr) break;
-			obj_sejan[j] = obj_sejan[j + 1];
-			obj_sejan[j + 1] = nullptr;
-		}
-		se_count--;
+
 	}
 
 	//playerのじゃん撃をとってくる
@@ -420,6 +427,10 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy, const Jangeki_
 						{
 							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y, Jan_Type::PAPER, _CHAR_TYPE::PLAYER);
 							//effect_count++;
+
+							//SE
+							obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::HIT_JAN);
+							//se_count++;
 						}
 					}
 					break;
@@ -434,6 +445,10 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy, const Jangeki_
 						{
 							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y, Jan_Type::ROCK,_CHAR_TYPE::PLAYER);
 							//effect_count++;
+							
+							//SE
+							obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::HIT_JAN);
+							//se_count++;
 						}
 					}
 					break;
@@ -448,6 +463,10 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy, const Jangeki_
 						{
 							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y, Jan_Type::SCISSORS, _CHAR_TYPE::PLAYER);
 							//effect_count++;
+
+						    //SE
+							obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::HIT_JAN);
+							//se_count++;
 						}
 					}
 					break;
@@ -462,6 +481,10 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy, const Jangeki_
 						{
 							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y, p_type, _CHAR_TYPE::PLAYER);
 							//effect_count++;
+
+						    //SE
+							obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::HIT_JAN);
+							//se_count++;
 						}
 					}
 					break;
@@ -490,6 +513,10 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy, const Jangeki_
 				{
 					obj_effect[effect_count] = new Effect_Jangeki(p_x, p_y, e_jan[i]->GetType(), _CHAR_TYPE::ENEMY);
 					//effect_count++;
+
+					//SE
+					obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::HIT_JAN);
+					//se_count++;
 				}
 			}
 		}
@@ -512,6 +539,10 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy, const Jangeki_
 					{
 						obj_effect[effect_count] = new Effect_Jangeki(p_x, p_y, r_jan[r]->GetType(), _CHAR_TYPE::ENEMY);
 						//effect_count++;
+
+					    //SE
+						obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::HIT_JAN);
+						//se_count++;
 					}
 				}
 			}
@@ -546,16 +577,22 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy, const Jangeki_
 
 					obj_effect[effect_count] = new Effect_Jangeki(jan_x, jan_y, e_jan[e]->GetType(), _CHAR_TYPE::NOT_CHARA);
 					effect_count++;
+
+					//SE
+					obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::ONEMORE);
+					//se_count++;
 				}
 				else if (result == 1)   //勝ち
 				{
 					// SE
 					obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::PLAYER_WIN);
+					//se_count++;
 				}
 				else if (result == 0)   //負け
 				{
 					// SE
 					obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::ENEMY_WIN);
+					//se_count++;
 				}
 				else {};
 			}
@@ -569,8 +606,10 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy, const Jangeki_
 					if (r_jan[r] == nullptr) break;              //抜ける
 					if (p_jan[p]->Hit_Jangeki(r_jan[r]) == true) //当たり
 					{
+						int result = p_jan[p]->CheckAdvantage(r_jan[r]);
+
 						//あいこの場合
-						if (p_jan[p]->CheckAdvantage(r_jan[r]) == 2)
+						if (result == 2)
 						{
 							//じゃん撃間の距離
 							float dx = r_jan[r]->GetX() - p_jan[p]->GetX();
@@ -581,7 +620,24 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy, const Jangeki_
 
 							obj_effect[effect_count] = new Effect_Jangeki(jan_x, jan_y, r_jan[r]->GetType(), _CHAR_TYPE::NOT_CHARA);
 							effect_count++;
+
+							//SE
+							obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::ONEMORE);
+							//se_count++;
 						}
+						else if (result == 1)   //勝ち
+						{
+							// SE
+							obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::PLAYER_WIN);
+							//se_count++;
+						}
+						else if (result == 0)   //負け
+						{
+							// SE
+							obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::ENEMY_WIN);
+							//se_count++;
+						}
+						else {};
 					}
 				}
 			}

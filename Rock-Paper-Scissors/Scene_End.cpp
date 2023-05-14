@@ -50,8 +50,8 @@ void EndScene::Draw() const
 	DrawString(450, 500 + PosY, "ステージ9     仲吉  彪流", 0xFFFFFF);
 	DrawString(450, 530 + PosY, "ステージ10    與座  芳弘", 0xFFFFFF);
 	DrawString(450, 565 + PosY, "素材利用", 0xFFFFFF);
-	DrawString(450, 600 + PosY, "　BGM　　　 　ＸＸＸＸ", 0xFFFFFF);
-	DrawString(450, 630 + PosY, "　SE　　　　　ＸＸＸＸＸＸＸＸ", 0xFFFFFF);
+	DrawString(450, 600 + PosY, "　BGM/SE　MusMus https://musmus.main.jp", 0xFFFFFF);
+	DrawString(450, 630 + PosY, "　BGM/SE　効果音ラボ https://soundeffect-lab.info/sound/battle/", 0xFFFFFF);
 }
 
 //シーンの変更

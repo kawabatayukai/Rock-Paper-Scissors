@@ -673,7 +673,7 @@ void Enemy_03::Update_Jangeki()
 			float speed = 4.5f;
 
 			//”ös’e
-			if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+			if (frame_count % 85 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 			
 		 }
 		//HP‚ª70‰º‰ñ‚Á‚½‚ç
