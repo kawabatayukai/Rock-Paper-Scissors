@@ -36,5 +36,7 @@ private:      //‰æ‘œ‚È‚Ç
 	int image_back;        //”wŒi
 	int hp = 50;//•œŠˆHP(”¼•ª‚Ã‚ÂŒ¸‚é)
 	int  attack_pattern = 0;      //UŒ‚ƒpƒ^[ƒ“•Ï”
+	int STAGE02_BGM;
+	
 };
 

@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CharaBase.cpp" />
+    <ClCompile Include="Effect_ChagePlayer.cpp" />
     <ClCompile Include="Effect_Enemy.cpp" />
     <ClCompile Include="Effect_Jangeki.cpp" />
     <ClCompile Include="Effect_Player.cpp" />
@@ -169,8 +170,10 @@
     <ClCompile Include="Enemy_10.cpp" />
     <ClCompile Include="Enemy_Cannon.cpp" />
     <ClCompile Include="Floor.cpp" />
+    <ClCompile Include="FPS_Controll.cpp" />
     <ClCompile Include="GameData.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Item_stage08.cpp" />
     <ClCompile Include="Jangeki_Changespeed.cpp" />
     <ClCompile Include="Jangeki_Coming.cpp" />
     <ClCompile Include="Jangeki_Player.cpp" />
@@ -197,7 +200,7 @@
     <ClCompile Include="Scne_TitleInterval.cpp" />
     <ClCompile Include="SortSave.cpp" />
     <ClCompile Include="Scene_Ranking.cpp" />
-    <ClCompile Include="Scene_InputName.cpp" />
+    <ClCompile Include="Scene_InputNameRanking.cpp" />
     <ClCompile Include="Scene_Stage00.cpp" />
     <ClCompile Include="Scene_Stage01.cpp" />
     <ClCompile Include="Scene_Stage02.cpp" />
@@ -211,13 +214,17 @@
     <ClCompile Include="Scene_Stage10.cpp" />
     <ClCompile Include="Scene_Title.cpp" />
     <ClCompile Include="SoundSystem.cpp" />
+    <ClCompile Include="Sound_Jangeki.cpp" />
+    <ClCompile Include="Sound_Player.cpp" />
     <ClCompile Include="Stage_Base.cpp" />
+    <ClCompile Include="Jangeki_Bounds.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h" />
     <ClInclude Include="CharaBase.h" />
     <ClInclude Include="comon.h" />
     <ClInclude Include="Debug_Manager.h" />
+    <ClInclude Include="Effect_ChangePlayer.h" />
     <ClInclude Include="Effect_Enemy.h" />
     <ClInclude Include="Effect_Jangeki.h" />
     <ClInclude Include="Effect_Player.h" />
@@ -235,8 +242,10 @@
     <ClInclude Include="Enemy_10.h" />
     <ClInclude Include="Enemy_Cannon.h" />
     <ClInclude Include="Floor.h" />
+    <ClInclude Include="FPS_Controll.h" />
     <ClInclude Include="GameData.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="Item_stage08.h" />
     <ClInclude Include="Jangeki_Changespeed.h" />
     <ClInclude Include="Jangeki_Coming.h" />
     <ClInclude Include="Jangeki_Player.h" />
@@ -262,7 +271,7 @@
     <ClInclude Include="Scne_TitleInterval.h" />
     <ClInclude Include="SortSave.h" />
     <ClInclude Include="Scene_Ranking.h" />
-    <ClInclude Include="Scene_InputName.h" />
+    <ClInclude Include="Scene_InputNameRanking.h" />
     <ClInclude Include="Scene_Stage00.h" />
     <ClInclude Include="Scene_Stage01.h" />
     <ClInclude Include="Scene_Stage02.h" />
@@ -276,7 +285,13 @@
     <ClInclude Include="Scene_Stage10.h" />
     <ClInclude Include="Scene_Title.h" />
     <ClInclude Include="SoundSystem.h" />
+    <ClInclude Include="Sound_Jangeki.h" />
+    <ClInclude Include="Sound_Player.h" />
     <ClInclude Include="Stage_Base.h" />
+    <ClInclude Include="Jangeki_Bounds.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="window\Resource.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

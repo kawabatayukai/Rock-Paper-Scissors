@@ -4,6 +4,8 @@
 #include"Scene_GameClear.h"
 #include"DxLib.h"
 #include"GameData.h"
+#include"SoundSystem.h"
+#include"Scene_Ranking.h"
 
 //デバッグモード
 #include"Debug_Manager.h"
@@ -59,7 +61,8 @@ Scene_Stage01::~Scene_Stage01()
 //更新
 void Scene_Stage01::Update()
 {
-
+	//BGM再生
+	SoundSystem::PlayBGM(BGM::STAGE01_BGM);
 
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
@@ -230,15 +233,33 @@ void Scene_Stage01::Update()
 	}
 
 
-	HitCtrl_Floor(obj_player, STAGE_01_FLOOR);     // player　床・壁判定
-	HitCtrl_Floor(obj_enemy, STAGE_01_FLOOR);      // 敵　　　床・壁判定
+	//壁との当たり判定
+	if (obj_player->Get_X() <= 50 || obj_player->Get_X() >= 1220)
+	{
+		HitCtrl_Floor(obj_player, STAGE_01_FLOOR);     // player　床・壁判定
+	}
+
+	//プレイヤーのy座標が減少しない時のみ当たり判定を取得
+	if (obj_player->Get_Y() >= obj_player->Get_OldY() || obj_player->Get_Y() <= -200)
+	{
+		HitCtrl_Floor(obj_player, STAGE_01_FLOOR);     // player　床・壁判定
+	}
+
+	//敵のy座標が減少しない時のみ当たり判定を取得
+	if (obj_enemy->Get_Y() >= obj_enemy->Get_OldY() || obj_enemy->Get_Y() <= -200)
+	{
+		HitCtrl_Floor(obj_enemy, STAGE_01_FLOOR);      // 敵　　　床・壁判定
+
+		//(x - (w / 2))
+		//(y - (h / 2))
+		//(x + (w / 2))
+		//(y + (h / 2))
+	}
 }
 
 //描画
 void Scene_Stage01::Draw() const
 {
-
-
 	//背景
 	DrawGraph(0, 0, image_back, FALSE);
 
@@ -283,15 +304,25 @@ AbstractScene* Scene_Stage01::ChangeScene()
 #ifdef DEBUG_OFF_01
 
 	//敵のHPが0以下
-	if (obj_enemy->GetHP() < 0)
+	if (obj_enemy->GetHP() <= 0)
 	{
+		//BGM停止
+		SoundSystem::StopBGM(BGM::STAGE01_BGM);
+
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(2));
+		//sortSave.setScore(9, 10);	// ランキングデータの１０番目にスコアを登録
+		//sortSave.SortRanking();		// ランキング並べ替え
+		//sortSave.SaveRanking();		// ランキングデータの保存
+		//return new Scene_Ranking();
 	}
 
 	//プレイヤーのHPが0以下
 	if (obj_player->IsDeathPlayer() == true)
 	{
+		//BGM停止
+		SoundSystem::StopBGM(BGM::STAGE01_BGM);
+
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(1));
 	}

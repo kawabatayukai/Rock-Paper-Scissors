@@ -1,6 +1,9 @@
 #pragma once
 #include "CharaBase.h"
 #include"Effect_Player.h"
+#include"Effect_ChangePlayer.h"
+#include"Sound_Jangeki.h"
+#include"Sound_Player.h"
 
 //プレイヤーの状態
 enum class PLAYER_STATE
@@ -16,7 +19,6 @@ class Player : public CharaBase
 public:
 	//コンストラクタ
 	Player(float x, float y);
-	Player(const Player& player);
 
 	~Player();                       //デストラクタ
 
@@ -65,6 +67,15 @@ public:
 
 	//プレイヤーが死亡しているか
 	bool IsDeathPlayer() const;
+
+	void setName(int i, char name[11]);
+
+	//SE再生
+	void Play_SE();
+	//SE生成(jan)
+	void Create_SEJan();
+	//SE生成(player)
+	void Create_SEPlayer(const SE_PLAYER& se_type);
 
 private:
 	/********************   ジャンプ関係   ********************/
@@ -126,15 +137,15 @@ private:
 		DOWN,
 	};
 
-	Effect_Player* obj_effect;  //エフェクト
+	//エフェクト(回復)
+	Effect_Player* obj_effect;
+	//エフェクト(属性)
+	Effect_ChangePlayer* obj_effectchange;
+	//SE
+	Sound_Jangeki** obj_se;
+	Sound_Player** obj_pse;
+
+	int name_font;
+
 	int ui_font;  //ui用フォントハンドル
-
-	bool animflg = false;	//アニメーションフラグ
-
-	int animtimer = 0; //アニメーションタイム
-
-	//アニメーション用画像変数
-	int img_Playeranim[15];	//再生
-
-	int anim_count = 0;  //アニメーション回数
 };

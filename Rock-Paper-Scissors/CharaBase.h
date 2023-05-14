@@ -7,6 +7,13 @@
 
 #define JANGEKI_MAX 60    //じゃん撃最大数
 
+//キャラの種類
+enum class _CHAR_TYPE
+{
+	PLAYER,     
+	ENEMY,
+	NOT_CHARA
+};
 
 //キャラクターの基底クラス　　プレイヤー・敵キャラのベース
 class CharaBase

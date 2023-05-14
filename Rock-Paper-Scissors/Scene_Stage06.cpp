@@ -5,6 +5,7 @@
 #include "Scene_GameClear.h"
 #include "Enemy_02.h"
 #include"GameData.h"
+#include"SoundSystem.h"
 
 //デバッグモード
 #include"Debug_Manager.h"
@@ -29,6 +30,9 @@ Scene_Stage06::Scene_Stage06(const Player* player)
 
 	//背景画像の読み込み
 	stage6_BackImage = LoadGraph("images/stage06/mori32-.png");
+
+	////被弾SEの読み込み
+	//damageSE = LoadSoundMem("Sound/stage06/damage6.mp3");
 
 	//床・壁の用意
 	Init_Floor(STAGE_06_FLOOR);
@@ -70,6 +74,9 @@ Scene_Stage06::~Scene_Stage06()
 //更新
 void Scene_Stage06::Update()
 {
+	//BGM再生
+	SoundSystem::PlayBGM(BGM::STAGE06_BGM);
+
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
@@ -88,6 +95,12 @@ void Scene_Stage06::Update()
 
 	//接触じゃんけん処理
 	Touch_Janken(obj_enemy, this, 6);
+
+	if (obj_enemy->Get_smokeflg() == false)
+	{
+		//Effect
+		Effect_Update_HitJangeki(obj_enemy);
+	}
 
 	//playerのじゃん撃をとってくる
 	Jangeki_Base** player_jangeki = obj_player->GetJangeki();
@@ -161,7 +174,7 @@ void Scene_Stage06::Update()
 	//playerじゃん撃とenemyの当たり判定
 	for (int i = 0; i < JANGEKI_MAX; i++)
 	{
-		if (player_jangeki[i] == nullptr) break;         //じゃん撃がない時は処理しない
+		if (player_jangeki[i] == nullptr || obj_enemy->Get_smokeflg() == true) break;         //じゃん撃がない時は処理しない
 
 		//じゃん撃との当たり判定
 		if (obj_enemy->Hit_Jangeki(player_jangeki[i]) == true)
@@ -177,6 +190,7 @@ void Scene_Stage06::Update()
 				//パーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::PAPER)
 				{
+					//PlaySoundMem(damageSE, DX_PLAYTYPE_NORMAL, FALSE);   //被弾SE
 					obj_enemy->ReceiveDamage(10);     //ダメージが入る
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
@@ -189,6 +203,7 @@ void Scene_Stage06::Update()
 				//グーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::ROCK)
 				{
+					//PlaySoundMem(damageSE, DX_PLAYTYPE_NORMAL, FALSE);   //被弾SE
 					obj_enemy->ReceiveDamage(10);     //ダメージが入る
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
@@ -200,6 +215,7 @@ void Scene_Stage06::Update()
 				//チョキのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::SCISSORS)
 				{
+					//PlaySoundMem(damageSE, DX_PLAYTYPE_NORMAL, FALSE);   //被弾SE
 					obj_enemy->ReceiveDamage(10);     //ダメージが入る
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
@@ -288,6 +304,12 @@ void Scene_Stage06::Draw() const
 		//接触時じゃんけん描画
 		Draw_Janken();
 	}
+
+	if (obj_enemy->Get_smokeflg() == false)
+	{
+		//Effect
+		Effect_Draw_HitJangeki();
+	}
 }
 
 //じゃんけん描画
@@ -316,6 +338,9 @@ AbstractScene* Scene_Stage06::ChangeScene()
 	//敵のHPが0以下
 	if (obj_enemy->GetHP() <= 0)
 	{
+		//BGM停止
+		SoundSystem::StopBGM(BGM::STAGE06_BGM);
+
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(7));
 	}
@@ -323,6 +348,9 @@ AbstractScene* Scene_Stage06::ChangeScene()
 	//プレイヤーのHPが0以下
 	if (obj_player->IsDeathPlayer() == true)
 	{
+		//BGM停止
+		SoundSystem::StopBGM(BGM::STAGE06_BGM);
+
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(6));
 	}

@@ -9,6 +9,7 @@
 #include"Jangeki_Player.h"
 #include"GameData.h"
 #include"SoundSystem.h"
+#include"SortSave.h"
 
 //‚¶‚á‚ñŒ‚”­ËŠÔŠu@i1•bj
 #define PLAYER_JAN_INTERVAL 30
@@ -17,7 +18,7 @@
 //ƒRƒ“ƒXƒgƒ‰ƒNƒ^@@@@@@@@@@@@@  ‚˜@‚™@•@@@‚‚³
 Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ô
 , player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0), player_state(PLAYER_STATE::ALIVE), playerCount2(0), Prev_recoveryScore(0)
-, obj_effect(nullptr)
+, obj_effect(nullptr), obj_effectchange(nullptr)
 {
 	speed = 7.0f;
 	hp = 100;
@@ -32,8 +33,6 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 	head_Image[1] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“–Ú‚È‚µ¶.png");
 	head_Image[2] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“–Ú‚È‚µ‰Eã.png");
 	head_Image[3] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“–Ú‚È‚µ¶ã.png");
-	//head_Image[0] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“Šç‚Ì‚İ‰E.png");
-	//head_Image[1] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“Šç‚Ì‚İ¶.png");
 
 	//–Ú
 	eye_ImageR[0] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“–Ú‚Ì‚İ‰E.png");
@@ -85,54 +84,15 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 	//ƒtƒHƒ“ƒg‚ğì¬
 	ui_font = CreateFontToHandle("ƒƒCƒŠƒI", 20, 4, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
 
-	LoadDivGraph("images/stage09/teleport2.png", 15, 15, 1, 120, 150, img_Playeranim); //img_Playeranim
-}
-
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^iƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^j
-Player::Player(const Player& player) : CharaBase(player.x, player.y, player.w, player.h)  //Šî’êƒNƒ‰ƒX‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ô
-, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0), player_state(PLAYER_STATE::ALIVE), playerCount2(0)
-{
-	//ƒƒ“ƒo•Ï”‚ğˆø”‚ÌƒIƒuƒWƒFƒNƒg‚Ì“à—e‚Å‰Šú‰»‚·‚é
-	// 
-	//
-	//ƒƒ“ƒo‚Éƒ|ƒCƒ“ƒ^•Ï”‚ğŠÜ‚Ş‚½‚ß’ˆÓ
-
-
-/************ Šî’êƒNƒ‰ƒX@CharaBase@‚Ì“à—e ************/
-
-	this->speed = player.speed;       //ƒXƒs[ƒh
-	this->hp = player.hp;          //HP
-	this->dir = player.dir;         //Œü‚«
-	this->land_flg = player.land_flg;    //Ú’nƒtƒ‰ƒO
-
-	Init_Jangeki();       //‚¶‚á‚ñŒ‚‚ğ—pˆÓi‚¶‚á‚ñŒ‚‚Íˆø‚«Œp‚ª‚È‚¢j
-
-/************* ‚±‚±‚Ü‚Å@CharaBase@‚Ì“à—e *************/
-
-
-	//this->image = player.image;             //ƒvƒŒƒCƒ„[‰æ‘œ
-	this->select_JanType = player.select_JanType;    //‘I‘ğ‚µ‚½"è"
-	this->jan_angle = player.jan_angle;              //‚¶‚á‚ñŒ‚Šp“x
-	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ALL‰æ‘œ˜r–³‚µ.png", 10, 5, 2, 100, 100, image[0]);
-	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image_JanType);  //‚¶‚á‚ñŒ‚‰æ‘œ
-	image_setsumei = LoadGraph("images/Janken/Setumei50ptg.png");
-	image_set_circle = LoadGraph("images/Janken/Setumei_Select50.png");
-	image_set_LTRT = LoadGraph("images/Janken/Setumei_LTRT_235_105.png");
-	image_set_GPT = LoadGraph("images/Janken/Setumei_GTP.png");
-
-	armL_Image[0] = LoadGraph("images/˜r‚Ì‚İ‚®[h¶.png");
-	armR_Image[0] = LoadGraph("images/˜r‚Ì‚İ‚®[h‰E.png");
-
-	armL_Image[1] = LoadGraph("images/˜r‚Ì‚İ‚¿‚å‚«¶.png");
-	armR_Image[1] = LoadGraph("images/˜r‚Ì‚İ‚¿‚å‚«‰E.png");
-
-	armL_Image[2] = LoadGraph("images/˜r‚Ì‚İ‚Ï[¶.png");
-	armR_Image[2] = LoadGraph("images/˜r‚Ì‚İ‚Ï[‰E.png");
-
-	hpImage = LoadGraph("images/HitPoint.png");
-
 	//ƒtƒHƒ“ƒg‚ğì¬
-	ui_font = CreateFontToHandle("ƒƒCƒŠƒI", 20, 3, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
+	name_font = CreateFontToHandle("ƒƒCƒŠƒI", 20, 4, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
+
+	//SE
+	obj_se = new Sound_Jangeki * [10];
+	for (int i = 0; i < 10; i++) obj_se[i] = nullptr;
+
+	obj_pse = new Sound_Player * [5];
+	for (int i = 0; i < 5; i++) obj_pse[i] = nullptr;
 }
 
 //ƒfƒXƒgƒ‰ƒNƒ^
@@ -159,6 +119,7 @@ void Player::Update()
 		Recover_HP(20);
 
 		if (obj_effect == nullptr) obj_effect = new Effect_Player(x, y);
+		Create_SEPlayer(SE_PLAYER::RECOVERY);  //se
 	}
 
 	//ƒGƒtƒFƒNƒg
@@ -172,6 +133,19 @@ void Player::Update()
 		{
 			delete obj_effect;
 			obj_effect = nullptr;
+		}
+	}
+	//ƒGƒtƒFƒNƒg
+	if (obj_effectchange != nullptr)
+	{
+		obj_effectchange->SetPlayerLocation(x, y);
+		obj_effectchange->Update();
+
+		//Ä¶I—¹
+		if (obj_effectchange->IsEffectFinished() == true)
+		{
+			delete obj_effectchange;
+			obj_effectchange = nullptr;
 		}
 	}
 
@@ -244,7 +218,7 @@ void Player::Update()
 			player_state = PLAYER_STATE::DEATH_END;
 		}
 	}
-
+	
 	//‚¶‚á‚ñŒ‚
 	Update_Jangeki();
 
@@ -270,9 +244,6 @@ void Player::Update()
 
 
 //````````````````````````@Æ€@```````````````````````````
-
-	static double old_angle;
-
 	//‰EƒXƒeƒBƒbƒN‚ÌƒAƒiƒƒO“ü—Í‚ğæ“¾
 	double right_x = static_cast<double>(KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X));   //‚˜
 	double right_y = static_cast<double>(KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y));   //‚™
@@ -363,18 +334,11 @@ void Player::Update()
 			jan_angle = M_PI / -2;
 		}
 	}
-
-	//Šp“x‚ğ•Û‚·‚é
-	if (old_angle != jan_angle)
-	{
-       old_angle = jan_angle;
-	}
-	
-
 //```````````````````````````````````````````````````````
+	Play_SE();   //Œø‰Ê‰¹
 }
 
-/* “ª‚Ì•`‰æE“®‚«(ŠÔ‚ª‚ ‚Á‚½‚ç)*/
+/* “ª‚Ì•`‰æE“®‚«)*/
 void Player::HeadDrawMove() const
 {
 	///*********************
@@ -383,8 +347,8 @@ void Player::HeadDrawMove() const
 	//*                    *
 	//*********************/
 
-	//DrawRotaGraph(x + 3, y - 22, 1.0f, M_PI - jan_angle, head_Image[0], TRUE);
-
+	int x = static_cast<int>(this->x);
+	int y = static_cast<int>(this->y);
 	/*HP‚ª”¼•ªˆÈã‚Ì*/
 	if (this->hp > 50)
 	{
@@ -485,7 +449,7 @@ void Player::HeadDrawMove() const
 		}*/
 	}
 	/*HP‚ª”¼•ªˆÈ‰º‚Ì*/
-	else if (this->hp < 50)
+	else if (this->hp <= 50)
 	{
 		/*‰EŒü‚«*/
 		if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 0)
@@ -631,6 +595,9 @@ void Player::EyeDrawMove() const
 	//*   –Ú‚Ì•`‰æ‚Ì‚İ     *
 	//*                    *
 	//*********************/
+
+	int x = static_cast<int>(this->x);
+	int y = static_cast<int>(this->y);
 
 	/*‰EŒü‚«*/
 	if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 0)
@@ -1281,6 +1248,12 @@ void Player::Draw() const
 	if (player_state == PLAYER_STATE::ALIVE)
 	{
 		//ƒGƒtƒFƒNƒg
+		if (obj_effectchange != nullptr)
+		{
+			obj_effectchange->Draw_Back();
+		}
+		else {};
+		//ƒGƒtƒFƒNƒg
 		if (obj_effect != nullptr)
 		{
 			obj_effect->Draw_Back();
@@ -1299,7 +1272,8 @@ void Player::Draw() const
 			int vx = static_cast<int>(550 * cos(jan_angle));
 			int vy = static_cast<int>(550 * sin(jan_angle));
 
-			DrawLineAA(x, y, x + vx, y - vy, 0xffff00, 3);
+			/*^‚Á’¼‚®‚Èü‚ÌÆ€æ*/
+			//DrawLineAA(x, y, x + vx, y - vy, 0xffff00, 3); 
 
 			/*˜r‚Ì•`‰æE“®‚«*/
 			ArmDrawMove();
@@ -1312,6 +1286,18 @@ void Player::Draw() const
 
 		//–Ú
 		EyeDrawMove();
+
+		//ƒGƒtƒFƒNƒg
+		if (obj_effectchange != nullptr)
+		{
+			obj_effectchange->Draw_Front();
+		}
+		else {};
+		//ƒGƒtƒFƒNƒg
+		if (obj_effect != nullptr)
+		{
+			obj_effect->Draw_Front();
+		}
 	}
 	else
 	{
@@ -1324,7 +1310,11 @@ void Player::Draw() const
 	//ƒeƒXƒg ‘I‘ğ‚¶‚á‚ñŒ‚
 	DrawStringToHandle(30, 150, "RB : ”­Ë", 0xffffff, ui_font);
 	DrawStringToHandle(30, 180, "LB : ƒWƒƒƒ“ƒv", 0xffffff, ui_font);
-	//DrawFormatString(50, 200,0x000000, "%d", M_PI - jan_angle);
+
+	//–¼‘O•\¦
+	const char* name = sortSave.getRankingData(9).name;
+	int str_w = GetDrawStringWidthToHandle(name, static_cast<int>(sizeof(name)), name_font);
+	DrawStringToHandle((static_cast<int>(x) - (str_w / 2)), static_cast<int>(y) - 80, name, 0x00ff00, name_font);
 
 	//ƒeƒXƒg 110
 	int circle_x = 0;
@@ -1384,12 +1374,6 @@ void Player::Draw() const
 		DrawTriangleAA(234.f, 17.f, 234.f, 39.f, 244.f, 28.f, 0xffa500, TRUE);
 		DrawBoxAA(207.f, 24.f, 234.f, 32.f, 0xffa500, TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	}
-
-	/*ƒeƒŒƒ|[ƒg‚ÌƒAƒjƒ[ƒVƒ‡ƒ“*/
-	if (animflg == true)
-	{
-		if(DrawGraph(x - 50, y - 50, img_Playeranim[animtimer / 2 % 15], TRUE));
 	}
 }
 
@@ -1719,16 +1703,17 @@ void Player::Update_Jangeki()
 
 	/*********************** «« ”­ËE¶¬ «« ***********************/
 
-			//LT,RT‚Å”­Ë‚·‚é‚¶‚á‚ñŒ‚‘®«‚ğ‘I‘ğiƒZƒbƒgj‚·‚é
+	//LT,RT‚Å”­Ë‚·‚é‚¶‚á‚ñŒ‚‘®«‚ğ‘I‘ğiƒZƒbƒgj‚·‚é
 	static int select_num;
 
-	if (KeyManager::OnPadClicked_RT()) select_num++, animflg = true; //ƒAƒjƒ[ƒVƒ‡ƒ“ŠJn;
+	if (KeyManager::OnPadClicked_RT()) select_num++;
 	if (select_num > 2) select_num = 0;
 
-	if (KeyManager::OnPadClicked_LT()) select_num--, animflg = true; //ƒAƒjƒ[ƒVƒ‡ƒ“ŠJn;
+	if (KeyManager::OnPadClicked_LT()) select_num--;
 	if (select_num < 0) select_num = 2;
 
-	
+	//‘O‰ñ‚Ì‘®«
+	Jan_Type old_type = select_JanType;
 
 	// B,Y,X@ƒ{ƒ^ƒ“‚Å”­Ë‚·‚é‚¶‚á‚ñŒ‚‘®«‚ğ‘I‘ğiƒZƒbƒgj‚·‚é
 	if (KeyManager::OnPadClicked(PAD_INPUT_B))         //Bƒ{ƒ^ƒ“
@@ -1736,68 +1721,32 @@ void Player::Update_Jangeki()
 		//  ƒO[‚ğ‘I‘ğ 
 		select_JanType = Jan_Type::ROCK;
 		select_num = 2;
-		animflg = true; //ƒAƒjƒ[ƒVƒ‡ƒ“ŠJn
 	}
 	else if (KeyManager::OnPadClicked(PAD_INPUT_4))    //Yƒ{ƒ^ƒ“
 	{
 		//  ƒ`ƒ‡ƒL‚ğ‘I‘ğ 
 		select_JanType = Jan_Type::SCISSORS;
 		select_num = 1;
-		animflg = true; //ƒAƒjƒ[ƒVƒ‡ƒ“ŠJn
 	}
 	else if (KeyManager::OnPadClicked(PAD_INPUT_3))    //Xƒ{ƒ^ƒ“
 	{
 		//  ƒp[‚ğ‘I‘ğ 
 		select_JanType = Jan_Type::PAPER;
 		select_num = 0;
-		animflg = true; //ƒAƒjƒ[ƒVƒ‡ƒ“ŠJn
 	}
-	else
+	else{}
+
+	if (old_type != select_JanType)
 	{
-
-	}
-	switch (select_num)
-	{
-	case 0:
-		select_JanType = Jan_Type::PAPER;
-		break;
-
-	case 1:
-		select_JanType = Jan_Type::SCISSORS;
-		break;
-
-	case 2:
-		select_JanType = Jan_Type::ROCK;
-		break;
-
-	default:
-		break;
-	}
-
-	/*ƒAƒjƒ[ƒVƒ‡ƒ“‚Ìˆ—*/
-	if (animflg == true)
-	{
-		animtimer++;
-
-		if (animtimer / 3 % 15 == 14)
+		//ƒGƒtƒFƒNƒg¶¬
+		if (obj_effectchange != nullptr)
 		{
-
-			if (anim_count == 0)
-			{
-				animtimer = 0;
-				anim_count = 1;
-			}
-			else
-			{
-				animtimer = 0;
-				animflg = false;
-				anim_count = 0;
-			}
-
+			delete obj_effectchange;
+			obj_effectchange = nullptr;
 		}
+		if (obj_effectchange == nullptr)obj_effectchange = new Effect_ChangePlayer(select_JanType, x, y);
+		Create_SEPlayer(SE_PLAYER::CHANGE);  //se
 	}
-
-	//select_JanType = static_cast<Jan_Type>(select_num);
 
 	//”z—ñ‚Ì‹ó—v‘f
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
@@ -1823,6 +1772,8 @@ void Player::Update_Jangeki()
 				obj_jangeki[jan_count] = new Jangeki_Player(x, y, radius, speed, select_JanType);
 			}
 
+			Create_SEJan();  //SE¶¬
+
 			//ŠÔŠuİ’è
 			jan_interval = PLAYER_JAN_INTERVAL;
 		}
@@ -1844,6 +1795,7 @@ void Player::Create_Homing(int jan_count, float x, float y, float r, float speed
 	
 	//ƒz[ƒ~ƒ“ƒO‚ğ¶¬
 	obj_jangeki[jan_count] = new Jangeki_Homing(x, y, r, speed, type);
+	obj_jangeki[jan_count]->SetPlayerHoming();
 }
 
 //“G‚ÌÀ•W‚ğæ“¾
@@ -1896,3 +1848,74 @@ bool Player::IsDeathPlayer() const
 	}
 	return false;
 }
+
+//SEÄ¶
+void Player::Play_SE()
+{
+	//jan
+	for (int se_count = 0; se_count < 10; se_count++)
+	{
+		if (obj_se[se_count] == nullptr) break;
+		obj_se[se_count]->Play();
+
+		if (obj_se[se_count]->CheckPlayEnd() == true)
+		{
+			delete obj_se[se_count];
+			obj_se[se_count] = nullptr;
+
+			for (int i = se_count; i < (10 - 1); i++)
+			{
+				if (obj_se[i + 1] == nullptr) break;
+
+				obj_se[i] = obj_se[i + 1];
+				obj_se[i + 1] = nullptr;
+			}
+			se_count--;
+		}
+	}
+
+	//player
+	for (int se_count = 0; se_count < 5; se_count++)
+	{
+		if (obj_pse[se_count] == nullptr) break;
+		obj_pse[se_count]->Play();
+
+		if (obj_pse[se_count]->CheckPlayEnd() == true)
+		{
+			delete obj_pse[se_count];
+			obj_pse[se_count] = nullptr;
+
+			for (int i = se_count; i < (5 - 1); i++)
+			{
+				if (obj_pse[i + 1] == nullptr) break;
+
+				obj_pse[i] = obj_pse[i + 1];
+				obj_pse[i + 1] = nullptr;
+			}
+			se_count--;
+		}
+	}
+}
+
+//SE¶¬
+void Player::Create_SEJan()
+{
+	int se_count;
+	for (se_count = 0; se_count < 10; se_count++)
+	{
+		if (obj_se[se_count] == nullptr) break;
+	}
+	obj_se[se_count] = new Sound_Jangeki(SE_JAN::FIRE_JAN);
+}
+
+//SE¶¬(player)
+void Player::Create_SEPlayer(const SE_PLAYER& se_type)
+{
+	int se_count;
+	for (se_count = 0; se_count < 5; se_count++)
+	{
+		if (obj_pse[se_count] == nullptr) break;
+	}
+	obj_pse[se_count] = new Sound_Player(se_type);
+}
+

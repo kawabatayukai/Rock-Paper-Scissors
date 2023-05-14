@@ -2,8 +2,9 @@
 #include"KeyManager.h"
 #include"DxLib.h"
 #include"GameData.h"
-
+#include"MobEnemy_05.h"
 #include<vector>
+
 
 //衝突判定なし時間   5秒
 #define NOT_COLLISION_TIME  300
@@ -12,6 +13,8 @@ namespace _CONSTANTS_SB
 {
 	//エフェクト最大生成数
 	const int EFFECT_MAX = 20;
+	//SE Max
+	const int SE_MAX = 15;
 
 	//時計座標
 	const int CLOCK_X = 640;
@@ -24,6 +27,7 @@ Stage_Base::Stage_Base() : blackout_time(0), Prev_EnemyType(Jan_Type::NONE), obj
 
 	//                           サイズ 幅              外枠
 	font = CreateFontToHandle(NULL, 60, 3, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
+	font_score = CreateFontToHandle("メイリオ", 30, 5, DX_FONTTYPE_ANTIALIASING_EDGE, - 1,1);
 
 	//エフェクト初期化
 	obj_effect = new Effect_Jangeki * [_CONSTANTS_SB::EFFECT_MAX];
@@ -34,11 +38,19 @@ Stage_Base::Stage_Base() : blackout_time(0), Prev_EnemyType(Jan_Type::NONE), obj
 	image_clock = LoadGraph("images/Clock/clockback_wood.png");
 	image_clockhand = LoadGraph("images/Clock/clockhand_wood.png");
 	image_clockchar = LoadGraph("images/Clock/clock_str.png");
+
+	//SE
+	obj_sejan = new Sound_Jangeki * [_CONSTANTS_SB::SE_MAX];
+	for (int i = 0; i < _CONSTANTS_SB::SE_MAX; i++) obj_sejan[i] = nullptr;
+
+	//SE Player
+	Sound_Player::LoadPlayerSound();
 }
 
 Stage_Base::~Stage_Base()
 {
-
+	//サウンドを削除
+	Sound_Player::DeletePlayerSound();
 }
 
 //UI描画
@@ -49,14 +61,8 @@ void Stage_Base::DrawUI(Jan_Type type, int hp) const
 	int color = 0x00ff00;    //HPバーの色
 
 	//制限時間描画
-	//DrawFormatStringToHandle(500, 20, 0x00ff00, font, "%d分%d秒", GameData::Get_Each_Time() / 3600, GameData::Get_Each_Time() / 60);
-	DrawFormatStringToHandle(500, 20, 0x00ff00, font, "%d : %d", GameData::Get_Each_Time_Min(), GameData::Get_Each_Time_Sec(), 0xffffff);
-
-	//スコア表示
-	DrawFormatString(20, 220, 0xffffff, "スコア：%d", GameData::Get_Score());
-
 	//スコア
-	DrawFormatString(1050, 150, 0x00ff00, "Score : %d", GameData::Get_Score());
+	DrawFormatStringToHandle(950, 80, 0xffffff, font_score, "Score : %d", GameData::Get_Score(),0x000000);
 
 	// ------------------------------ 時計 ------------------------------------
 	//現在のパーセンテージ(扇形)
@@ -123,7 +129,7 @@ void Stage_Base::DrawUI_ON_Enemy(const EnemyBase* enemy) const
 	float draw_y = enemy_y - 100; //描画ｙ
 
 	//属性
-	if (type != Jan_Type::NONE)DrawRotaGraph(draw_x - 20, draw_y + 5, 0.3, 1, typeImage[index], TRUE);
+	if (type != Jan_Type::NONE)DrawRotaGraphF(draw_x - 20, draw_y + 5, 0.3, 1, typeImage[index], TRUE);
 	//枠
 	DrawBoxAA(draw_x - 3, draw_y - 3, draw_x + 103, draw_y + 13, 0xffffff, TRUE);
 	DrawBoxAA(draw_x, draw_y, (draw_x + 100), draw_y + 10, 0x000000, TRUE);
@@ -241,8 +247,16 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 
 			case Jan_Result::LOSE:    //負け
 
-				//オーバーライドされたAfterJanken_LOSE()を呼び出す
-				stage_ptr->AfterJanken_LOSE();
+				/*難易度が即死モードなら*/
+				if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
+				{
+					obj_player->ReceiveDamage(100); //即死
+				}
+				else /*普通のモード*/
+				{
+					//オーバーライドされたAfterJanken_LOSE()を呼び出す
+					stage_ptr->AfterJanken_LOSE();
+				}
 
 				//じゃん撃を初期化する
 				enemy->Init_Jangeki();
@@ -304,7 +318,7 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 
 
 //じゃん撃ヒット時エフェクト 処理
-void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
+void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy, const Jangeki_Reflection* ref)
 {
 	//敵の座標
 	float e_x = enemy->GetX();
@@ -322,9 +336,12 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 	{
 		//空なら終了
 		if (obj_effect[effect_count] == nullptr) break;
-
 		obj_effect[effect_count]->Update();
 
+		if (obj_effect[effect_count]->GetCharacterType() == _CHAR_TYPE::ENEMY)
+			obj_effect[effect_count]->SetCharacterLocation(obj_player->GetX(), obj_player->GetY());
+		else if (obj_effect[effect_count]->GetCharacterType() == _CHAR_TYPE::PLAYER)
+			obj_effect[effect_count]->SetCharacterLocation(enemy->GetX(), enemy->GetY());
 		//削除
 		if (obj_effect[effect_count]->Check_PlayEnd() == true)
 		{
@@ -344,12 +361,38 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 		}
 	}
 
+	//SEを生成する配列の要素番号
+	int se_count;
+	for (se_count = 0; se_count < _CONSTANTS_SB::SE_MAX; se_count++)
+	{
+		if (obj_sejan[se_count] == nullptr) break;
+		obj_sejan[se_count]->Play();
+
+		//削除
+		if (obj_sejan[se_count]->CheckPlayEnd() == true)
+		{
+			delete obj_sejan[se_count];
+			obj_sejan[se_count] = nullptr;
+
+			//詰める
+			for (int j = 0; j < (_CONSTANTS_SB::SE_MAX - 1); j++)
+			{
+				if (obj_sejan[j + 1] == nullptr) break;
+				obj_sejan[j] = obj_sejan[j + 1];
+				obj_sejan[j + 1] = nullptr;
+			}
+			se_count--;
+		}
+
+	}
+
+	//playerのじゃん撃をとってくる
+	Jangeki_Base** p_jan = obj_player->GetJangeki();
+	//enemyのじゃん撃をとってくる
+	Jangeki_Base** e_jan = enemy->GetJangeki();
 
 	//--------------------  playerじゃん撃とenemy  -------------------------------------
-	{
-		//playerのじゃん撃をとってくる
-		Jangeki_Base** p_jan = obj_player->GetJangeki();
-
+	
 		//playerじゃん撃とenemyの当たり判定
 		for (int i = 0; i < JANGEKI_MAX; i++)
 		{
@@ -360,6 +403,8 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 			if (enemy->Hit_Jangeki(p_jan[i]) == true)
 			{
 				Jan_Type p_type = p_jan[i]->GetType();  //当たったじゃん撃の属性
+
+				
 
 				//不利属性のみ
 				switch (enemy->GetType())
@@ -372,7 +417,12 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 						//エフェクト生成
 						if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
 						{
-							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y);
+							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y, Jan_Type::PAPER, _CHAR_TYPE::PLAYER);
+							//effect_count++;
+
+							//SE
+							obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::HIT_JAN);
+							//se_count++;
 						}
 					}
 					break;
@@ -385,7 +435,12 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 						//エフェクト生成
 						if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
 						{
-							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y);
+							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y, Jan_Type::ROCK,_CHAR_TYPE::PLAYER);
+							//effect_count++;
+							
+							//SE
+							obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::HIT_JAN);
+							//se_count++;
 						}
 					}
 					break;
@@ -393,12 +448,35 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 				case Jan_Type::PAPER:                          //敵の属性　パー
 
 					//チョキのみ有効
-					if (p_type == Jan_Type::ROCK)
+					if (p_type == Jan_Type::SCISSORS)
 					{
 						//エフェクト生成
 						if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
 						{
-							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y);
+							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y, Jan_Type::SCISSORS, _CHAR_TYPE::PLAYER);
+							//effect_count++;
+
+						    //SE
+							obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::HIT_JAN);
+							//se_count++;
+						}
+					}
+					break;
+
+				case Jan_Type::NONE:                            //属性なし
+
+					//反射じゃん撃に当てることで生成されるホーミングじゃん撃のみ有効
+					if (p_jan[i]->IsGetPlayerHoming() == true)
+					{
+						//エフェクト生成
+						if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
+						{
+							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y, p_type, _CHAR_TYPE::PLAYER);
+							//effect_count++;
+
+						    //SE
+							obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::HIT_JAN);
+							//se_count++;
 						}
 					}
 					break;
@@ -408,14 +486,11 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 				}
 			}
 		}
-	}
+	
 	//----------------------------------------------------------------------------------
 
 	//--------------------  enemyじゃん撃とplayer  -------------------------------------
 	{
-		//enemyのじゃん撃をとってくる
-		Jangeki_Base** e_jan = enemy->GetJangeki();
-
 		//enemyじゃん撃とplayerの当たり判定
 		for (int i = 0; i < JANGEKI_MAX; i++)
 		{
@@ -428,13 +503,143 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy)
 				//エフェクト生成
 				if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
 				{
-					obj_effect[effect_count] = new Effect_Jangeki(p_x, p_y);
+					obj_effect[effect_count] = new Effect_Jangeki(p_x, p_y, e_jan[i]->GetType(), _CHAR_TYPE::ENEMY);
+					//effect_count++;
+
+					//SE
+					obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::HIT_JAN);
+					//se_count++;
+				}
+			}
+		}
+
+		//反射
+		if (ref != nullptr)
+		{
+			Jangeki_Base** r_jan = ref->GetJangeki();
+
+			for (int r = 0; r < JANGEKI_MAX; r++)
+			{
+				//空要素なら終了
+				if (r_jan[r] == nullptr) break;
+
+				//当たり判定
+				if (obj_player->Hit_Jangeki(r_jan[r]) == true)
+				{
+					//エフェクト生成
+					if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
+					{
+						obj_effect[effect_count] = new Effect_Jangeki(p_x, p_y, r_jan[r]->GetType(), _CHAR_TYPE::ENEMY);
+						//effect_count++;
+
+					    //SE
+						obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::HIT_JAN);
+						//se_count++;
+					}
 				}
 			}
 		}
 	}
 	//----------------------------------------------------------------------------------
 
+	//-------------------  enemyじゃん撃とplayerじゃん撃  ------------------------------
+
+	for (int p = 0; p < JANGEKI_MAX; p++)
+	{
+		if (p_jan[p] == nullptr) break;                  //なければ抜ける
+
+		//enemy
+		for (int e = 0; e < JANGEKI_MAX; e++)
+		{
+			if (e_jan[e] == nullptr) break;              //なければ抜ける
+
+			if (p_jan[p]->Hit_Jangeki(e_jan[e]) == true) //当たり
+			{
+				int result = p_jan[p]->CheckAdvantage(e_jan[e]);
+
+				//あいこの場合
+				if (result == 2)
+				{
+					//じゃん撃間の距離
+					float dx = e_jan[e]->GetX() - p_jan[p]->GetX();
+					float dy = e_jan[e]->GetY() - p_jan[p]->GetY();
+
+					float jan_x = p_jan[p]->GetX() + (dx / 2);
+					float jan_y = p_jan[p]->GetY() + (dy / 2);
+
+					obj_effect[effect_count] = new Effect_Jangeki(jan_x, jan_y, e_jan[e]->GetType(), _CHAR_TYPE::NOT_CHARA);
+					effect_count++;
+
+					//SE
+					obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::ONEMORE);
+					//se_count++;
+				}
+				else if (result == 1)   //勝ち
+				{
+					// SE
+					obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::PLAYER_WIN);
+					//se_count++;
+				}
+				else if (result == 0)   //負け
+				{
+					// SE
+					obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::ENEMY_WIN);
+					//se_count++;
+				}
+				else {};
+			}
+
+			//ref反射
+			if (ref != nullptr)
+			{
+				Jangeki_Base** r_jan = ref->GetJangeki();
+				for (int r = 0; r < JANGEKI_MAX; r++)
+				{
+					if (r_jan[r] == nullptr) break;              //抜ける
+					if (p_jan[p]->Hit_Jangeki(r_jan[r]) == true) //当たり
+					{
+						int result = p_jan[p]->CheckAdvantage(r_jan[r]);
+
+						//あいこの場合
+						if (result == 2)
+						{
+							//じゃん撃間の距離
+							float dx = r_jan[r]->GetX() - p_jan[p]->GetX();
+							float dy = r_jan[r]->GetY() - p_jan[p]->GetY();
+
+							float jan_x = p_jan[p]->GetX() + (dx / 2);
+							float jan_y = p_jan[p]->GetY() + (dy / 2);
+
+							obj_effect[effect_count] = new Effect_Jangeki(jan_x, jan_y, r_jan[r]->GetType(), _CHAR_TYPE::NOT_CHARA);
+							effect_count++;
+
+							//SE
+							obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::ONEMORE);
+							//se_count++;
+						}
+						else if (result == 1)   //勝ち
+						{
+							// SE
+							obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::PLAYER_WIN);
+							//se_count++;
+						}
+						else if (result == 0)   //負け
+						{
+							// SE
+							obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::ENEMY_WIN);
+							//se_count++;
+						}
+						else {};
+					}
+				}
+			}
+		}
+	}
+
+	//----------------------------------------------------------------------------------
+	
+
+	//----------------------------------　属性変化　------------------------------------
 		//前回の属性と違っていればエフェクト生成
 	if (enemy->GetType() != Prev_EnemyType && Prev_EnemyType != Jan_Type::NONE)
 	{

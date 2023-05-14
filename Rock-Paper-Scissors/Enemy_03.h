@@ -37,6 +37,10 @@ public:
 
 	float Get_OldY() const { return old_y; } //Y座標の取得
 
+	int GetRunSE()const;//走るSE取得
+
+	int GetWalkSE()const;//歩くSE取得
+
 
 private:
 	/********************   ジャンプ関係   ********************/
@@ -76,15 +80,17 @@ private:
 	int enemyimage3[6]; //耐久値3の時の画像
 	int enemyimage4[6]; //やられかけの時の画像
 
-	int SheeldBreakAnim[8];//盾が壊れた時のアニメーション
+	int ShieldBreakAnim[8];//盾が壊れた時のアニメーション
 	
-	bool st3_animflg = false;
-	int st3_animtimer = 0;
-	int st3_animcount = 0;
 
-	int Ecurrentindex_st03 = 0;
+	bool st3_animflg = false;//エネミーのアニメフラグ
+	int st3_animtimer = 0;//エネミーアニメーションの時間
+	int st3_animcount = 0;//エネミーアニメーションのカウント
+
+	int Ecurrentindex_st03 = 0;//エネミーアニメーションの配列
 	
-	
+	int se_run;    //走るse
+	int se_walk;   //歩く
 	
 };
 

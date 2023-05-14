@@ -11,6 +11,8 @@ int GameData::total_time;        //総合時間
 int GameData::each_stage_time;   //各ステージの制限時間
 int GameData::c_time_limit;      //制限時間（固定）
 
+GAME_DIFFICULTY GameData::game_Diff;
+
 //初期化
 void GameData::Init_Data()
 {
@@ -122,4 +124,16 @@ int GameData::Get_Each_Time_Min()
 int GameData::Get_Total_Time()
 {
 	return total_time;
+}
+
+/*難易度*/
+void GameData::Set_DIFFICULTY(GAME_DIFFICULTY game_diff)
+{
+	game_Diff = game_diff;
+}
+
+/*難易度*/
+GAME_DIFFICULTY GameData::Get_DIFFICULTY()
+{
+	return game_Diff;
 }

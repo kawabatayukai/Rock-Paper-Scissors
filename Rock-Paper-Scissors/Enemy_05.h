@@ -24,6 +24,8 @@ public:
 
 	void Change_JanType();
 
+	void MoveReset();
+
 	Jangeki_Reflection* reflection;
 
 private:
@@ -37,11 +39,18 @@ private:
 	/**********************************************************/
 
 	int frame_count = 0;       //じゃん撃発射用
+	int animtimer = 0;
 
-	int Enemy_image;		   //敵画像用
+	int Enemy_imageL;		   //敵画像用
+	int Enemy_imageR;		   //敵画像用
+	int Enemy_barrier;			//敵バリア画像用
 	int Enemy_jamp_image;	   //敵ジャンプ時画像用
 	int Movepattern;			//動きのパターン
 	int Movetimer;				//動き用のタイマー
+	int Enemy_run_R[4];			//走るアニメーション画像用
+	int Enemy_run_L[4];
+	bool runanimfragR;			//走るアニメーション用フラグ
+	bool runanimfragL;			
 
 	bool respawn;
 

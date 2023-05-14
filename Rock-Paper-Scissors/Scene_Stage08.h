@@ -6,6 +6,7 @@
 #include"Player.h"
 #include"Floor.h"
 
+
 #define STAGE_08_FLOOR  30        //床・壁の合計数
 
 //0ステージ
@@ -31,8 +32,12 @@ public:
 private:
 	int Back_image;
 	Enemy_08* obj_enemy;            //敵
-	EnemyBase* obj_cannon;
+	Enemy_Cannon* obj_cannon;
 	Enemy_Cannon** cannon;
+
+	Jangeki_Base** Item;
+
+	int damage;
 };
 
 

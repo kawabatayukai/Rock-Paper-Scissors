@@ -1,5 +1,26 @@
 #pragma once
 
+#define RANKING_DATA 10
+
+//難易度
+enum class GAME_DIFFICULTY
+{
+	NOMAL,/*通常モード*/
+	HARD,/*即死モード*/
+};
+
+/*ランキングデータ（構造体*/
+//struct RankingData {
+//
+//	int no;
+//
+//	char name[11];
+//
+//	long score;
+//
+//	int time;
+//};
+
 //データを保持する
 class GameData
 {
@@ -38,6 +59,19 @@ public:
 	//総合時間を取得
 	static int Get_Total_Time();
 
+	static GAME_DIFFICULTY Get_DIFFICULTY();
+
+	static void Set_DIFFICULTY(GAME_DIFFICULTY game_diff);
+
+	/*ランキングデータ（構造体*/
+	/*RankingData getRankingData(int i);
+
+	void setName(int i, char name[11]);
+
+	void setScore(int i, int score);
+
+	void setTimer(int i, int time);*/
+
 private:
 	GameData();     //オブジェクトは作れない
 
@@ -46,7 +80,11 @@ private:
 
 	static int total_time;    //総合時間
 
+	static GAME_DIFFICULTY game_Diff; //難易度
 
 	static int each_stage_time;   //各ステージの制限時間
 	static int c_time_limit;      //制限時間（最大）
+
+	//FILE* fp;
+	//RankingData g_Ranking[RANKING_DATA];  // ランキングデータ変数宣言
 };

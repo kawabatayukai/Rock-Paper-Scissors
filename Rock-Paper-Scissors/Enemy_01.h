@@ -39,6 +39,9 @@ public:
 	//プレイヤー目掛けてじゃん撃を発射する
 	void Fire_JanTakeAim(const float& player_x, const float& player_y);
 
+	float Get_OldY();                   //old_yの取得関数
+	float Get_Y();                      //yの取得
+
 /*--------------------------------------------------------------------------------*/
 
 private:
@@ -64,7 +67,12 @@ private:
 	};
 	ACT_TYPE Now_Action;
 
-	int current_action;        //現在のアクション
+	int current_action;      //現在のアクション
+
+	int* image_enemy;        //画像
+	int image_index;
+	int max_index;
+	int framecount;
 };
 
 

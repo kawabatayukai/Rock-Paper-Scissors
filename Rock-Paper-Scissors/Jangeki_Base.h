@@ -46,7 +46,7 @@ public:
 
 	virtual void Update();                    //更新
 	virtual void Draw() const;                //描画
-	bool CheckScreenOut();                    //画面外にいるか　true:画面外　false:画面内
+	virtual bool CheckScreenOut();            //画面外にいるか　true:画面外　false:画面内
 
 	//エフェクトを動作させる（全ての派生じゃん撃内・Updateで呼ぶ）引数：フレーム毎の拡大量
 	void Update_Effect(double fp_rate = 5.0);
@@ -80,14 +80,13 @@ public:
 	//発動するエフェクトの種類（player）
 	EFFECT_TYPE GetPlayerEffect() const { return player_effect; }
 
-	//あいこ相殺エフェクト（player側で行う）
-	void Update_OffsetEffect();
-
-	//あいこ相殺エフェクト描画（player側で行う）
-	void Draw_OffsetEffect() const;
 
 	float GetOffsetEffect_X() const { return effect_x; }
 	float GetOffsetEffect_Y() const { return effect_y; }
+
+	//自身は反射されたじゃん撃に当たることで生成されるプレイヤーホーミングじゃん撃である
+	bool IsGetPlayerHoming() const { return player_homing; }
+	void SetPlayerHoming() { player_homing = true; }
 
 protected:
 
@@ -107,6 +106,10 @@ protected:
 	//反射専用
 	int reflection_image[3];
 	bool refrection;    //trueの時、自身は反射である
+
+	//自身は反射されたじゃん撃に当たることで生成されるプレイヤーホーミングじゃん撃である
+	bool player_homing = false;
+	
 
 	Jan_Type type;      //タイプ　グーorチョキorパー
 

@@ -9,10 +9,13 @@
 #include"GameData.h"
 #include"Enemy_10.h"
 #include"Jangeki_whole.h"
-#include"Scene_InputName.h"
+#include"Scene_InputNameRanking.h"
+#include"Scene_Ranking.h"
+#include"SortSave.h"
 
 //デバッグモード
 #include"Debug_Manager.h"
+#include "SoundSystem.h"
 
 //コンストラクタ
 Scene_Stage10::Scene_Stage10(const Player* player)
@@ -52,6 +55,10 @@ Scene_Stage10::Scene_Stage10(const Player* player)
 //デストラクタ
 Scene_Stage10::~Scene_Stage10()
 {
+	SoundSystem::StopBGM(BGM::ENEMY_10_Form2BGM);
+	SoundSystem::StopBGM(BGM::ENEMY_10_Marry);
+	SoundSystem::StopBGM(BGM::ENEMY_10_Arupus);
+	SoundSystem::StopBGM(BGM::ENEMY_10_London);
 }
 
 //更新
@@ -63,6 +70,24 @@ void Scene_Stage10::Update()
 		* 第一形態
 		***********/
 	case 1:
+
+		static int interval;
+		interval++;
+
+		//BGM
+		if (interval % 10 == 0)
+		{
+			SoundSystem::PlayBGM(BGM::ENEMY_10_Arupus);
+		}
+		if (interval % 300 == 0)
+		{
+			SoundSystem::PlayBGM(BGM::ENEMY_10_Marry);
+		}
+		if (interval % 600 == 0)
+		{
+			SoundSystem::PlayBGM(BGM::ENEMY_10_London);
+		}
+
 		obj_floor[3] = new Floor(100, 350, 120, 50);      //足場
 		obj_floor[4] = new Floor(1000, 350, 120, 50);      //足場
 
@@ -87,6 +112,15 @@ void Scene_Stage10::Update()
 		* 第二形態
 		***********/
 	case 2:
+
+		//BGM STOP
+		SoundSystem::StopBGM(BGM::ENEMY_10_Marry);
+		SoundSystem::StopBGM(BGM::ENEMY_10_Arupus);
+		SoundSystem::StopBGM(BGM::ENEMY_10_London);
+
+		//BGM
+		SoundSystem::PlayBGM(BGM::ENEMY_10_Form2BGM);
+
 		//obj_floor[3] = new Floor(81, 100, 120, 10, 22822);          //足場[3]～[15]
 		//obj_floor[4] = new Floor(81, 300, 120, 10, 22822);
 		//obj_floor[5] = new Floor(81, 500, 120, 10, 22822);
@@ -554,12 +588,21 @@ AbstractScene* Scene_Stage10::ChangeScene()
 #ifdef DEBUG_OFF_10
 
 	/*敵のHPが0以下*/
-	//if (obj_enemy->Get_Enemy10Form() == 2 && obj_enemy->GetHP() < 0)
-	//
+	if (obj_enemy->Get_Enemy10Form() == 1 && obj_enemy->IsDeathEnemy10() == true)
+	{
+		SoundSystem::StopBGM(BGM::ENEMY_10_Marry);
+		SoundSystem::StopBGM(BGM::ENEMY_10_Arupus);
+		SoundSystem::StopBGM(BGM::ENEMY_10_London);
+	}
 	if(obj_enemy->Get_Enemy10Form() == 2 && obj_enemy->IsDeathEnemy10() == true)
 	{
 		//リザルトへ切り替え
-		return dynamic_cast<AbstractScene*> (new Scene_InputName());
+		//return dynamic_cast<AbstractScene*> (new Scene_InputNameRanking());
+		sortSave.setScore(9, 10);	// ランキングデータの１０番目にスコアを登録
+		sortSave.SortRanking();		// ランキング並べ替え
+		sortSave.SaveRanking();		// ランキングデータの保存
+		return new Scene_Ranking();
+		SoundSystem::StopBGM(BGM::ENEMY_10_Form2BGM);
 	}
 
 
@@ -570,6 +613,7 @@ AbstractScene* Scene_Stage10::ChangeScene()
 	{
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(10));
+		SoundSystem::StopBGM(BGM::ENEMY_10_Form2BGM);
 	}
 
 #endif // DEBUG_OFF_10

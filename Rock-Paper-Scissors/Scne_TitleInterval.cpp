@@ -24,7 +24,7 @@ Scne_TitleInterval::Scne_TitleInterval() :
 	std::ifstream read_file;
 
 	//ŠJ‚­
-	read_file.open("textdata/Arasuzi.txt", std::ios::in);
+	read_file.open("textdata/start.txt", std::ios::in);
 
 	//Ž¸”s!
 	if (read_file.fail() == true) isLoadFailed = true;
@@ -110,7 +110,7 @@ void Scne_TitleInterval::Draw() const
 {
 	using namespace _C_STORY;
 
-	DrawLine(CENTER_X, 0, CENTER_X, 720, 0xffffff, 3);
+	//DrawLine(CENTER_X, 0, CENTER_X, 720, 0xffffff, 3);
 	SetBackgroundColor(0, 64, 0);
 
 	//static bool str_end;

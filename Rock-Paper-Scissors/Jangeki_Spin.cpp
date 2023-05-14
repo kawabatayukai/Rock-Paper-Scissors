@@ -29,8 +29,8 @@ void Jangeki_Spin::Update()
 	y += sinf(rad) * speed;
 
 	//回転させる
-	x = x + r * cos(angle);
-	y = y + r * sin(angle);
+	x = x + r * cosf(angle);
+	y = y + r * sinf(angle);
 
 	//エフェクト
 	Update_Effect(7.0);

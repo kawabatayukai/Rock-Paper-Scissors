@@ -28,6 +28,7 @@ private:
 	int frame_count = 0;       //‚¶‚á‚ñŒ‚”­ŽË—p
 
 	int Enemy_image;
+	int frame_move = 0;
 };
 
 

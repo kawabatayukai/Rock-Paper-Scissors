@@ -3,6 +3,7 @@
 #include"Player.h"
 #include"Jangeki_Base.h"
 #include"Jangeki_Coming.h"
+#include"SoundSystem.h"
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
@@ -14,12 +15,20 @@ Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	old_type = static_cast<Jan_Type>(1);  //チョキ属性で初期化
 
 	//画像読み込み
-	images[0] = LoadGraph("images/gu-test.png");     //グー属性
-	images[1] = LoadGraph("images/tyokitest.png");   //チョキ属性
-	images[2] = LoadGraph("images/pa-test.png");     //パー属性
+	images[0] = LoadGraph("images/stage06/赤NINJA_通常.png");     //グー属性
+	images[1] = LoadGraph("images/stage06/黄NINJA_通常.png");   //チョキ属性
+	images[2] = LoadGraph("images/stage06/青NINJA_通常.png");     //パー属性
+
+	images[3] = LoadGraph("images/stage06/赤NINJA_走.png");     //グー属性
+	images[4] = LoadGraph("images/stage06/黄NINJA_走.png");   //チョキ属性
+	images[5] = LoadGraph("images/stage06/青NINJA_走.png");     //パー属性
+
+	images[6] = LoadGraph("images/stage06/赤NINJA_跳3.png");     //グー属性
+	images[7] = LoadGraph("images/stage06/黄NINJA_跳3.png");   //チョキ属性
+	images[8] = LoadGraph("images/stage06/青NINJA_跳3.png");     //パー属性
 
 	//煙エフェクト読み込み
-	LoadDivGraph("images/stage06/pipo-charachip_smoke01a-s..png", 12, 4, 5, 135, 150, smokeImage);
+	LoadDivGraph("images/stage06/pipo-btleffect059.png", 10, 10, 1, 120, 120, smokeImage);
 
 	Init_Jangeki();       //じゃん撃を用意
 
@@ -38,15 +47,10 @@ void Enemy_06::Update()
 	frame_count++;
 	TeleportTime++;
 	SpeedUpTime++;
-	if (smokeCnt < 3)
-	{
-		smokeCnt++;
-	}
-	else
-	{
-		smokeCnt = 0;
-	}
-	
+	bef_x = x;
+	bef_y = y;
+
+	smoke();
 
 	//じゃん撃更新・生成
 	Update_Jangeki();
@@ -54,112 +58,162 @@ void Enemy_06::Update()
 	//HP表示がマイナスにならないように調整
 	if (hp <= 0)hp = 0;
 
-	if (TeleportFlg == false)   //瞬間移動接触フラグの判定
+	if (smokeFlg == false)
 	{
-		//攻撃パターン1
-		if (attack_pattern == 0)
+		if (TeleportFlg == false)   //瞬間移動接触フラグの判定
 		{
-			AttackPattern_1();
-		}
+			//攻撃パターン1
+			if (attack_pattern == 0)
+			{
+				AttackPattern_1();
+			}
 
-		//攻撃パターン2
-		if (attack_pattern == 1)
-		{
-			AttackPattern_2();
-		}
+			//攻撃パターン2
+			if (attack_pattern == 1)
+			{
+				AttackPattern_2();
+			}
 
-		//攻撃パターン3
-		if (attack_pattern == 2)
-		{
-			AttackPattern_3();
+			//攻撃パターン3
+			if (attack_pattern == 2)
+			{
+				AttackPattern_3();
+			}
 		}
-	}
-	else if (TeleportFlg == true && x > 0 && x < 1280)
-	{
-		//特殊行動2   プレイヤーの後方側に移動し、接近してくる
-		if (attack_pattern > 0)  //行動ループ1以外の時
+		else if (TeleportFlg == true)
 		{
-			Teleportation();
+			//特殊行動2   プレイヤーの後方側に移動し、接近してくる
+			if (attack_pattern > 0)  //行動ループ1以外の時
+			{
+				Teleportation();
+			}
+			else  //例外処理
+			{
+				TeleportFlg = false;
+				TeleportInit = true;
+				speed = 5.0f;
+				smokeFlg = false;
+			}
 		}
 		else  //例外処理
 		{
 			TeleportFlg = false;
 			TeleportInit = true;
 			speed = 5.0f;
+			smokeFlg = false;
 		}
+
+		//750フレームごとに瞬間移動接触フラグをtrueにする
+		if (TeleportTime == 750 && TeleportFlg == false && (player_x - 300) > 50 && (player_x + 300) < 1230 && speed != 8.0f)
+		{
+			TeleportFlg = true;
+			if (attack_pattern != 0 && hp <= 70)
+			{
+				smokeFlg = true;
+			}
+		}
+		else if (TeleportTime > 750)
+		{
+			TeleportTime = 0;
+		}
+
+		/********************   ジャンプ関係   ********************/
+
+		y_add = (y - old_y) + g_add;  //今回の落下距離を設定
+
+		//落下速度の制限
+		if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
+
+		old_y = y;                    //1フレーム前のｙ座標
+		y += y_add;                   //落下距離をｙ座標に加算する
+		g_add = _GRAVITY;              //重力加速度を初期化する
+
+		/**********************************************************/
 	}
-	else  //例外処理
-	{
-		TeleportFlg = false;
-		TeleportInit = true;
-		speed = 5.0f;
-	}
-
-	//750フレームごとに瞬間移動接触フラグをtrueにする
-	if (TeleportTime == 750 && TeleportFlg == false && (player_x - 300) > 0 && (player_x + 300) < 1280 && speed != 8.0f)
-	{
-		TeleportFlg = true;
-	}
-	else if(TeleportTime > 750)
-	{
-		TeleportTime = 0;
-	}
-
-	/********************   ジャンプ関係   ********************/
-
-	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
-
-	//落下速度の制限
-	if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
-
-	old_y = y;                    //1フレーム前のｙ座標
-	y += y_add;                   //落下距離をｙ座標に加算する
-	g_add = _GRAVITY;              //重力加速度を初期化する
-
-	/**********************************************************/
-
 }
 
 //描画
 void Enemy_06::Draw() const
 {
-	//グー属性の時、赤いキャラ画像を表示
-	if (GetType() == static_cast<Jan_Type>(0))
+	if (smokeFlg == true)
 	{
-		//中心から描画
-		DrawRotaGraphF(x, y, 1, 0, images[0], TRUE, dir == -1 ? 0 : 1);
+		//煙アニメーション
+		DrawGraph((x - 63), (y - 70), smokeImage[smokeCnt], TRUE);
 	}
-
-	//チョキ属性の時、黄色いキャラ画像を表示
-	if (GetType() == static_cast<Jan_Type>(1))
+	else
 	{
-		//中心から描画
-		DrawRotaGraphF(x, y, 1, 0, images[1], TRUE, dir == -1 ? 0 : 1);
-	}
+		//グー属性の時、赤いキャラ画像を表示
+		if (GetType() == static_cast<Jan_Type>(0))
+		{
+			if (y != bef_y && y != 101)
+			{
+				//中心から描画
+				DrawRotaGraphF(x, y, 4.2, 0, images[6], TRUE, dir == -1 ? 0 : 1);
+			}
+			else if (x != bef_x)
+			{
+				//中心から描画
+				DrawRotaGraphF(x, y, 4.2, 0, images[3], TRUE, dir == -1 ? 0 : 1);
+			}
+			else
+			{
+				//中心から描画
+				DrawRotaGraphF(x, y, 4.2, 0, images[0], TRUE, dir == -1 ? 0 : 1);
+			}
+		}
 
-	//パー属性の時、青いキャラ画像を表示
-	if (GetType() == static_cast<Jan_Type>(2))
-	{
-		//中心から描画
-		DrawRotaGraphF(x, y, 1, 0, images[2], TRUE, dir == -1 ? 0 : 1);
-	}
+		//チョキ属性の時、黄色いキャラ画像を表示
+		if (GetType() == static_cast<Jan_Type>(1))
+		{
+			if (y != bef_y && y != 101)
+			{
+				//中心から描画
+				DrawRotaGraphF(x, y, 4.2, 0, images[7], TRUE, dir == -1 ? 0 : 1);
+			}
+			else if (x != bef_x)
+			{
+				//中心から描画
+				DrawRotaGraphF(x, y, 4.2, 0, images[4], TRUE, dir == -1 ? 0 : 1);
+			}
+			else
+			{
+				//中心から描画
+				DrawRotaGraphF(x, y, 4.2, 0, images[1], TRUE, dir == -1 ? 0 : 1);
+			}
+		}
 
-	//煙アニメーション
-	DrawGraph(1089, 550, smokeImage[0], TRUE);
+		//パー属性の時、青いキャラ画像を表示
+		if (GetType() == static_cast<Jan_Type>(2))
+		{
+			if (y != bef_y && y != 101)
+			{
+				//中心から描画
+				DrawRotaGraphF(x, y, 4.2, 0, images[8], TRUE, dir == -1 ? 0 : 1);
+			}
+			else if (x != bef_x)
+			{
+				//中心から描画
+				DrawRotaGraphF(x, y, 4.2, 0, images[5], TRUE, dir == -1 ? 0 : 1);
+			}
+			else
+			{
+				//中心から描画
+				DrawRotaGraphF(x, y, 4.2, 0, images[2], TRUE, dir == -1 ? 0 : 1);
+			}
+		}
+
+		//テスト
+		if (hp > 0) DrawFormatString((int)(x - 50), (int)(y - 125), 0xffffff, "HP : %d", hp);
+		else DrawString((int)(x - 50), (int)(y - 125), "death!", 0xffffff);
+
+		if (speed == 8.0f)
+		{
+			DrawString((int)(x - 80), (int)(y - 75), "スピードアップ", GetColor(255, 0, 0));
+		}
+	}
 
 	//じゃん撃描画
 	Draw_Jangeki();
-
-	//テスト
-	if (hp > 0) DrawFormatString((int)(x - 50), (int)(y - 125), 0xffffff, "HP : %d", hp);
-	else DrawString((int)(x - 50), (int)(y - 125), "death!", 0xffffff);
-
-	if (speed == 8.0f)
-	{
-		DrawString((int)(x - 80), (int)(y - 75), "スピードアップ", GetColor(255, 0, 0));
-	}
-
-	/*DrawBox((x - (w / 2)), (y - (h / 2)), (x + (w / 2)), (y + (h / 2)), 0xffffff, TRUE);*/
 }
 
 //じゃん撃生成・更新
@@ -200,28 +254,31 @@ void Enemy_06::Update_Jangeki()
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
-		//行動パターン1の時の弾(speed = 3.0f  frame_count % 80)
-		if (attack_pattern == 0)
+		if (smokeFlg == false)
 		{
-			//プレイヤー方向に向かって発射されるジャン撃の生成
-			if (frame_count % 90 == 0) obj_jangeki[jan_count] = 
-				new Jangeki_Coming(x, y, radius, speed + 1.0f, type, player_x, player_y);
-		}
+			//行動パターン1の時の弾(speed = 3.0f  frame_count % 80)
+			if (attack_pattern == 0)
+			{
+				//プレイヤー方向に向かって発射されるジャン撃の生成
+				if (frame_count % 90 == 0) obj_jangeki[jan_count] =
+					new Jangeki_Coming(x, y, radius, speed + 1.0f, type, player_x, player_y);
+			}
 
-		//行動パターン2の時の弾(speed = 3.0f  frame_count % 80)
-		if (attack_pattern == 1)
-		{
-			//プレイヤー方向に向かって発射されるジャン撃の生成
-			if (frame_count % 75 == 0) obj_jangeki[jan_count] =
-				new Jangeki_Coming(x, y, radius, speed + 1.5f, type, player_x, player_y);
-		}
+			//行動パターン2の時の弾(speed = 3.0f  frame_count % 80)
+			if (attack_pattern == 1)
+			{
+				//プレイヤー方向に向かって発射されるジャン撃の生成
+				if (frame_count % 75 == 0) obj_jangeki[jan_count] =
+					new Jangeki_Coming(x, y, radius, speed + 1.5f, type, player_x, player_y);
+			}
 
-		//行動パターン3の時の弾(speed = 3.0f  frame_count % 80)
-		if (attack_pattern == 2)
-		{
-			//プレイヤー方向に向かって発射されるジャン撃の生成
-			if (frame_count % 65 == 0) obj_jangeki[jan_count] =
-				new Jangeki_Coming(x, y, radius, speed + 2.0f, type, player_x, player_y);
+			//行動パターン3の時の弾(speed = 3.0f  frame_count % 80)
+			if (attack_pattern == 2)
+			{
+				//プレイヤー方向に向かって発射されるジャン撃の生成
+				if (frame_count % 65 == 0) obj_jangeki[jan_count] =
+					new Jangeki_Coming(x, y, radius, speed + 2.0f, type, player_x, player_y);
+			}
 		}
 	}
 }
@@ -266,7 +323,7 @@ void Enemy_06::AttackPattern_1()
 		{
 			jump_flg = true;
 		}
-		else if (x > 1150 && x < 1156)
+		else if (x > 1140 && x < 1146)
 		{
 			jump_flg = true;
 		}
@@ -354,8 +411,7 @@ void Enemy_06::AttackPattern_1()
 	//HPが70以下になると次の行動ループに移行
 	if (hp <= 70)
 	{
-		attack_pattern = 1;    //攻撃パターンを変更
-		attack2_Flg = true;    //攻撃パターン2初期処理フラグをtrueにする
+		smokeFlg = true;
 	}
 }
 
@@ -372,6 +428,7 @@ void Enemy_06::AttackPattern_2()
 		dir = -1;                  //向きの初期化(左向き)
 		attack2_Flg = false;       //初期化処理フラグをfalseにする
 		jump_cnt = 0;              //ジャンプカウントの初期化
+		smokeFlg = true;
 	}
 
 	//床ごとの処理
@@ -812,7 +869,7 @@ void Enemy_06::SpeedUp()
 //特殊行動2   プレイヤーの後方側に移動し、接近してくる
 void Enemy_06::Teleportation()
 {
-	if (TeleportInit == true)
+	if (TeleportInit == true && smokeFlg == false)
 	{
 		if (player_dir == 0)
 		{
@@ -830,6 +887,7 @@ void Enemy_06::Teleportation()
 
 		speed = 1.5f;
 		TeleportInit = false;
+		smokeFlg = true;
 	}
 	
 	speed += 0.2f;
@@ -844,20 +902,24 @@ void Enemy_06::Teleportation()
 		x += speed;
 	}
 
-	if (x < 200)
+	if (x < 190 && dir == -1)
 	{
 		TeleportFlg = false;
 		TeleportInit = true;
 		TeleportTime = 0;
 		speed = 5.0f;
+		dir = 1;
+		floor = 1;
 	}
 
-	if (x > 1090)
+	if (x > 1080 && dir == 1)
 	{
 		TeleportFlg = false;
 		TeleportInit = true;
 		TeleportTime = 0;
 		speed = 5.0f;
+		dir = -1;
+		floor = 5;
 	}
 }
 
@@ -969,7 +1031,7 @@ void Enemy_06::jump()
 	//ジャンプ処理
 	if (jump_flg == true && land_flg == true)
 	{
-		g_add = -19.8f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+		g_add = -19.9f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 		land_flg = false;  //地面についていない
 		jump_flg = false;  //ジャンプ用フラグのリセット
 
@@ -994,6 +1056,30 @@ void Enemy_06::low_jump()
 		g_add = -8.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 		land_flg = false;  //地面についていない
 		jump_flg = false;  //ジャンプ用フラグのリセット
+	}
+}
+
+//煙エフェクト関数
+void Enemy_06::smoke()
+{
+	if (smokeCnt < 10 && frame_count % 2 == 0 && smokeFlg == true)
+	{
+		if (smokeCnt == 0)
+		{
+			//BGM再生
+			SoundSystem::PlaySE(SE::ENEMY06_SMOKE);
+		}
+		smokeCnt++;
+	}
+	else if(smokeCnt > 9 && frame_count % 2 == 0 && smokeFlg == true)
+	{
+		smokeFlg = false;
+		smokeCnt = 0;
+		if (hp <= 70 && attack_pattern == 0)
+		{
+			attack_pattern = 1;    //攻撃パターンを変更
+			attack2_Flg = true;    //攻撃パターン2初期処理フラグをtrueにする
+		}
 	}
 }
 
@@ -1029,4 +1115,10 @@ float Enemy_06::Get_OldY()
 float Enemy_06::Get_Y()
 {
 	return y;
+}
+
+//煙エフェクトのフラグの取得
+int Enemy_06::Get_smokeflg()
+{
+	return smokeFlg;
 }

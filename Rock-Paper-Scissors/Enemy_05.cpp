@@ -16,12 +16,19 @@ Enemy_05::Enemy_05(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	hp = 100;
 	Movepattern = 1;
 	Movetimer = 0;
+	runanimfragL = FALSE;
+	runanimfragR = FALSE;
 
 	image = LoadGraph("images/tyokitest.png");
 
 	Init_Jangeki();       //じゃん撃を用意
 
-	Enemy_image = LoadGraph("images/stage05/Stage5_Enemy_NoMove_Left.png", TRUE);
+	Enemy_imageL = LoadGraph("images/stage05/Stage5_Enemy_NoMove_L.png", TRUE);
+	Enemy_imageR = LoadGraph("images/stage05/Stage5_Enemy_NoMove_R.png", TRUE);
+	Enemy_barrier = LoadGraph("images/stage05/Stage5_EnemyBarrier.png", TRUE);
+
+	LoadDivGraph("images/stage05/Stage5_enemyRun_L.png", 4, 4, 1, 100, 100, Enemy_run_L);
+	LoadDivGraph("images/stage05/Stage5_enemyRun_R.png", 4, 4, 1, 100, 100, Enemy_run_R);
 	reflection = new Jangeki_Reflection(x, y, h, w, Jan_Type::ROCK);
 	reflection->Init_reflectionJangeki();
 }
@@ -40,16 +47,16 @@ void Enemy_05::Update()
 	Update_Jangeki();
 	reflection->Update_reflection();
 
-	//if (x + (w / 2) == (1280 - 20))
-	//{
-	//	dir = -1;
-	//}
-	//else if (x - (w / 2) == (20))
-	//{
-	//	dir = 1;
-	//}
+	/*if (x + (w / 2) == (1280 - 20))
+	{
+		dir = -1;
+	}
+	else if (x - (w / 2) == (20))
+	{
+		dir = 1;
+	}*/
 
-	//x += dir * speed;
+	/*x += dir * speed;*/
 
 	///********************   ジャンプ関係   ********************/
 
@@ -64,6 +71,10 @@ void Enemy_05::Update()
 
 	if (mob[0]->GetHP() <= 0 && mob[1]->GetHP() <= 0 && mob[2]->GetHP() <= 0)
 	{
+		mob[0]->Init_Jangeki();
+		mob[1]->Init_Jangeki();
+		mob[2]->Init_Jangeki();
+
 		Movetimer++;
 		//敵の移動
 		switch (Movepattern)
@@ -72,10 +83,13 @@ void Enemy_05::Update()
 			if (x >= 650 && Movetimer >= 30)
 			{
 				x -= 5;
+				runanimfragL = TRUE;
 			}
 			else if (Movetimer > 30)
 			{
 				Movepattern = 2;
+				dir = -1;
+				runanimfragL = FALSE;
 			}
 			if (Movepattern == 2)
 			{
@@ -92,10 +106,13 @@ void Enemy_05::Update()
 			if (x <= 1000 && Movetimer >= 30)
 			{
 				x += 5;
+				runanimfragR = TRUE;
 			}
 			else if (Movetimer > 30)
 			{
 				Movepattern = 3;
+				dir = 1;
+				runanimfragR = FALSE;
 			}
 			if (Movepattern == 3)
 			{
@@ -112,11 +129,13 @@ void Enemy_05::Update()
 			if (x >= 300 && Movetimer >= 30)
 			{
 				x -= 5;
-
+				runanimfragL = TRUE;
 			}
 			else if (Movetimer > 30)
 			{
 				Movepattern = 4;
+				dir = -1;
+				runanimfragL = FALSE;
 			}
 			if (Movepattern == 4)
 			{
@@ -133,10 +152,13 @@ void Enemy_05::Update()
 			if (x <= 650 && Movetimer >= 30)
 			{
 				x += 5;
+				runanimfragR = TRUE;
 			}
 			else if (Movetimer > 30)
 			{
 				Movepattern = 5;
+				dir = 1;
+				runanimfragR = FALSE;
 			}
 			if (Movepattern == 5)
 			{
@@ -153,10 +175,13 @@ void Enemy_05::Update()
 			if (x >= 300 && Movetimer >= 30)
 			{
 				x -= 5;
+				runanimfragL = TRUE;
 			}
 			else if (Movetimer > 30)
 			{
 				Movepattern = 6;
+				dir = -1;
+				runanimfragL = FALSE;
 			}
 			if (Movepattern == 6)
 			{
@@ -173,10 +198,13 @@ void Enemy_05::Update()
 			if (x <= 1000 && Movetimer >= 30)
 			{
 				x += 5;
+				runanimfragR = TRUE;
 			}
 			else if (Movetimer > 30)
 			{
 				Movepattern = 7;
+				dir = 1;
+				runanimfragR = FALSE;
 			}
 			if (Movepattern == 1)
 			{
@@ -200,6 +228,8 @@ void Enemy_05::Update()
 	}
 
 
+
+
 	y_add = (y - old_y) + g_add;  //今回の落下距離を設定
 
 	//落下速度の制限
@@ -211,15 +241,32 @@ void Enemy_05::Update()
 
 	/**********************************************************/
 
+	animtimer++;
 }
 
 //描画
 void Enemy_05::Draw() const
 {
 	DrawFormatString(600, 600, 0x00ff00, "%f", player_x);
+	if (runanimfragL == FALSE && runanimfragR == FALSE)
+	{
+		//中心から描画
+		if (dir == 1) DrawRotaGraphF(x, y, 1, 0, Enemy_imageL, TRUE);
+		else if (dir == -1) DrawRotaGraphF(x, y, 1, 0, Enemy_imageR, TRUE);
+	}
 
-	//中心から描画
-	DrawRotaGraphF(x, y, 1, 0, Enemy_image, TRUE);
+
+	//バリア描画
+	if (mob[0]->GetHP() <= 0 && mob[1]->GetHP() <= 0 && mob[2]->GetHP() <= 0){}
+	else DrawRotaGraphF(x, y, 1, 0, Enemy_barrier, TRUE);
+	
+
+	//左に走るアニメーション
+	if (runanimfragL == TRUE) DrawGraph(x - 50, y - 50, Enemy_run_L[animtimer / 15 % 4], TRUE);
+
+	//右に走るアニメーション
+	if (runanimfragR == TRUE) DrawGraph(x - 50, y - 50, Enemy_run_R[animtimer / 15 % 4], TRUE);
+
 
 	//じゃん撃描画
 	Draw_Jangeki();
@@ -276,7 +323,7 @@ void Enemy_05::Update_Jangeki()
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Spin(x, y, radius, speed, type,player_x,player_y);
 
 		//反射じゃん撃生成
-		if (reflection->GetFlg() == true)reflection->obj_reflection[reflection->jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed-2, type, true);
+		if (reflection->GetFlg() == true)reflection->obj_reflection[reflection->jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed - 2, type, true);
 		reflection->falseFlg();
 	}
 }
@@ -312,4 +359,10 @@ void Enemy_05::Change_JanType()
 	default:
 		break;
 	}
+}
+
+void Enemy_05::MoveReset()
+{
+	Movepattern = 1;
+	Movetimer = 0;
 }

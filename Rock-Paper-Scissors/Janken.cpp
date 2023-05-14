@@ -25,12 +25,16 @@ Janken::Janken(Jan_Type enemy_jan, const int stage_num)
 	//“G‚Ì‰æ‘œ
 	{
 		image_all_enemy[0] = LoadGraph("images/tyokitest.png");
-		image_all_enemy[1] = LoadGraph("images/tyokitest.png");
+
+		int enemy01[3];
+		LoadDivGraph("images/stage01/stage01_chicken.png", 3, 3, 1, 96, 78, enemy01);
+		image_all_enemy[1] = enemy01[1];
+
 		image_all_enemy[2] = LoadGraph("images/stage02/ex.png");
 		image_all_enemy[3] = LoadGraph("images/stage03/stage03attack.png");
 		image_all_enemy[4] = LoadGraph("images/Stage04/stage_Boss04.png");
-		image_all_enemy[5] = LoadGraph("images/stage05/Stage5_Enemy_NoMove_Left.png");
-		image_all_enemy[6] = LoadGraph("images/tyokitest.png");
+		image_all_enemy[5] = LoadGraph("images/stage05/Stage5_Enemy_NoMove_L.png");
+		image_all_enemy[6] = LoadGraph("images/stage06/ÂNINJA.png");
 
 		int images[9];
 		LoadDivGraph("images/stage07/wrestler_test39ver2.png", 9, 9, 1, 38, 38, images);
@@ -136,6 +140,14 @@ void Janken::Draw() const
 	if (stage_num == 7)
 	{
 		DrawRotaGraph(e_image_x, 600, 5.2, 0, image_all_enemy[stage_num], TRUE);
+	}
+	else if (stage_num == 6)
+	{
+		DrawRotaGraph(e_image_x, 600, 8.6, 0, image_all_enemy[stage_num], TRUE);
+	}
+	else if (stage_num == 1)
+	{
+		DrawRotaGraph(e_image_x, 600, 1.7, 0, image_all_enemy[stage_num], TRUE, TRUE);
 	}
 	else
 	{

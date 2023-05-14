@@ -3,7 +3,9 @@
 #include"Scene_Stage01.h"
 #include<fstream>
 #include<string>
+#include<sstream>
 #include"KeyManager.h"
+#include "SortSave.h"
 
 //定数
 namespace _C_STORY
@@ -36,6 +38,12 @@ Scene_Story::Scene_Story() :
 	std::string data("");
 	while (std::getline(read_file, data))
 	{
+		if (data.compare("そんな世界を正すべく、主人公「」がじゃんけん世界大会に出場する-----") == 0)
+		{
+			std::string name(sortSave.getRankingData(9).name);
+			data.insert(data.find("「") + 2, name);
+		}
+
 		text->push_back(data);
 	}
 
@@ -108,7 +116,7 @@ void Scene_Story::Draw() const
 {
 	using namespace _C_STORY;
 
-	DrawLine(CENTER_X, 0, CENTER_X, 720, 0xffffff, 3);
+	//DrawLine(CENTER_X, 0, CENTER_X, 720, 0xffffff, 3);
 	SetBackgroundColor(0, 64, 0);
 
 	//static bool str_end;

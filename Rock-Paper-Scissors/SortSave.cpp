@@ -1,5 +1,5 @@
 #include"GameData.h"
-#include"Scene_InputName.h"
+#include"Scene_InputNameRanking.h"
 #include "SortSave.h"
 
 SortSave sortSave;
@@ -43,15 +43,28 @@ void SortSave::SortRanking(void)
 /*ランキングデータの保存*/
 int SortSave::SaveRanking(void)
 {
-	//FILE* fp;
-//#pragma warning(disable:4996)
-
-	// ファイルオープン
-	if ((fopen_s(&fp, "dat/rankingdata.txt", "w")) != 0)
+	/*通常モード*/
+	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::NOMAL)
 	{
-		/* エラー処理 */
-		printf("Ranking Data Error\n");
-		return -1;
+		// ファイルオープン
+		if ((fopen_s(&fp, "dat/rankingdata.txt", "w")) != 0)
+		{
+			/* エラー処理 */
+			printf("Ranking Data Error\n");
+			return -1;
+		}
+	}
+
+	/*即死モード*/
+	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
+	{
+		// ファイルオープン
+		if ((fopen_s(&fp, "dat/rankingdata.txt", "w")) != 0)
+		{
+			/* エラー処理 */
+			printf("Ranking Data Error\n");
+			return -1;
+		}
 	}
 
 	// ランキングデータ分配列データを書き込む
@@ -67,15 +80,28 @@ int SortSave::SaveRanking(void)
 }
 int  SortSave::ReadRanking(void)
 {
-	//FILE* fp;
-//#pragma warning(disable:4996)
-
-	//ファイルオープン
-	if ((fopen_s(&fp, "dat/rankingdata.txt", "r")) != 0)
+	/*通常モード*/
+	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::NOMAL)
 	{
-		//エラー処理
-		printf("Ranking Data Error\n");
-		return -1;
+		//ファイルオープン
+		if ((fopen_s(&fp, "dat/rankingdata_HARD.txt", "r")) != 0)
+		{
+			//エラー処理
+			printf("Ranking Data Error\n");
+			return -1;
+		}
+	}
+
+	/*即死モード*/
+	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
+	{
+		// ファイルオープン
+		if ((fopen_s(&fp, "dat/rankingdata_HARD.txt", "w")) != 0)
+		{
+			/* エラー処理 */
+			printf("Ranking Data Error\n");
+			return -1;
+		}
 	}
 
 	//ランキングデータ配分列データを読み込む

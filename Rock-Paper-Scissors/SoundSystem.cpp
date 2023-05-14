@@ -13,7 +13,48 @@ void  SoundSystem::LoadSounds_SE()
 {
 	//SE
 	// se_sounds.push_back(LoadSoundMem("サウンドへのパス"));
+
+	/*プレイヤー↓*/
+
 	se_sounds.push_back (LoadSoundMem("Sound/jump_player.mp3"));
+
+	/*プレイヤー↑*/
+
+	/*敵↓*/
+
+	/*ステージ1*/
+
+	/*ステージ2*/
+	se_sounds.push_back(LoadSoundMem("Sound/enemy(Jump).mp3"));
+	se_sounds.push_back(LoadSoundMem("Sound/zyangeki.mp3"));
+	/*ステージ3*/
+	se_sounds.push_back(LoadSoundMem("Sound/st03/SlightlyBrokenSE.wav"));
+	se_sounds.push_back(LoadSoundMem("Sound/st03/BrokenSE.wav"));
+	se_sounds.push_back(LoadSoundMem("Sound/st03/GardStance.wav"));
+	se_sounds.push_back(LoadSoundMem("Sound/st03/RunningSt03.wav"));
+	se_sounds.push_back(LoadSoundMem("Sound/st03/WorkingSt03.wav"));
+	/*ステージ4*/
+	se_sounds.push_back(LoadSoundMem("Sound/stage04/specialSE.wav"));
+	se_sounds.push_back(LoadSoundMem("Sound/stage04/specialAttackSE.wav"));
+
+	/*ステージ5*/
+
+	/*ステージ6*/
+	se_sounds.push_back(LoadSoundMem("Sound/stage06/bomb.mp3"));
+
+	/*ステージ7*/
+
+	/*ステージ8*/
+
+	/*ステージ9*/
+
+	/*ステージ10*/
+	se_sounds.push_back(LoadSoundMem("Sound/笑い声2.mp3"));
+	se_sounds.push_back(LoadSoundMem("Sound/ピョョョ2.mp3"));
+
+	/*敵↑*/
+
+	/*それ以外↓*/
 }
 
 void  SoundSystem::LoadSounds_BGM()
@@ -21,6 +62,20 @@ void  SoundSystem::LoadSounds_BGM()
 	//BGM
 	// bgm_sounds.push_back(LoadSoundMem("サウンドへのパス"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/TitleBGM.mp3"));
+	bgm_sounds.push_back(LoadSoundMem("Sound/stage01/maou_game_battle37.mp3"));
+	bgm_sounds.push_back(LoadSoundMem("Sound/Stage02BGM.mp3"));
+	bgm_sounds.push_back(LoadSoundMem("Sound/st03/St03BGM.wav"));
+	bgm_sounds.push_back(LoadSoundMem("Sound/stage04/stage04_BGM.wav"));
+	bgm_sounds.push_back(LoadSoundMem("Sound/stage06/RPG_Battle_03.mp3"));
+	bgm_sounds.push_back(LoadSoundMem("Sound/sento.mp3"));
+	bgm_sounds.push_back(LoadSoundMem("Sound/VSQPD_0077_Mary_Had_a_Little_Lamb_FC.mp3"));
+	bgm_sounds.push_back(LoadSoundMem("Sound/VSQPD_0046_Yankee_Doodle.mp3"));
+	bgm_sounds.push_back(LoadSoundMem("Sound/VSQPD_0048_London_Bridge.mp3"));
+
+	//for (int i = 0; i < bgm_sounds.size(); i++)
+	//{
+	//	SetVolumeSoundMem(200, bgm_sounds[i]);
+	//}
 }
 
 

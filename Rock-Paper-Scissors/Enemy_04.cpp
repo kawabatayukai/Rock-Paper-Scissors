@@ -4,6 +4,7 @@
 #include"Jangeki_Base.h"
 #include"Jangeki_Coming.h"
 #include "Jangeki_whole.h"
+#include"SoundSystem.h"
 #include <typeinfo>
 #define _USE_MATH_DEFINES
 #include<math.h>
@@ -85,12 +86,12 @@ void Enemy_04::Update()
 	//特殊行動時や残りHPによってスピードが変わる
 	if (specialFlg == true)
 	{
-		speed = 15.0f;
+		speed = 20.0f;
 		specialTime++;
 	}
 	else if (hp <= 50)
 	{
-		speed = 2.5f;
+		speed = 2.8f;
 	}
 	else
 	{
@@ -98,7 +99,7 @@ void Enemy_04::Update()
 	}
 
 	//少しずつHP回復
-	if (hp < 100 && frame_count % 35 == 0) hp++;
+	if (hp < 100 && frame_count % 30 == 0) hp++;
 
 	//特殊行動時間(4秒間)
 	if (specialTime >= 240)
@@ -106,6 +107,7 @@ void Enemy_04::Update()
 		specialTime = 0;
 		specialFlg = false;
 		current = 0;
+		SoundSystem::StopSE(SE::ENEMY_SPECIAL);
 	}
 }
 
@@ -115,7 +117,7 @@ void Enemy_04::Draw() const
 	//中心から描画
 	DrawRotaGraphF(x, y, 1.5, 0, enemy_image[0], TRUE);
 
-	/************* ↓↓ 黒目の位置をプレイヤーとの角度によって変える ↓↓ *************/
+	/************* ↓↓ 黒目をプレイヤーの角度へ向ける ↓↓ *************/
 
 	//上向きの画像
 	if (angle > 2.625 && angle <= 3.15 || angle <= -2.625 && angle > -3)
@@ -173,7 +175,14 @@ void Enemy_04::Draw() const
 	//じゃん撃描画
 	Draw_Jangeki();
 
-	if (hp > 0) DrawFormatString((int)(x - 45), (int)(y - 130), 0xffffff, "HP : %d", hp);
+	//残りHP表示
+	if (hp > 0) DrawFormatString((int)(x - 45), (int)(y - 130), GetColor(0, 255, 0), "HP : %d", hp);
+
+	//残りHP50以下の時に表示
+	if (hp <= 50) DrawFormatString((int)(x - 60), (int)(y - 160), GetColor(30, 30, 255), "スピードUP↑", hp);
+
+	//特殊効果時に表示
+	if (specialFlg == true) DrawFormatString((int)(x - 50), (int)(y - 160), GetColor(255, 30, 30), "特殊効果", hp);
 }
 
 //じゃん撃生成・更新
@@ -219,11 +228,15 @@ void Enemy_04::Update_Jangeki()
 		if (specialFlg == false)
 		{
 			//プレイヤーの角度へ発射するジャン撃生成
-			if (frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+			if (frame_count % 70 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 		}
 		else if (specialFlg == true)
 		{
-			if (frame_count % 60 == 0) Jan_360degrees(jan_count, radius, speed * 1.5, type);
+			if (frame_count % 80 == 0)
+			{
+				Jan_360degrees(jan_count, radius * 0.8, speed, type);
+				SoundSystem::PlaySE(SE::ENEMY_SPECIAL_ATTACK);
+			}
 		}
 	}
 }
@@ -344,15 +357,16 @@ void Enemy_04::Special_Action()
 {
 	specialFlg = true;
 	current = 1;
+	SoundSystem::PlaySE(SE::ENEMY_SPECIAL);
 }
 
 //360度発射
 void Enemy_04::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
 {
-	//36度ずつ10個生成
-	for (int i = count; i < (count + 10); i++)
+	//24度ずつ15個生成
+	for (int i = count; i < (count + 15); i++)
 	{
-		double angle = static_cast<double>((36.0 * i) * (M_PI / 180));
+		double angle = static_cast<double>((24.0 * i) * (M_PI / 180));
 
 		obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
 	}

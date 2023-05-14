@@ -5,7 +5,7 @@
 #include "Scene_GameOver.h"
 #include "Stage_Base.h"
 #include "GameData.h"
-
+#include"SoundSystem.h"
 
 
 //デバッグモード
@@ -17,8 +17,7 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	stage = LoadGraph("images/stage03/stage03back.png");
 	GroundImages = LoadGraph("images/stage03/GroundImages.png");
 	BlockImages = LoadGraph("images/stage03/BlockImages.png");
-
-
+	
 
 	//プレイヤー情報が渡されていれば
 	if (player != nullptr)
@@ -54,6 +53,8 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	obj_floor[10] = new Floor("images/stage03/BlockImages.png", 60, 340, 95, 1);//足場8//100, GetColor(193, 107, 68)
 	obj_floor[11] = new Floor("images/stage03/BlockImages.png", 60, 500, 95, 1);//足場9//130, GetColor(193, 107, 68)
 
+
+	
 	//obj_floor[12] = new Floor("images/stage03/BlockImages.png", 970, 405, 95, 10);//足場3, GetColor(193, 107, 68)
 	//obj_floor[12] = new Floor("images/stage03/BlockImages.png", 790, 360, 95, 10);//足場4//130, GetColor(193, 107, 68)
 	//obj_floor[13] = new Floor("images/stage03/BlockImages.png", 595, 425, 95, 10);//足場5//100, GetColor(193, 107, 68)
@@ -74,9 +75,8 @@ Scene_Stage03::~Scene_Stage03()
 //更新
 void Scene_Stage03::Update()
 {
-
-	//時間をカウント
-	GameData::Time_Update();
+	//BGMを鳴らす
+	SoundSystem::PlayBGM(BGM::ST03_BGM);
 
 
 	//接触じゃんけん開始前
@@ -87,11 +87,21 @@ void Scene_Stage03::Update()
 		obj_enemy->ChangeDir(obj_player->GetX());//プレイヤーがx < 640だったらエネミーの弾の向きを変える
 		obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());	//プレイヤーの座標を取得
 		
-		
+		//時間をカウント
+		GameData::Time_Update();
 	}
 
+	
+	
 	//接触じゃんけん処理
 	Touch_Janken(obj_enemy, this, 3);
+
+	//走るSE停止
+	StopSoundMem(obj_enemy->GetRunSE());
+	//歩くSE停止
+	StopSoundMem(obj_enemy->GetWalkSE());
+
+	Effect_Update_HitJangeki(obj_enemy);
 
 	//playerのじゃん撃をとってくる
 	Jangeki_Base** player_jangeki = obj_player->GetJangeki();
@@ -183,47 +193,79 @@ void Scene_Stage03::Update()
 				{
 
 					//HP86以上の時
-					if (obj_enemy->GetHP() >= 86 &&  obj_enemy->GetWaitTime() > 0 || obj_enemy->GetHP() >= 86 &&  obj_enemy->GetWaitTime() < 200) {
+					if (obj_enemy->GetHP() >= 86) {
 
-						SheeldEnduranse = 27;
-						obj_enemy->ReceiveDamage(35 - SheeldEnduranse-EnemyCutDamege); //軽減ダメージが入る
 
-					}
-					else if (obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 71  && obj_enemy->GetWaitTime() > 0 || obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 71 && obj_enemy->GetWaitTime() < 200) {
+						if(obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200){
 
-						SheeldEnduranse = 24;
-						obj_enemy->ReceiveDamage(35 - SheeldEnduranse- EnemyCutDamege); //軽減ダメージが入る
+							SheeldEnduranse = 27;				//3 - じゃんけん負けた時 1
+							obj_enemy->ReceiveDamage(30 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
 
+						}
 
 					}
-					else if (obj_enemy->GetHP() <= 70 && obj_enemy->GetHP() >= 56  && obj_enemy->GetWaitTime() > 0 || obj_enemy->GetHP() <= 70 && obj_enemy->GetHP() >= 56 && obj_enemy->GetWaitTime() < 200) {
 
-						SheeldEnduranse = 21;
-						obj_enemy->ReceiveDamage(35 - SheeldEnduranse- EnemyCutDamege); //軽減ダメージが入る
+					else if (obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 71) {
 
 
+						if(obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200) {
+
+							SheeldEnduranse = 24;			//6 - じゃんけん負けた時 3
+							obj_enemy->ReceiveDamage(30 - SheeldEnduranse- EnemyCutDamege); //軽減ダメージが入る
+							
+						}
+
+						SoundSystem::PlaySE(SE::ENEMY_SLIGHTLYBROKEN);
+					
 					}
-					else if (obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 41 && obj_enemy->GetWaitTime() > 0 || obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 41 && obj_enemy->GetWaitTime() <  200) {
+					else if (obj_enemy->GetHP() <= 70 && obj_enemy->GetHP() >= 56) {
+					
+						if(obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200){
 
-						SheeldEnduranse = 18;
-						obj_enemy->ReceiveDamage(35 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
+							SheeldEnduranse = 21;			//9 - じゃんけん負けた時 5
+							obj_enemy->ReceiveDamage(30 - SheeldEnduranse- EnemyCutDamege); //軽減ダメージが入る
 
+						}
 
+						SoundSystem::PlaySE(SE::ENEMY_SLIGHTLYBROKEN);
+						
 					}
-					else if (obj_enemy->GetHP() <= 40  && obj_enemy->GetWaitTime() > 0 || obj_enemy->GetHP() <= 40 && obj_enemy->GetWaitTime() < 200) {
+					else if (obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 41) {
 
-						SheeldEnduranse = 15;
-						obj_enemy->ReceiveDamage(35 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
+			
+						if(obj_enemy->GetWaitTime() > 0 ||  obj_enemy->GetWaitTime() < 200){
 
+							
+							SheeldEnduranse = 18;				//12 - じゃんけん負けた時 6
+							obj_enemy->ReceiveDamage(30 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
+						
+						}
+
+						SoundSystem::PlaySE(SE::ENEMY_SHIELDBROKEN);
+					}
+					else if (obj_enemy->GetHP() <= 40) {
+
+
+						if (obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200) {
+
+							
+							SheeldEnduranse = 15;				//15 - じゃんけん負けた時 8
+							obj_enemy->ReceiveDamage(30 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
+						}
+						
 
 					}
 
 					else {
 
-						if (obj_enemy->GetWaitTime() < 200  && obj_enemy->GetWaitTime() > 0){
-							
-							
-							obj_enemy->ReceiveDamage(8 - EnemyCutDamege); //ダメージが入る
+						if (obj_enemy->GetWaitTime() < 200 || obj_enemy->GetWaitTime() > 0){
+															 
+
+															//1 - じゃんけん負けた時 1
+
+							obj_enemy->ReceiveDamage(1 - EnemyCutDamege); //ダメージが入る
+
+
 						}
 					}
 
@@ -336,7 +378,7 @@ void Scene_Stage03::Update()
 
 			//			}
 
-			//		//}zz
+			//		//}
 			//		else {
 
 			//				SheeldEnduranse = 0;
@@ -366,10 +408,10 @@ void Scene_Stage03::Update()
 		//じゃん撃との当たり判定
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
-			//エネミーのHPが40以下の場合35ダメージ食らう
+			//エネミーのHPが40以下の場合25ダメージ食らう
 			if (obj_enemy->GetHP() <= 40) {
 
-				//半径が90.0fの場合のダメージ
+				//半径が50.0fの場合のダメージ
 				float radius = 50.0f;
 
 				if (radius >= 50.0f) {
@@ -377,7 +419,17 @@ void Scene_Stage03::Update()
 					obj_player->ReceiveDamage(25 - PlayerCutDamege) ;
 				}
 			}
+			else if (obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 41) {
 
+				//半径が50.0fの場合のダメージ
+				float radius = 25.5f;
+
+				if (radius >= 25.5f) {
+
+					obj_player->ReceiveDamage(15 - PlayerCutDamege);
+				}
+
+			}
 			//それ以外
 			//通常時のダメージを受ける（プレイヤー）
 			else obj_player->ReceiveDamage(15 - PlayerCutDamege);
@@ -426,6 +478,7 @@ void Scene_Stage03::Draw() const
 	if (GetJanState() == Jan_State::START || GetJanState() == Jan_State::BEFORE)
 	{
 
+
 		obj_player->Draw();  //プレイヤー描画
 		obj_enemy->Draw();   //敵キャラ描画
 
@@ -435,6 +488,32 @@ void Scene_Stage03::Draw() const
 		{
 			if (obj_floor[i] == nullptr) break;
 			obj_floor[i]->Draw();
+		}
+
+		//じゃんけん負けた時
+		if (Player_Janwin == 1)
+		{
+			float p_x = obj_player->GetX();
+			float p_y = obj_player->GetY();
+
+			DrawString(p_x, p_y - 80, "防御力UP↑", 0xfff);
+		}
+		else {
+			int Player_Janwin = 0;
+		}
+
+		if (Enemy_Janwin == 1) {
+
+			if (obj_enemy->GetWaitTime() > 0) {
+				//エネミー特殊効果テキスト表示
+
+				DrawFormatString((int)(obj_enemy->GetX() - 40), (int)(obj_enemy->GetY() - 90), GetColor(0, 0, 255), "さらに防御UP↑", obj_enemy->GetWaitTime());
+			}
+			else {
+
+				int Enemy_Janwin = 0;
+
+			}
 		}
 
 		//接触した瞬間の演出
@@ -448,6 +527,13 @@ void Scene_Stage03::Draw() const
 	}
 
 	//DrawString(640, 360, "Stage03", 0xffff);
+	
+	//接触じゃんけん時Effect
+	Effect_Draw_HitJangeki();
+
+  
+
+
 }
 
 
@@ -465,17 +551,29 @@ AbstractScene* Scene_Stage03::ChangeScene()
 #ifdef DEBUG_OFF_03
 
 	//敵のHP0
-	if (obj_enemy->GetHP() < 0) {
+	if (obj_enemy->GetHP() <= 0) {
 
+		//BGM停止
+		SoundSystem::StopBGM(BGM::ST03_BGM);
+		//走るSE停止
+		StopSoundMem(obj_enemy->GetRunSE());
+		//歩くSE停止
+		StopSoundMem(obj_enemy->GetWalkSE());
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(4));
 
 	}
 
 	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() < 0 || GameData::Get_Each_Time() <= 0){
+					//死亡演出//
+	if (obj_player->IsDeathPlayer() == true){
 		 
-
+		//BGM停止
+		SoundSystem::StopBGM(BGM::ST03_BGM);
+		//走るSE停止
+		StopSoundMem(obj_enemy->GetRunSE());
+		//歩くSE停止
+		StopSoundMem(obj_enemy->GetWalkSE());
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(3));
 	}
@@ -489,22 +587,68 @@ AbstractScene* Scene_Stage03::ChangeScene()
 
 void Scene_Stage03::AfterJanken_WIN()
 {
+
+	//勝ったら1
+	Player_Janwin = 1;
+
+
 	//じゃんけん勝利時
 	PlayerCutDamege = 10;
-
+	
 	obj_player->SetX(200);
-	//obj_enemy->SetX(1150);
+	
+	
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）
 void Scene_Stage03::AfterJanken_LOSE()
 {
 
-	//じゃんけん敗北時
-	EnemyCutDamege = 5;
+	//負けたら1
+	Enemy_Janwin = 1;
+
+
+	if(obj_enemy->GetHP() >= 86){
+
+	    //じゃんけん敗北時
+	    EnemyCutDamege = 2;
+	}
+	else if(obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 71) {
+
+		//じゃんけん敗北時
+		EnemyCutDamege = 3;
+
+	}
+	else if (obj_enemy->GetHP() <= 70 && obj_enemy->GetHP() >= 56) {
+
+		//じゃんけん敗北時
+		EnemyCutDamege = 5;
+
+	}
+	else if (obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 41) {
+
+		//じゃんけん敗北時
+		EnemyCutDamege = 6;
+
+	}
+	else if (obj_enemy->GetHP() <= 40) {
+
+
+		//じゃんけん敗北時
+		EnemyCutDamege = 8;
+
+
+	}
+	else {
+
+		//じゃんけん敗北時
+		EnemyCutDamege = 1;
+
+	}
 
 	obj_player->SetX(200);
-	//obj_enemy->SetX(1150);
+	
+
 }
 
 
