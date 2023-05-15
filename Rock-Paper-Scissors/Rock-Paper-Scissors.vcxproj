@@ -169,6 +169,7 @@
     <ClCompile Include="Enemy_09.cpp" />
     <ClCompile Include="Enemy_10.cpp" />
     <ClCompile Include="Enemy_Cannon.cpp" />
+    <ClCompile Include="Enemy_Death.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="FPS_Controll.cpp" />
     <ClCompile Include="GameData.cpp" />
@@ -242,6 +243,7 @@
     <ClInclude Include="Enemy_09.h" />
     <ClInclude Include="Enemy_10.h" />
     <ClInclude Include="Enemy_Cannon.h" />
+    <ClInclude Include="Enemy_Death.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="FPS_Controll.h" />
     <ClInclude Include="GameData.h" />

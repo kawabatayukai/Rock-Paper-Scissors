@@ -8,6 +8,7 @@
 #include"Effect_Enemy.h"
 #include"Jangeki_reflection.h"
 #include"Sound_Jangeki.h"
+#include"Enemy_Death.h"
 
 //ステージのベース
 class Stage_Base : public AbstractScene
@@ -43,6 +44,15 @@ public:
 	//じゃん撃ヒット時エフェクト 描画
 	void Effect_Draw_HitJangeki() const;
 
+	//死亡時処理
+	void Update_DeathEnemy();
+
+	//死亡時描画
+	void Draw_DeathEnemy() const;
+
+	//死亡演出終了チェック
+	bool IsEnd_DeathEnemy();
+	void GetStage09IsClear(bool isclear);
 
 	//じゃんけん描画
 	void Draw_Janken() const;
@@ -81,5 +91,8 @@ private:
 	int font_score;                           //Score描画用フォント
 
 	Sound_Jangeki** obj_sejan;                //SE
+
+	Enemy_Death* obj_death;                   //死亡時に生成する
+	bool stage09_isclear = false;
 };
 
