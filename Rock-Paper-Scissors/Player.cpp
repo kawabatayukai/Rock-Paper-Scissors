@@ -338,7 +338,7 @@ void Player::Update()
 	Play_SE();   //Œø‰Ê‰¹
 }
 
-/* “ª‚Ì•`‰æE“®‚«)*/
+/*“ª‚Ì•`‰æE“®‚«)*/
 void Player::HeadDrawMove() const
 {
 	///*********************
