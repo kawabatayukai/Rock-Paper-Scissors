@@ -47,6 +47,8 @@ Enemy_Death::Enemy_Death(const float& x, const float& y, const int& stage_num,co
 		break;
 	}
 
+	se_death = LoadSoundMem("Sound/Janken/「ぐああーーっ！」.mp3");
+
 	g_add = -24.5f;    //重力加速度をマイナス値に
 	old_y = y;
 	land_flg = false;  //地面についていない
@@ -54,6 +56,7 @@ Enemy_Death::Enemy_Death(const float& x, const float& y, const int& stage_num,co
 
 Enemy_Death::~Enemy_Death()
 {
+	DeleteSoundMem(se_death);
 }
 
 void Enemy_Death::Update()
@@ -72,6 +75,8 @@ void Enemy_Death::Update()
 	if (y > old_y) land_flg = false;
 
 	/**********************************************************/
+
+	if (CheckSoundMem(se_death) == 0) PlaySoundMem(se_death, DX_PLAYTYPE_BACK);
 }
 
 void Enemy_Death::Draw() const

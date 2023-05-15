@@ -16,6 +16,7 @@ public:
 
 private:
 	int image_death;
+	int se_death;
 
 	float old_x = 0;          //前回の位置X
 	float old_y = 0;          //前回の位置Y
