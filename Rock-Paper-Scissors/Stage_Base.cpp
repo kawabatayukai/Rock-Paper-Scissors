@@ -705,9 +705,13 @@ void Stage_Base::Draw_JankenStart() const
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - (static_cast<int>(blackout_time * 5)));
 		if (blackout_time < 60) obj_janken->Draw();
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-		//SetDrawBlendMode(DX_BLENDMODE_ADD, static_cast<int>(blackout_time * 5));
-		//DrawBox(0, 0, 1280, 720, 0xffffff, TRUE);
-		//SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+		for (int i = 0; i < 12; i++)
+		{
+			DrawBox(0, i * 60, (1280 - (blackout_time * 21)), (i * 60) + 30, 0x000000, TRUE);
+
+			DrawBox(1280, (i * 60) + 30, blackout_time * 21, (i * 60) + 60, 0x000000, TRUE);
+		}
 	}
 	else
 	{
