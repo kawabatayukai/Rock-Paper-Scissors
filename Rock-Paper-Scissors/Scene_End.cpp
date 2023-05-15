@@ -50,8 +50,12 @@ void EndScene::Draw() const
 	DrawString(450, 500 + PosY, "ステージ9     仲吉  彪流", 0xFFFFFF);
 	DrawString(450, 530 + PosY, "ステージ10    與座  芳弘", 0xFFFFFF);
 	DrawString(450, 565 + PosY, "素材利用", 0xFFFFFF);
-	DrawString(450, 600 + PosY, "　BGM/SE　MusMus https://musmus.main.jp", 0xFFFFFF);
-	DrawString(450, 630 + PosY, "　BGM/SE　効果音ラボ https://soundeffect-lab.info/sound/battle/", 0xFFFFFF);
+	DrawString(450, 600 + PosY, "  画像    ぴぽや倉庫 https://pipoya.net/sozai/", 0xFFFFFF);
+	DrawString(450, 630 + PosY, "  画像    OKUMONO URL https://sozaino.site/", 0xFFFFFF);
+	DrawString(450, 660 + PosY, "　BGM/SE　MusMus https://musmus.main.jp", 0xFFFFFF);
+	DrawString(450, 690 + PosY, "　BGM/SE　効果音ラボ https://soundeffect-lab.info/sound/battle/", 0xFFFFFF);
+	DrawString(450, 720 + PosY, "　BGM/SE　springin https://www.springin.org/", 0xFFFFFF);
+	DrawString(450, 750 + PosY, "　BGM/SE　無料効果音で遊ぼう！ https://taira-komori.jpn.org/index.html", 0xFFFFFF);
 }
 
 //シーンの変更

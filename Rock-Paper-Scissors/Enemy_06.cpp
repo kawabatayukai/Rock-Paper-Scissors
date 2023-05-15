@@ -30,12 +30,6 @@ Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	//煙エフェクト読み込み
 	LoadDivGraph("images/stage06/pipo-btleffect059.png", 10, 10, 1, 120, 120, smokeImage);
 
-	////ジャン撃SE読み込み
-	//attackSE = LoadSoundMem("Sound/stage06/nc263537.wav");
-
-	////移動SE読み込み
-	//dashSE = LoadSoundMem("Sound/stage06/下駄で走る.mp3");
-
 	Init_Jangeki();       //じゃん撃を用意
 
 }
@@ -57,19 +51,6 @@ void Enemy_06::Update()
 	bef_y = y;
 
 	smoke();
-
-	////SE再生
-	//if (y == bef_y && hp > 0)
-	//{
-	//	if (CheckSoundMem(dashSE) == FALSE)
-	//	{
-	//		PlaySoundMem(dashSE, DX_PLAYTYPE_BACK, TRUE);
-	//	}
-	//}
-	//else
-	//{
-	//	StopSoundMem(dashSE);
-	//}
 
 	//じゃん撃更新・生成
 	Update_Jangeki();
