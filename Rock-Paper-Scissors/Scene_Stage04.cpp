@@ -318,7 +318,7 @@ void Scene_Stage04::AfterJanken_WIN()
 {
 	obj_player->Recover_HP(50);
 	obj_player->SetX(200);
-	obj_player->SetY(550);
+	obj_player->SetY(500);
 	obj_enemy->SetX(1180);
 }
 
@@ -327,6 +327,6 @@ void Scene_Stage04::AfterJanken_LOSE()
 {
 	obj_enemy->Special_Action();
 	obj_player->SetX(200);
-	obj_player->SetY(550);
+	obj_player->SetY(500);
 	obj_enemy->SetX(1180);
 }
