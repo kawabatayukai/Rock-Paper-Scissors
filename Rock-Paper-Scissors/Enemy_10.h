@@ -77,6 +77,8 @@ public:
 
 	//Scene_Stage10* obj_floor;
 
+	void SetSpeed(int speed);
+
 private:
 	/********************   ƒWƒƒƒ“ƒvŠÖŒW   ********************/
 

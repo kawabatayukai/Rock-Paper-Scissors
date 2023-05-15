@@ -573,12 +573,12 @@ void Scene_Stage10::Draw_Janken() const
 
 void Scene_Stage10::AfterJanken_WIN()
 {
-	
+	obj_player->Recover_HP(30);
 }
 
 void Scene_Stage10::AfterJanken_LOSE()
 {
-
+	obj_enemy->SetSpeed(7);
 }
 
 //ƒV[ƒ“‚Ì•ÏX

@@ -63,10 +63,10 @@ void GameClearScene::Draw() const
 AbstractScene* GameClearScene::ChangeScene()
 {
 	//Aƒ{ƒ^ƒ“‚Å–ß‚é
-	if (KeyManager::OnPadClicked(PAD_INPUT_A))
+	/*if (KeyManager::OnPadClicked(PAD_INPUT_A))
 	{
 		return dynamic_cast<AbstractScene*> (new TitleScene());
-	}
+	}*/
 	if (KeyManager::OnPadClicked(PAD_INPUT_B))
 	{
 		switch (Next)

@@ -66,9 +66,9 @@ void Scene_Title_GameLevel::Draw() const
 {
 	
 
-	DrawStringToHandle(70, 200, "難易度選択", 0xf, font_title);
-	DrawStringToHandle(70, 350, "NOMAL", 0xf, font_title); 
-	DrawStringToHandle(70, 400, "REAL JANKEN", 0xf, font_title);
+	DrawStringToHandle(70, 200, "ゲームモード選択選択", 0xf, font_title);
+	DrawStringToHandle(70, 350, "STANDARD", 0xf, font_title); 
+	DrawStringToHandle(70, 400, "EXTRA JANKEN", 0xf, font_title);
 	DrawStringToHandle(70, 500, "Bボタンで戻る", 0xf, font_title);
 	
 	//メニューカーソル
@@ -93,7 +93,7 @@ AbstractScene* Scene_Title_GameLevel::ChangeScene()
 		switch (T_selectnum)
 		{
 		case 0:/*通常モード*/
-			GameData::Set_DIFFICULTY(GAME_DIFFICULTY::NOMAL);
+			GameData::Set_DIFFICULTY(GAME_DIFFICULTY::NORMAL);
 			//return dynamic_cast<AbstractScene*> (new Scene_Story());
 			//return dynamic_cast<AbstractScene*> (new Scene_InputNamePlayer());
 			return dynamic_cast<AbstractScene*> (new Scene_InputNameRanking());

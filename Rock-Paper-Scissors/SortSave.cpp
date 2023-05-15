@@ -44,7 +44,7 @@ void SortSave::SortRanking(void)
 int SortSave::SaveRanking(void)
 {
 	/*通常モード*/
-	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::NOMAL)
+	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::NORMAL)
 	{
 		// ファイルオープン
 		if ((fopen_s(&fp, "dat/rankingdata.txt", "w")) != 0)
@@ -81,7 +81,7 @@ int SortSave::SaveRanking(void)
 int  SortSave::ReadRanking(void)
 {
 	/*通常モード*/
-	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::NOMAL)
+	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::NORMAL)
 	{
 		//ファイルオープン
 		if ((fopen_s(&fp, "dat/rankingdata_HARD.txt", "r")) != 0)
