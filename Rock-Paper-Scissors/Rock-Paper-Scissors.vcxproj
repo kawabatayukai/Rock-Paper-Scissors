@@ -169,6 +169,7 @@
     <ClCompile Include="Enemy_09.cpp" />
     <ClCompile Include="Enemy_10.cpp" />
     <ClCompile Include="Enemy_Cannon.cpp" />
+    <ClCompile Include="Enemy_Death.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="FPS_Controll.cpp" />
     <ClCompile Include="GameData.cpp" />
@@ -215,6 +216,7 @@
     <ClCompile Include="Scene_Title.cpp" />
     <ClCompile Include="SoundSystem.cpp" />
     <ClCompile Include="Sound_Jangeki.cpp" />
+    <ClCompile Include="Sound_Janken.cpp" />
     <ClCompile Include="Sound_Player.cpp" />
     <ClCompile Include="Stage_Base.cpp" />
     <ClCompile Include="Jangeki_Bounds.cpp" />
@@ -241,6 +243,7 @@
     <ClInclude Include="Enemy_09.h" />
     <ClInclude Include="Enemy_10.h" />
     <ClInclude Include="Enemy_Cannon.h" />
+    <ClInclude Include="Enemy_Death.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="FPS_Controll.h" />
     <ClInclude Include="GameData.h" />
@@ -286,6 +289,7 @@
     <ClInclude Include="Scene_Title.h" />
     <ClInclude Include="SoundSystem.h" />
     <ClInclude Include="Sound_Jangeki.h" />
+    <ClInclude Include="Sound_Janken.h" />
     <ClInclude Include="Sound_Player.h" />
     <ClInclude Include="Stage_Base.h" />
     <ClInclude Include="Jangeki_Bounds.h" />

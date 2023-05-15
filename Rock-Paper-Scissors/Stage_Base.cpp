@@ -21,13 +21,13 @@ namespace _CONSTANTS_SB
 	const int CLOCK_Y = 60;
 }
 
-Stage_Base::Stage_Base() : blackout_time(0), Prev_EnemyType(Jan_Type::NONE), obj_effectEnemy(nullptr)
+Stage_Base::Stage_Base() : blackout_time(0), Prev_EnemyType(Jan_Type::NONE), obj_effectEnemy(nullptr), obj_death(nullptr)
 {
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, typeImage);
 
 	//                           サイズ 幅              外枠
 	font = CreateFontToHandle(NULL, 60, 3, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
-	font_score = CreateFontToHandle("メイリオ", 30, 5, DX_FONTTYPE_ANTIALIASING_EDGE, - 1,1);
+	font_score = CreateFontToHandle("メイリオ", 30, 5, DX_FONTTYPE_ANTIALIASING_EDGE, -1, 1);
 
 	//エフェクト初期化
 	obj_effect = new Effect_Jangeki * [_CONSTANTS_SB::EFFECT_MAX];
@@ -62,7 +62,7 @@ void Stage_Base::DrawUI(Jan_Type type, int hp) const
 
 	//制限時間描画
 	//スコア
-	DrawFormatStringToHandle(950, 80, 0xffffff, font_score, "Score : %d", GameData::Get_Score(),0x000000);
+	DrawFormatStringToHandle(950, 80, 0xffffff, font_score, "Score : %d", GameData::Get_Score(), 0x000000);
 
 	// ------------------------------ 時計 ------------------------------------
 	//現在のパーセンテージ(扇形)
@@ -258,15 +258,10 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 					stage_ptr->AfterJanken_LOSE();
 				}
 
-				//じゃん撃を初期化する
-				enemy->Init_Jangeki();
-
-				delete obj_janken;
-				//あたり判定なし時間をセット
-				nhit_time = NOT_COLLISION_TIME;
-
-				//開始前にリセット
-				j_state = Jan_State::BEFORE;
+				//END演出
+				blackout_time = 0;
+				j_state = Jan_State::END;
+				
 				break;
 
 
@@ -283,16 +278,10 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 					stage_ptr->AfterJanken_WIN();
 				}
 
-				//じゃん撃を初期化する
-				enemy->Init_Jangeki();
-
-				delete obj_janken;
-				//あたり判定なし時間をセット
-				nhit_time = NOT_COLLISION_TIME;
-
-				//開始前にリセット
-				j_state = Jan_State::BEFORE;
-
+				//END演出
+				blackout_time = 0;  
+				j_state = Jan_State::END;
+			
 				break;
 
 
@@ -309,8 +298,6 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 				break;
 
 			default:
-
-				delete obj_janken;
 				break;
 			}
 
@@ -318,11 +305,55 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 
 		}
 	}
-	else {}
+	else if (j_state == Jan_State::END)
+    {
+
+
+		//じゃん撃を初期化する
+		enemy->Init_Jangeki();
+		//あたり判定なし時間をセット
+		nhit_time = NOT_COLLISION_TIME;
+
+		//開始前にリセット
+		if(++blackout_time > 60) 
+		{
+			j_state = Jan_State::BEFORE;
+			delete obj_janken;
+		}
+	}
+	else
+	{
+	}
 
 	//衝突判定なし時間
 	if (--nhit_time < 0) nhit_time = 0;
-}
+
+	//Enemyを監視
+	if (my_StageNum == 9)
+	{
+		if (stage09_isclear == true && obj_death == nullptr)
+		{
+			//死亡演出用オブジェクト
+			obj_death = new Enemy_Death(enemy->GetX(), enemy->GetY(), my_StageNum);
+
+			enemy->SetX(-9999, true);
+			enemy->SetY(-9999, true);
+		}
+	}
+	else
+	{
+		if (enemy->GetHP() <= 0 && obj_death == nullptr)
+		{
+			//死亡演出用オブジェクト
+			obj_death = new Enemy_Death(enemy->GetX(), enemy->GetY(), my_StageNum, enemy->GetType());
+
+			enemy->SetX(-9999, true);
+			enemy->SetY(-9999, true);
+		}
+	}
+
+	Update_DeathEnemy();
+};
 
 
 //じゃん撃ヒット時エフェクト 処理
@@ -400,101 +431,101 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy, const Jangeki_
 	Jangeki_Base** e_jan = enemy->GetJangeki();
 
 	//--------------------  playerじゃん撃とenemy  -------------------------------------
-	
+
 		//playerじゃん撃とenemyの当たり判定
-		for (int i = 0; i < JANGEKI_MAX; i++)
+	for (int i = 0; i < JANGEKI_MAX; i++)
+	{
+		//空要素なら終了
+		if (p_jan[i] == nullptr) break;
+
+		//当たり判定
+		if (enemy->Hit_Jangeki(p_jan[i]) == true)
 		{
-			//空要素なら終了
-			if (p_jan[i] == nullptr) break;
+			Jan_Type p_type = p_jan[i]->GetType();  //当たったじゃん撃の属性
 
-			//当たり判定
-			if (enemy->Hit_Jangeki(p_jan[i]) == true)
+
+
+			//不利属性のみ
+			switch (enemy->GetType())
 			{
-				Jan_Type p_type = p_jan[i]->GetType();  //当たったじゃん撃の属性
+			case Jan_Type::ROCK:                           //敵の属性　グー
 
-				
-
-				//不利属性のみ
-				switch (enemy->GetType())
+				//パーのみ有効
+				if (p_type == Jan_Type::PAPER)
 				{
-				case Jan_Type::ROCK:                           //敵の属性　グー
-
-					//パーのみ有効
-					if (p_type == Jan_Type::PAPER)
+					//エフェクト生成
+					if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
 					{
-						//エフェクト生成
-						if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
-						{
-							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y, Jan_Type::PAPER, _CHAR_TYPE::PLAYER);
-							//effect_count++;
+						obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y, Jan_Type::PAPER, _CHAR_TYPE::PLAYER);
+						//effect_count++;
 
-							//SE
-							obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::HIT_JAN);
-							//se_count++;
-						}
+						//SE
+						obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::HIT_JAN);
+						//se_count++;
 					}
-					break;
-
-				case Jan_Type::SCISSORS:                       //敵の属性　チョキ
-
-					//グーのみ有効
-					if (p_type == Jan_Type::ROCK)
-					{
-						//エフェクト生成
-						if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
-						{
-							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y, Jan_Type::ROCK,_CHAR_TYPE::PLAYER);
-							//effect_count++;
-							
-							//SE
-							obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::HIT_JAN);
-							//se_count++;
-						}
-					}
-					break;
-
-				case Jan_Type::PAPER:                          //敵の属性　パー
-
-					//チョキのみ有効
-					if (p_type == Jan_Type::SCISSORS)
-					{
-						//エフェクト生成
-						if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
-						{
-							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y, Jan_Type::SCISSORS, _CHAR_TYPE::PLAYER);
-							//effect_count++;
-
-						    //SE
-							obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::HIT_JAN);
-							//se_count++;
-						}
-					}
-					break;
-
-				case Jan_Type::NONE:                            //属性なし
-
-					//反射じゃん撃に当てることで生成されるホーミングじゃん撃のみ有効
-					if (p_jan[i]->IsGetPlayerHoming() == true)
-					{
-						//エフェクト生成
-						if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
-						{
-							obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y, p_type, _CHAR_TYPE::PLAYER);
-							//effect_count++;
-
-						    //SE
-							obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::HIT_JAN);
-							//se_count++;
-						}
-					}
-					break;
-
-				default:
-					break;
 				}
+				break;
+
+			case Jan_Type::SCISSORS:                       //敵の属性　チョキ
+
+				//グーのみ有効
+				if (p_type == Jan_Type::ROCK)
+				{
+					//エフェクト生成
+					if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
+					{
+						obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y, Jan_Type::ROCK, _CHAR_TYPE::PLAYER);
+						//effect_count++;
+
+						//SE
+						obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::HIT_JAN);
+						//se_count++;
+					}
+				}
+				break;
+
+			case Jan_Type::PAPER:                          //敵の属性　パー
+
+				//チョキのみ有効
+				if (p_type == Jan_Type::SCISSORS)
+				{
+					//エフェクト生成
+					if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
+					{
+						obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y, Jan_Type::SCISSORS, _CHAR_TYPE::PLAYER);
+						//effect_count++;
+
+						//SE
+						obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::HIT_JAN);
+						//se_count++;
+					}
+				}
+				break;
+
+			case Jan_Type::NONE:                            //属性なし
+
+				//反射じゃん撃に当てることで生成されるホーミングじゃん撃のみ有効
+				if (p_jan[i]->IsGetPlayerHoming() == true)
+				{
+					//エフェクト生成
+					if (obj_effect[effect_count] == nullptr && effect_count < _CONSTANTS_SB::EFFECT_MAX)
+					{
+						obj_effect[effect_count] = new Effect_Jangeki(e_x, e_y, p_type, _CHAR_TYPE::PLAYER);
+						//effect_count++;
+
+						//SE
+						obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::HIT_JAN);
+						//se_count++;
+					}
+				}
+				break;
+
+			default:
+				break;
 			}
 		}
-	
+	}
+
 	//----------------------------------------------------------------------------------
 
 	//--------------------  enemyじゃん撃とplayer  -------------------------------------
@@ -540,7 +571,7 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy, const Jangeki_
 						obj_effect[effect_count] = new Effect_Jangeki(p_x, p_y, r_jan[r]->GetType(), _CHAR_TYPE::ENEMY);
 						//effect_count++;
 
-					    //SE
+						//SE
 						obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::HIT_JAN);
 						//se_count++;
 					}
@@ -645,7 +676,7 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy, const Jangeki_
 	}
 
 	//----------------------------------------------------------------------------------
-	
+
 
 	//----------------------------------　属性変化　------------------------------------
 		//前回の属性と違っていればエフェクト生成
@@ -683,8 +714,41 @@ void Stage_Base::Effect_Draw_HitJangeki() const
 	}
 
 	if (obj_effectEnemy != nullptr) obj_effectEnemy->Draw();
+	Draw_DeathEnemy();
 }
 
+//死亡時処理
+void Stage_Base::Update_DeathEnemy()
+{
+	if (obj_death != nullptr)
+	{
+		obj_death->Update();
+	}
+}
+
+//死亡時描画
+void Stage_Base::Draw_DeathEnemy() const
+{
+	if (obj_death != nullptr)
+	{
+		obj_death->Draw();
+	}
+}
+
+//死亡演出終了チェック
+bool Stage_Base::IsEnd_DeathEnemy()
+{
+	if (obj_death != nullptr)
+	{
+		if (obj_death->IsDeathEnd() == true) return true;
+	}
+	return false;
+}
+
+void Stage_Base::GetStage09IsClear(bool isclear)
+{
+	stage09_isclear = isclear;
+}
 
 //じゃんけん描画
 void Stage_Base::Draw_Janken() const
@@ -695,11 +759,29 @@ void Stage_Base::Draw_Janken() const
 //じゃんけん開始直後
 void Stage_Base::Draw_JankenStart() const
 {
-	SetDrawBlendMode(DX_BLENDMODE_ADD, static_cast<int>(blackout_time * 5));
-	DrawBox(0, 0, 1280, 720, 0xffffff, TRUE);
-	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	if (j_state == Jan_State::END)
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - (static_cast<int>(blackout_time * 5)));
+		if (blackout_time < 60) obj_janken->Draw();
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
-	//DrawBox(0, 0, static_cast<int>(blackout_time), static_cast<int>(blackout_time), 0xffffff, TRUE);
+		for (int i = 0; i < 12; i++)
+		{
+			DrawBox(0, i * 60, (1280 - (blackout_time * 21)), (i * 60) + 30, 0x000000, TRUE);
+
+			DrawBox(1280, (i * 60) + 30, blackout_time * 21, (i * 60) + 60, 0x000000, TRUE);
+		}
+	}
+	else
+	{
+		//ポケモンバトル風
+		for (int i = 0; i < 12; i++)
+		{
+			DrawBox(0, i * 60, blackout_time * 21, (i * 60) + 30, 0x000000, TRUE);
+
+			DrawBox(1280, (i * 60) + 30, (1280 - (blackout_time * 21)), (i * 60) + 60, 0x000000, TRUE);
+		}
+	}
 }
 
 
@@ -719,9 +801,8 @@ void Stage_Base::AfterJanken_LOSE()
 //じゃんけんの状態取得
 Jan_State Stage_Base::GetJanState() const
 {
-	////無理やり
-	//if (j_state == Jan_State::START) return Jan_State::BEFORE;
-	//else return j_state;
+
+	if (j_state == Jan_State::END) return Jan_State::START;
 
 	return j_state;
 }

@@ -1736,6 +1736,21 @@ void Player::Update_Jangeki()
 	}
 	else{}
 
+	switch (select_num)
+	{
+	case 0:
+		select_JanType = Jan_Type::PAPER;
+		break;
+	case 1:
+		select_JanType = Jan_Type::SCISSORS;
+		break;
+	case 2:
+		select_JanType = Jan_Type::ROCK;
+		break;
+	default:
+		break;
+	}
+
 	if (old_type != select_JanType)
 	{
 		//エフェクト生成

@@ -291,7 +291,7 @@ AbstractScene* Scene_Stage04::ChangeScene()
 #ifdef DEBUG_OFF_04
 
 	//“G‚ÌHP‚ª0ˆÈ‰º
-	if (obj_enemy->GetHP() <= 0)
+	if (IsEnd_DeathEnemy() == true)
 	{
 		//BGM’âŽ~
 		SoundSystem::StopBGM(BGM::STAGE04_BGM);
@@ -317,7 +317,8 @@ AbstractScene* Scene_Stage04::ChangeScene()
 void Scene_Stage04::AfterJanken_WIN()
 {
 	obj_player->Recover_HP(50);
-	obj_player->SetX(100);
+	obj_player->SetX(260);
+	obj_player->SetY(620);
 	obj_enemy->SetX(1180);
 }
 
@@ -325,6 +326,7 @@ void Scene_Stage04::AfterJanken_WIN()
 void Scene_Stage04::AfterJanken_LOSE()
 {
 	obj_enemy->Special_Action();
-	obj_player->SetX(100);
+	obj_player->SetX(260);
+	obj_player->SetY(620);
 	obj_enemy->SetX(1180);
 }

@@ -136,9 +136,6 @@
     <Filter Include="ソース ファイル\GameMainScene\StageBase">
       <UniqueIdentifier>{dbcd22f1-48ff-4b27-94ec-aaa129619bd9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\FPSコントロール">
-      <UniqueIdentifier>{6488d950-fe2d-4703-a896-8059d8f6f86b}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -288,6 +285,9 @@
     <ClCompile Include="Item_stage08.cpp">
       <Filter>ソース ファイル\GameMainScene\Stage_08</Filter>
     </ClCompile>
+    <ClCompile Include="FPS_Controll.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
     <ClCompile Include="Sound_Jangeki.cpp">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClCompile>
@@ -339,8 +339,11 @@
     <ClCompile Include="Stage_Base.cpp">
       <Filter>ソース ファイル\GameMainScene\StageBase</Filter>
     </ClCompile>
-    <ClCompile Include="FPS_Controll.cpp">
-      <Filter>ソース ファイル\FPSコントロール</Filter>
+    <ClCompile Include="Sound_Janken.cpp">
+      <Filter>ソース ファイル\Rock-Paper-Scissors %28RPS%29</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_Death.cpp">
+      <Filter>ソース ファイル\EnemyBase</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -497,6 +500,9 @@
     <ClInclude Include="Item_stage08.h">
       <Filter>ソース ファイル\GameMainScene\Stage_08</Filter>
     </ClInclude>
+    <ClInclude Include="FPS_Controll.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="Sound_Jangeki.h">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClInclude>
@@ -548,8 +554,11 @@
     <ClInclude Include="Stage_Base.h">
       <Filter>ソース ファイル\GameMainScene\StageBase</Filter>
     </ClInclude>
-    <ClInclude Include="FPS_Controll.h">
-      <Filter>ソース ファイル\FPSコントロール</Filter>
+    <ClInclude Include="Sound_Janken.h">
+      <Filter>ソース ファイル\Rock-Paper-Scissors %28RPS%29</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_Death.h">
+      <Filter>ソース ファイル\EnemyBase</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

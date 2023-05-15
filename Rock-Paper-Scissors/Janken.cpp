@@ -93,7 +93,6 @@ void Janken::Update()
 		}
 		else
 		{
-			return;   //何もしない
 		}
 	}
 	else
@@ -127,11 +126,6 @@ void Janken::Draw() const
 
 	//"VS"
 	DrawGraph(0, 0, image_back, TRUE);
-
-	//DrawBox(0, 0, 1280, 720, 0x000000, TRUE);
-	////SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
-	//DrawGraph(0, 0, image_back_light, TRUE);
-	//SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 200);
 
 	//プレイヤー
 	DrawRotaGraph(p_image_x, 300, 2, 0, image_player, TRUE);
@@ -305,6 +299,7 @@ void Janken::OneMore_Init()
 
 	//敵の出す手を再設定
 	enemy_jan = static_cast<Jan_Type> (GetRand(2));
+	
 
 	result = Jan_Result::_ERROR;
 }

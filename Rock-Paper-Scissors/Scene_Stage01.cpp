@@ -304,7 +304,7 @@ AbstractScene* Scene_Stage01::ChangeScene()
 #ifdef DEBUG_OFF_01
 
 	//“G‚ÌHP‚ª0ˆÈ‰º
-	if (obj_enemy->GetHP() <= 0)
+	if (IsEnd_DeathEnemy() == true)
 	{
 		//BGM’âŽ~
 		SoundSystem::StopBGM(BGM::STAGE01_BGM);

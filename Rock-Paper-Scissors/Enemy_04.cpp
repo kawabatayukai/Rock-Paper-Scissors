@@ -16,8 +16,8 @@ Enemy_04::Enemy_04(float x, float y, Jan_Type type) : EnemyBase(x, y, 150.0f, 15
 	dir = 1;
 	hp = 100;
 
-	enemy_x = GetRand(1160) + 100;
-	enemy_y = GetRand(600) + 100;
+	enemy_x = 640;
+	enemy_y = 360;
 
 	enemy_image[0] = LoadGraph("images/Stage04/stage_Boss04.png");
 	enemy_image[1] = LoadGraph("images/Stage04/stage_Boss04(è„).png");
@@ -64,8 +64,8 @@ void Enemy_04::Update()
 		{
 			if (specialFlg == true)
 			{
-				enemy_x = GetRand(1160) + 100;
-				enemy_y = GetRand(600) + 100;
+				enemy_x = GetRand(1080) + 100;
+				enemy_y = GetRand(340) + 100;
 			}
 			waitTime = 0;
 			current = moveinfo[current].next_index;
@@ -232,9 +232,9 @@ void Enemy_04::Update_Jangeki()
 		}
 		else if (specialFlg == true)
 		{
-			if (frame_count % 80 == 0)
+			if (frame_count % 60 == 0)
 			{
-				Jan_360degrees(jan_count, radius * 0.8, speed, type);
+				Jan_360degrees(jan_count, radius * 0.8, speed * 1.2, type);
 				SoundSystem::PlaySE(SE::ENEMY_SPECIAL_ATTACK);
 			}
 		}
