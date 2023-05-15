@@ -28,6 +28,7 @@ public:
 	void jump();                     //ジャンプ
 	void low_jump();                 //低いジャンプ
 	void smoke();                    //煙エフェクト関数
+	void death();                    //死亡処理
 
 	float Get_OldY();                   //old_yの取得関数
 	float Get_Y();                      //yの取得
@@ -61,10 +62,12 @@ private:
 	int  smokeImage[10];          //煙画像
 	int  smokeCnt = 0;            //煙用カウント変数
 
+	bool deathFlg = false;        //死亡フラグ
+
 	/**********************************************************/
 
 	int frame_count = 0;          //じゃん撃発射用
-	int images[9];                //敵画像
+	int images[12];                //敵画像
 	float bef_x = 0;              //前回のx座標(画像表示用)
 	float bef_y = 0;              //前回のy座標(画像表示用)
 	Jan_Type old_type;            //前回の敵ジャンケン属性

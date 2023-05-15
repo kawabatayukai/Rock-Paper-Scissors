@@ -15,17 +15,21 @@ Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	old_type = static_cast<Jan_Type>(2);  //パー属性で初期化
 
 	//画像読み込み
-	images[0] = LoadGraph("images/stage06/赤NINJA_通常.png");     //グー属性
-	images[1] = LoadGraph("images/stage06/黄NINJA_通常.png");   //チョキ属性
-	images[2] = LoadGraph("images/stage06/青NINJA_通常.png");     //パー属性
+	images[0]  = LoadGraph("images/stage06/赤NINJA_通常.png");     //グー属性
+	images[1]  = LoadGraph("images/stage06/黄NINJA_通常.png");   //チョキ属性
+	images[2]  = LoadGraph("images/stage06/青NINJA_通常.png");     //パー属性
 
-	images[3] = LoadGraph("images/stage06/赤NINJA_走.png");     //グー属性
-	images[4] = LoadGraph("images/stage06/黄NINJA_走.png");   //チョキ属性
-	images[5] = LoadGraph("images/stage06/青NINJA_走.png");     //パー属性
+	images[3]  = LoadGraph("images/stage06/赤NINJA_走.png");       //グー属性
+	images[4]  = LoadGraph("images/stage06/黄NINJA_走.png");     //チョキ属性
+	images[5]  = LoadGraph("images/stage06/青NINJA_走.png");       //パー属性
 
-	images[6] = LoadGraph("images/stage06/赤NINJA_跳3.png");     //グー属性
-	images[7] = LoadGraph("images/stage06/黄NINJA_跳3.png");   //チョキ属性
-	images[8] = LoadGraph("images/stage06/青NINJA_跳3.png");     //パー属性
+	images[6]  = LoadGraph("images/stage06/赤NINJA_跳3.png");      //グー属性
+	images[7]  = LoadGraph("images/stage06/黄NINJA_跳3.png");    //チョキ属性
+	images[8]  = LoadGraph("images/stage06/青NINJA_跳3.png");      //パー属性
+
+	images[9]  = LoadGraph("images/stage06/赤頭.png");             //グー属性
+	images[10] = LoadGraph("images/stage06/黄頭.png");           //チョキ属性
+	images[11] = LoadGraph("images/stage06/青頭.png");             //パー属性
 
 	//煙エフェクト読み込み
 	LoadDivGraph("images/stage06/pipo-btleffect059.png", 10, 10, 1, 120, 120, smokeImage);
@@ -1097,6 +1101,37 @@ void Enemy_06::smoke()
 			attack2_Flg = true;    //攻撃パターン2初期処理フラグをtrueにする
 		}
 	}
+}
+
+//死亡処理
+void Enemy_06::death()
+{
+	//生首が飛ぶ演出
+
+
+	///*死亡時の処理*/
+	//if (enemy_state == ENEMY_STATE10::DEATH)
+	//{
+	//	static bool isJumped = false;
+
+	//	if (land_flg == false && isJumped == false) land_flg = true;
+
+	//	if (land_flg == true)
+	//	{
+	//		isJumped = true;
+	//		g_add = -23.5f;    //重力加速度をマイナス値に
+	//		land_flg = false;  //地面についていない
+	//	}
+
+	//	w = 0;
+	//	h = 0;
+
+	//	if (y > 730.f)
+	//	{
+	//		enemy_state = ENEMY_STATE10::DEATH_END;
+	//	}
+	//	Init_Jangeki(); //ジャン撃を消す
+	//}
 }
 
 //向きを乱数で決める関数
