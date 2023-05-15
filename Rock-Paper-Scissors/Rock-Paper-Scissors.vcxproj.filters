@@ -342,6 +342,9 @@
     <ClCompile Include="Sound_Janken.cpp">
       <Filter>ソース ファイル\Rock-Paper-Scissors %28RPS%29</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy_Death.cpp">
+      <Filter>ソース ファイル\EnemyBase</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -553,6 +556,9 @@
     </ClInclude>
     <ClInclude Include="Sound_Janken.h">
       <Filter>ソース ファイル\Rock-Paper-Scissors %28RPS%29</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_Death.h">
+      <Filter>ソース ファイル\EnemyBase</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

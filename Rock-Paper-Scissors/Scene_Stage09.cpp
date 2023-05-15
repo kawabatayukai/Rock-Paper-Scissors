@@ -379,10 +379,13 @@ AbstractScene* Scene_Stage09::ChangeScene()
 	//敵のHPが0以下
 	if (clearFlg == true)
 	{
+		GetStage09IsClear(true);
+	}
+	if (IsEnd_DeathEnemy() == true)
+	{
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(10));
 	}
-
 	//プレイヤーのHPが0以下
 	if (obj_player->IsDeathPlayer() == true)
 	{

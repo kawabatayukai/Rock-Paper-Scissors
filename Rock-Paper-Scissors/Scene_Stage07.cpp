@@ -350,7 +350,7 @@ AbstractScene* Scene_Stage07::ChangeScene()
 #ifdef DEBUG_OFF_07
 
 	//敵のHPが0以下
-	if (obj_enemy->GetHP() < 0)
+	if (IsEnd_DeathEnemy() == true)
 	{
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(8));

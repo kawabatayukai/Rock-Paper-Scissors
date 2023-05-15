@@ -21,7 +21,7 @@ namespace _CONSTANTS_SB
 	const int CLOCK_Y = 60;
 }
 
-Stage_Base::Stage_Base() : blackout_time(0), Prev_EnemyType(Jan_Type::NONE), obj_effectEnemy(nullptr)
+Stage_Base::Stage_Base() : blackout_time(0), Prev_EnemyType(Jan_Type::NONE), obj_effectEnemy(nullptr), obj_death(nullptr)
 {
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, typeImage);
 
@@ -327,6 +327,32 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 
 	//衝突判定なし時間
 	if (--nhit_time < 0) nhit_time = 0;
+
+	//Enemyを監視
+	if (my_StageNum == 9)
+	{
+		if (stage09_isclear == true && obj_death == nullptr)
+		{
+			//死亡演出用オブジェクト
+			obj_death = new Enemy_Death(enemy->GetX(), enemy->GetY(), my_StageNum);
+
+			enemy->SetX(-9999, true);
+			enemy->SetY(-9999, true);
+		}
+	}
+	else
+	{
+		if (enemy->GetHP() <= 0 && obj_death == nullptr)
+		{
+			//死亡演出用オブジェクト
+			obj_death = new Enemy_Death(enemy->GetX(), enemy->GetY(), my_StageNum, enemy->GetType());
+
+			enemy->SetX(-9999, true);
+			enemy->SetY(-9999, true);
+		}
+	}
+
+	Update_DeathEnemy();
 };
 
 
@@ -688,8 +714,41 @@ void Stage_Base::Effect_Draw_HitJangeki() const
 	}
 
 	if (obj_effectEnemy != nullptr) obj_effectEnemy->Draw();
+	Draw_DeathEnemy();
 }
 
+//死亡時処理
+void Stage_Base::Update_DeathEnemy()
+{
+	if (obj_death != nullptr)
+	{
+		obj_death->Update();
+	}
+}
+
+//死亡時描画
+void Stage_Base::Draw_DeathEnemy() const
+{
+	if (obj_death != nullptr)
+	{
+		obj_death->Draw();
+	}
+}
+
+//死亡演出終了チェック
+bool Stage_Base::IsEnd_DeathEnemy()
+{
+	if (obj_death != nullptr)
+	{
+		if (obj_death->IsDeathEnd() == true) return true;
+	}
+	return false;
+}
+
+void Stage_Base::GetStage09IsClear(bool isclear)
+{
+	stage09_isclear = isclear;
+}
 
 //じゃんけん描画
 void Stage_Base::Draw_Janken() const
