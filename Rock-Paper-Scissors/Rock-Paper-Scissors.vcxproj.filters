@@ -85,9 +85,6 @@
     <Filter Include="ランキング">
       <UniqueIdentifier>{dbc2c324-e103-450b-adb4-28e0277e64aa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ランキング\ヘッダー">
-      <UniqueIdentifier>{12e27910-5930-45ed-9cd2-b2402931e747}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\CharaBase">
       <UniqueIdentifier>{69d52d54-be0e-45b2-a843-52ce30cee56e}</UniqueIdentifier>
     </Filter>
@@ -99,6 +96,45 @@
     </Filter>
     <Filter Include="ソース ファイル\Sound">
       <UniqueIdentifier>{305c3d51-5374-4ef5-b4dc-53c801fe0160}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\タイトル">
+      <UniqueIdentifier>{29e78c63-4900-4a69-a398-470e17a6d402}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\ゲームクリア画面">
+      <UniqueIdentifier>{e9702205-9b15-40f4-980f-18c382d112c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\ゲームオーバー画面">
+      <UniqueIdentifier>{e79d9bf7-bf78-482b-bc89-bedcd051ee70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\ヘルプ画面">
+      <UniqueIdentifier>{6d5ddaf0-0e29-4456-8158-5551cd79ad27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\エンド画面">
+      <UniqueIdentifier>{53e2b130-06a2-47cd-9463-322828ed2a67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\ストーリー画面">
+      <UniqueIdentifier>{4eac4120-57b1-4d7d-a364-f8cd83086ae9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\タイトル\ゲームモード選択画面">
+      <UniqueIdentifier>{4190909f-1bfe-4f1a-a0ac-c796179ce443}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ランキング\並び替え">
+      <UniqueIdentifier>{efbdcd41-5965-4181-89fe-34c39e83ebed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ランキング\ランキング画面">
+      <UniqueIdentifier>{345c9015-90b6-454f-a414-b64769a069d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\名前入力画面">
+      <UniqueIdentifier>{12e27910-5930-45ed-9cd2-b2402931e747}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Jangeki\飛び跳ね返りジャン撃">
+      <UniqueIdentifier>{a57537a4-fe28-426b-b330-33fbd901ffaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Player\プレイヤーのエフェクト">
+      <UniqueIdentifier>{9841bab7-d625-474e-82a2-793aac8b72c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameMainScene\StageBase">
+      <UniqueIdentifier>{dbcd22f1-48ff-4b27-94ec-aaa129619bd9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -165,17 +201,8 @@
     <ClCompile Include="Scene_Stage00.cpp">
       <Filter>ソース ファイル\GameMainScene\Stage_00</Filter>
     </ClCompile>
-    <ClCompile Include="Stage_Base.cpp">
-      <Filter>ソース ファイル\GameMainScene</Filter>
-    </ClCompile>
     <ClCompile Include="Scene_Stage01.cpp">
       <Filter>ソース ファイル\GameMainScene\Stage_01</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene_GameClear.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene_GameOver.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Janken.cpp">
       <Filter>ソース ファイル\Rock-Paper-Scissors %28RPS%29</Filter>
@@ -206,15 +233,6 @@
     </ClCompile>
     <ClCompile Include="Scene_Stage02.cpp">
       <Filter>ソース ファイル\GameMainScene\Stage_02</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene_Title.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene_Help.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene_End.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Jangeki_Homing.cpp">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
@@ -255,46 +273,19 @@
     <ClCompile Include="Jangeki_Player.cpp">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClCompile>
-    <ClCompile Include="Scene_Ranking.cpp">
-      <Filter>ランキング</Filter>
-    </ClCompile>
-    <ClCompile Include="SortSave.cpp">
-      <Filter>ランキング</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene_InputNameRanking.cpp">
-      <Filter>ランキング</Filter>
-    </ClCompile>
     <ClCompile Include="Effect_Jangeki.cpp">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClCompile>
     <ClCompile Include="SoundSystem.cpp">
       <Filter>ソース ファイル\Sound</Filter>
     </ClCompile>
-    <ClCompile Include="Scene_Story.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Effect_Player.cpp">
-      <Filter>ソース ファイル\Player</Filter>
-    </ClCompile>
     <ClCompile Include="Effect_Enemy.cpp">
       <Filter>ソース ファイル\EnemyBase</Filter>
-    </ClCompile>
-    <ClCompile Include="Effect_ChagePlayer.cpp">
-      <Filter>ソース ファイル\Player</Filter>
     </ClCompile>
     <ClCompile Include="Item_stage08.cpp">
       <Filter>ソース ファイル\GameMainScene\Stage_08</Filter>
     </ClCompile>
-    <ClCompile Include="Scne_TitleInterval.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene_Title_GameLevel.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="FPS_Controll.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Jangeki_Bounds.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Sound_Jangeki.cpp">
@@ -302,6 +293,54 @@
     </ClCompile>
     <ClCompile Include="Sound_Player.cpp">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Title.cpp">
+      <Filter>ソース ファイル\Scene\タイトル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scne_TitleInterval.cpp">
+      <Filter>ソース ファイル\Scene\タイトル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_GameClear.cpp">
+      <Filter>ソース ファイル\Scene\ゲームクリア画面</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_GameOver.cpp">
+      <Filter>ソース ファイル\Scene\ゲームオーバー画面</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Help.cpp">
+      <Filter>ソース ファイル\Scene\ヘルプ画面</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_End.cpp">
+      <Filter>ソース ファイル\Scene\エンド画面</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Story.cpp">
+      <Filter>ソース ファイル\Scene\ストーリー画面</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Title_GameLevel.cpp">
+      <Filter>ソース ファイル\Scene\タイトル\ゲームモード選択画面</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_InputNameRanking.cpp">
+      <Filter>ソース ファイル\Scene\名前入力画面</Filter>
+    </ClCompile>
+    <ClCompile Include="SortSave.cpp">
+      <Filter>ランキング\並び替え</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Ranking.cpp">
+      <Filter>ランキング\ランキング画面</Filter>
+    </ClCompile>
+    <ClCompile Include="Jangeki_Bounds.cpp">
+      <Filter>ソース ファイル\Jangeki\飛び跳ね返りジャン撃</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_ChagePlayer.cpp">
+      <Filter>ソース ファイル\Player\プレイヤーのエフェクト</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect_Player.cpp">
+      <Filter>ソース ファイル\Player\プレイヤーのエフェクト</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage_Base.cpp">
+      <Filter>ソース ファイル\GameMainScene\StageBase</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound_Janken.cpp">
+      <Filter>ソース ファイル\Rock-Paper-Scissors %28RPS%29</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -368,17 +407,8 @@
     <ClInclude Include="Scene_Stage00.h">
       <Filter>ソース ファイル\GameMainScene\Stage_00</Filter>
     </ClInclude>
-    <ClInclude Include="Stage_Base.h">
-      <Filter>ソース ファイル\GameMainScene</Filter>
-    </ClInclude>
     <ClInclude Include="Scene_Stage01.h">
       <Filter>ソース ファイル\GameMainScene\Stage_01</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene_GameClear.h">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene_GameOver.h">
-      <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Janken.h">
       <Filter>ソース ファイル\Rock-Paper-Scissors %28RPS%29</Filter>
@@ -409,15 +439,6 @@
     </ClInclude>
     <ClInclude Include="Scene_Stage02.h">
       <Filter>ソース ファイル\GameMainScene\Stage_02</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene_Title.h">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene_Help.h">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene_End.h">
-      <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Jangeki_Homing.h">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
@@ -464,46 +485,19 @@
     <ClInclude Include="Jangeki_Player.h">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClInclude>
-    <ClInclude Include="Scene_Ranking.h">
-      <Filter>ランキング\ヘッダー</Filter>
-    </ClInclude>
-    <ClInclude Include="SortSave.h">
-      <Filter>ランキング\ヘッダー</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene_InputNameRanking.h">
-      <Filter>ランキング\ヘッダー</Filter>
-    </ClInclude>
     <ClInclude Include="Effect_Jangeki.h">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
     </ClInclude>
     <ClInclude Include="SoundSystem.h">
       <Filter>ソース ファイル\Sound</Filter>
     </ClInclude>
-    <ClInclude Include="Scene_Story.h">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Effect_Player.h">
-      <Filter>ソース ファイル\Player</Filter>
-    </ClInclude>
     <ClInclude Include="Effect_Enemy.h">
       <Filter>ソース ファイル\EnemyBase</Filter>
-    </ClInclude>
-    <ClInclude Include="Effect_ChangePlayer.h">
-      <Filter>ソース ファイル\Player</Filter>
     </ClInclude>
     <ClInclude Include="Item_stage08.h">
       <Filter>ソース ファイル\GameMainScene\Stage_08</Filter>
     </ClInclude>
-    <ClInclude Include="Scne_TitleInterval.h">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene_Title_GameLevel.h">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="FPS_Controll.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Jangeki_Bounds.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Sound_Jangeki.h">
@@ -511,6 +505,54 @@
     </ClInclude>
     <ClInclude Include="Sound_Player.h">
       <Filter>ソース ファイル\Jangeki\kawabata</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Title.h">
+      <Filter>ソース ファイル\Scene\タイトル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scne_TitleInterval.h">
+      <Filter>ソース ファイル\Scene\タイトル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_GameClear.h">
+      <Filter>ソース ファイル\Scene\ゲームクリア画面</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_GameOver.h">
+      <Filter>ソース ファイル\Scene\ゲームオーバー画面</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Help.h">
+      <Filter>ソース ファイル\Scene\ヘルプ画面</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_End.h">
+      <Filter>ソース ファイル\Scene\エンド画面</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Story.h">
+      <Filter>ソース ファイル\Scene\ストーリー画面</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Title_GameLevel.h">
+      <Filter>ソース ファイル\Scene\タイトル\ゲームモード選択画面</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_InputNameRanking.h">
+      <Filter>ソース ファイル\Scene\名前入力画面</Filter>
+    </ClInclude>
+    <ClInclude Include="SortSave.h">
+      <Filter>ランキング\並び替え</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Ranking.h">
+      <Filter>ランキング\ランキング画面</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_Bounds.h">
+      <Filter>ソース ファイル\Jangeki\飛び跳ね返りジャン撃</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_ChangePlayer.h">
+      <Filter>ソース ファイル\Player\プレイヤーのエフェクト</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect_Player.h">
+      <Filter>ソース ファイル\Player\プレイヤーのエフェクト</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage_Base.h">
+      <Filter>ソース ファイル\GameMainScene\StageBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound_Janken.h">
+      <Filter>ソース ファイル\Rock-Paper-Scissors %28RPS%29</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -596,12 +596,15 @@ AbstractScene* Scene_Stage10::ChangeScene()
 	}
 	if(obj_enemy->Get_Enemy10Form() == 2 && obj_enemy->IsDeathEnemy10() == true)
 	{
-		//リザルトへ切り替え
+		/*ランキングへ切り替え*/
 		//return dynamic_cast<AbstractScene*> (new Scene_InputNameRanking());
-		sortSave.setScore(9, 10);	// ランキングデータの１０番目にスコアを登録
-		sortSave.SortRanking();		// ランキング並べ替え
-		sortSave.SaveRanking();		// ランキングデータの保存
-		return new Scene_Ranking();
+		//sortSave.setScore(9, 10);	// ランキングデータの１０番目にスコアを登録
+		//sortSave.SortRanking();		// ランキング並べ替え
+		//sortSave.SaveRanking();		// ランキングデータの保存
+		//return new Scene_Ranking();
+
+		//ゲームクリアシーンへ切り替え
+		return dynamic_cast<AbstractScene*> (new GameClearScene(11));
 		SoundSystem::StopBGM(BGM::ENEMY_10_Form2BGM);
 	}
 

@@ -215,6 +215,7 @@
     <ClCompile Include="Scene_Title.cpp" />
     <ClCompile Include="SoundSystem.cpp" />
     <ClCompile Include="Sound_Jangeki.cpp" />
+    <ClCompile Include="Sound_Janken.cpp" />
     <ClCompile Include="Sound_Player.cpp" />
     <ClCompile Include="Stage_Base.cpp" />
     <ClCompile Include="Jangeki_Bounds.cpp" />
@@ -286,6 +287,7 @@
     <ClInclude Include="Scene_Title.h" />
     <ClInclude Include="SoundSystem.h" />
     <ClInclude Include="Sound_Jangeki.h" />
+    <ClInclude Include="Sound_Janken.h" />
     <ClInclude Include="Sound_Player.h" />
     <ClInclude Include="Stage_Base.h" />
     <ClInclude Include="Jangeki_Bounds.h" />

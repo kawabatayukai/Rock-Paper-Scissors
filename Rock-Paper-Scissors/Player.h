@@ -145,7 +145,7 @@ private:
 	Sound_Jangeki** obj_se;
 	Sound_Player** obj_pse;
 
-	int name_font;
+	int name_font; //名前・フォント
 
 	int ui_font;  //ui用フォントハンドル
 };

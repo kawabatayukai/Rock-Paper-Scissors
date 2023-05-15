@@ -69,5 +69,3 @@ private:
 	float bef_y = 0;              //前回のy座標(画像表示用)
 	Jan_Type old_type;            //前回の敵ジャンケン属性
 };
-
-

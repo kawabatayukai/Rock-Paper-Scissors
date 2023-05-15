@@ -338,7 +338,7 @@ void Player::Update()
 	Play_SE();   //Œø‰Ê‰¹
 }
 
-/* “ª‚Ì•`‰æE“®‚«)*/
+/*“ª‚Ì•`‰æE“®‚«)*/
 void Player::HeadDrawMove() const
 {
 	///*********************
@@ -1735,6 +1735,21 @@ void Player::Update_Jangeki()
 		select_num = 0;
 	}
 	else{}
+
+	switch (select_num)
+	{
+	case 0:
+		select_JanType = Jan_Type::PAPER;
+		break;
+	case 1:
+		select_JanType = Jan_Type::SCISSORS;
+		break;
+	case 2:
+		select_JanType = Jan_Type::ROCK;
+		break;
+	default:
+		break;
+	}
 
 	if (old_type != select_JanType)
 	{

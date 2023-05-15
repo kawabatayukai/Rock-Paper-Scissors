@@ -81,12 +81,12 @@ void Scne_TitleInterval::Update()
 		//テキストの最終行まで終了
 		if (i >= text->size() - 1 && str_y < 0) str_end = true;
 	}
-	if (str_end == true) DrawStringToHandle(100, 100, "Press A To Start", 0xffffff, font_text);
+	//if (str_end == true) DrawStringToHandle(100, 100, "Press A To Start", 0xffffff, font_text);
 
 
 
 	//Bボタンで加速 / リセット
-	if (KeyManager::OnPadClicked(PAD_INPUT_B) == true)
+	/*if (KeyManager::OnPadClicked(PAD_INPUT_B) == true)
 	{
 		if (scroll_speed <= _C_STORY::MIN_SPEED)
 		{
@@ -97,7 +97,7 @@ void Scne_TitleInterval::Update()
 			scroll_speed = _C_STORY::MIN_SPEED;
 		}
 		else {};
-	}
+	}*/
 
 	//スクロール
 	scroll_y += scroll_speed;
@@ -158,7 +158,7 @@ AbstractScene* Scne_TitleInterval::ChangeScene()
 {
 	//if (str_end == true && KeyManager::OnPadClicked(PAD_INPUT_A))
 		//return dynamic_cast<AbstractScene*> (new TitleScene());
-	if (KeyManager::OnPadClicked(PAD_INPUT_A) || KeyManager::OnPadClicked(PAD_INPUT_B))
+	if (str_end == true || KeyManager::OnPadClicked(PAD_INPUT_A) || KeyManager::OnPadClicked(PAD_INPUT_B))
 		return dynamic_cast<AbstractScene*> (new TitleScene());
 
 	//テキストファイル読み込み失敗でステージ1へ

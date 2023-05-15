@@ -106,7 +106,7 @@ void Scene_InputNameRanking::KeyBoardInit()
 int Scene_InputNameRanking::LoadKeyBoardImgaes()
 {
 	//背景
-	if ((backimage = LoadGraph("images/KeyBoard/back04.png")) == -1) return -1;
+	if ((backimage = LoadGraph("images/KeyBoard/back07.png")) == -1) return -1;
 	//キーボード
 	if ((keyboardimage = LoadGraph("images/KeyBoard/OPEN_Board4.png")) == -1) return -1;
 	//分割読み込み　押したよ/押してない が連結した画像
