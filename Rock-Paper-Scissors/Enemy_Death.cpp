@@ -16,7 +16,7 @@ Enemy_Death::Enemy_Death(const float& x, const float& y, const int& stage_num,co
 		image_death = LoadGraph("images/Death/stage03_death.png");
 		break;
 	case 4:
-		image_death = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“Šç‚Ì‚İ¶.png");
+		image_death = LoadGraph("images/Death/stage04_death.png");
 		break;
 	case 5:
 		image_death = LoadGraph("images/Death/stage05_death.png");
