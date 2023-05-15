@@ -329,7 +329,7 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 	if (--nhit_time < 0) nhit_time = 0;
 
 	//Enemy‚ðŠÄŽ‹
-	if (my_StageNum == 9)
+	if (my_StageNum == 9 || my_StageNum == 10)
 	{
 		if (stage09_isclear == true && obj_death == nullptr)
 		{
@@ -351,6 +351,7 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 			enemy->SetY(-9999, true);
 		}
 	}
+
 
 	Update_DeathEnemy();
 };
@@ -740,7 +741,11 @@ bool Stage_Base::IsEnd_DeathEnemy()
 {
 	if (obj_death != nullptr)
 	{
-		if (obj_death->IsDeathEnd() == true) return true;
+		if (obj_death->IsDeathEnd() == true)
+		{
+			return true;
+			delete obj_death;
+		}
 	}
 	return false;
 }
