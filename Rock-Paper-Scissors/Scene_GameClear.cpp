@@ -20,6 +20,8 @@
 #include"Scene_Help.h"
 #include"SortSave.h"
 #include"GameData.h"
+#include"SortSave.h"
+#include"Scene_Ranking.h"
 
 //コンストラクタ
 GameClearScene::GameClearScene(int Next):Next(Next)
@@ -115,6 +117,12 @@ AbstractScene* GameClearScene::ChangeScene()
 			return dynamic_cast<AbstractScene*> (new Scene_Stage10());
 			break;
 
+		case 11:
+			sortSave.setScore(9, 10);	// ランキングデータの１０番目にスコアを登録
+			sortSave.SortRanking();		// ランキング並べ替え
+			sortSave.SaveRanking();		// ランキングデータの保存
+			return new Scene_Ranking();
+			break;
 
 		default:
 			break;
