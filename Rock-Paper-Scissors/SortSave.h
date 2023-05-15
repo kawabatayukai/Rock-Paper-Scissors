@@ -12,7 +12,7 @@ struct RankingData {
 
 	long score;
 
-	int time;
+	 int time;
 };
 
 

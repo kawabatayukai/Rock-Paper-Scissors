@@ -47,8 +47,8 @@ void GameClearScene::Draw() const
 	//背景
 	DrawGraph(0, 0, clearImage, TRUE);
 
-	SetFontSize(30);
-	DrawFormatString(400,200, 0xFFFFFF,"スコア：%d ・ 時間：%d", GameData::Get_Score(), GameData::Get_Each_Time_Min());
+	SetFontSize(50);
+	DrawFormatString(200,500, 0x000000,"スコア：%d ・ 残り時間：%d分%d秒", GameData::Get_Score(), GameData::Get_Each_Time_Min(), GameData::Get_Each_Time_Min() / 60);
 	SetFontSize(20);
 
 	/*SetFontSize(200);
@@ -118,9 +118,12 @@ AbstractScene* GameClearScene::ChangeScene()
 			break;
 
 		case 11:
+			/*ランキング内部処理*/
 			sortSave.setScore(9, 10);	// ランキングデータの１０番目にスコアを登録
 			sortSave.SortRanking();		// ランキング並べ替え
 			sortSave.SaveRanking();		// ランキングデータの保存
+
+			/*ランキング画面へ*/
 			return new Scene_Ranking();
 			break;
 

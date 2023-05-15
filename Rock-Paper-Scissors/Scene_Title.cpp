@@ -92,20 +92,19 @@ AbstractScene* TitleScene::ChangeScene()
 	{
 		switch (T_selectnum)
 		{
-		case 0:
-			/*return dynamic_cast<AbstractScene*> (new Scene_Story());
-			SoundSystem::StopBGM(BGM::TITLE);*/
+		case 0: //ゲームモードの選択
 			return dynamic_cast<AbstractScene*> (new Scene_Title_GameLevel());
 			break;
-		case 1:
+		case 1: //ヘルプ画面
 			return dynamic_cast<AbstractScene*> (new HelpScene());
 			SoundSystem::StopBGM(BGM::TITLE);
 			break;
-		case 2:
+		case 2: //ランキング画面
+			//sortSave.ReadRanking();		// ランキングデータの読み込み
 			return dynamic_cast<AbstractScene*> (new Scene_Ranking());
 			SoundSystem::StopBGM(BGM::TITLE);
 			break;
-		case 3:
+		case 3: //エンド画面
 			return dynamic_cast<AbstractScene*> (new EndScene());
 			SoundSystem::StopBGM(BGM::TITLE);
 			break;

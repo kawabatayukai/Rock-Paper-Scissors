@@ -455,7 +455,6 @@ void Enemy_10::Update()
 	if (this->hp <= 0)enemy_state = ENEMY_STATE10::DEATH;
 
 
-
 	//‚¶‚á‚ñŒ‚XVE¶¬
 	Update_Jangeki();
 

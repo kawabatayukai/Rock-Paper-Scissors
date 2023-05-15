@@ -27,7 +27,10 @@ Scene_Ranking::Scene_Ranking(/*const RankingData* Data*/)
 //更新
 void Scene_Ranking::Update()
 {
-
+	/*ランキング内部処理*/
+	//sortSave.setScore(9, 10);	// ランキングデータの１０番目にスコアを登録
+	//sortSave.SortRanking();		// ランキング並べ替え
+	//sortSave.SaveRanking();		// ランキングデータの保存
 }
 
 //描画
@@ -48,7 +51,7 @@ void Scene_Ranking::Draw() const
 
 		/*即死モード*/
 		if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
-		{
+		{                                                                                                                                                                                                                                //sortSave.getRankingData(i).time                                           
 			DrawFormatString(0, 170 + i * 50, 0xFFFFFF, "%2d位   %10s  スコア：%10d  総合時間： %10d分%10d秒 EXTRA", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score, GameData::Get_Total_Time() / 3600, (GameData::Get_Total_Time() % 3600) / 60);
 		}
 	}
