@@ -17,7 +17,7 @@ int TitleScene::font_title;   //フォントハンドル
 //コンストラクタ
 TitleScene::TitleScene()
 {
-	TitleImage = LoadGraph("images/JankenWorldTitle仮.png");
+	TitleImage = LoadGraph("images/JankenWorldTitle.png");
 
 	//フォントデータを作成
 	if (font_title == 0)
