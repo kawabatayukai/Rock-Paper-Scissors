@@ -51,6 +51,7 @@ void EndScene::Draw() const
 	DrawString(350, 530 + PosY, "BGM/SE　効果音ラボ https://soundeffect-lab.info/sound/battle/", 0xFFFFFF);
 	DrawString(350, 565 + PosY, "BGM/SE　springin https://www.springin.org/", 0xFFFFFF);
 	DrawString(350, 600 + PosY, "BGM/SE　無料効果音で遊ぼう！ https://taira-komori.jpn.org/index.html", 0xFFFFFF);
+	DrawString(350, 630 + PosY, "BGM/SE　魔王魂 https://maou.audio/", 0xFFFFFF);
 
 
 
