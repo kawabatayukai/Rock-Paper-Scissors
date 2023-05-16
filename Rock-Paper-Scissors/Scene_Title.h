@@ -12,8 +12,7 @@ private:
 	int ClickSE;
 	int T_selectnum = 0;
 
-	int font_title;   //フォントハンドル
-	int font_debug;   //デバッグ用フォント
+	static int font_title;   //フォントハンドル
 public:
 
 	//コンストラクタ

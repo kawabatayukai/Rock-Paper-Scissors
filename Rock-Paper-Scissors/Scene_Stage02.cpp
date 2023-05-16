@@ -8,7 +8,7 @@
 #include "Enemy_02.h"
 //デバッグモード
 #include"Debug_Manager.h"
-
+#include "SoundSystem.h"
 //コンストラクタ
 Scene_Stage02::Scene_Stage02(const Player* player)
 {
@@ -40,6 +40,9 @@ Scene_Stage02::Scene_Stage02(const Player* player)
 	//obj_floor[3] = new Floor(0, 200, 120, 20);      //足場
 
 	image_back = LoadGraph("images/stage02/mizuumi01.png");
+
+	//BGMの読み込み
+	//stage2_BGM = LoadSoundMem("Sound/Stage02BGM.mp3");
 }
 
 //デストラクタ
@@ -50,10 +53,17 @@ Scene_Stage02::~Scene_Stage02()
 //更新
 void Scene_Stage02::Update()
 {
-
+	if (CheckSoundMem(STAGE02_BGM) == 0) {
+		//メニュー選択中のSE
+		ChangeVolumeSoundMem(115, STAGE02_BGM);
+		
+	}
+	//BGM再生
+	SoundSystem::PlayBGM(BGM::STAGE02_BGM);
+	//PlaySoundMem(stage2_BGM, DX_PLAYTYPE_LOOP, FALSE);
 	//時間をカウント
 	GameData::Time_Update();
-
+	
 	obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
 
 	//接触じゃんけん開始前
@@ -65,8 +75,9 @@ void Scene_Stage02::Update()
 
 	//接触じゃんけん処理
 	Touch_Janken(obj_enemy, this, 2);
-
-
+	
+		//Effect
+		Effect_Update_HitJangeki(obj_enemy);
 	
 
 
@@ -254,6 +265,8 @@ void Scene_Stage02::Draw() const
 	}
 
 	DrawString(640, 360, "Stage02", 0xffffff);
+	//Effect
+	Effect_Draw_HitJangeki();
 }
 
 //じゃんけん描画
@@ -269,15 +282,22 @@ AbstractScene* Scene_Stage02::ChangeScene()
 #ifdef DEBUG_OFF_02
 
 	//敵のHPが0以下
-	if (obj_enemy->GetHP() < 0)
+	if (IsEnd_DeathEnemy() == true)
 	{
+		//BGM停止
+		//StopSoundMem(stage2_BGM);
+		//BGM再生
+		SoundSystem::StopBGM(BGM::STAGE02_BGM);
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(3));
 	}
 
 	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() < 0 || GameData::Get_Each_Time() <= 0)
+	if (obj_player->IsDeathPlayer() == true)
 	{
+		//BGM停止
+		//StopSoundMem(stage2_BGM);
+		SoundSystem::StopBGM(BGM::STAGE02_BGM);
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(2));
 		
@@ -290,6 +310,7 @@ AbstractScene* Scene_Stage02::ChangeScene()
 //じゃんけん終了後の挙動（プレイヤー勝ち）
 void Scene_Stage02::AfterJanken_WIN()
 {
+	obj_player->Recover_HP(30);
 	obj_enemy->frameDown();
 	obj_player->SetX(100);
 	obj_enemy->SetX(1100);

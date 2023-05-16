@@ -2,9 +2,10 @@
 #include"DxLib.h"
 #include"Player.h"
 #include"Jangeki_Base.h"
+#include<math.h>
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
-Enemy_08::Enemy_08(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
+Enemy_08::Enemy_08(float x, float y, Jan_Type type) : EnemyBase(x, y, 90.0f, 90.0f, type)
 {	
 	speed = 7.0f;
 	dir = 1;
@@ -30,16 +31,34 @@ void Enemy_08::Update()
 	//じゃん撃更新・生成
 	Update_Jangeki();
 
-	//if (x + (w / 2) == (1280 - 20))
-	//{
-	//	dir = -1;
-	//}
-	//else if (x - (w / 2) == (20))
-	//{
-	//	dir = 1;
-	//}
+	
 
-	//x += dir * speed;
+	static bool move;
+	old_x = x;
+	
+	if (x <= 20 + w / 2) move = true;
+	if (x >= 1280 - 20 - w / 2) move = false;
+	
+	if (++frame_move % 180 ==0)
+	{
+		if (move == true) move = false;
+		else move = true;
+	}
+	else
+	{
+
+	}
+
+	if (move == true) x += speed;
+	else x -= speed;
+
+	
+	//if (frame_move <= 180 && frame_move > 200) speed = 0;
+	//else if (frame_move == 186) frame_move = 0;
+	//else speed = 7.;
+
+
+	
 
 	/********************   ジャンプ関係   ********************/
 
@@ -71,10 +90,8 @@ void Enemy_08::Draw() const
 	//じゃん撃描画
 	Draw_Jangeki();
 
-	//テスト
-	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
-	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
-
+	DrawFormatString(100, 200, 0x000000, "%f", x);
+	DrawFormatString(100, 250, 0x000000, "%f", old_x);
 }
 
 //じゃん撃生成・更新
@@ -104,7 +121,7 @@ void Enemy_08::Update_Jangeki()
 	//配列の空要素
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
-		float radius = 45.5f;   //半径
+		float radius = 75.5f;   //半径
 		float speed = -7.0f;     //スピード
 
 		//ランダムな属性を生成

@@ -85,7 +85,10 @@ void Scene_Stage09::Update()
 	//接触じゃんけん処理
 	//特殊行動中とアニメーション再生中はなし
 	if (obj_enemy->Spflg == false && obj_enemy->animflg == false)
+	{
 		Touch_Janken(obj_enemy, this, 9);
+	}
+	Effect_Update_HitJangeki(obj_enemy, obj_enemy->reflection);
 
 
 	//playerのじゃん撃をとってくる
@@ -189,12 +192,15 @@ void Scene_Stage09::Update()
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 					obj_enemy->reflection->trueFlg();
+					obj_enemy->ranimflg = true;
+					if (obj_enemy->ranimflg == true)
+						obj_enemy->Ranimflg = true;
 				}
 			}
 			obj_enemy->HP();
-
 		}
 	}
+	
 
 
 	//enemyじゃん撃とplayerの当たり判定
@@ -354,8 +360,7 @@ void Scene_Stage09::Draw() const
 		//接触時じゃんけん描画
 		Draw_Janken();
 	}
-
-	DrawString(640, 360, "Stage09", 0xffffff);
+	Effect_Draw_HitJangeki();
 }
 
 
@@ -374,10 +379,13 @@ AbstractScene* Scene_Stage09::ChangeScene()
 	//敵のHPが0以下
 	if (clearFlg == true)
 	{
+		GetStage09IsClear(true);
+	}
+	if (IsEnd_DeathEnemy() == true)
+	{
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(10));
 	}
-
 	//プレイヤーのHPが0以下
 	if (obj_player->IsDeathPlayer() == true)
 	{
@@ -411,7 +419,7 @@ void Scene_Stage09::AfterJanken_LOSE()
 	{
 		obj_enemy->SetHP(-hp);
 		hp = hp / 2;
-		if (GameData::Get_Total_Time() <= 3600)
+		if (GameData::Get_Each_Time_Sec() <= 3600)
 			GameData::Set_TimeLimit(5400);
 	}
 	

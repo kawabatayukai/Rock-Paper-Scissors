@@ -7,6 +7,13 @@
 
 #define JANGEKI_MAX 60    //じゃん撃最大数
 
+//キャラの種類
+enum class _CHAR_TYPE
+{
+	PLAYER,     
+	ENEMY,
+	NOT_CHARA
+};
 
 //キャラクターの基底クラス　　プレイヤー・敵キャラのベース
 class CharaBase
@@ -36,8 +43,8 @@ public:
 	Jangeki_Base** GetJangeki() const { return obj_jangeki; }  //じゃん撃配列取得
 
 	void ReceiveDamage(int damage);     //ダメージを受ける　（hp -= damage）
-	void SetX(const float x);           //ｘ座標変更
-	void SetY(const float y);           //ｙ座標変更
+	void SetX(const float x, bool deathmode = false);           //ｘ座標変更
+	void SetY(const float y, bool deathmode = false);           //ｙ座標変更
  
 	/*******************  当たり判定  *******************/
 	

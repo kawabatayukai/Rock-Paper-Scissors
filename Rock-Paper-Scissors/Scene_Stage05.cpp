@@ -3,6 +3,7 @@
 #include "DxLib.h"
 #include"Scene_GameOver.h"
 #include "Scene_GameClear.h"
+#include"SoundSystem.h"
 #include"GameData.h"
 #define PI    3.1415926535897932384626433832795f
 
@@ -31,18 +32,18 @@ Scene_Stage05::Scene_Stage05(const Player* player)
 	for (int i = 0; i < 3; i++) mob[i] = nullptr;
 
 
-	mob[0] = new MobEnemy_05(640, 100, Jan_Type::PAPER);
-	mob[1] = new MobEnemy_05(50, 420, Jan_Type::SCISSORS);
-	mob[2] = new MobEnemy_05(1230, 420, Jan_Type::ROCK);
+	mob[0] = new MobEnemy_05(640, 220, Jan_Type::PAPER);
+	mob[1] = new MobEnemy_05(150, 420, Jan_Type::SCISSORS);
+	mob[2] = new MobEnemy_05(1130, 420, Jan_Type::ROCK);
 
 	reflection = new Jangeki_Reflection(0, 0, 0, 0, Jan_Type::ROCK);
 
-	if (mob[0]->GetHP() <= 0 && mob[1]->GetHP() <= 0 && mob[2]->GetHP() <= 0)
-	{
-		mob[0] = new MobEnemy_05(640, 100, Jan_Type::PAPER);
-		mob[1] = new MobEnemy_05(50, 420, Jan_Type::SCISSORS);
-		mob[2] = new MobEnemy_05(1230, 420, Jan_Type::ROCK);
-	}
+	//if (mob[0]->GetHP() <= 0 && mob[1]->GetHP() <= 0 && mob[2]->GetHP() <= 0)
+	//{
+	//	mob[0] = new MobEnemy_05(640, 100, Jan_Type::PAPER);
+	//	mob[1] = new MobEnemy_05(50, 420, Jan_Type::SCISSORS);
+	//	mob[2] = new MobEnemy_05(1230, 420, Jan_Type::ROCK);
+	//}
 
 	GameData::Set_TimeLimit();
 	//床・壁の用意
@@ -69,6 +70,9 @@ Scene_Stage05::~Scene_Stage05()
 //更新
 void Scene_Stage05::Update()
 {
+	//BGM再生
+	SoundSystem::PlayBGM(BGM::STAGE05_BGM);
+
 	static int timer = 0;
 	timer++;
 
@@ -97,10 +101,13 @@ void Scene_Stage05::Update()
 
 		for (int i = 0; i < 3; i++)
 		{
-			mob[i]->Update();
+			if (mob[i]->GetHP() > 0)
+			{
+				mob[i]->Update();
 
-			//プレイヤーの座標を取得
-			mob[i]->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
+				//プレイヤーの座標を取得
+				mob[i]->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
+			}
 		}
 
 		GameData::Time_Update();
@@ -110,8 +117,11 @@ void Scene_Stage05::Update()
 	}
 	//接触じゃんけん処理
 	Touch_Janken(obj_enemy, this, 5);
+	Effect_Update_HitJangeki(obj_enemy, obj_enemy->reflection);
 
-
+	if (mob[0]->GetHP() > 0) mob[0]->Effect_MobEnemy(obj_player);
+	if (mob[1]->GetHP() > 0) mob[1]->Effect_MobEnemy(obj_player);
+	if (mob[2]->GetHP() > 0) mob[2]->Effect_MobEnemy(obj_player);
 
 	//playerのじゃん撃をとってくる
 	Jangeki_Base** player_jangeki = obj_player->GetJangeki();
@@ -359,6 +369,7 @@ void Scene_Stage05::Update()
 						if (jangeki_type == Jan_Type::PAPER)
 						{
 							mob[a]->ReceiveDamage(20);     //ダメージが入る
+							if(mob[a]->GetHP() > 0)mob[a]->CreateEffect(_CHAR_TYPE::PLAYER, jangeki_type);
 							obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 							i--;
 						}
@@ -371,6 +382,7 @@ void Scene_Stage05::Update()
 						if (jangeki_type == Jan_Type::ROCK)
 						{
 							mob[a]->ReceiveDamage(20);     //ダメージが入る
+							if (mob[a]->GetHP() > 0)mob[a]->CreateEffect(_CHAR_TYPE::PLAYER, jangeki_type);
 							obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 							i--;
 						}
@@ -382,6 +394,7 @@ void Scene_Stage05::Update()
 						if (jangeki_type == Jan_Type::SCISSORS)
 						{
 							mob[a]->ReceiveDamage(20);     //ダメージが入る
+							if (mob[a]->GetHP() > 0)mob[a]->CreateEffect(_CHAR_TYPE::PLAYER, jangeki_type);
 							obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 							i--;
 						}
@@ -563,6 +576,8 @@ void Scene_Stage05::Draw() const
 
 
 	DrawString(640, 360, "Stage05", 0xffffff);
+	//Effect
+	Effect_Draw_HitJangeki();
 }
 
 
@@ -580,15 +595,21 @@ AbstractScene* Scene_Stage05::ChangeScene()
 #ifdef DEBUG_OFF_05
 
 	//敵のHPが0以下
-	if (obj_enemy->GetHP() <= 0)
+	if (IsEnd_DeathEnemy() == true)
 	{
+		//BGM停止
+		SoundSystem::StopBGM(BGM::STAGE05_BGM);
+
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(6));
 	}
 
 	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() < 0)
+	if (obj_player->IsDeathPlayer() == true)
 	{
+		//BGM停止
+		SoundSystem::StopBGM(BGM::STAGE05_BGM);
+
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(5));
 	}
@@ -620,5 +641,5 @@ void Scene_Stage05::AfterJanken_LOSE()
 	obj_player->SetX(200);
 	obj_enemy->MoveReset();
 	obj_enemy->SetX(1000);
-	obj_enemy->SetY(160);
+	obj_enemy->SetY(140);
 }

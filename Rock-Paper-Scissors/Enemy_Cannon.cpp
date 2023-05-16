@@ -10,11 +10,11 @@ Enemy_Cannon::Enemy_Cannon(float x, float y, Jan_Type type) : EnemyBase(x, y, 10
 	dir = 1;
 	hp = 100;
 
-	image = LoadGraph("images/tyokitest.png");
+	//image = LoadGraph("images/tyokitest.png");
 
 	Init_Jangeki();       //じゃん撃を用意
 
-	Enemy_image = LoadGraph("images/stage08/Stage8_image.png");
+	Enemy_image = LoadGraph("images/stage08/Stage8_image.png");//敵の画像
 }
 
 //デストラクタ2
@@ -87,13 +87,13 @@ void Enemy_Cannon::Update_Jangeki()
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
 		float radius = 45.5f;   //半径
-		float speed = 10.0f;     //スピード
+		float speed = 7.0f;     //スピード
 
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
 
 		//生成
-		if (frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+		if (frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x+GetRand(30), player_y + GetRand(30));
 	}
 }

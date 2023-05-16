@@ -12,14 +12,16 @@
 #include"Scene_Story.h"
 #include "Scene_Title_GameLevel.h"
 
+int TitleScene::font_title;   //フォントハンドル
+
 //コンストラクタ
 TitleScene::TitleScene()
 {
 	TitleImage = LoadGraph("images/JankenWorldTitle仮.png");
 
 	//フォントデータを作成
-	font_title = CreateFontToHandle("Yu Gothic UI", 50, 3, DX_FONTTYPE_ANTIALIASING_4X4);
-	font_debug = CreateFontToHandle("Yu Gothic UI", 20, 2, DX_FONTTYPE_ANTIALIASING_4X4);
+	if (font_title == 0)
+		font_title = CreateFontToHandle("Yu Gothic UI", 50, 3, DX_FONTTYPE_ANTIALIASING_4X4);
 
 	//データの初期化
 	GameData::Init_Data();
@@ -28,9 +30,6 @@ TitleScene::TitleScene()
 //デストラクタ
 TitleScene::~TitleScene()
 {
-	//フォントデータを削除
-	DeleteFontToHandle(font_title);
-	DeleteFontToHandle(font_debug);
 	SoundSystem::StopBGM(BGM::TITLE);
 }
 
@@ -75,7 +74,7 @@ void TitleScene::Draw() const
 	DrawTriangle(40, 255 + (T_selectnum * 50), 60, 270 + (T_selectnum * 50), 40, 285 + (T_selectnum * 50), GetColor(255, 0, 0), TRUE);
 
 	//デバッグ
-	DrawStringToHandle(10, 670, "RT + A で選択画面(開発)", 0xf, font_debug);
+	DrawStringToHandle(10, 650, "RT + A で選択画面(開発)", 0xf, font_title);
 }
 
 //シーンの変更
@@ -92,20 +91,19 @@ AbstractScene* TitleScene::ChangeScene()
 	{
 		switch (T_selectnum)
 		{
-		case 0:
-			/*return dynamic_cast<AbstractScene*> (new Scene_Story());
-			SoundSystem::StopBGM(BGM::TITLE);*/
+		case 0: //ゲームモードの選択
 			return dynamic_cast<AbstractScene*> (new Scene_Title_GameLevel());
 			break;
-		case 1:
+		case 1: //ヘルプ画面
 			return dynamic_cast<AbstractScene*> (new HelpScene());
 			SoundSystem::StopBGM(BGM::TITLE);
 			break;
-		case 2:
+		case 2: //ランキング画面
+			//sortSave.ReadRanking();		// ランキングデータの読み込み
 			return dynamic_cast<AbstractScene*> (new Scene_Ranking());
 			SoundSystem::StopBGM(BGM::TITLE);
 			break;
-		case 3:
+		case 3: //エンド画面
 			return dynamic_cast<AbstractScene*> (new EndScene());
 			SoundSystem::StopBGM(BGM::TITLE);
 			break;

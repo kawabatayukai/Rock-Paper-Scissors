@@ -28,7 +28,7 @@ Effect_Enemy::Effect_Enemy(const float& x, const float& y, Jan_Type enemyType)
 //デストラクタ
 Effect_Enemy::~Effect_Enemy()
 {
-	delete image_effect;
+	delete[] image_effect;
 }
 
 //更新
@@ -43,8 +43,8 @@ void Effect_Enemy::Update()
 //描画
 void Effect_Enemy::Draw() const
 {
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA,255);
-	DrawRotaGraph(effect_x, effect_y, 1.5, 0, image_effect[index_effect], TRUE);
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - (frame_count * 2));
+	DrawRotaGraphF(effect_x, effect_y - 10, 1.5, 0, image_effect[index_effect], TRUE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 

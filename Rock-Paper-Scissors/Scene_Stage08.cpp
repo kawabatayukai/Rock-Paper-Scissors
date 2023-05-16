@@ -5,13 +5,14 @@
 #include"DxLib.h"
 #include"Enemy_Cannon.h"
 #include"GameData.h"
+#include"Item_stage08.h"
 #define PI    3.1415926535897932384626433832795f
 
 //デバッグモード
 #include"Debug_Manager.h"
 
 //コンストラクタ
-Scene_Stage08::Scene_Stage08(const Player* player)
+Scene_Stage08::Scene_Stage08(const Player* player) : damage(5)
 {
 	//プレイヤー情報が渡されていれば
 	if (player != nullptr)
@@ -71,7 +72,13 @@ Scene_Stage08::Scene_Stage08(const Player* player)
 	obj_floor[28] = new Floor(179, 155, 5, 120, 0x00ff00);      //足場　右下
 	obj_floor[29] = new Floor(64,  275, 120, 5, 0x00ff00);      //足場　右下
 
-	Back_image = LoadGraph("images/stage08/Stage08_1.jpg",TRUE);
+	Back_image = LoadGraph("images/stage08/Stage08_1.jpg", TRUE);
+
+	Item = new Jangeki_Base * [3];
+	for (int i = 0; i < 3; i++) Item[i] = nullptr;
+
+	//生成
+	Item[0] = new Item_st8(600, 200, 0);
 }
 
 //デストラクタ
@@ -99,7 +106,7 @@ void Scene_Stage08::Update()
 
 	//接触じゃんけん処理
 	Touch_Janken(obj_enemy, this, 8);
-
+	Effect_Update_HitJangeki(obj_enemy);
 
 	//playerのじゃん撃をとってくる
 	Jangeki_Base** player_jangeki = obj_player->GetJangeki();
@@ -146,7 +153,7 @@ void Scene_Stage08::Update()
 					obj_enemy->DeleteJangeki(e_count);
 					e_count--;
 
-					break;
+				break;
 
 				case 2:             //あいこ
 
@@ -173,7 +180,7 @@ void Scene_Stage08::Update()
 			p_count--;
 		}
 	}
-
+	
 	//じゃん撃同士
 	for (int a = 0; a < 2; a++)
 	{
@@ -243,7 +250,12 @@ void Scene_Stage08::Update()
 	}
 
 
+	for (int i = 0; i < 3; i++)
+	{
+		if (Item[i] == nullptr) break;
 
+		Item[i]->Update();
+	}
 
 
 
@@ -274,7 +286,7 @@ void Scene_Stage08::Update()
 				//パーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::PAPER)
 				{
-					obj_enemy->ReceiveDamage(5);     //ダメージが入る
+					obj_enemy->ReceiveDamage(damage);     //元のダメージ
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -286,7 +298,7 @@ void Scene_Stage08::Update()
 				//グーのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::ROCK)
 				{
-					obj_enemy->ReceiveDamage(5);     //ダメージが入る
+					obj_enemy->ReceiveDamage(damage);     //元のダメージ
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -297,7 +309,7 @@ void Scene_Stage08::Update()
 				//チョキのじゃん撃のみ有効
 				if (jangeki_type == Jan_Type::SCISSORS)
 				{
-					obj_enemy->ReceiveDamage(5);     //ダメージが入る
+					obj_enemy->ReceiveDamage(damage);     //元のダメージ
 					obj_player->DeleteJangeki(i);     //当たったじゃん撃を削除
 					i--;
 				}
@@ -320,7 +332,7 @@ void Scene_Stage08::Update()
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
 			//ダメージを受ける（プレイヤー）
-			obj_player->ReceiveDamage(30);
+			obj_player->ReceiveDamage(40);
 
 			//あたったじゃん撃を削除
 			obj_enemy->DeleteJangeki(i);
@@ -342,13 +354,39 @@ void Scene_Stage08::Update()
 			if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 			{
 				//ダメージを受ける（プレイヤー）
-				obj_player->ReceiveDamage(30);
+				obj_player->ReceiveDamage(15);
 
 				//あたったじゃん撃を削除
 				cannon[a]->DeleteJangeki(i);
 				i--;
 			}
 		}
+	}
+
+	//アイテムとプレイヤー当たり判定
+	for (int i = 0; i < 3; i++)
+	{
+		if (Item[i] == nullptr) break;
+
+		if (obj_player->Hit_Jangeki(Item[i]) == true)
+		{
+			//当たった時
+			damage += 15;
+
+			delete Item[i];
+			Item[i] = nullptr;
+
+			for (int j = i; j < 3 - 1; j++)
+			{
+				if (Item[j + 1] == nullptr) break;
+				Item[j] = Item[j + 1];
+				Item[j + 1] = nullptr;
+			}
+			i--;
+			
+		}
+
+
 	}
 
 
@@ -362,11 +400,14 @@ void Scene_Stage08::Update()
 //描画
 void Scene_Stage08::Draw() const
 {	
-		//HP表示
-		DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+	
+	DrawUI_ON_Enemy(obj_enemy);
+	DrawRotaGraph(640, 360, 1.f, 0, Back_image,TRUE);
 
-		DrawUI_ON_Enemy(obj_enemy);
-		DrawRotaGraph(640, 360, 1.f, 0, Back_image,TRUE);
+		//HP表示
+	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
+	DrawUI_ON_Enemy(obj_enemy);
+
 
 	//接触じゃんけんでない時
 	if (GetJanState() == Jan_State::START || GetJanState() == Jan_State::BEFORE)
@@ -383,6 +424,15 @@ void Scene_Stage08::Draw() const
 			if (obj_floor[i] == nullptr) break;
 			obj_floor[i]->Draw();
 		}
+
+		//item描画
+		for (int i = 0; i < 3; i++)
+		{
+			if (Item[i] == nullptr) break;
+
+			Item[i]->Draw();
+		}
+
 		//接触した瞬間の演出
 		if (GetJanState() == Jan_State::START) Draw_JankenStart();
 	}
@@ -392,7 +442,10 @@ void Scene_Stage08::Draw() const
 		Draw_Janken();
 	}
 
+
+
 	//DrawString(640, 360, "Stage08", 0xffffff);
+	Effect_Draw_HitJangeki();
 }
 
 
@@ -409,14 +462,14 @@ AbstractScene* Scene_Stage08::ChangeScene()
 #ifdef DEBUG_OFF_08
 
 	//敵のHPが0以下
-	if (obj_enemy->GetHP() < 0)
+	if (IsEnd_DeathEnemy() == true)
 	{
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(9));
 	}
 
 	//プレイヤーのHPが0以下
-	if (obj_player->GetHP() < 0)
+	if (obj_player->IsDeathPlayer() == true)
 	{
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(8));

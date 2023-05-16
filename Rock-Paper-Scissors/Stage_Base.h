@@ -6,6 +6,9 @@
 #include"EnemyBase.h"
 #include"Effect_Jangeki.h"
 #include"Effect_Enemy.h"
+#include"Jangeki_reflection.h"
+#include"Sound_Jangeki.h"
+#include"Enemy_Death.h"
 
 //ステージのベース
 class Stage_Base : public AbstractScene
@@ -36,11 +39,20 @@ public:
 	void Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_StageNum = 0);
 
 	//じゃん撃ヒット時エフェクト 処理
-	void Effect_Update_HitJangeki(const EnemyBase* enemy);
+	void Effect_Update_HitJangeki(const EnemyBase* enemy, const Jangeki_Reflection* ref = nullptr);
 
 	//じゃん撃ヒット時エフェクト 描画
 	void Effect_Draw_HitJangeki() const;
 
+	//死亡時処理
+	void Update_DeathEnemy();
+
+	//死亡時描画
+	void Draw_DeathEnemy() const;
+
+	//死亡演出終了チェック
+	bool IsEnd_DeathEnemy();
+	void GetStage09IsClear(bool isclear);
 
 	//じゃんけん描画
 	void Draw_Janken() const;
@@ -61,7 +73,7 @@ protected:
 private:
 	short nhit_time = 0;                      //衝突判定なし時間
 
-	int font;         //結果(WIN or LOSE or ONEMORE) 用フォント 
+	static int font;         //結果(WIN or LOSE or ONEMORE) 用フォント 
 
 	Jan_State j_state = Jan_State::BEFORE;    //じゃんけんの状態
 
@@ -76,5 +88,11 @@ private:
 	int image_clock;                          //時計
 	int image_clockhand;                      //時計の針
 	int image_clockchar;                      //時計の文字盤
+	static int font_score;                    //Score描画用フォント
+
+	Sound_Jangeki** obj_sejan;                //SE
+
+	Enemy_Death* obj_death;                   //死亡時に生成する
+	bool stage09_isclear = false;
 };
 

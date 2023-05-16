@@ -27,7 +27,7 @@ Effect_ChangePlayer::Effect_ChangePlayer(Jan_Type type, const float& x, const fl
 //デストラクタ
 Effect_ChangePlayer::~Effect_ChangePlayer()
 {
-	delete image_effect;
+	delete[] image_effect;
 }
 
 //更新

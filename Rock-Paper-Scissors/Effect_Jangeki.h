@@ -1,29 +1,39 @@
 #pragma once
+#include"Jangeki_Base.h"
+#include"CharaBase.h"
 
 /** じゃん撃ではない **/
-
 
 //エフェクトを発生させる(じゃん撃同士の衝突)
 class Effect_Jangeki
 {
 public:
-	Effect_Jangeki(float play_x, float play_y);
+	Effect_Jangeki(float play_x, float play_y, Jan_Type type = Jan_Type::PAPER, _CHAR_TYPE character = _CHAR_TYPE::NOT_CHARA);
 	~Effect_Jangeki();
 
-	void Update();
-	void Draw() const;
+	virtual void Update();
+	virtual void Draw() const;
 
 	bool Check_PlayEnd();          //再生終了 true
 
-private:
-	const float play_x;            //エフェクト再生座標ｘ
-	const float play_y;            //エフェクト再生座標ｙ
+	//Characterの座標
+	void SetCharacterLocation(const float& x = 0.f, const float& y = 0.f);
+
+	_CHAR_TYPE GetCharacterType() const { return character; }
+
+protected:
+	float play_x;            //エフェクト再生座標ｘ
+	float play_y;            //エフェクト再生座標ｙ
 
 	unsigned int frame_count;      //フレームカウンタ
 	unsigned int index_effect;     //配列操作
 	unsigned int index_max;        //画像最大数
 	
 	int* image_effect;             //エフェクト画像
+	int image_sub;                 //サブエフェクト
+	double rotation;               //回転率
+
+	const _CHAR_TYPE character;    //呼び出し元のキャラ
 
 	bool finish_effect;            //エフェクト完了
 };
