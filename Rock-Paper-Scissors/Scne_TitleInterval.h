@@ -16,6 +16,11 @@ public:
 	AbstractScene* ChangeScene() override;
 
 private:
+	int image_high;
+	int image_middle;
+	int image_low;
 
+	int frame;
+	int speed;
 };
 
