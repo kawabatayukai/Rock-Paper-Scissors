@@ -57,10 +57,6 @@ Stage_Base::~Stage_Base()
 {
 	//ƒTƒEƒ“ƒh‚ğíœ
 	Sound_Player::DeletePlayerSound();
-	delete obj_player;
-	delete[] obj_floor;
-	delete[] obj_effect;
-	delete[] obj_sejan;
 }
 
 //UI•`‰æ
