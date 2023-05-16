@@ -1103,37 +1103,6 @@ void Enemy_06::smoke()
 	}
 }
 
-//死亡処理
-void Enemy_06::death()
-{
-	//生首が飛ぶ演出
-
-
-	///*死亡時の処理*/
-	//if (enemy_state == ENEMY_STATE10::DEATH)
-	//{
-	//	static bool isJumped = false;
-
-	//	if (land_flg == false && isJumped == false) land_flg = true;
-
-	//	if (land_flg == true)
-	//	{
-	//		isJumped = true;
-	//		g_add = -23.5f;    //重力加速度をマイナス値に
-	//		land_flg = false;  //地面についていない
-	//	}
-
-	//	w = 0;
-	//	h = 0;
-
-	//	if (y > 730.f)
-	//	{
-	//		enemy_state = ENEMY_STATE10::DEATH_END;
-	//	}
-	//	Init_Jangeki(); //ジャン撃を消す
-	//}
-}
-
 //向きを乱数で決める関数
 void Enemy_06::decision_Direction()
 {

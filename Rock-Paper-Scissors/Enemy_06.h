@@ -28,7 +28,6 @@ public:
 	void jump();                     //ジャンプ
 	void low_jump();                 //低いジャンプ
 	void smoke();                    //煙エフェクト関数
-	void death();                    //死亡処理
 
 	float Get_OldY();                   //old_yの取得関数
 	float Get_Y();                      //yの取得
@@ -61,8 +60,6 @@ private:
 	bool smokeFlg = true;         //煙エフェクトのフラグ
 	int  smokeImage[10];          //煙画像
 	int  smokeCnt = 0;            //煙用カウント変数
-
-	bool deathFlg = false;        //死亡フラグ
 
 	/**********************************************************/
 
