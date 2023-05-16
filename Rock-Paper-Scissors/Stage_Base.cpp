@@ -200,13 +200,13 @@ Jan_Result Stage_Base::Get_JankenResult(Jan_Type player, Jan_Type enemy)
 
 
 //敵とプレイヤーの当たり判定→接触じゃんけん処理    敵へのポインタ、"this" を引数に
-void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_StageNum)
+void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_StageNum, bool invalidate)
 {
 	//じゃんけん開始前 
 	if (j_state == Jan_State::BEFORE)
 	{
 		//敵とプレイヤーが接触
-		if (enemy->Hit_Character(obj_player) == true && nhit_time == 0)
+		if (enemy->Hit_Character(obj_player) == true && nhit_time == 0 && invalidate == false)
 		{
 			//接触した!
 			j_state = Jan_State::START;

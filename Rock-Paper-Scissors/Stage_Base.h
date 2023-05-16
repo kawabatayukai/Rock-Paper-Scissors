@@ -36,7 +36,7 @@ public:
 	Jan_Result Get_JankenResult(Jan_Type player, Jan_Type enemy);
 
 	//敵とプレイヤーの当たり判定→接触じゃんけん処理    敵へのポインタ、"this" を引数に
-	void Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_StageNum = 0);
+	void Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_StageNum = 0, bool invalidate = false);
 
 	//じゃん撃ヒット時エフェクト 処理
 	void Effect_Update_HitJangeki(const EnemyBase* enemy, const Jangeki_Reflection* ref = nullptr);
