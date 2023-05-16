@@ -218,7 +218,7 @@ void Scene_InputNameRanking::KeyBoard_Update()
 //カーソルの移動・ボタンの長押しを調整
 bool Scene_InputNameRanking::CursorControl()
 {
-	int timing = 8;
+	int timing = 9;
 	if (frame % timing == 0) return true;
 	//frame = 0;
 	return false;

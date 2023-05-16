@@ -14,10 +14,10 @@ int Scene_Story::font_skip = 0;      //"skip"用フォント
 namespace _C_STORY
 {
 	const int CENTER_X = 640;    //画面中心
-	const int FIRST_Y = 300;     //テキスト1行目の高さ
+	const int FIRST_Y = 720;     //テキスト1行目の高さ
 
 	const int MIN_SPEED = 1;     //最低スクロールスピード
-	const int MAX_SPEED = 7;     //最大スクロールスピード
+	const int MAX_SPEED = 10;     //最大スクロールスピード
 }
 
 //コンストラクタ
@@ -62,9 +62,6 @@ Scene_Story::~Scene_Story()
 {
 	//テキストを削除
 	delete text;
-
-	//フォントを削除
-	DeleteFontToHandle(font_text);
 }
 
 void Scene_Story::Update()
