@@ -73,7 +73,7 @@ protected:
 private:
 	short nhit_time = 0;                      //衝突判定なし時間
 
-	int font;         //結果(WIN or LOSE or ONEMORE) 用フォント 
+	static int font;         //結果(WIN or LOSE or ONEMORE) 用フォント 
 
 	Jan_State j_state = Jan_State::BEFORE;    //じゃんけんの状態
 
@@ -88,7 +88,7 @@ private:
 	int image_clock;                          //時計
 	int image_clockhand;                      //時計の針
 	int image_clockchar;                      //時計の文字盤
-	int font_score;                           //Score描画用フォント
+	static int font_score;                    //Score描画用フォント
 
 	Sound_Jangeki** obj_sejan;                //SE
 
