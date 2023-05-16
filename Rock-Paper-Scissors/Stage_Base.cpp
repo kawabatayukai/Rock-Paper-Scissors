@@ -339,6 +339,7 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 	{
 		if (stage09_isclear == true && obj_death == nullptr)
 		{
+			enemy->Init_Jangeki();
 			//死亡演出用オブジェクト
 			obj_death = new Enemy_Death(enemy->GetX(), enemy->GetY(), my_StageNum);
 
@@ -350,6 +351,7 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 	{
 		if (enemy->GetHP() <= 0 && obj_death == nullptr)
 		{
+			enemy->Init_Jangeki();
 			//死亡演出用オブジェクト
 			obj_death = new Enemy_Death(enemy->GetX(), enemy->GetY(), my_StageNum, enemy->GetType());
 
