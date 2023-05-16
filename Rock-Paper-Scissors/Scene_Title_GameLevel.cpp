@@ -12,14 +12,16 @@
 #include"Scene_Story.h"
 #include "Scene_InputNameRanking.h"
 
+int Scene_Title_GameLevel::font_title = 0;
+
 //コンストラクタ
 Scene_Title_GameLevel::Scene_Title_GameLevel()
 {
 	TitleImage = LoadGraph("images/JankenWorldTitle.png");
 
 	//フォントデータを作成
-	font_title = CreateFontToHandle("Yu Gothic UI", 50, 3, DX_FONTTYPE_ANTIALIASING_4X4);
-	font_debug = CreateFontToHandle("Yu Gothic UI", 20, 2, DX_FONTTYPE_ANTIALIASING_4X4);
+	if (font_title == 0)
+		font_title = CreateFontToHandle("Yu Gothic UI", 50, 3, DX_FONTTYPE_ANTIALIASING_4X4);
 
 	//データの初期化
 	GameData::Init_Data();
@@ -30,8 +32,6 @@ Scene_Title_GameLevel::Scene_Title_GameLevel()
 Scene_Title_GameLevel::~Scene_Title_GameLevel()
 {
 	//フォントデータを削除
-	DeleteFontToHandle(font_title);
-	DeleteFontToHandle(font_debug);
 	SoundSystem::StopBGM(BGM::TITLE);
 	SetBackgroundColor(0, 0, 0);
 }
@@ -75,7 +75,7 @@ void Scene_Title_GameLevel::Draw() const
 	DrawTriangle(40, 355 + (T_selectnum * 50), 60, 370 + (T_selectnum * 50), 40, 385 + (T_selectnum * 50), GetColor(255, 0, 0), TRUE);
 
 	//デバッグ
-	DrawStringToHandle(10, 650, "RT + A で選択画面(開発)", 0xf, font_debug);
+	DrawStringToHandle(10, 650, "RT + A で選択画面(開発)", 0xf, font_title);
 }
 
 //シーンの変更

@@ -9,6 +9,10 @@
 //衝突判定なし時間   5秒
 #define NOT_COLLISION_TIME  300
 
+
+int Stage_Base::font = 0;         //結果(WIN or LOSE or ONEMORE) 用フォント
+int Stage_Base::font_score = 0;   //Score描画用フォント
+
 namespace _CONSTANTS_SB
 {
 	//エフェクト最大生成数
@@ -25,9 +29,11 @@ Stage_Base::Stage_Base() : blackout_time(0), Prev_EnemyType(Jan_Type::NONE), obj
 {
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, typeImage);
 
-	//                           サイズ 幅              外枠
-	font = CreateFontToHandle(NULL, 60, 3, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
-	font_score = CreateFontToHandle("メイリオ", 30, 5, DX_FONTTYPE_ANTIALIASING_EDGE, -1, 1);
+	if (font == 0)
+		font = CreateFontToHandle(NULL, 60, 3, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
+
+	if (font_score == 0)
+		font_score = CreateFontToHandle("メイリオ", 30, 5, DX_FONTTYPE_ANTIALIASING_EDGE, -1, 1);
 
 	//エフェクト初期化
 	obj_effect = new Effect_Jangeki * [_CONSTANTS_SB::EFFECT_MAX];
@@ -51,6 +57,10 @@ Stage_Base::~Stage_Base()
 {
 	//サウンドを削除
 	Sound_Player::DeletePlayerSound();
+	delete obj_player;
+	delete[] obj_floor;
+	delete[] obj_effect;
+	delete[] obj_sejan;
 }
 
 //UI描画
