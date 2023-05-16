@@ -5,7 +5,7 @@
 //難易度
 enum class GAME_DIFFICULTY
 {
-	NOMAL,/*通常モード*/
+	NORMAL,/*通常モード*/
 	HARD,/*即死モード*/
 };
 

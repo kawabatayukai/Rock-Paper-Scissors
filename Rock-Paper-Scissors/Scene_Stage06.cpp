@@ -31,9 +31,6 @@ Scene_Stage06::Scene_Stage06(const Player* player)
 	//”wŒi‰æ‘œ‚Ì“Ç‚Ýž‚Ý
 	stage6_BackImage = LoadGraph("images/stage06/mori32-.png");
 
-	////”í’eSE‚Ì“Ç‚Ýž‚Ý
-	//damageSE = LoadSoundMem("Sound/stage06/damage6.mp3");
-
 	//°E•Ç‚Ì—pˆÓ
 	Init_Floor(STAGE_06_FLOOR);
 
@@ -263,11 +260,6 @@ void Scene_Stage06::Update()
 	if (obj_enemy->Get_Y() >= obj_enemy->Get_OldY() || obj_enemy->Get_Y() <= -200)
 	{
 		HitCtrl_Floor(obj_enemy, STAGE_06_FLOOR);      // “G@@@°E•Ç”»’è
-
-		//(x - (w / 2))
-		//(y - (h / 2))
-		//(x + (w / 2))
-		//(y + (h / 2))
 	}
 }
 
@@ -336,7 +328,7 @@ AbstractScene* Scene_Stage06::ChangeScene()
 #ifdef DEBUG_OFF_06
 
 	//“G‚ÌHP‚ª0ˆÈ‰º
-	if (obj_enemy->GetHP() <= 0)
+	if (IsEnd_DeathEnemy() == true)
 	{
 		//BGM’âŽ~
 		SoundSystem::StopBGM(BGM::STAGE06_BGM);

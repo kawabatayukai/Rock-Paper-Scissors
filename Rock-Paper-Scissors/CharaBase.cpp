@@ -241,18 +241,20 @@ void CharaBase::ReceiveDamage(int damage)
 
 
 //ｘ座標変更
-void CharaBase::SetX(const float x)
+void CharaBase::SetX(const float x, bool deathmode)
 {
-	if (x > 0)
+	if (deathmode == true) this->x = x;
+	else
 	{
-		this->x = x;
+		if (x > 0) this->x = x;
 	}
 }
 //ｙ座標変更
-void CharaBase::SetY(const float y)
+void CharaBase::SetY(const float y, bool deathmode)
 {
-	if (y > 0)
+	if (deathmode == true) this->y = y;
+	else
 	{
-		this->y = y;
+		if (y > 0) this->y = y;
 	}
 }

@@ -291,7 +291,7 @@ AbstractScene* Scene_Stage04::ChangeScene()
 #ifdef DEBUG_OFF_04
 
 	//敵のHPが0以下
-	if (obj_enemy->GetHP() <= 0)
+	if (IsEnd_DeathEnemy() == true)
 	{
 		//BGM停止
 		SoundSystem::StopBGM(BGM::STAGE04_BGM);
@@ -316,8 +316,9 @@ AbstractScene* Scene_Stage04::ChangeScene()
 //じゃんけん終了後の挙動（プレイヤー勝ち）
 void Scene_Stage04::AfterJanken_WIN()
 {
-	obj_player->Recover_HP(30);
-	obj_player->SetX(100);
+	obj_player->Recover_HP(50);
+	obj_player->SetX(260);
+	obj_player->SetY(620);
 	obj_enemy->SetX(1180);
 }
 
@@ -325,6 +326,7 @@ void Scene_Stage04::AfterJanken_WIN()
 void Scene_Stage04::AfterJanken_LOSE()
 {
 	obj_enemy->Special_Action();
-	obj_player->SetX(100);
+	obj_player->SetX(260);
+	obj_player->SetY(620);
 	obj_enemy->SetX(1180);
 }

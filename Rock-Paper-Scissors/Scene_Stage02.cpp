@@ -282,7 +282,7 @@ AbstractScene* Scene_Stage02::ChangeScene()
 #ifdef DEBUG_OFF_02
 
 	//敵のHPが0以下
-	if (obj_enemy->GetHP() <= 0)
+	if (IsEnd_DeathEnemy() == true)
 	{
 		//BGM停止
 		//StopSoundMem(stage2_BGM);
@@ -310,6 +310,7 @@ AbstractScene* Scene_Stage02::ChangeScene()
 //じゃんけん終了後の挙動（プレイヤー勝ち）
 void Scene_Stage02::AfterJanken_WIN()
 {
+	obj_player->Recover_HP(30);
 	obj_enemy->frameDown();
 	obj_player->SetX(100);
 	obj_enemy->SetX(1100);

@@ -106,7 +106,7 @@ void Scene_InputNameRanking::KeyBoardInit()
 int Scene_InputNameRanking::LoadKeyBoardImgaes()
 {
 	//背景
-	if ((backimage = LoadGraph("images/KeyBoard/back04.png")) == -1) return -1;
+	if ((backimage = LoadGraph("images/KeyBoard/back07.png")) == -1) return -1;
 	//キーボード
 	if ((keyboardimage = LoadGraph("images/KeyBoard/OPEN_Board4.png")) == -1) return -1;
 	//分割読み込み　押したよ/押してない が連結した画像
@@ -218,7 +218,7 @@ void Scene_InputNameRanking::KeyBoard_Update()
 //カーソルの移動・ボタンの長押しを調整
 bool Scene_InputNameRanking::CursorControl()
 {
-	int timing = 8;
+	int timing = 9;
 	if (frame % timing == 0) return true;
 	//frame = 0;
 	return false;

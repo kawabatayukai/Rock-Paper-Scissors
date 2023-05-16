@@ -3,6 +3,7 @@
 #include "DxLib.h"
 #include"Scene_GameOver.h"
 #include "Scene_GameClear.h"
+#include"SoundSystem.h"
 #include"GameData.h"
 #define PI    3.1415926535897932384626433832795f
 
@@ -44,7 +45,7 @@ Scene_Stage05::Scene_Stage05(const Player* player)
 	//	mob[2] = new MobEnemy_05(1230, 420, Jan_Type::ROCK);
 	//}
 
-	GameData::Set_TimeLimit();
+	GameData::Set_TimeLimit(7200);
 	//床・壁の用意
 	Init_Floor(STAGE_05_FLOOR);
 
@@ -69,6 +70,9 @@ Scene_Stage05::~Scene_Stage05()
 //更新
 void Scene_Stage05::Update()
 {
+	//BGM再生
+	SoundSystem::PlayBGM(BGM::STAGE05_BGM);
+
 	static int timer = 0;
 	timer++;
 
@@ -591,8 +595,11 @@ AbstractScene* Scene_Stage05::ChangeScene()
 #ifdef DEBUG_OFF_05
 
 	//敵のHPが0以下
-	if (obj_enemy->GetHP() <= 0)
+	if (IsEnd_DeathEnemy() == true)
 	{
+		//BGM停止
+		SoundSystem::StopBGM(BGM::STAGE05_BGM);
+
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(6));
 	}
@@ -600,6 +607,9 @@ AbstractScene* Scene_Stage05::ChangeScene()
 	//プレイヤーのHPが0以下
 	if (obj_player->IsDeathPlayer() == true)
 	{
+		//BGM停止
+		SoundSystem::StopBGM(BGM::STAGE05_BGM);
+
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(5));
 	}

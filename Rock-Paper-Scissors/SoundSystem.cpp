@@ -66,7 +66,9 @@ void  SoundSystem::LoadSounds_BGM()
 	bgm_sounds.push_back(LoadSoundMem("Sound/Stage02BGM.mp3"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/st03/St03BGM.wav"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/stage04/stage04_BGM.wav"));
+	bgm_sounds.push_back(LoadSoundMem("Sound/stage05/Stage5_BGM.mp3"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/stage06/RPG_Battle_03.mp3"));
+	bgm_sounds.push_back(LoadSoundMem("Sound/stage07/RPG_Battle_04.mp3"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/sento.mp3"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/VSQPD_0077_Mary_Had_a_Little_Lamb_FC.mp3"));
 	bgm_sounds.push_back(LoadSoundMem("Sound/VSQPD_0046_Yankee_Doodle.mp3"));

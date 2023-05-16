@@ -16,8 +16,8 @@ Enemy_04::Enemy_04(float x, float y, Jan_Type type) : EnemyBase(x, y, 150.0f, 15
 	dir = 1;
 	hp = 100;
 
-	enemy_x = GetRand(1160) + 100;
-	enemy_y = GetRand(600) + 100;
+	enemy_x = 640;
+	enemy_y = 360;
 
 	enemy_image[0] = LoadGraph("images/Stage04/stage_Boss04.png");
 	enemy_image[1] = LoadGraph("images/Stage04/stage_Boss04(上).png");
@@ -64,8 +64,8 @@ void Enemy_04::Update()
 		{
 			if (specialFlg == true)
 			{
-				enemy_x = GetRand(1160) + 100;
-				enemy_y = GetRand(600) + 100;
+				enemy_x = GetRand(1080) + 100;
+				enemy_y = GetRand(340) + 100;
 			}
 			waitTime = 0;
 			current = moveinfo[current].next_index;
@@ -91,15 +91,15 @@ void Enemy_04::Update()
 	}
 	else if (hp <= 50)
 	{
-		speed = 2.3f;
+		speed = 2.8f;
 	}
 	else
 	{
-		speed = 1.3f;
+		speed = 1.5f;
 	}
 
 	//少しずつHP回復
-	if (hp < 100 && frame_count % 40 == 0) hp++;
+	if (hp < 100 && frame_count % 30 == 0) hp++;
 
 	//特殊行動時間(4秒間)
 	if (specialTime >= 240)
@@ -228,13 +228,13 @@ void Enemy_04::Update_Jangeki()
 		if (specialFlg == false)
 		{
 			//プレイヤーの角度へ発射するジャン撃生成
-			if (frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+			if (frame_count % 70 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 		}
 		else if (specialFlg == true)
 		{
 			if (frame_count % 60 == 0)
 			{
-				Jan_360degrees(jan_count, radius, speed * 1.2, type);
+				Jan_360degrees(jan_count, radius * 0.8, speed * 1.2, type);
 				SoundSystem::PlaySE(SE::ENEMY_SPECIAL_ATTACK);
 			}
 		}
@@ -363,10 +363,10 @@ void Enemy_04::Special_Action()
 //360度発射
 void Enemy_04::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
 {
-	//36度ずつ10個生成
-	for (int i = count; i < (count + 10); i++)
+	//24度ずつ15個生成
+	for (int i = count; i < (count + 15); i++)
 	{
-		double angle = static_cast<double>((36.0 * i) * (M_PI / 180));
+		double angle = static_cast<double>((24.0 * i) * (M_PI / 180));
 
 		obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
 	}

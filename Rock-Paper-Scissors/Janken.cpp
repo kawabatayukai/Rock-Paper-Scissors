@@ -2,67 +2,87 @@
 #include"KeyManager.h"
 #include"Janken.h"
 
+int Janken::font_result = 0;         //結果(WIN or LOSE or ONEMORE) 用フォント 
+int Janken::font_other = 0;          //「じゃんけん..」,「ぽん」など用フォント
 
 //コンストラクタ　　　　　　　　　　enemyの出す手が決まる
 Janken::Janken(Jan_Type enemy_jan, const int stage_num)
-	: enemy_jan(enemy_jan), p_image_x(-50), e_image_x(1330), stage_num(stage_num)
+	: enemy_jan(enemy_jan), p_image_x(-50), e_image_x(1330), stage_num(stage_num), image_enemy(0)
 {
 	//適当に初期化
-	player_jan = Jan_Type::ROCK;
+	player_jan = Jan_Type::NONE;
 	result = Jan_Result::_ERROR;
 
 	//画像読み込み
 	LoadDivGraph("images/Janken_Test.png", 3, 3, 1, 200, 200, image);
-	image_back = LoadGraph("images/Janken/touch_janBack.png");             //じゃんけん中背景
-	image_back_light = LoadGraph("images/Janken/Jan_Lightning_Red.png");
+	image_backjan = LoadGraph("images/Janken/touch_janBack.png");             //じゃんけん中背景
 
 	image_hand = LoadGraph("images/Janken_Hand2.png");
 
 	LoadDivGraph("images/ワンパンマンALL画像.png", 1, 1, 1, 100, 100, &image_player);
-	//image_player = LoadGraph("images/sd_body-1.png");     //プレイヤー
-	image_enemy = LoadGraph("images/tyokitest.png");
 
-	//敵の画像
+	switch (stage_num)
 	{
-		image_all_enemy[0] = LoadGraph("images/tyokitest.png");
+	case 1:
+		image_enemy = LoadGraph("images/stage01/chicken_Janken.png");
+		image_back = LoadGraph("images/stage01/Tutorial_Back.png");
+		break;
 
-		int enemy01[3];
-		LoadDivGraph("images/stage01/stage01_chicken.png", 3, 3, 1, 96, 78, enemy01);
-		image_all_enemy[1] = enemy01[1];
+	case 2:
+		image_enemy = LoadGraph("images/stage02/ex.png");
+		image_back = LoadGraph("images/stage02/mizuumi01.png");
+		break;
 
-		image_all_enemy[2] = LoadGraph("images/stage02/ex.png");
-		image_all_enemy[3] = LoadGraph("images/stage03/stage03attack.png");
-		image_all_enemy[4] = LoadGraph("images/Stage04/stage_Boss04.png");
-		image_all_enemy[5] = LoadGraph("images/stage05/Stage5_Enemy_NoMove_L.png");
-		image_all_enemy[6] = LoadGraph("images/stage06/青NINJA.png");
+	case 3:
+		image_enemy = LoadGraph("images/stage03/stage03attack.png");
+		image_back = LoadGraph("images/stage03/stage03back.png");
+		break;
 
-		int images[9];
-		LoadDivGraph("images/stage07/wrestler_test39ver2.png", 9, 9, 1, 38, 38, images);
+	case 4:
+		image_enemy = LoadGraph("images/Stage04/stage_Boss04.png");
+		image_back = LoadGraph("images/Stage04/Stage_Image2.png");
+		break;
 
-		image_all_enemy[7] = images[2];
-		image_all_enemy[8] = LoadGraph("images/stage08/Stage8_image100.png");
-		image_all_enemy[9] = LoadGraph("images/stage09/Stage9_100.png");
-		image_all_enemy[10] = LoadGraph("images/ステージ10敵の画像単体.png");
+	case 5:
+		image_enemy = LoadGraph("images/stage05/Stage5_Enemy_NoMove_L.png");
+		image_back = LoadGraph("images/stage05/Stage5_Stageimage.png");
+		break;
+
+	case 6:
+		image_enemy = LoadGraph("images/stage06/stage06_Janken.png");
+		image_back = LoadGraph("images/stage06/mori32-.png");
+		break;
+
+	case 7:
+		image_enemy = LoadGraph("images/stage07/stage07_Janken.png");
+		image_back = LoadGraph("images/stage07/back02.png");
+		break;
+
+	case 8:
+		image_enemy = LoadGraph("images/stage08/Stage8_image100.png");
+		image_back = LoadGraph("images/stage08/Stage08_1.jpg");
+		break;
+
+	case 9:
+		image_enemy = LoadGraph("images/stage09/Stage9_100.png");
+		image_back = LoadGraph("images/stage09/stage09_image.png");
+		break;
+
+	case 10:
+		image_enemy = LoadGraph("images/ステージ10敵の画像単体.png");
+		image_back = 0;
+		break;
+
+
+	default:
+		break;
 	}
 
-	//背景
-	{
-		image_all_back[0] = -1;
-		image_all_back[1] = LoadGraph("images/stage01/Tutorial_Back.png");
-		image_all_back[2] = LoadGraph("images/stage02/mizuumi01.png");
-		image_all_back[3] = LoadGraph("images/stage03/stage03back.png");
-		image_all_back[4] = LoadGraph("images/Stage04/Stage_Image2.png");
-		image_all_back[5] = LoadGraph("images/stage05/Stage5_Stageimage.png");
-		image_all_back[6] = LoadGraph("images/stage06/mori32-.png");
-		image_all_back[7] = LoadGraph("images/stage07/back02.png");
-		image_all_back[8] = LoadGraph("images/stage08/Stage08_1.jpg");
-		image_all_back[9] = LoadGraph("images/stage09/stage09_image.png");
-		image_all_back[10] = 0; //LoadGraph("images/stage10/tyokitest.png");
-	}
-
-	//フォントデータを作成　　　　　　Windows標準搭載フォントなら大丈夫。多分　　　[候補 "Yu Gothic UI"]
-	font_result = CreateFontToHandle("メイリオ", 70, 8, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 2);
-	font_other = CreateFontToHandle("メイリオ", 40, 3, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
+	//フォントデータを作成　　　　　
+	if(font_result == 0)
+		font_result = CreateFontToHandle("メイリオ", 70, 8, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 2);
+	if(font_other == 0)
+		font_other = CreateFontToHandle("メイリオ", 40, 3, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
 
 	//色
 	blue      = GetColor(0, 0, 255);    
@@ -75,8 +95,6 @@ Janken::Janken(Jan_Type enemy_jan, const int stage_num)
 //デストラクタ
 Janken::~Janken()
 {
-	//フォントデータを削除
-	DeleteFontToHandle(font_result);
 }
 
 //更新
@@ -93,7 +111,6 @@ void Janken::Update()
 		}
 		else
 		{
-			return;   //何もしない
 		}
 	}
 	else
@@ -116,50 +133,25 @@ void Janken::Update()
 void Janken::Draw() const
 {
 	//背景
-	if (stage_num == 0 || image_all_back[stage_num] == -1)        //画像読み込み失敗
+	if (image_back == -1 || image_back == 0)        //画像読み込み失敗
 	{
 		DrawBox(0, 0, 1280, 720, 0x808080, TRUE);
 	}
 	else
 	{
-		DrawGraph(0, 0, image_all_back[stage_num], FALSE);
+		DrawGraph(0, 0, image_back, FALSE);
 	}
 
 	//"VS"
-	DrawGraph(0, 0, image_back, TRUE);
-
-	//DrawBox(0, 0, 1280, 720, 0x000000, TRUE);
-	////SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
-	//DrawGraph(0, 0, image_back_light, TRUE);
-	//SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 200);
+	DrawGraph(0, 0, image_backjan, TRUE);
 
 	//プレイヤー
 	DrawRotaGraph(p_image_x, 300, 2, 0, image_player, TRUE);
 
-	//ステージ7だけ
-	if (stage_num == 7)
+	//画像読み込みに失敗していなければ
+	if (image_enemy != -1)
 	{
-		DrawRotaGraph(e_image_x, 600, 5.2, 0, image_all_enemy[stage_num], TRUE);
-	}
-	else if (stage_num == 6)
-	{
-		DrawRotaGraph(e_image_x, 600, 8.6, 0, image_all_enemy[stage_num], TRUE);
-	}
-	else if (stage_num == 1)
-	{
-		DrawRotaGraph(e_image_x, 600, 1.7, 0, image_all_enemy[stage_num], TRUE, TRUE);
-	}
-	else
-	{
-		//画像読み込みに失敗していなければ
-		if (image_all_enemy[stage_num] != -1)
-		{
-			DrawRotaGraph(e_image_x, 600, 2, 0, image_all_enemy[stage_num], TRUE);
-		}
-		else
-		{
-			DrawRotaGraph(e_image_x, 600, 2, 0, image_enemy, TRUE);
-		}
+		DrawRotaGraph(e_image_x, 600, 2, 0, image_enemy, TRUE);
 	}
 
 
@@ -184,11 +176,16 @@ void Janken::Draw() const
 			DrawStringToHandle(400, 450, "ぽ ん", white, font_other);
 
 			//プレイヤーの手
-			DrawRotaGraph(420, 180, 1.0, 0.5, image[static_cast<int>(player_jan)], TRUE);
+			if (player_jan != Jan_Type::NONE)
+			{
+				DrawRotaGraph(420, 180, 1.0, 0.5, image[static_cast<int>(player_jan)], TRUE);
+			}
 
 			//敵の手
-			DrawRotaGraph(850, 500, 1.0, 0.5, image[static_cast<int>(enemy_jan)], TRUE);
-
+			if (enemy_jan != Jan_Type::NONE)
+			{
+				DrawRotaGraph(850, 500, 1.0, 0.5, image[static_cast<int>(enemy_jan)], TRUE);
+			}
 
 			//じゃんけんの結果（プレイヤー目線）
 			switch (result)
@@ -304,7 +301,9 @@ void Janken::OneMore_Init()
 	button_X = false;   //Xボタンが押されているか
 
 	//敵の出す手を再設定
+	enemy_jan = Jan_Type::NONE;
 	enemy_jan = static_cast<Jan_Type> (GetRand(2));
+	
 
 	result = Jan_Result::_ERROR;
 }

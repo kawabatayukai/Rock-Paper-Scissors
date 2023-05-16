@@ -121,7 +121,7 @@ void Enemy_08::Update_Jangeki()
 	//配列の空要素
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
-		float radius = 45.5f;   //半径
+		float radius = 75.5f;   //半径
 		float speed = -7.0f;     //スピード
 
 		//ランダムな属性を生成

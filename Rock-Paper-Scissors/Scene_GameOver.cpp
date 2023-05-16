@@ -16,6 +16,7 @@
 #include"Scene_Stage08.h"
 #include"Scene_Stage09.h"
 #include"Scene_Stage10.h"
+#include"Scene_Ranking.h"
 //コンストラクタ
 GameOverScene::GameOverScene(int again):again(again)
 {
@@ -55,7 +56,7 @@ void GameOverScene::Draw() const
 AbstractScene* GameOverScene::ChangeScene()
 {
 	/*通常モード*/
-	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::NOMAL)
+	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::NORMAL)
 	{
 		//Aボタンで戻る
 		if (KeyManager::OnPadClicked(PAD_INPUT_A))
@@ -122,7 +123,11 @@ AbstractScene* GameOverScene::ChangeScene()
 	/*即死モード*/
 	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
 	{
-		return dynamic_cast<AbstractScene*> (new TitleScene());
+		//return dynamic_cast<AbstractScene*> (new TitleScene());
+		sortSave.setScore(9, 10);	// ランキングデータの１０番目にスコアを登録
+		sortSave.SortRanking();		// ランキング並べ替え
+		sortSave.SaveRanking();		// ランキングデータの保存
+		return new Scene_Ranking();
 	}
 	return this;
 }

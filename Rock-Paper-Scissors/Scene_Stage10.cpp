@@ -21,7 +21,7 @@
 Scene_Stage10::Scene_Stage10(const Player* player)
 {
 	//制限時間をセット
-	GameData::Set_TimeLimit(3700);
+	GameData::Set_TimeLimit(4300);
 
 	//プレイヤー情報が渡されていれば
 	if (player != nullptr)
@@ -573,12 +573,12 @@ void Scene_Stage10::Draw_Janken() const
 
 void Scene_Stage10::AfterJanken_WIN()
 {
-	
+	obj_player->Recover_HP(30);
 }
 
 void Scene_Stage10::AfterJanken_LOSE()
 {
-
+	obj_enemy->SetSpeed(7);
 }
 
 //シーンの変更
@@ -596,20 +596,27 @@ AbstractScene* Scene_Stage10::ChangeScene()
 	}
 	if(obj_enemy->Get_Enemy10Form() == 2 && obj_enemy->IsDeathEnemy10() == true)
 	{
-		//リザルトへ切り替え
+		/*名前入力*/
 		//return dynamic_cast<AbstractScene*> (new Scene_InputNameRanking());
-		sortSave.setScore(9, 10);	// ランキングデータの１０番目にスコアを登録
-		sortSave.SortRanking();		// ランキング並べ替え
-		sortSave.SaveRanking();		// ランキングデータの保存
-		return new Scene_Ranking();
+	 
+		 /*ランキング内部処理*/
+		//sortSave.setScore(9, 10);	// ランキングデータの１０番目にスコアを登録
+		//sortSave.SortRanking();		// ランキング並べ替え
+		//sortSave.SaveRanking();		// ランキングデータの保存
+	
+	    /*ランキングへ切り替え*/
+		//return new Scene_Ranking();
+
+		//ゲームクリアシーンへ切り替え
+		return dynamic_cast<AbstractScene*> (new GameClearScene(11));
 		SoundSystem::StopBGM(BGM::ENEMY_10_Form2BGM);
 	}
-
 
 	/*プレイヤーのHPが0以下*/
 	//if (obj_player->GetHP() < 0 || GameData::Get_Each_Time() <= 0)
 	//
-	 	   if (obj_player->IsDeathPlayer() == true)
+	 	   
+	if (obj_player->IsDeathPlayer() == true)
 	{
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(10));
