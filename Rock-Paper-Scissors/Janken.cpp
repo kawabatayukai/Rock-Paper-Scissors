@@ -10,7 +10,7 @@ Janken::Janken(Jan_Type enemy_jan, const int stage_num)
 	: enemy_jan(enemy_jan), p_image_x(-50), e_image_x(1330), stage_num(stage_num), image_enemy(0)
 {
 	//適当に初期化
-	player_jan = Jan_Type::ROCK;
+	player_jan = Jan_Type::NONE;
 	result = Jan_Result::_ERROR;
 
 	//画像読み込み
@@ -176,11 +176,16 @@ void Janken::Draw() const
 			DrawStringToHandle(400, 450, "ぽ ん", white, font_other);
 
 			//プレイヤーの手
-			DrawRotaGraph(420, 180, 1.0, 0.5, image[static_cast<int>(player_jan)], TRUE);
+			if (player_jan != Jan_Type::NONE)
+			{
+				DrawRotaGraph(420, 180, 1.0, 0.5, image[static_cast<int>(player_jan)], TRUE);
+			}
 
 			//敵の手
-			DrawRotaGraph(850, 500, 1.0, 0.5, image[static_cast<int>(enemy_jan)], TRUE);
-
+			if (enemy_jan != Jan_Type::NONE)
+			{
+				DrawRotaGraph(850, 500, 1.0, 0.5, image[static_cast<int>(enemy_jan)], TRUE);
+			}
 
 			//じゃんけんの結果（プレイヤー目線）
 			switch (result)
@@ -296,6 +301,7 @@ void Janken::OneMore_Init()
 	button_X = false;   //Xボタンが押されているか
 
 	//敵の出す手を再設定
+	enemy_jan = Jan_Type::NONE;
 	enemy_jan = static_cast<Jan_Type> (GetRand(2));
 	
 
