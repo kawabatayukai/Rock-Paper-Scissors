@@ -38,9 +38,9 @@ AbstractScene* HelpScene::ChangeScene()
 	{
 		return dynamic_cast<AbstractScene*> (new TitleScene());
 	}
-	if (KeyManager::OnPadClicked(PAD_INPUT_B))
+	/*if (KeyManager::OnPadClicked(PAD_INPUT_B))
 	{
 		return dynamic_cast<AbstractScene*> (new Scene_Stage01());
-	}
+	}*/
 	return this;  //çXêVÇ»Çµ
 }
