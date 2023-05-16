@@ -15,7 +15,7 @@
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_10::Enemy_10(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
-	speed = 7.0f;
+	speed = 4.0f;
 	dir = 1;
 	hp = 100;
 
@@ -298,7 +298,7 @@ void  Enemy_10::Move()
 					if (x < 1210)
 					{
 						dir = static_cast<int>(DIRECTION::RIGHT);   //向きを設定（左）
-						x += 4/*GetRand(20)*/;
+						x += speed/*GetRand(20)*/;
 					}
 					else 
 					{
@@ -326,7 +326,7 @@ void  Enemy_10::Move()
 					if (x > 70)
 					{
 						dir = static_cast<int>(DIRECTION::LEFT);   //向きを設定（左）
-						x -= 4/*GetRand(20)*/;
+						x -= speed/*GetRand(20)*/;
 					}
 					else 
 					{
@@ -453,7 +453,6 @@ void Enemy_10::Update()
 
 	//敵のHPが0以下の時、"死んだ"状態に
 	if (this->hp <= 0)enemy_state = ENEMY_STATE10::DEATH;
-
 
 
 	//じゃん撃更新・生成
@@ -958,4 +957,9 @@ bool Enemy_10::IsDeathEnemy10() const
 		return true;
 	}
 	return false;
+}
+
+void Enemy_10::SetSpeed(int speed)
+{
+	this->speed = speed;
 }

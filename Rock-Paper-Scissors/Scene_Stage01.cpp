@@ -46,9 +46,6 @@ Scene_Stage01::Scene_Stage01(const Player* player)
 	obj_floor[6] = new Floor(50, 290, 120, 20, 0x006400);        //足場No.04
 	obj_floor[7] = new Floor(250, 500, 120, 20, 0x006400);       //足場No.05
 
-	//フォントデータを作成　　　　　　Windows標準搭載フォントなら大丈夫。多分　　　[候補 "Yu Gothic UI"]
-	font_tut = CreateFontToHandle("メイリオ", 40, 8, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 2);
-
 	//画像読み込み
 	image_back = LoadGraph("images/stage01/Tutorial_Back.png");
 }
@@ -56,6 +53,7 @@ Scene_Stage01::Scene_Stage01(const Player* player)
 //デストラクタ
 Scene_Stage01::~Scene_Stage01()
 {
+	delete obj_enemy;
 }
 
 //更新
@@ -304,7 +302,7 @@ AbstractScene* Scene_Stage01::ChangeScene()
 #ifdef DEBUG_OFF_01
 
 	//敵のHPが0以下
-	if (obj_enemy->GetHP() <= 0)
+	if (IsEnd_DeathEnemy() == true)
 	{
 		//BGM停止
 		SoundSystem::StopBGM(BGM::STAGE01_BGM);

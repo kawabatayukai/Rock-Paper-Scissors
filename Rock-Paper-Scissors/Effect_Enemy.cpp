@@ -44,7 +44,7 @@ void Effect_Enemy::Update()
 void Effect_Enemy::Draw() const
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - (frame_count * 2));
-	DrawRotaGraph(effect_x, effect_y - 10, 1.5, 0, image_effect[index_effect], TRUE);
+	DrawRotaGraphF(effect_x, effect_y - 10, 1.5, 0, image_effect[index_effect], TRUE);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 

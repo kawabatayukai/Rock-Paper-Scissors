@@ -36,7 +36,4 @@ protected:
 	const _CHAR_TYPE character;    //呼び出し元のキャラ
 
 	bool finish_effect;            //エフェクト完了
-
-	//--------- sounds ----------
-	int se;                        //効果音
 };

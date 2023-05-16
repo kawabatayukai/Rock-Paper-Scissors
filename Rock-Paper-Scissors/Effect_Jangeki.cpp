@@ -5,7 +5,7 @@
 Effect_Jangeki::Effect_Jangeki(float play_x, float play_y, Jan_Type type, _CHAR_TYPE character)
 	: play_x(play_x), play_y(play_y), character(character)
 	, frame_count(0), index_effect(0), index_max(0), image_effect(nullptr), finish_effect(false)
-	, rotation(0.0), se(0)
+	, rotation(0.0)
 {
 	if (character != _CHAR_TYPE::NOT_CHARA)
 	{
@@ -52,12 +52,6 @@ Effect_Jangeki::Effect_Jangeki(float play_x, float play_y, Jan_Type type, _CHAR_
 		default:
 			break;
 		}
-
-		//SE
-		se = LoadSoundMem("Sound/Jangeki/shoot.wav");
-
-				//音量
-		//ChangeVolumeSoundMem(255, se);
 	}
 	else
 	{ 
@@ -83,12 +77,6 @@ Effect_Jangeki::Effect_Jangeki(float play_x, float play_y, Jan_Type type, _CHAR_
 		default:
 			break;
 		}
-
-		//SE
-		se = LoadSoundMem("Sound/Jangeki/aiko.wav");
-
-		//音量
-		ChangeVolumeSoundMem(255, se);
 	}
 }
 
@@ -96,7 +84,6 @@ Effect_Jangeki::Effect_Jangeki(float play_x, float play_y, Jan_Type type, _CHAR_
 Effect_Jangeki::~Effect_Jangeki()
 {
 	delete[] image_effect;
-	DeleteSoundMem(se);
 }
 
 //更新
@@ -115,13 +102,6 @@ void Effect_Jangeki::Update()
 	}
 
 	rotation += 0.05;
-
-	//se
-	//if (character == _CHAR_TYPE::NOT_CHARA)
-	{
-		if (CheckSoundMem(se) == 0) PlaySoundMem(se, DX_PLAYTYPE_BACK);
-	}
-	
 }
 
 //描画
@@ -131,21 +111,21 @@ void Effect_Jangeki::Draw() const
 	{
 		//エフェクト
 		SetDrawBlendMode(DX_BLENDMODE_ADD, GetRand(55) + 200);
-		DrawRotaGraph(play_x, play_y, 1, GetRand(360), image_sub, TRUE);
+		DrawRotaGraphF(play_x, play_y, 1, GetRand(360), image_sub, TRUE);
 
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 230);
-		DrawRotaGraph(play_x, play_y, 1.0, 0, image_effect[index_effect], TRUE);
+		DrawRotaGraphF(play_x, play_y, 1.0, 0, image_effect[index_effect], TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 	else
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ADD, 200);
-		DrawRotaGraph(play_x, play_y, 0.6, rotation, image_effect[index_effect], TRUE);
+		DrawRotaGraphF(play_x, play_y, 0.6, rotation, image_effect[index_effect], TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 		//エフェクト
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 230);
-		DrawRotaGraph(play_x, play_y, 0.7, rotation, image_effect[index_effect], TRUE);
+		DrawRotaGraphF(play_x, play_y, 0.7, rotation, image_effect[index_effect], TRUE);
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 }

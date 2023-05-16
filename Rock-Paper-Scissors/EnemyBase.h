@@ -27,6 +27,9 @@ public:
 
 	void SetPlayerDirection(const int player_dir);
 
+	//画像を削除
+
+
 protected:
 	Jan_Type e_type;         //属性（グー　チョキ　パー　のいずれか）
 	int image = 0;           //画像
