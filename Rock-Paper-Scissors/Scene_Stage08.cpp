@@ -78,7 +78,7 @@ Scene_Stage08::Scene_Stage08(const Player* player) : damage(5)
 	for (int i = 0; i < 3; i++) Item[i] = nullptr;
 
 	//生成
-	Item[0] = new Item_st8(100, 300, 30);
+	Item[0] = new Item_st8(600, 200, 0);
 }
 
 //デストラクタ
@@ -332,7 +332,7 @@ void Scene_Stage08::Update()
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
 			//ダメージを受ける（プレイヤー）
-			obj_player->ReceiveDamage(30);
+			obj_player->ReceiveDamage(40);
 
 			//あたったじゃん撃を削除
 			obj_enemy->DeleteJangeki(i);
@@ -354,7 +354,7 @@ void Scene_Stage08::Update()
 			if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 			{
 				//ダメージを受ける（プレイヤー）
-				obj_player->ReceiveDamage(10);
+				obj_player->ReceiveDamage(15);
 
 				//あたったじゃん撃を削除
 				cannon[a]->DeleteJangeki(i);
@@ -371,7 +371,7 @@ void Scene_Stage08::Update()
 		if (obj_player->Hit_Jangeki(Item[i]) == true)
 		{
 			//当たった時
-			damage += 10;
+			damage += 15;
 
 			delete Item[i];
 			Item[i] = nullptr;

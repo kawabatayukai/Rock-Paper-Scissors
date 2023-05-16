@@ -14,7 +14,7 @@ Enemy_Cannon::Enemy_Cannon(float x, float y, Jan_Type type) : EnemyBase(x, y, 10
 
 	Init_Jangeki();       //じゃん撃を用意
 
-	//Enemy_image = LoadGraph("images/stage08/Stage8_image.png");
+	Enemy_image = LoadGraph("images/stage08/Stage8_image.png");//敵の画像
 }
 
 //デストラクタ2
