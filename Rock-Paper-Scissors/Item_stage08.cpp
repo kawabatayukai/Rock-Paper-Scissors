@@ -18,5 +18,5 @@ void Item_st8::Update()
 
 void Item_st8::Draw() const
 {
-	DrawCircle(x, y, r, 0xffffff, TRUE);
+	DrawCircle(x, y, r, 0x8B0000, TRUE);
 }
