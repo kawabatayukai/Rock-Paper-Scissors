@@ -6,6 +6,8 @@
 #include"Scene_GameOver.h"
 #include"Scene_GameClear.h"
 
+#include"SoundSystem.h"
+
 //デバッグモード
 #include"Debug_Manager.h"
 
@@ -59,6 +61,8 @@ Scene_Stage07::~Scene_Stage07()
 //更新
 void Scene_Stage07::Update()
 {
+	//BGM再生
+	SoundSystem::PlayBGM(BGM::STAGE07_BGM);
 
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
@@ -352,6 +356,9 @@ AbstractScene* Scene_Stage07::ChangeScene()
 	//敵のHPが0以下
 	if (IsEnd_DeathEnemy() == true)
 	{
+		//BGM停止
+		SoundSystem::StopBGM(BGM::STAGE07_BGM);
+
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(8));
 	}
@@ -359,6 +366,9 @@ AbstractScene* Scene_Stage07::ChangeScene()
 	//プレイヤーのHPが0以下
 	if (obj_player->IsDeathPlayer() == true)
 	{
+		//BGM停止
+		SoundSystem::StopBGM(BGM::STAGE07_BGM);
+
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(7));
 	}

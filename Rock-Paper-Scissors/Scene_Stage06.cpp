@@ -71,7 +71,7 @@ Scene_Stage06::~Scene_Stage06()
 //更新
 void Scene_Stage06::Update()
 {
-	//BGM停止
+	//BGM再生
 	SoundSystem::PlayBGM(BGM::STAGE06_BGM);
 
 	//接触じゃんけん開始前

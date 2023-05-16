@@ -7,14 +7,17 @@
 #include"KeyManager.h"
 #include "SortSave.h"
 
+int Scene_Story::font_text = 0;      //テキスト用フォント
+int Scene_Story::font_skip = 0;      //"skip"用フォント
+
 //定数
 namespace _C_STORY
 {
 	const int CENTER_X = 640;    //画面中心
-	const int FIRST_Y = 300;     //テキスト1行目の高さ
+	const int FIRST_Y = 720;     //テキスト1行目の高さ
 
 	const int MIN_SPEED = 1;     //最低スクロールスピード
-	const int MAX_SPEED = 7;     //最大スクロールスピード
+	const int MAX_SPEED = 10;     //最大スクロールスピード
 }
 
 //コンストラクタ
@@ -48,8 +51,10 @@ Scene_Story::Scene_Story() :
 	}
 
 	//フォントを作成
-	font_text = CreateFontToHandle("メイリオ", 30, 10, DX_FONTTYPE_ANTIALIASING, -1, 0);
-	font_skip = CreateFontToHandle("メイリオ", 20, 10, DX_FONTTYPE_ANTIALIASING);
+	if (font_text == 0)
+		font_text = CreateFontToHandle("メイリオ", 30, 10, DX_FONTTYPE_ANTIALIASING, -1, 0);
+	if (font_skip == 0)
+		font_skip = CreateFontToHandle("メイリオ", 20, 10, DX_FONTTYPE_ANTIALIASING);
 }
 
 //デストラクタ
@@ -57,9 +62,6 @@ Scene_Story::~Scene_Story()
 {
 	//テキストを削除
 	delete text;
-
-	//フォントを削除
-	DeleteFontToHandle(font_text);
 }
 
 void Scene_Story::Update()
@@ -118,31 +120,6 @@ void Scene_Story::Draw() const
 
 	//DrawLine(CENTER_X, 0, CENTER_X, 720, 0xffffff, 3);
 	SetBackgroundColor(0, 64, 0);
-
-	//static bool str_end;
-
-	////1行ずつ描画
-	//for (int i = 0; i < text->size(); i++)
-	//{
-	//	std::string str(text->data()[i]);
-
-	//	//文字列の幅
-	//	int str_w = GetDrawStringWidthToHandle(str.c_str(), str.size(), font_text);
-
-	//	//描画座標
-	//	int str_x = CENTER_X - str_w / 2;
-	//	int str_y = FIRST_Y + (i * 100) - scroll_y;
-
-	//	//画面外でスキップ
-	//	if (str_y < -30) continue;
-
-	//	//char*に変換,
-	//	DrawFormatStringToHandle(str_x, str_y, 0xffffff, font_text, "%s", str.c_str());
-
-	//	//テキストの最終行まで終了
-	//	if (i >= text->size() - 1 && str_y < 0) str_end = true;
-	//}
-	//if (str_end == true) DrawString(100, 100, "Press A To Start", 0xffffff);
 
 	//点滅"Skip"
 	if (skipflash_count < 120)

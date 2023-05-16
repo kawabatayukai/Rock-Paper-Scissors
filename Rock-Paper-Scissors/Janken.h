@@ -55,19 +55,17 @@ private:
 
 //---------------------------------------------------------------
 	int image[3];            //画像
-	int image_back;          //じゃんけん中背景
-	int image_back_light;    //じゃんけん中"VS"
+	int image_backjan;          //じゃんけん中背景
 
 	int image_hand;          //じゃんけん説明
 	int image_player;        //プレイヤーじゃんけん中
-	int image_enemy;         //敵じゃんけん中
 
-	int image_all_enemy[11]; //全ステージの画像
-	int image_all_back[11];  //全ステージの背景
+	int image_enemy;
+	int image_back;
 	int stage_num;           //呼び出し元のステージ番号
 
-	int font_result;         //結果(WIN or LOSE or ONEMORE) 用フォント 
-	int font_other;          //「じゃんけん..」,「ぽん」など用フォント
+	static int font_result;         //結果(WIN or LOSE or ONEMORE) 用フォント 
+	static int font_other;          //「じゃんけん..」,「ぽん」など用フォント
 
 	//色
 	int blue;

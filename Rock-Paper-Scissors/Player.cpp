@@ -14,6 +14,7 @@
 //‚¶‚á‚ñŒ‚”­ËŠÔŠu@i1•bj
 #define PLAYER_JAN_INTERVAL 30
 
+int Player::name_font = 0; //–¼‘OEƒtƒHƒ“ƒg
 
 //ƒRƒ“ƒXƒgƒ‰ƒNƒ^@@@@@@@@@@@@@  ‚˜@‚™@•@@@‚‚³
 Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğŒÄ‚Ô
@@ -82,10 +83,8 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 	select_JanType = Jan_Type::ROCK;
 
 	//ƒtƒHƒ“ƒg‚ğì¬
-	ui_font = CreateFontToHandle("ƒƒCƒŠƒI", 20, 4, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
-
-	//ƒtƒHƒ“ƒg‚ğì¬
-	name_font = CreateFontToHandle("ƒƒCƒŠƒI", 20, 4, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
+	if (name_font == 0)
+		name_font = CreateFontToHandle("ƒƒCƒŠƒI", 20, 4, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
 
 	//SE
 	obj_se = new Sound_Jangeki * [10];
@@ -98,8 +97,6 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 //ƒfƒXƒgƒ‰ƒNƒ^
 Player::~Player()
 {
-	//ƒtƒHƒ“ƒgƒf[ƒ^‚ğíœ
-	DeleteFontToHandle(ui_font);
 }
 
 //XV
@@ -1306,10 +1303,6 @@ void Player::Draw() const
 	}
 
 	PlayerDrawUI(GetHP());
-
-	//ƒeƒXƒg ‘I‘ğ‚¶‚á‚ñŒ‚
-	DrawStringToHandle(30, 150, "RB : ”­Ë", 0xffffff, ui_font);
-	DrawStringToHandle(30, 180, "LB : ƒWƒƒƒ“ƒv", 0xffffff, ui_font);
 
 	//–¼‘O•\¦
 	const char* name = sortSave.getRankingData(9).name;
