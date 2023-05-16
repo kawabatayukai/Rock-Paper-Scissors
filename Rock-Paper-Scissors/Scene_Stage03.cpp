@@ -646,6 +646,7 @@ void Scene_Stage03::AfterJanken_LOSE()
 
 	}
 
+	//X‚ª200‚ÉˆÚ“®
 	obj_player->SetX(200);
 	
 

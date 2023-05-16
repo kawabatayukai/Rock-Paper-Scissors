@@ -128,6 +128,7 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	moveinfo[38] = { 1,  0 ,   0.f , 0, 200 ,1 };//Xが900で停止し配列[0]に戻る
 
+	//SE読み込み
 	se_run = LoadSoundMem("Sound/st03/RunningSt03.wav");
 	se_walk = LoadSoundMem("Sound/st03/WorkingSt03.wav");
 	
@@ -150,7 +151,7 @@ void Enemy_03::Update()
 		g_add = -23.f;    //初期-21.5f,重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 		land_flg = false;  //地面についていない
 
-		SoundSystem::PlaySE(SE::PLAYER_JUMP);
+		SoundSystem::PlaySE(SE::PLAYER_JUMP);//JUMP時SE鳴らす
 		speed = 2.8f;
 
 	}
@@ -216,9 +217,6 @@ void Enemy_03::Update()
 	}
 	else {
 
-		
-		
-		
 		
 		//enemyのxが475以下の時
 		if (x <= 475) {
@@ -436,7 +434,6 @@ void Enemy_03::Update()
 void Enemy_03::Draw() const
 
 {
-	
 	////////////////////////
 	///HPが86以上の時
 	///////////////////////
@@ -449,7 +446,7 @@ void Enemy_03::Draw() const
 
 		
 			//ガード時の画像描画							
-			DrawRotaGraphF(x, y, 1, 0, enemyimage[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
+			DrawRotaGraphF(x, y, 1, 0, enemyimage[5], TRUE, dir == -1 ? 0 : 1);
 			
 			
 			
@@ -459,7 +456,7 @@ void Enemy_03::Draw() const
 		else if (moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200) {
 
 			//ジャンプ時の画像描画							
-			DrawRotaGraphF(x, y, 1, 0, enemyimage[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
+			DrawRotaGraphF(x, y, 1, 0, enemyimage[4], TRUE, dir == -1 ? 0 : 1);
 			
 		}
 		//そうじゃないとき
@@ -471,8 +468,9 @@ void Enemy_03::Draw() const
 
 
 				//攻撃時の画像描画								//向きを変える
-				DrawRotaGraphF(x, y, 1, 0, enemyimage[Ecurrentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
+				DrawRotaGraphF(x, y, 1, 0, enemyimage[Ecurrentindex_st03], TRUE, dir == -1 ? 0 : 1);
 				
+				//歩時SE鳴らす
 				if (CheckSoundMem(se_walk) == 0) PlaySoundMem(se_walk, DX_PLAYTYPE_BACK, 0);
 
 			}
@@ -490,13 +488,13 @@ void Enemy_03::Draw() const
 
 		if (moveinfo[current].enemywaitTime > 0) {
 
-	
-			DrawRotaGraphF(x, y, 1, 0, enemyimage1[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
+			//ガード時の画像描画
+			DrawRotaGraphF(x, y, 1, 0, enemyimage1[5], TRUE, dir == -1 ? 0 : 1);
 
 		}
 		else if (moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200) {
 			//ジャンプ時の画像描画							
-			DrawRotaGraphF(x, y, 1, 0, enemyimage1[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
+			DrawRotaGraphF(x, y, 1, 0, enemyimage1[4], TRUE, dir == -1 ? 0 : 1);
 
 		}
 
@@ -507,7 +505,8 @@ void Enemy_03::Draw() const
 				
 				
 				//攻撃時の画像描画								//向きを変える
-				DrawRotaGraphF(x, y, 1, 0, enemyimage1[Ecurrentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
+				DrawRotaGraphF(x, y, 1, 0, enemyimage1[Ecurrentindex_st03], TRUE, dir == -1 ? 0 : 1);
+				//歩時SE鳴らす
 				if (CheckSoundMem(se_walk) == 0) PlaySoundMem(se_walk, DX_PLAYTYPE_BACK, 0);
 				
 			}
@@ -526,14 +525,14 @@ void Enemy_03::Draw() const
 	
 		if (moveinfo[current].enemywaitTime > 0) {
 
-			
-			DrawRotaGraphF(x, y, 1, 0, enemyimage2[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
+			//ガード時の画像描画
+			DrawRotaGraphF(x, y, 1, 0, enemyimage2[5], TRUE, dir == -1 ? 0 : 1);
 
 		}
 		else if (moveinfo[current].jumpflg == 0 && moveinfo[current].moveflg == 0 && moveinfo[current].enemywaitTime < 200) {
 
 			//ジャンプ時の画像描画							
-			DrawRotaGraphF(x, y, 1, 0, enemyimage2[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
+			DrawRotaGraphF(x, y, 1, 0, enemyimage2[4], TRUE, dir == -1 ? 0 : 1);
 
 		}
 		else {
@@ -543,7 +542,8 @@ void Enemy_03::Draw() const
 				
 				
 				//攻撃時の画像描画								//向きを変える
-				DrawRotaGraphF(x, y, 1, 0, enemyimage2[Ecurrentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
+				DrawRotaGraphF(x, y, 1, 0, enemyimage2[Ecurrentindex_st03], TRUE, dir == -1 ? 0 : 1);
+				//歩時SE鳴らす
 				if (CheckSoundMem(se_walk) == 0) PlaySoundMem(se_walk, DX_PLAYTYPE_BACK, 0);
 			}
 			
@@ -560,8 +560,8 @@ void Enemy_03::Draw() const
 		if ( moveinfo[current].enemywaitTime > 0) {
 
 			
-
-			DrawRotaGraphF(x, y, 1, 0, enemyimage3[5]/*[1]*/, TRUE, dir == -1 ? 0 : 1);
+			//ガード時の画像描画
+			DrawRotaGraphF(x, y, 1, 0, enemyimage3[5], TRUE, dir == -1 ? 0 : 1);
 
 		}
 
@@ -570,7 +570,7 @@ void Enemy_03::Draw() const
 
 
 			//ジャンプ時の画像描画							
-			DrawRotaGraphF(x, y, 1, 0, enemyimage3[4]/*[2]*/, TRUE, dir == -1 ? 0 : 1);
+			DrawRotaGraphF(x, y, 1, 0, enemyimage3[4], TRUE, dir == -1 ? 0 : 1);
 
 		}
 		else {
@@ -578,10 +578,9 @@ void Enemy_03::Draw() const
 			//エネミーの構造体と一致したときにエネミーが左または右に動く
 			if ((enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE && moveinfo[current].enemywaitTime < 200)) {
 				
-				
-
 				//攻撃時の画像描画								//向きを変える
-				DrawRotaGraphF(x, y, 1, 0, enemyimage3[Ecurrentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
+				DrawRotaGraphF(x, y, 1, 0, enemyimage3[Ecurrentindex_st03], TRUE, dir == -1 ? 0 : 1);
+				//歩時SE鳴らす
 				if (CheckSoundMem(se_walk) == 0) PlaySoundMem(se_walk, DX_PLAYTYPE_BACK, 0);
 			}
 			
@@ -595,10 +594,11 @@ void Enemy_03::Draw() const
 	else {
 		
 			//エネミーの構造体と一致したときにエネミーが左または右に動く
-		if ((hp <= 40 /*&& hp >= 39*/ && enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE && moveinfo[current].enemywaitTime < 200)) {
-			//攻撃時の画像描画								//向きを変える
+		if ((hp <= 40 && enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE && moveinfo[current].enemywaitTime < 200)) {
 			
-			DrawRotaGraphF(x, y, 1, 0, enemyimage4[Ecurrentindex_st03]/*[0]*/, TRUE, dir == -1 ? 0 : 1);
+			//攻撃時の画像描画								//向きを変える
+			DrawRotaGraphF(x, y, 1, 0, enemyimage4[Ecurrentindex_st03], TRUE, dir == -1 ? 0 : 1);
+			//走時SE鳴らす
 			if (CheckSoundMem(se_run) == 0) PlaySoundMem(se_run, DX_PLAYTYPE_LOOP,0);
 
 			////////////
@@ -658,7 +658,7 @@ void Enemy_03::Update_Jangeki()
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
 		float radius = 35.5f;   //半径 //35.5f
-		float speed = 4.5f /** dir*/;     //スピード//3.0
+		float speed = 4.5f /** dir*/;  //スピード//3.0
 
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));//2 //主に属性時のジャン撃を繰り出す
@@ -667,6 +667,7 @@ void Enemy_03::Update_Jangeki()
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
 	 
 		//攻撃UP時のジャン撃
+		//HP40以下の時	
 		 if (hp <= 40) {
 
 			float radius = 50.0f;
@@ -676,7 +677,7 @@ void Enemy_03::Update_Jangeki()
 			if (frame_count % 85 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 			
 		 }
-		//HPが70下回ったら
+		//HPが85以下で41以上の時
 		else if (hp <= 85 && hp >= 41){
 
 			//尾行弾
@@ -688,6 +689,7 @@ void Enemy_03::Update_Jangeki()
 			if(frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
 		}
 		
+		 //それ以外
 		//プレイヤー方向へのジャン撃生成
 		else  {//(hp <= 86 && hp >= 71)
 
@@ -778,6 +780,7 @@ void Enemy_03::Move_Pattern() {
 //enemywaitTime継承
 int Enemy_03::GetWaitTime()const {
 
+	//敵キャラ停止時間
 	return moveinfo[current].enemywaitTime;
 }
 
@@ -790,11 +793,12 @@ void Enemy_03::ChangeDir(float enemy_x)
 	else dir = 1;
 }
 
+//ステージ3の走時SEを止めるために必要な関数
 int Enemy_03::GetRunSE()const {
 
 	return se_run;
 }
-
+//ステージ3の歩時SEを止めるために必要な関数
 int Enemy_03::GetWalkSE()const {
 
 	return se_walk;
