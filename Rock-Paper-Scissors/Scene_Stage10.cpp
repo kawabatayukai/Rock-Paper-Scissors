@@ -21,7 +21,7 @@
 Scene_Stage10::Scene_Stage10(const Player* player)
 {
 	//制限時間をセット
-	GameData::Set_TimeLimit(3700);
+	GameData::Set_TimeLimit(4300);
 
 	//プレイヤー情報が渡されていれば
 	if (player != nullptr)
