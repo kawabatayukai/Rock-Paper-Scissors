@@ -14,7 +14,7 @@ EndScene::~EndScene()
 {
 	////ƒGƒ“ƒh‰æ‘œ•\Ž¦
 	//DrawGraph(0, 0, g_EndImage, FALSE);
-
+	 
 	
 }
 
