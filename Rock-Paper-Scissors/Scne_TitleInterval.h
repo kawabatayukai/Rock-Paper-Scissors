@@ -17,6 +17,7 @@ public:
 
 private:
 	int image_high;
+	int image_middle;
 	int image_low;
 
 	int frame;
