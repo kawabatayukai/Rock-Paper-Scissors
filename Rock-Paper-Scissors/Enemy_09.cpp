@@ -7,6 +7,7 @@
 #include"Jangeki_whole.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include "SoundSystem.h"
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_09::Enemy_09(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
@@ -174,7 +175,7 @@ void Enemy_09::Update_Jangeki()
 					//反射じゃん撃生成
 					if (reflection->GetFlg() == true)
 					{
-
+						SoundSystem::PlaySE(SE::ENEMY09_Reflection);
 						reflection->obj_reflection[reflection->jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed - 0.3, type, true);
 						reflection->falseFlg();
 					}
@@ -252,6 +253,8 @@ void Enemy_09::MoveEnmey_09()
 		animflg = true;
 		ranimflg = false;
 
+		SoundSystem::PlaySE(SE::ENEMY09_Teleprot);
+
 		before_x = x;
 		before_y = y;
 
@@ -297,8 +300,9 @@ void Enemy_09::MoveEnmey_09()
 
 		if (animflg == true)
 		{
-			animtimer++;
-
+			
+			animtimer++; 
+			
 			if (animtimer / 3 % 15 == 14) {
 				
 				if (anim_count == 0)
@@ -329,6 +333,8 @@ void Enemy_09::SpecialMoveEnmey()
 			
 			animflg = true;
 			ranimflg = false;
+
+			SoundSystem::PlaySE(SE::ENEMY09_Teleprot);
 
 			before_x = x;
 			before_y = y;
@@ -375,7 +381,7 @@ void Enemy_09::SpecialMoveEnmey()
 		if (animflg == true)
 		{
 			animtimer++;
-
+			
 			if (animtimer / 1 % 15 == 14)
 			{
 				animtimer = 0;
