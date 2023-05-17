@@ -99,7 +99,8 @@ AbstractScene* TitleScene::ChangeScene()
 			return dynamic_cast<AbstractScene*> (new HelpScene());
 			break;
 		case 2: //ランキング画面
-			return dynamic_cast<AbstractScene*> (new Scene_Ranking_GameLevel());
+			sortSave.ReadRanking();		// ランキングデータの読み込み
+			return dynamic_cast<AbstractScene*> (new Scene_Ranking());
 			break;
 		case 3: //エンド画面
 			return dynamic_cast<AbstractScene*> (new EndScene());
