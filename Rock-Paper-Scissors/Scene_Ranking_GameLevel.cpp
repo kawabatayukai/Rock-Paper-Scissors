@@ -1,21 +1,15 @@
-#include "Scene_Title_GameLevel.h"
+#include "Scene_Ranking_GameLevel.h"
 #include"KeyManager.h"
 #include"Debug_Manager.h"
 #include"Scene_Title.h"
-#include"Scene_GameMain.h"
-#include"Scene_End.h"
-#include"Scene_Stage01.h"
 #include "Scene_Ranking.h"
-#include "Scene_Help.h"
 #include"GameData.h"
 #include"SoundSystem.h"
-#include"Scene_Story.h"
-#include "Scene_InputNameRanking.h"
 
-int Scene_Title_GameLevel::font_title = 0;
+int Scene_Ranking_GameLevel::font_title = 0;
 
 //コンストラクタ
-Scene_Title_GameLevel::Scene_Title_GameLevel()
+Scene_Ranking_GameLevel::Scene_Ranking_GameLevel()
 {
 	TitleImage = LoadGraph("images/JankenWorldTitle.png");
 
@@ -29,7 +23,7 @@ Scene_Title_GameLevel::Scene_Title_GameLevel()
 }
 
 //デストラクタ
-Scene_Title_GameLevel::~Scene_Title_GameLevel()
+Scene_Ranking_GameLevel::~Scene_Ranking_GameLevel()
 {
 	//フォントデータを削除
 	SoundSystem::StopBGM(BGM::TITLE);
@@ -37,7 +31,7 @@ Scene_Title_GameLevel::~Scene_Title_GameLevel()
 }
 
 //更新
-void Scene_Title_GameLevel::Update()
+void Scene_Ranking_GameLevel::Update()
 {
 	//SoundSystem::PlayBGM(BGM::TITLE);
 
@@ -62,44 +56,39 @@ void Scene_Title_GameLevel::Update()
 }
 
 //描画
-void Scene_Title_GameLevel::Draw() const
+void Scene_Ranking_GameLevel::Draw() const
 {
-	
+
 
 	DrawStringToHandle(70, 200, "ゲームモード選択選択", 0xf, font_title);
-	DrawStringToHandle(70, 350, "STANDARD", 0xf, font_title); 
+	DrawStringToHandle(70, 350, "STANDARD", 0xf, font_title);
 	DrawStringToHandle(70, 400, "EXTRA JANKEN", 0xf, font_title);
 	DrawStringToHandle(70, 500, "Bボタンで戻る", 0xf, font_title);
-	
+
 	//メニューカーソル
 	DrawTriangle(40, 355 + (T_selectnum * 50), 60, 370 + (T_selectnum * 50), 40, 385 + (T_selectnum * 50), GetColor(255, 0, 0), TRUE);
-
-	//デバッグ
-	//DrawStringToHandle(10, 650, "RT + A で選択画面(開発)", 0xf, font_title);
 }
 
 //シーンの変更
-AbstractScene* Scene_Title_GameLevel::ChangeScene()
+AbstractScene* Scene_Ranking_GameLevel::ChangeScene()
 {
-	// RT + A でセレクト画面
-	/*if (KeyManager::GetValue_RT() >= 40 && KeyManager::OnPadClicked(PAD_INPUT_A) == true)
-	{
-		return dynamic_cast<AbstractScene*> (new GameMainScene());
-		SoundSystem::StopBGM(BGM::TITLE);
-	}*/
 	//Aボタンで決定
-	/*else*/ if (KeyManager::OnPadClicked(PAD_INPUT_A) == true)
+	 if (KeyManager::OnPadClicked(PAD_INPUT_A) == true)
 	{
 		switch (T_selectnum)
 		{
 		case 0:/*通常モード*/
 			GameData::Set_DIFFICULTY(GAME_DIFFICULTY::NORMAL);
-			return dynamic_cast<AbstractScene*> (new Scene_InputNameRanking());
+
+			sortSave.ReadRanking();		// ランキングデータの読み込み
+			return dynamic_cast<AbstractScene*> (new Scene_Ranking());
 			SoundSystem::StopBGM(BGM::TITLE);
 			break;
 		case 1:/*即死モード*/
 			GameData::Set_DIFFICULTY(GAME_DIFFICULTY::HARD);
-			return dynamic_cast<AbstractScene*> (new Scene_InputNameRanking());
+
+			sortSave.ReadRanking();		// ランキングデータの読み込み
+			return dynamic_cast<AbstractScene*> (new Scene_Ranking());
 			SoundSystem::StopBGM(BGM::TITLE);
 			break;
 		default:

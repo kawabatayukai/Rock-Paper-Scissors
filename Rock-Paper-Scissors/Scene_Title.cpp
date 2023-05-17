@@ -11,6 +11,7 @@
 #include"SoundSystem.h"
 #include"Scene_Story.h"
 #include "Scene_Title_GameLevel.h"
+#include"Scene_Ranking_GameLevel.h"
 
 int TitleScene::font_title;   //フォントハンドル
 
@@ -68,8 +69,6 @@ void TitleScene::Draw() const
 	DrawStringToHandle(70, 345, "RANKING", 0xf, font_title);
 	DrawStringToHandle(70, 395, "END", 0xf, font_title);
 
-	
-
 	//メニューカーソル
 	DrawTriangle(40, 255 + (T_selectnum * 50), 60, 270 + (T_selectnum * 50), 40, 285 + (T_selectnum * 50), GetColor(255, 0, 0), TRUE);
 
@@ -99,8 +98,10 @@ AbstractScene* TitleScene::ChangeScene()
 			SoundSystem::StopBGM(BGM::TITLE);
 			break;
 		case 2: //ランキング画面
-			//sortSave.ReadRanking();		// ランキングデータの読み込み
-			return dynamic_cast<AbstractScene*> (new Scene_Ranking());
+			/*sortSave.ReadRanking();		// ランキングデータの読み込み
+			//return dynamic_cast<AbstractScene*> (new Scene_Ranking());
+			//SoundSystem::StopBGM(BGM::TITLE);*/
+			return dynamic_cast<AbstractScene*> (new Scene_Ranking_GameLevel());
 			SoundSystem::StopBGM(BGM::TITLE);
 			break;
 		case 3: //エンド画面

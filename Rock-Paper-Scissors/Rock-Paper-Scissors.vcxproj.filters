@@ -348,8 +348,8 @@
     <ClCompile Include="FPS_Controll.cpp">
       <Filter>ソース ファイル\FPSコントロール</Filter>
     </ClCompile>
-    <ClCompile Include="Janken_Star.cpp">
-      <Filter>ソース ファイル\Rock-Paper-Scissors %28RPS%29</Filter>
+    <ClCompile Include="Scene_Ranking_GameLevel.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -566,8 +566,8 @@
     <ClInclude Include="FPS_Controll.h">
       <Filter>ソース ファイル\FPSコントロール</Filter>
     </ClInclude>
-    <ClInclude Include="Janken_Star.h">
-      <Filter>ソース ファイル\Rock-Paper-Scissors %28RPS%29</Filter>
+    <ClInclude Include="Scene_Ranking_GameLevel.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
