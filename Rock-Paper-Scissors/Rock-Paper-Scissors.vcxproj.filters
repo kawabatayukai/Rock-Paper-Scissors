@@ -91,6 +91,9 @@
     <Filter Include="ソース ファイル\GameMainScene\Stage_03">
       <UniqueIdentifier>{541f08c4-6dfa-4a35-a86b-63667d913571}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\GameMainScene\Stage_09">
+      <UniqueIdentifier>{7ef79df2-836f-4819-ae65-ab302c52ec6a}</UniqueIdentifier>
+    </Filter>
     <Filter Include="ソース ファイル\Sound">
       <UniqueIdentifier>{305c3d51-5374-4ef5-b4dc-53c801fe0160}</UniqueIdentifier>
     </Filter>
@@ -136,8 +139,8 @@
     <Filter Include="ソース ファイル\FPSコントロール">
       <UniqueIdentifier>{7bc01875-e7e8-4e5d-a0cd-bb5a0511e458}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\GameMainScene\Stage_09">
-      <UniqueIdentifier>{7ef79df2-836f-4819-ae65-ab302c52ec6a}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\Scene\タイトル\ランキングゲームモード選択画面">
+      <UniqueIdentifier>{f2530f34-e4e1-4317-8738-0db4abc8121c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -348,8 +351,11 @@
     <ClCompile Include="FPS_Controll.cpp">
       <Filter>ソース ファイル\FPSコントロール</Filter>
     </ClCompile>
-    <ClCompile Include="Scene_Ranking_GameLevel.cpp">
+    <ClCompile Include="Janken_Star.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_Ranking_GameLevel.cpp">
+      <Filter>ソース ファイル\Scene\タイトル\ランキングゲームモード選択画面</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -566,8 +572,11 @@
     <ClInclude Include="FPS_Controll.h">
       <Filter>ソース ファイル\FPSコントロール</Filter>
     </ClInclude>
-    <ClInclude Include="Scene_Ranking_GameLevel.h">
+    <ClInclude Include="Janken_Star.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_Ranking_GameLevel.h">
+      <Filter>ソース ファイル\Scene\タイトル\ランキングゲームモード選択画面</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

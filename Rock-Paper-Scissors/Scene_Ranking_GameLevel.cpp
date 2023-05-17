@@ -59,9 +59,9 @@ void Scene_Ranking_GameLevel::Draw() const
 {
 
 
-	DrawStringToHandle(70, 200, "ゲームモード選択選択", 0xf, font_title);
-	DrawStringToHandle(70, 350, "STANDARD", 0xf, font_title);
-	DrawStringToHandle(70, 400, "EXTRA JANKEN", 0xf, font_title);
+	//DrawStringToHandle(70, 200, "ゲームモード選択選択", 0xf, font_title);
+	DrawStringToHandle(70, 350, "STANDARD RANKING", 0xf, font_title);
+	DrawStringToHandle(70, 400, "EXTRA JANKEN RANKING", 0xf, font_title);
 	DrawStringToHandle(70, 500, "Bボタンで戻る", 0xf, font_title);
 
 	//メニューカーソル
