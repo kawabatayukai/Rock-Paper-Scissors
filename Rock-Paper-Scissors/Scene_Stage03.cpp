@@ -496,7 +496,7 @@ void Scene_Stage03::Draw() const
 			float p_x = obj_player->GetX();
 			float p_y = obj_player->GetY();
 
-			DrawString(p_x, p_y - 80, "–hŒä—ÍUPª", 0xfff);
+			DrawString(p_x, p_y - 55, "–hŒä—ÍUPª", 0xfff);
 		}
 		else {
 			int Player_Janwin = 0;
