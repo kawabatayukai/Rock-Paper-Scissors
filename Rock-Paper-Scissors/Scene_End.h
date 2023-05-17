@@ -16,7 +16,7 @@ public:
 	AbstractScene* ChangeScene() override;   //シーンの変更
 
 private:
-	int framecount;  //フレーム
+	int framecount ;  //フレーム
 	int GameState = 0;
 	int WaitTime = 0;
 	int PosY;
