@@ -127,6 +127,12 @@ void Stage_Base::DrawUI_ON_Enemy(const EnemyBase* enemy) const
 		bar_color = 0x0000ff;    //blue
 		break;
 
+	case Jan_Type::NONE:
+
+		index = 3;
+		bar_color = 0x8B52A1;    //blue
+		break;
+
 	default:
 		break;
 	}
