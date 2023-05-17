@@ -6,6 +6,7 @@
 #include"Enemy_Cannon.h"
 #include"GameData.h"
 #include"Item_stage08.h"
+#include"SoundSystem.h"
 #define PI    3.1415926535897932384626433832795f
 
 //デバッグモード
@@ -84,7 +85,7 @@ Scene_Stage08::Scene_Stage08(const Player* player) : damage(5)
 
 
 	//BGMロード
-	bgm = LoadSoundMem("");
+	bgm = LoadSoundMem("Sound/Stege8/technophobia.mp3");
 }
 
 //デストラクタ
@@ -494,10 +495,13 @@ AbstractScene* Scene_Stage08::ChangeScene()
 void Scene_Stage08::AfterJanken_WIN()
 {
 	obj_player->SetX(100);
+	damage += 5;
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）
 void Scene_Stage08::AfterJanken_LOSE()
 {
 	obj_player->SetX(100);
+	obj_enemy->MAX();
+	
 }

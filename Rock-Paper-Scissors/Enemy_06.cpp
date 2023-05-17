@@ -108,7 +108,7 @@ void Enemy_06::Update()
 		}
 
 		//500ƒtƒŒ[ƒ€‚²‚Æ‚ÉuŠÔˆÚ“®ÚGƒtƒ‰ƒO‚ðtrue‚É‚·‚é
-		if (TeleportTime == 500 && TeleportFlg == false && (player_x - 230) > 50 && (player_x + 230) < 1230 && speed != 8.0f && hp > 0)
+		if (TeleportTime == 500 && TeleportFlg == false && (player_x - 230) > 100 && (player_x + 230) < 1180 && speed != 8.0f && hp > 0)
 		{
 			TeleportFlg = true;
 			if (attack_pattern != 0 && hp <= 70)

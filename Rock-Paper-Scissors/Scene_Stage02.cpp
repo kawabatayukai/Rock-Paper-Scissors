@@ -54,11 +54,7 @@ Scene_Stage02::~Scene_Stage02()
 //更新
 void Scene_Stage02::Update()
 {
-	if (CheckSoundMem(STAGE02_BGM) == 0) {
-		//メニュー選択中のSE
-		ChangeVolumeSoundMem(115, STAGE02_BGM);
-		
-	}
+	
 	//BGM再生
 	if (CheckSoundMem(bgm) == 0) PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
 	//PlaySoundMem(stage2_BGM, DX_PLAYTYPE_LOOP, FALSE);

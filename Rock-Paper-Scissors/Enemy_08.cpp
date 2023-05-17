@@ -7,7 +7,7 @@
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_08::Enemy_08(float x, float y, Jan_Type type) : EnemyBase(x, y, 90.0f, 90.0f, type)
 {	
-	speed = 7.0f;
+	speed = 10.0f;
 	dir = 1;
 	hp = 100;
 
@@ -64,7 +64,7 @@ void Enemy_08::Update()
 
 	if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
 	{
-		g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+		g_add = -41.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 		land_flg = false;  //地面についていない
 	}
 
@@ -131,4 +131,10 @@ void Enemy_08::Update_Jangeki()
 		//生成
 		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
 	}
+}
+
+void Enemy_08::MAX()
+{
+
+	hp = 100;
 }
