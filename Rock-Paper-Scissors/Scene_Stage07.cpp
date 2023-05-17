@@ -53,7 +53,7 @@ Scene_Stage07::Scene_Stage07(const Player* player)
 	image_spotlight = LoadGraph("images/stage07/soptlight.png");
 
 	//BGMロード
-	bgm = LoadSoundMem("Sound/stage07/maou_game_battle29.mp3");
+	bgm = LoadSoundMem("Sound/stage07/RPG_Battle_04.mp3");
 }
 
 //デストラクタ
