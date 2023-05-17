@@ -875,7 +875,7 @@ void Enemy_10::Update_Jangeki()
 
 			/*********************** «« ¶¬( ’†S‰~Œ^ŠgU’e ) «« ***********************/
 
-				if (frame_count % 2000 == 0)
+				if (frame_count % 200 == 0)
 				{
 					Jan_360degrees(jan_count, radius, speed, type); //360“x”­Ë
 				}
@@ -902,7 +902,7 @@ void Enemy_10::Update_Jangeki()
 
 				/*********************** «« ¶¬( ATƒtƒB[ƒ‹ƒh ) «« ***********************/
 
-				if (frame_count % 1000 == 0 && jan_count == 0)Jan_360Guard(jan_count, radius, type);
+				if (frame_count % 500 == 0)Jan_360Guard(jan_count, radius, type);
 
 				/************************************************************************/
 				break;
