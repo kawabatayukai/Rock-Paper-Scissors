@@ -48,19 +48,23 @@ Scene_Stage01::Scene_Stage01(const Player* player)
 
 	//画像読み込み
 	image_back = LoadGraph("images/stage01/Tutorial_Back.png");
+
+	//BGMロード
+	bgm = LoadSoundMem("Sound/stage01/maou_game_battle37.mp3");
 }
 
 //デストラクタ
 Scene_Stage01::~Scene_Stage01()
 {
 	delete obj_enemy;
+	DeleteSoundMem(bgm);
 }
 
 //更新
 void Scene_Stage01::Update()
 {
 	//BGM再生
-	SoundSystem::PlayBGM(BGM::STAGE01_BGM);
+	if (CheckSoundMem(bgm) == 0) PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
 
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
@@ -304,8 +308,6 @@ AbstractScene* Scene_Stage01::ChangeScene()
 	//敵のHPが0以下
 	if (IsEnd_DeathEnemy() == true)
 	{
-		//BGM停止
-		SoundSystem::StopBGM(BGM::STAGE01_BGM);
 
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(2));
@@ -318,9 +320,6 @@ AbstractScene* Scene_Stage01::ChangeScene()
 	//プレイヤーのHPが0以下
 	if (obj_player->IsDeathPlayer() == true)
 	{
-		//BGM停止
-		SoundSystem::StopBGM(BGM::STAGE01_BGM);
-
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(1));
 	}

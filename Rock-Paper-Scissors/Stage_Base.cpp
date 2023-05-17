@@ -55,8 +55,7 @@ Stage_Base::Stage_Base() : blackout_time(0), Prev_EnemyType(Jan_Type::NONE), obj
 
 Stage_Base::~Stage_Base()
 {
-	//ƒTƒEƒ“ƒh‚ğíœ
-	Sound_Player::DeletePlayerSound();
+
 }
 
 //UI•`‰æ

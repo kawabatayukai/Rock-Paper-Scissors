@@ -26,7 +26,6 @@ Scene_Ranking_GameLevel::Scene_Ranking_GameLevel()
 Scene_Ranking_GameLevel::~Scene_Ranking_GameLevel()
 {
 	//フォントデータを削除
-	SoundSystem::StopBGM(BGM::TITLE);
 	SetBackgroundColor(0, 0, 0);
 }
 
@@ -82,14 +81,12 @@ AbstractScene* Scene_Ranking_GameLevel::ChangeScene()
 
 			sortSave.ReadRanking();		// ランキングデータの読み込み
 			return dynamic_cast<AbstractScene*> (new Scene_Ranking());
-			SoundSystem::StopBGM(BGM::TITLE);
 			break;
 		case 1:/*即死モード*/
 			GameData::Set_DIFFICULTY(GAME_DIFFICULTY::HARD);
 
 			sortSave.ReadRanking();		// ランキングデータの読み込み
 			return dynamic_cast<AbstractScene*> (new Scene_Ranking());
-			SoundSystem::StopBGM(BGM::TITLE);
 			break;
 		default:
 			break;
