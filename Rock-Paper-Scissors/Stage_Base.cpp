@@ -232,6 +232,7 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 	{
 		//じゃんけん中
 		obj_janken->Update();
+		obj_janken->Stars_Update();
 
 		// 結果が _ERROR(じゃんけん中)でないとき、じゃんけん終了
 		if (obj_janken->GetResult() != Jan_Result::_ERROR)
@@ -241,6 +242,7 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 	}
 	else if (j_state == Jan_State::AFTER)
 	{
+		obj_janken->Stars_Update();
 		//Aボタンが押されたとき 
 		if (KeyManager::OnPadClicked(PAD_INPUT_A) == true)
 		{
