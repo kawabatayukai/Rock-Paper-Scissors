@@ -6,6 +6,7 @@
 #include"Enemy_Cannon.h"
 #include"GameData.h"
 #include"Item_stage08.h"
+#include"SoundSystem.h"
 #define PI    3.1415926535897932384626433832795f
 
 //デバッグモード
@@ -91,6 +92,9 @@ Scene_Stage08::~Scene_Stage08()
 //更新
 void Scene_Stage08::Update()
 {
+	//BGM再生
+	SoundSystem::PlayBGM(BGM::STAGE08_BGM);
+
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
@@ -466,6 +470,9 @@ AbstractScene* Scene_Stage08::ChangeScene()
 	//敵のHPが0以下
 	if (IsEnd_DeathEnemy() == true)
 	{
+		//BGM停止
+		SoundSystem::StopBGM(BGM::STAGE05_BGM);
+
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(9));
 	}

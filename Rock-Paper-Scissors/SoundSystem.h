@@ -43,7 +43,7 @@ enum class SE
 
 
 	/*ステージ8*/
-
+	
 
 	/*ステージ9*/
 	ENEMY09_Teleprot,
@@ -69,6 +69,7 @@ enum class BGM
 	STAGE05_BGM,
 	STAGE06_BGM,
 	STAGE07_BGM,
+	STAGE08_BGM,
 	STAGE09_BGM,
 	ENEMY_10_Form2BGM,
 	ENEMY_10_Marry,
