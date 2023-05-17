@@ -99,7 +99,7 @@ AbstractScene* TitleScene::ChangeScene()
 			SoundSystem::StopBGM(BGM::TITLE);
 			break;
 		case 2: //ランキング画面
-			//sortSave.ReadRanking();		// ランキングデータの読み込み
+			sortSave.ReadRanking();		// ランキングデータの読み込み
 			return dynamic_cast<AbstractScene*> (new Scene_Ranking());
 			SoundSystem::StopBGM(BGM::TITLE);
 			break;

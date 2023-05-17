@@ -8,6 +8,9 @@
 //コンストラクタ
 Scne_TitleInterval::Scne_TitleInterval()
 {
+	band[0] = LoadGraph("images/ロール1.png");
+	band[1] = LoadGraph("images/ロール2.png");
+	band[2] = LoadGraph("images/ロール3.png");
 }
 
 //デストラクタ

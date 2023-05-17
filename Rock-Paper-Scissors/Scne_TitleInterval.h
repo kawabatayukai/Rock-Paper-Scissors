@@ -16,6 +16,6 @@ public:
 	AbstractScene* ChangeScene() override;
 
 private:
-
+	int band[3];
 };
 
