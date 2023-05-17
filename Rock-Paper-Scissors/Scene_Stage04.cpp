@@ -26,7 +26,7 @@ Scene_Stage04::Scene_Stage04(const Player* player)
 	else
 	{
 		//ƒvƒŒƒCƒ„[‚ğ¶¬
-		obj_player = new Player(640, 360);
+		obj_player = new Player(260, 670);
 	}
 
 	//“G‚ğ¶¬
@@ -320,7 +320,7 @@ void Scene_Stage04::AfterJanken_WIN()
 {
 	obj_player->Recover_HP(50);
 	obj_player->SetX(260);
-	obj_player->SetY(620);
+	obj_player->SetY(670);
 	obj_enemy->SetX(1180);
 }
 
@@ -329,6 +329,6 @@ void Scene_Stage04::AfterJanken_LOSE()
 {
 	obj_enemy->Special_Action();
 	obj_player->SetX(260);
-	obj_player->SetY(620);
+	obj_player->SetY(670);
 	obj_enemy->SetX(1180);
 }
