@@ -34,7 +34,8 @@ void SortSave::SortRanking(void)
 	// 得点が同じ場合は、同じ順位とする
 	// 同順位があった場合の次の順位はデータ個数が加算された順位とする
 	for (i = 0; i < RANKING_DATA - 1; i++) {
-		for (j = i + 1; j < RANKING_DATA; j++) {
+		for (j = i + 1; j < RANKING_DATA; j++) 
+		{
 			if (g_Ranking[i].score > g_Ranking[j].score)
 			{
 				g_Ranking[j].no++;
@@ -89,7 +90,7 @@ int  SortSave::ReadRanking(void)
 	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::NORMAL)
 	{
 		//ファイルオープン
-		if ((fopen_s(&fp, "dat/rankingdata_HARD.txt", "r")) != 0)
+		if ((fopen_s(&fp, "dat/rankingdata.txt", "r")) != 0)
 		{
 			//エラー処理
 			printf("Ranking Data Error\n");

@@ -38,8 +38,10 @@ void Scene_Ranking::Draw() const
 {
 	//背景
 	DrawGraph(0, 0, backimage, FALSE);
-	//ランキング一覧を表示
+
 	DrawStringToHandle(480, 40, "ランキング", 0xffffff, ranking_font);
+
+	/*ランキング一覧を表示*/
 	SetFontSize(30);
 	for (int i = 0; i < 10; i++)
 	{
@@ -49,14 +51,61 @@ void Scene_Ranking::Draw() const
 			//DrawFormatString(0, 170 + i * 50, 0xFFFFFF, "%2d位   %10s  スコア：%10d  総合時間： %10d分%10d秒 NORMAL", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score, GameData::Get_Total_Time() / 3600, (GameData::Get_Total_Time() % 3600) / 60);
 			DrawFormatString(0, 170 + i * 50, 0xFFFFFF, "%2d位   %10s  スコア：%10d  総合時間： %10d分%10d秒 NORMAL", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score, sortSave.getRankingData(i).timeMin, sortSave.getRankingData(i).timeSec);
 		}
-
 		/*即死モード*/
 		if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
-		{                                                                                                                                                                                                                                                                    
+		{
 			//DrawFormatString(0, 170 + i * 50, 0xFFFFFF, "%2d位   %10s  スコア：%10d  総合時間： %10d分%10d秒 EXTRA", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score, GameData::Get_Total_Time() / 3600, (GameData::Get_Total_Time() % 3600) / 60);
 			DrawFormatString(0, 170 + i * 50, 0xFFFFFF, "%2d位   %10s  スコア：%10d  総合時間： %10d分%10d秒 EXTRA", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score, sortSave.getRankingData(i).timeMin, sortSave.getRankingData(i).timeSec);
 		}
 	}
+
+
+	//static int diffi = 1;
+	//switch (diffi)
+	//{
+	//case 1: /*通常モード*/
+	//	if (KeyManager::OnPadClicked(PAD_INPUT_B) == false)
+	//	{
+	//		SetFontSize(30);
+	//		for (int i = 0; i < 10; i++)
+	//		{
+	//			if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::NORMAL)
+	//			{
+	//				//DrawFormatString(0, 170 + i * 50, 0xFFFFFF, "%2d位   %10s  スコア：%10d  総合時間： %10d分%10d秒 NORMAL", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score, GameData::Get_Total_Time() / 3600, (GameData::Get_Total_Time() % 3600) / 60);
+	//				DrawFormatString(0, 170 + i * 50, 0xFFFFFF, "%2d位   %10s  スコア：%10d  総合時間： %10d分%10d秒 NORMAL", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score, sortSave.getRankingData(i).timeMin, sortSave.getRankingData(i).timeSec);
+	//			}
+	//		}
+	//	}
+	//	else
+	//	{
+	//		GameData::Set_DIFFICULTY(GAME_DIFFICULTY::HARD);
+	//		diffi = 2;
+	//	}
+	//	break;
+	//	/*即死モード*/
+	//case 2:
+	//	if (KeyManager::OnPadClicked(PAD_INPUT_B) == false)
+	//	{
+	//		SetFontSize(30);
+	//		for (int i = 0; i < 10; i++)
+	//		{
+	//			if (KeyManager::OnPadClicked(PAD_INPUT_B))
+	//			{
+	//				if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
+	//				{
+	//					//DrawFormatString(0, 170 + i * 50, 0xFFFFFF, "%2d位   %10s  スコア：%10d  総合時間： %10d分%10d秒 EXTRA", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score, GameData::Get_Total_Time() / 3600, (GameData::Get_Total_Time() % 3600) / 60);
+	//					DrawFormatString(0, 170 + i * 50, 0xFFFFFF, "%2d位   %10s  スコア：%10d  総合時間： %10d分%10d秒 EXTRA", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score, sortSave.getRankingData(i).timeMin, sortSave.getRankingData(i).timeSec);
+	//				}
+	//			}
+	//		}
+	//	}
+	//	else
+	//	{
+	//		GameData::Set_DIFFICULTY(GAME_DIFFICULTY::NORMAL);
+	//		diffi = 2;
+	//	}
+	//	break;
+	//}
 
 	SetFontSize(100);
 	//文字の表示(点滅)
