@@ -4,10 +4,9 @@
 #include"Scene_Title.h"
 
 //コンストラクタ
-Scne_TitleInterval::Scne_TitleInterval() : frame(0), speed(10)
+Scne_TitleInterval::Scne_TitleInterval() : frame(0), speed(16)
 {
 	image_high = LoadGraph("images/title_high.png");
-	image_middle = LoadGraph("images/title_middle.png");
 	image_low = LoadGraph("images/title_low.png");
 }
 
@@ -20,7 +19,7 @@ Scne_TitleInterval::~Scne_TitleInterval()
 void Scne_TitleInterval::Update()
 {
 	frame++;
-	if (frame > 128) frame = 128;
+	if (frame > 80) frame = 80;
 }
 
 //描画
@@ -36,7 +35,7 @@ void Scne_TitleInterval::Draw() const
 //シーンの変更
 AbstractScene* Scne_TitleInterval::ChangeScene()
 {
-	if (frame == 128)
+	if (frame == 80)
 		return dynamic_cast<AbstractScene*> (new TitleScene());
 	//更新なし
 	return this;

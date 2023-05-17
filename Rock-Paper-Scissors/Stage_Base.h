@@ -53,6 +53,7 @@ public:
 	//死亡演出終了チェック
 	bool IsEnd_DeathEnemy();
 	void GetStage09IsClear(bool isclear);
+	bool GetIsHardWin() const { return isHard_Win; }
 
 	//じゃんけん描画
 	void Draw_Janken() const;
@@ -76,6 +77,7 @@ private:
 	static int font;         //結果(WIN or LOSE or ONEMORE) 用フォント 
 
 	Jan_State j_state = Jan_State::BEFORE;    //じゃんけんの状態
+	Jan_Result bf_result;                     //あいこの時
 
 	unsigned short blackout_time;             //暗転時間（接触直後演出）
 
@@ -94,5 +96,6 @@ private:
 
 	Enemy_Death* obj_death;                   //死亡時に生成する
 	bool stage09_isclear = false;
+	bool isHard_Win = false;
 };
 

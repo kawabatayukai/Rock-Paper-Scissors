@@ -43,15 +43,15 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	obj_floor[2] = new Floor("images/stage03/GroundImagesTate.png", 1260, -100, 20, 1260);     //壁（右）, GetColor(240, 230, 140)
 
 	//右から順に
-	obj_floor[3] = new Floor("images/stage03/BlockImages.png", 1130, 340, 95, 1);//足場1//130,GetColor(193, 107, 68)
-	obj_floor[4] = new Floor("images/stage03/BlockImages.png", 1130, 500, 95, 1);//足場2//130,	GetColor(193, 107, 68)
-	obj_floor[5] = new Floor("images/stage03/BlockImages.png", 920, 205, 95, 1);//足場3, GetColor(193, 107, 68)
-	obj_floor[6] = new Floor("images/stage03/BlockImages.png", 770, 150, 95, 1);//足場4//130, GetColor(193, 107, 68)
-	obj_floor[7] = new Floor("images/stage03/BlockImages.png", 575, 205, 95, 1);//足場5//100, GetColor(193, 107, 68)
-	obj_floor[8] = new Floor("images/stage03/BlockImages.png", 390, 150, 95, 1);//足場6//130, GetColor(193, 107, 68)
-	obj_floor[9] = new Floor("images/stage03/BlockImages.png", 240, 205, 95, 1);//足場7//130, GetColor(193, 107, 68)
-	obj_floor[10] = new Floor("images/stage03/BlockImages.png", 60, 340, 95, 1);//足場8//100, GetColor(193, 107, 68)
-	obj_floor[11] = new Floor("images/stage03/BlockImages.png", 60, 500, 95, 1);//足場9//130, GetColor(193, 107, 68)
+	obj_floor[3] = new Floor("images/stage03/BlockImages.png", 1130, 340, 95, 30);//足場1//130,GetColor(193, 107, 68)
+	obj_floor[4] = new Floor("images/stage03/BlockImages.png", 1130, 500, 95, 30);//足場2//130,	GetColor(193, 107, 68)
+	obj_floor[5] = new Floor("images/stage03/BlockImages.png", 920, 205, 95, 30);//足場3, GetColor(193, 107, 68)
+	obj_floor[6] = new Floor("images/stage03/BlockImages.png", 770, 150, 95, 30);//足場4//130, GetColor(193, 107, 68)
+	obj_floor[7] = new Floor("images/stage03/BlockImages.png", 575, 205, 95, 30);//足場5//100, GetColor(193, 107, 68)
+	obj_floor[8] = new Floor("images/stage03/BlockImages.png", 390, 150, 95, 30);//足場6//130, GetColor(193, 107, 68)
+	obj_floor[9] = new Floor("images/stage03/BlockImages.png", 240, 205, 95, 30);//足場7//130, GetColor(193, 107, 68)
+	obj_floor[10] = new Floor("images/stage03/BlockImages.png", 60, 340, 95, 30);//足場8//100, GetColor(193, 107, 68)
+	obj_floor[11] = new Floor("images/stage03/BlockImages.png", 60, 500, 95, 30);//足場9//130, GetColor(193, 107, 68)
 
 
 	
@@ -62,7 +62,7 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	//obj_floor[16] = new Floor("images/stage03/BlockImages.png", 210, 405, 95, 10);//足場7//130, GetColor(193, 107, 68)
 
 	//制限時間をセット
-	GameData::Set_TimeLimit(10810); //3分　//2分 ←　7200 % 3600
+	GameData::Set_TimeLimit(10860); //3分　//2分 ←　7200 % 3600
 
 	//BGMロード
 	bgm = LoadSoundMem("Sound/st03/St03BGM.wav");
@@ -232,7 +232,7 @@ void Scene_Stage03::Update()
 						SoundSystem::PlaySE(SE::ENEMY_SLIGHTLYBROKEN);
 						
 					}
-					else if (obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 41) {
+					else if (obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 46) {
 
 			
 						if(obj_enemy->GetWaitTime() > 0 ||  obj_enemy->GetWaitTime() < 200){
@@ -245,7 +245,7 @@ void Scene_Stage03::Update()
 
 						SoundSystem::PlaySE(SE::ENEMY_SHIELDBROKEN);
 					}
-					else if (obj_enemy->GetHP() <= 40) {
+					else if (obj_enemy->GetHP() <= 45) {
 
 
 						if (obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200) {
@@ -410,8 +410,8 @@ void Scene_Stage03::Update()
 		//じゃん撃との当たり判定
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
-			//エネミーのHPが40以下の場合25ダメージ食らう
-			if (obj_enemy->GetHP() <= 40) {
+			//エネミーのHPが45以下の場合25ダメージ食らう
+			if (obj_enemy->GetHP() <= 45) {
 
 				//半径が50.0fの場合のダメージ
 				float radius = 50.0f;
@@ -421,9 +421,9 @@ void Scene_Stage03::Update()
 					obj_player->ReceiveDamage(25 - PlayerCutDamege) ;
 				}
 			}
-			else if (obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 41) {
+			else if (obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 45) {
 
-				//半径が50.0fの場合のダメージ
+				//半径が25.5fの場合のダメージ
 				float radius = 25.5f;
 
 				if (radius >= 25.5f) {
@@ -498,7 +498,7 @@ void Scene_Stage03::Draw() const
 			float p_x = obj_player->GetX();
 			float p_y = obj_player->GetY();
 
-			DrawString(p_x, p_y - 80, "防御力UP↑", 0xfff);
+			DrawString(p_x, p_y - 55, "防御力UP↑", 0xfff);
 		}
 		else {
 			int Player_Janwin = 0;
@@ -625,13 +625,13 @@ void Scene_Stage03::AfterJanken_LOSE()
 		EnemyCutDamege = 5;
 
 	}
-	else if (obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 41) {
+	else if (obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 46) {
 
 		//じゃんけん敗北時
 		EnemyCutDamege = 6;
 
 	}
-	else if (obj_enemy->GetHP() <= 40) {
+	else if (obj_enemy->GetHP() <= 45) {
 
 
 		//じゃんけん敗北時
@@ -646,6 +646,7 @@ void Scene_Stage03::AfterJanken_LOSE()
 
 	}
 
+	//Xが200に移動
 	obj_player->SetX(200);
 	
 

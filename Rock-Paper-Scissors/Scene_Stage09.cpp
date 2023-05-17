@@ -204,7 +204,7 @@ void Scene_Stage09::Update()
 						obj_enemy->Ranimflg = true;
 				}
 			}
-			obj_enemy->HP();
+			obj_enemy->HP(GetIsHardWin());
 		}
 	}
 	
@@ -410,15 +410,24 @@ AbstractScene* Scene_Stage09::ChangeScene()
 //じゃんけん終了後の挙動（プレイヤー勝ち）
 void Scene_Stage09::AfterJanken_WIN()
 {
-	
-	if (obj_enemy->GetHP() == 1)
+	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
 	{
 		clearFlg = true;
+		GetStage09IsClear(true);
+	}
+	else
+	{
+
+		if (obj_enemy->GetHP() == 1)
+		{
+			clearFlg = true;
+		}
 	}
 	obj_player->SetX(100);
 	obj_enemy->SetX(1110);
 	obj_enemy->frameDown();
 	obj_enemy->Tflg();
+
 }
 //じゃんけん終了後の挙動（プレイヤー負け）
 void Scene_Stage09::AfterJanken_LOSE()
