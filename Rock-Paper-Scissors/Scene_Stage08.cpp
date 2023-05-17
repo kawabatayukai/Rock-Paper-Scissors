@@ -85,7 +85,7 @@ Scene_Stage08::Scene_Stage08(const Player* player) : damage(5)
 
 
 	//BGMロード
-	bgm = LoadSoundMem("");
+	bgm = LoadSoundMem("Sound/Stege8/technophobia.mp3");
 }
 
 //デストラクタ
