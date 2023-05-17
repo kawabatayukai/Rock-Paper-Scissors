@@ -25,8 +25,8 @@ void Scne_TitleInterval::Update()
 //描画
 void Scne_TitleInterval::Draw() const
 {
-	DrawString(0, 360, "Press A", 0xffffff);
-	DrawString(0, 400, "凝ったタイトル", 0xffffff);
+	//DrawString(0, 360, "Press A", 0xffffff);
+	//DrawString(0, 400, "凝ったタイトル", 0xffffff);
 
 	DrawGraph(-1280 + (frame * speed), 0, image_high,TRUE);
 	DrawGraph(1280 - (frame * speed), (720 - 250), image_low, TRUE);
