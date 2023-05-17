@@ -12,7 +12,7 @@ Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = -1;                 //-1なら左向き  +1なら右向き
 	hp = 100;                 //HPは100
 
-	old_type = static_cast<Jan_Type>(2);  //パー属性で初期化
+	old_type = static_cast<Jan_Type>(1);  //チョキ属性で初期化
 
 	//画像読み込み
 	images[0]  = LoadGraph("images/stage06/赤NINJA_通常.png");     //グー属性

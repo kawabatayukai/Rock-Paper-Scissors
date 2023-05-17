@@ -5,6 +5,7 @@
 #include "Scene_GameClear.h"
 #include"Scene_Stage10.h"
 #include"GameData.h"
+#include "SoundSystem.h"
 
 
 //デバッグモード
@@ -66,6 +67,9 @@ Scene_Stage09::~Scene_Stage09()
 //更新
 void Scene_Stage09::Update()
 {
+
+	SoundSystem::PlayBGM(BGM::STAGE09_BGM);
+
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
@@ -84,10 +88,10 @@ void Scene_Stage09::Update()
 
 	//接触じゃんけん処理
 	//特殊行動中とアニメーション再生中はなし
-	if (obj_enemy->Spflg == false && obj_enemy->animflg == false)
-	{
-		Touch_Janken(obj_enemy, this, 9);
-	}
+	bool no_hit = false;                      //当たり判定を無効化
+	if (obj_enemy->Spflg == true || obj_enemy->animflg == true)  no_hit = true;
+
+	Touch_Janken(obj_enemy, this, 9, no_hit);
 	Effect_Update_HitJangeki(obj_enemy, obj_enemy->reflection);
 
 
@@ -383,12 +387,14 @@ AbstractScene* Scene_Stage09::ChangeScene()
 	}
 	if (IsEnd_DeathEnemy() == true)
 	{
+		SoundSystem::StopBGM(BGM::STAGE09_BGM);
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(10));
 	}
 	//プレイヤーのHPが0以下
 	if (obj_player->IsDeathPlayer() == true)
 	{
+		SoundSystem::StopBGM(BGM::STAGE09_BGM);
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(9));
 	}
@@ -419,7 +425,7 @@ void Scene_Stage09::AfterJanken_LOSE()
 	{
 		obj_enemy->SetHP(-hp);
 		hp = hp / 2;
-		if (GameData::Get_Each_Time_Sec() <= 3600)
+		if (GameData::Get_Each_Time() <= 3600)
 			GameData::Set_TimeLimit(5400);
 	}
 	
@@ -427,5 +433,4 @@ void Scene_Stage09::AfterJanken_LOSE()
 	obj_enemy->SetX(1110);
 	obj_enemy->frameUP();
 	obj_enemy->Spflg = true;
-
 }

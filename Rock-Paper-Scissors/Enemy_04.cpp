@@ -86,20 +86,20 @@ void Enemy_04::Update()
 	//特殊行動時や残りHPによってスピードが変わる
 	if (specialFlg == true)
 	{
-		speed = 20.0f;
+		speed = 25.0f;
 		specialTime++;
 	}
 	else if (hp <= 50)
 	{
-		speed = 2.8f;
+		speed = 3.0f;
 	}
 	else
 	{
-		speed = 1.5f;
+		speed = 2.0f;
 	}
 
 	//少しずつHP回復
-	if (hp < 100 && frame_count % 30 == 0) hp++;
+	if (hp < 100 && frame_count % 20 == 0) hp++;
 
 	//特殊行動時間(4秒間)
 	if (specialTime >= 240)
@@ -228,7 +228,7 @@ void Enemy_04::Update_Jangeki()
 		if (specialFlg == false)
 		{
 			//プレイヤーの角度へ発射するジャン撃生成
-			if (frame_count % 70 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+			if (frame_count % 60 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 		}
 		else if (specialFlg == true)
 		{
