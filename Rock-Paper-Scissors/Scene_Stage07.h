@@ -36,5 +36,6 @@ private:
 private:      //画像など
 	int image_back;        //背景
 	int image_spotlight;   //スポットライト
+	int bgm;
 };
 

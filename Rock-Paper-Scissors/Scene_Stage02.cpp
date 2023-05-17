@@ -13,7 +13,7 @@
 Scene_Stage02::Scene_Stage02(const Player* player)
 {
 	//制限時間をセット
-	GameData::Set_TimeLimit(6000);
+	GameData::Set_TimeLimit(10800);
 
 	//プレイヤー情報が渡されていれば
 	if (player != nullptr)
@@ -41,13 +41,14 @@ Scene_Stage02::Scene_Stage02(const Player* player)
 
 	image_back = LoadGraph("images/stage02/mizuumi01.png");
 
-	//BGMの読み込み
-	//stage2_BGM = LoadSoundMem("Sound/Stage02BGM.mp3");
+	//BGMロード
+	bgm = LoadSoundMem("Sound/Stage02BGM.mp3");
 }
 
 //デストラクタ
 Scene_Stage02::~Scene_Stage02()
 {
+	StopSoundMem(bgm);
 }
 
 //更新
@@ -59,7 +60,7 @@ void Scene_Stage02::Update()
 		
 	}
 	//BGM再生
-	SoundSystem::PlayBGM(BGM::STAGE02_BGM);
+	if (CheckSoundMem(bgm) == 0) PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
 	//PlaySoundMem(stage2_BGM, DX_PLAYTYPE_LOOP, FALSE);
 	//時間をカウント
 	GameData::Time_Update();
@@ -284,10 +285,7 @@ AbstractScene* Scene_Stage02::ChangeScene()
 	//敵のHPが0以下
 	if (IsEnd_DeathEnemy() == true)
 	{
-		//BGM停止
-		//StopSoundMem(stage2_BGM);
-		//BGM再生
-		SoundSystem::StopBGM(BGM::STAGE02_BGM);
+		
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(3));
 	}
@@ -295,9 +293,7 @@ AbstractScene* Scene_Stage02::ChangeScene()
 	//プレイヤーのHPが0以下
 	if (obj_player->IsDeathPlayer() == true)
 	{
-		//BGM停止
-		//StopSoundMem(stage2_BGM);
-		SoundSystem::StopBGM(BGM::STAGE02_BGM);
+		
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(2));
 		

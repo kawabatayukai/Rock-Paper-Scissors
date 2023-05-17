@@ -55,10 +55,11 @@ private:
 	//列挙体ステージ3
 	enum class ENEMY_STATE
 	{
-		STOP,
-		LEFTMOVE,
-		RIGHTMOVE,
-		JUMP,
+		//画像用
+		STOP,//止まるとき
+		LEFTMOVE,//左に動くとき
+		RIGHTMOVE,//右に動くとき
+		JUMP,//ジャンプ時
 	};
 	ENEMY_STATE enemy_state = ENEMY_STATE::STOP;
 	
@@ -90,7 +91,7 @@ private:
 	int Ecurrentindex_st03 = 0;//エネミーアニメーションの配列
 	
 	int se_run;    //走るse
-	int se_walk;   //歩く
+	int se_walk;   //歩くse
 	
 };
 

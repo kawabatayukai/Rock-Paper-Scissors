@@ -34,5 +34,7 @@ private:
 	Jangeki_Reflection* reflection;
 
 	bool janken_flag = false;       //ÚG‚¶‚á‚ñ‚¯‚ñƒtƒ‰ƒO
+
+	int bgm[4];
 };
 
