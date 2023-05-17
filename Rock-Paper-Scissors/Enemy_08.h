@@ -15,6 +15,8 @@ public:
 
 	void Update_Jangeki() override;  //じゃん撃生成・更新
 
+	void MAX();
+
 private:
 	/********************   ジャンプ関係   ********************/
 

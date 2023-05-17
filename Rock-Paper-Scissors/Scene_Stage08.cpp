@@ -495,10 +495,13 @@ AbstractScene* Scene_Stage08::ChangeScene()
 void Scene_Stage08::AfterJanken_WIN()
 {
 	obj_player->SetX(100);
+	damage += 5;
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）
 void Scene_Stage08::AfterJanken_LOSE()
 {
 	obj_player->SetX(100);
+	obj_enemy->MAX();
+	
 }
