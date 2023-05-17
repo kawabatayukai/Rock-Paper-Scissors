@@ -11,6 +11,7 @@
 #include"Jangeki_Player.h"
 #include "SoundSystem.h"
 #include"Jangeki_Bounds.h"
+#include"Jangeki_Guard.h"
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_10::Enemy_10(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
@@ -760,11 +761,14 @@ void Enemy_10::Update_Jangeki()
 		//配列の jan_count 番目がnullptr（空要素）ならそれ以上処理しない
 		if (obj_jangeki[jan_count] == nullptr) break;
 
+		//敵の座標をセット
+		obj_jangeki[jan_count]->SetEnemyLocation(x, y);
+
 		obj_jangeki[jan_count]->Update();
 
 		//ホーミングじゃん撃であればプレイヤーの座標をセットする
 		obj_jangeki[jan_count]->SetTargetLocation(player_x, player_y);
-
+		
 		//画面外で削除する
 		if (obj_jangeki[jan_count]->CheckScreenOut() == true)
 		{
@@ -802,7 +806,7 @@ void Enemy_10::Update_Jangeki()
 				/*********************** ↓↓ 生成( 追跡弾 ) ↓↓ ***********************/
 
 				//            生成速度
-				if (frame_count % 50 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //追跡弾 
+				//if (frame_count % 50 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //追跡弾 
 
 				/************************************************************************/
 
@@ -838,6 +842,8 @@ void Enemy_10::Update_Jangeki()
 				//reflection->falseFlg();
 
 				/************************************************************************/
+
+				if (frame_count % 100 == 0) Jan_360Guard(jan_count, radius, type);
 				break;
 
 				/***********
@@ -867,7 +873,7 @@ void Enemy_10::Update_Jangeki()
 
 			/*********************** ↓↓ 生成( 中心円型拡散弾 ) ↓↓ ***********************/
 
-				if (frame_count % 200 == 0)
+				if (frame_count % 2000 == 0)
 				{
 					Jan_360degrees(jan_count, radius, speed, type); //360度発射
 				}
@@ -914,6 +920,19 @@ void Enemy_10::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
 		double angle = static_cast<double>((20.0 * i) * (M_PI / 180));
 
 		obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
+	}
+}
+
+//360度守り
+void Enemy_10::Jan_360Guard(int count, float rad, Jan_Type type)
+{
+	for (int i = count; i < (count + 18); i++)
+	{
+		
+		double angle = static_cast<double>((20.0 * i) * (M_PI / 180));
+
+		obj_jangeki[i] = new Jangeki_Guard(x, y, rad, 0, type, cosf(angle) * 100, sinf(angle) * 100);
+
 	}
 }
 

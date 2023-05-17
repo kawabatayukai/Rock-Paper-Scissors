@@ -252,7 +252,12 @@ void Jangeki_Base::SetTargetLocation(const float target_x, const float target_y)
 	this->target_y = target_y;
 }
 
-
+//敵の座標をセット
+void Jangeki_Base::SetEnemyLocation(const float enemy_x, const float enemy_y)
+{
+	this->enemy_x = enemy_x;
+	this->enemy_y = enemy_y;
+}
 
 //円形の当たり判定
 bool Jangeki_Base::Hit_CircleCircle(float c_x, float c_y, float c_r) const

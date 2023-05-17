@@ -357,6 +357,9 @@
     <ClCompile Include="Scene_Ranking_GameLevel.cpp">
       <Filter>ソース ファイル\Scene\タイトル\ランキングゲームモード選択画面</Filter>
     </ClCompile>
+    <ClCompile Include="Jangeki_Guard.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -577,6 +580,9 @@
     </ClInclude>
     <ClInclude Include="Scene_Ranking_GameLevel.h">
       <Filter>ソース ファイル\Scene\タイトル\ランキングゲームモード選択画面</Filter>
+    </ClInclude>
+    <ClInclude Include="Jangeki_Guard.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

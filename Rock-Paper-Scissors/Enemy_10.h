@@ -61,6 +61,8 @@ public:
 
 	void Jan_360degrees(int count, float rad, float speed, Jan_Type type);
 
+	void Jan_360Guard(int count, float rad, Jan_Type type);
+
 	void HP();
 
 	bool Getflg();
