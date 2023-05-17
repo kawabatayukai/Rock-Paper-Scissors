@@ -7,7 +7,6 @@
 Scne_TitleInterval::Scne_TitleInterval() : frame(0), speed(16)
 {
 	image_high = LoadGraph("images/title_high.png");
-	image_middle = LoadGraph("images/title_middle.png");
 	image_low = LoadGraph("images/title_low.png");
 }
 

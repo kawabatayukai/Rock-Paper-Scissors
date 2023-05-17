@@ -235,14 +235,6 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 	}
 	else if (j_state == Jan_State::PROGRESS)
 	{
-		//‘O‰ñ‚ ‚¢‚±‚Å‚µ‚½
-		if (bf_result == Jan_Result::ONEMORE)
-		{
-			//obj_janken->OneMore_Init();
-			bf_result = Jan_Result::_ERROR;
-
-
-		}
 
 		//‚¶‚á‚ñ‚¯‚ñ’†
 		obj_janken->Update();
