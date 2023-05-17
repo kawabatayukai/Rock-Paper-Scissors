@@ -232,7 +232,7 @@ void Scene_Stage03::Update()
 						SoundSystem::PlaySE(SE::ENEMY_SLIGHTLYBROKEN);
 						
 					}
-					else if (obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 41) {
+					else if (obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 46) {
 
 			
 						if(obj_enemy->GetWaitTime() > 0 ||  obj_enemy->GetWaitTime() < 200){
@@ -245,7 +245,7 @@ void Scene_Stage03::Update()
 
 						SoundSystem::PlaySE(SE::ENEMY_SHIELDBROKEN);
 					}
-					else if (obj_enemy->GetHP() <= 40) {
+					else if (obj_enemy->GetHP() <= 45) {
 
 
 						if (obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200) {
@@ -410,8 +410,8 @@ void Scene_Stage03::Update()
 		//じゃん撃との当たり判定
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
-			//エネミーのHPが40以下の場合25ダメージ食らう
-			if (obj_enemy->GetHP() <= 40) {
+			//エネミーのHPが45以下の場合25ダメージ食らう
+			if (obj_enemy->GetHP() <= 45) {
 
 				//半径が50.0fの場合のダメージ
 				float radius = 50.0f;
@@ -421,9 +421,9 @@ void Scene_Stage03::Update()
 					obj_player->ReceiveDamage(25 - PlayerCutDamege) ;
 				}
 			}
-			else if (obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 41) {
+			else if (obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 45) {
 
-				//半径が50.0fの場合のダメージ
+				//半径が25.5fの場合のダメージ
 				float radius = 25.5f;
 
 				if (radius >= 25.5f) {
@@ -625,13 +625,13 @@ void Scene_Stage03::AfterJanken_LOSE()
 		EnemyCutDamege = 5;
 
 	}
-	else if (obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 41) {
+	else if (obj_enemy->GetHP() <= 55 && obj_enemy->GetHP() >= 46) {
 
 		//じゃんけん敗北時
 		EnemyCutDamege = 6;
 
 	}
-	else if (obj_enemy->GetHP() <= 40) {
+	else if (obj_enemy->GetHP() <= 45) {
 
 
 		//じゃんけん敗北時

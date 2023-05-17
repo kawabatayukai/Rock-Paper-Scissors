@@ -156,7 +156,16 @@ void Enemy_03::Update()
 
 	}
 
+	if (hp <= 45){
 
+		if (land_flg == true /*&& moveinfo[current].enemywaitTime == 0 && moveinfo[current].jumpflg == 0*/)    //GetRand(30) == 3　のところがジャンプの条件
+		{
+			g_add = -18.f;    //初期-21.5f,重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+			land_flg = false;  //地面についていない
+			SoundSystem::PlaySE(SE::PLAYER_JUMP);//JUMP時SE鳴らす
+			//speed = 2.8f;
+		}
+	}
 	//じゃん撃更新・生成
 	Update_Jangeki();
 
@@ -178,7 +187,7 @@ void Enemy_03::Update()
 	}*/
 
 
-	if (hp > 40) {//HP40%より多いの間パターンの動きをする
+	if (hp > 45) {//HP45より多いの間パターンの動きをする
 
 
 		//ステ03パターン用関数
@@ -210,7 +219,7 @@ void Enemy_03::Update()
 
 
 	}
-	else if (hp<=40 && st3_animcount < 8) {
+	else if (hp <= 45 && st3_animcount < 8) {
 
 
 
@@ -218,20 +227,21 @@ void Enemy_03::Update()
 	else {
 
 		
+		
 		//enemyのxが475以下の時
 		if (x <= 475) {
 			
 
 			//前回より加速する
-			speed = 7.5f;
+			speed = 8.5f;
 
 		}
 		//enemyのxが950以下で475以上の時
 		else if (x <= 950 && x >= 475) {
 
 
-			//前回より加速する
-			speed = 5.5f;
+			//前回より減速する
+			speed = 7.5f;
 			
 
 		}
@@ -241,7 +251,7 @@ void Enemy_03::Update()
 
 
 			//前回より加速する
-			speed = 7.5f;
+			speed = 8.5f;
 
 		}
 		
@@ -264,7 +274,8 @@ void Enemy_03::Update()
 		static int count;
 		if (count == 0)
 		{
-			target_x = GetRand(1170) + 70;
+			target_x = GetRand(60) + 20;
+			target_x = GetRand(1130) + 20;
 			//if (x==1000)
 			//{
 			//	count = 1;
@@ -394,11 +405,11 @@ void Enemy_03::Update()
 	//前回のｘ
 	old_x = x;
 
-	//HPが40%以下Animcountが8より小さい時アニメーション実装
-	if (hp <= 40 && st3_animcount < 8) {
+	//HPが45以下Animcountが8より小さい時アニメーション実装
+	if (hp <= 45 && st3_animcount < 8) {
 
 		++st3_animtimer;
-		if (st3_animtimer % 10 == 0) {
+		if (st3_animtimer % 5 == 0) {
 
 			st3_animcount++;
 			st3_animtimer = 0;
@@ -554,7 +565,7 @@ void Enemy_03::Draw() const
 	//////////////////////////
 	//HP55以下で41以上のとき
 	//////////////////////////
-	else if(hp <= 55 && hp >= 41){
+	else if(hp <= 55 && hp >= 46){
 		
 		
 		if ( moveinfo[current].enemywaitTime > 0) {
@@ -589,12 +600,12 @@ void Enemy_03::Draw() const
 	}
 
 	//////////////////////////
-	//HP40以下のとき
+	//HP45以下のとき
 	////////////////////////////
 	else {
 		
 			//エネミーの構造体と一致したときにエネミーが左または右に動く
-		if ((hp <= 40 && enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE && moveinfo[current].enemywaitTime < 200)) {
+		if ((hp <= 45 && enemy_state == ENEMY_STATE::LEFTMOVE || enemy_state == ENEMY_STATE::RIGHTMOVE && moveinfo[current].enemywaitTime < 200)) {
 			
 			//攻撃時の画像描画								//向きを変える
 			DrawRotaGraphF(x, y, 1, 0, enemyimage4[Ecurrentindex_st03], TRUE, dir == -1 ? 0 : 1);
@@ -621,7 +632,7 @@ void Enemy_03::Draw() const
 	//テキスト表示                                                      //赤色
 	if (hp <= 85 && moveinfo[current].enemywaitTime > 0) DrawFormatString((int)(x - 35), (int)(y - 50), GetColor(0, 0, 255), "防御DOWN↓", moveinfo[current].enemywaitTime);
 
-	if (hp <= 40) DrawFormatString((int)(x - 50), (int)(y - 70), GetColor(255, 0, 0), " 攻撃UP↑", hp);
+	if (hp <= 45) DrawFormatString((int)(x - 50), (int)(y - 70), GetColor(255, 0, 0), " 攻撃UP↑", hp);
 
 	if (hp <= 0)DrawString((int)(x - 100), (int)(y - 120), "death!", 0xff0000);
 	
@@ -667,8 +678,8 @@ void Enemy_03::Update_Jangeki()
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
 	 
 		//攻撃UP時のジャン撃
-		//HP40以下の時	
-		 if (hp <= 40) {
+		//HP45以下の時	
+		 if (hp <= 45) {
 
 			float radius = 50.0f;
 			float speed = 4.5f;
@@ -677,8 +688,8 @@ void Enemy_03::Update_Jangeki()
 			if (frame_count % 85 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 			
 		 }
-		//HPが85以下で41以上の時
-		else if (hp <= 85 && hp >= 41){
+		//HPが85以下で46以上の時
+		else if (hp <= 85 && hp >= 46){
 
 			//尾行弾
 			if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
