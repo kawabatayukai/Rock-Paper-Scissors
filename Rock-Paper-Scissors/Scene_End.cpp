@@ -14,7 +14,7 @@ EndScene::~EndScene()
 {
 	////エンド画像表示
 	//DrawGraph(0, 0, g_EndImage, FALSE);
-
+	 
 	
 }
 
@@ -55,6 +55,8 @@ void EndScene::Draw() const
 	DrawString(300, 600 + PosY, "BGM/SE　無料効果音で遊ぼう！ URL https://taira-komori.jpn.org/index.html", 0xFFFFFF);
 	DrawString(300, 630 + PosY, "BGM/SE　魔王魂 URL https://maou.audio/", 0xFFFFFF);
 	DrawString(300, 660 + PosY, "BGM/SE　甘茶の音楽工房 URL https://amachamusic.chagasi.com/", 0xFFFFFF);
+	DrawString(300, 690 + PosY, "BGM/SE　ハシマミ URL https://hashimamiweb.com/", 0xFFFFFF);
+	DrawString(300, 720 + PosY, "BGM/SE　無料効果音で遊ぼう！ URL https://taira-komori.jpn.org/", 0xFFFFFF);
 
 
 	//DrawFormatString(100, 600, 0xFFFFFF, "%f", framecount);

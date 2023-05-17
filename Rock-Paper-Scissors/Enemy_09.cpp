@@ -8,6 +8,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include "SoundSystem.h"
+#include"GameData.h"
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_09::Enemy_09(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
@@ -408,12 +409,16 @@ void Enemy_09::frameDown()
 
 }
 
-void Enemy_09::HP() 
+void Enemy_09::HP(bool isHard)
 {
-	if (hp <= 0)
+	if (isHard == false)
 	{
-		hp = 1;
+		if (hp <= 0)
+		{
+			hp = 1;
+		}
 	}
+	else return;
 }
 
 bool Enemy_09::Getflg()
