@@ -22,7 +22,7 @@ EndScene::~EndScene()
 void EndScene::Update()
 {
 	//エンディング表示
-	if (++WaitTime < 2000) PosY = 500 - WaitTime*2 / 2;
+	if (++WaitTime < 5000) PosY = 500 - WaitTime / 2;
 
 
 
