@@ -26,6 +26,7 @@ namespace _CONSTANTS_SB
 }
 
 Stage_Base::Stage_Base() : blackout_time(0), Prev_EnemyType(Jan_Type::NONE), obj_effectEnemy(nullptr), obj_death(nullptr)
+,bf_result(Jan_Result::_ERROR)
 {
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, typeImage);
 
@@ -55,8 +56,7 @@ Stage_Base::Stage_Base() : blackout_time(0), Prev_EnemyType(Jan_Type::NONE), obj
 
 Stage_Base::~Stage_Base()
 {
-	//サウンドを削除
-	Sound_Player::DeletePlayerSound();
+
 }
 
 //UI描画
@@ -125,6 +125,11 @@ void Stage_Base::DrawUI_ON_Enemy(const EnemyBase* enemy) const
 
 		index = 2;
 		bar_color = 0x0000ff;    //blue
+		break;
+
+	case Jan_Type::NONE:
+
+		bar_color = 0x8B52A1;    //purple
 		break;
 
 	default:
@@ -230,6 +235,15 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 	}
 	else if (j_state == Jan_State::PROGRESS)
 	{
+		//前回あいこでした
+		if (bf_result == Jan_Result::ONEMORE)
+		{
+			//obj_janken->OneMore_Init();
+			bf_result = Jan_Result::_ERROR;
+
+
+		}
+
 		//じゃんけん中
 		obj_janken->Update();
 		obj_janken->Stars_Update();
@@ -279,6 +293,7 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 				if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
 				{
 					enemy->ReceiveDamage(100);
+					isHard_Win = true;
 				}
 				else /*普通のモード*/
 				{
@@ -294,17 +309,24 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 
 
 			case Jan_Result::ONEMORE: //あいこ
-
+			{
 				//じゃん撃を初期化する
 				enemy->Init_Jangeki();
 
-				obj_janken->OneMore_Init();
+				bf_result = Jan_Result::ONEMORE;
+				delete obj_janken;
+
+				//敵が出す手をランダムに決める　　　（ランダムなint型の値(0～2)を Jan_Type型に変換）
+				Jan_Type enemy_janken = static_cast<Jan_Type> (GetRand(2));
+
+				//じゃんけんオブジェクト生成
+				obj_janken = new Janken(enemy_janken, my_StageNum);
 
 				//じゃんけん開始
 				j_state = Jan_State::PROGRESS;
 
 				break;
-
+			}
 			default:
 				break;
 			}
@@ -315,7 +337,6 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 	}
 	else if (j_state == Jan_State::END)
     {
-
 
 		//じゃん撃を初期化する
 		enemy->Init_Jangeki();
@@ -339,7 +360,7 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 	//Enemyを監視
 	if (my_StageNum == 9 || my_StageNum == 10)
 	{
-		if (stage09_isclear == true && obj_death == nullptr)
+		if (stage09_isclear == true && obj_death == nullptr || enemy->GetHP() <= 0 && obj_death == nullptr)
 		{
 			enemy->Init_Jangeki();
 			//死亡演出用オブジェクト
@@ -776,8 +797,8 @@ void Stage_Base::Draw_JankenStart() const
 {
 	if (j_state == Jan_State::END)
 	{
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - (static_cast<int>(blackout_time * 5)));
-		if (blackout_time < 60) obj_janken->Draw();
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - (static_cast<int>(blackout_time * 6)));
+		if (blackout_time < 58) obj_janken->Draw();
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 		for (int i = 0; i < 12; i++)

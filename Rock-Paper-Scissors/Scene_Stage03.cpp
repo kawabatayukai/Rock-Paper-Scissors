@@ -43,15 +43,15 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	obj_floor[2] = new Floor("images/stage03/GroundImagesTate.png", 1260, -100, 20, 1260);     //•Çi‰Ej, GetColor(240, 230, 140)
 
 	//‰E‚©‚ç‡‚É
-	obj_floor[3] = new Floor("images/stage03/BlockImages.png", 1130, 340, 95, 1);//‘«ê1//130,GetColor(193, 107, 68)
-	obj_floor[4] = new Floor("images/stage03/BlockImages.png", 1130, 500, 95, 1);//‘«ê2//130,	GetColor(193, 107, 68)
-	obj_floor[5] = new Floor("images/stage03/BlockImages.png", 920, 205, 95, 1);//‘«ê3, GetColor(193, 107, 68)
-	obj_floor[6] = new Floor("images/stage03/BlockImages.png", 770, 150, 95, 1);//‘«ê4//130, GetColor(193, 107, 68)
-	obj_floor[7] = new Floor("images/stage03/BlockImages.png", 575, 205, 95, 1);//‘«ê5//100, GetColor(193, 107, 68)
-	obj_floor[8] = new Floor("images/stage03/BlockImages.png", 390, 150, 95, 1);//‘«ê6//130, GetColor(193, 107, 68)
-	obj_floor[9] = new Floor("images/stage03/BlockImages.png", 240, 205, 95, 1);//‘«ê7//130, GetColor(193, 107, 68)
-	obj_floor[10] = new Floor("images/stage03/BlockImages.png", 60, 340, 95, 1);//‘«ê8//100, GetColor(193, 107, 68)
-	obj_floor[11] = new Floor("images/stage03/BlockImages.png", 60, 500, 95, 1);//‘«ê9//130, GetColor(193, 107, 68)
+	obj_floor[3] = new Floor("images/stage03/BlockImages.png", 1130, 340, 95, 30);//‘«ê1//130,GetColor(193, 107, 68)
+	obj_floor[4] = new Floor("images/stage03/BlockImages.png", 1130, 500, 95, 30);//‘«ê2//130,	GetColor(193, 107, 68)
+	obj_floor[5] = new Floor("images/stage03/BlockImages.png", 920, 205, 95, 30);//‘«ê3, GetColor(193, 107, 68)
+	obj_floor[6] = new Floor("images/stage03/BlockImages.png", 770, 150, 95, 30);//‘«ê4//130, GetColor(193, 107, 68)
+	obj_floor[7] = new Floor("images/stage03/BlockImages.png", 575, 205, 95, 30);//‘«ê5//100, GetColor(193, 107, 68)
+	obj_floor[8] = new Floor("images/stage03/BlockImages.png", 390, 150, 95, 30);//‘«ê6//130, GetColor(193, 107, 68)
+	obj_floor[9] = new Floor("images/stage03/BlockImages.png", 240, 205, 95, 30);//‘«ê7//130, GetColor(193, 107, 68)
+	obj_floor[10] = new Floor("images/stage03/BlockImages.png", 60, 340, 95, 30);//‘«ê8//100, GetColor(193, 107, 68)
+	obj_floor[11] = new Floor("images/stage03/BlockImages.png", 60, 500, 95, 30);//‘«ê9//130, GetColor(193, 107, 68)
 
 
 	
@@ -62,21 +62,23 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	//obj_floor[16] = new Floor("images/stage03/BlockImages.png", 210, 405, 95, 10);//‘«ê7//130, GetColor(193, 107, 68)
 
 	//§ŒÀŠÔ‚ğƒZƒbƒg
-	GameData::Set_TimeLimit(10810); //3•ª@//2•ª ©@7200 % 3600
+	GameData::Set_TimeLimit(10860); //3•ª@//2•ª ©@7200 % 3600
 
-
+	//BGMƒ[ƒh
+	bgm = LoadSoundMem("Sound/st03/St03BGM.wav");
 }
 
 //ƒfƒXƒgƒ‰ƒNƒ^
 Scene_Stage03::~Scene_Stage03()
 {
+	StopSoundMem(bgm);
 }
 
 //XV
 void Scene_Stage03::Update()
 {
 	//BGM‚ğ–Â‚ç‚·
-	SoundSystem::PlayBGM(BGM::ST03_BGM);
+	if (CheckSoundMem(bgm) == 0) PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
 
 
 	//ÚG‚¶‚á‚ñ‚¯‚ñŠJn‘O
@@ -496,7 +498,7 @@ void Scene_Stage03::Draw() const
 			float p_x = obj_player->GetX();
 			float p_y = obj_player->GetY();
 
-			DrawString(p_x, p_y - 80, "–hŒä—ÍUPª", 0xfff);
+			DrawString(p_x, p_y - 55, "–hŒä—ÍUPª", 0xfff);
 		}
 		else {
 			int Player_Janwin = 0;
@@ -553,8 +555,7 @@ AbstractScene* Scene_Stage03::ChangeScene()
 	//“G‚ÌHP0
 	if (IsEnd_DeathEnemy() == true) {
 
-		//BGM’â~
-		SoundSystem::StopBGM(BGM::ST03_BGM);
+
 		//‘–‚éSE’â~
 		StopSoundMem(obj_enemy->GetRunSE());
 		//•à‚­SE’â~
@@ -568,8 +569,7 @@ AbstractScene* Scene_Stage03::ChangeScene()
 					//€–S‰‰o//
 	if (obj_player->IsDeathPlayer() == true){
 		 
-		//BGM’â~
-		SoundSystem::StopBGM(BGM::ST03_BGM);
+
 		//‘–‚éSE’â~
 		StopSoundMem(obj_enemy->GetRunSE());
 		//•à‚­SE’â~
@@ -646,6 +646,7 @@ void Scene_Stage03::AfterJanken_LOSE()
 
 	}
 
+	//X‚ª200‚ÉˆÚ“®
 	obj_player->SetX(200);
 	
 

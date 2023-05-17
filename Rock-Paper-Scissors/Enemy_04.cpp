@@ -86,7 +86,7 @@ void Enemy_04::Update()
 	//特殊行動時や残りHPによってスピードが変わる
 	if (specialFlg == true)
 	{
-		speed = 25.0f;
+		speed = 20.0f;
 		specialTime++;
 	}
 	else if (hp <= 50)
@@ -175,11 +175,8 @@ void Enemy_04::Draw() const
 	//じゃん撃描画
 	Draw_Jangeki();
 
-	//残りHP表示
-	if (hp > 0) DrawFormatString((int)(x - 45), (int)(y - 130), GetColor(0, 255, 0), "HP : %d", hp);
-
 	//残りHP50以下の時に表示
-	if (hp <= 50) DrawFormatString((int)(x - 60), (int)(y - 160), GetColor(30, 30, 255), "スピードUP↑", hp);
+	if (hp <= 50) DrawFormatString((int)(x - 60), (int)(y - 130), GetColor(30, 30, 255), "スピードUP↑", hp);
 
 	//特殊効果時に表示
 	if (specialFlg == true) DrawFormatString((int)(x - 50), (int)(y - 160), GetColor(255, 30, 30), "特殊効果", hp);
@@ -216,10 +213,10 @@ void Enemy_04::Update_Jangeki()
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
 		float radius = 45.0f;   //半径
-		float speed  =  2.5f;   //スピード
+		float speed  =  3.0f;   //スピード
 
 		//HP50以下でジャン撃スピード変更
-		if (hp <= 50) speed = 5.0f;
+		if (hp <= 50) speed = 6.0f;
 		
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));

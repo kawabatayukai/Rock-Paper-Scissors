@@ -61,18 +61,22 @@ Scene_Stage06::Scene_Stage06(const Player* player)
 
 	//制限時間をセット
 	GameData::Set_TimeLimit(10800);
+
+	//BGMロード
+	bgm = LoadSoundMem("Sound/stage06/maou_game_battle27.mp3");
 }
 
 //デストラクタ
 Scene_Stage06::~Scene_Stage06()
 {
+	StopSoundMem(bgm);
 }
 
 //更新
 void Scene_Stage06::Update()
 {
 	//BGM再生
-	SoundSystem::PlayBGM(BGM::STAGE06_BGM);
+	if (CheckSoundMem(bgm) == 0) PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
 
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
@@ -330,8 +334,7 @@ AbstractScene* Scene_Stage06::ChangeScene()
 	//敵のHPが0以下
 	if (IsEnd_DeathEnemy() == true)
 	{
-		//BGM停止
-		SoundSystem::StopBGM(BGM::STAGE06_BGM);
+
 
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(7));
@@ -340,8 +343,7 @@ AbstractScene* Scene_Stage06::ChangeScene()
 	//プレイヤーのHPが0以下
 	if (obj_player->IsDeathPlayer() == true)
 	{
-		//BGM停止
-		SoundSystem::StopBGM(BGM::STAGE06_BGM);
+
 
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(6));

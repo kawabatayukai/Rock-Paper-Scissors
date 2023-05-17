@@ -11,6 +11,7 @@
 #include"SoundSystem.h"
 #include"Scene_Story.h"
 #include "Scene_Title_GameLevel.h"
+#include"Scene_Ranking_GameLevel.h"
 
 int TitleScene::font_title;   //フォントハンドル
 
@@ -25,18 +26,21 @@ TitleScene::TitleScene()
 
 	//データの初期化
 	GameData::Init_Data();
+
+	//BGMロード
+	bgm = LoadSoundMem("Sound/TitleBGM.mp3");
 }
 
 //デストラクタ
 TitleScene::~TitleScene()
 {
-	SoundSystem::StopBGM(BGM::TITLE);
+	StopSoundMem(bgm);
 }
 
 //更新
 void TitleScene::Update()
 {
-	SoundSystem::PlayBGM(BGM::TITLE);
+	if (CheckSoundMem(bgm) == 0) PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
 
 	//カーソルを合わせてボタンを押すと遷移
 	if (KeyManager::OnPadClicked(PAD_INPUT_DOWN) == true) {
@@ -68,13 +72,11 @@ void TitleScene::Draw() const
 	DrawStringToHandle(70, 345, "RANKING", 0xf, font_title);
 	DrawStringToHandle(70, 395, "END", 0xf, font_title);
 
-	
-
 	//メニューカーソル
 	DrawTriangle(40, 255 + (T_selectnum * 50), 60, 270 + (T_selectnum * 50), 40, 285 + (T_selectnum * 50), GetColor(255, 0, 0), TRUE);
 
 	//デバッグ
-	DrawStringToHandle(10, 650, "RT + A で選択画面(開発)", 0xf, font_title);
+	//DrawStringToHandle(10, 650, "RT + A で選択画面(開発)", 0xf, font_title);
 }
 
 //シーンの変更
@@ -84,7 +86,6 @@ AbstractScene* TitleScene::ChangeScene()
 	if (KeyManager::GetValue_RT() >= 40 && KeyManager::OnPadClicked(PAD_INPUT_A) == true)
 	{
 		return dynamic_cast<AbstractScene*> (new GameMainScene());
-		SoundSystem::StopBGM(BGM::TITLE);
 	}
 	//Aボタンで決定
 	else if (KeyManager::OnPadClicked(PAD_INPUT_A) == true)
@@ -96,16 +97,13 @@ AbstractScene* TitleScene::ChangeScene()
 			break;
 		case 1: //ヘルプ画面
 			return dynamic_cast<AbstractScene*> (new HelpScene());
-			SoundSystem::StopBGM(BGM::TITLE);
 			break;
 		case 2: //ランキング画面
-			//sortSave.ReadRanking();		// ランキングデータの読み込み
+			sortSave.ReadRanking();		// ランキングデータの読み込み
 			return dynamic_cast<AbstractScene*> (new Scene_Ranking());
-			SoundSystem::StopBGM(BGM::TITLE);
 			break;
 		case 3: //エンド画面
 			return dynamic_cast<AbstractScene*> (new EndScene());
-			SoundSystem::StopBGM(BGM::TITLE);
 			break;
 
 

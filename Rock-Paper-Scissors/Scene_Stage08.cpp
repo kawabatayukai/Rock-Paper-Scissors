@@ -82,18 +82,23 @@ Scene_Stage08::Scene_Stage08(const Player* player) : damage(5)
 
 	//生成
 	Item[0] = new Item_st8(600, 200, 20);
+
+
+	//BGMロード
+	bgm = LoadSoundMem("");
 }
 
 //デストラクタ
 Scene_Stage08::~Scene_Stage08()
 {
+	StopSoundMem(bgm);
 }
 
 //更新
 void Scene_Stage08::Update()
 {
 	//BGM再生
-	SoundSystem::PlayBGM(BGM::STAGE08_BGM);
+	if (CheckSoundMem(bgm) == 0) PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
 
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
@@ -470,9 +475,6 @@ AbstractScene* Scene_Stage08::ChangeScene()
 	//敵のHPが0以下
 	if (IsEnd_DeathEnemy() == true)
 	{
-		//BGM停止
-		SoundSystem::StopBGM(BGM::STAGE05_BGM);
-
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(9));
 	}

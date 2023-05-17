@@ -57,18 +57,21 @@ Scene_Stage09::Scene_Stage09(const Player* player)
 	obj_floor[9] = new Floor(560, 450, 120, 20, 0xd2d2d2);
 	obj_floor[10] = new Floor(560, 130, 120, 20, 0xd2d2d2);
 
+	//BGMロード
+	bgm = LoadSoundMem("Sound/stage09/stage09.mp3");
 }
 
 //デストラクタ
 Scene_Stage09::~Scene_Stage09()
 {
+	StopSoundMem(bgm);
 }
 
 //更新
 void Scene_Stage09::Update()
 {
 
-	SoundSystem::PlayBGM(BGM::STAGE09_BGM);
+	if (CheckSoundMem(bgm) == 0) PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
 
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
@@ -201,7 +204,7 @@ void Scene_Stage09::Update()
 						obj_enemy->Ranimflg = true;
 				}
 			}
-			obj_enemy->HP();
+			obj_enemy->HP(GetIsHardWin());
 		}
 	}
 	
@@ -387,14 +390,14 @@ AbstractScene* Scene_Stage09::ChangeScene()
 	}
 	if (IsEnd_DeathEnemy() == true)
 	{
-		SoundSystem::StopBGM(BGM::STAGE09_BGM);
+		
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(10));
 	}
 	//プレイヤーのHPが0以下
 	if (obj_player->IsDeathPlayer() == true)
 	{
-		SoundSystem::StopBGM(BGM::STAGE09_BGM);
+		
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(9));
 	}
@@ -407,15 +410,24 @@ AbstractScene* Scene_Stage09::ChangeScene()
 //じゃんけん終了後の挙動（プレイヤー勝ち）
 void Scene_Stage09::AfterJanken_WIN()
 {
-	
-	if (obj_enemy->GetHP() == 1)
+	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
 	{
 		clearFlg = true;
+		GetStage09IsClear(true);
+	}
+	else
+	{
+
+		if (obj_enemy->GetHP() == 1)
+		{
+			clearFlg = true;
+		}
 	}
 	obj_player->SetX(100);
 	obj_enemy->SetX(1110);
 	obj_enemy->frameDown();
 	obj_enemy->Tflg();
+
 }
 //じゃんけん終了後の挙動（プレイヤー負け）
 void Scene_Stage09::AfterJanken_LOSE()

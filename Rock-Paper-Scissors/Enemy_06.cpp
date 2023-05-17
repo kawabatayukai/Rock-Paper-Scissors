@@ -108,7 +108,7 @@ void Enemy_06::Update()
 		}
 
 		//500フレームごとに瞬間移動接触フラグをtrueにする
-		if (TeleportTime == 500 && TeleportFlg == false && (player_x - 250) > 50 && (player_x + 250) < 1230 && speed != 8.0f)
+		if (TeleportTime == 500 && TeleportFlg == false && (player_x - 230) > 50 && (player_x + 230) < 1230 && speed != 8.0f && hp > 0)
 		{
 			TeleportFlg = true;
 			if (attack_pattern != 0 && hp <= 70)
@@ -205,10 +205,6 @@ void Enemy_06::Draw() const
 				DrawRotaGraphF(x, y, 4.2, 0, images[2], TRUE, dir == -1 ? 0 : 1);
 			}
 		}
-
-		//テスト
-		if (hp > 0) DrawFormatString((int)(x - 50), (int)(y - 125), 0xffffff, "HP : %d", hp);
-		else DrawString((int)(x - 50), (int)(y - 125), "death!", 0xffffff);
 
 		if (speed == 8.0f)
 		{
@@ -887,19 +883,19 @@ void Enemy_06::SpeedUp()
 //特殊行動2   プレイヤーの後方側に移動し、接近してくる
 void Enemy_06::Teleportation()
 {
-	if (TeleportInit == true && smokeFlg == false)
+	if (TeleportInit == true && smokeFlg == false && hp > 0)
 	{
 		if (player_dir == 0)
 		{
 			dir = -1;
-			x = player_x + 250;
+			x = player_x + 230;
 			y = 650.0f;
 		}
 
 		if (player_dir == 1)
 		{
 			dir = 1;
-			x = player_x - 250;
+			x = player_x - 230;
 			y = 650.0f;
 		}
 
