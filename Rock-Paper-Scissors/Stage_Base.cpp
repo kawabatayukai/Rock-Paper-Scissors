@@ -129,8 +129,7 @@ void Stage_Base::DrawUI_ON_Enemy(const EnemyBase* enemy) const
 
 	case Jan_Type::NONE:
 
-		index = 3;
-		bar_color = 0x8B52A1;    //blue
+		bar_color = 0x8B52A1;    //purple
 		break;
 
 	default:
@@ -285,6 +284,7 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 				if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
 				{
 					enemy->ReceiveDamage(100);
+					isHard_Win = true;
 				}
 				else /*普通のモード*/
 				{
@@ -322,7 +322,6 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 	else if (j_state == Jan_State::END)
     {
 
-
 		//じゃん撃を初期化する
 		enemy->Init_Jangeki();
 		//あたり判定なし時間をセット
@@ -345,7 +344,7 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 	//Enemyを監視
 	if (my_StageNum == 9 || my_StageNum == 10)
 	{
-		if (stage09_isclear == true && obj_death == nullptr)
+		if (stage09_isclear == true && obj_death == nullptr || enemy->GetHP() <= 0 && obj_death == nullptr)
 		{
 			enemy->Init_Jangeki();
 			//死亡演出用オブジェクト

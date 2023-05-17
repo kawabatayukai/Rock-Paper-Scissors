@@ -53,6 +53,7 @@ public:
 	//死亡演出終了チェック
 	bool IsEnd_DeathEnemy();
 	void GetStage09IsClear(bool isclear);
+	bool GetIsHardWin() const { return isHard_Win; }
 
 	//じゃんけん描画
 	void Draw_Janken() const;
@@ -94,5 +95,6 @@ private:
 
 	Enemy_Death* obj_death;                   //死亡時に生成する
 	bool stage09_isclear = false;
+	bool isHard_Win = false;
 };
 

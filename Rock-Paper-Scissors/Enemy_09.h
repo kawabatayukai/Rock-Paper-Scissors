@@ -22,7 +22,7 @@ public:
 	void Jan_40degrees();
 	void SpecialMoveEnmey();
 
-	void HP(); 
+	void HP(bool isHard = false); 
 
 	void frameUP();
 	void frameDown();
