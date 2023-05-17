@@ -64,19 +64,21 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	//制限時間をセット
 	GameData::Set_TimeLimit(10810); //3分　//2分 ←　7200 % 3600
 
-
+	//BGMロード
+	bgm = LoadSoundMem("Sound/st03/St03BGM.wav");
 }
 
 //デストラクタ
 Scene_Stage03::~Scene_Stage03()
 {
+	StopSoundMem(bgm);
 }
 
 //更新
 void Scene_Stage03::Update()
 {
 	//BGMを鳴らす
-	SoundSystem::PlayBGM(BGM::ST03_BGM);
+	if (CheckSoundMem(bgm) == 0) PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
 
 
 	//接触じゃんけん開始前
@@ -553,8 +555,7 @@ AbstractScene* Scene_Stage03::ChangeScene()
 	//敵のHP0
 	if (IsEnd_DeathEnemy() == true) {
 
-		//BGM停止
-		SoundSystem::StopBGM(BGM::ST03_BGM);
+
 		//走るSE停止
 		StopSoundMem(obj_enemy->GetRunSE());
 		//歩くSE停止
@@ -568,8 +569,7 @@ AbstractScene* Scene_Stage03::ChangeScene()
 					//死亡演出//
 	if (obj_player->IsDeathPlayer() == true){
 		 
-		//BGM停止
-		SoundSystem::StopBGM(BGM::ST03_BGM);
+
 		//走るSE停止
 		StopSoundMem(obj_enemy->GetRunSE());
 		//歩くSE停止

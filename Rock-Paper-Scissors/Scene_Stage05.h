@@ -37,5 +37,6 @@ private:
 	int Back_image;					//”wŒi‰æ‘œ
 
 	Jangeki_Reflection* reflection;
+	int bgm;
 };
 

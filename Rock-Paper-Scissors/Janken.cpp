@@ -5,9 +5,11 @@
 int Janken::font_result = 0;         //結果(WIN or LOSE or ONEMORE) 用フォント 
 int Janken::font_other = 0;          //「じゃんけん..」,「ぽん」など用フォント
 
+#define STAR_MAX 50
+
 //コンストラクタ　　　　　　　　　　enemyの出す手が決まる
 Janken::Janken(Jan_Type enemy_jan, const int stage_num)
-	: enemy_jan(enemy_jan), p_image_x(-50), e_image_x(1330), stage_num(stage_num), image_enemy(0)
+	: enemy_jan(enemy_jan), p_image_x(-50), e_image_x(1330), stage_num(stage_num), image_enemy(0), star_time(0)
 {
 	//適当に初期化
 	player_jan = Jan_Type::NONE;
@@ -78,6 +80,11 @@ Janken::Janken(Jan_Type enemy_jan, const int stage_num)
 		break;
 	}
 
+	//star
+	stars = new Janken_Star * [STAR_MAX];
+	for (int i = 0; i < STAR_MAX; i++) stars[i] = nullptr;
+	//stars[0] = new Janken_Star(560.f, 400.f, 0.f, 720.f);
+
 	//フォントデータを作成　　　　　
 	if(font_result == 0)
 		font_result = CreateFontToHandle("メイリオ", 70, 8, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 2);
@@ -144,6 +151,18 @@ void Janken::Draw() const
 
 	//"VS"
 	DrawGraph(0, 0, image_backjan, TRUE);
+	for (int i = 0; i < STAR_MAX; i++)
+	{
+		if (stars[i] == nullptr) break;
+
+		if (stars[i]->GetX() >= 560.f && stars[i]->GetX() <= 740.f
+			&& stars[i]->GetY() >= 300.f && stars[i]->GetY() <= 400.f)
+		{}
+		else
+		{
+			stars[i]->Draw();
+		}
+	}
 
 	//プレイヤー
 	DrawRotaGraph(p_image_x, 300, 2, 0, image_player, TRUE);
@@ -223,8 +242,39 @@ void Janken::Draw() const
 			else {}
 		}
 	}
+}
 
-	
+//星
+void Janken::Stars_Update()
+{
+	int starcount;
+	for (starcount = 0; starcount < STAR_MAX; starcount++)
+	{
+		if (stars[starcount] == nullptr) break;
+		stars[starcount]->Update();
+		if (stars[starcount]->CheckScreenOut() == true)
+		{
+			delete stars[starcount];
+			stars[starcount] = nullptr;
+
+			//詰める
+			for (int d = 0; d < (STAR_MAX - 1); d++)
+			{
+				if (stars[d + 1] == nullptr) break;
+				stars[d] = stars[d + 1];
+				stars[d + 1] = nullptr;
+			}
+			starcount--;
+		}
+	}
+
+	if (++star_time % 6 == 0)
+	{
+		if (starcount < STAR_MAX && stars[starcount] == nullptr)
+		{
+			stars[starcount] = new Janken_Star(1280.f, 0.f, 0.f, 720.f);
+		}
+	}
 }
 
 

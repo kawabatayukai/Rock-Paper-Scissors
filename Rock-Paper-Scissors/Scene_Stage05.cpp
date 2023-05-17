@@ -60,18 +60,21 @@ Scene_Stage05::Scene_Stage05(const Player* player)
 	obj_floor[7] = new Floor(900, 300, 120, 15, 0x00ff00);      //足場　(右下)
 
 	Back_image = LoadGraph("images/stage05/Stage5_Stageimage.png", TRUE);
+	//BGMロード
+	bgm = LoadSoundMem("Sound/stage05/Stage5_BGM.mp3");
 }
 
 //デストラクタ
 Scene_Stage05::~Scene_Stage05()
 {
+	StopSoundMem(bgm);
 }
 
 //更新
 void Scene_Stage05::Update()
 {
 	//BGM再生
-	SoundSystem::PlayBGM(BGM::STAGE05_BGM);
+	if (CheckSoundMem(bgm) == 0) PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
 
 	static int timer = 0;
 	timer++;
@@ -574,8 +577,6 @@ void Scene_Stage05::Draw() const
 		Draw_Janken();
 	}
 
-
-	DrawString(640, 360, "Stage05", 0xffffff);
 	//Effect
 	Effect_Draw_HitJangeki();
 }
@@ -597,9 +598,6 @@ AbstractScene* Scene_Stage05::ChangeScene()
 	//敵のHPが0以下
 	if (IsEnd_DeathEnemy() == true)
 	{
-		//BGM停止
-		SoundSystem::StopBGM(BGM::STAGE05_BGM);
-
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(6));
 	}
@@ -607,9 +605,6 @@ AbstractScene* Scene_Stage05::ChangeScene()
 	//プレイヤーのHPが0以下
 	if (obj_player->IsDeathPlayer() == true)
 	{
-		//BGM停止
-		SoundSystem::StopBGM(BGM::STAGE05_BGM);
-
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(5));
 	}

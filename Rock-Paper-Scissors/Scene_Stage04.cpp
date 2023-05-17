@@ -51,18 +51,22 @@ Scene_Stage04::Scene_Stage04(const Player* player)
 	obj_floor[12] = new Floor(80, 500, 120, 10, 0x493759);			//足場壁際左②
 	obj_floor[13] = new Floor(1100, 350, 100,  10, 0x493759);	    //足場壁際右①
 	obj_floor[14] = new Floor(1050, 510, 130,  10, 0x493759);		//足場壁際右②
+
+	//BGMロード
+	bgm = LoadSoundMem("Sound/stage04/stage04_BGM.wav");
 }
 
 //デストラクタ
 Scene_Stage04::~Scene_Stage04()
 {
+	StopSoundMem(bgm);
 }
 
 //更新
 void Scene_Stage04::Update()
 {
 	//BGM再生
-	SoundSystem::PlayBGM(BGM::STAGE04_BGM);
+	if (CheckSoundMem(bgm) == 0) PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
 
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
@@ -293,8 +297,7 @@ AbstractScene* Scene_Stage04::ChangeScene()
 	//敵のHPが0以下
 	if (IsEnd_DeathEnemy() == true)
 	{
-		//BGM停止
-		SoundSystem::StopBGM(BGM::STAGE04_BGM);
+
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(5));
 	}
@@ -302,8 +305,7 @@ AbstractScene* Scene_Stage04::ChangeScene()
 	//プレイヤーのHPが0以下
 	if (obj_player->IsDeathPlayer() == true)
 	{
-		//BGM停止
-		SoundSystem::StopBGM(BGM::STAGE04_BGM);
+
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(4));
 	}
