@@ -574,8 +574,6 @@ void Scene_Stage05::Draw() const
 		Draw_Janken();
 	}
 
-
-	DrawString(640, 360, "Stage05", 0xffffff);
 	//Effect
 	Effect_Draw_HitJangeki();
 }
