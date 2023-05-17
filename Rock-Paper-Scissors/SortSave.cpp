@@ -10,6 +10,9 @@ void SortSave::SortRanking(void)
 	int i, j;
 	RankingData work;
 
+	g_Ranking[9].timeMin = GameData::Get_Total_Time() / 3600;
+	g_Ranking[9].timeSec = (GameData::Get_Total_Time() % 3600) / 60;
+
 	// 選択法ソート
 	for (i = 0; i < 9; i++) {
 		for (j = i + 1; j < RANKING_DATA; j++) {
@@ -31,7 +34,8 @@ void SortSave::SortRanking(void)
 	// 得点が同じ場合は、同じ順位とする
 	// 同順位があった場合の次の順位はデータ個数が加算された順位とする
 	for (i = 0; i < RANKING_DATA - 1; i++) {
-		for (j = i + 1; j < RANKING_DATA; j++) {
+		for (j = i + 1; j < RANKING_DATA; j++) 
+		{
 			if (g_Ranking[i].score > g_Ranking[j].score)
 			{
 				g_Ranking[j].no++;
@@ -59,7 +63,7 @@ int SortSave::SaveRanking(void)
 	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
 	{
 		// ファイルオープン
-		if ((fopen_s(&fp, "dat/dat/rankingdata_HARD.txt", "w")) != 0)
+		if ((fopen_s(&fp, "dat/rankingdata_HARD.txt", "w")) != 0)
 		{
 			/* エラー処理 */
 			printf("Ranking Data Error\n");
@@ -70,7 +74,7 @@ int SortSave::SaveRanking(void)
 	// ランキングデータ分配列データを書き込む
 	for (int i = 0; i < RANKING_DATA; i++)
 	{
-		fprintf_s(fp, "%2d %10s %10d %10d%10d\n", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].score, sortSave.getRankingData(i).time, sortSave.getRankingData(i).time % 60);
+		fprintf_s(fp, "%2d %10s %10d %10d %10d\n", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].score, g_Ranking[i].timeMin, g_Ranking[i].timeSec);
 	}
 
 	//ファイルクローズ
@@ -86,7 +90,7 @@ int  SortSave::ReadRanking(void)
 	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::NORMAL)
 	{
 		//ファイルオープン
-		if ((fopen_s(&fp, "dat/rankingdata_HARD.txt", "r")) != 0)
+		if ((fopen_s(&fp, "dat/rankingdata.txt", "r")) != 0)
 		{
 			//エラー処理
 			printf("Ranking Data Error\n");
@@ -98,7 +102,7 @@ int  SortSave::ReadRanking(void)
 	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
 	{
 		// ファイルオープン
-		if ((fopen_s(&fp, "dat/rankingdata_HARD.txt", "w")) != 0)
+		if ((fopen_s(&fp, "dat/rankingdata_HARD.txt", "r")) != 0)
 		{
 			/* エラー処理 */
 			printf("Ranking Data Error\n");
@@ -109,7 +113,7 @@ int  SortSave::ReadRanking(void)
 	//ランキングデータ配分列データを読み込む
 	for (int i = 0; i < RANKING_DATA; i++)
 	{
-		fscanf_s(fp, "%2d %10s %10d %10d%10d\n", &g_Ranking[i].no, g_Ranking[i].name, &g_Ranking[i].score, sortSave.getRankingData(i).time, sortSave.getRankingData(i).time % 60);
+		fscanf_s(fp, "%2d %10s %10d %10d %10d", &g_Ranking[i].no, g_Ranking[i].name,sizeof(g_Ranking[i].name), &g_Ranking[i].score, &g_Ranking[i].timeMin, &g_Ranking[i].timeSec);
 	}
 
 	//ファイルクローズ
@@ -143,10 +147,18 @@ void SortSave::setScore(int i, int score)
 	}
 }
 
-void SortSave::setTimer(int i, int time)
-{
-	if (0 < time)
-	{
-		g_Ranking[i].time = GameData::Get_Total_Time() / 3600;
-	}
-}
+//void SortSave::setTimerMin(int i, int time)
+//{
+//	if (0 < time)
+//	{
+//		g_Ranking[i].timeMin = GameData::Get_Total_Time() / 3600;
+//	}
+//}
+
+//void SortSave::setTimerSec(int i, int time)
+//{
+//	if (0 < time)
+//	{
+//		g_Ranking[i].timeMin = (GameData::Get_Total_Time() % 3600) / 60;
+//	}
+//}

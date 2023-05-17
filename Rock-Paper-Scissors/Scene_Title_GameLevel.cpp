@@ -32,7 +32,6 @@ Scene_Title_GameLevel::Scene_Title_GameLevel()
 Scene_Title_GameLevel::~Scene_Title_GameLevel()
 {
 	//フォントデータを削除
-	SoundSystem::StopBGM(BGM::TITLE);
 	SetBackgroundColor(0, 0, 0);
 }
 
@@ -75,7 +74,7 @@ void Scene_Title_GameLevel::Draw() const
 	DrawTriangle(40, 355 + (T_selectnum * 50), 60, 370 + (T_selectnum * 50), 40, 385 + (T_selectnum * 50), GetColor(255, 0, 0), TRUE);
 
 	//デバッグ
-	DrawStringToHandle(10, 650, "RT + A で選択画面(開発)", 0xf, font_title);
+	//DrawStringToHandle(10, 650, "RT + A で選択画面(開発)", 0xf, font_title);
 }
 
 //シーンの変更
@@ -85,7 +84,6 @@ AbstractScene* Scene_Title_GameLevel::ChangeScene()
 	if (KeyManager::GetValue_RT() >= 40 && KeyManager::OnPadClicked(PAD_INPUT_A) == true)
 	{
 		return dynamic_cast<AbstractScene*> (new GameMainScene());
-		SoundSystem::StopBGM(BGM::TITLE);
 	}
 	//Aボタンで決定
 	else if (KeyManager::OnPadClicked(PAD_INPUT_A) == true)
@@ -94,17 +92,11 @@ AbstractScene* Scene_Title_GameLevel::ChangeScene()
 		{
 		case 0:/*通常モード*/
 			GameData::Set_DIFFICULTY(GAME_DIFFICULTY::NORMAL);
-			//return dynamic_cast<AbstractScene*> (new Scene_Story());
-			//return dynamic_cast<AbstractScene*> (new Scene_InputNamePlayer());
 			return dynamic_cast<AbstractScene*> (new Scene_InputNameRanking());
-			SoundSystem::StopBGM(BGM::TITLE);
 			break;
 		case 1:/*即死モード*/
 			GameData::Set_DIFFICULTY(GAME_DIFFICULTY::HARD);
-			//return dynamic_cast<AbstractScene*> (new Scene_Story());
-			//return dynamic_cast<AbstractScene*> (new Scene_InputNamePlayer());
 			return dynamic_cast<AbstractScene*> (new Scene_InputNameRanking());
-			SoundSystem::StopBGM(BGM::TITLE);
 			break;
 		default:
 			break;

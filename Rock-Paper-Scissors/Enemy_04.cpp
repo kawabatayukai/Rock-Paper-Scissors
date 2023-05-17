@@ -86,7 +86,7 @@ void Enemy_04::Update()
 	//特殊行動時や残りHPによってスピードが変わる
 	if (specialFlg == true)
 	{
-		speed = 25.0f;
+		speed = 20.0f;
 		specialTime++;
 	}
 	else if (hp <= 50)
@@ -95,7 +95,7 @@ void Enemy_04::Update()
 	}
 	else
 	{
-		speed = 1.5f;
+		speed = 2.0f;
 	}
 
 	//少しずつHP回復
@@ -175,11 +175,8 @@ void Enemy_04::Draw() const
 	//じゃん撃描画
 	Draw_Jangeki();
 
-	//残りHP表示
-	if (hp > 0) DrawFormatString((int)(x - 45), (int)(y - 130), GetColor(0, 255, 0), "HP : %d", hp);
-
 	//残りHP50以下の時に表示
-	if (hp <= 50) DrawFormatString((int)(x - 60), (int)(y - 160), GetColor(30, 30, 255), "スピードUP↑", hp);
+	if (hp <= 50) DrawFormatString((int)(x - 60), (int)(y - 130), GetColor(30, 30, 255), "スピードUP↑", hp);
 
 	//特殊効果時に表示
 	if (specialFlg == true) DrawFormatString((int)(x - 50), (int)(y - 160), GetColor(255, 30, 30), "特殊効果", hp);
@@ -228,7 +225,7 @@ void Enemy_04::Update_Jangeki()
 		if (specialFlg == false)
 		{
 			//プレイヤーの角度へ発射するジャン撃生成
-			if (frame_count % 70 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+			if (frame_count % 60 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 		}
 		else if (specialFlg == true)
 		{

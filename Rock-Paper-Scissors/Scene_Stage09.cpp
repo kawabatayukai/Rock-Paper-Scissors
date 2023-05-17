@@ -5,6 +5,7 @@
 #include "Scene_GameClear.h"
 #include"Scene_Stage10.h"
 #include"GameData.h"
+#include "SoundSystem.h"
 
 
 //デバッグモード
@@ -56,16 +57,22 @@ Scene_Stage09::Scene_Stage09(const Player* player)
 	obj_floor[9] = new Floor(560, 450, 120, 20, 0xd2d2d2);
 	obj_floor[10] = new Floor(560, 130, 120, 20, 0xd2d2d2);
 
+	//BGMロード
+	bgm = LoadSoundMem("Sound/stage09/stage09.mp3");
 }
 
 //デストラクタ
 Scene_Stage09::~Scene_Stage09()
 {
+	StopSoundMem(bgm);
 }
 
 //更新
 void Scene_Stage09::Update()
 {
+
+	if (CheckSoundMem(bgm) == 0) PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
+
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
@@ -383,12 +390,14 @@ AbstractScene* Scene_Stage09::ChangeScene()
 	}
 	if (IsEnd_DeathEnemy() == true)
 	{
+		
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(10));
 	}
 	//プレイヤーのHPが0以下
 	if (obj_player->IsDeathPlayer() == true)
 	{
+		
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(9));
 	}

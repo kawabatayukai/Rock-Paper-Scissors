@@ -13,6 +13,7 @@ private:
 	int T_selectnum = 0;
 
 	static int font_title;   //フォントハンドル
+	int bgm;
 public:
 
 	//コンストラクタ

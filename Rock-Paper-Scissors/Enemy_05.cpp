@@ -247,7 +247,7 @@ void Enemy_05::Update()
 //•`‰æ
 void Enemy_05::Draw() const
 {
-	DrawFormatString(600, 600, 0x00ff00, "%f", player_x);
+	//DrawFormatString(600, 600, 0x00ff00, "%f", player_x);
 	if (runanimfragL == FALSE && runanimfragR == FALSE)
 	{
 		//’†S‚©‚ç•`‰æ
@@ -273,8 +273,8 @@ void Enemy_05::Draw() const
 	reflection->Draw_reflectionJangeki();
 
 	//ƒeƒXƒg
-	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
-	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
+	/*if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
+	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);*/
 
 
 }

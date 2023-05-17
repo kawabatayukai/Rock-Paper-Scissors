@@ -34,7 +34,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
     //サウンド
     SoundSystem::LoadSounds_SE();
-    SoundSystem::LoadSounds_BGM();
+    //SoundSystem::LoadSounds_BGM();
 
     //FPS固定用
     FPS_Controll fps_ctrl(60);

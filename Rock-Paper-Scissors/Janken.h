@@ -1,5 +1,6 @@
 #pragma once
 #include"Jangeki_Base.h"
+#include"Janken_Star.h"
 
 //じゃんけんの状態
 enum class Jan_State
@@ -23,6 +24,7 @@ public:
 
 	void Update();        //更新
 	void Draw() const;    //描画
+	void Stars_Update();  //星
 
 	Jan_Result GetResult() const { return result; }  //じゃんけんの結果を返す
 
@@ -49,19 +51,21 @@ private:
 	Jan_Result result;       // じゃんけんの結果を格納する
 
 	int time = 0;            //カウンター
+	int star_time;
 	int p_image_x;           //プレイヤー描画ｘ座標
 	int e_image_x;           //敵描画ｘ座標
 
-
 //---------------------------------------------------------------
 	int image[3];            //画像
-	int image_backjan;          //じゃんけん中背景
+	int image_backjan;       //じゃんけん中背景
 
 	int image_hand;          //じゃんけん説明
 	int image_player;        //プレイヤーじゃんけん中
 
 	int image_enemy;
 	int image_back;
+	Janken_Star** stars;
+
 	int stage_num;           //呼び出し元のステージ番号
 
 	static int font_result;         //結果(WIN or LOSE or ONEMORE) 用フォント 

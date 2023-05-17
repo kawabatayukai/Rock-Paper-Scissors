@@ -55,8 +55,10 @@ Scene_Stage08::Scene_Stage08(const Player* player) : damage(5)
 	obj_floor[12] = new Floor(717, 470,  10,120, 0x00ff00);      //足場　右下
 	obj_floor[13] = new Floor(973, 470,  10,120, 0x00ff00);      //足場　右下
 	obj_floor[14] = new Floor(565, 475, 10, 120, 0x00ff00);      //足場　右下
-	obj_floor[15] = new Floor(820, 475, 10, 120, 0x00ff00);      //足場　右下
 
+
+
+	obj_floor[15] = new Floor(820, 475, 10, 120, 0x00ff00);      //足場　右下
 	obj_floor[16] = new Floor(311, 290, 100, 10,0x00ff00);      //足場　右下
 	obj_floor[17] = new Floor(565, 290, 105, 10,0x00ff00);      //足場　右下
 	obj_floor[18] = new Floor(817, 290, 108, 10,0x00ff00);      //足場　右下
@@ -79,16 +81,24 @@ Scene_Stage08::Scene_Stage08(const Player* player) : damage(5)
 
 	//生成
 	Item[0] = new Item_st8(600, 200, 20);
+
+
+	//BGMロード
+	bgm = LoadSoundMem("");
 }
 
 //デストラクタ
 Scene_Stage08::~Scene_Stage08()
 {
+	StopSoundMem(bgm);
 }
 
 //更新
 void Scene_Stage08::Update()
 {
+	//BGM再生
+	if (CheckSoundMem(bgm) == 0) PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
+
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{
