@@ -96,6 +96,8 @@ private:
 	float v = V;
 	float a = 0.6f;
 
+	static int teleport;
+
 	int form;
 
 	int image[10]; //‰æ‘œ

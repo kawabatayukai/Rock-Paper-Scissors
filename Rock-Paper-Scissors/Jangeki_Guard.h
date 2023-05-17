@@ -15,5 +15,7 @@ public:
 
 	virtual void Update()override;
 
+	bool CheckScreenOut() override;
+
 };
 

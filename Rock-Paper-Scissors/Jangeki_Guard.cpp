@@ -33,3 +33,8 @@ void Jangeki_Guard::Update()
 	//エフェクト
 	Update_Effect();
 }
+
+bool Jangeki_Guard::CheckScreenOut()
+{
+	return false;
+}

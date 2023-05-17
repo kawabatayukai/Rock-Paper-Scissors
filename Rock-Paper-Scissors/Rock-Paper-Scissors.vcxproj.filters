@@ -142,6 +142,9 @@
     <Filter Include="ソース ファイル\Scene\タイトル\ランキングゲームモード選択画面">
       <UniqueIdentifier>{f2530f34-e4e1-4317-8738-0db4abc8121c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Jangeki\ATフィールドじゃん">
+      <UniqueIdentifier>{56049f42-07fb-4d02-aee9-a690f9a07d41}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -358,7 +361,7 @@
       <Filter>ソース ファイル\Scene\タイトル\ランキングゲームモード選択画面</Filter>
     </ClCompile>
     <ClCompile Include="Jangeki_Guard.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Jangeki\ATフィールドじゃん</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -582,7 +585,7 @@
       <Filter>ソース ファイル\Scene\タイトル\ランキングゲームモード選択画面</Filter>
     </ClInclude>
     <ClInclude Include="Jangeki_Guard.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\Jangeki\ATフィールドじゃん</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
