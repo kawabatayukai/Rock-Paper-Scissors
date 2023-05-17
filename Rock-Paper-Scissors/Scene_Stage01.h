@@ -45,5 +45,7 @@ private:
 		TOUCH_JANKEN,    //接触じゃんけん
 	};
 	TUTORIAL_STATE Now_Tut_State;    //現在のチュートリアルの状況を保持
+
+	int bgm;
 };
 

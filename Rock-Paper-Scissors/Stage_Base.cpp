@@ -55,8 +55,7 @@ Stage_Base::Stage_Base() : blackout_time(0), Prev_EnemyType(Jan_Type::NONE), obj
 
 Stage_Base::~Stage_Base()
 {
-	//ƒTƒEƒ“ƒh‚ğíœ
-	Sound_Player::DeletePlayerSound();
+
 }
 
 //UI•`‰æ
@@ -125,6 +124,12 @@ void Stage_Base::DrawUI_ON_Enemy(const EnemyBase* enemy) const
 
 		index = 2;
 		bar_color = 0x0000ff;    //blue
+		break;
+
+	case Jan_Type::NONE:
+
+		index = 3;
+		bar_color = 0x8B52A1;    //blue
 		break;
 
 	default:

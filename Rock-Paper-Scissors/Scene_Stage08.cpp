@@ -81,16 +81,24 @@ Scene_Stage08::Scene_Stage08(const Player* player) : damage(5)
 
 	//生成
 	Item[0] = new Item_st8(600, 200, 20);
+
+
+	//BGMロード
+	bgm = LoadSoundMem("");
 }
 
 //デストラクタ
 Scene_Stage08::~Scene_Stage08()
 {
+	StopSoundMem(bgm);
 }
 
 //更新
 void Scene_Stage08::Update()
 {
+	//BGM再生
+	if (CheckSoundMem(bgm) == 0) PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
+
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::BEFORE)
 	{

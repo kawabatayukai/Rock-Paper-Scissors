@@ -91,9 +91,6 @@
     <Filter Include="ソース ファイル\GameMainScene\Stage_03">
       <UniqueIdentifier>{541f08c4-6dfa-4a35-a86b-63667d913571}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\GameMainScene\Stage_09">
-      <UniqueIdentifier>{7ef79df2-836f-4819-ae65-ab302c52ec6a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Sound">
       <UniqueIdentifier>{305c3d51-5374-4ef5-b4dc-53c801fe0160}</UniqueIdentifier>
     </Filter>
@@ -138,6 +135,9 @@
     </Filter>
     <Filter Include="ソース ファイル\FPSコントロール">
       <UniqueIdentifier>{7bc01875-e7e8-4e5d-a0cd-bb5a0511e458}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameMainScene\Stage_09">
+      <UniqueIdentifier>{7ef79df2-836f-4819-ae65-ab302c52ec6a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -38,6 +38,7 @@ private:
 	Jangeki_Base** Item;
 
 	int damage;
+	int bgm;
 };
 
 

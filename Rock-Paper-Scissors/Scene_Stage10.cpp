@@ -50,15 +50,21 @@ Scene_Stage10::Scene_Stage10(const Player* player)
 	//
 
 	reflection = new Jangeki_Reflection(0, 0, 0, 0, Jan_Type::ROCK);
+
+	//BGMロード
+	bgm[0] = LoadSoundMem("Sound/VSQPD_0077_Mary_Had_a_Little_Lamb_FC.mp3");
+	bgm[1] = LoadSoundMem("Sound/VSQPD_0046_Yankee_Doodle.mp3");
+	bgm[2] = LoadSoundMem("Sound/VSQPD_0048_London_Bridge.mp3");
+	bgm[3] = LoadSoundMem("Sound/sento.mp3");
 }
 
 //デストラクタ
 Scene_Stage10::~Scene_Stage10()
 {
-	SoundSystem::StopBGM(BGM::ENEMY_10_Form2BGM);
-	SoundSystem::StopBGM(BGM::ENEMY_10_Marry);
-	SoundSystem::StopBGM(BGM::ENEMY_10_Arupus);
-	SoundSystem::StopBGM(BGM::ENEMY_10_London);
+	for (int i = 0; i < 4; i++)
+	{
+		StopSoundMem(bgm[i]);
+	}
 }
 
 //更新
@@ -77,15 +83,15 @@ void Scene_Stage10::Update()
 		//BGM
 		if (interval % 10 == 0)
 		{
-			SoundSystem::PlayBGM(BGM::ENEMY_10_Arupus);
+			if (CheckSoundMem(bgm[1]) == 0) PlaySoundMem(bgm[0], DX_PLAYTYPE_LOOP);
 		}
 		if (interval % 300 == 0)
 		{
-			SoundSystem::PlayBGM(BGM::ENEMY_10_Marry);
+			if (CheckSoundMem(bgm[2]) == 0) PlaySoundMem(bgm[1], DX_PLAYTYPE_LOOP);
 		}
 		if (interval % 600 == 0)
 		{
-			SoundSystem::PlayBGM(BGM::ENEMY_10_London);
+			if (CheckSoundMem(bgm[3]) == 0) PlaySoundMem(bgm[2], DX_PLAYTYPE_LOOP);
 		}
 
 		obj_floor[3] = new Floor(100, 350, 120, 50);      //足場
@@ -114,12 +120,13 @@ void Scene_Stage10::Update()
 	case 2:
 
 		//BGM STOP
-		SoundSystem::StopBGM(BGM::ENEMY_10_Marry);
-		SoundSystem::StopBGM(BGM::ENEMY_10_Arupus);
-		SoundSystem::StopBGM(BGM::ENEMY_10_London);
+		for (int i = 0; i < 4; i++)
+		{
+			StopSoundMem(bgm[i]);
+		}
 
 		//BGM
-		SoundSystem::PlayBGM(BGM::ENEMY_10_Form2BGM);
+		if (CheckSoundMem(bgm[4]) == 0) PlaySoundMem(bgm[2], DX_PLAYTYPE_LOOP);
 
 		//obj_floor[3] = new Floor(81, 100, 120, 10, 22822);          //足場[3]～[15]
 		//obj_floor[4] = new Floor(81, 300, 120, 10, 22822);
@@ -590,9 +597,9 @@ AbstractScene* Scene_Stage10::ChangeScene()
 	/*敵のHPが0以下*/
 	if (obj_enemy->Get_Enemy10Form() == 1 && obj_enemy->IsDeathEnemy10() == true)
 	{
-		SoundSystem::StopBGM(BGM::ENEMY_10_Marry);
-		SoundSystem::StopBGM(BGM::ENEMY_10_Arupus);
-		SoundSystem::StopBGM(BGM::ENEMY_10_London);
+		StopSoundMem(bgm[0]);
+		StopSoundMem(bgm[1]);
+		StopSoundMem(bgm[2]);
 	}
 	if(obj_enemy->Get_Enemy10Form() == 2 && obj_enemy->IsDeathEnemy10() == true)
 	{
@@ -609,7 +616,6 @@ AbstractScene* Scene_Stage10::ChangeScene()
 
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(11));
-		SoundSystem::StopBGM(BGM::ENEMY_10_Form2BGM);
 	}
 
 	/*プレイヤーのHPが0以下*/
@@ -620,7 +626,6 @@ AbstractScene* Scene_Stage10::ChangeScene()
 	{
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(10));
-		SoundSystem::StopBGM(BGM::ENEMY_10_Form2BGM);
 	}
 
 #endif // DEBUG_OFF_10

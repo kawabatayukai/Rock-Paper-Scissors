@@ -39,6 +39,6 @@ private:
 
 	int hp = 50;//•œŠˆHP(”¼•ª‚Ã‚ÂŒ¸‚é)
 
-
+	int bgm;
 };
 
