@@ -22,12 +22,12 @@ EndScene::~EndScene()
 void EndScene::Update()
 {
 	//エンディング表示
-	if (++WaitTime < 950) PosY = 500 - WaitTime / 2;
+	if (++WaitTime < 2000) PosY = 500 - WaitTime*2 / 2;
 
 
 
 	//タイムの加算処理＆終了
-	if (++WaitTime > 950) GameState = 99;
+	if (++WaitTime > 2000) GameState = 99;
 	framecount++;
 }
 
@@ -35,23 +35,25 @@ void EndScene::Update()
 void EndScene::Draw() const
 {
 	SetFontSize(50);
-	DrawString(300, 100, "Thank You for Playing!!!", 0xffffff);
+	DrawString(300, 1380 + PosY, "Thank You for Playing!!!", 0xffffff);
 	SetFontSize(24);
-	DrawString(450, 170 + PosY, "タイトル　　　JankenWorld", 0xFFFFFF);
-	DrawString(450, 230 + PosY, "最終更新日　　2023年xx月xx日", 0xFFFFFF);
-	DrawString(450, 260 + PosY, "制作者　　　　国際電子ビジネス専門学校", 0xFFFFFF);
-	DrawString(250, 290 + PosY, "ステージ2,3,4,5,6 與那原 廉,宮城ジャスティン,玉寄 兼仁,備瀬 龍樹,新垣 大喜", 0xFFFFFF);
-	DrawString(250, 320 + PosY, "ステージ7,8,9,10  川畑  勇快,棚原  碧人,仲吉  彪流,與座  芳弘", 0xFFFFFF);
-	DrawString(450, 350 + PosY, "素材利用", 0xFFFFFF);
-	DrawString(350, 380 + PosY, "画像    ぴぽや倉庫 https://pipoya.net/sozai/", 0xFFFFFF);
-	DrawString(350, 410 + PosY, "画像    OKUMONO URL https://sozaino.site/", 0xFFFFFF);
-	DrawString(350, 440 + PosY, "画像    illustAC URL https://www.ac-illust.com/", 0xFFFFFF);
-	DrawString(350, 470 + PosY, "画像    いらすとや URL https://www.irasutoya.com/", 0xFFFFFF);
-	DrawString(350, 500 + PosY, "BGM/SE　MusMus https://musmus.main.jp", 0xFFFFFF);
-	DrawString(350, 530 + PosY, "BGM/SE　効果音ラボ https://soundeffect-lab.info/sound/battle/", 0xFFFFFF);
-	DrawString(350, 565 + PosY, "BGM/SE　springin https://www.springin.org/", 0xFFFFFF);
-	DrawString(350, 600 + PosY, "BGM/SE　無料効果音で遊ぼう！ https://taira-komori.jpn.org/index.html", 0xFFFFFF);
-	DrawString(350, 630 + PosY, "BGM/SE　魔王魂 https://maou.audio/", 0xFFFFFF);
+	DrawString(350, 170 + PosY, "タイトル　　　JankenWorld", 0xFFFFFF);
+	DrawString(350, 200 + PosY, "最終更新日　　2023年xx月xx日", 0xFFFFFF);
+	DrawString(350, 230 + PosY, "制作者　　　　国際電子ビジネス専門学校", 0xFFFFFF);
+	DrawString(150, 260 + PosY, "ステージ2,3,4,5,6 與那原 廉,宮城ジャスティン,玉寄 兼仁,備瀬 龍樹,新垣 大喜", 0xFFFFFF);
+	DrawString(150, 290 + PosY, "ステージ7,8,9,10  川畑  勇快,棚原  碧人,仲吉  彪流,與座  芳弘", 0xFFFFFF);
+	DrawString(350, 320 + PosY, "素材利用", 0xFFFFFF);
+	DrawString(250, 350 + PosY, "画像  ぴぽや倉庫 https://pipoya.net/sozai/", 0xFFFFFF);
+	DrawString(250, 380 + PosY, "画像  OKUMONO URL https://sozaino.site/", 0xFFFFFF);
+	DrawString(250, 410 + PosY, "画像  illustAC URL https://www.ac-illust.com/", 0xFFFFFF);
+	DrawString(250, 440 + PosY, "画像  いらすとや URL https://www.irasutoya.com/", 0xFFFFFF);
+	DrawString(250, 470 + PosY, "画像  Unishar-ユニシャー URL https://miyagame.net/wallpaper/", 0xFFFFFF);
+	DrawString(250, 500 + PosY, "BGM/SE　MusMus URL https://musmus.main.jp", 0xFFFFFF);
+	DrawString(250, 530 + PosY, "BGM/SE　効果音ラボ URL https://soundeffect-lab.info/sound/battle/", 0xFFFFFF);
+	DrawString(250, 565 + PosY, "BGM/SE　springin URL https://www.springin.org/", 0xFFFFFF);
+	DrawString(250, 600 + PosY, "BGM/SE　無料効果音で遊ぼう！ URL https://taira-komori.jpn.org/index.html", 0xFFFFFF);
+	DrawString(250, 630 + PosY, "BGM/SE　魔王魂 URL https://maou.audio/", 0xFFFFFF);
+	DrawString(250, 660 + PosY, "BGM/SE　甘茶の音楽工房 URL https://amachamusic.chagasi.com/", 0xFFFFFF);
 
 
 
