@@ -11,6 +11,7 @@
 #include"Jangeki_Player.h"
 #include "SoundSystem.h"
 #include"Jangeki_Bounds.h"
+#include"Jangeki_Guard.h"
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_10::Enemy_10(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
@@ -495,11 +496,9 @@ void Enemy_10::Update()
 	//{
 	//	dir = 1;
 	//}
-
 	//x += dir * speed;
 
 	/********************   ジャンプ関係   ********************/
-
 	//if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
 	//{
 	//	g_add = -21.5f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
@@ -514,9 +513,7 @@ void Enemy_10::Update()
 	//old_y = y;                    //1フレーム前のｙ座標
 	//y += y_add;                   //落下距離をｙ座標に加算する
 	//g_add = _GRAVITY;              //重力加速度を初期化する
-
 	/**********************************************************/
-
 }
 
 //描画
@@ -760,11 +757,14 @@ void Enemy_10::Update_Jangeki()
 		//配列の jan_count 番目がnullptr（空要素）ならそれ以上処理しない
 		if (obj_jangeki[jan_count] == nullptr) break;
 
+		//敵の座標をセット
+		obj_jangeki[jan_count]->SetEnemyLocation(x, y);
+
 		obj_jangeki[jan_count]->Update();
 
 		//ホーミングじゃん撃であればプレイヤーの座標をセットする
 		obj_jangeki[jan_count]->SetTargetLocation(player_x, player_y);
-
+		
 		//画面外で削除する
 		if (obj_jangeki[jan_count]->CheckScreenOut() == true)
 		{
@@ -781,6 +781,10 @@ void Enemy_10::Update_Jangeki()
 	{
 		float radius = 35.5f;   //半径
 		float speed = /* - */3.0f;     //スピード
+
+		static int interval;
+		interval++;
+		static int teleport = 200;
 
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
@@ -891,6 +895,12 @@ void Enemy_10::Update_Jangeki()
 					//reflection->falseFlg();
 
 				/************************************************************************/
+
+				/*********************** ↓↓ 生成( ATフィールド ) ↓↓ ***********************/
+
+				if (frame_count % 500 == 0)Jan_360Guard(jan_count, radius, type);
+
+				/************************************************************************/
 				break;
 
 			default:
@@ -914,6 +924,19 @@ void Enemy_10::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
 		double angle = static_cast<double>((20.0 * i) * (M_PI / 180));
 
 		obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
+	}
+}
+
+//360度守り
+void Enemy_10::Jan_360Guard(int count, float rad, Jan_Type type)
+{
+	for (int i = count; i < (count + 5); i++)
+	{
+		
+		double angle = static_cast<double>((200.0 * i) * (M_PI / 180));
+
+		obj_jangeki[i] = new Jangeki_Guard(x, y, rad, 0, type, cosf(angle) * 100, sinf(angle) * 100);
+
 	}
 }
 

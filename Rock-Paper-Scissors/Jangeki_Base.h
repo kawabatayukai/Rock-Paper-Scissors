@@ -71,6 +71,9 @@ public:
 	//追跡対象の座標をセット　プレイヤーの座標を取りたいときに使えます
 	void SetTargetLocation(const float target_x, const float target_y);
 
+	//敵の座標をセット
+	void SetEnemyLocation(const float enemy_x, const float enemy_y);
+
 	//じゃん撃同士の当たり判定
 	bool Hit_Jangeki(const Jangeki_Base* jangeki);
 
@@ -79,7 +82,6 @@ public:
 
 	//発動するエフェクトの種類（player）
 	EFFECT_TYPE GetPlayerEffect() const { return player_effect; }
-
 
 	float GetOffsetEffect_X() const { return effect_x; }
 	float GetOffsetEffect_Y() const { return effect_y; }
@@ -117,6 +119,8 @@ protected:
 	float target_x = 0; //対象のｘ座標
 	float target_y = 0; //対象のｙ座標
 
+	float enemy_x = 0; //対象のｘ座標
+	float enemy_y = 0; //対象のｙ座標
 
 	int index_effect =0;              //画像No
 	int index_max = 0;

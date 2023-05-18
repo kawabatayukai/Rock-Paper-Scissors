@@ -8,6 +8,7 @@
 #include"Effect_Enemy.h"
 #include"Jangeki_reflection.h"
 #include"Sound_Jangeki.h"
+#include"Sound_Janken.h"
 #include"Enemy_Death.h"
 
 //ステージのベース
@@ -93,6 +94,7 @@ private:
 	static int font_score;                    //Score描画用フォント
 
 	Sound_Jangeki** obj_sejan;                //SE
+	Sound_Janken* se_Janken;
 
 	Enemy_Death* obj_death;                   //死亡時に生成する
 	bool stage09_isclear = false;
