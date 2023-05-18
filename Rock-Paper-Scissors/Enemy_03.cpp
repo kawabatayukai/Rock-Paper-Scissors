@@ -163,7 +163,7 @@ void Enemy_03::Update()
 			g_add = -18.f;    //初期-21.5f,重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 			land_flg = false;  //地面についていない
 			SoundSystem::PlaySE(SE::PLAYER_JUMP);//JUMP時SE鳴らす
-			//speed = 2.8f;
+			speed = 2.8f;
 		}
 	}
 	//じゃん撃更新・生成
@@ -226,32 +226,30 @@ void Enemy_03::Update()
 	}
 	else {
 
-		
-		
 		//enemyのxが475以下の時
-		if (x <= 475) {
+		if ( x <= 280 && x >= 50 ) {
 			
 
 			//前回より加速する
-			speed = 10.5f;
+			speed = 4.3f;
 
 		}
 		//enemyのxが950以下で475以上の時
-		else if (x <= 950 && x >= 475) {
+		else if (x >= 70 && x <= 1130) {
 
 
 			//前回より減速する
-			speed = 8.5f;
+			speed = 9.5f;
 			
 
 		}
-		//enemyのxが950以上の時
-		else if (x >= 950) {
 
+		//enemyのxが950以上の時
+		else if (x <= 1150 && x >= 970) {
 
 
 			//前回より加速する
-			speed = 10.5f;
+			speed = 4.3f;
 
 		}
 		
@@ -259,7 +257,7 @@ void Enemy_03::Update()
 		else
 		{
 			
-			speed = 1.5f;
+			speed = 2.8f;
 
 
 		}
@@ -276,8 +274,8 @@ void Enemy_03::Update()
 		if (count == 0)
 		{
 			//target_x = GetRand(1170) + 70;
-			target_x = GetRand(60) + 70;
-			target_x = GetRand(1130) + 70;
+			target_x = GetRand(60) + 100;
+			target_x = GetRand(1130) + 100;
 			//if (x==1000)
 			//{
 			//	count = 1;
@@ -301,6 +299,15 @@ void Enemy_03::Update()
 		//x座標が目標と不一致
 		if (x != target_x)
 		{
+
+			//ジャンプしているとき
+			if (moveinfo[current].jumpflg == 0) {
+
+				//speedがup,足場に乗せるための調整
+				speed = 4.3f;
+
+			}
+
 			//目標の方が大きい（目標は右方向）
 			if (x < target_x)
 			{
@@ -357,14 +364,15 @@ void Enemy_03::Update()
 		x = move_x;
 		y = move_y;
 
-		//前回いたxと今のxが一致したら目標座標をランダムに+20する
-		if (old_x == x)
+		//前回いたxと今のxが一致したら目標座標をランダムに+する
+		if (old_x == x  )
 		{
 			//target_x = GetRand(1170) + 70;
 
-			target_x = GetRand(60) + 70;
-			target_x = GetRand(1130) + 70;
 
+			target_x = GetRand(60) + 100;
+			target_x = GetRand(1130) + 100;
+			speed = 2.8f;
 
 		}
 
@@ -688,6 +696,12 @@ void Enemy_03::Update_Jangeki()
 
 			//尾行弾
 			if (frame_count % 85 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+
+			//追加,属性を生成//
+			Jan_Type type = static_cast<Jan_Type>(GetRand(0));//グーのみ
+
+			//バウンド弾
+			if (frame_count % 55 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
 			
 		 }
 		//HPが85以下で46以上の時

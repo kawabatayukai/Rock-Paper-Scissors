@@ -22,23 +22,25 @@ Enemy_10::Enemy_10(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	form = 1;
 
-	Rimage = LoadGraph("images/stage09/Stage9_1.png");	//反射ON
-	Limage = LoadGraph("images/stage09/Stage9.png");		//反射OFF
-
 	ded_Image = LoadGraph("images/ステージ10敵の倒れ顔だけ画像.png");
 
-	//image = LoadGraph("images/tyokitest.png");
 	if (LoadDivGraph("images/ステージ10敵の画像.png", 10, 5, 2, 100, 100, image) == -1);
 
+	/*テレポートのエフェクト*/
 	LoadDivGraph("images/stage09/teleport2.png", 15, 15, 1, 120, 150, img_teleport);
 	LoadDivGraph("images/stage09/teleport22.png", 15, 15, 1, 120, 150, img_teleport2);
 
 	Init_Jangeki();       //じゃん撃を用意
 
-	/*反射弾*/
-	reflection = new Jangeki_Reflection(x, y, w, h, Jan_Type::ROCK);
-	reflection->Init_reflectionJangeki();
+	se_death = LoadSoundMem("Sound/Janken/咆哮.mp3");
 
+	/*反射*/
+	//Rimage = LoadGraph("images/stage09/Stage9_1.png");	//反射ON
+	//Limage = LoadGraph("images/stage09/Stage9.png");		//反射OFF
+
+	/*反射弾*/
+	//reflection = new Jangeki_Reflection(x, y, w, h, Jan_Type::ROCK);
+	//reflection->Init_reflectionJangeki();
 }
 
 //デストラクタ
@@ -113,8 +115,8 @@ void  Enemy_10::Move()
 						g_add = -25.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 						land_flg = false;  //地面についていない
 					}
-
-					if (land_flg == false) //ジャンプ中の加速
+					/*ジャンプ中の加速*/
+					if (land_flg == false) 
 					{
 						if (v < 15) //加速上限
 						{
@@ -160,8 +162,8 @@ void  Enemy_10::Move()
 						g_add = -25.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 						land_flg = false;  //地面についていない
 					}
-
-					if (land_flg == false) //ジャンプ中の加速
+					/*ジャンプ中の加速*/
+					if (land_flg == false) 
 					{
 						if (v < 15) //加速上限
 						{
@@ -249,8 +251,6 @@ void  Enemy_10::Move()
 					x = 160;
 					y = 430;
 
-					
-
 					old_y = y;
 					break;
 				
@@ -314,7 +314,7 @@ void  Enemy_10::Move()
 						{
 							hp += 4;
 						}
-						 if (hp > 100)
+						if (hp > 100)
 						{
 							hp = 100;
 						}
@@ -342,7 +342,7 @@ void  Enemy_10::Move()
 						{
 							hp += 4;
 						}
-						 if (hp > 100)
+						if (hp > 100)
 						{
 							hp = 100;
 						}
@@ -360,8 +360,8 @@ void  Enemy_10::Move()
 						g_add = -25.0f;    //重力加速度をマイナス値に　　下げるほどジャンプ力アップ
 						land_flg = false;  //地面についていない
 					}
-
-					if (land_flg == false) //ジャンプ中の加速
+					/*ジャンプ中の加速*/
+					if (land_flg == false) 
 					{
 						if (v < 15) //加速上限
 						{
@@ -398,7 +398,6 @@ void  Enemy_10::Move()
 
 		if (animtimer / 3 % 15 == 14) 
 		{
-
 			if (anim_count == 0)
 			{
 				animtimer = 0;
@@ -410,11 +409,11 @@ void  Enemy_10::Move()
 				animflg = false;
 				anim_count = 0;
 			}
-
 		}
 	}
 }
 
+/*第二形態への移行までの間の処理*/
 void Enemy_10::Interval()
 {
 	//点滅
@@ -455,18 +454,19 @@ void Enemy_10::Update()
 	//敵のHPが0以下の時、"死んだ"状態に
 	if (this->hp <= 0)enemy_state = ENEMY_STATE10::DEATH;
 
-
 	//じゃん撃更新・生成
 	Update_Jangeki();
 
 	//じゃん撃更新・生成(反射弾)
-	reflection->Update_reflection();
+	//reflection->Update_reflection();
 
 	Move(); //敵の動き
 
 	/*死亡時の処理*/
 	if (enemy_state == ENEMY_STATE10::DEATH)
 	{
+		if (CheckSoundMem(se_death) == 0) PlaySoundMem(se_death, DX_PLAYTYPE_BACK);
+
 		static bool isJumped = false;
 
 		if (land_flg == false && isJumped == false) land_flg = true;
@@ -483,20 +483,11 @@ void Enemy_10::Update()
 
 		if (y > 730.f)
 		{
+			StopSoundMem(se_death);
 			enemy_state = ENEMY_STATE10::DEATH_END;
 		}
 		Init_Jangeki(); //ジャン撃を消す
 	 }
-
-	//if (x + (w / 2) == (1280 - 20))
-	//{
-	//	dir = -1;
-	//}
-	//else if (x - (w / 2) == (20))
-	//{
-	//	dir = 1;
-	//}
-	//x += dir * speed;
 
 	/********************   ジャンプ関係   ********************/
 	//if (land_flg == true && GetRand(30) == 3)    //GetRand(30) == 3　のところがジャンプの条件
@@ -527,7 +518,7 @@ void Enemy_10::Draw() const
 
 		//じゃん撃描画
 		Draw_Jangeki();
-		reflection->Draw_reflectionJangeki(); //反射弾描画
+		//reflection->Draw_reflectionJangeki(); //反射弾描画
 
 		/*テレポート時のアニメーション*/
 		if (animflg == true)
@@ -590,8 +581,8 @@ void  Enemy_10::EnemySwitch()
 			break;
 		}
 
-		//case 0: //止まっている
-
+		/*止まっている*/
+		//case 0: 
 		//   /*     左向き            接地                                           押されてない   */
 		//	if (dir == 0 && land_flg == true && KeyManager::OnPadPressed(PAD_INPUT_RIGHT) == FALSE)
 		//	{
@@ -741,8 +732,6 @@ void  Enemy_10::EnemyChangeMoveimg()
 			enemyCount = 0;
 		}
 	}
-	//enemy_Image = enemy_Image + dir * 4;
-	//
 }
 
 
@@ -781,10 +770,6 @@ void Enemy_10::Update_Jangeki()
 	{
 		float radius = 35.5f;   //半径
 		float speed = /* - */3.0f;     //スピード
-
-		static int interval;
-		interval++;
-		static int teleport = 200;
 
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
@@ -916,12 +901,13 @@ void Enemy_10::Update_Jangeki()
 	}
 }
 
+/*敵の形態の取得*/
 int Enemy_10::Get_Enemy10Form()
 {
 	return form;
 }
 
-//360度発射
+/*360度発射*/
 void Enemy_10::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
 {
 	for (int i = count; i < (count + 18); i++)
@@ -932,7 +918,7 @@ void Enemy_10::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
 	}
 }
 
-//360度守り
+/*ATフィールド*/
 void Enemy_10::Jan_360Guard(int count, float rad, Jan_Type type)
 {
 	if (form == 1) {
@@ -958,18 +944,21 @@ void Enemy_10::Jan_360Guard(int count, float rad, Jan_Type type)
 	}
 }
 
-bool Enemy_10::Getflg()
-{
-	return rflg;
-}
-void Enemy_10::Tflg()
-{
-	rflg = true;
-}
-void Enemy_10::Fflg()
-{
-	rflg = false;
-}
+/*反射*/
+//bool Enemy_10::Getflg()
+//{
+//	return rflg;
+//}
+//void Enemy_10::Tflg()
+//{
+//	rflg = true;
+//}
+//void Enemy_10::Fflg()
+//{
+//	rflg = false;
+//}
+
+/*敵のHP*/
 void Enemy_10::HP()
 {
 	if (hp <= 0)

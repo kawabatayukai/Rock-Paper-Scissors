@@ -55,21 +55,28 @@ public:
 	/*画像の動作変更*/
 	void EnemyChangeMoveimg();
 
+	/*敵の形態の取得*/
 	int Get_Enemy10Form();
 
+	/*第二形態への移行までの間の処理*/
 	void Interval();
 
+	/*360度発射*/
 	void Jan_360degrees(int count, float rad, float speed, Jan_Type type);
 
+	//ATフィールド
 	void Jan_360Guard(int count, float rad, Jan_Type type);
 
+	/*敵のHP*/
 	void HP();
 
-	bool Getflg();
+	/*反射*/
+	/*bool Getflg();
 	void Tflg();
-	void Fflg();
+	void Fflg();*/
 
-	Jangeki_Reflection* reflection;
+	/*反射*/
+	//Jangeki_Reflection* reflection;
 
 	float Get_OldY();                   //old_yの取得関数
 	float Get_Y();                      //yの取得
@@ -96,16 +103,16 @@ private:
 	float v = V;
 	float a = 0.6f;
 
-	static int teleport;
+	int se_death; //死亡時のSE
 
-	int form;
+	int form; //敵の形態
 
 	int image[10]; //画像
 
 	int Rimage;
 	int Limage;
 
-	int ded_Image;
+	int ded_Image; //死亡時の画像
 
 	int jangeki_Set; //じゃん撃セット用変数
 
@@ -155,5 +162,5 @@ private:
 
 	int anim_count = 0;  //アニメーション回数
 
-	ENEMY_STATE10 enemy_state;
+	ENEMY_STATE10 enemy_state; //敵の状態
 };

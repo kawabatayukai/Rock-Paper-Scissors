@@ -7,7 +7,7 @@
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_08::Enemy_08(float x, float y, Jan_Type type) : EnemyBase(x, y, 90.0f, 90.0f, type)
 {	
-	speed = 10.0f;
+	speed = 11.0f;
 	dir = 1;
 	hp = 100;
 
@@ -90,8 +90,8 @@ void Enemy_08::Draw() const
 	//じゃん撃描画
 	Draw_Jangeki();
 
-	DrawFormatString(100, 200, 0x000000, "%f", x);
-	DrawFormatString(100, 250, 0x000000, "%f", old_x);
+	//DrawFormatString(100, 200, 0x000000, "%f", x);
+	//DrawFormatString(100, 250, 0x000000, "%f", old_x);
 }
 
 //じゃん撃生成・更新
@@ -136,5 +136,7 @@ void Enemy_08::Update_Jangeki()
 void Enemy_08::MAX()
 {
 
-	hp = 100;
+	hp += 50;
+	if (GetHP() >= 100)
+		hp = 100;
 }
