@@ -82,9 +82,6 @@
     <Filter Include="ソース ファイル\GameMainScene\GameData">
       <UniqueIdentifier>{9f06c314-6ab2-4a50-a430-f3d9e3eb4ddf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ランキング">
-      <UniqueIdentifier>{dbc2c324-e103-450b-adb4-28e0277e64aa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\CharaBase">
       <UniqueIdentifier>{69d52d54-be0e-45b2-a843-52ce30cee56e}</UniqueIdentifier>
     </Filter>
@@ -118,9 +115,6 @@
     <Filter Include="ソース ファイル\Scene\タイトル\ゲームモード選択画面">
       <UniqueIdentifier>{4190909f-1bfe-4f1a-a0ac-c796179ce443}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ランキング\並び替え">
-      <UniqueIdentifier>{efbdcd41-5965-4181-89fe-34c39e83ebed}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Scene\名前入力画面">
       <UniqueIdentifier>{12e27910-5930-45ed-9cd2-b2402931e747}</UniqueIdentifier>
     </Filter>
@@ -144,6 +138,9 @@
     </Filter>
     <Filter Include="ソース ファイル\Scene\ランキング画面">
       <UniqueIdentifier>{345c9015-90b6-454f-a414-b64769a069d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\ランキング画面\並び替え">
+      <UniqueIdentifier>{efbdcd41-5965-4181-89fe-34c39e83ebed}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -328,7 +325,7 @@
       <Filter>ソース ファイル\Scene\名前入力画面</Filter>
     </ClCompile>
     <ClCompile Include="SortSave.cpp">
-      <Filter>ランキング\並び替え</Filter>
+      <Filter>ソース ファイル\Scene\ランキング画面\並び替え</Filter>
     </ClCompile>
     <ClCompile Include="Scene_Ranking.cpp">
       <Filter>ソース ファイル\Scene\ランキング画面</Filter>
@@ -552,7 +549,7 @@
       <Filter>ソース ファイル\Scene\名前入力画面</Filter>
     </ClInclude>
     <ClInclude Include="SortSave.h">
-      <Filter>ランキング\並び替え</Filter>
+      <Filter>ソース ファイル\Scene\ランキング画面\並び替え</Filter>
     </ClInclude>
     <ClInclude Include="Scene_Ranking.h">
       <Filter>ソース ファイル\Scene\ランキング画面</Filter>
