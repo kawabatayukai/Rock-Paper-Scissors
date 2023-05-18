@@ -90,8 +90,8 @@ void Enemy_08::Draw() const
 	//‚¶‚á‚ñŒ‚•`‰æ
 	Draw_Jangeki();
 
-	DrawFormatString(100, 200, 0x000000, "%f", x);
-	DrawFormatString(100, 250, 0x000000, "%f", old_x);
+	//DrawFormatString(100, 200, 0x000000, "%f", x);
+	//DrawFormatString(100, 250, 0x000000, "%f", old_x);
 }
 
 //‚¶‚á‚ñŒ‚¶¬EXV
