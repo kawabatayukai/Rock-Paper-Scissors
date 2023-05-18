@@ -21,7 +21,7 @@
 Scene_Stage10::Scene_Stage10(const Player* player)
 {
 	//制限時間をセット
-	GameData::Set_TimeLimit(4300);
+	GameData::Set_TimeLimit(10800);
 
 	//プレイヤー情報が渡されていれば
 	if (player != nullptr)
@@ -83,15 +83,15 @@ void Scene_Stage10::Update()
 		//BGM
 		if (interval % 10 == 0)
 		{
-			if (CheckSoundMem(bgm[1]) == 0) PlaySoundMem(bgm[0], DX_PLAYTYPE_LOOP);
+			if (CheckSoundMem(bgm[1]) == 0) PlaySoundMem(bgm[1], DX_PLAYTYPE_LOOP);
 		}
 		if (interval % 300 == 0)
 		{
-			if (CheckSoundMem(bgm[2]) == 0) PlaySoundMem(bgm[1], DX_PLAYTYPE_LOOP);
+			if (CheckSoundMem(bgm[0]) == 0) PlaySoundMem(bgm[0], DX_PLAYTYPE_LOOP);
 		}
 		if (interval % 600 == 0)
 		{
-			if (CheckSoundMem(bgm[3]) == 0) PlaySoundMem(bgm[2], DX_PLAYTYPE_LOOP);
+			if (CheckSoundMem(bgm[2]) == 0) PlaySoundMem(bgm[2], DX_PLAYTYPE_LOOP);
 		}
 
 		obj_floor[3] = new Floor(100, 350, 120, 50);      //足場
@@ -120,13 +120,13 @@ void Scene_Stage10::Update()
 	case 2:
 
 		//BGM STOP
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < 3; i++)
 		{
 			StopSoundMem(bgm[i]);
 		}
 
 		//BGM
-		if (CheckSoundMem(bgm[4]) == 0) PlaySoundMem(bgm[2], DX_PLAYTYPE_LOOP);
+		if (CheckSoundMem(bgm[3]) == 0) PlaySoundMem(bgm[3], DX_PLAYTYPE_LOOP);
 
 		//obj_floor[3] = new Floor(81, 100, 120, 10, 22822);          //足場[3]～[15]
 		//obj_floor[4] = new Floor(81, 300, 120, 10, 22822);

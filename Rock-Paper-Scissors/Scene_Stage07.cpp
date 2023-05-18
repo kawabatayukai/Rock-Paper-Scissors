@@ -15,7 +15,7 @@
 Scene_Stage07::Scene_Stage07(const Player* player)
 {
 	//制限時間をセット
-	GameData::Set_TimeLimit(6000);
+	GameData::Set_TimeLimit(10800);
 
 
 	//プレイヤー情報が渡されていれば
@@ -53,7 +53,7 @@ Scene_Stage07::Scene_Stage07(const Player* player)
 	image_spotlight = LoadGraph("images/stage07/soptlight.png");
 
 	//BGMロード
-	bgm = LoadSoundMem("Sound/stage07/RPG_Battle_04.mp3");
+	bgm = LoadSoundMem("Sound/stage07/maou_game_battle29.mp3");
 }
 
 //デストラクタ
