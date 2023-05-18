@@ -29,8 +29,21 @@ Scene_Stage04::Scene_Stage04(const Player* player)
 		obj_player = new Player(260, 670);
 	}
 
+	first_Type = GetRand(2);
+
 	//ìGÇê∂ê¨
-	obj_enemy = new Enemy_04(1100, 360, Jan_Type::SCISSORS);
+	switch (first_Type)
+	{
+	case 0:
+		obj_enemy = new Enemy_04(1100, 360, Jan_Type::ROCK);
+		break;
+	case 1:
+		obj_enemy = new Enemy_04(1100, 360, Jan_Type::SCISSORS);
+		break;
+	case 2:
+		obj_enemy = new Enemy_04(1100, 360, Jan_Type::PAPER);
+		break;
+	}
 
 	//è∞ÅEï«ÇÃópà”
 	Init_Floor(STAGE_04_FLOOR);
