@@ -44,7 +44,7 @@ Scene_Stage08::Scene_Stage08(const Player* player) : damage(5)
 	obj_floor[0] = new Floor(0, 700, 1280, 20,0x00ff00);        //床
 	obj_floor[1] = new Floor(0, -300, 20, 1720);           //壁（左）
 	obj_floor[2] = new Floor(1260, -300, 20, 1720);           //壁（右）
-	obj_floor[3] = new Floor(-9999, -9999, 100, 10,0x000000);      //足場　下1
+	obj_floor[3] = new Floor(0, -350, 1280, 0,0x000000);      //足場　下1
 	obj_floor[4] = new Floor(465, 590, 105, 10,0x00ff00);      //足場　下2
 	obj_floor[5] = new Floor(717, 590, 107, 10,0x00ff00);      //足場　下3
 	obj_floor[6] = new Floor(-9999, -9999, 110, 10,0x000000);      //足場　下4
@@ -382,7 +382,7 @@ void Scene_Stage08::Update()
 		if (obj_player->Hit_Jangeki(Item[i]) == true)
 		{
 			//当たった時
-			damage += 15;
+			damage += 8;
 
 			delete Item[i];
 			Item[i] = nullptr;
@@ -495,7 +495,7 @@ AbstractScene* Scene_Stage08::ChangeScene()
 void Scene_Stage08::AfterJanken_WIN()
 {
 	obj_player->SetX(100);
-	damage += 5;
+	damage += 2;
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）

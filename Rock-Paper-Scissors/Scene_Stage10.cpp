@@ -46,9 +46,6 @@ Scene_Stage10::Scene_Stage10(const Player* player)
 	obj_floor[1] = new Floor(0, 0, 20, 1720);           //壁（左）
 	obj_floor[2] = new Floor(1260, 0, 20, 1720);           //壁（右）
 
-	//obj_floor[3] = new Floor(1000, 100, 120, 50);      //足場	
-	//
-
 	reflection = new Jangeki_Reflection(0, 0, 0, 0, Jan_Type::ROCK);
 
 	//BGMロード
@@ -94,24 +91,22 @@ void Scene_Stage10::Update()
 			if (CheckSoundMem(bgm[2]) == 0) PlaySoundMem(bgm[2], DX_PLAYTYPE_LOOP);
 		}
 
-		obj_floor[3] = new Floor(100, 350, 120, 50);      //足場
-		obj_floor[4] = new Floor(1000, 350, 120, 50);      //足場
+		/*足場*/
+		obj_floor[3] = new Floor(100, 350, 120, 50);      
+		obj_floor[4] = new Floor(1000, 350, 120, 50);      
 
-		obj_floor[5] = new Floor(0, 700, 1280, 20);        //床
-
-		obj_floor[6] = new Floor(0, 700, 1280, 20);        //床
-		obj_floor[7] = new Floor(0, 700, 1280, 20);        //床
-
-		obj_floor[8] = new Floor(0, 700, 1280, 20);        //床
-		obj_floor[9] = new Floor(0, 700, 1280, 20);        //床
-		obj_floor[10] = new Floor(0, 700, 1280, 20);        //床
-
-		obj_floor[11] = new Floor(0, 700, 1280, 20);        //床
-		obj_floor[12] = new Floor(0, 700, 1280, 20);        //床
-
-		obj_floor[13] = new Floor(0, 700, 1280, 20);        //床
-		obj_floor[14] = new Floor(0, 700, 1280, 20);        //床
-		obj_floor[15] = new Floor(0, 700, 1280, 20);        //床
+		/*床*/
+		obj_floor[5] = new Floor(0, 700, 1280, 20);        
+		obj_floor[6] = new Floor(0, 700, 1280, 20);        
+		obj_floor[7] = new Floor(0, 700, 1280, 20);        
+		obj_floor[8] = new Floor(0, 700, 1280, 20);        
+		obj_floor[9] = new Floor(0, 700, 1280, 20);       
+		obj_floor[10] = new Floor(0, 700, 1280, 20);        
+		obj_floor[11] = new Floor(0, 700, 1280, 20);        
+		obj_floor[12] = new Floor(0, 700, 1280, 20);        
+		obj_floor[13] = new Floor(0, 700, 1280, 20);       
+		obj_floor[14] = new Floor(0, 700, 1280, 20);        
+		obj_floor[15] = new Floor(0, 700, 1280, 20);       
 		break;
 
 		/***********
@@ -128,34 +123,17 @@ void Scene_Stage10::Update()
 		//BGM
 		if (CheckSoundMem(bgm[3]) == 0) PlaySoundMem(bgm[3], DX_PLAYTYPE_LOOP);
 
-		//obj_floor[3] = new Floor(81, 100, 120, 10, 22822);          //足場[3]～[15]
-		//obj_floor[4] = new Floor(81, 300, 120, 10, 22822);
-		//obj_floor[5] = new Floor(81, 500, 120, 10, 22822);
-
-		//obj_floor[6] = new Floor(333, 200, 120, 10, 22822);
-		//obj_floor[7] = new Floor(333, 400, 120, 10, 22822);
-
-		//obj_floor[8] = new Floor(585, 100, 120, 10, 22822);
-		//obj_floor[9] = new Floor(585, 300, 120, 10, 22822);
-		//obj_floor[10] = new Floor(585, 500, 120, 10, 22822);
-
-		
+		/*足場*/  
 		obj_floor[3] = new Floor(100, 500, 120, 20, 0xd2d2d2);//テレポート左位置
 		obj_floor[4] = new Floor(81, 300, 120, 10, 22822);
-		//obj_floor[4] = new Floor(0, 700, 1280, 20);
 		obj_floor[5] = new Floor(0, 700, 1280, 20);
-
-		//足場  
 		obj_floor[6] = new Floor(1050, 500, 120, 20, 0xd2d2d2);//テレポート右位置
 		obj_floor[7] = new Floor(333, 400, 120, 10, 22822);
 		obj_floor[8] = new Floor(585, 100, 120, 10, 22822);
-
-		//足場  
 		obj_floor[9] = new Floor(560, 420, 120, 20, 0xd2d2d2);//テレポート真ん中位置
 		obj_floor[10] = new Floor(0, 700, 1280, 20);
 		obj_floor[11] = new Floor(837, 200, 120, 10, 22822);
 		obj_floor[12] = new Floor(800, 500, 120, 10, 22822);
-
 		obj_floor[13] = new Floor(1089, 100, 120, 10, 22822);
 		obj_floor[14] = new Floor(1089, 300, 120, 10, 22822);
 		obj_floor[15] = new Floor(100, 100, 120, 10, 22822);
@@ -432,8 +410,6 @@ void Scene_Stage10::Update()
 			i--;
 		}
 	}
-
-
 	//HitCtrl_Floor(obj_player, STAGE_10_FLOOR);     // player　床・壁判定
 	//HitCtrl_Floor(obj_enemy, STAGE_10_FLOOR);      // 敵　　　床・壁判定
 
@@ -454,41 +430,12 @@ void Scene_Stage10::Update()
 	{
 		HitCtrl_Floor(obj_enemy, STAGE_10_FLOOR);      // 敵　　　床・壁判定
 	}
-
 }
 
 
 //描画
 void Scene_Stage10::Draw() const
 {
-	//if (obj_enemy->GetHP() > 0) //HPがある時
-	//{
-	//	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
-	//}
-	//
-	////接触じゃんけんでない時
-	//if (janken_flag == false)
-	//{
-	//
-	//	obj_player->Draw();  //プレイヤー描画
-	//	obj_enemy->Draw();   //敵キャラ描画
-	//	obj_enemy->reflection->Draw_reflectionJangeki(); //反射弾描画
-	//
-	//	//床・壁描画
-	//	for (int i = 0; i < STAGE_10_FLOOR; i++)
-	//	{
-	//		if (obj_floor[i] == nullptr) break;
-	//		obj_floor[i]->Draw();
-	//	}
-	//}
-	//else
-	//{
-	//	//接触時じゃんけん描画
-	//	Draw_Janken();
-	//}
-	//
-	//DrawString(640, 360, "Stage10", 0xffffff);
-
 	//背景の描画
 	DrawGraph(0, 0, 0, FALSE);
 
@@ -499,7 +446,6 @@ void Scene_Stage10::Draw() const
 	//接触じゃんけん開始前
 	if (GetJanState() == Jan_State::START || GetJanState() == Jan_State::BEFORE)
 	{
-
 		obj_player->Draw();  //プレイヤー描画
 		obj_enemy->Draw();   //敵キャラ描画
 
@@ -524,7 +470,6 @@ void Scene_Stage10::Draw() const
 void Scene_Stage10::Update_Janken()
 {
 	//　ここは改良したほうがいい
-
 
 	obj_janken->Update();
 
@@ -578,6 +523,7 @@ void Scene_Stage10::Draw_Janken() const
 	obj_janken->Draw();
 }
 
+/*じゃんけんに勝った時*/
 void Scene_Stage10::AfterJanken_WIN()
 {
 	if(obj_enemy->Get_Enemy10Form() == 1)
@@ -591,6 +537,7 @@ void Scene_Stage10::AfterJanken_WIN()
 	}
 }
 
+/*じゃんけんに負けた時*/
 void Scene_Stage10::AfterJanken_LOSE()
 {
 	if (obj_enemy->Get_Enemy10Form() == 1)
@@ -600,7 +547,7 @@ void Scene_Stage10::AfterJanken_LOSE()
 
 	if (obj_enemy->Get_Enemy10Form() == 2)
 	{
-		obj_enemy->SetSpeed(7);
+		obj_enemy->Recover_HP(30);
 	}
 }
 
@@ -611,33 +558,19 @@ AbstractScene* Scene_Stage10::ChangeScene()
 #ifdef DEBUG_OFF_10
 
 	/*敵のHPが0以下*/
-	if (obj_enemy->Get_Enemy10Form() == 1 && obj_enemy->IsDeathEnemy10() == true)
+	if (obj_enemy->Get_Enemy10Form() == 1 && obj_enemy->IsDeathEnemy10() == true) //第一形態
 	{
 		StopSoundMem(bgm[0]);
 		StopSoundMem(bgm[1]);
 		StopSoundMem(bgm[2]);
 	}
-	if(obj_enemy->Get_Enemy10Form() == 2 && obj_enemy->IsDeathEnemy10() == true)
+	if(obj_enemy->Get_Enemy10Form() == 2 && obj_enemy->IsDeathEnemy10() == true) //第二形態
 	{
-		/*名前入力*/
-		//return dynamic_cast<AbstractScene*> (new Scene_InputNameRanking());
-	 
-		 /*ランキング内部処理*/
-		//sortSave.setScore(9, 10);	// ランキングデータの１０番目にスコアを登録
-		//sortSave.SortRanking();		// ランキング並べ替え
-		//sortSave.SaveRanking();		// ランキングデータの保存
-	
-	    /*ランキングへ切り替え*/
-		//return new Scene_Ranking();
-
 		//ゲームクリアシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameClearScene(11));
 	}
-
-	/*プレイヤーのHPが0以下*/
-	//if (obj_player->GetHP() < 0 || GameData::Get_Each_Time() <= 0)
-	//
 	 	   
+	/*プレイヤーのHPが0になったら*/
 	if (obj_player->IsDeathPlayer() == true)
 	{
 		//ゲームオーバーシーンへ切り替え
