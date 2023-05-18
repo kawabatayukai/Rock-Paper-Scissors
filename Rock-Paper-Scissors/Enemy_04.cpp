@@ -213,10 +213,10 @@ void Enemy_04::Update_Jangeki()
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
 		float radius = 45.0f;   //半径
-		float speed  =  6.0f;   //スピード
+		float speed  =  7.0f;   //スピード
 
 		//HP50以下でジャン撃スピード変更
-		if (hp <= 50) speed = 10.0f;
+		if (hp <= 50) speed = 12.0f;
 		
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
@@ -226,12 +226,13 @@ void Enemy_04::Update_Jangeki()
 		{
 			//プレイヤーの角度へ発射するジャン撃生成
 			if (frame_count % 60 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+			//if (frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius * 0.7, speed * 0, type, player_x, player_y);
 		}
 		else if (specialFlg == true)
 		{
 			if (frame_count % 60 == 0)
 			{
-				Jan_360degrees(jan_count, radius * 0.8, speed * 0.8, type);
+				Jan_360degrees(jan_count, radius * 0.8, speed * 0.7, type);
 				SoundSystem::PlaySE(SE::ENEMY_SPECIAL_ATTACK);
 			}
 		}
