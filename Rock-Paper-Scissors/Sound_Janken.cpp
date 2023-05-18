@@ -4,7 +4,7 @@
 namespace SE_TIME_JANKEN
 {
 	const int JAN_WIN = 108;
-	const int JAN_LOSE = 78;
+	const int JAN_LOSE = 120;
 	const int JAN_AIKO = 60;
 }
 
@@ -41,14 +41,16 @@ Sound_Janken::Sound_Janken(const SE_JANKEN& se_type)
 
 Sound_Janken::~Sound_Janken()
 {
+	DeleteSoundMem(play_se);
 }
 
 //Update
 void Sound_Janken::Play()
 {
 	if (CheckSoundMem(play_se) == 0)
+	{
 		PlaySoundMem(play_se, DX_PLAYTYPE_BACK);
-
+	}
 	time_count++;
 }
 

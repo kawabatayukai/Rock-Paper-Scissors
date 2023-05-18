@@ -94,7 +94,8 @@ private:
 	static int font_score;                    //Score描画用フォント
 
 	Sound_Jangeki** obj_sejan;                //SE
-	Sound_Janken* se_Janken;
+	Sound_Janken* se_Janken;                  //SEじゃんけん
+	int se_count = 0;                         //SE再生回数
 
 	Enemy_Death* obj_death;                   //死亡時に生成する
 	bool stage09_isclear = false;

@@ -51,6 +51,7 @@ Scene_Stage01::Scene_Stage01(const Player* player)
 
 	//BGMロード
 	bgm = LoadSoundMem("Sound/stage01/maou_game_battle37.mp3");
+	
 }
 
 //デストラクタ
@@ -64,6 +65,7 @@ Scene_Stage01::~Scene_Stage01()
 void Scene_Stage01::Update()
 {
 	//BGM再生
+	
 	if (CheckSoundMem(bgm) == 0) PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
 
 	//接触じゃんけん開始前
