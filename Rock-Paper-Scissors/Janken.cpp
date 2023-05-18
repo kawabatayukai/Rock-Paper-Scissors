@@ -10,6 +10,7 @@ int Janken::font_other = 0;          //「じゃんけん..」,「ぽん」など用フォント
 //コンストラクタ　　　　　　　　　　enemyの出す手が決まる
 Janken::Janken(Jan_Type enemy_jan, const int stage_num)
 	: enemy_jan(enemy_jan), p_image_x(-50), e_image_x(1330), stage_num(stage_num), image_enemy(0), star_time(0)
+	, winLine_angle(0.0)
 {
 	//適当に初期化
 	player_jan = Jan_Type::NONE;
@@ -80,9 +81,29 @@ Janken::Janken(Jan_Type enemy_jan, const int stage_num)
 		break;
 	}
 
+	image_winLine = LoadGraph("images/Janken/Janken_WIN_Line.png");
+	image_loseSmoke = new int[8];
+	LoadDivGraph("images/Janken/Janken_LOSE_Smoke.png", 8, 8, 1, 240, 240, image_loseSmoke);
+
 	//star
 	stars = new Janken_Star * [STAR_MAX];
 	for (int i = 0; i < STAR_MAX; i++) stars[i] = nullptr;
+	stars[0] = new Janken_Star(70, 680, 0, 720);
+	stars[1] = new Janken_Star(140, 640, 0, 720);
+	stars[2] = new Janken_Star(210, 602, 0, 720);
+	stars[3] = new Janken_Star(280, 562, 0, 720);
+	stars[4] = new Janken_Star(350, 523, 0, 720);
+	stars[5] = new Janken_Star(420, 484, 0, 720);
+	stars[6] = new Janken_Star(490, 444, 0, 720);
+	stars[7] = new Janken_Star(560, 405, 0, 720);
+	stars[8] = new Janken_Star(770, 286, 0, 720);
+	stars[9] = new Janken_Star(840, 247, 0, 720);
+	stars[10] = new Janken_Star(910, 208, 0, 720);
+	stars[11] = new Janken_Star(980, 168, 0, 720);
+	stars[12] = new Janken_Star(1050, 129, 0, 720);
+	stars[13] = new Janken_Star(1120, 90, 0, 720);
+	stars[14] = new Janken_Star(1190, 50, 0, 720);
+	stars[15] = new Janken_Star(1260, 11, 0, 720);
 
 	//フォントデータを作成　　　　　
 	if(font_result == 0)
@@ -101,6 +122,8 @@ Janken::Janken(Jan_Type enemy_jan, const int stage_num)
 //デストラクタ
 Janken::~Janken()
 {
+	delete image_loseSmoke;
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 //更新
@@ -148,33 +171,6 @@ void Janken::Draw() const
 		DrawGraph(0, 0, image_back, FALSE);
 	}
 
-	//"VS"
-	DrawGraph(0, 0, image_backjan, TRUE);
-	for (int i = 0; i < STAR_MAX; i++)
-	{
-		if (stars[i] == nullptr) break;
-
-		if (stars[i]->GetX() >= 560.f && stars[i]->GetX() <= 740.f
-			&& stars[i]->GetY() >= 300.f && stars[i]->GetY() <= 400.f)
-		{}
-		else
-		{
-			stars[i]->Draw();
-		}
-	}
-
-	//プレイヤー
-	DrawRotaGraph(p_image_x, 300, 2, 0, image_player, TRUE);
-
-	//画像読み込みに失敗していなければ
-	if (image_enemy != -1)
-	{
-		DrawRotaGraph(e_image_x, 600, 2, 0, image_enemy, TRUE);
-	}
-
-
-
-
 	//40フレーム後
 	if (time > 40)
 	{
@@ -191,6 +187,40 @@ void Janken::Draw() const
 		}
 		else
 		{
+			//集中線 Smoke
+			if (result == Jan_Result::WIN)
+			{
+				DrawRotaGraph(p_image_x, 300, 1, winLine_angle, image_winLine, TRUE);
+				DrawRotaGraph(e_image_x, 600, 4, winLine_angle*-1, image_loseSmoke[smokeCount], TRUE);
+			}
+			else if (result == Jan_Result::LOSE)
+			{
+				DrawRotaGraph(e_image_x, 600, 1, winLine_angle, image_winLine, TRUE);
+				DrawRotaGraph(p_image_x, 300, 4, winLine_angle * -1, image_loseSmoke[smokeCount], TRUE);
+			}
+			else {}
+
+			SetDrawBlendMode(DX_BLENDMODE_ADD, 110);
+			if (result == Jan_Result::WIN)
+			{
+				DrawRotaGraph(p_image_x, 300, 1.02, winLine_angle, image_winLine, TRUE);
+
+				SetDrawBright(0, 0, 200);
+				DrawRotaGraph(e_image_x, 600, 4, 0, image_loseSmoke[smokeCount], TRUE);
+				SetDrawBright(255, 255, 255);
+			}
+			else if (result == Jan_Result::LOSE)
+			{
+				DrawRotaGraph(e_image_x, 600, 1.02, winLine_angle, image_winLine, TRUE);
+
+				SetDrawBright(0, 0, 200);
+				DrawRotaGraph(p_image_x, 300, 4, 0, image_loseSmoke[smokeCount], TRUE);
+				SetDrawBright(255, 255, 255);
+			}	
+			else {}
+			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+
 			DrawStringToHandle(400, 450, "ぽ ん", white, font_other);
 
 			//プレイヤーの手
@@ -241,6 +271,29 @@ void Janken::Draw() const
 			else {}
 		}
 	}
+
+	for (int i = 0; i < STAR_MAX; i++)
+	{
+		if (stars[i] == nullptr) break;
+
+		if (stars[i]->GetX() >= 560.f && stars[i]->GetX() <= 740.f
+			&& stars[i]->GetY() >= 300.f && stars[i]->GetY() <= 400.f)
+		{
+		}
+		else
+		{
+			stars[i]->Draw();
+		}
+	}
+
+	if (end_alpha_value > 0) SetDrawBlendMode(DX_BLENDMODE_ALPHA, end_alpha_value);
+	//"VS"
+	DrawGraph(0, 0, image_backjan, TRUE);
+	//プレイヤー
+	DrawRotaGraph(p_image_x, 300, 2, 0, image_player, TRUE);
+	//Enemy
+	DrawRotaGraph(e_image_x, 600, 2, 0, image_enemy, TRUE);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
 //星
@@ -251,6 +304,7 @@ void Janken::Stars_Update()
 	{
 		if (stars[starcount] == nullptr) break;
 		stars[starcount]->Update();
+
 		if (stars[starcount]->CheckScreenOut() == true)
 		{
 			delete stars[starcount];
@@ -274,6 +328,10 @@ void Janken::Stars_Update()
 			stars[starcount] = new Janken_Star(1280.f, 0.f, 0.f, 720.f);
 		}
 	}
+
+	if (result != Jan_Result::_ERROR) winLine_angle += 0.002;
+	if (result != Jan_Result::_ERROR && star_time % 7 == 0) smokeCount++;
+	if (smokeCount > 7) smokeCount = 0;
 }
 
 
@@ -355,4 +413,10 @@ void Janken::OneMore_Init()
 	
 
 	result = Jan_Result::_ERROR;
+}
+
+//透過度セット
+void Janken::SetAlphaValue(const int& value)
+{
+	if (value > 0) end_alpha_value = value;
 }

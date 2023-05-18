@@ -31,6 +31,9 @@ public:
 	//(あいこの時用) 必要な変数を初期化する
 	void OneMore_Init();
 
+	//透過度セット
+	void SetAlphaValue(const int& value);
+
 private:
 
 	//B（グー）,Y（チョキ）,X（パー）のいずれかが押された瞬間、trueを返す
@@ -64,6 +67,10 @@ private:
 
 	int image_enemy;
 	int image_back;
+	int image_winLine;       //集中線
+	double winLine_angle;
+	int* image_loseSmoke;
+	short smokeCount = 0;
 	Janken_Star** stars;
 
 	int stage_num;           //呼び出し元のステージ番号
@@ -77,4 +84,7 @@ private:
 	int brack;
 	int white;
 	int green;
+
+	//終了時透過
+	int end_alpha_value = 0;
 };
