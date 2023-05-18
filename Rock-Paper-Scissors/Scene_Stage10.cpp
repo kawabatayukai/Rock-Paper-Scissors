@@ -580,12 +580,28 @@ void Scene_Stage10::Draw_Janken() const
 
 void Scene_Stage10::AfterJanken_WIN()
 {
-	obj_player->Recover_HP(30);
+	if(obj_enemy->Get_Enemy10Form() == 1)
+	{
+		obj_enemy->ReceiveDamage(100);
+	}
+
+	if (obj_enemy->Get_Enemy10Form() == 2)
+	{
+		obj_player->Recover_HP(50);
+	}
 }
 
 void Scene_Stage10::AfterJanken_LOSE()
 {
-	obj_enemy->SetSpeed(7);
+	if (obj_enemy->Get_Enemy10Form() == 1)
+	{
+		obj_player->ReceiveDamage(100);
+	}
+
+	if (obj_enemy->Get_Enemy10Form() == 2)
+	{
+		obj_enemy->SetSpeed(7);
+	}
 }
 
 //ƒV[ƒ“‚Ì•ÏX
