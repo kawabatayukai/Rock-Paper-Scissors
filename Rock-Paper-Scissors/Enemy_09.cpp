@@ -18,21 +18,24 @@ Enemy_09::Enemy_09(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	dir = 1;
 	hp = 100;
 
-	
+
 	Rimage = LoadGraph("images/stage09/Stage9_1.png");	//反射ON
 	image = LoadGraph("images/stage09/Stage9.png");		//反射OFF
 
 	LoadDivGraph("images/stage09/teleport2.png", 15, 15, 1, 120, 150, img_teleport);
 	LoadDivGraph("images/stage09/teleport22.png", 15, 15, 1, 120, 150, img_teleport2);
-	
+
 	LoadDivGraph("images/stage09/ref3.png", 15, 5, 3, 200, 200, refanim);
 
 
 	//じゃん撃を用意
-	Init_Jangeki();       
+	Init_Jangeki();
 	reflection = new Jangeki_Reflection(x, y, w, h, Jan_Type::ROCK);
 	reflection->Init_reflectionJangeki();
-	
+
+	SE_Teleport = LoadSoundMem("Sound/stage09/teleport.mp3");
+	SE_Reflection = LoadSoundMem("Sound/stage09/reflection.mp3");
+
 }
 
 //デストラクタ
@@ -49,10 +52,10 @@ void Enemy_09::Update()
 	Update_Jangeki();
 	reflection->Update_reflection();
 
-	if(Spflg==false)MoveEnmey_09();
+	if (Spflg == false)MoveEnmey_09();
 	else  SpecialMoveEnmey();
 
-	
+
 }
 
 //描画
@@ -80,7 +83,7 @@ void Enemy_09::Draw() const
 	//じゃん撃描画
 	Draw_Jangeki();
 	reflection->Draw_reflectionJangeki();
-	
+
 	//テスト
 	/*if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
 	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);*/
@@ -131,57 +134,57 @@ void Enemy_09::Update_Jangeki()
 		}*/
 
 		//アニメーション再生中でなければ生成
-			if (animflg == false)
+		if (animflg == false)
+		{
+			if (frame_count % janFrame == 0)
 			{
-				if (frame_count % janFrame == 0)
+				if (Spflg == false)
 				{
-					if (Spflg == false)
-					{
-						obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
-						count++;
-					}
-					else
-					{
-						Jan_360degrees();
-						count = 0;		 //リセット
-						SPcount++;
-					}
-					if (count == 5)		//五回目で特殊弾発射
-					{
-						Jan_40degrees();
-						count = 0;		 //リセット
-					}
+					obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type);
+					count++;
+				}
+				else
+				{
+					Jan_360degrees();
+					count = 0;		 //リセット
+					SPcount++;
+				}
+				if (count == 5)		//五回目で特殊弾発射
+				{
+					Jan_40degrees();
+					count = 0;		 //リセット
+				}
+
+			}
+
+			if (ranimflg == true)
+			{
+				animtimer++;
+
+				if (animtimer / 3 % 15 == 14)
+				{
+					animtimer = 0;
+					ranimflg = false;
+					Ranimflg = false;
+				}
+
+				//再生中にあたると初めから再生
+				if (Ranimflg == true)
+				{
+					animtimer = 0;
+					Ranimflg = false;
 
 				}
 
-				if (ranimflg == true)
+				//反射じゃん撃生成
+				if (reflection->GetFlg() == true)
 				{
-					animtimer++;
-
-					if (animtimer / 3 % 15 == 14)
-					{
-						animtimer = 0;
-						ranimflg = false;
-						Ranimflg = false;
-					}
-
-					//再生中にあたると初めから再生
-					if (Ranimflg == true)
-					{
-						animtimer = 0;
-						Ranimflg = false;
-
-					}
-
-					//反射じゃん撃生成
-					if (reflection->GetFlg() == true)
-					{
-						SoundSystem::PlaySE(SE::ENEMY09_Reflection);
-						reflection->obj_reflection[reflection->jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed - 0.3, type, true);
-						reflection->falseFlg();
-					}
+					if (CheckSoundMem(SE_Reflection) == 0)PlaySoundMem(SE_Reflection, DX_PLAYTYPE_BACK);
+					reflection->obj_reflection[reflection->jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed - 0.3, type, true);
+					reflection->falseFlg();
 				}
 			}
+		}
 	}
 }
 
@@ -226,7 +229,7 @@ void Enemy_09::Jan_40degrees()
 		//生成するじゃん撃の半径
 		float radius = 35.5f;
 		if (GetHP() <= 51)radius = 45.f;
-	
+
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 
@@ -237,7 +240,7 @@ void Enemy_09::Jan_40degrees()
 			double angle = static_cast<double>((270.0 * i) * (M_PI / 120));
 
 			obj_jangeki[i] = new Jangeki_Base(x, y, radius, speed, angle, type);
-		
+
 		}
 	}
 }
@@ -249,12 +252,13 @@ void Enemy_09::MoveEnmey_09()
 
 	if (GetHP() == 1)teleport = 500;
 
-		if (interval % teleport == 0) {
+	if (interval % teleport == 0) {
 
 		animflg = true;
 		ranimflg = false;
 
-		SoundSystem::PlaySE(SE::ENEMY09_Teleprot);
+		if (CheckSoundMem(SE_Teleport) == 0)PlaySoundMem(SE_Teleport, DX_PLAYTYPE_BACK);
+
 
 		before_x = x;
 		before_y = y;
@@ -299,27 +303,27 @@ void Enemy_09::MoveEnmey_09()
 		}
 	}
 
-		if (animflg == true)
-		{
-			
-			animtimer++; 
-			
-			if (animtimer / 3 % 15 == 14) {
-				
-				if (anim_count == 0)
-				{
-					animtimer = 0;
-					anim_count = 1;
-				}
-				else
-				{
-					animtimer = 0;
-					animflg = false;
-					anim_count = 0;
-				}
-				
+	if (animflg == true)
+	{
+
+		animtimer++;
+
+		if (animtimer / 3 % 15 == 14) {
+
+			if (anim_count == 0)
+			{
+				animtimer = 0;
+				anim_count = 1;
 			}
+			else
+			{
+				animtimer = 0;
+				animflg = false;
+				anim_count = 0;
+			}
+
 		}
+	}
 }
 
 void Enemy_09::SpecialMoveEnmey()
@@ -331,11 +335,11 @@ void Enemy_09::SpecialMoveEnmey()
 
 	if (Spflg == true) {
 		if (interval % 30 == 0) {
-			
+
 			animflg = true;
 			ranimflg = false;
 
-			SoundSystem::PlaySE(SE::ENEMY09_Teleprot);
+			if (CheckSoundMem(SE_Teleport) == 0)PlaySoundMem(SE_Teleport, DX_PLAYTYPE_BACK);
 
 			before_x = x;
 			before_y = y;
@@ -382,7 +386,7 @@ void Enemy_09::SpecialMoveEnmey()
 		if (animflg == true)
 		{
 			animtimer++;
-			
+
 			if (animtimer / 1 % 15 == 14)
 			{
 				animtimer = 0;
