@@ -233,7 +233,7 @@ void Enemy_03::Update()
 			
 
 			//前回より加速する
-			speed = 8.5f;
+			speed = 10.5f;
 
 		}
 		//enemyのxが950以下で475以上の時
@@ -241,7 +241,7 @@ void Enemy_03::Update()
 
 
 			//前回より減速する
-			speed = 7.5f;
+			speed = 8.5f;
 			
 
 		}
@@ -251,7 +251,7 @@ void Enemy_03::Update()
 
 
 			//前回より加速する
-			speed = 8.5f;
+			speed = 10.5f;
 
 		}
 		
@@ -272,10 +272,12 @@ void Enemy_03::Update()
 
 		//一致回数
 		static int count;
+		//カウントが0と一致したとき
 		if (count == 0)
 		{
-			target_x = GetRand(60) + 20;
-			target_x = GetRand(1130) + 20;
+			//target_x = GetRand(1170) + 70;
+			target_x = GetRand(60) + 70;
+			target_x = GetRand(1130) + 70;
 			//if (x==1000)
 			//{
 			//	count = 1;
@@ -294,13 +296,11 @@ void Enemy_03::Update()
 		//移動量
 		float move_x = x;
 		float move_y = y;
-		moveinfo[current].jumpflg = 1;
+		//moveinfo[current].jumpflg = 1;
 
 		//x座標が目標と不一致
 		if (x != target_x)
 		{
-
-
 			//目標の方が大きい（目標は右方向）
 			if (x < target_x)
 			{
@@ -357,9 +357,14 @@ void Enemy_03::Update()
 		x = move_x;
 		y = move_y;
 
+		//前回いたxと今のxが一致したら目標座標をランダムに+20する
 		if (old_x == x)
 		{
-			target_x = GetRand(1170) + 70;
+			//target_x = GetRand(1170) + 70;
+
+			target_x = GetRand(60) + 70;
+			target_x = GetRand(1130) + 70;
+
 
 		}
 
@@ -368,9 +373,6 @@ void Enemy_03::Update()
 	//HPが0以下だったらHPに0を代入
 	if (hp <= 0)hp = 0;
 
-
-	
-	
 	//if (x + (w / 2) == (1280 - 20))
 	//{
 	//	dir = -1;
