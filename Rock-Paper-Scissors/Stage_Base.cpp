@@ -298,7 +298,7 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 				//END演出
 				blackout_time = 0;
 				j_state = Jan_State::END;
-				
+
 				break;
 
 
@@ -321,7 +321,7 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 				//END演出
 				blackout_time = 0;  
 				j_state = Jan_State::END;
-			
+
 				break;
 
 
@@ -356,7 +356,6 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 	}
 	else if (j_state == Jan_State::END)
     {
-
 		//じゃん撃を初期化する
 		enemy->Init_Jangeki();
 		//あたり判定なし時間をセット
@@ -829,6 +828,7 @@ void Stage_Base::Draw_JankenStart() const
 	if (j_state == Jan_State::END)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - (static_cast<int>(blackout_time * 5)));
+		obj_janken->SetAlphaValue(255 - (static_cast<int>(blackout_time * 5)));
 		if (blackout_time < 60) obj_janken->Draw();
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
