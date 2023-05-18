@@ -225,6 +225,10 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 
 			//じゃんけんオブジェクト生成
 			obj_janken = new Janken(enemy_janken, my_StageNum);
+
+			//SE初期化
+			se_Janken = nullptr;
+			se_count = 0;
 		}
 
 	}
@@ -246,16 +250,16 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 		Jan_Result result = obj_janken->GetResult();
 		
 		// 結果が _ERROR(じゃんけん中)でないとき、じゃんけん終了
-		if (result != Jan_Result::_ERROR)
-		{
-			j_state = Jan_State::AFTER;
+		if (result != Jan_Result::_ERROR) j_state = Jan_State::AFTER;
+		
+	}
+	else if (j_state == Jan_State::AFTER)
+	{
+		obj_janken->Stars_Update();
 
-			//SE
-			if (se_Janken != nullptr)
-			{
-				delete se_Janken;
-				se_Janken = nullptr;
-			}
+		if (se_Janken == nullptr && se_count == 0)
+		{
+			Jan_Result result = obj_janken->GetResult();
 			if (result == Jan_Result::WIN)
 				se_Janken = new Sound_Janken(SE_JANKEN::JANKEN_WIN);
 			else if (result == Jan_Result::LOSE)
@@ -263,11 +267,9 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 			else if (result == Jan_Result::ONEMORE)
 				se_Janken = new Sound_Janken(SE_JANKEN::JANKEN_AIKO);
 			else {}
+			se_count++;
 		}
-	}
-	else if (j_state == Jan_State::AFTER)
-	{
-		obj_janken->Stars_Update();
+
 		//Aボタンが押されたとき 
 		if (KeyManager::OnPadClicked(PAD_INPUT_A) == true)
 		{
@@ -279,6 +281,8 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 			{
 
 			case Jan_Result::LOSE:    //負け
+
+				
 
 				/*難易度が即死モードなら*/
 				if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
@@ -299,6 +303,8 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 
 
 			case Jan_Result::WIN:     //勝ち
+
+				
 
 				/*難易度が即死モードなら*/
 				if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
@@ -321,6 +327,8 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 
 			case Jan_Result::ONEMORE: //あいこ
 			{
+				
+
 				//じゃん撃を初期化する
 				enemy->Init_Jangeki();
 
