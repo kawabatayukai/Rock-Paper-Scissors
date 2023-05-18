@@ -378,7 +378,7 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 	if (--nhit_time < 0) nhit_time = 0;
 
 	//Enemy‚ðŠÄŽ‹
-	if (my_StageNum == 9 || my_StageNum == 10)
+	if (my_StageNum == 9)
 	{
 		if (stage09_isclear == true && obj_death == nullptr || enemy->GetHP() <= 0 && obj_death == nullptr)
 		{
@@ -389,6 +389,9 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 			enemy->SetX(-9999, true);
 			enemy->SetY(-9999, true);
 		}
+	}
+	else if (my_StageNum == 10)
+	{
 	}
 	else
 	{
