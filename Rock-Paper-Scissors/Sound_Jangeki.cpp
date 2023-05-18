@@ -10,7 +10,7 @@ namespace SE_TIME_JAN
 	const int ENEMY_WIN = 90;
 	const int ONEMORE = 105;
 	const int HIT_JANGEKI = 64;
-	const int FIRE_JANGEKI = 30;
+	const int FIRE_JANGEKI = 17;
 }
 
 //コンストラクタ
@@ -39,7 +39,7 @@ Sound_Jangeki::Sound_Jangeki(SE_JAN se_type) :se_type(se_type),play_se(0),play_t
 		break;
 
 	case SE_JAN::FIRE_JAN:
-		play_se = LoadSoundMem("Sound/Jangeki/jan_fire1.mp3");
+		play_se = LoadSoundMem("Sound/Jangeki/jan_fire1.wav");
 		play_time = SE_TIME_JAN::FIRE_JANGEKI;
 		break;
 
