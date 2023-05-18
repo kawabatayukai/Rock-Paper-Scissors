@@ -16,7 +16,7 @@ namespace _C_STORY
 	const int CENTER_X = 640;    //画面中心
 	const int FIRST_Y = 720;     //テキスト1行目の高さ
 
-	const int MIN_SPEED = 1;     //最低スクロールスピード
+	const int MIN_SPEED = 2;     //最低スクロールスピード
 	const int MAX_SPEED = 10;     //最大スクロールスピード
 }
 

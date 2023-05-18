@@ -21,7 +21,7 @@
 Scene_Stage10::Scene_Stage10(const Player* player)
 {
 	//制限時間をセット
-	GameData::Set_TimeLimit(4300);
+	GameData::Set_TimeLimit(10800);
 
 	//プレイヤー情報が渡されていれば
 	if (player != nullptr)
@@ -580,12 +580,28 @@ void Scene_Stage10::Draw_Janken() const
 
 void Scene_Stage10::AfterJanken_WIN()
 {
-	obj_player->Recover_HP(30);
+	if(obj_enemy->Get_Enemy10Form() == 1)
+	{
+		obj_enemy->ReceiveDamage(100);
+	}
+
+	if (obj_enemy->Get_Enemy10Form() == 2)
+	{
+		obj_player->Recover_HP(50);
+	}
 }
 
 void Scene_Stage10::AfterJanken_LOSE()
 {
-	obj_enemy->SetSpeed(7);
+	if (obj_enemy->Get_Enemy10Form() == 1)
+	{
+		obj_player->ReceiveDamage(100);
+	}
+
+	if (obj_enemy->Get_Enemy10Form() == 2)
+	{
+		obj_enemy->SetSpeed(7);
+	}
 }
 
 //シーンの変更
