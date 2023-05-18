@@ -57,6 +57,8 @@ void EndScene::Draw() const
 	DrawString(300, 660 + PosY, "BGM/SE　甘茶の音楽工房 URL https://amachamusic.chagasi.com/", 0xFFFFFF);
 	DrawString(300, 690 + PosY, "BGM/SE　ハシマミ URL https://hashimamiweb.com/", 0xFFFFFF);
 	DrawString(300, 720 + PosY, "BGM/SE　無料効果音で遊ぼう！ URL https://taira-komori.jpn.org/", 0xFFFFFF);
+	DrawString(300, 750 + PosY, "BGM/SE　FREE BGM URL https://ucchii0artist.wixsite.com/ucchii0", 0xFFFFFF);
+	DrawString(300, 780 + PosY, "BGM/SE　DOVA-SYNDROME URL https://dova-s.jp/", 0xFFFFFF);
 
 
 	//DrawFormatString(100, 600, 0xFFFFFF, "%f", framecount);
