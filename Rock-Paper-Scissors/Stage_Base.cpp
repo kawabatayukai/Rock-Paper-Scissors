@@ -52,6 +52,9 @@ Stage_Base::Stage_Base() : blackout_time(0), Prev_EnemyType(Jan_Type::NONE), obj
 
 	//SE Player
 	Sound_Player::LoadPlayerSound();
+
+	//SE Janken
+	se_Janken = nullptr;
 }
 
 Stage_Base::~Stage_Base()
@@ -239,11 +242,27 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 		//Ç∂Ç·ÇÒÇØÇÒíÜ
 		obj_janken->Update();
 		obj_janken->Stars_Update();
-
+		//åãâ ÇàÍéûäiî[
+		Jan_Result result = obj_janken->GetResult();
+		
 		// åãâ Ç™ _ERROR(Ç∂Ç·ÇÒÇØÇÒíÜ)Ç≈Ç»Ç¢Ç∆Ç´ÅAÇ∂Ç·ÇÒÇØÇÒèIóπ
-		if (obj_janken->GetResult() != Jan_Result::_ERROR)
+		if (result != Jan_Result::_ERROR)
 		{
 			j_state = Jan_State::AFTER;
+
+			//SE
+			if (se_Janken != nullptr)
+			{
+				delete se_Janken;
+				se_Janken = nullptr;
+			}
+			if (result == Jan_Result::WIN)
+				se_Janken = new Sound_Janken(SE_JANKEN::JANKEN_WIN);
+			else if (result == Jan_Result::LOSE)
+				se_Janken = new Sound_Janken(SE_JANKEN::JANKEN_LOSE);
+			else if (result == Jan_Result::ONEMORE)
+				se_Janken = new Sound_Janken(SE_JANKEN::JANKEN_AIKO);
+			else {}
 		}
 	}
 	else if (j_state == Jan_State::AFTER)
@@ -342,8 +361,17 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 			delete obj_janken;
 		}
 	}
-	else
+	else {}
+
+	//SEçƒê∂
+	if (se_Janken != nullptr)
 	{
+		se_Janken->Play();
+		if (se_Janken->CheckPlayEnd() == true)
+		{
+			delete se_Janken;
+			se_Janken = nullptr;
+		}
 	}
 
 	//è’ìÀîªíËÇ»Çµéûä‘
@@ -789,8 +817,8 @@ void Stage_Base::Draw_JankenStart() const
 {
 	if (j_state == Jan_State::END)
 	{
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - (static_cast<int>(blackout_time * 6)));
-		if (blackout_time < 58) obj_janken->Draw();
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255 - (static_cast<int>(blackout_time * 5)));
+		if (blackout_time < 60) obj_janken->Draw();
 		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
 		for (int i = 0; i < 12; i++)

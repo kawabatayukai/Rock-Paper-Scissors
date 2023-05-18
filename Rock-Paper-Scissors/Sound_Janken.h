@@ -6,6 +6,7 @@ enum class SE_JANKEN
 
 	JANKEN_WIN,
 	JANKEN_LOSE,
+	JANKEN_AIKO,
 };
 
 class Sound_Janken
