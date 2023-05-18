@@ -46,22 +46,27 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“‰æ‘œŠç–³‚µƒ`ƒ‡ƒL.png", 10, 5, 2, 100, 100, image[1]);
 	LoadDivGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“‰æ‘œŠç–³‚µƒp[.png", 10, 5, 2, 100, 100, image[2]);
 
+	//ƒO[‚Ì‚ÌƒWƒƒƒ“ƒv
 	image[0][4] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ‰EƒO[.png");
 	image[0][9] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ¶ƒO[.png");
 
+	//ƒ`ƒ‡ƒL‚Ì‚ÌƒWƒƒƒ“ƒv
 	image[1][4] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ‰Eƒ`ƒ‡ƒL.png");
 	image[1][9] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ¶ƒ`ƒ‡ƒL.png");
 
+	//ƒp[‚Ì‚ÌƒWƒƒƒ“ƒv
 	image[2][4] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ‰Eƒp[.png");
 	image[2][9] = LoadGraph("images/ƒƒ“ƒpƒ“ƒ}ƒ“ƒWƒƒƒ“ƒv‰æ‘œ˜r–³‚µ¶ƒp[.png");
 
-	//˜r
+	//ƒO[‚Ì˜r
 	armL_Image[0] = LoadGraph("images/˜r‚Ì‚İ‚®[h¶.png");
 	armR_Image[0] = LoadGraph("images/˜r‚Ì‚İ‚®[h‰E.png");
 
+	//ƒ`ƒ‡ƒL‚Ì˜r
 	armL_Image[1] = LoadGraph("images/˜r‚Ì‚İ‚¿‚å‚«¶.png");
 	armR_Image[1] = LoadGraph("images/˜r‚Ì‚İ‚¿‚å‚«‰E.png");
 
+	//ƒp[‚Ì˜r
 	armL_Image[2] = LoadGraph("images/˜r‚Ì‚İ‚Ï[¶.png");
 	armR_Image[2] = LoadGraph("images/˜r‚Ì‚İ‚Ï[‰E.png");
 
