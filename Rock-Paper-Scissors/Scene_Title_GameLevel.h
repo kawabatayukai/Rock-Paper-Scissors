@@ -4,9 +4,12 @@ class Scene_Title_GameLevel :
     public AbstractScene
 {
 private:
-
-	int TitleImage = 0;
 	int T_selectnum = 0;
+
+	//説明画像
+	int ex_image;
+	int normal_image;
+	int image_back;
 
 	static int font_title;   //フォントハンドル
 public:

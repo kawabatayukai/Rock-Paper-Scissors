@@ -1,4 +1,4 @@
-#include "Scene_Title_GameLevel.h"
+ï»¿#include "Scene_Title_GameLevel.h"
 #include"KeyManager.h"
 #include"Debug_Manager.h"
 #include"Scene_Title.h"
@@ -14,36 +14,39 @@
 
 int Scene_Title_GameLevel::font_title = 0;
 
-//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 Scene_Title_GameLevel::Scene_Title_GameLevel()
 {
-	TitleImage = LoadGraph("images/JankenWorldTitle.png");
+	image_back = LoadGraph("images/Story/starback.png");
 
-	//ƒtƒHƒ“ƒgƒf[ƒ^‚ğì¬
+	//ãƒ•ã‚©ãƒ³ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’ä½œæˆ
 	if (font_title == 0)
-		font_title = CreateFontToHandle("Yu Gothic UI", 50, 3, DX_FONTTYPE_ANTIALIASING_4X4);
+		font_title = CreateFontToHandle("ãƒ¡ã‚¤ãƒªã‚ª", 40, 3, DX_FONTTYPE_ANTIALIASING_EDGE, -1, 1);
 
-	//ƒf[ƒ^‚Ì‰Šú‰»
+	//ãƒ‡ãƒ¼ã‚¿ã®åˆæœŸåŒ–
 	GameData::Init_Data();
 	SetBackgroundColor(255, 255, 255);
+
+	ex_image = LoadGraph("images/Story/ex.png");
+	normal_image = LoadGraph("images/Story/no.png");
 }
 
-//ƒfƒXƒgƒ‰ƒNƒ^
+//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 Scene_Title_GameLevel::~Scene_Title_GameLevel()
 {
-	//ƒtƒHƒ“ƒgƒf[ƒ^‚ğíœ
+	//ãƒ•ã‚©ãƒ³ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’å‰Šé™¤
 	SetBackgroundColor(0, 0, 0);
 }
 
-//XV
+//æ›´æ–°
 void Scene_Title_GameLevel::Update()
 {
-	//SoundSystem::PlayBGM(BGM::TITLE);
+	
 
-	//ƒJ[ƒ\ƒ‹‚ğ‡‚í‚¹‚Äƒ{ƒ^ƒ“‚ğ‰Ÿ‚·‚Æ‘JˆÚ
+	//ã‚«ãƒ¼ã‚½ãƒ«ã‚’åˆã‚ã›ã¦ãƒœã‚¿ãƒ³ã‚’æŠ¼ã™ã¨é·ç§»
 	if (KeyManager::OnPadClicked(PAD_INPUT_DOWN) == true) {
 
-		//ãƒ{ƒ^ƒ“‚Åã‚É
+		//ä¸Šãƒœã‚¿ãƒ³ã§ä¸Šã«
 		T_selectnum++;
 
 		if (T_selectnum > 1) T_selectnum = 0;
@@ -51,7 +54,7 @@ void Scene_Title_GameLevel::Update()
 
 	if (KeyManager::OnPadClicked(PAD_INPUT_UP) == true) {
 
-		//‰ºƒ{ƒ^ƒ“‚Å‰º‚É
+		//ä¸‹ãƒœã‚¿ãƒ³ã§ä¸‹ã«
 		T_selectnum--;
 
 		if (T_selectnum < 0) T_selectnum = 1;
@@ -60,41 +63,55 @@ void Scene_Title_GameLevel::Update()
 
 }
 
-//•`‰æ
+//æç”»
 void Scene_Title_GameLevel::Draw() const
 {
-	
+	DrawGraph(0, 0, image_back, FALSE);
 
-	DrawStringToHandle(70, 200, "ƒQ[ƒ€ƒ‚[ƒh‘I‘ğ‘I‘ğ", 0xf, font_title);
-	DrawStringToHandle(70, 350, "STANDARD", 0xf, font_title); 
-	DrawStringToHandle(70, 400, "EXTRA JANKEN", 0xf, font_title);
-	DrawStringToHandle(70, 500, "Bƒ{ƒ^ƒ“‚Å–ß‚é", 0xf, font_title);
+	DrawStringToHandle(70, 200, "ã‚²ãƒ¼ãƒ ãƒ¢ãƒ¼ãƒ‰é¸æŠ", 0xffffff, font_title, 0x20b2aa);
+	DrawStringToHandle(70, 350, "STANDARD", 0xffffff, font_title, 0x20b2aa);
+	DrawStringToHandle(70, 400, "EXTRA JANKEN", 0xffffff, font_title, 0x20b2aa);
+	DrawStringToHandle(70, 500, "B : ã‚¿ã‚¤ãƒˆãƒ«ã¸", 0xffffff, font_title, 0x20b2aa);
 	
-	//ƒƒjƒ…[ƒJ[ƒ\ƒ‹
+	//ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚«ãƒ¼ã‚½ãƒ«
 	DrawTriangle(40, 355 + (T_selectnum * 50), 60, 370 + (T_selectnum * 50), 40, 385 + (T_selectnum * 50), GetColor(255, 0, 0), TRUE);
 
-	//ƒfƒoƒbƒO
-	//DrawStringToHandle(10, 650, "RT + A ‚Å‘I‘ğ‰æ–Ê(ŠJ”­)", 0xf, font_title);
+	//èª¬æ˜æ–‡å­—
+	std::string str("é€šå¸¸ã®ãƒ«ãƒ¼ãƒ«ã§ã™ã€‚ã˜ã‚ƒã‚“æ’ƒã‚’é§†ä½¿ã—ã¦æˆ¦ã„ã¾ã™");
+
+	//ç”»åƒ
+	if (T_selectnum == 0)
+	{
+		DrawGraph(560, 154, normal_image, TRUE);
+	}
+	else if (T_selectnum == 1)
+	{
+		DrawGraph(560, 154, ex_image, TRUE);
+		str = std::string("æ¥è§¦ã˜ã‚ƒã‚“ã‘ã‚“ã«å‹ã¤ã¨å³ã‚¯ãƒªã‚¢ã€‚è² ã‘ã‚‹ã¨å³æ­»ã«ãªã‚Šã¾ã™");
+	}
+	int str_w = GetDrawStringWidthToHandle(str.c_str(), str.size(), font_title);
+
+	DrawStringToHandle(640 - (str_w / 2), 650, str.c_str(), 0xffffff, font_title, 0x20b2aa);
 }
 
-//ƒV[ƒ“‚Ì•ÏX
+//ã‚·ãƒ¼ãƒ³ã®å¤‰æ›´
 AbstractScene* Scene_Title_GameLevel::ChangeScene()
 {
-	// RT + A ‚ÅƒZƒŒƒNƒg‰æ–Ê
+	// RT + A ã§ã‚»ãƒ¬ã‚¯ãƒˆç”»é¢
 	if (KeyManager::GetValue_RT() >= 40 && KeyManager::OnPadClicked(PAD_INPUT_A) == true)
 	{
 		return dynamic_cast<AbstractScene*> (new GameMainScene());
 	}
-	//Aƒ{ƒ^ƒ“‚ÅŒˆ’è
+	//Aãƒœã‚¿ãƒ³ã§æ±ºå®š
 	else if (KeyManager::OnPadClicked(PAD_INPUT_A) == true)
 	{
 		switch (T_selectnum)
 		{
-		case 0:/*’Êíƒ‚[ƒh*/
+		case 0:/*é€šå¸¸ãƒ¢ãƒ¼ãƒ‰*/
 			GameData::Set_DIFFICULTY(GAME_DIFFICULTY::NORMAL);
 			return dynamic_cast<AbstractScene*> (new Scene_InputNameRanking());
 			break;
-		case 1:/*‘¦€ƒ‚[ƒh*/
+		case 1:/*å³æ­»ãƒ¢ãƒ¼ãƒ‰*/
 			GameData::Set_DIFFICULTY(GAME_DIFFICULTY::HARD);
 			return dynamic_cast<AbstractScene*> (new Scene_InputNameRanking());
 			break;
@@ -108,5 +125,5 @@ AbstractScene* Scene_Title_GameLevel::ChangeScene()
 		return dynamic_cast<AbstractScene*> (new TitleScene());
 	}
 
-	return this;  //XV‚È‚µ
+	return this;  //æ›´æ–°ãªã—
 }
