@@ -842,6 +842,12 @@ void Enemy_10::Update_Jangeki()
 				//reflection->falseFlg();
 
 				/************************************************************************/
+
+				/*********************** ↓↓ 生成( ATフィールド ) ↓↓ ***********************/
+
+				if (jan_count < 2)Jan_360Guard(jan_count, radius, type);
+
+				/************************************************************************/
 				break;
 
 				/***********
@@ -858,14 +864,14 @@ void Enemy_10::Update_Jangeki()
 			/*********************** ↓↓ 生成( 追跡弾 ) ↓↓ ***********************/
 
 			//            生成速度
-			//if (frame_count % 150 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //追跡弾 
+			if (frame_count % 300 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //追跡弾 
 
 			/************************************************************************/
 
 			/*********************** ↓↓ 生成( プレイヤー向き通常弾 ) ↓↓ ***********************/
 
 			//            生成速度
-			//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+			if (frame_count % 50 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 
 			/************************************************************************/
 
@@ -878,13 +884,12 @@ void Enemy_10::Update_Jangeki()
 
 				//            生成速度
 				//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_whole(x, y, radius, speed, type);
-
 				/************************************************************************/
 
 				/*********************** ↓↓ 生成( 飛び跳ね弾 ) ↓↓ ***********************/
 
 				//飛び跳ねじゃん撃生成
-				if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
+				//if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
 
 				/************************************************************************/
 
@@ -898,7 +903,7 @@ void Enemy_10::Update_Jangeki()
 
 				/*********************** ↓↓ 生成( ATフィールド ) ↓↓ ***********************/
 
-				if (frame_count % 500 == 0)Jan_360Guard(jan_count, radius, type);
+				if (jan_count < 3)Jan_360Guard(jan_count, radius, type);
 
 				/************************************************************************/
 				break;
@@ -930,13 +935,26 @@ void Enemy_10::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
 //360度守り
 void Enemy_10::Jan_360Guard(int count, float rad, Jan_Type type)
 {
-	for (int i = count; i < (count + 5); i++)
-	{
-		
-		double angle = static_cast<double>((200.0 * i) * (M_PI / 180));
+	if (form == 1) {
+		for (int i = count; i < (count + 4); i++)
+		{
 
-		obj_jangeki[i] = new Jangeki_Guard(x, y, rad, 0, type, cosf(angle) * 100, sinf(angle) * 100);
+			double angle = static_cast<double>((100.0 * i) * (M_PI / 180));
 
+			obj_jangeki[i] = new Jangeki_Guard(x, y, rad, 0, type, cosf(angle) * 100, sinf(angle) * 100);
+
+		}
+	}
+
+	if (form == 2) {
+		for (int i = count; i < (count + 5); i++)
+		{
+
+			double angle = static_cast<double>((200.0 * i) * (M_PI / 180));
+
+			obj_jangeki[i] = new Jangeki_Guard(x, y, rad, 0, type, cosf(angle) * 100, sinf(angle) * 100);
+
+		}
 	}
 }
 
