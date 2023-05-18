@@ -121,9 +121,6 @@
     <Filter Include="ランキング\並び替え">
       <UniqueIdentifier>{efbdcd41-5965-4181-89fe-34c39e83ebed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ランキング\ランキング画面">
-      <UniqueIdentifier>{345c9015-90b6-454f-a414-b64769a069d0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Scene\名前入力画面">
       <UniqueIdentifier>{12e27910-5930-45ed-9cd2-b2402931e747}</UniqueIdentifier>
     </Filter>
@@ -144,6 +141,9 @@
     </Filter>
     <Filter Include="ソース ファイル\Jangeki\ATフィールドじゃん">
       <UniqueIdentifier>{56049f42-07fb-4d02-aee9-a690f9a07d41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene\ランキング画面">
+      <UniqueIdentifier>{345c9015-90b6-454f-a414-b64769a069d0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -331,7 +331,7 @@
       <Filter>ランキング\並び替え</Filter>
     </ClCompile>
     <ClCompile Include="Scene_Ranking.cpp">
-      <Filter>ランキング\ランキング画面</Filter>
+      <Filter>ソース ファイル\Scene\ランキング画面</Filter>
     </ClCompile>
     <ClCompile Include="Jangeki_Bounds.cpp">
       <Filter>ソース ファイル\Jangeki\飛び跳ね返りジャン撃</Filter>
@@ -555,7 +555,7 @@
       <Filter>ランキング\並び替え</Filter>
     </ClInclude>
     <ClInclude Include="Scene_Ranking.h">
-      <Filter>ランキング\ランキング画面</Filter>
+      <Filter>ソース ファイル\Scene\ランキング画面</Filter>
     </ClInclude>
     <ClInclude Include="Jangeki_Bounds.h">
       <Filter>ソース ファイル\Jangeki\飛び跳ね返りジャン撃</Filter>
