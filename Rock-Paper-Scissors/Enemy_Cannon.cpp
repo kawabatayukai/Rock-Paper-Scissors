@@ -94,6 +94,6 @@ void Enemy_Cannon::Update_Jangeki()
 
 
 		//¶¬
-		if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x+GetRand(30), player_y + GetRand(30));
+		if (frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x+GetRand(30), player_y + GetRand(30));
 	}
 }

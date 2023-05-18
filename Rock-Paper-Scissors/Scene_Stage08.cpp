@@ -382,7 +382,7 @@ void Scene_Stage08::Update()
 		if (obj_player->Hit_Jangeki(Item[i]) == true)
 		{
 			//“–‚½‚Á‚½Žž
-			damage += 10;
+			damage += 8;
 
 			delete Item[i];
 			Item[i] = nullptr;
