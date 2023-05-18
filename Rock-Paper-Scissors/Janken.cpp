@@ -83,7 +83,6 @@ Janken::Janken(Jan_Type enemy_jan, const int stage_num)
 	//star
 	stars = new Janken_Star * [STAR_MAX];
 	for (int i = 0; i < STAR_MAX; i++) stars[i] = nullptr;
-	//stars[0] = new Janken_Star(560.f, 400.f, 0.f, 720.f);
 
 	//フォントデータを作成　　　　　
 	if(font_result == 0)
