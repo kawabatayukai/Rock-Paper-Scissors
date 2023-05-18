@@ -32,5 +32,6 @@ public:
 private:
 	Enemy_04* obj_enemy;            //“G
 	int bgm;
+	int first_Type;
 };
 
