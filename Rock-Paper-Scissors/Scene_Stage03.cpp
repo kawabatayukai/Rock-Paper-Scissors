@@ -201,7 +201,7 @@ void Scene_Stage03::Update()
 						if(obj_enemy->GetWaitTime() > 0 || obj_enemy->GetWaitTime() < 200){
 
 							SheeldEnduranse = 27;				//3 - じゃんけん負けた時 1
-							obj_enemy->ReceiveDamage(30 - SheeldEnduranse - EnemyCutDamege); //軽減ダメージが入る
+							obj_enemy->ReceiveDamage(30 - SheeldEnduranse - EnemyCutDamege); //100 //軽減ダメージが入る
 
 						}
 
@@ -483,7 +483,7 @@ void Scene_Stage03::Draw() const
 
 		obj_player->Draw();  //プレイヤー描画
 		obj_enemy->Draw();   //敵キャラ描画
-
+		
 
 		//床・壁描画
 		for (int i = 0; i < STAGE_03_FLOOR; i++)
