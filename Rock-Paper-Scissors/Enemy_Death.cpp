@@ -8,18 +8,23 @@ Enemy_Death::Enemy_Death(const float& x, const float& y, const int& stage_num,co
 	{
 	case 1:
 		image_death = LoadGraph("images/Death/stage01_death.png");
+		se_death = LoadSoundMem("Sound/Janken/鳥・ニワトリ01.mp3");
 		break;
 	case 2:
 		image_death = LoadGraph("images/Death/stage02_death.png");
+		se_death = LoadSoundMem("Sound/Janken/カエル03.mp3");
 		break;
 	case 3:
 		image_death = LoadGraph("images/Death/stage03_death.png");
+		se_death = LoadSoundMem("Sound/Janken/「ぐああーーっ！」.mp3");
 		break;
 	case 4:
 		image_death = LoadGraph("images/Death/stage04_death.png");
+		se_death = LoadSoundMem("Sound/Janken/「ぐああーーっ！」.mp3");
 		break;
 	case 5:
 		image_death = LoadGraph("images/Death/stage05_death.png");
+		se_death = LoadSoundMem("Sound/Janken/「ぐああーーっ！」.mp3");
 		break;
 	case 6:
 	{
@@ -31,23 +36,25 @@ Enemy_Death::Enemy_Death(const float& x, const float& y, const int& stage_num,co
 		break;
 	case 7:
 		image_death = LoadGraph("images/Death/stage07_death.png");
+		se_death = LoadSoundMem("Sound/Janken/「ぐああーーっ！」.mp3");
 		break;
 	case 8:
 		image_death = LoadGraph("images/Death/stage08_death.png");
+		se_death = LoadSoundMem("Sound/Janken/「ぐああーーっ！」.mp3");
 		break;
 	case 9:
 		image_death = LoadGraph("images/Death/stage09_death.png");
+		se_death = LoadSoundMem("Sound/Janken/「ぐああーーっ！」.mp3");
 		break;
 	case 10:
 		image_death = LoadGraph("images/ワンパンマン顔のみ左.png");
+		se_death = LoadSoundMem("Sound/Janken/咆哮.mp3");
 		break;
 
 	default:
 		image_death = LoadGraph("images/ワンパンマン顔のみ左.png");
 		break;
 	}
-
-	se_death = LoadSoundMem("Sound/Janken/「ぐああーーっ！」.mp3");
 
 	g_add = -24.5f;    //重力加速度をマイナス値に
 	old_y = y;

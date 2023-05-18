@@ -98,6 +98,8 @@ private:
 
 	static int teleport;
 
+	int se_death;
+
 	int form;
 
 	int image[10]; //‰æ‘œ

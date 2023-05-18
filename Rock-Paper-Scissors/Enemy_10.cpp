@@ -39,6 +39,7 @@ Enemy_10::Enemy_10(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	reflection = new Jangeki_Reflection(x, y, w, h, Jan_Type::ROCK);
 	reflection->Init_reflectionJangeki();
 
+	se_death = LoadSoundMem("Sound/Janken/咆哮.mp3");
 }
 
 //デストラクタ
@@ -467,6 +468,9 @@ void Enemy_10::Update()
 	/*死亡時の処理*/
 	if (enemy_state == ENEMY_STATE10::DEATH)
 	{
+		
+		if (CheckSoundMem(se_death) == 0) PlaySoundMem(se_death, DX_PLAYTYPE_BACK);
+
 		static bool isJumped = false;
 
 		if (land_flg == false && isJumped == false) land_flg = true;
@@ -483,6 +487,7 @@ void Enemy_10::Update()
 
 		if (y > 730.f)
 		{
+			StopSoundMem(se_death);
 			enemy_state = ENEMY_STATE10::DEATH_END;
 		}
 		Init_Jangeki(); //ジャン撃を消す
