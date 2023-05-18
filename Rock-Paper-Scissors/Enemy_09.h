@@ -77,6 +77,10 @@ private:
 
 	int refanim[15];
 
+
+	//SE
+	int SE_Reflection;
+	int SE_Teleport;
 };
 
 
