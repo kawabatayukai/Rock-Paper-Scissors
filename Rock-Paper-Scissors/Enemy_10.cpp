@@ -468,7 +468,6 @@ void Enemy_10::Update()
 	/*€–S‚Ìˆ—*/
 	if (enemy_state == ENEMY_STATE10::DEATH)
 	{
-		
 		if (CheckSoundMem(se_death) == 0) PlaySoundMem(se_death, DX_PLAYTYPE_BACK);
 
 		static bool isJumped = false;
