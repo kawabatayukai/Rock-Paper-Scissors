@@ -45,7 +45,7 @@ Scene_Stage05::Scene_Stage05(const Player* player)
 	//	mob[2] = new MobEnemy_05(1230, 420, Jan_Type::ROCK);
 	//}
 
-	GameData::Set_TimeLimit(7200);
+	GameData::Set_TimeLimit(10800);
 	//è∞ÅEï«ÇÃópà”
 	Init_Floor(STAGE_05_FLOOR);
 

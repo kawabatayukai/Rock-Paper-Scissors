@@ -936,7 +936,7 @@ void Enemy_10::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
 void Enemy_10::Jan_360Guard(int count, float rad, Jan_Type type)
 {
 	if (form == 1) {
-		for (int i = count; i < (count + 4); i++)
+		for (int i = count; i < (count + 6); i++)
 		{
 
 			double angle = static_cast<double>((100.0 * i) * (M_PI / 180));
