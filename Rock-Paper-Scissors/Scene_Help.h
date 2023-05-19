@@ -3,10 +3,7 @@
 
 //ヘルプシーン
 class HelpScene : public AbstractScene
-{
-private:
-	int HelpImage = 0;
-	
+{	
 public:
 	//コンストラクタ
 	HelpScene();
@@ -17,4 +14,8 @@ public:
 	void Draw() const override;  //描画
 
 	AbstractScene* ChangeScene() override;   //シーンの変更
+
+private:
+	int HelpImage = 0;
+	static int font_help;
 };
