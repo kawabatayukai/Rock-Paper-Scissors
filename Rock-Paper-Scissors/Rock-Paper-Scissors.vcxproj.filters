@@ -363,6 +363,12 @@
     <ClCompile Include="KeyBoard.cpp">
       <Filter>ソース ファイル\Scene\名前入力画面</Filter>
     </ClCompile>
+    <ClCompile Include="SortSaveTime.cpp">
+      <Filter>ソース ファイル\Scene\ランキング画面\並び替え</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene_RankingTime.cpp">
+      <Filter>ソース ファイル\Scene\ランキング画面</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -589,6 +595,12 @@
     </ClInclude>
     <ClInclude Include="KeyBoard.h">
       <Filter>ソース ファイル\Scene\名前入力画面</Filter>
+    </ClInclude>
+    <ClInclude Include="SortSaveTime.h">
+      <Filter>ソース ファイル\Scene\ランキング画面\並び替え</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_RankingTime.h">
+      <Filter>ソース ファイル\Scene\ランキング画面</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

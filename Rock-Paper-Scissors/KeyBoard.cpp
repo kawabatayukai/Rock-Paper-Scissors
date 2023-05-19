@@ -2,6 +2,7 @@
 #include"DxLib.h"
 #include"KeyManager.h"
 #include"SortSave.h"
+#include"SortSaveTime.h"
 
 #define KEY_CENTER_X 320      //幅  720　用で作ったキーボードを無理やり中心に持ってくる
 #define KEY_CENTER_Y 120      //高さ480　　　　　　　　　　不要な時は CENTER_X,Y を0にしてください
@@ -165,6 +166,7 @@ int KeyBoard::KeyBoard_PushA()
 				{
 					char* name = const_cast<char*>(input_str.c_str());
 					sortSave.setName(9, name);
+					sortSaveTime.setName(9, name);
 
 					return 1;
 				}

@@ -16,89 +16,87 @@ void SortSave::SortRanking(void)
 	/*********
 	* スコア *
 	*********/
-	//// 選択法ソート
-	//for (i = 0; i < 9; i++) {
-	//	for (j = i + 1; j < RANKING_DATA; j++) {
-	//		if (g_Ranking[i].score <= g_Ranking[j].score)
-	//		{
-	//			work = g_Ranking[i];
-	//			g_Ranking[i] = g_Ranking[j];
-	//			g_Ranking[j] = work;
-	//		}
-	//	}
-	//}
-	//// 順位付け
-	//for (i = 0; i < RANKING_DATA; i++)
-	//{
-	//	g_Ranking[i].no = 1;
-	//}
-	//// 得点が同じ場合は、同じ順位とする
-	//// 同順位があった場合の次の順位はデータ個数が加算された順位とする
-	//for (i = 0; i < RANKING_DATA - 1; i++) {
-	//	for (j = i + 1; j < RANKING_DATA; j++) 
-	//	{
-	//		if (g_Ranking[i].score > g_Ranking[j].score)
-	//		{
-	//			g_Ranking[j].no++;
-	//		}
-	//	}
-	//}
+	// 選択法ソート
+	for (i = 0; i < 9; i++) {
+		for (j = i + 1; j < RANKING_DATA; j++) {
+			if (g_Ranking[i].score <= g_Ranking[j].score)
+			{
+				work = g_Ranking[i];
+				g_Ranking[i] = g_Ranking[j];
+				g_Ranking[j] = work;
+			}
+		}
+	}
+	// 順位付け
+	for (i = 0; i < RANKING_DATA; i++)
+	{
+		g_Ranking[i].no = 1;
+	}
+	// 得点が同じ場合は、同じ順位とする
+	// 同順位があった場合の次の順位はデータ個数が加算された順位とする
+	for (i = 0; i < RANKING_DATA - 1; i++) {
+		for (j = i + 1; j < RANKING_DATA; j++) 
+		{
+			if (g_Ranking[i].score > g_Ranking[j].score)
+			{
+				g_Ranking[j].no++;
+			}
+		}
+	}
 
 	/********
 	* 時間  *
 	********/
-		// 選択法ソート
-		for (i = 0; i < 9; i++) {
-			for (j = i + 1; j < RANKING_DATA; j++) 
-			{
-				if (g_Ranking[i].timeMin > 0) //0以上
-				{
-					if (g_Ranking[i].timeMin <= g_Ranking[j].timeMin)
-					{
-						work = g_Ranking[i];
-						g_Ranking[i] = g_Ranking[j];
-						g_Ranking[j] = work;
-					}
-				}
-				else  //0以下
-				{
-					if (g_Ranking[i].timeSec <= g_Ranking[j].timeSec)
-					{
-						work = g_Ranking[i];
-						g_Ranking[i] = g_Ranking[j];
-						g_Ranking[j] = work;
-					}
-				}
-			}
-		}
-
-		// 順位付け
-		for (i = 0; i < RANKING_DATA; i++)
-		{
-			g_Ranking[i].no = 1;
-		}
-
-		// 得点が同じ場合は、同じ順位とする
-		// 同順位があった場合の次の順位はデータ個数が加算された順位とする
-		for (i = 0; i < RANKING_DATA - 1; i++) {
-			for (j = i + 1; j < RANKING_DATA; j++)
-			{
-				if (g_Ranking[i].timeMin > 0) //0以上
-				{
-					if (g_Ranking[i].timeMin > g_Ranking[j].timeMin)
-					{
-						g_Ranking[j].no++;
-					}
-				}
-				else   //0以下
-				{
-					if (g_Ranking[i].timeSec > g_Ranking[j].timeSec)
-					{
-						g_Ranking[j].no++;
-					}
-				}
-			}
-		}
+		//// 選択法ソート
+		//for (i = 0; i < 9; i++) {
+		//	for (j = i + 1; j < RANKING_DATA; j++) 
+		//	{
+		//		if (g_Ranking[i].timeMin > 0) //0以上
+		//		{
+		//			if (g_Ranking[i].timeMin <= g_Ranking[j].timeMin)
+		//			{
+		//				work = g_Ranking[i];
+		//				g_Ranking[i] = g_Ranking[j];
+		//				g_Ranking[j] = work;
+		//			}
+		//		}
+		//		else  //0以下
+		//		{
+		//			if (g_Ranking[i].timeSec <= g_Ranking[j].timeSec)
+		//			{
+		//				work = g_Ranking[i];
+		//				g_Ranking[i] = g_Ranking[j];
+		//				g_Ranking[j] = work;
+		//			}
+		//		}
+		//	}
+		//}
+		//// 順位付け
+		//for (i = 0; i < RANKING_DATA; i++)
+		//{
+		//	g_Ranking[i].no = 1;
+		//}
+		//// 得点が同じ場合は、同じ順位とする
+		//// 同順位があった場合の次の順位はデータ個数が加算された順位とする
+		//for (i = 0; i < RANKING_DATA - 1; i++) {
+		//	for (j = i + 1; j < RANKING_DATA; j++)
+		//	{
+		//		if (g_Ranking[i].timeMin > 0) //0以上
+		//		{
+		//			if (g_Ranking[i].timeMin > g_Ranking[j].timeMin)
+		//			{
+		//				g_Ranking[j].no++;
+		//			}
+		//		}
+		//		else   //0以下
+		//		{
+		//			if (g_Ranking[i].timeSec > g_Ranking[j].timeSec)
+		//			{
+		//				g_Ranking[j].no++;
+		//			}
+		//		}
+		//	}
+		//}
 }
 
 /*ランキングデータの保存*/
