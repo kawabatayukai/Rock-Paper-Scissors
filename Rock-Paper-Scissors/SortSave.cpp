@@ -10,38 +10,95 @@ void SortSave::SortRanking(void)
 	int i, j;
 	RankingData work;
 
-	g_Ranking[9].timeMin = GameData::Get_Total_Time() / 3600;
-	g_Ranking[9].timeSec = (GameData::Get_Total_Time() % 3600) / 60;
+	//g_Ranking[9].timeMin = GameData::Get_Total_Time() / 3600;
+	//g_Ranking[9].timeSec = (GameData::Get_Total_Time() % 3600) / 60;
 
-	// 選択法ソート
-	for (i = 0; i < 9; i++) {
-		for (j = i + 1; j < RANKING_DATA; j++) {
-			if (g_Ranking[i].score <= g_Ranking[j].score)
+	/*********
+	* スコア *
+	*********/
+	//// 選択法ソート
+	//for (i = 0; i < 9; i++) {
+	//	for (j = i + 1; j < RANKING_DATA; j++) {
+	//		if (g_Ranking[i].score <= g_Ranking[j].score)
+	//		{
+	//			work = g_Ranking[i];
+	//			g_Ranking[i] = g_Ranking[j];
+	//			g_Ranking[j] = work;
+	//		}
+	//	}
+	//}
+	//// 順位付け
+	//for (i = 0; i < RANKING_DATA; i++)
+	//{
+	//	g_Ranking[i].no = 1;
+	//}
+	//// 得点が同じ場合は、同じ順位とする
+	//// 同順位があった場合の次の順位はデータ個数が加算された順位とする
+	//for (i = 0; i < RANKING_DATA - 1; i++) {
+	//	for (j = i + 1; j < RANKING_DATA; j++) 
+	//	{
+	//		if (g_Ranking[i].score > g_Ranking[j].score)
+	//		{
+	//			g_Ranking[j].no++;
+	//		}
+	//	}
+	//}
+
+	/********
+	* 時間  *
+	********/
+		// 選択法ソート
+		for (i = 0; i < 9; i++) {
+			for (j = i + 1; j < RANKING_DATA; j++) 
 			{
-				work = g_Ranking[i];
-				g_Ranking[i] = g_Ranking[j];
-				g_Ranking[j] = work;
+				if (g_Ranking[i].timeMin > 0) //0以上
+				{
+					if (g_Ranking[i].timeMin <= g_Ranking[j].timeMin)
+					{
+						work = g_Ranking[i];
+						g_Ranking[i] = g_Ranking[j];
+						g_Ranking[j] = work;
+					}
+				}
+				else  //0以下
+				{
+					if (g_Ranking[i].timeSec <= g_Ranking[j].timeSec)
+					{
+						work = g_Ranking[i];
+						g_Ranking[i] = g_Ranking[j];
+						g_Ranking[j] = work;
+					}
+				}
 			}
 		}
-	}
 
-	// 順位付け
-	for (i = 0; i < RANKING_DATA; i++)
-	{
-		g_Ranking[i].no = 1;
-	}
-
-	// 得点が同じ場合は、同じ順位とする
-	// 同順位があった場合の次の順位はデータ個数が加算された順位とする
-	for (i = 0; i < RANKING_DATA - 1; i++) {
-		for (j = i + 1; j < RANKING_DATA; j++) 
+		// 順位付け
+		for (i = 0; i < RANKING_DATA; i++)
 		{
-			if (g_Ranking[i].score > g_Ranking[j].score)
+			g_Ranking[i].no = 1;
+		}
+
+		// 得点が同じ場合は、同じ順位とする
+		// 同順位があった場合の次の順位はデータ個数が加算された順位とする
+		for (i = 0; i < RANKING_DATA - 1; i++) {
+			for (j = i + 1; j < RANKING_DATA; j++)
 			{
-				g_Ranking[j].no++;
+				if (g_Ranking[i].timeMin > 0) //0以上
+				{
+					if (g_Ranking[i].timeMin > g_Ranking[j].timeMin)
+					{
+						g_Ranking[j].no++;
+					}
+				}
+				else   //0以下
+				{
+					if (g_Ranking[i].timeSec > g_Ranking[j].timeSec)
+					{
+						g_Ranking[j].no++;
+					}
+				}
 			}
 		}
-	}
 }
 
 /*ランキングデータの保存*/
@@ -74,7 +131,15 @@ int SortSave::SaveRanking(void)
 	// ランキングデータ分配列データを書き込む
 	for (int i = 0; i < RANKING_DATA; i++)
 	{
-		fprintf_s(fp, "%2d %10s %10d %10d %10d\n", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].score, g_Ranking[i].timeMin, g_Ranking[i].timeSec);
+	/*********
+	* スコア *
+	*********/
+		//fprintf_s(fp, "%2d %10s %10d %10d %10d\n", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].score, g_Ranking[i].timeMin, g_Ranking[i].timeSec);
+
+	/********
+	* 時間  *
+	********/
+		fprintf_s(fp, "%2d %10s %10d %10d %10d\n", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].timeMin, g_Ranking[i].timeSec, g_Ranking[i].score);
 	}
 
 	//ファイルクローズ
@@ -113,7 +178,15 @@ int  SortSave::ReadRanking(void)
 	//ランキングデータ配分列データを読み込む
 	for (int i = 0; i < RANKING_DATA; i++)
 	{
-		fscanf_s(fp, "%2d %10s %10d %10d %10d", &g_Ranking[i].no, g_Ranking[i].name,sizeof(g_Ranking[i].name), &g_Ranking[i].score, &g_Ranking[i].timeMin, &g_Ranking[i].timeSec);
+	/*********
+	* スコア *
+	*********/
+		//fscanf_s(fp, "%2d %10s %10d %10d %10d", &g_Ranking[i].no, g_Ranking[i].name,sizeof(g_Ranking[i].name), &g_Ranking[i].score, &g_Ranking[i].timeMin, &g_Ranking[i].timeSec);
+
+	/********
+	* 時間  *
+	********/
+		fscanf_s(fp, "%2d %10s %10d %10d %10d", &g_Ranking[i].no, g_Ranking[i].name, sizeof(g_Ranking[i].name), &g_Ranking[i].timeMin, &g_Ranking[i].timeSec, &g_Ranking[i].score);
 	}
 
 	//ファイルクローズ
@@ -128,6 +201,7 @@ RankingData SortSave::getRankingData(int i)
 	return g_Ranking[i];
 }
 
+/*名前*/
 void SortSave::setName(int i, char name[11])
 {
 	int j;
@@ -139,6 +213,7 @@ void SortSave::setName(int i, char name[11])
 	g_Ranking[i].name[j] = '\0';
 }
 
+/*スコア*/
 void SortSave::setScore(int i, int score)
 {
 	if (0 <= score)
@@ -147,18 +222,20 @@ void SortSave::setScore(int i, int score)
 	}
 }
 
-//void SortSave::setTimerMin(int i, int time)
-//{
-//	if (0 < time)
-//	{
-//		g_Ranking[i].timeMin = GameData::Get_Total_Time() / 3600;
-//	}
-//}
+/*時間：分*/
+void SortSave::setTimerMin(int i, int time)
+{
+	if (0 < time)
+	{
+		g_Ranking[i].timeMin = GameData::Get_Total_Time() / 3600;
+	}
+}
 
-//void SortSave::setTimerSec(int i, int time)
-//{
-//	if (0 < time)
-//	{
-//		g_Ranking[i].timeMin = (GameData::Get_Total_Time() % 3600) / 60;
-//	}
-//}
+/*時間：秒*/
+void SortSave::setTimerSec(int i, int time)
+{
+	if (0 < time)
+	{
+		g_Ranking[i].timeSec = (GameData::Get_Total_Time() % 3600) / 60;
+	}
+}

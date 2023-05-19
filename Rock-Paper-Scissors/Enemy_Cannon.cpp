@@ -50,9 +50,9 @@ void Enemy_Cannon::Update()
 	//じゃん撃描画
 	Draw_Jangeki();
 
-	//テスト
-	if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
-	else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
+	////テスト
+	//if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
+	//else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
 
 }
 

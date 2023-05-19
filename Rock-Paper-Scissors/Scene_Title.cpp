@@ -13,6 +13,7 @@
 #include "Scene_Title_GameLevel.h"
 #include"Scene_Ranking_GameLevel.h"
 
+
 int TitleScene::font_title;   //フォントハンドル
 
 //コンストラクタ
@@ -29,12 +30,14 @@ TitleScene::TitleScene()
 
 	//BGMロード
 	bgm = LoadSoundMem("Sound/TitleBGM.mp3");
+
 }
 
 //デストラクタ
 TitleScene::~TitleScene()
 {
 	StopSoundMem(bgm);
+	
 }
 
 //更新

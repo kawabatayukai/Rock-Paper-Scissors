@@ -86,7 +86,7 @@ void Enemy_04::Update()
 	//特殊行動時や残りHPによってスピードが変わる
 	if (specialFlg == true)
 	{
-		speed = 20.0f;
+		speed = 15.0f;
 		specialTime++;
 	}
 	else if (hp <= 50)
@@ -99,6 +99,7 @@ void Enemy_04::Update()
 	}
 
 	//少しずつHP回復
+	//if (hp < 100 && frame_count % 30 == 0) hp++;
 	if (hp < 100 && frame_count % 20 == 0) hp++;
 
 	//特殊行動時間(4秒間)
@@ -213,10 +214,12 @@ void Enemy_04::Update_Jangeki()
 	if (jan_count < JANGEKI_MAX && obj_jangeki[jan_count] == nullptr)
 	{
 		float radius = 45.0f;   //半径
-		float speed  =  7.0f;   //スピード
+		//float speed  =  4.0f;   //スピード
+		float speed  =  6.0f;   //スピード
 
 		//HP50以下でジャン撃スピード変更
-		if (hp <= 50) speed = 12.0f;
+		//if (hp <= 50) speed = 7.0f;
+		if (hp <= 50) speed = 10.0f;
 		
 		//ランダムな属性を生成
 		Jan_Type type = static_cast<Jan_Type>(GetRand(2));

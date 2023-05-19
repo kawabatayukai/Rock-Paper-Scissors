@@ -38,11 +38,16 @@ public:
 	/*ランキングデータ（構造体*/
 	RankingData getRankingData(int i);
 
+	/*名前*/
 	void setName(int i, char name[11]);
 
+	/*スコア*/
 	void setScore(int i, int score);
 
+	/*時間：分*/
 	void setTimerMin(int i, int time);
+
+	/*時間：秒*/
 	void setTimerSec(int i, int time);
 
 };

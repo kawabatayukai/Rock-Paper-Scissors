@@ -5,7 +5,7 @@ class Scene_Ranking_GameLevel :
 {
 private:
 
-	int TitleImage = 0;
+	int image_back = 0;
 	int T_selectnum = 0;
 
 	static int font_title;   //フォントハンドル

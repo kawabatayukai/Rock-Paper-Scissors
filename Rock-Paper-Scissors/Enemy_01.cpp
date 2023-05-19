@@ -43,7 +43,7 @@ Enemy_01::Enemy_01(float x, float y, Jan_Type type) : EnemyBase(x, y, 96.0f, 78.
 	//‰æ‘œ‚Ì—pˆÓ
 	max_index = 3;
 	image_enemy = new int[3];
-	LoadDivGraph("images/stage01/stage01_chicken.png", 3, 3, 1, 96, 78, image_enemy);;
+	LoadDivGraph("images/stage01/stage01_chicken.png", 3, 3, 1, 100, 99, image_enemy);;
 
 	Init_Jangeki();       //‚¶‚á‚ñŒ‚‚ğ—pˆÓ
 }
@@ -87,7 +87,7 @@ void Enemy_01::Update()
 void Enemy_01::Draw() const
 {
 	//’†S‚©‚ç•`‰æ
-	DrawRotaGraphF(x, y, 1, 0, image_enemy[image_index], TRUE,dir == 0 ? 1 : 0);
+	DrawRotaGraphF(x, y - 10, 1, 0, image_enemy[image_index], TRUE,dir == 0 ? 1 : 0);
 
 	//‚¶‚á‚ñŒ‚•`‰æ
 	Draw_Jangeki();

@@ -102,6 +102,7 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //Šî’êƒNƒ‰ƒX‚
 //ƒfƒXƒgƒ‰ƒNƒ^
 Player::~Player()
 {
+
 }
 
 //XV
@@ -137,6 +138,7 @@ void Player::Update()
 			obj_effect = nullptr;
 		}
 	}
+
 	//ƒGƒtƒFƒNƒg
 	if (obj_effectchange != nullptr)
 	{
@@ -234,7 +236,6 @@ void Player::Update()
 		if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
 	}
 
-
 	old_y = y;                    //1ƒtƒŒ[ƒ€‘O‚Ì‚™À•W
 	y += y_add;                   //—‰º‹——£‚ğ‚™À•W‚É‰ÁZ‚·‚é
 	g_add = _GRAVITY;              //d—Í‰Á‘¬“x‚ğ‰Šú‰»‚·‚é
@@ -242,8 +243,6 @@ void Player::Update()
 	if (y > old_y) land_flg = false;
 
 	/**********************************************************/
-
-
 
 //````````````````````````@Æ€@```````````````````````````
 	//‰EƒXƒeƒBƒbƒN‚ÌƒAƒiƒƒO“ü—Í‚ğæ“¾
