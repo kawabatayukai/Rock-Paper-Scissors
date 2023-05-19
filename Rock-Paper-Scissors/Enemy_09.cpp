@@ -398,7 +398,7 @@ void Enemy_09::SpecialMoveEnmey()
 
 void Enemy_09::frameUP()
 {
-	if (janFrame >= 55)
+	if (janFrame >= 25)
 	{
 		janFrame = janFrame - 10;
 	}
@@ -406,9 +406,9 @@ void Enemy_09::frameUP()
 
 void Enemy_09::frameDown()
 {
-	if (janFrame < 75)
+	if (janFrame < 65)
 	{
-		janFrame = janFrame + 5;
+		janFrame = janFrame + 10;
 	}
 
 }
