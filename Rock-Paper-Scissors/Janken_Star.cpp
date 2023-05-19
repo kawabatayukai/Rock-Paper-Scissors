@@ -25,7 +25,6 @@ void Janken_Star::Update()
 
 void Janken_Star::Draw() const
 {
-
 	SetDrawBlendMode(DX_BLENDMODE_ADD, type);
 	SetDrawBright(255, 165, 0);
 	DrawRotaGraph(x, y, 1.2, rate, image, TRUE);

@@ -55,6 +55,8 @@ Scene_Story::Scene_Story() :
 		font_text = CreateFontToHandle("メイリオ", 30, 10, DX_FONTTYPE_ANTIALIASING, -1, 0);
 	if (font_skip == 0)
 		font_skip = CreateFontToHandle("メイリオ", 20, 10, DX_FONTTYPE_ANTIALIASING);
+
+	image_back = LoadGraph("images/Story/Story_Back.png");
 }
 
 //デストラクタ
@@ -67,6 +69,8 @@ Scene_Story::~Scene_Story()
 void Scene_Story::Update()
 {
 	using namespace _C_STORY;
+
+	DrawGraph(0, 0, image_back, TRUE);
 
 	//1行ずつ描画
 	for (int i = 0; i < text->size(); i++)
@@ -119,7 +123,7 @@ void Scene_Story::Draw() const
 	using namespace _C_STORY;
 
 	//DrawLine(CENTER_X, 0, CENTER_X, 720, 0xffffff, 3);
-	SetBackgroundColor(0, 64, 0);
+	
 
 	//点滅"Skip"
 	if (skipflash_count < 120)

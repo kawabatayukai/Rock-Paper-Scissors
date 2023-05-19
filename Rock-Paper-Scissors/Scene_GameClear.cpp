@@ -26,7 +26,7 @@
 //コンストラクタ
 GameClearScene::GameClearScene(int Next):Next(Next)
 {
-	clearImage = LoadGraph("images/GameClear.png");
+	clearImage = LoadGraph("images/GameClear2.png");
 }
 
 //デストラクタ

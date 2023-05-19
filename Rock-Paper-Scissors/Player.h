@@ -68,7 +68,7 @@ public:
 	//プレイヤーが死亡しているか
 	bool IsDeathPlayer() const;
 
-	void setName(int i, char name[11]);
+	//void setName(int i, char name[11]);
 
 	//SE再生
 	void Play_SE();
@@ -139,8 +139,10 @@ private:
 
 	//エフェクト(回復)
 	Effect_Player* obj_effect;
+
 	//エフェクト(属性)
 	Effect_ChangePlayer* obj_effectchange;
+
 	//SE
 	Sound_Jangeki** obj_se;
 	Sound_Player** obj_pse;

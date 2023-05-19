@@ -56,7 +56,7 @@ private:
 	int interval = 0;
 	int Rimage;
 	int image;
-	int janFrame = 75;
+	int janFrame = 25;
 	int count = 0;
 	int SPcount = 0;
 	

@@ -50,7 +50,7 @@ Scene_Stage01::Scene_Stage01(const Player* player)
 	image_back = LoadGraph("images/stage01/Tutorial_Back.png");
 
 	//BGMƒ[ƒh
-	bgm = LoadSoundMem("Sound/stage01/maou_game_battle37.mp3");
+	bgm = LoadSoundMem("Sound/stage01/stage01bgm.mp3");
 	
 }
 
