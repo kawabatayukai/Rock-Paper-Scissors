@@ -132,7 +132,23 @@ void Enemy_08::Update_Jangeki()
 		if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
 	}
 }
-
+void Enemy_08::Change_JanType()
+{
+	switch (GetRand(2))
+	{
+	case 0:
+		SetType(Jan_Type::ROCK);
+		break;
+	case 1:
+		SetType(Jan_Type::SCISSORS);
+		break;
+	case 2:
+		SetType(Jan_Type::PAPER);
+		break;
+	default:
+		break;
+	}
+}
 void Enemy_08::MAX()
 {
 
