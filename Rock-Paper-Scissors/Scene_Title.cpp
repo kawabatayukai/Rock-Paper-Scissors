@@ -43,7 +43,7 @@ TitleScene::~TitleScene()
 //更新
 void TitleScene::Update()
 {
-	//if (CheckSoundMem(bgm) == 0) PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
+	if (CheckSoundMem(bgm) == 0) PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
 
 	//カーソルを合わせてボタンを押すと遷移
 	if (KeyManager::OnPadClicked(PAD_INPUT_DOWN) == true) {
