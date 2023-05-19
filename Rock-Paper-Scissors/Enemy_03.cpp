@@ -239,7 +239,7 @@ void Enemy_03::Update()
 
 
 			//前回より減速する
-			speed = 9.5f;
+			speed = 10.5f;
 			
 
 		}
@@ -701,7 +701,7 @@ void Enemy_03::Update_Jangeki()
 			Jan_Type type = static_cast<Jan_Type>(GetRand(0));//グーのみ
 
 			//バウンド弾
-			if (frame_count % 55 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
+			if (frame_count % 45 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
 			
 		 }
 		//HPが85以下で46以上の時

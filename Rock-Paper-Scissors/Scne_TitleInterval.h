@@ -21,5 +21,6 @@ private:
 
 	int frame;
 	int speed;
+	
 };
 

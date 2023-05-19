@@ -9,7 +9,7 @@ int HelpScene::font_help = 0;
 HelpScene::HelpScene()
 {
 	HelpImage = LoadGraph("images/help/help_2.png");
-	if(font_help == 0) font_help = CreateFontToHandle("メイリオ", 40, 3, DX_FONTTYPE_ANTIALIASING_EDGE, -1, 1);
+	if(font_help == 0) font_help = CreateFontToHandle("メイリオ", 40, 10, DX_FONTTYPE_ANTIALIASING_EDGE, -1, 3);
 }
 
 //デストラクタ
@@ -28,7 +28,7 @@ void HelpScene::Update()
 void HelpScene::Draw() const
 {
 	DrawGraph(0, 0, HelpImage, TRUE);
-	DrawStringToHandle(50, 660, "A : タイトル", 0xffffff, font_help, 0x00ff00);
+	DrawStringToHandle(50, 660, "A : タイトル", 0xffffff, font_help, 0x7cd900);
 }
 
 //シーンの変更
