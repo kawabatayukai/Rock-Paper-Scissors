@@ -19,8 +19,11 @@ public:
 
 private:
 	int HelpImage = 0;      //画像
+	int image_back;         //背景
 	static int font_help;   //フォント
 
 	Player* obj_player;     //プレイヤー
 	Floor** obj_floor;      //床
+
+	int helpTime;           //時間
 };
