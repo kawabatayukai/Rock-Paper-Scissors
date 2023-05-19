@@ -29,6 +29,21 @@ void HelpScene::Draw() const
 {
 	DrawGraph(0, 0, HelpImage, TRUE);
 	DrawStringToHandle(50, 660, "A : タイトル", 0xffffff, font_help, 0x7cd900);
+
+	//RB
+	if (KeyManager::OnPadPressed(PAD_INPUT_6))   
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ADD, 80);
+		DrawBox(778, 58, (778 + 89), (58 + 60), 0xffffff, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+	//LB
+	if (KeyManager::OnPadPressed(PAD_INPUT_6))   
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ADD, 80);
+		DrawBox(778, 58, (778 + 89), (58 + 60), 0xffffff, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
 }
 
 //シーンの変更

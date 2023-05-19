@@ -360,6 +360,9 @@
     <ClCompile Include="Jangeki_Guard.cpp">
       <Filter>ソース ファイル\Jangeki\ATフィールドじゃん</Filter>
     </ClCompile>
+    <ClCompile Include="KeyBoard.cpp">
+      <Filter>ソース ファイル\Scene\名前入力画面</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -583,6 +586,9 @@
     </ClInclude>
     <ClInclude Include="Jangeki_Guard.h">
       <Filter>ソース ファイル\Jangeki\ATフィールドじゃん</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyBoard.h">
+      <Filter>ソース ファイル\Scene\名前入力画面</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
