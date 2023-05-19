@@ -304,7 +304,7 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 
 			case Jan_Result::WIN:     //Ÿ‚¿
 
-				
+				GameData::Add_Score(500);
 
 				/*“ïˆÕ“x‚ª‘¦€ƒ‚[ƒh‚È‚ç*/
 				if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
@@ -806,6 +806,8 @@ bool Stage_Base::IsEnd_DeathEnemy()
 		{
 			return true;
 			delete obj_death;
+
+			GameData::Add_Score(1000);
 		}
 	}
 	return false;
