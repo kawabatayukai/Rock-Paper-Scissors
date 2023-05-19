@@ -2,31 +2,62 @@
 #include"KeyManager.h"
 #include"Scene_Help.h"
 #include"Scene_Title.h"
+#include"GameData.h"
 
 int HelpScene::font_help = 0;
+#define FLOOR_HELP 3
 
 //コンストラクタ
-HelpScene::HelpScene()
+HelpScene::HelpScene() : helpTime(0)
 {
-	HelpImage = LoadGraph("images/help/help_2.png");
+	HelpImage = LoadGraph("images/help/help3.png");
+	image_back = LoadGraph("images/Story/starback.png");
 	if(font_help == 0) font_help = CreateFontToHandle("メイリオ", 40, 10, DX_FONTTYPE_ANTIALIASING_EDGE, -1, 3);
+
+	GameData::Set_TimeLimit();                 //制限時間が0の場合、playerが死んでしまう
+	obj_player = new Player(1220.0f, 610.0f, 1);
+
+	obj_floor = new Floor * [FLOOR_HELP];
+	for (int i = 0; i < FLOOR_HELP; i++) obj_floor[i] = nullptr;
+	obj_floor[0] = new Floor(-100, 685, 1480, 15, 0);
+	obj_floor[1] = new Floor(385, 605, 215, 10, 0);
+	obj_floor[2] = new Floor(765, 578, 105, 15, 0);
+
+	helpTime = GetNowCount();
 }
 
 //デストラクタ
 HelpScene::~HelpScene()
 {
-
+	GameData::Set_TimeLimit(0);
+	delete obj_player;
+	delete[] obj_floor;
 }
 
 //更新
 void HelpScene::Update()
 {
-	
+	obj_player->Update();
+	if (obj_player->GetX() > 1330.0f) obj_player->SetX(-40.0f, true);
+	else if (obj_player->GetX() < -50.0f) obj_player->SetX(1320.0f);
+
+	for (int i = 0; i < FLOOR_HELP; i++)
+	{
+		if (obj_floor[i] == nullptr) break;
+		obj_player->Hit_Floor(obj_floor[i]);
+	}
+
+	//Aボタンで死亡
+	if (KeyManager::OnPadClicked(PAD_INPUT_A))
+	{
+		if((GetNowCount() - helpTime) > 60)  obj_player->ReceiveDamage(1000);
+	}
 }
 
 //描画
 void HelpScene::Draw() const
 {
+	DrawGraph(0, 0, image_back, FALSE);
 	DrawGraph(0, 0, HelpImage, TRUE);
 	DrawStringToHandle(50, 660, "A : タイトル", 0xffffff, font_help, 0x7cd900);
 
@@ -79,12 +110,13 @@ void HelpScene::Draw() const
 	}
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	obj_player->Draw();
 }
 
 //シーンの変更
 AbstractScene* HelpScene::ChangeScene()
 {
-	if (KeyManager::OnPadClicked(PAD_INPUT_A))
+	if (obj_player->IsDeathPlayer())
 	{
 		return dynamic_cast<AbstractScene*> (new TitleScene());
 	}

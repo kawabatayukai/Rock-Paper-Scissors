@@ -32,8 +32,12 @@ void Floor::Draw() const
 	}
 	else
 	{
-		//”’
-		DrawBox(x, y, (x + w), (y + h), color, TRUE);
+		if (color == 0){ }
+		else
+		{
+			//”’
+			DrawBox(x, y, (x + w), (y + h), color, TRUE);
+		}
 	}
 
 }
