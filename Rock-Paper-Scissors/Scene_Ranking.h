@@ -5,10 +5,12 @@
 class Scene_Ranking : public AbstractScene
 {
 public:
+
+
 	Scene_Ranking(/*const RankingData* Data*/);
 
-	/*コンストラクタ*/
-	virtual ~Scene_Ranking() {};
+	//デストラクタ
+	 ~Scene_Ranking();
 
 	//更新
 	void Update()override;
@@ -23,5 +25,6 @@ private:
 	int backimage = 0;            //背景画像
 	int ranking_font;
 	//RankingData dataRanking[RANKING_DATA];  // ランキングデータ変数宣言
+	int r_bgm;
 };
 
