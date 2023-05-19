@@ -71,7 +71,7 @@ void Scene_Title_GameLevel::Draw() const
 	DrawStringToHandle(70, 200, "ゲームモード選択", 0xffffff, font_title, 0x20b2aa);
 	DrawStringToHandle(70, 350, "STANDARD", 0xffffff, font_title, 0x20b2aa);
 	DrawStringToHandle(70, 400, "EXTRA JANKEN", 0xffffff, font_title, 0x20b2aa);
-	DrawStringToHandle(70, 500, "B : タイトルへ", 0xffffff, font_title, 0x20b2aa);
+	DrawStringToHandle(70, 500, "B : タイトル", 0xffffff, font_title, 0x20b2aa);
 	
 	//メニューカーソル
 	DrawTriangle(40, 355 + (T_selectnum * 50), 60, 370 + (T_selectnum * 50), 40, 385 + (T_selectnum * 50), GetColor(255, 0, 0), TRUE);
