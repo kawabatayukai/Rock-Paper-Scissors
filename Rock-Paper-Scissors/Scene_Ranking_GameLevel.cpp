@@ -11,11 +11,11 @@ int Scene_Ranking_GameLevel::font_title = 0;
 //コンストラクタ
 Scene_Ranking_GameLevel::Scene_Ranking_GameLevel()
 {
-	TitleImage = LoadGraph("images/JankenWorldTitle.png");
+	image_back = LoadGraph("images/Story/starback.png");
 
 	//フォントデータを作成
 	if (font_title == 0)
-		font_title = CreateFontToHandle("Yu Gothic UI", 50, 3, DX_FONTTYPE_ANTIALIASING_4X4);
+		font_title = CreateFontToHandle("メイリオ", 40, 3, DX_FONTTYPE_ANTIALIASING_EDGE, -1, 1);
 
 	//データの初期化
 	GameData::Init_Data();
@@ -32,7 +32,7 @@ Scene_Ranking_GameLevel::~Scene_Ranking_GameLevel()
 //更新
 void Scene_Ranking_GameLevel::Update()
 {
-	//SoundSystem::PlayBGM(BGM::TITLE);
+	DrawGraph(0, 0, image_back, FALSE);
 
 	//カーソルを合わせてボタンを押すと遷移
 	if (KeyManager::OnPadClicked(PAD_INPUT_DOWN) == true) {
@@ -57,12 +57,12 @@ void Scene_Ranking_GameLevel::Update()
 //描画
 void Scene_Ranking_GameLevel::Draw() const
 {
+	DrawGraph(0, 0, image_back, FALSE);
 
-
-	//DrawStringToHandle(70, 200, "ゲームモード選択選択", 0xf, font_title);
-	DrawStringToHandle(70, 350, "STANDARD RANKING", 0xf, font_title);
-	DrawStringToHandle(70, 400, "EXTRA JANKEN RANKING", 0xf, font_title);
-	DrawStringToHandle(70, 500, "Bボタンで戻る", 0xf, font_title);
+	DrawStringToHandle(70, 200, "ゲームモード選択", 0xffffff, font_title, 0x20b2aa);
+	DrawStringToHandle(70, 350, "STANDARD", 0xffffff, font_title, 0x20b2aa);
+	DrawStringToHandle(70, 400, "EXTRA JANKEN", 0xffffff, font_title, 0x20b2aa);
+	DrawStringToHandle(70, 500, "B : タイトルへ", 0xffffff, font_title, 0x20b2aa);
 
 	//メニューカーソル
 	DrawTriangle(40, 355 + (T_selectnum * 50), 60, 370 + (T_selectnum * 50), 40, 385 + (T_selectnum * 50), GetColor(255, 0, 0), TRUE);
