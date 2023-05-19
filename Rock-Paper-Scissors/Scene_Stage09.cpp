@@ -307,7 +307,7 @@ void Scene_Stage09::Update()
 		if (obj_player->Hit_Jangeki(reflection_jangeki[i]) == true)
 		{
 			
-			//ダメージを受ける（プレイヤー）
+			////ダメージを受ける（プレイヤー）
 			obj_player->ReceiveDamage(20);
 
 			//あたったじゃん撃を削除
@@ -424,6 +424,7 @@ void Scene_Stage09::AfterJanken_WIN()
 		}
 	}
 	obj_player->SetX(100);
+	obj_player->SetY(700);
 	obj_enemy->SetX(1110);
 	obj_enemy->frameDown();
 	obj_enemy->Tflg();
@@ -442,6 +443,7 @@ void Scene_Stage09::AfterJanken_LOSE()
 	}
 	
 	obj_player->SetX(100);
+	obj_player->SetY(700);
 	obj_enemy->SetX(1110);
 	obj_enemy->frameUP();
 	obj_enemy->Spflg = true;

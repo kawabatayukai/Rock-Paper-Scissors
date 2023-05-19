@@ -11,6 +11,10 @@ int g_WaitTime = 0;
 Scene_Ranking::Scene_Ranking(/*const RankingData* Data*/)
 {
 	backimage = LoadGraph("images/Rankingback.png");
+
+	//BGMロード
+	r_bgm = LoadSoundMem("Sound/Ranking.wav");
+
 	/*for (int i = 0; i < RANKING_DATA; i++)
 	{
 		for (int j = 0; dataRanking[i].name[j] != '\0'; j++)
@@ -25,9 +29,20 @@ Scene_Ranking::Scene_Ranking(/*const RankingData* Data*/)
 	ranking_font = CreateFontToHandle("メイリオ", 70, 4, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
 }
 
+
+//デストラクタ
+Scene_Ranking::~Scene_Ranking()
+{
+	StopSoundMem(r_bgm);
+}
+
+
 //更新
 void Scene_Ranking::Update()
 {
+	//rankingBGM
+	if (CheckSoundMem(r_bgm) == 0) PlaySoundMem(r_bgm, DX_PLAYTYPE_LOOP);
+
 	/*ランキング内部処理*/
 	//sortSave.setScore(9, 10);	// ランキングデータの１０番目にスコアを登録
 	//sortSave.SortRanking();		// ランキング並べ替え
@@ -96,11 +111,15 @@ AbstractScene* Scene_Ranking::ChangeScene()
 {
 	if (KeyManager::OnPadClicked(PAD_INPUT_A) == true)//KEY_INPUT_RETURN
 	{
+		
 		return dynamic_cast<AbstractScene*> (new TitleScene());
+		
 	}
 	if (KeyManager::OnPadClicked(PAD_INPUT_B) == true)//KEY_INPUT_RETURN
 	{
 		return dynamic_cast<AbstractScene*> (new Scene_RankingTime());
 	}
 	return this;
+
 }
+
