@@ -1,4 +1,5 @@
 #include "Scene_Ranking.h"
+#include "Scene_RankingTime.h"
 #include <DxLib.h>
 #include"Scene_Title.h"
 #include "KeyManager.h"
@@ -45,6 +46,9 @@ void Scene_Ranking::Draw() const
 	SetFontSize(30);
 	for (int i = 0; i < 10; i++)
 	{
+	/*********
+	* スコア *
+	*********/
 		/*通常モード*/
 		if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::NORMAL)
 		{
@@ -57,6 +61,22 @@ void Scene_Ranking::Draw() const
 			//DrawFormatString(0, 170 + i * 50, 0xFFFFFF, "%2d位   %10s  スコア：%10d  総合時間： %10d分%10d秒 EXTRA", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score, GameData::Get_Total_Time() / 3600, (GameData::Get_Total_Time() % 3600) / 60);
 			DrawFormatString(0, 170 + i * 50, 0xFFFFFF, "%2d位   %10s  スコア：%10d  総合時間： %10d分%10d秒 EXTRA", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score, sortSave.getRankingData(i).timeMin, sortSave.getRankingData(i).timeSec);
 		}
+
+	/********
+	* 時間  *
+	********/
+		///*通常モード*/
+		//if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::NORMAL)
+		//{
+		//	//DrawFormatString(0, 170 + i * 50, 0xFFFFFF, "%2d位   %10s  スコア：%10d  総合時間： %10d分%10d秒 NORMAL", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score, GameData::Get_Total_Time() / 3600, (GameData::Get_Total_Time() % 3600) / 60);
+		//	DrawFormatString(0, 170 + i * 50, 0xFFFFFF, "%2d位   %10s  総合時間： %10d分%10d秒 スコア：%10d NORMAL", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).timeMin, sortSave.getRankingData(i).timeSec, sortSave.getRankingData(i).score);
+		//}
+		///*即死モード*/
+		//if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
+		//{
+		//	//DrawFormatString(0, 170 + i * 50, 0xFFFFFF, "%2d位   %10s  スコア：%10d  総合時間： %10d分%10d秒 EXTRA", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).score, GameData::Get_Total_Time() / 3600, (GameData::Get_Total_Time() % 3600) / 60);
+		//	DrawFormatString(0, 170 + i * 50, 0xFFFFFF, "%2d位   %10s 総合時間： %10d分%10d秒 スコア：%10d EXTRA", sortSave.getRankingData(i).no, sortSave.getRankingData(i).name, sortSave.getRankingData(i).timeMin, sortSave.getRankingData(i).timeSec, sortSave.getRankingData(i).score);
+		//}
 	}
 
 	SetFontSize(100);
@@ -77,6 +97,10 @@ AbstractScene* Scene_Ranking::ChangeScene()
 	if (KeyManager::OnPadClicked(PAD_INPUT_A) == true)//KEY_INPUT_RETURN
 	{
 		return dynamic_cast<AbstractScene*> (new TitleScene());
+	}
+	if (KeyManager::OnPadClicked(PAD_INPUT_B) == true)//KEY_INPUT_RETURN
+	{
+		return dynamic_cast<AbstractScene*> (new Scene_RankingTime());
 	}
 	return this;
 }

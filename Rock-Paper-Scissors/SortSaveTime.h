@@ -4,25 +4,24 @@
 #define RANKING_DATA 10
 
 /*ランキングデータ（構造体*/
-struct RankingData {
+struct RankingDataTime {
 
 	int no;
 
 	char name[11];
 
-	 int score;
+	int score;
 
-	 int timeMin;
+	int timeMin;
 
-	 int timeSec;
+	int timeSec;
 };
 
-
-class SortSave
+class SortSaveTime
 {
 private:
 	FILE* fp;
-	RankingData g_Ranking[RANKING_DATA];  // ランキングデータ変数宣言
+	RankingDataTime g_RankingTime[RANKING_DATA];  // ランキングデータ変数宣言
 
 public:
 
@@ -36,7 +35,7 @@ public:
 	int ReadRanking(void);
 
 	/*ランキングデータ（構造体*/
-	RankingData getRankingData(int i);
+	RankingDataTime getRankingData(int i);
 
 	/*名前*/
 	void setName(int i, char name[11]);
@@ -51,4 +50,5 @@ public:
 	void setTimerSec(int i, int time);
 
 };
-extern SortSave sortSave;
+extern SortSaveTime sortSaveTime;
+

@@ -22,6 +22,7 @@
 #include"GameData.h"
 #include"SortSave.h"
 #include"Scene_Ranking.h"
+#include "SortSaveTime.h"
 
 //コンストラクタ
 GameClearScene::GameClearScene(int Next):Next(Next)
@@ -122,6 +123,11 @@ AbstractScene* GameClearScene::ChangeScene()
 			sortSave.setScore(9, 10);	// ランキングデータの１０番目にスコアを登録
 			sortSave.SortRanking();		// ランキング並べ替え
 			sortSave.SaveRanking();		// ランキングデータの保存
+
+			sortSaveTime.setTimerMin(9, 10); // ランキングデータの１０番目に時間：分を登録
+			sortSaveTime.setTimerSec(9, 10); // ランキングデータの１０番目に時間：秒を登録
+			sortSaveTime.SortRanking();		// ランキング並べ替え
+			sortSaveTime.SaveRanking();		// ランキングデータの保存
 
 			/*ランキング画面へ*/
 			return new Scene_Ranking();

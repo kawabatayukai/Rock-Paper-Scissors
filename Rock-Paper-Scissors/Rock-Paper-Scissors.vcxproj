@@ -198,6 +198,7 @@
     <ClCompile Include="Scene_GameClear.cpp" />
     <ClCompile Include="Scene_GameMain.cpp" />
     <ClCompile Include="Scene_GameOver.cpp" />
+    <ClCompile Include="Scene_RankingTime.cpp" />
     <ClCompile Include="Scene_Ranking_GameLevel.cpp" />
     <ClCompile Include="Scene_Story.cpp" />
     <ClCompile Include="Scene_Title_GameLevel.cpp" />
@@ -217,6 +218,7 @@
     <ClCompile Include="Scene_Stage09.cpp" />
     <ClCompile Include="Scene_Stage10.cpp" />
     <ClCompile Include="Scene_Title.cpp" />
+    <ClCompile Include="SortSaveTime.cpp" />
     <ClCompile Include="SoundSystem.cpp" />
     <ClCompile Include="Sound_Jangeki.cpp" />
     <ClCompile Include="Sound_Janken.cpp" />
@@ -274,6 +276,7 @@
     <ClInclude Include="Scene_GameClear.h" />
     <ClInclude Include="Scene_GameMain.h" />
     <ClInclude Include="Scene_GameOver.h" />
+    <ClInclude Include="Scene_RankingTime.h" />
     <ClInclude Include="Scene_Ranking_GameLevel.h" />
     <ClInclude Include="Scene_Story.h" />
     <ClInclude Include="Scene_Title_GameLevel.h" />
@@ -293,6 +296,7 @@
     <ClInclude Include="Scene_Stage09.h" />
     <ClInclude Include="Scene_Stage10.h" />
     <ClInclude Include="Scene_Title.h" />
+    <ClInclude Include="SortSaveTime.h" />
     <ClInclude Include="SoundSystem.h" />
     <ClInclude Include="Sound_Jangeki.h" />
     <ClInclude Include="Sound_Janken.h" />
