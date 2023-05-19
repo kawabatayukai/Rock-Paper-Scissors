@@ -1,5 +1,7 @@
 #pragma once
 #include"AbstractScene.h"
+#include"Player.h"
+#include"Floor.h"
 
 //ヘルプシーン
 class HelpScene : public AbstractScene
@@ -16,6 +18,9 @@ public:
 	AbstractScene* ChangeScene() override;   //シーンの変更
 
 private:
-	int HelpImage = 0;
-	static int font_help;
+	int HelpImage = 0;      //画像
+	static int font_help;   //フォント
+
+	Player* obj_player;     //プレイヤー
+	Floor** obj_floor;      //床
 };

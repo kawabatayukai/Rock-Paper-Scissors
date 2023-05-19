@@ -17,9 +17,9 @@
 int Player::name_font = 0; //名前・フォント
 
 //コンストラクタ　　　　　　　　　　　　　  ｘ　ｙ　幅　　　高さ
-Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //基底クラスのコンストラクタを呼ぶ
+Player::Player(float x, float y, int isHelp) : CharaBase(x, y, 57.0f, 100.0f)  //基底クラスのコンストラクタを呼ぶ
 , player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0), player_state(PLAYER_STATE::ALIVE), playerCount2(0), Prev_recoveryScore(0)
-, obj_effect(nullptr), obj_effectchange(nullptr)
+, obj_effect(nullptr), obj_effectchange(nullptr), isHelp(isHelp)
 {
 	speed = 7.0f;
 	hp = 100;
@@ -1237,6 +1237,71 @@ void Player::PlayerDrawUI(int hp) const
 		//HP
 		DrawBoxAA(draw_x, draw_y, (draw_x + hp), draw_y + 10, bar_color, TRUE);
 	}
+
+	//名前表示
+	const char* name = sortSave.getRankingData(9).name;
+	int str_w = GetDrawStringWidthToHandle(name, static_cast<int>(sizeof(name)), name_font);
+	DrawStringToHandle((static_cast<int>(x) - (str_w / 2)), static_cast<int>(y) - 80, name, 0x00ff00, name_font);
+
+	//テスト 110
+	int circle_x = 0;
+	switch (select_JanType)
+	{
+	case Jan_Type::ROCK:
+		circle_x = 2;
+		break;
+	case Jan_Type::SCISSORS:
+		circle_x = 1;
+		break;
+	case Jan_Type::PAPER:
+		circle_x = 0;
+		break;
+	default:
+		circle_x = 0;
+		break;
+	}
+
+	DrawGraph(40, 40, image_setsumei, TRUE);
+	DrawGraph(50 + (circle_x * 60), 50, image_set_circle, TRUE);
+	DrawGraph(13, 10, image_set_LTRT, TRUE);
+	DrawGraph(55, 100, image_set_GPT, TRUE);
+
+	//選択の演出 XYB
+	if (KeyManager::OnPadPressed(PAD_INPUT_3))      //X
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ADD, 100);
+		DrawCircle(75, 120, 15, 0xffffff, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+	else if (KeyManager::OnPadPressed(PAD_INPUT_4))  //Y
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ADD, 120);
+		DrawCircle(135, 120, 15, 0xffffff, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+	else if (KeyManager::OnPadPressed(PAD_INPUT_B))  //B
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ADD, 120);
+		DrawCircle(195, 120, 15, 0xffffff, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+	else {}
+
+	// LT RT
+	if (KeyManager::GetValue_LT() > 30)
+	{
+		//SetDrawBlendMode(DX_BLENDMODE_ADD, 30);
+		DrawTriangleAA(33.f, 17.f, 33.f, 39.f, 23.f, 28.f, 0xffa500, TRUE);
+		DrawBoxAA(33.f, 24.f, 60.f, 32.f, 0xffa500, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+	else if (KeyManager::GetValue_RT() > 30)
+	{
+		//SetDrawBlendMode(DX_BLENDMODE_ADD, 30);
+		DrawTriangleAA(234.f, 17.f, 234.f, 39.f, 244.f, 28.f, 0xffa500, TRUE);
+		DrawBoxAA(207.f, 24.f, 234.f, 32.f, 0xffa500, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
 }
 
 //描画
@@ -1306,72 +1371,7 @@ void Player::Draw() const
 		DrawRotaGraphF(x, y, 1, 0, image_death, TRUE);
 	}
 
-	PlayerDrawUI(GetHP());
-
-	//名前表示
-	const char* name = sortSave.getRankingData(9).name;
-	int str_w = GetDrawStringWidthToHandle(name, static_cast<int>(sizeof(name)), name_font);
-	DrawStringToHandle((static_cast<int>(x) - (str_w / 2)), static_cast<int>(y) - 80, name, 0x00ff00, name_font);
-
-	//テスト 110
-	int circle_x = 0;
-	switch (select_JanType)
-	{
-	case Jan_Type::ROCK:
-		circle_x = 2;
-		break;
-	case Jan_Type::SCISSORS:
-		circle_x = 1;
-		break;
-	case Jan_Type::PAPER:
-		circle_x = 0;
-		break;
-	default:
-		circle_x = 0;
-		break;
-	}
-
-	DrawGraph(40, 40,  image_setsumei, TRUE);
-	DrawGraph(50 + (circle_x * 60), 50, image_set_circle, TRUE);
-	DrawGraph(13, 10, image_set_LTRT, TRUE);
-	DrawGraph(55, 100, image_set_GPT, TRUE);
-
-	//選択の演出 XYB
-	if (KeyManager::OnPadPressed(PAD_INPUT_3))      //X
-	{
-		SetDrawBlendMode(DX_BLENDMODE_ADD, 100);
-		DrawCircle(75, 120, 15, 0xffffff, TRUE);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	}
-	else if (KeyManager::OnPadPressed(PAD_INPUT_4))  //Y
-	{
-		SetDrawBlendMode(DX_BLENDMODE_ADD, 120);
-		DrawCircle(135, 120, 15, 0xffffff, TRUE);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	}
-	else if (KeyManager::OnPadPressed(PAD_INPUT_B))  //B
-	{
-		SetDrawBlendMode(DX_BLENDMODE_ADD, 120);
-		DrawCircle(195, 120, 15, 0xffffff, TRUE);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	}
-	else {}
-
-	// LT RT
-	if (KeyManager::GetValue_LT() > 30)
-	{
-		//SetDrawBlendMode(DX_BLENDMODE_ADD, 30);
-		DrawTriangleAA(33.f, 17.f, 33.f, 39.f, 23.f, 28.f, 0xffa500, TRUE);
-		DrawBoxAA(33.f, 24.f, 60.f, 32.f, 0xffa500, TRUE);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	}
-	else if (KeyManager::GetValue_RT() > 30)
-	{
-		//SetDrawBlendMode(DX_BLENDMODE_ADD, 30);
-		DrawTriangleAA(234.f, 17.f, 234.f, 39.f, 244.f, 28.f, 0xffa500, TRUE);
-		DrawBoxAA(207.f, 24.f, 234.f, 32.f, 0xffa500, TRUE);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	}
+	if (isHelp == 0)PlayerDrawUI(GetHP());
 }
 
 /*画像の変更取得*/

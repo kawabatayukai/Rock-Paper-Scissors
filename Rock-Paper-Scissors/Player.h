@@ -18,7 +18,7 @@ class Player : public CharaBase
 {
 public:
 	//コンストラクタ
-	Player(float x, float y);
+	Player(float x, float y, int isHelp = 0);
 
 	~Player();                       //デストラクタ
 
@@ -148,4 +148,5 @@ private:
 	Sound_Player** obj_pse;
 
 	static int name_font; //名前・フォント
+	int isHelp;           //ヘルプ画面
 };
