@@ -25,6 +25,9 @@ Scene_Story::Scene_Story() :
 	isLoadFailed(false), str_end(false)
 	, scroll_y(0), scroll_speed(_C_STORY::MIN_SPEED), skipflash_count(0)
 {
+
+	story_bgm = LoadSoundMem("Sound/Story.wav");
+
 	//ファイルストリーム
 	std::ifstream read_file;
 
@@ -57,17 +60,26 @@ Scene_Story::Scene_Story() :
 		font_skip = CreateFontToHandle("メイリオ", 20, 10, DX_FONTTYPE_ANTIALIASING);
 
 	image_back = LoadGraph("images/Story/Story_Back.png");
+	
+
 }
 
 //デストラクタ
 Scene_Story::~Scene_Story()
 {
+
+	StopSoundMem(story_bgm);
+
 	//テキストを削除
 	delete text;
 }
 
 void Scene_Story::Update()
 {
+
+	//StoryBGM
+	if (CheckSoundMem(story_bgm) == 0) PlaySoundMem(story_bgm, DX_PLAYTYPE_LOOP);
+
 	using namespace _C_STORY;
 
 	DrawGraph(0, 0, image_back, TRUE);

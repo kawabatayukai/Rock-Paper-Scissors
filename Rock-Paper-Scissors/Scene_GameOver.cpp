@@ -24,26 +24,40 @@ GameOverScene::GameOverScene(int again):again(again)
 {
 	SetFontSize(50);
 	image_back = LoadGraph("images/Gameover2.png");
+	gameover_se = LoadSoundMem("Sound/GameOver.mp3");
+
 }
 
 GameOverScene::GameOverScene() :again(11)
 {
 	SetFontSize(50);
 	image_back = LoadGraph("images/Gameover2.png");
+	gameover_se = LoadSoundMem("Sound/GameOver.mp3");
 }
 
 //デストラクタ
 GameOverScene::~GameOverScene()
 {
+	DeleteSoundMem(gameover_se);
 	SetFontSize(20);
 }
 
 //更新
 void GameOverScene::Update()
 {
-
+	
 }
 
+void GameOverScene::GameOverPlay() {
+
+	//GameOverSE
+	if (CheckSoundMem(gameover_se) == 0) {
+
+		PlaySoundMem(gameover_se, DX_PLAYTYPE_BACK);
+
+	}
+
+}
 //描画
 void GameOverScene::Draw() const
 {

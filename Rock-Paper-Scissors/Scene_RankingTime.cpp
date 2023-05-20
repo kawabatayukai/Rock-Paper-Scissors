@@ -12,6 +12,8 @@ int g_WaitTimeTime = 0;
 Scene_RankingTime::Scene_RankingTime()
 {
 	backimage = LoadGraph("images/Rankingback.png");
+	//BGMロード
+	r_bgm = LoadSoundMem("Sound/Ranking.wav");
 	/*for (int i = 0; i < RANKING_DATA; i++)
 	{
 		for (int j = 0; dataRanking[i].name[j] != '\0'; j++)
@@ -24,6 +26,12 @@ Scene_RankingTime::Scene_RankingTime()
 
 	//フォントを作成
 	ranking_font = CreateFontToHandle("メイリオ", 70, 4, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
+}
+
+//デストラクタ
+Scene_RankingTime::~Scene_RankingTime()
+{
+	StopSoundMem(r_bgm);
 }
 
 //更新

@@ -28,18 +28,21 @@
 GameClearScene::GameClearScene(int Next):Next(Next)
 {
 	clearImage = LoadGraph("images/GameClear2.png");
+	clear_se = LoadSoundMem("Sound/GameClear.mp3");
 }
 
 //デストラクタ
 GameClearScene::~GameClearScene()
 {
+	StopSoundMem(clear_se);
 	SetFontSize(20);
 }
 
 //更新
 void GameClearScene::Update()
 {
-
+	//clear_se
+	if (CheckSoundMem(clear_se) == 0) PlaySoundMem(clear_se, DX_PLAYTYPE_BACK);
 }
 
 //描画

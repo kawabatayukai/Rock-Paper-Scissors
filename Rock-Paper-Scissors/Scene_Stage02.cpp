@@ -57,6 +57,7 @@ void Scene_Stage02::Update()
 	
 	//BGMÄ¶
 	if (CheckSoundMem(bgm) == 0) PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
+
 	//PlaySoundMem(stage2_BGM, DX_PLAYTYPE_LOOP, FALSE);
 	//ŠÔ‚ğƒJƒEƒ“ƒg
 	GameData::Time_Update();

@@ -12,6 +12,8 @@ HelpScene::HelpScene() : helpTime(0)
 {
 	HelpImage = LoadGraph("images/help/help3.png");
 	image_back = LoadGraph("images/Story/starback.png");
+	help_bgm = LoadSoundMem("Sound/HelpBGM.mp3");
+
 	if(font_help == 0) font_help = CreateFontToHandle("メイリオ", 40, 10, DX_FONTTYPE_ANTIALIASING_EDGE, -1, 3);
 
 	GameData::Set_TimeLimit();                 //制限時間が0の場合、playerが死んでしまう
@@ -29,6 +31,8 @@ HelpScene::HelpScene() : helpTime(0)
 //デストラクタ
 HelpScene::~HelpScene()
 {
+
+	StopSoundMem(help_bgm);
 	GameData::Set_TimeLimit(0);
 	delete obj_player;
 	delete[] obj_floor;
@@ -37,6 +41,10 @@ HelpScene::~HelpScene()
 //更新
 void HelpScene::Update()
 {
+
+	//helpBGM
+	if (CheckSoundMem(help_bgm) == 0) PlaySoundMem(help_bgm, DX_PLAYTYPE_LOOP);
+
 	obj_player->Update();
 	if (obj_player->GetX() > 1330.0f) obj_player->SetX(-40.0f, true);
 	else if (obj_player->GetX() < -50.0f) obj_player->SetX(1320.0f);
