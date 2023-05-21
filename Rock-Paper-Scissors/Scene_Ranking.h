@@ -24,7 +24,7 @@ public:
 private:
 	int backimage = 0;            //背景画像
 	int ranking_font;
-	//RankingData dataRanking[RANKING_DATA];  // ランキングデータ変数宣言
+	//RankingData dataRanking[RANKING_DATA_COLUMN];  // ランキングデータ変数宣言
 	int r_bgm;
 };
 

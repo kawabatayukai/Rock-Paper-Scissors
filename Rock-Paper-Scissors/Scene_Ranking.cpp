@@ -15,7 +15,7 @@ Scene_Ranking::Scene_Ranking(/*const RankingData* Data*/)
 	//BGMƒ[ƒh
 	r_bgm = LoadSoundMem("Sound/Ranking.wav");
 
-	/*for (int i = 0; i < RANKING_DATA; i++)
+	/*for (int i = 0; i < RANKING_DATA_COLUMN; i++)
 	{
 		for (int j = 0; dataRanking[i].name[j] != '\0'; j++)
 		{
