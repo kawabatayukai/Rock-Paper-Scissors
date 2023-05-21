@@ -17,4 +17,5 @@ public:
 private:      //‰æ‘œ‚È‚Ç
 	int image_back;        //”wŒi
 	int again;
+	int gameover_se;
 };

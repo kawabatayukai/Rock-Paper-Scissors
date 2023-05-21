@@ -216,16 +216,12 @@ int Jangeki_Base::CheckAdvantage(Jangeki_Base* jangeki)
 	//じゃんけん勝ち
 	if (result_num == 1)
 	{
-		GameData::Add_Score(100);    //スコア加算
-
 		//player側のエフェクト発動
 		player_effect = EFFECT_TYPE::WIN;
 	}
 	//じゃんけんあいこ
 	if (result_num == 2)
 	{
-		GameData::Add_Score(100 / 2);    //スコア加算
-
 		//相殺エフェクト発動
 		player_effect = EFFECT_TYPE::OFFSET;
 		jangeki->enemy_effect = EFFECT_TYPE::OFFSET;

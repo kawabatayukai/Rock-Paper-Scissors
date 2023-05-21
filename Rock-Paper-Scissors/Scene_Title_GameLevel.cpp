@@ -29,11 +29,14 @@ Scene_Title_GameLevel::Scene_Title_GameLevel()
 
 	ex_image = LoadGraph("images/Story/ex.png");
 	normal_image = LoadGraph("images/Story/no.png");
+	gameserect_bgm = LoadSoundMem("Sound/GameSelectBGM.wav");
 }
 
 //デストラクタ
 Scene_Title_GameLevel::~Scene_Title_GameLevel()
 {
+	StopSoundMem(gameserect_bgm);
+
 	//フォントデータを削除
 	SetBackgroundColor(0, 0, 0);
 }
@@ -42,6 +45,8 @@ Scene_Title_GameLevel::~Scene_Title_GameLevel()
 void Scene_Title_GameLevel::Update()
 {
 	
+	//StoryBGM
+	if (CheckSoundMem(gameserect_bgm) == 0) PlaySoundMem(gameserect_bgm, DX_PLAYTYPE_LOOP);
 
 	//カーソルを合わせてボタンを押すと遷移
 	if (KeyManager::OnPadClicked(PAD_INPUT_DOWN) == true) {

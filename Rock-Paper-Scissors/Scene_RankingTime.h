@@ -4,10 +4,12 @@ class Scene_RankingTime :
     public AbstractScene
 {
 public:
-	Scene_RankingTime();
 
 	/*コンストラクタ*/
-	virtual ~Scene_RankingTime() {};
+	Scene_RankingTime();
+
+	//デストラクタ
+	~Scene_RankingTime();
 
 	//更新
 	void Update()override;
@@ -21,6 +23,6 @@ public:
 private:
 	int backimage = 0;            //背景画像
 	int ranking_font;
-	
+	int r_bgm;
 };
 

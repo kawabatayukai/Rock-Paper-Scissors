@@ -18,7 +18,7 @@ int Player::name_font = 0; //名前・フォント
 
 //コンストラクタ　　　　　　　　　　　　　  ｘ　ｙ　幅　　　高さ
 Player::Player(float x, float y, int isHelp) : CharaBase(x, y, 57.0f, 100.0f)  //基底クラスのコンストラクタを呼ぶ
-, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0), player_state(PLAYER_STATE::ALIVE), playerCount2(0), Prev_recoveryScore(0)
+, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0), player_state(PLAYER_STATE::ALIVE), playerCount2(0)
 , obj_effect(nullptr), obj_effectchange(nullptr), isHelp(isHelp)
 {
 	speed = 7.0f;
@@ -114,13 +114,13 @@ void Player::Update()
 	//前回の座標ｘを保存
 	old_x = x;
 
-	//スコア1000毎にHP回復
-	int _score = GameData::Get_MaxScore();
-	if (_score % 300 == 0 && _score != Prev_recoveryScore)
+	//貫通回数6(3)回で回復  1貫通につき2,1あいこにつき1加算
+	if (GameData::Get_PierceCount() >= 6)
 	{
-		Prev_recoveryScore = _score;
-		Recover_HP(20);
+		//貫通回数リセット
+		GameData::Add_PierceCount(0);
 
+		Recover_HP(20);
 		if (obj_effect == nullptr) obj_effect = new Effect_Player(x, y);
 		Create_SEPlayer(SE_PLAYER::RECOVERY);  //se
 	}

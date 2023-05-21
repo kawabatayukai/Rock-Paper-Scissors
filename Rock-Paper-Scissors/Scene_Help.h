@@ -26,4 +26,5 @@ private:
 	Floor** obj_floor;      //°
 
 	int helpTime;           //ŠÔ
+	int help_bgm;            //ƒwƒ‹ƒv‰æ–ÊBGM
 };

@@ -16,5 +16,6 @@ public:
 private:
 	int Next;
 	int clearImage;
+	int clear_se;
 };
 

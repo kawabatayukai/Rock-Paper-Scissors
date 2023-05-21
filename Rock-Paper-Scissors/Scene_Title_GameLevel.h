@@ -12,6 +12,7 @@ private:
 	int image_back;
 
 	static int font_title;   //フォントハンドル
+	int gameserect_bgm; //セレクト画面BGM
 public:
 
 	//コンストラクタ
