@@ -35,6 +35,6 @@ private:
 
 	bool janken_flag = false;       //ÚG‚¶‚á‚ñ‚¯‚ñƒtƒ‰ƒO
 
-	int bgm[4];
+	int bgm[2];
 };
 
