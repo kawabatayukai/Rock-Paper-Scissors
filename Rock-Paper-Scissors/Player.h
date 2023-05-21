@@ -125,7 +125,7 @@ private:
 	int image_set_GPT;
 	int hpImage;
 
-	int Prev_recoveryScore;   //前回回復した時のスコア
+	
 	PLAYER_STATE player_state;
 
 	//向き（左右のみ）
