@@ -59,6 +59,9 @@ void Scene_Ranking::Draw() const
 
 	/*ランキング一覧を表示*/
 	SetFontSize(30);
+
+	DrawString(1000, 50, "B：時間順", 0xffffff);
+
 	for (int i = 0; i < 10; i++)
 	{
 	/*********

@@ -132,12 +132,12 @@ int SortSave::SaveRanking(void)
 	/*********
 	* スコア *
 	*********/
-		//fprintf_s(fp, "%2d %10s %10d %10d %10d\n", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].score, g_Ranking[i].timeMin, g_Ranking[i].timeSec);
+		fprintf_s(fp, "%2d %10s %10d %10d %10d\n", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].score, g_Ranking[i].timeMin, g_Ranking[i].timeSec);
 
 	/********
 	* 時間  *
 	********/
-		fprintf_s(fp, "%2d %10s %10d %10d %10d\n", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].timeMin, g_Ranking[i].timeSec, g_Ranking[i].score);
+		//fprintf_s(fp, "%2d %10s %10d %10d %10d\n", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].timeMin, g_Ranking[i].timeSec, g_Ranking[i].score);
 	}
 
 	//ファイルクローズ
@@ -179,12 +179,12 @@ int  SortSave::ReadRanking(void)
 	/*********
 	* スコア *
 	*********/
-		//fscanf_s(fp, "%2d %10s %10d %10d %10d", &g_Ranking[i].no, g_Ranking[i].name,sizeof(g_Ranking[i].name), &g_Ranking[i].score, &g_Ranking[i].timeMin, &g_Ranking[i].timeSec);
+		fscanf_s(fp, "%2d %10s %10d %10d %10d\n", &g_Ranking[i].no, g_Ranking[i].name,sizeof(g_Ranking[i].name), &g_Ranking[i].score, &g_Ranking[i].timeMin, &g_Ranking[i].timeSec);
 
 	/********
 	* 時間  *
 	********/
-		fscanf_s(fp, "%2d %10s %10d %10d %10d", &g_Ranking[i].no, g_Ranking[i].name, sizeof(g_Ranking[i].name), &g_Ranking[i].timeMin, &g_Ranking[i].timeSec, &g_Ranking[i].score);
+		//fscanf_s(fp, "%2d %10s %10d %10d %10d", &g_Ranking[i].no, g_Ranking[i].name, sizeof(g_Ranking[i].name), &g_Ranking[i].timeMin, &g_Ranking[i].timeSec, &g_Ranking[i].score);
 	}
 
 	//ファイルクローズ

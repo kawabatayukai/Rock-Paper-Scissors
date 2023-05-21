@@ -5,6 +5,7 @@
 #include "Scene_Ranking.h"
 #include"GameData.h"
 #include"SoundSystem.h"
+#include"SortSaveTime.h"
 
 int Scene_Ranking_GameLevel::font_title = 0;
 
@@ -80,12 +81,14 @@ AbstractScene* Scene_Ranking_GameLevel::ChangeScene()
 			GameData::Set_DIFFICULTY(GAME_DIFFICULTY::NORMAL);
 
 			sortSave.ReadRanking();		// ランキングデータの読み込み
+			sortSaveTime.ReadRanking();
 			return dynamic_cast<AbstractScene*> (new Scene_Ranking());
 			break;
 		case 1:/*即死モード*/
 			GameData::Set_DIFFICULTY(GAME_DIFFICULTY::HARD);
 
 			sortSave.ReadRanking();		// ランキングデータの読み込み
+			sortSaveTime.ReadRanking();
 			return dynamic_cast<AbstractScene*> (new Scene_Ranking());
 			break;
 		default:

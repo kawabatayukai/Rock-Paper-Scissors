@@ -141,7 +141,7 @@ int SortSaveTime::ReadRanking(void)
 	/********
 	* 時間  *
 	********/
-		fscanf_s(fp, "%2d %10s %10d %10d %10d", &g_RankingTime[i].no, g_RankingTime[i].name, sizeof(g_RankingTime[i].name), &g_RankingTime[i].timeMin, &g_RankingTime[i].timeSec, &g_RankingTime[i].score);
+		fscanf_s(fp, "%2d %10s %10d %10d %10d\n", &g_RankingTime[i].no, g_RankingTime[i].name, sizeof(g_RankingTime[i].name), &g_RankingTime[i].timeMin, &g_RankingTime[i].timeSec, &g_RankingTime[i].score);
 	}
 
 	//ファイルクローズ
