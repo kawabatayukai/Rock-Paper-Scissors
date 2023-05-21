@@ -674,12 +674,16 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy, const Jangeki_
 					//SE
 					obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::ONEMORE);
 					//se_count++;
+					GameData::Add_PierceCount(1); //ŠÑ’Ê‰ñ”‰ÁZ
+					GameData::Add_Score(100 / 2); //ƒXƒRƒA‰ÁZ
 				}
 				else if (result == 1)   //Ÿ‚¿
 				{
 					// SE
 					obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::PLAYER_WIN);
 					//se_count++;
+					GameData::Add_PierceCount(2); //ŠÑ’Ê‰ñ”‰ÁZ
+					GameData::Add_Score(100);     //ƒXƒRƒA‰ÁZ
 				}
 				else if (result == 0)   //•‰‚¯
 				{
@@ -717,12 +721,16 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy, const Jangeki_
 							//SE
 							obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::ONEMORE);
 							//se_count++;
+							GameData::Add_PierceCount(1); //ŠÑ’Ê‰ñ”‰ÁZ
+							GameData::Add_Score(100 / 2); //ƒXƒRƒA‰ÁZ
 						}
 						else if (result == 1)   //Ÿ‚¿
 						{
 							// SE
 							obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::PLAYER_WIN);
 							//se_count++;
+							GameData::Add_PierceCount(2); //ŠÑ’Ê‰ñ”‰ÁZ
+							GameData::Add_Score(100);     //ƒXƒRƒA‰ÁZ
 						}
 						else if (result == 0)   //•‰‚¯
 						{
