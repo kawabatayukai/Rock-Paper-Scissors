@@ -48,16 +48,17 @@ void GameOverScene::Update()
 	
 }
 
-void GameOverScene::GameOverPlay() {
-
-	//GameOverSE
-	if (CheckSoundMem(gameover_se) == 0) {
-
-		PlaySoundMem(gameover_se, DX_PLAYTYPE_BACK);
-
-	}
-
-}
+//void GameOverScene::GameOverPlay() {
+//
+//	//GameOverSE
+//	if (CheckSoundMem(gameover_se) == 0) {
+//
+//		PlaySoundMem(gameover_se, DX_PLAYTYPE_BACK);
+//
+//	}
+//
+//}
+// 
 //•`‰æ
 void GameOverScene::Draw() const
 {
