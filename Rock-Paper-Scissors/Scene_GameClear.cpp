@@ -121,12 +121,14 @@ AbstractScene* GameClearScene::ChangeScene()
 			return dynamic_cast<AbstractScene*> (new Scene_Stage10());
 			break;
 
-		case 11:
-			/*ランキング内部処理*/
+		case 11:/*ランキング内部処理*/
+
+			/*スコア順*/
 			sortSave.setScore(9, 10);	// ランキングデータの１０番目にスコアを登録
 			sortSave.SortRanking();		// ランキング並べ替え
 			sortSave.SaveRanking();		// ランキングデータの保存
 
+			/*時間順*/
 			sortSaveTime.setTimerMin(9, 10); // ランキングデータの１０番目に時間：分を登録
 			sortSaveTime.setTimerSec(9, 10); // ランキングデータの１０番目に時間：秒を登録
 			sortSaveTime.SortRanking();		// ランキング並べ替え
