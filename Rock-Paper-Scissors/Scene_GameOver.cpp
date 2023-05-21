@@ -38,27 +38,19 @@ GameOverScene::GameOverScene() :again(11)
 //デストラクタ
 GameOverScene::~GameOverScene()
 {
-	DeleteSoundMem(gameover_se);
+	//DeleteSoundMem(gameover_se);
+	StopSoundMem(gameover_se);
 	SetFontSize(20);
 }
 
 //更新
 void GameOverScene::Update()
 {
-	
+	//GameOverSE
+	if (CheckSoundMem(gameover_se) == 0) PlaySoundMem(gameover_se, DX_PLAYTYPE_BACK);
+
 }
 
-//void GameOverScene::GameOverPlay() {
-//
-//	//GameOverSE
-//	if (CheckSoundMem(gameover_se) == 0) {
-//
-//		PlaySoundMem(gameover_se, DX_PLAYTYPE_BACK);
-//
-//	}
-//
-//}
-// 
 //描画
 void GameOverScene::Draw() const
 {

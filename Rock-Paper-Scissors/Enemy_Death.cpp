@@ -16,7 +16,7 @@ Enemy_Death::Enemy_Death(const float& x, const float& y, const int& stage_num,co
 		break;
 	case 3:
 		image_death = LoadGraph("images/Death/stage03_death.png");
-		se_death = LoadSoundMem("Sound/Janken/「ぐああーーっ！」.mp3");
+		se_death = LoadSoundMem("Sound/Janken/よくわからない機械音.wav");
 		break;
 	case 4:
 		image_death = LoadGraph("images/Death/stage04_death.png");
