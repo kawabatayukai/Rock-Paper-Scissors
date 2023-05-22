@@ -31,7 +31,7 @@ namespace _CONSTANTS_SB
 	{
 		"NIWATORI",       //1
 		"KAERU",        //2
-		"ZAKU",           //3
+		"SHIELD/MASTER",           //3
 		"RED EYE",       //4
 		"METAL",         //5
 		"JAN NINJA",      //6
