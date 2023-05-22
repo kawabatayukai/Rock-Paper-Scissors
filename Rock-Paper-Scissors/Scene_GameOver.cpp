@@ -56,9 +56,6 @@ void GameOverScene::Draw() const
 {
 	//背景
 	DrawGraph(0, 0, image_back, TRUE);
-	/*SetFontSize(50);
-	DrawString(100, 360, "ゲームオーバー", 0xffffff);
-	DrawString(100, 460, "Aボタンを押してください", 0xffffff);*/
 }
 
 //シーンの変更
