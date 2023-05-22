@@ -280,7 +280,7 @@ void Enemy_06::Update_Jangeki()
 					new Jangeki_Coming(x, y, radius, speed + 2.0f, type, player_x, player_y);
 			}
 
-			//行動パターン3の時の弾(speed = 3.0f  frame_count % 80)
+			//特殊行動時の弾(speed = 10.0f  frame_count % 50)
 			if (attack_pattern == 2 && GetSpeed() == 8.0f)
 			{
 				//プレイヤー方向に向かって発射されるジャン撃の生成
