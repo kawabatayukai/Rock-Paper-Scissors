@@ -111,6 +111,11 @@ void Scene_NextStage::Draw() const
 		//îwåi
 		DrawGraph(0, 0, nextImage[0], TRUE);
 		break;
+
+	case 11:
+		//îwåi
+		DrawGraph(0, 0, nextImage[0], TRUE);
+		break;
 	}
 
 }
