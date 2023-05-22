@@ -31,16 +31,17 @@ Scene_NextStage::Scene_NextStage(int Next) :Next(Next), frameCount(0)
 {
 	nextImage[0] = LoadGraph("images/Rounds/Round1.png");
 	nextImage[1] = LoadGraph("images/Rounds/Round2.png");
-	nextImage[2] = LoadGraph("images/Rounds/Round1.png");
-	nextImage[3] = LoadGraph("images/Rounds/Round1.png");
-	nextImage[4] = LoadGraph("images/Rounds/Round1.png");
-	nextImage[5] = LoadGraph("images/Rounds/Round1.png");
-	nextImage[6] = LoadGraph("images/Rounds/Round1.png");
+	nextImage[2] = LoadGraph("images/Rounds/Round3.png");
+	nextImage[3] = LoadGraph("images/Rounds/Round4.png");
+	nextImage[4] = LoadGraph("images/Rounds/Round5.png");
+	nextImage[5] = LoadGraph("images/Rounds/Round6.png");
+	nextImage[6] = LoadGraph("images/Rounds/Round7.png");
 	nextImage[7] = LoadGraph("images/Rounds/Round1.png");
 	nextImage[8] = LoadGraph("images/Rounds/Round1.png");
 	nextImage[9] = LoadGraph("images/Rounds/Round1.png");
 
 	next_se = LoadSoundMem("Sound/和太鼓でドドン.mp3");
+	PlaySoundMem(next_se, DX_PLAYTYPE_BACK);
 }
 
 //デストラクタ
@@ -53,8 +54,6 @@ Scene_NextStage::~Scene_NextStage()
 //更新
 void Scene_NextStage::Update()
 {
-	//clear_se
-	if (CheckSoundMem(next_se) == 0) PlaySoundMem(next_se, DX_PLAYTYPE_BACK);
 }
 
 //描画
