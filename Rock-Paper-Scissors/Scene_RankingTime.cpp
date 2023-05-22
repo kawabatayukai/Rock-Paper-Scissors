@@ -37,6 +37,9 @@ Scene_RankingTime::~Scene_RankingTime()
 //更新
 void Scene_RankingTime::Update()
 {
+	//rankingTimeBGM
+	if (CheckSoundMem(r_bgm) == 0) PlaySoundMem(r_bgm, DX_PLAYTYPE_LOOP);
+
 	/*ランキング内部処理*/
 	//sortSave.setScore(9, 10);	// ランキングデータの１０番目にスコアを登録
 	//sortSave.SortRanking();		// ランキング並べ替え
