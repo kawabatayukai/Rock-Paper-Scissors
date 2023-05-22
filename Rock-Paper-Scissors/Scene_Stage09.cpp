@@ -58,7 +58,7 @@ Scene_Stage09::Scene_Stage09(const Player* player)
 	obj_floor[10] = new Floor(560, 130, 120, 20, 0xd2d2d2);
 
 	//BGMロード
-	bgm = LoadSoundMem("Sound/stage09/stage09.mp3");
+	bgm = LoadSoundMem("Sound/stage09/stage9.wav");
 }
 
 //デストラクタ
