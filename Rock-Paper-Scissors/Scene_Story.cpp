@@ -60,7 +60,7 @@ Scene_Story::Scene_Story() :
 	if (font_skip == 0)
 		font_skip = CreateFontToHandle("ÉÅÉCÉäÉI", 20, 10, DX_FONTTYPE_ANTIALIASING);
 
-	image_back = LoadGraph("images/Story/Story_Back.png");
+	image_back = LoadGraph("images/Story/Story_Back2.png");
 	
 
 }
