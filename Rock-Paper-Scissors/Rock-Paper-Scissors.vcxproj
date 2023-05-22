@@ -199,6 +199,7 @@
     <ClCompile Include="Scene_GameClear.cpp" />
     <ClCompile Include="Scene_GameMain.cpp" />
     <ClCompile Include="Scene_GameOver.cpp" />
+    <ClCompile Include="Scene_NextStage.cpp" />
     <ClCompile Include="Scene_RankingTime.cpp" />
     <ClCompile Include="Scene_Ranking_GameLevel.cpp" />
     <ClCompile Include="Scene_Story.cpp" />
@@ -278,6 +279,7 @@
     <ClInclude Include="Scene_GameClear.h" />
     <ClInclude Include="Scene_GameMain.h" />
     <ClInclude Include="Scene_GameOver.h" />
+    <ClInclude Include="Scene_NextStage.h" />
     <ClInclude Include="Scene_RankingTime.h" />
     <ClInclude Include="Scene_Ranking_GameLevel.h" />
     <ClInclude Include="Scene_Story.h" />

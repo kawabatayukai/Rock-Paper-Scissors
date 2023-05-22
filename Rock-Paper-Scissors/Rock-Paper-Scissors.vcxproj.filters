@@ -369,6 +369,9 @@
     <ClCompile Include="Scene_RankingTime.cpp">
       <Filter>ソース ファイル\Scene\ランキング画面</Filter>
     </ClCompile>
+    <ClCompile Include="Scene_NextStage.cpp">
+      <Filter>ソース ファイル\Scene\ゲームクリア画面</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -601,6 +604,9 @@
     </ClInclude>
     <ClInclude Include="Scene_RankingTime.h">
       <Filter>ソース ファイル\Scene\ランキング画面</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene_NextStage.h">
+      <Filter>ソース ファイル\Scene\ゲームクリア画面</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
