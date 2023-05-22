@@ -57,6 +57,7 @@ KeyBoard::KeyBoard() :isStartKey(true), frame(0), frame_CL(0), KeyType(_KEY_TYPE
 	se_normalkey = LoadSoundMem("Sound/KeyBoard/key_normalpush.wav");
 	se_cancelkey = LoadSoundMem("Sound/KeyBoard/key_cancel.wav");
 	se_donekey = LoadSoundMem("Sound/KeyBoard/key_ok.wav");
+	se_donotOk = LoadSoundMem("Sound/KeyBoard/NotOK.wav");
 }
 
 KeyBoard::~KeyBoard()
@@ -234,20 +235,6 @@ int KeyBoard::KeyBoard_PushA()
 
 		case KeyBoard::_KEY_TYPE::DONE:
 
-			//一文字も入力されていない場合は確定できない
-			if (input_str.empty() != true)
-			{
-				char* name = const_cast<char*>(input_str.c_str());
-				sortSave.setName(9, name);
-				sortSaveTime.setName(9, name);
-				if (CheckSoundMem(se_donekey) == 0) PlaySoundMem(se_donekey, DX_PLAYTYPE_BACK);
-
-				return 1;
-			}
-			else
-			{
-				//確定不可
-			}
 			break;
 
 		default:
@@ -277,7 +264,7 @@ int KeyBoard::KeyBoard_PushA()
 	if (KeyManager::OnPadReleased(PAD_INPUT_B)) frame_CL = 0;
 	
 	//STARTボタンでも確定できる
-	if (KeyManager::OnPadClicked(PAD_INPUT_8))
+	if (KeyManager::OnPadClicked(PAD_INPUT_8) || KeyManager::OnPadClicked(PAD_INPUT_A) && KeyType == _KEY_TYPE::DONE)
 	{
 		//一文字も入力されていない場合は確定できない
 		if (input_str.empty() != true)
@@ -292,6 +279,7 @@ int KeyBoard::KeyBoard_PushA()
 		else
 		{
 			//確定不可
+			PlaySoundMem(se_donotOk, DX_PLAYTYPE_BACK);
 		}
 	}
 

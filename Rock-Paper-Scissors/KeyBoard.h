@@ -52,4 +52,5 @@ private:
 	int se_normalkey;      //ƒm[ƒ}ƒ‹
 	int se_cancelkey;      //ˆê•¶šíœ
 	int se_donekey;        //OK
+	int se_donotOk;        //Not OK
 };
