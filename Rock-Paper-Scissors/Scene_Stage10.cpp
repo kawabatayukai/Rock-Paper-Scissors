@@ -190,6 +190,9 @@ void Scene_Stage10::Update()
 	//接触じゃんけん処理
 	Touch_Janken(obj_enemy, this, 10);
 
+	/*エフェクト追加(スコア加算)*/
+	Effect_Update_HitJangeki(obj_enemy);
+
 	//playerのじゃん撃をとってくる
 	Jangeki_Base** player_jangeki = obj_player->GetJangeki();
 
@@ -459,6 +462,9 @@ void Scene_Stage10::Draw() const
 		//接触時じゃんけん描画
 		Draw_Janken();
 	}
+
+	/*エフェクト描画*/
+	Effect_Draw_HitJangeki();
 }
 
 //じゃんけん更新・内部処理

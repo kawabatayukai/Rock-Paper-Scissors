@@ -9,6 +9,8 @@ private:
 	int T_selectnum = 0;
 
 	static int font_title;   //フォントハンドル
+
+	int r_gamemode_bgm; //ランキングのゲームモードセレクト画面
 public:
 
 	//コンストラクタ
