@@ -30,14 +30,14 @@ namespace _CONSTANTS_SB
 	const std::vector<std::string> Enemy_Name =
 	{
 		"NIWATORI",       //1
-		"FROGMAN",        //2
+		"KAERU",        //2
 		"ZAKU",           //3
 		"MOROKILLER",       //4
 		"TAMAGO",         //5
 		"JAN NINJA",      //6
 		"JHO",            //7
 		"SYMMETRY",     //8
-		"Mystery",        //9
+		"SHADOW",        //9
 		"YÅEY"            //10
 	};
 }
