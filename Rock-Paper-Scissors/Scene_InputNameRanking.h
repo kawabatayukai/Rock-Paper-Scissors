@@ -28,5 +28,6 @@ public:
 
 private:
 	KeyBoard* keyboard;   //キーボード
+	int bgm;
 };
 
