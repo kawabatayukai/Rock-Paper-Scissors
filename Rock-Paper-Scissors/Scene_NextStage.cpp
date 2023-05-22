@@ -27,18 +27,18 @@
 
 
 //ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-Scene_NextStage::Scene_NextStage(int Next) :Next(Next)
+Scene_NextStage::Scene_NextStage(int Next) :Next(Next), frameCount(0)
 {
-	nextImage[0] = LoadGraph("images/GameClear2.png");
-	nextImage[1] = LoadGraph("images/GameClear2.png");
-	nextImage[2] = LoadGraph("images/GameClear2.png");
-	nextImage[3] = LoadGraph("images/GameClear2.png");
-	nextImage[4] = LoadGraph("images/GameClear2.png");
-	nextImage[5] = LoadGraph("images/GameClear2.png");
-	nextImage[6] = LoadGraph("images/GameClear2.png");
-	nextImage[7] = LoadGraph("images/GameClear2.png");
-	nextImage[8] = LoadGraph("images/GameClear2.png");
-	nextImage[9] = LoadGraph("images/GameClear2.png");
+	nextImage[0] = LoadGraph("images/Rounds/Round1.png");
+	nextImage[1] = LoadGraph("images/Rounds/Round2.png");
+	nextImage[2] = LoadGraph("images/Rounds/Round1.png");
+	nextImage[3] = LoadGraph("images/Rounds/Round1.png");
+	nextImage[4] = LoadGraph("images/Rounds/Round1.png");
+	nextImage[5] = LoadGraph("images/Rounds/Round1.png");
+	nextImage[6] = LoadGraph("images/Rounds/Round1.png");
+	nextImage[7] = LoadGraph("images/Rounds/Round1.png");
+	nextImage[8] = LoadGraph("images/Rounds/Round1.png");
+	nextImage[9] = LoadGraph("images/Rounds/Round1.png");
 
 	next_se = LoadSoundMem("Sound/˜a‘¾ŒÛ‚Åƒhƒhƒ“.mp3");
 }
@@ -60,75 +60,16 @@ void Scene_NextStage::Update()
 //•`‰æ
 void Scene_NextStage::Draw() const
 {
-	switch (Next)
+	if (Next <= 10)
 	{
-	case 1:
-		//”wŒi
-		DrawGraph(0, 0, nextImage[0], TRUE);
-		break;
-
-	case 2:
-		//”wŒi
-		DrawGraph(0, 0, nextImage[0], TRUE);
-		break;
-
-	case 3:
-		//”wŒi
-		DrawGraph(0, 0, nextImage[0], TRUE);
-		break;
-
-	case 4:
-		//”wŒi
-		DrawGraph(0, 0, nextImage[0], TRUE);
-		break;
-
-	case 5:
-		//”wŒi
-		DrawGraph(0, 0, nextImage[0], TRUE);
-		break;
-
-	case 6:
-		//”wŒi
-		DrawGraph(0, 0, nextImage[0], TRUE);
-		break;
-
-	case 7:
-		//”wŒi
-		DrawGraph(0, 0, nextImage[0], TRUE);
-		break;
-
-	case 8:
-		//”wŒi
-		DrawGraph(0, 0, nextImage[0], TRUE);
-		break;
-
-	case 9:
-		//”wŒi
-		DrawGraph(0, 0, nextImage[0], TRUE);
-		break;
-
-	case 10:
-		//”wŒi
-		DrawGraph(0, 0, nextImage[0], TRUE);
-		break;
-
-	case 11:
-		//”wŒi
-		DrawGraph(0, 0, nextImage[0], TRUE);
-		break;
+		DrawGraph(0, 0, nextImage[Next - 1], TRUE);
 	}
-
 }
 
 //ƒV[ƒ“‚Ì•ÏX
 AbstractScene* Scene_NextStage::ChangeScene()
 {
-	//Aƒ{ƒ^ƒ“‚Å–ß‚é
-	/*if (KeyManager::OnPadClicked(PAD_INPUT_A))
-	{
-		return dynamic_cast<AbstractScene*> (new TitleScene());
-	}*/
-	if (KeyManager::OnPadClicked(PAD_INPUT_B))
+	if (KeyManager::OnPadClicked(PAD_INPUT_B) || Next <= 10 && ++frameCount > 120)
 	{
 		switch (Next)
 		{
@@ -149,7 +90,7 @@ AbstractScene* Scene_NextStage::ChangeScene()
 			break;
 
 		case 4:
-			return dynamic_cast<AbstractScene*> (new Scene_Stage04());
+			return dynamic_cast<AbstractScene*> (new Scene_Stage08());
 			break;
 
 		case 5:
@@ -165,7 +106,7 @@ AbstractScene* Scene_NextStage::ChangeScene()
 			break;
 
 		case 8:
-			return dynamic_cast<AbstractScene*> (new Scene_Stage08());
+			return dynamic_cast<AbstractScene*> (new Scene_Stage04());
 			break;
 
 		case 9:

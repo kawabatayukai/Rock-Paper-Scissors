@@ -26,7 +26,7 @@ Scene_Stage06::Scene_Stage06(const Player* player)
 	}
 
 	//“G‚ğ¶¬
-	obj_enemy = new Enemy_06(1200, 360, Jan_Type::SCISSORS);
+	obj_enemy = new Enemy_06(1200, 360, Jan_Type::PAPER);
 
 	//”wŒi‰æ‘œ‚Ì“Ç‚İ‚İ
 	stage6_BackImage = LoadGraph("images/stage06/mori32-.png");
