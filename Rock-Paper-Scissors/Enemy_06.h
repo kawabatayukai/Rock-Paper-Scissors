@@ -21,8 +21,6 @@ public:
 	void SpeedUp();                  //特殊行動1   speed = 8.0f
 	void Teleportation();            //特殊行動2   プレイヤーの後方側に移動し、接近してくる
 
-	void AttackPattern_00();         //旧行動ループ2(保存用)
-
 	void decision_Direction();       //向きを乱数で決める関数
 	void jump_Direction();           //ジャンプするかを乱数で決める関数
 	void jump();                     //ジャンプ
@@ -46,6 +44,7 @@ private:
 	int  attack_pattern = 0;      //攻撃パターン変数
 	bool jump_flg = false;        //ジャンプ用フラグ　　       ジャンプさせる:true   ジャンプしない:false
 	int  jump_cnt = 0;            //ジャンプカウント
+	bool attack1_InitFlg = false; //攻撃パターン1の初期化フラグ
 	bool attack2_Flg = true;      //攻撃パターン2開始前フラグ  初期化:true       初期化終了:false
 	bool P1_side = false;         //パターン2時の位置フラグ      左側:true             右側:false
 	int  floor = 5;

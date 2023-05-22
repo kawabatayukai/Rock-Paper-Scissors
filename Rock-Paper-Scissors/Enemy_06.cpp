@@ -286,6 +286,17 @@ void Enemy_06::Update_Jangeki()
 //行動ループ1
 void Enemy_06::AttackPattern_1()
 {
+	//特殊行動終了後の初期化処理
+	if (attack1_InitFlg == true)
+	{
+		attack1_InitFlg = false;
+		jump_cnt = 0;
+		dir = -1;
+		x = 1200;
+		y = 360;
+		smokeFlg = true;
+	}
+
 	//4回ジャンプするまでの間以下の処理(ジャンプ)を繰り返す
 	if (jump_cnt < 2)         
 	{
@@ -857,11 +868,13 @@ void Enemy_06::AttackPattern_3()
 		speed = 5.0f;
 		if (hp > 70)
 		{
+			smokeFlg = true;
+			attack1_InitFlg = true;
 			attack_pattern = 0;
-			jump_cnt = 0;
-			dir = 1;
-			x = 1200;
-			y = 360;
+			//jump_cnt = 0;
+			//dir = 1;
+			//x = 1200;
+			//y = 360;
 		}
 		else if (hp > 40)
 		{
@@ -935,108 +948,6 @@ void Enemy_06::Teleportation()
 		dir = -1;
 		floor = 5;
 	}
-}
-
-
-//旧行動ループ2(保存用)
-void Enemy_06::AttackPattern_00()
-{
-	//if (teleport_Flg == true && dir == -1)
-	//{
-	//	x = 1180;
-	//	y = 450;
-	//	dir = -1;
-	//	teleport_Flg = false;
-	//	P1_side = false;
-	//	jump_cnt = 0;
-	//}
-	//else if (teleport_Flg == true && dir == 1)
-	//{
-	//	x = 100;
-	//	y = 450;
-	//	dir = 1;
-	//	teleport_Flg = false;
-	//	P1_side = true;
-	//	jump_cnt = 0;
-	//}
-
-
-
-	//if (P1_side == false)
-	//{
-	//	//左の足場へジャンプ
-	//	if (x >= 930 && dir == 1)
-	//	{
-	//		x = x - 6;
-	//	}
-	//	else if (x <= 1180 && dir == 1)
-	//	{
-	//		dir = -1;
-	//		jump_flg = true;
-	//		jump_cnt++;
-	//	}
-
-	//	//右の足場へジャンプ
-	//	if (x <= 1180 && dir == -1)
-	//	{
-	//		x = x + 6;
-	//	}
-	//	else if (x >= 930 && dir == -1)
-	//	{
-	//		dir = 1;
-	//		jump_flg = true;
-	//		jump_cnt++;
-	//	}
-
-	//	//瞬間移動
-	//	if (jump_cnt == 5)
-	//	{
-	//		teleport_Flg = true;
-	//		dir = 1;
-	//		ChangeCnt++;
-	//	}
-
-	//	//ジャンプ処理
-	//	jump();
-	//}
-
-	//else if (P1_side == true)
-	//{
-	//	//右の足場へジャンプ
-	//	if (x <= 350 && dir == -1)
-	//	{
-	//		x = x + 6;
-	//	}
-	//	else if (x >= 100 && dir == -1)
-	//	{
-	//		dir = 1;
-	//		jump_flg = true;
-	//		jump_cnt++;
-	//	}
-
-	//	//左の足場へジャンプ
-	//	if (x >= 100 && dir == 1)
-	//	{
-	//		x = x - 5;
-	//	}
-	//	else if (x <= 350 && dir == 1)
-	//	{
-	//		dir = -1;
-	//		jump_flg = true;
-	//		jump_cnt++;
-	//	}
-
-	//	//瞬間移動
-	//	if (jump_cnt == 5)
-	//	{
-	//		teleport_Flg = true;
-	//		dir = -1;
-	//		ChangeCnt++;
-	//	}
-
-	//	//ジャンプ処理
-	//	jump();
-	//}
 }
 
 //ジャンプ

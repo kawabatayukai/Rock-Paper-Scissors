@@ -13,6 +13,7 @@ int Scene_Ranking_GameLevel::font_title = 0;
 Scene_Ranking_GameLevel::Scene_Ranking_GameLevel()
 {
 	image_back = LoadGraph("images/Story/starback.png");
+	r_gamemode_bgm = LoadSoundMem("Sound/GameSelectBGM.wav");
 
 	//フォントデータを作成
 	if (font_title == 0)
@@ -26,6 +27,8 @@ Scene_Ranking_GameLevel::Scene_Ranking_GameLevel()
 //デストラクタ
 Scene_Ranking_GameLevel::~Scene_Ranking_GameLevel()
 {
+	StopSoundMem(r_gamemode_bgm);
+
 	//フォントデータを削除
 	SetBackgroundColor(0, 0, 0);
 }
@@ -33,6 +36,10 @@ Scene_Ranking_GameLevel::~Scene_Ranking_GameLevel()
 //更新
 void Scene_Ranking_GameLevel::Update()
 {
+
+	//GameModeSerect.Rankingver
+	if (CheckSoundMem(r_gamemode_bgm) == 0)PlaySoundMem(r_gamemode_bgm, DX_PLAYTYPE_LOOP);
+
 	DrawGraph(0, 0, image_back, FALSE);
 
 	//カーソルを合わせてボタンを押すと遷移
