@@ -23,6 +23,7 @@
 #include"SortSave.h"
 #include"Scene_Ranking.h"
 #include "SortSaveTime.h"
+#include"Scene_NextStage.h"
 
 //コンストラクタ
 GameClearScene::GameClearScene(int Next):Next(Next)
@@ -75,73 +76,59 @@ AbstractScene* GameClearScene::ChangeScene()
 	}*/
 	if (KeyManager::OnPadClicked(PAD_INPUT_B))
 	{
-		switch (Next)
-		{
-		case 0:
-			return dynamic_cast<AbstractScene*> (new Scene_Stage00());
-			break;
-
-		case 1:
-			return dynamic_cast<AbstractScene*> (new Scene_Stage01());
-			break;
-
-		case 2:
-			return dynamic_cast<AbstractScene*> (new Scene_Stage02());
-			break;
-
-		case 3:
-			return dynamic_cast<AbstractScene*> (new Scene_Stage03());
-			break;
-
-		case 4:
-			return dynamic_cast<AbstractScene*> (new Scene_Stage04());
-			break;
-
-		case 5:
-			return dynamic_cast<AbstractScene*> (new Scene_Stage05());
-			break;
-
-		case 6:
-			return dynamic_cast<AbstractScene*> (new Scene_Stage06());
-			break;
-
-		case 7:
-			return dynamic_cast<AbstractScene*> (new Scene_Stage07());
-			break;
-
-		case 8:
-			return dynamic_cast<AbstractScene*> (new Scene_Stage08());
-			break;
-
-		case 9:
-			return dynamic_cast<AbstractScene*> (new Scene_Stage09());
-			break;
-
-		case 10:
-			return dynamic_cast<AbstractScene*> (new Scene_Stage10());
-			break;
-
-		case 11:/*ランキング内部処理*/
-
-			/*スコア順*/
-			sortSave.setScore(9, 10);	// ランキングデータの１０番目にスコアを登録
-			sortSave.SortRanking();		// ランキング並べ替え
-			sortSave.SaveRanking();		// ランキングデータの保存
-
-			/*時間順*/
-			sortSaveTime.setTimerMin(9, 10); // ランキングデータの１０番目に時間：分を登録
-			sortSaveTime.setTimerSec(9, 10); // ランキングデータの１０番目に時間：秒を登録
-			sortSaveTime.SortRanking();		// ランキング並べ替え
-			sortSaveTime.SaveRanking();		// ランキングデータの保存
-
-			/*ランキング画面へ*/
-			return new Scene_Ranking();
-			break;
-
-		default:
-			break;
-		}
+		//switch (Next)
+		//{
+		//case 0:
+		//	return dynamic_cast<AbstractScene*> (new Scene_Stage00());
+		//	break;
+		//case 1:
+		//	return dynamic_cast<AbstractScene*> (new Scene_Stage01());
+		//	break;
+		//case 2:
+		//	return dynamic_cast<AbstractScene*> (new Scene_Stage02());
+		//	break;
+		//case 3:
+		//	return dynamic_cast<AbstractScene*> (new Scene_Stage03());
+		//	break;
+		//case 4:
+		//	return dynamic_cast<AbstractScene*> (new Scene_Stage04());
+		//	break;
+		//case 5:
+		//	return dynamic_cast<AbstractScene*> (new Scene_Stage05());
+		//	break;
+		//case 6:
+		//	return dynamic_cast<AbstractScene*> (new Scene_Stage06());
+		//	break;
+		//case 7:
+		//	return dynamic_cast<AbstractScene*> (new Scene_Stage07());
+		//	break;
+		//case 8:
+		//	return dynamic_cast<AbstractScene*> (new Scene_Stage08());
+		//	break;
+		//case 9:
+		//	return dynamic_cast<AbstractScene*> (new Scene_Stage09());
+		//	break;
+		//case 10:
+		//	return dynamic_cast<AbstractScene*> (new Scene_Stage10());
+		//	break;
+		//case 11:/*ランキング内部処理*/
+		//	/*スコア順*/
+		//	sortSave.setScore(9, 10);	// ランキングデータの１０番目にスコアを登録
+		//	sortSave.SortRanking();		// ランキング並べ替え
+		//	sortSave.SaveRanking();		// ランキングデータの保存
+		//	/*時間順*/
+		//	sortSaveTime.setTimerMin(9, 10); // ランキングデータの１０番目に時間：分を登録
+		//	sortSaveTime.setTimerSec(9, 10); // ランキングデータの１０番目に時間：秒を登録
+		//	sortSaveTime.SortRanking();		// ランキング並べ替え
+		//	sortSaveTime.SaveRanking();		// ランキングデータの保存
+		//	/*ランキング画面へ*/
+		//	return new Scene_Ranking();
+		//	break;
+		//default:
+		//	break;
+		//}
 		
+		return dynamic_cast<AbstractScene*> (new Scene_NextStage(Next));
 	}
 	return this;
 }

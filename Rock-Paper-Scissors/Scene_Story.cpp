@@ -6,6 +6,7 @@
 #include<sstream>
 #include"KeyManager.h"
 #include "SortSave.h"
+#include"Scene_NextStage.h"
 
 int Scene_Story::font_text = 0;      //テキスト用フォント
 int Scene_Story::font_skip = 0;      //"skip"用フォント
@@ -156,7 +157,8 @@ void Scene_Story::Draw() const
 AbstractScene* Scene_Story::ChangeScene()
 {
 	if(str_end == true && KeyManager::OnPadClicked(PAD_INPUT_A))
-		return dynamic_cast<AbstractScene*> (new Scene_Stage01());
+		//return dynamic_cast<AbstractScene*> (new Scene_Stage01());
+		return dynamic_cast<AbstractScene*> (new Scene_NextStage(1));
 
 	//テキストファイル読み込み失敗でステージ1へ
 	if (isLoadFailed == true)  
