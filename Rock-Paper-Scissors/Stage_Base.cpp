@@ -32,11 +32,11 @@ namespace _CONSTANTS_SB
 		"NIWATORI",       //1
 		"KAERU",        //2
 		"ZAKU",           //3
-		"MOROKILLER",       //4
+		"RED EYE",       //4
 		"TAMAGO",         //5
 		"JAN NINJA",      //6
 		"JHO",            //7
-		"SYMMETRY",     //8
+		"TWIN AVATAR",     //8
 		"SHADOW",        //9
 		"YÅEY"            //10
 	};
