@@ -4,7 +4,7 @@
 #define _USE_MATH_DEFINES      //数学系マクロの使用
 #include<math.h>
 
-#define HOMING_TIME 100        //追跡時間
+#define HOMING_TIME 90        //追跡時間
 
 
 //コンストラクタ

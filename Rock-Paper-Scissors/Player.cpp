@@ -1240,7 +1240,7 @@ void Player::PlayerDrawUI(int hp) const
 
 	//名前表示
 	const char* name = sortSave.getRankingData(9).name;
-	int str_w = GetDrawStringWidthToHandle(name, static_cast<int>(sizeof(name)), name_font);
+	int str_w = GetDrawStringWidthToHandle(name, static_cast<int>(strlen(name)), name_font);
 	DrawStringToHandle((static_cast<int>(x) - (str_w / 2)), static_cast<int>(y) - 80, name, 0x00ff00, name_font);
 
 	//テスト 110

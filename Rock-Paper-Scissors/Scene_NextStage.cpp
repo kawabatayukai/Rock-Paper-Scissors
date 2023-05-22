@@ -32,11 +32,11 @@ Scene_NextStage::Scene_NextStage(int Next) :Next(Next), frameCount(0)
 	nextImage[0] = LoadGraph("images/Rounds/Round1.png");
 	nextImage[1] = LoadGraph("images/Rounds/Round2.png");
 	nextImage[2] = LoadGraph("images/Rounds/Round3.png");
-	nextImage[3] = LoadGraph("images/Rounds/Round4.png");
+	nextImage[3] = LoadGraph("images/Rounds/Round8.png");
 	nextImage[4] = LoadGraph("images/Rounds/Round5.png");
 	nextImage[5] = LoadGraph("images/Rounds/Round6.png");
 	nextImage[6] = LoadGraph("images/Rounds/Round7.png");
-	nextImage[7] = LoadGraph("images/Rounds/Round1.png");
+	nextImage[7] = LoadGraph("images/Rounds/Round4.png");
 	nextImage[8] = LoadGraph("images/Rounds/Round1.png");
 	nextImage[9] = LoadGraph("images/Rounds/Round1.png");
 

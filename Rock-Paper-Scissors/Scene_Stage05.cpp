@@ -543,7 +543,7 @@ void Scene_Stage05::Draw() const
 	for (int a = 0; a < 3; a++)
 	{
 		if (mob[a]->GetHP() > 0)
-			DrawUI_ON_Enemy(mob[a]);
+			DrawUI_ON_Enemy(mob[a], 1);
 	}
 
 	//ÚG‚¶‚á‚ñ‚¯‚ñŠJn‘O
