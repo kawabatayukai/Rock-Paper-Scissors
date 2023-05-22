@@ -208,7 +208,7 @@ void Enemy_06::Draw() const
 
 		if (speed == 8.0f)
 		{
-			DrawString((int)(x - 80), (int)(y - 75), "スピードアップ", GetColor(255, 0, 0));
+			DrawString((int)(x - 80), (int)(y - 125), "スピードアップ", GetColor(255, 0, 0));
 		}
 	}
 
@@ -278,6 +278,14 @@ void Enemy_06::Update_Jangeki()
 				//プレイヤー方向に向かって発射されるジャン撃の生成
 				if (frame_count % 65 == 0) obj_jangeki[jan_count] =
 					new Jangeki_Coming(x, y, radius, speed + 2.0f, type, player_x, player_y);
+			}
+
+			//行動パターン3の時の弾(speed = 3.0f  frame_count % 80)
+			if (attack_pattern == 2 && GetSpeed() == 8.0f)
+			{
+				//プレイヤー方向に向かって発射されるジャン撃の生成
+				if (frame_count % 50 == 0) obj_jangeki[jan_count] =
+					new Jangeki_Coming(x, y, radius, speed + 10.0f, type, player_x, player_y);
 			}
 		}
 	}
@@ -680,6 +688,10 @@ void Enemy_06::AttackPattern_3()
 		if (x >= 393)
 		{
 			floor = 2;
+			if (speed == 8.0f)
+			{
+				ChangeCnt++;
+			}
 			decision_Direction();
 			jump_Direction();
 		}
@@ -709,11 +721,19 @@ void Enemy_06::AttackPattern_3()
 		{
 			floor = 1;
 			dir = 1;
+			if (speed == 8.0f)
+			{
+				ChangeCnt++;
+			}
 			jump_Direction();
 		}
 		if (x >= 645)
 		{
 			floor = 3;
+			if (speed == 8.0f)
+			{
+				ChangeCnt++;
+			}
 			decision_Direction();
 			jump_Direction();
 		}
@@ -752,12 +772,20 @@ void Enemy_06::AttackPattern_3()
 		if (x <= 393)
 		{
 			floor = 2;
+			if (speed == 8.0f)
+			{
+				ChangeCnt++;
+			}
 			decision_Direction();
 			jump_Direction();
 		}
 		if (x >= 897)
 		{
 			floor = 4;
+			if (speed == 8.0f)
+			{
+				ChangeCnt++;
+			}
 			decision_Direction();
 			jump_Direction();
 		}
@@ -787,6 +815,10 @@ void Enemy_06::AttackPattern_3()
 		{
 			floor = 3;
 			jump_cnt = 0;
+			if (speed == 8.0f)
+			{
+				ChangeCnt++;
+			}
 			decision_Direction();
 			jump_Direction();
 		}
@@ -828,6 +860,10 @@ void Enemy_06::AttackPattern_3()
 		if (x <= 897)
 		{
 			floor = 4;
+			if (speed == 8.0f)
+			{
+				ChangeCnt++;
+			}
 			decision_Direction();
 			jump_Direction();
 		}
@@ -871,10 +907,6 @@ void Enemy_06::AttackPattern_3()
 			smokeFlg = true;
 			attack1_InitFlg = true;
 			attack_pattern = 0;
-			//jump_cnt = 0;
-			//dir = 1;
-			//x = 1200;
-			//y = 360;
 		}
 		else if (hp > 40)
 		{
@@ -1048,4 +1080,10 @@ float Enemy_06::Get_Y()
 int Enemy_06::Get_smokeflg()
 {
 	return smokeFlg;
+}
+
+//スピード取得
+float Enemy_06::GetSpeed()
+{
+	return speed;
 }
