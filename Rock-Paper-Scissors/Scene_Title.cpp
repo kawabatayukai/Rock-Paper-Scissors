@@ -12,6 +12,7 @@
 #include"Scene_Story.h"
 #include "Scene_Title_GameLevel.h"
 #include"Scene_Ranking_GameLevel.h"
+#include"SortSaveTime.h"
 
 
 int TitleScene::font_title;   //フォントハンドル

@@ -14,7 +14,7 @@ void SortSaveTime::SortRanking(void)
 	********/
 	// 選択法ソート
 	for (i = 0; i < 9; i++) {
-		for (j = i + 1; j < RANKING_DATA; j++)
+		for (j = i + 1; j < RANKING_DATA_COLUMN; j++)
 		{
 			if (g_RankingTime[i].timeMin > 0) //0以上
 			{
@@ -38,15 +38,15 @@ void SortSaveTime::SortRanking(void)
 	}
 
 	// 順位付け
-	for (i = 0; i < RANKING_DATA; i++)
+	for (i = 0; i < RANKING_DATA_COLUMN; i++)
 	{
 		g_RankingTime[i].no = 1;
 	}
 
 	// 得点が同じ場合は、同じ順位とする
 	// 同順位があった場合の次の順位はデータ個数が加算された順位とする
-	for (i = 0; i < RANKING_DATA - 1; i++) {
-		for (j = i + 1; j < RANKING_DATA; j++)
+	for (i = 0; i < RANKING_DATA_COLUMN - 1; i++) {
+		for (j = i + 1; j < RANKING_DATA_COLUMN; j++)
 		{
 			if (g_RankingTime[i].timeMin > 0) //0以上
 			{
@@ -94,7 +94,7 @@ int SortSaveTime::SaveRanking(void)
 	}
 
 	// ランキングデータ分配列データを書き込む
-	for (int i = 0; i < RANKING_DATA; i++)
+	for (int i = 0; i < RANKING_DATA_COLUMN; i++)
 	{
 	/********
 	* 時間  *
@@ -115,7 +115,7 @@ int SortSaveTime::ReadRanking(void)
 	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::NORMAL)
 	{
 		//ファイルオープン
-		if ((fopen_s(&fp, "dat/rankingdata.txt", "r")) != 0)
+		if ((fopen_s(&fp, "dat/rankingdataTIME.txt", "r")) != 0)
 		{
 			//エラー処理
 			printf("Ranking Data Error\n");
@@ -127,7 +127,7 @@ int SortSaveTime::ReadRanking(void)
 	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
 	{
 		// ファイルオープン
-		if ((fopen_s(&fp, "dat/rankingdata_HARD.txt", "r")) != 0)
+		if ((fopen_s(&fp, "dat/rankingdataTIME_HARD.txt", "r")) != 0)
 		{
 			/* エラー処理 */
 			printf("Ranking Data Error\n");
@@ -136,7 +136,7 @@ int SortSaveTime::ReadRanking(void)
 	}
 
 	//ランキングデータ配分列データを読み込む
-	for (int i = 0; i < RANKING_DATA; i++)
+	for (int i = 0; i < RANKING_DATA_COLUMN; i++)
 	{
 	/********
 	* 時間  *

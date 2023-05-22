@@ -18,7 +18,7 @@ void SortSave::SortRanking(void)
 	*********/
 	// 選択法ソート
 	for (i = 0; i < 9; i++) {
-		for (j = i + 1; j < RANKING_DATA; j++) {
+		for (j = i + 1; j < RANKING_DATA_COLUMN; j++) {
 			if (g_Ranking[i].score <= g_Ranking[j].score)
 			{
 				work = g_Ranking[i];
@@ -28,14 +28,14 @@ void SortSave::SortRanking(void)
 		}
 	}
 	// 順位付け
-	for (i = 0; i < RANKING_DATA; i++)
+	for (i = 0; i < RANKING_DATA_COLUMN; i++)
 	{
 		g_Ranking[i].no = 1;
 	}
 	// 得点が同じ場合は、同じ順位とする
 	// 同順位があった場合の次の順位はデータ個数が加算された順位とする
-	for (i = 0; i < RANKING_DATA - 1; i++) {
-		for (j = i + 1; j < RANKING_DATA; j++) 
+	for (i = 0; i < RANKING_DATA_COLUMN - 1; i++) {
+		for (j = i + 1; j < RANKING_DATA_COLUMN; j++) 
 		{
 			if (g_Ranking[i].score > g_Ranking[j].score)
 			{
@@ -49,7 +49,7 @@ void SortSave::SortRanking(void)
 	********/
 		//// 選択法ソート
 		//for (i = 0; i < 9; i++) {
-		//	for (j = i + 1; j < RANKING_DATA; j++) 
+		//	for (j = i + 1; j < RANKING_DATA_COLUMN; j++) 
 		//	{
 		//		if (g_Ranking[i].timeMin > 0) //0以上
 		//		{
@@ -72,14 +72,14 @@ void SortSave::SortRanking(void)
 		//	}
 		//}
 		//// 順位付け
-		//for (i = 0; i < RANKING_DATA; i++)
+		//for (i = 0; i < RANKING_DATA_COLUMN; i++)
 		//{
 		//	g_Ranking[i].no = 1;
 		//}
 		//// 得点が同じ場合は、同じ順位とする
 		//// 同順位があった場合の次の順位はデータ個数が加算された順位とする
-		//for (i = 0; i < RANKING_DATA - 1; i++) {
-		//	for (j = i + 1; j < RANKING_DATA; j++)
+		//for (i = 0; i < RANKING_DATA_COLUMN - 1; i++) {
+		//	for (j = i + 1; j < RANKING_DATA_COLUMN; j++)
 		//	{
 		//		if (g_Ranking[i].timeMin > 0) //0以上
 		//		{
@@ -127,17 +127,17 @@ int SortSave::SaveRanking(void)
 	}
 
 	// ランキングデータ分配列データを書き込む
-	for (int i = 0; i < RANKING_DATA; i++)
+	for (int i = 0; i < RANKING_DATA_COLUMN; i++)
 	{
 	/*********
 	* スコア *
 	*********/
-		//fprintf_s(fp, "%2d %10s %10d %10d %10d\n", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].score, g_Ranking[i].timeMin, g_Ranking[i].timeSec);
+		fprintf_s(fp, "%2d %10s %10d %10d %10d", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].score, g_Ranking[i].timeMin, g_Ranking[i].timeSec);
 
 	/********
 	* 時間  *
 	********/
-		fprintf_s(fp, "%2d %10s %10d %10d %10d\n", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].timeMin, g_Ranking[i].timeSec, g_Ranking[i].score);
+		//fprintf_s(fp, "%2d %10s %10d %10d %10d\n", g_Ranking[i].no, g_Ranking[i].name, g_Ranking[i].timeMin, g_Ranking[i].timeSec, g_Ranking[i].score);
 	}
 
 	//ファイルクローズ
@@ -174,17 +174,17 @@ int  SortSave::ReadRanking(void)
 	}
 
 	//ランキングデータ配分列データを読み込む
-	for (int i = 0; i < RANKING_DATA; i++)
+	for (int i = 0; i < RANKING_DATA_COLUMN; i++)
 	{
 	/*********
 	* スコア *
 	*********/
-		//fscanf_s(fp, "%2d %10s %10d %10d %10d", &g_Ranking[i].no, g_Ranking[i].name,sizeof(g_Ranking[i].name), &g_Ranking[i].score, &g_Ranking[i].timeMin, &g_Ranking[i].timeSec);
+		fscanf_s(fp, "%2d %10s %10d %10d %10d\n", &g_Ranking[i].no, g_Ranking[i].name,sizeof(g_Ranking[i].name), &g_Ranking[i].score, &g_Ranking[i].timeMin, &g_Ranking[i].timeSec);
 
 	/********
 	* 時間  *
 	********/
-		fscanf_s(fp, "%2d %10s %10d %10d %10d", &g_Ranking[i].no, g_Ranking[i].name, sizeof(g_Ranking[i].name), &g_Ranking[i].timeMin, &g_Ranking[i].timeSec, &g_Ranking[i].score);
+		//fscanf_s(fp, "%2d %10s %10d %10d %10d", &g_Ranking[i].no, g_Ranking[i].name, sizeof(g_Ranking[i].name), &g_Ranking[i].timeMin, &g_Ranking[i].timeSec, &g_Ranking[i].score);
 	}
 
 	//ファイルクローズ

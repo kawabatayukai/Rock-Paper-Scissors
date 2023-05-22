@@ -1,7 +1,8 @@
 #pragma once
 #include <stdio.h>
 
-#define RANKING_DATA 10
+#define RANKING_DATA_COLUMN 10
+#define RANKING_DATA_ROW 5
 
 /*ランキングデータ（構造体*/
 struct RankingDataTime {
@@ -21,7 +22,7 @@ class SortSaveTime
 {
 private:
 	FILE* fp;
-	RankingDataTime g_RankingTime[RANKING_DATA];  // ランキングデータ変数宣言
+	RankingDataTime g_RankingTime[RANKING_DATA_COLUMN];  // ランキングデータ変数宣言
 
 public:
 

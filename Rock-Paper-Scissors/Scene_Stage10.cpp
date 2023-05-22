@@ -49,16 +49,14 @@ Scene_Stage10::Scene_Stage10(const Player* player)
 	reflection = new Jangeki_Reflection(0, 0, 0, 0, Jan_Type::ROCK);
 
 	//BGMロード
-	bgm[0] = LoadSoundMem("Sound/VSQPD_0077_Mary_Had_a_Little_Lamb_FC.mp3");
-	bgm[1] = LoadSoundMem("Sound/VSQPD_0046_Yankee_Doodle.mp3");
-	bgm[2] = LoadSoundMem("Sound/VSQPD_0048_London_Bridge.mp3");
-	bgm[3] = LoadSoundMem("Sound/sento.mp3");
+	bgm[0] = LoadSoundMem("Sound/音源データ2.mp3");
+	bgm[1] = LoadSoundMem("Sound/sento.mp3");
 }
 
 //デストラクタ
 Scene_Stage10::~Scene_Stage10()
 {
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < 2; i++)
 	{
 		StopSoundMem(bgm[i]);
 	}
@@ -80,16 +78,16 @@ void Scene_Stage10::Update()
 		//BGM
 		if (interval % 10 == 0)
 		{
-			if (CheckSoundMem(bgm[1]) == 0) PlaySoundMem(bgm[1], DX_PLAYTYPE_LOOP);
-		}
-		if (interval % 300 == 0)
-		{
 			if (CheckSoundMem(bgm[0]) == 0) PlaySoundMem(bgm[0], DX_PLAYTYPE_LOOP);
 		}
-		if (interval % 600 == 0)
-		{
-			if (CheckSoundMem(bgm[2]) == 0) PlaySoundMem(bgm[2], DX_PLAYTYPE_LOOP);
-		}
+		//if (interval % 300 == 0)
+		//{
+		//	if (CheckSoundMem(bgm[0]) == 0) PlaySoundMem(bgm[0], DX_PLAYTYPE_LOOP);
+		//}
+		//if (interval % 600 == 0)
+		//{
+		//	if (CheckSoundMem(bgm[2]) == 0) PlaySoundMem(bgm[2], DX_PLAYTYPE_LOOP);
+		//}
 
 		/*足場*/
 		obj_floor[3] = new Floor(100, 350, 120, 50);      
@@ -115,13 +113,10 @@ void Scene_Stage10::Update()
 	case 2:
 
 		//BGM STOP
-		for (int i = 0; i < 3; i++)
-		{
-			StopSoundMem(bgm[i]);
-		}
+		StopSoundMem(bgm[0]);
 
 		//BGM
-		if (CheckSoundMem(bgm[3]) == 0) PlaySoundMem(bgm[3], DX_PLAYTYPE_LOOP);
+		if (CheckSoundMem(bgm[1]) == 0) PlaySoundMem(bgm[1], DX_PLAYTYPE_LOOP);
 
 		/*足場*/  
 		obj_floor[3] = new Floor(100, 500, 120, 20, 0xd2d2d2);//テレポート左位置
@@ -194,6 +189,9 @@ void Scene_Stage10::Update()
 
 	//接触じゃんけん処理
 	Touch_Janken(obj_enemy, this, 10);
+
+	/*エフェクト追加(スコア加算)*/
+	Effect_Update_HitJangeki(obj_enemy);
 
 	//playerのじゃん撃をとってくる
 	Jangeki_Base** player_jangeki = obj_player->GetJangeki();
@@ -464,6 +462,9 @@ void Scene_Stage10::Draw() const
 		//接触時じゃんけん描画
 		Draw_Janken();
 	}
+
+	/*エフェクト描画*/
+	Effect_Draw_HitJangeki();
 }
 
 //じゃんけん更新・内部処理
@@ -561,8 +562,8 @@ AbstractScene* Scene_Stage10::ChangeScene()
 	if (obj_enemy->Get_Enemy10Form() == 1 && obj_enemy->IsDeathEnemy10() == true) //第一形態
 	{
 		StopSoundMem(bgm[0]);
-		StopSoundMem(bgm[1]);
-		StopSoundMem(bgm[2]);
+		//StopSoundMem(bgm[1]);
+		//StopSoundMem(bgm[2]);
 	}
 	if(obj_enemy->Get_Enemy10Form() == 2 && obj_enemy->IsDeathEnemy10() == true) //第二形態
 	{

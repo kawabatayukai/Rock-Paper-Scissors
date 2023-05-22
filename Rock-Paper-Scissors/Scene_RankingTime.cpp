@@ -14,7 +14,7 @@ Scene_RankingTime::Scene_RankingTime()
 	backimage = LoadGraph("images/Rankingback.png");
 	//BGMロード
 	r_bgm = LoadSoundMem("Sound/Ranking.wav");
-	/*for (int i = 0; i < RANKING_DATA; i++)
+	/*for (int i = 0; i < RANKING_DATA_COLUMN; i++)
 	{
 		for (int j = 0; dataRanking[i].name[j] != '\0'; j++)
 		{
@@ -53,6 +53,9 @@ void Scene_RankingTime::Draw() const
 
 	/*ランキング一覧を表示*/
 	SetFontSize(30);
+
+	DrawString(1000, 50, "B：スコア順", 0xffffff);
+
 	for (int i = 0; i < 10; i++)
 	{
 	/********

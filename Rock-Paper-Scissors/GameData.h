@@ -1,6 +1,7 @@
 #pragma once
 
-#define RANKING_DATA 10
+#define RANKING_DATA_COLUMN 10
+#define RANKING_DATA_ROW 5
 
 //“ïˆÕ“x
 enum class GAME_DIFFICULTY

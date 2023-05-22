@@ -31,6 +31,7 @@ Enemy_Death::Enemy_Death(const float& x, const float& y, const int& stage_num,co
 		int* image = new int[3];
 		LoadDivGraph("images/Death/stage06_death.png", 3, 3, 1, 100, 100, image);
 		image_death = image[static_cast<int>(type)];
+		se_death = LoadSoundMem("Sound/Janken/「ぐああーーっ！」.mp3");
 		delete[] image;
 	}
 		break;
@@ -48,7 +49,7 @@ Enemy_Death::Enemy_Death(const float& x, const float& y, const int& stage_num,co
 		break;
 	case 10:
 		image_death = LoadGraph("images/ワンパンマン顔のみ左.png");
-		se_death = LoadSoundMem("Sound/Janken/咆哮.mp3");
+		se_death = LoadSoundMem("Sound/Janken/「ぐああーーっ！」.mp3");
 		break;
 
 	default:

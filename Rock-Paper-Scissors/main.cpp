@@ -40,7 +40,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     FPS_Controll fps_ctrl(60);
 
     //ESCキーまたはコントローラーBackボタンで終了
-    while (ProcessMessage() == 0 && !KeyManager::OnKeyClicked(KEY_INPUT_ESCAPE) && !(g_NowKey & PAD_INPUT_7))
+    while (ProcessMessage() == 0 && !KeyManager::OnKeyClicked(KEY_INPUT_ESCAPE) && !KeyManager::OnPadClicked(PAD_INPUT_7))
     {
         // 画面の初期化 
         ClearDrawScreen();

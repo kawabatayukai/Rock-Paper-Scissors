@@ -32,7 +32,7 @@ Enemy_10::Enemy_10(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	Init_Jangeki();       //じゃん撃を用意
 
-	se_death = LoadSoundMem("Sound/Janken/咆哮.mp3");
+	se_death = LoadSoundMem("Sound/Janken/「ぐああーーっ！」.mp3");
 
 	/*反射*/
 	//Rimage = LoadGraph("images/stage09/Stage9_1.png");	//反射ON
