@@ -79,10 +79,10 @@ void HelpScene::Draw() const
 	if (KeyManager::OnPadPressed(PAD_INPUT_6)) 
 		DrawRoundRect(777, 58, (777 + 89), (58 + 60), 10, 10, 0xffffff, TRUE);
 	//LT
-	if (KeyManager::GetValue_LT() > 30)        
+	if (KeyManager::GetValue_RT() > 30)        
 		DrawRoundRect(268, 318, (268 + 90), (318 + 60), 10, 10, 0xffffff, TRUE);
 	//RT
-	if (KeyManager::GetValue_RT() > 30)
+	if (KeyManager::GetValue_LT() > 30)
 		DrawRoundRect(48, 318, (48 + 90), (318 + 60), 10, 10, 0xffffff, TRUE);
 	//B
 	if (KeyManager::OnPadPressed(PAD_INPUT_B))

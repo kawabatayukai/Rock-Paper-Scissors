@@ -37,8 +37,8 @@ Scene_NextStage::Scene_NextStage(int Next) :Next(Next), frameCount(0)
 	nextImage[5] = LoadGraph("images/Rounds/Round6.png");
 	nextImage[6] = LoadGraph("images/Rounds/Round7.png");
 	nextImage[7] = LoadGraph("images/Rounds/Round4.png");
-	nextImage[8] = LoadGraph("images/Rounds/Round1.png");
-	nextImage[9] = LoadGraph("images/Rounds/Round1.png");
+	nextImage[8] = LoadGraph("images/Rounds/Round9.png");
+	nextImage[9] = LoadGraph("images/Rounds/Round10.png");
 
 	next_se = LoadSoundMem("Sound/˜a‘¾ŒÛ‚Åƒhƒhƒ“.mp3");
 	PlaySoundMem(next_se, DX_PLAYTYPE_BACK);

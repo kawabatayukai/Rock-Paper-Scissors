@@ -8,17 +8,20 @@
 Scene_InputNameRanking::Scene_InputNameRanking()
 {
 	keyboard = new KeyBoard();
+	bgm = LoadSoundMem("Sound/Help/InputName.wav");
 }
 
 Scene_InputNameRanking::~Scene_InputNameRanking()
 {
 	delete keyboard;
+	StopSoundMem(bgm);
 }
 
 //XV
 void  Scene_InputNameRanking::Update()
 {
 	keyboard->Update();
+	if (CheckSoundMem(bgm) == 0) PlaySoundMem(bgm, DX_PLAYTYPE_BACK);
 }
 //•`‰æ
 void  Scene_InputNameRanking::Draw() const
