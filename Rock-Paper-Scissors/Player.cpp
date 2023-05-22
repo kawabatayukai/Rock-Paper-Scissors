@@ -31,7 +31,7 @@ Player::Player(float x, float y, int isHelp) : CharaBase(x, y, 57.0f, 100.0f)  /
 	
 	//顔
 	head_Image[0] = LoadGraph("images/Player/ワンパンマン目なし右.png");
-	head_Image[1] = LoadGraph("images/Player/ワンパンマン目なし左3D.png");
+	head_Image[1] = LoadGraph("images/Player/ワンパンマン目なし左.png");
 	head_Image[2] = LoadGraph("images/Player/ワンパンマン目なし右弱.png");
 	head_Image[3] = LoadGraph("images/Player/ワンパンマン目なし左弱.png");
 
