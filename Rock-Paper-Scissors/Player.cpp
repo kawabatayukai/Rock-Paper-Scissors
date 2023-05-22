@@ -30,48 +30,48 @@ Player::Player(float x, float y, int isHelp) : CharaBase(x, y, 57.0f, 100.0f)  /
 	//画像読み込み
 	
 	//顔
-	head_Image[0] = LoadGraph("images/ワンパンマン目なし右.png");
-	head_Image[1] = LoadGraph("images/ワンパンマン目なし左.png");
-	head_Image[2] = LoadGraph("images/ワンパンマン目なし右弱.png");
-	head_Image[3] = LoadGraph("images/ワンパンマン目なし左弱.png");
+	head_Image[0] = LoadGraph("images/Player/ワンパンマン目なし右.png");
+	head_Image[1] = LoadGraph("images/Player/ワンパンマン目なし左.png");
+	head_Image[2] = LoadGraph("images/Player/ワンパンマン目なし右弱.png");
+	head_Image[3] = LoadGraph("images/Player/ワンパンマン目なし左弱.png");
 
 	//目
-	eye_ImageR[0] = LoadGraph("images/ワンパンマン目のみ右.png");
-	eye_ImageL[0] = LoadGraph("images/ワンパンマン目のみ左.png");
-	eye_ImageR[1] = LoadGraph("images/ワンパンマン目つむし右.png");
-	eye_ImageL[1] = LoadGraph("images/ワンパンマン目つむし左png");
+	eye_ImageR[0] = LoadGraph("images/Player/ワンパンマン目のみ右.png");
+	eye_ImageL[0] = LoadGraph("images/Player/ワンパンマン目のみ左.png");
+	eye_ImageR[1] = LoadGraph("images/Player/ワンパンマン目つむし右.png");
+	eye_ImageL[1] = LoadGraph("images/Player/ワンパンマン目つむし左png");
 
 	//体
-	LoadDivGraph("images/ワンパンマン画像顔無しグー.png", 10, 5, 2, 100, 100, image[0]);
-	LoadDivGraph("images/ワンパンマン画像顔無しチョキ.png", 10, 5, 2, 100, 100, image[1]);
-	LoadDivGraph("images/ワンパンマン画像顔無しパー.png", 10, 5, 2, 100, 100, image[2]);
+	LoadDivGraph("images/Player/ワンパンマン画像顔無しグー.png", 10, 5, 2, 100, 100, image[0]);
+	LoadDivGraph("images/Player/ワンパンマン画像顔無しチョキ.png", 10, 5, 2, 100, 100, image[1]);
+	LoadDivGraph("images/Player/ワンパンマン画像顔無しパー.png", 10, 5, 2, 100, 100, image[2]);
 
 	//グーの時のジャンプ
-	image[0][4] = LoadGraph("images/ワンパンマンジャンプ画像腕無し右グー.png");
-	image[0][9] = LoadGraph("images/ワンパンマンジャンプ画像腕無し左グー.png");
+	image[0][4] = LoadGraph("images/Player/ワンパンマンジャンプ画像腕無し右グー.png");
+	image[0][9] = LoadGraph("images/Player/ワンパンマンジャンプ画像腕無し左グー.png");
 
 	//チョキの時のジャンプ
-	image[1][4] = LoadGraph("images/ワンパンマンジャンプ画像腕無し右チョキ.png");
-	image[1][9] = LoadGraph("images/ワンパンマンジャンプ画像腕無し左チョキ.png");
+	image[1][4] = LoadGraph("images/Player/ワンパンマンジャンプ画像腕無し右チョキ.png");
+	image[1][9] = LoadGraph("images/Player/ワンパンマンジャンプ画像腕無し左チョキ.png");
 
 	//パーの時のジャンプ
-	image[2][4] = LoadGraph("images/ワンパンマンジャンプ画像腕無し右パー.png");
-	image[2][9] = LoadGraph("images/ワンパンマンジャンプ画像腕無し左パー.png");
+	image[2][4] = LoadGraph("images/Player/ワンパンマンジャンプ画像腕無し右パー.png");
+	image[2][9] = LoadGraph("images/Player/ワンパンマンジャンプ画像腕無し左パー.png");
 
 	//グーの腕
-	armL_Image[0] = LoadGraph("images/腕のみぐーh左.png");
-	armR_Image[0] = LoadGraph("images/腕のみぐーh右.png");
+	armL_Image[0] = LoadGraph("images/Player/腕のみぐーh左.png");
+	armR_Image[0] = LoadGraph("images/Player/腕のみぐーh右.png");
 
 	//チョキの腕
-	armL_Image[1] = LoadGraph("images/腕のみちょき左.png");
-	armR_Image[1] = LoadGraph("images/腕のみちょき右.png");
+	armL_Image[1] = LoadGraph("images/Player/腕のみちょき左.png");
+	armR_Image[1] = LoadGraph("images/Player/腕のみちょき右.png");
 
 	//パーの腕
-	armL_Image[2] = LoadGraph("images/腕のみぱー左.png");
-	armR_Image[2] = LoadGraph("images/腕のみぱー右.png");
+	armL_Image[2] = LoadGraph("images/Player/腕のみぱー左.png");
+	armR_Image[2] = LoadGraph("images/Player/腕のみぱー右.png");
 
 	//死亡時
-	image_death = LoadGraph("images/ワンパンマン顔のみ左弱.png");
+	image_death = LoadGraph("images/Player/ワンパンマン顔のみ左弱.png");
 
 	image_setsumei = LoadGraph("images/Setumei.png");
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image_JanType);  //じゃん撃画像
