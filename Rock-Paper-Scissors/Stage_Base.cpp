@@ -33,7 +33,7 @@ namespace _CONSTANTS_SB
 		"KAERU",        //2
 		"ZAKU",           //3
 		"RED EYE",       //4
-		"TAMAGO",         //5
+		"METAL",         //5
 		"JAN NINJA",      //6
 		"JHO",            //7
 		"TWIN AVATAR",     //8
