@@ -40,7 +40,7 @@ Scene_NextStage::Scene_NextStage(int Next) :Next(Next)
 	nextImage[8] = LoadGraph("images/GameClear2.png");
 	nextImage[9] = LoadGraph("images/GameClear2.png");
 
-	next_se = LoadSoundMem("Sound/GameClear.mp3");
+	next_se = LoadSoundMem("Sound/和太鼓でドドン.mp3");
 }
 
 //デストラクタ
