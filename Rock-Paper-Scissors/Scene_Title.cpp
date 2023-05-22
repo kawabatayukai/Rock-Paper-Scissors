@@ -32,7 +32,7 @@ TitleScene::TitleScene()
 	GameData::Set_DIFFICULTY(GAME_DIFFICULTY::NORMAL);
 
 	//BGMロード
-	bgm = LoadSoundMem("Sound/TitleBGM.mp3");
+	bgm = LoadSoundMem("Sound/Title/titlebgm.wav");
 }
 
 //デストラクタ

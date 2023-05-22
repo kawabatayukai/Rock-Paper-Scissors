@@ -12,7 +12,7 @@ HelpScene::HelpScene() : helpTime(0)
 {
 	HelpImage = LoadGraph("images/help/help3.png");
 	image_back = LoadGraph("images/Story/starback.png");
-	help_bgm = LoadSoundMem("Sound/HelpBGM.mp3");
+	help_bgm = LoadSoundMem("Sound/Help/helpbgm.wav");
 
 	if(font_help == 0) font_help = CreateFontToHandle("ÉÅÉCÉäÉI", 40, 10, DX_FONTTYPE_ANTIALIASING_EDGE, -1, 3);
 

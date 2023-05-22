@@ -35,7 +35,7 @@ void Scne_TitleInterval::Draw() const
 //シーンの変更
 AbstractScene* Scne_TitleInterval::ChangeScene()
 {
-	if (frame == 80)
+	if (frame == 80-1)
 		return dynamic_cast<AbstractScene*> (new TitleScene());
 	//更新なし
 	return this;
