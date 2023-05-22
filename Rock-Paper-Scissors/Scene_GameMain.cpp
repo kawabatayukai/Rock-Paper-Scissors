@@ -123,7 +123,7 @@ AbstractScene* GameMainScene::ChangeScene()
 			break;
 
 		case 4:
-			return dynamic_cast<AbstractScene*> (new Scene_Stage04());
+			return dynamic_cast<AbstractScene*> (new Scene_Stage08());
 			break;
 
 		case 5:
@@ -139,7 +139,7 @@ AbstractScene* GameMainScene::ChangeScene()
 			break;
 
 		case 8:
-			return dynamic_cast<AbstractScene*> (new Scene_Stage08());
+			return dynamic_cast<AbstractScene*> (new Scene_Stage04());
 			break;
 
 		case 9:

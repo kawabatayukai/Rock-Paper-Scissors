@@ -482,7 +482,7 @@ AbstractScene* Scene_Stage08::ChangeScene()
 	if (IsEnd_DeathEnemy() == true)
 	{
 		//ゲームクリアシーンへ切り替え
-		return dynamic_cast<AbstractScene*> (new GameClearScene(9));
+		return dynamic_cast<AbstractScene*> (new GameClearScene(5));
 	}
 
 	//プレイヤーのHPが0以下

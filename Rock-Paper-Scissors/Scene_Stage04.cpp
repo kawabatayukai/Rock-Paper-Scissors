@@ -314,7 +314,7 @@ AbstractScene* Scene_Stage04::ChangeScene()
 		SoundSystem::StopSE(SE::ENEMY_SPECIAL);
 
 		//ゲームクリアシーンへ切り替え
-		return dynamic_cast<AbstractScene*> (new GameClearScene(5));
+		return dynamic_cast<AbstractScene*> (new GameClearScene(9));
 	}
 
 	//プレイヤーのHPが0以下
