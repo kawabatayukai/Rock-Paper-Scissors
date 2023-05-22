@@ -120,7 +120,7 @@ void Enemy_09::Update_Jangeki()
 
 	{
 		float radius = 35.5f;   //半径
-		float speed = 4.5f;     //スピード
+		float speed = 5.5f;     //スピード
 
 		//if (GetHP() <= 51)speed=4.5f;
 
@@ -396,7 +396,7 @@ void Enemy_09::SpecialMoveEnmey()
 
 void Enemy_09::frameUP()
 {
-	if (janFrame >= 25)
+	if (janFrame > 25)
 	{
 		janFrame = janFrame - 10;
 	}
