@@ -10,7 +10,7 @@ int HelpScene::font_help = 0;
 //コンストラクタ
 HelpScene::HelpScene() : helpTime(0)
 {
-	HelpImage = LoadGraph("images/help/help3.png");
+	HelpImage = LoadGraph("images/help/help5.png");
 	image_back = LoadGraph("images/Story/starback.png");
 	help_bgm = LoadSoundMem("Sound/Help/helpbgm.wav");
 
@@ -73,11 +73,17 @@ void HelpScene::Draw() const
 	SetDrawBlendMode(DX_BLENDMODE_ADD, 80);
 
 	//LB
-	if (KeyManager::OnPadPressed(PAD_INPUT_5)) 
+	if (KeyManager::OnPadPressed(PAD_INPUT_5))
+	{
 		DrawRoundRect(398, 58, (398 + 90), (58 + 60), 10, 10, 0xffffff, TRUE);
+		DrawRoundRect(510, 170, (510 + 50), (170 + 30), 12, 12, 0xffffff, TRUE);
+	}
 	//RB
-	if (KeyManager::OnPadPressed(PAD_INPUT_6)) 
+	if (KeyManager::OnPadPressed(PAD_INPUT_6))
+	{
 		DrawRoundRect(777, 58, (777 + 89), (58 + 60), 10, 10, 0xffffff, TRUE);
+		DrawRoundRect(720, 170, (720 + 50), (170 + 30), 12, 12, 0xffffff, TRUE);
+	}
 	//LT
 	if (KeyManager::GetValue_RT() > 30)        
 		DrawRoundRect(268, 318, (268 + 90), (318 + 60), 10, 10, 0xffffff, TRUE);
@@ -98,23 +104,23 @@ void HelpScene::Draw() const
 	if (KeyManager::OnPadPressed(PAD_INPUT_LEFT) || KeyManager::OnPadPressed(PAD_INPUT_RIGHT)
 	   || KeyManager::OnPadPressed(PAD_INPUT_UP) || KeyManager::OnPadPressed(PAD_INPUT_DOWN))
 	{
-		DrawCircle(566, 392, 33, 0xffffff, TRUE);
+		DrawCircle(568, 392, 32, 0xffffff, TRUE);
 
 		if (KeyManager::OnPadPressed(PAD_INPUT_LEFT))
 		{
-			DrawTriangle(520, 310, 505, 295, 505, 326, 0xffffff, TRUE);
-			DrawRoundRect(475, 295, 505, 326, 5, 5, 0xffffff, TRUE);
+			DrawTriangle(524, 311, 510, 295, 510, 327, 0xffffff, TRUE);
+			DrawRoundRect(477, 295, 510, 328, 5, 5, 0xffffff, TRUE);
 		}
 		if (KeyManager::OnPadPressed(PAD_INPUT_RIGHT))
 		{
-			DrawTriangle(532, 310, 544, 297, 544, 327, 0xffffff, TRUE);
-			DrawRoundRect(544, 297, 575, 328, 5, 5, 0xffffff, TRUE);
+			DrawTriangle(528, 311, 543, 295, 543, 328, 0xffffff, TRUE);
+			DrawRoundRect(543, 295, 574, 328, 5, 5, 0xffffff, TRUE);
 		}
 	}
 	//Right Stick
 	if (KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_X) != 0 || KeyManager::Get_StickValue(Stick_Code::RIGHT_STICK_Y) != 0)
 	{
-		DrawCircle(713, 392, 33, 0xffffff, TRUE);
+		DrawCircle(713, 392, 32, 0xffffff, TRUE);
 	}
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
