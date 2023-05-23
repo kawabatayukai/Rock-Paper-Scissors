@@ -26,6 +26,8 @@ GameOverScene::GameOverScene(int again):again(again)
 	image_back[0] = LoadGraph("images/Gameover2.png");
 	image_back[1] = LoadGraph("images/GameoverHARD.png");
 	gameover_se = LoadSoundMem("Sound/GameOver.mp3");
+	//GameOverSE
+	if (CheckSoundMem(gameover_se) == 0) PlaySoundMem(gameover_se, DX_PLAYTYPE_BACK);
 
 }
 
@@ -35,12 +37,13 @@ GameOverScene::GameOverScene() :again(11)
 	image_back[0] = LoadGraph("images/Gameover2.png");
 	image_back[1] = LoadGraph("images/GameoverHARD.png");
 	gameover_se = LoadSoundMem("Sound/GameOver.mp3");
+	//GameOverSE
+	if (CheckSoundMem(gameover_se) == 0) PlaySoundMem(gameover_se, DX_PLAYTYPE_BACK);
 }
 
 //デストラクタ
 GameOverScene::~GameOverScene()
 {
-	//DeleteSoundMem(gameover_se);
 	StopSoundMem(gameover_se);
 	SetFontSize(20);
 }
@@ -49,7 +52,8 @@ GameOverScene::~GameOverScene()
 void GameOverScene::Update()
 {
 	//GameOverSE
-	if (CheckSoundMem(gameover_se) == 0) PlaySoundMem(gameover_se, DX_PLAYTYPE_BACK);
+	//if (CheckSoundMem(gameover_se) == 0) PlaySoundMem(gameover_se, DX_PLAYTYPE_BACK);
+
 }
 
 //描画
