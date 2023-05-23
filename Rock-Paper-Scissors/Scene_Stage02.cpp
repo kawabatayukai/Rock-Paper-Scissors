@@ -57,9 +57,10 @@ void Scene_Stage02::Update()
 	
 	//BGM再生
 	if (CheckSoundMem(bgm) == 0) PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
+
 	//PlaySoundMem(stage2_BGM, DX_PLAYTYPE_LOOP, FALSE);
-	//時間をカウント
-	GameData::Time_Update();
+	
+	
 	
 	obj_enemy->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());
 
@@ -68,6 +69,7 @@ void Scene_Stage02::Update()
 	{
 		obj_player->Update();    // プレイヤー更新・操作可能
 		obj_enemy->Update();     //敵キャラ更新・内部処理
+		GameData::Time_Update();//時間をカウント
 	}
 
 	//接触じゃんけん処理

@@ -543,7 +543,7 @@ void Scene_Stage05::Draw() const
 	for (int a = 0; a < 3; a++)
 	{
 		if (mob[a]->GetHP() > 0)
-			DrawUI_ON_Enemy(mob[a]);
+			DrawUI_ON_Enemy(mob[a], 1);
 	}
 
 	//ÚG‚¶‚á‚ñ‚¯‚ñŠJŽn‘O
@@ -636,5 +636,6 @@ void Scene_Stage05::AfterJanken_LOSE()
 	obj_player->SetX(200);
 	obj_enemy->MoveReset();
 	obj_enemy->SetX(1000);
-	obj_enemy->SetY(140);
+	obj_enemy->SetY(300);
+	obj_enemy->AnimReset();
 }

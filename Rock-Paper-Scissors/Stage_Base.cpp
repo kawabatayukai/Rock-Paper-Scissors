@@ -3,6 +3,7 @@
 #include"DxLib.h"
 #include"GameData.h"
 #include"MobEnemy_05.h"
+#include<iostream>
 #include<vector>
 
 
@@ -12,6 +13,7 @@
 
 int Stage_Base::font = 0;         //結果(WIN or LOSE or ONEMORE) 用フォント
 int Stage_Base::font_score = 0;   //Score描画用フォント
+int Stage_Base::name_font = 0;
 
 namespace _CONSTANTS_SB
 {
@@ -23,9 +25,24 @@ namespace _CONSTANTS_SB
 	//時計座標
 	const int CLOCK_X = 640;
 	const int CLOCK_Y = 60;
+
+	//敵の名前
+	const std::vector<std::string> Enemy_Name =
+	{
+		"NIWATORI",       //1
+		"KAERU",        //2
+		"SHIELD/MASTER",           //3
+		"RED EYE",       //4
+		"BOSSMETAL",         //5
+		"JAN NINJA",      //6
+		"JHO",            //7
+		"TWIN AVATAR",     //8
+		"SHADOW",        //9
+		"Y・Y"            //10
+	};
 }
 
-Stage_Base::Stage_Base() : blackout_time(0), Prev_EnemyType(Jan_Type::NONE), obj_effectEnemy(nullptr), obj_death(nullptr)
+Stage_Base::Stage_Base() : blackout_time(0), stage_number(0), Prev_EnemyType(Jan_Type::NONE), obj_effectEnemy(nullptr), obj_death(nullptr)
 ,bf_result(Jan_Result::_ERROR)
 {
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, typeImage);
@@ -35,6 +52,10 @@ Stage_Base::Stage_Base() : blackout_time(0), Prev_EnemyType(Jan_Type::NONE), obj
 
 	if (font_score == 0)
 		font_score = CreateFontToHandle("メイリオ", 30, 5, DX_FONTTYPE_ANTIALIASING_EDGE, -1, 1);
+
+	//フォントを作成
+	if (name_font == 0)
+		name_font = CreateFontToHandle("メイリオ", 20, 4, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
 
 	//エフェクト初期化
 	obj_effect = new Effect_Jangeki * [_CONSTANTS_SB::EFFECT_MAX];
@@ -67,8 +88,6 @@ void Stage_Base::DrawUI(Jan_Type type, int hp) const
 {
 	using namespace _CONSTANTS_SB;
 
-	int color = 0x00ff00;    //HPバーの色
-
 	//制限時間描画
 	//スコア
 	DrawFormatStringToHandle(950, 80, 0xffffff, font_score, "Score : %d", GameData::Get_Score(), 0x000000);
@@ -96,7 +115,7 @@ void Stage_Base::DrawUI(Jan_Type type, int hp) const
 }
 
 //敵の上にUI描画
-void Stage_Base::DrawUI_ON_Enemy(const EnemyBase* enemy) const
+void Stage_Base::DrawUI_ON_Enemy(const EnemyBase* enemy, const int& notDraw) const
 {
 	//情報を取得
 	Jan_Type type = enemy->GetType();
@@ -149,6 +168,16 @@ void Stage_Base::DrawUI_ON_Enemy(const EnemyBase* enemy) const
 	DrawBoxAA(draw_x, draw_y, (draw_x + 100), draw_y + 10, 0x000000, TRUE);
 	//HP
 	DrawBoxAA(draw_x, draw_y, (draw_x + enemy_hp), draw_y + 10, bar_color, TRUE);
+
+	using namespace _CONSTANTS_SB;
+
+	//名前
+	if (notDraw == 0)
+	{
+		std::string name = Enemy_Name[stage_number > 0 ? stage_number - 1 : 0];
+		int str_w = GetDrawStringWidthToHandle(name.c_str(), name.length(), name_font);
+		DrawStringToHandle((static_cast<int>(enemy->GetX()) - (str_w / 2)), static_cast<int>(enemy->GetY()) - 130, name.c_str(), 0x00ff00, name_font);
+	}
 }
 
 //床・壁の準備　　STAGE_XX_FLOOR を引数に
@@ -210,6 +239,8 @@ Jan_Result Stage_Base::Get_JankenResult(Jan_Type player, Jan_Type enemy)
 //敵とプレイヤーの当たり判定→接触じゃんけん処理    敵へのポインタ、"this" を引数に
 void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_StageNum, bool invalidate)
 {
+	stage_number = my_StageNum;
+
 	//じゃんけん開始前 
 	if (j_state == Jan_State::BEFORE)
 	{
@@ -304,7 +335,7 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 
 			case Jan_Result::WIN:     //勝ち
 
-				
+				GameData::Add_Score(500);
 
 				/*難易度が即死モードなら*/
 				if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
@@ -674,12 +705,16 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy, const Jangeki_
 					//SE
 					obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::ONEMORE);
 					//se_count++;
+					GameData::Add_PierceCount(1); //貫通回数加算
+					GameData::Add_Score(100 / 2); //スコア加算
 				}
 				else if (result == 1)   //勝ち
 				{
 					// SE
 					obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::PLAYER_WIN);
 					//se_count++;
+					GameData::Add_PierceCount(2); //貫通回数加算
+					GameData::Add_Score(100);     //スコア加算
 				}
 				else if (result == 0)   //負け
 				{
@@ -717,12 +752,16 @@ void Stage_Base::Effect_Update_HitJangeki(const EnemyBase* enemy, const Jangeki_
 							//SE
 							obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::ONEMORE);
 							//se_count++;
+							GameData::Add_PierceCount(1); //貫通回数加算
+							GameData::Add_Score(100 / 2); //スコア加算
 						}
 						else if (result == 1)   //勝ち
 						{
 							// SE
 							obj_sejan[se_count] = new Sound_Jangeki(SE_JAN::PLAYER_WIN);
 							//se_count++;
+							GameData::Add_PierceCount(2); //貫通回数加算
+							GameData::Add_Score(100);     //スコア加算
 						}
 						else if (result == 0)   //負け
 						{
@@ -806,6 +845,8 @@ bool Stage_Base::IsEnd_DeathEnemy()
 		{
 			return true;
 			delete obj_death;
+
+			GameData::Add_Score(1000);
 		}
 	}
 	return false;

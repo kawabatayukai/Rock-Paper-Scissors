@@ -116,9 +116,9 @@ void Enemy_07::Draw() const
 	LPCTSTR string_act = _CONSTANTS_07::action_str[static_cast<int>(Now_Action)];
 	LPCTSTR string_pre = _CONSTANTS_07::action_str[static_cast<int>(Pre_Action)];
 
-	DrawString(23, 580, string, 0x00ff00);
-	DrawString(23, 610, string_act, 0x00ff00);
-	DrawString(23, 640, string_pre, 0x00ff00);
+	//DrawString(23, 580, string, 0x00ff00);
+	//DrawString(23, 610, string_act, 0x00ff00);
+	//DrawString(23, 640, string_pre, 0x00ff00);
 }
 
 //Ç∂Ç·ÇÒåÇê∂ê¨ÅEçXêV

@@ -35,4 +35,5 @@ private:
 	int skipflash_count;//スキップ点滅用フレームカウンター
 
 	int image_back;     //背景
+	int story_bgm;//あらすじBGM
 };

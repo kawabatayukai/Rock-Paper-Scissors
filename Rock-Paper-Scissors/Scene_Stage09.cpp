@@ -58,7 +58,7 @@ Scene_Stage09::Scene_Stage09(const Player* player)
 	obj_floor[10] = new Floor(560, 130, 120, 20, 0xd2d2d2);
 
 	//BGMロード
-	bgm = LoadSoundMem("Sound/stage09/stage09.mp3");
+	bgm = LoadSoundMem("Sound/stage09/stage9.wav");
 }
 
 //デストラクタ
@@ -307,7 +307,7 @@ void Scene_Stage09::Update()
 		if (obj_player->Hit_Jangeki(reflection_jangeki[i]) == true)
 		{
 			
-			//ダメージを受ける（プレイヤー）
+			////ダメージを受ける（プレイヤー）
 			obj_player->ReceiveDamage(20);
 
 			//あたったじゃん撃を削除
@@ -424,6 +424,7 @@ void Scene_Stage09::AfterJanken_WIN()
 		}
 	}
 	obj_player->SetX(100);
+	obj_player->SetY(700);
 	obj_enemy->SetX(1110);
 	obj_enemy->frameDown();
 	obj_enemy->Tflg();
@@ -442,6 +443,7 @@ void Scene_Stage09::AfterJanken_LOSE()
 	}
 	
 	obj_player->SetX(100);
+	obj_player->SetY(700);
 	obj_enemy->SetX(1110);
 	obj_enemy->frameUP();
 	obj_enemy->Spflg = true;

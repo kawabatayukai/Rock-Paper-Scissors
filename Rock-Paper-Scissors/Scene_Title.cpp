@@ -12,6 +12,8 @@
 #include"Scene_Story.h"
 #include "Scene_Title_GameLevel.h"
 #include"Scene_Ranking_GameLevel.h"
+#include"SortSaveTime.h"
+
 
 int TitleScene::font_title;   //フォントハンドル
 
@@ -26,15 +28,18 @@ TitleScene::TitleScene()
 
 	//データの初期化
 	GameData::Init_Data();
+	//難易度
+	GameData::Set_DIFFICULTY(GAME_DIFFICULTY::NORMAL);
 
 	//BGMロード
-	bgm = LoadSoundMem("Sound/TitleBGM.mp3");
+	bgm = LoadSoundMem("Sound/Title/titlebgm.wav");
 }
 
 //デストラクタ
 TitleScene::~TitleScene()
 {
 	StopSoundMem(bgm);
+	
 }
 
 //更新

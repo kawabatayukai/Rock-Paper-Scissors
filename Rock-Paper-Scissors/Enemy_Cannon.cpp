@@ -6,7 +6,7 @@
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_Cannon::Enemy_Cannon(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 {
-	speed =7.0f;
+	speed =2.0f;
 	dir = 1;
 	hp = 100;
 
@@ -94,6 +94,6 @@ void Enemy_Cannon::Update_Jangeki()
 
 
 		//生成
-		if (frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x+GetRand(30), player_y + GetRand(30));
+		if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x+GetRand(30), player_y + GetRand(30));
 	}
 }

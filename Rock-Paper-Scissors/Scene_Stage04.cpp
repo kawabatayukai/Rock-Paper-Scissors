@@ -310,14 +310,18 @@ AbstractScene* Scene_Stage04::ChangeScene()
 	//敵のHPが0以下
 	if (IsEnd_DeathEnemy() == true)
 	{
+		//特殊行動時SE停止
+		SoundSystem::StopSE(SE::ENEMY_SPECIAL);
 
 		//ゲームクリアシーンへ切り替え
-		return dynamic_cast<AbstractScene*> (new GameClearScene(5));
+		return dynamic_cast<AbstractScene*> (new GameClearScene(9));
 	}
 
 	//プレイヤーのHPが0以下
 	if (obj_player->IsDeathPlayer() == true)
 	{
+		//特殊行動時SE停止
+		SoundSystem::StopSE(SE::ENEMY_SPECIAL);
 
 		//ゲームオーバーシーンへ切り替え
 		return dynamic_cast<AbstractScene*> (new GameOverScene(4));

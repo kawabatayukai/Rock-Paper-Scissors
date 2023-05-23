@@ -15,6 +15,7 @@ public:
 
 	AbstractScene* ChangeScene() override; //ƒV[ƒ“‚Ì•ÏX
 private:      //‰æ‘œ‚È‚Ç
-	int image_back;        //”wŒi
+	int image_back[2];        //”wŒi
 	int again;
+	int gameover_se;
 };

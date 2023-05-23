@@ -5,6 +5,7 @@
 
 unsigned int GameData::g_score;     //スコア
 unsigned int GameData::max_score;   //スコア
+int GameData::pierced_count;        //貫通回数
 
 int GameData::total_time;        //総合時間
 
@@ -40,6 +41,19 @@ unsigned int GameData::Get_MaxScore()
 	return max_score;
 }
 
+//貫通回数加算 デフォルト:2
+void GameData::Add_PierceCount(const int& add)
+{
+	if (add == 0)     pierced_count = 0;    //引数が0の時は初期化する
+	else if (add > 0) pierced_count += add;
+	else return;
+}
+
+//貫通回数取得
+int GameData::Get_PierceCount()
+{
+	return pierced_count;
+}
 
 //制限時間を設定（各ステージの制限時間）
 void GameData::Set_TimeLimit(const int time_limit)

@@ -17,6 +17,7 @@ public:
 
 	void MAX();
 
+	void Change_JanType();
 private:
 	/********************   ƒWƒƒƒ“ƒvŠÖŒW   ********************/
 

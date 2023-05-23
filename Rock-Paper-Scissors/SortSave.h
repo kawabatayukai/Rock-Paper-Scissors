@@ -1,7 +1,8 @@
 #pragma once
 #include <stdio.h>
 
-#define RANKING_DATA 10
+#define RANKING_DATA_COLUMN 10
+#define RANKING_DATA_ROW 5
 
 /*ランキングデータ（構造体*/
 struct RankingData {
@@ -22,7 +23,7 @@ class SortSave
 {
 private:
 	FILE* fp;
-	RankingData g_Ranking[RANKING_DATA];  // ランキングデータ変数宣言
+	RankingData g_Ranking[RANKING_DATA_COLUMN];  // ランキングデータ変数宣言
 
 public:
 
@@ -38,11 +39,16 @@ public:
 	/*ランキングデータ（構造体*/
 	RankingData getRankingData(int i);
 
+	/*名前*/
 	void setName(int i, char name[11]);
 
+	/*スコア*/
 	void setScore(int i, int score);
 
+	/*時間：分*/
 	void setTimerMin(int i, int time);
+
+	/*時間：秒*/
 	void setTimerSec(int i, int time);
 
 };

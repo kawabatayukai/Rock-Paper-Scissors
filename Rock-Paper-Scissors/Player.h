@@ -18,7 +18,7 @@ class Player : public CharaBase
 {
 public:
 	//コンストラクタ
-	Player(float x, float y);
+	Player(float x, float y, int isHelp = 0);
 
 	~Player();                       //デストラクタ
 
@@ -125,7 +125,7 @@ private:
 	int image_set_GPT;
 	int hpImage;
 
-	int Prev_recoveryScore;   //前回回復した時のスコア
+	
 	PLAYER_STATE player_state;
 
 	//向き（左右のみ）
@@ -148,4 +148,5 @@ private:
 	Sound_Player** obj_pse;
 
 	static int name_font; //名前・フォント
+	int isHelp;           //ヘルプ画面
 };

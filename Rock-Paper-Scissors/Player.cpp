@@ -17,9 +17,9 @@
 int Player::name_font = 0; //ñºëOÅEÉtÉHÉìÉg
 
 //ÉRÉìÉXÉgÉâÉNÉ^Å@Å@Å@Å@Å@Å@Å@Å@Å@Å@Å@Å@Å@  ÇòÅ@ÇôÅ@ïùÅ@Å@Å@çÇÇ≥
-Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //äÓíÍÉNÉâÉXÇÃÉRÉìÉXÉgÉâÉNÉ^ÇåƒÇ‘
-, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0), player_state(PLAYER_STATE::ALIVE), playerCount2(0), Prev_recoveryScore(0)
-, obj_effect(nullptr), obj_effectchange(nullptr)
+Player::Player(float x, float y, int isHelp) : CharaBase(x, y, 57.0f, 100.0f)  //äÓíÍÉNÉâÉXÇÃÉRÉìÉXÉgÉâÉNÉ^ÇåƒÇ‘
+, player_Image(0), playerGetMove(0), playerCount(0), playerChange_Image(0), pCount(0), player_state(PLAYER_STATE::ALIVE), playerCount2(0)
+, obj_effect(nullptr), obj_effectchange(nullptr), isHelp(isHelp)
 {
 	speed = 7.0f;
 	hp = 100;
@@ -30,48 +30,48 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //äÓíÍÉNÉâÉXÇ
 	//âÊëúì«Ç›çûÇ›
 	
 	//äÁ
-	head_Image[0] = LoadGraph("images/ÉèÉìÉpÉìÉ}Éìñ⁄Ç»ÇµâE.png");
-	head_Image[1] = LoadGraph("images/ÉèÉìÉpÉìÉ}Éìñ⁄Ç»Çµç∂.png");
-	head_Image[2] = LoadGraph("images/ÉèÉìÉpÉìÉ}Éìñ⁄Ç»ÇµâEé„.png");
-	head_Image[3] = LoadGraph("images/ÉèÉìÉpÉìÉ}Éìñ⁄Ç»Çµç∂é„.png");
+	head_Image[0] = LoadGraph("images/Player/ÉèÉìÉpÉìÉ}Éìñ⁄Ç»ÇµâE.png");
+	head_Image[1] = LoadGraph("images/Player/ÉèÉìÉpÉìÉ}Éìñ⁄Ç»Çµç∂.png");
+	head_Image[2] = LoadGraph("images/Player/ÉèÉìÉpÉìÉ}Éìñ⁄Ç»ÇµâEé„.png");
+	head_Image[3] = LoadGraph("images/Player/ÉèÉìÉpÉìÉ}Éìñ⁄Ç»Çµç∂é„.png");
 
 	//ñ⁄
-	eye_ImageR[0] = LoadGraph("images/ÉèÉìÉpÉìÉ}Éìñ⁄ÇÃÇ›âE.png");
-	eye_ImageL[0] = LoadGraph("images/ÉèÉìÉpÉìÉ}Éìñ⁄ÇÃÇ›ç∂.png");
-	eye_ImageR[1] = LoadGraph("images/ÉèÉìÉpÉìÉ}Éìñ⁄Ç¬ÇﬁÇµâE.png");
-	eye_ImageL[1] = LoadGraph("images/ÉèÉìÉpÉìÉ}Éìñ⁄Ç¬ÇﬁÇµç∂png");
+	eye_ImageR[0] = LoadGraph("images/Player/ÉèÉìÉpÉìÉ}Éìñ⁄ÇÃÇ›âE.png");
+	eye_ImageL[0] = LoadGraph("images/Player/ÉèÉìÉpÉìÉ}Éìñ⁄ÇÃÇ›ç∂.png");
+	eye_ImageR[1] = LoadGraph("images/Player/ÉèÉìÉpÉìÉ}Éìñ⁄Ç¬ÇﬁÇµâE.png");
+	eye_ImageL[1] = LoadGraph("images/Player/ÉèÉìÉpÉìÉ}Éìñ⁄Ç¬ÇﬁÇµç∂png");
 
 	//ëÃ
-	LoadDivGraph("images/ÉèÉìÉpÉìÉ}ÉìâÊëúäÁñ≥ÇµÉOÅ[.png", 10, 5, 2, 100, 100, image[0]);
-	LoadDivGraph("images/ÉèÉìÉpÉìÉ}ÉìâÊëúäÁñ≥ÇµÉ`ÉáÉL.png", 10, 5, 2, 100, 100, image[1]);
-	LoadDivGraph("images/ÉèÉìÉpÉìÉ}ÉìâÊëúäÁñ≥ÇµÉpÅ[.png", 10, 5, 2, 100, 100, image[2]);
+	LoadDivGraph("images/Player/ÉèÉìÉpÉìÉ}ÉìâÊëúäÁñ≥ÇµÉOÅ[.png", 10, 5, 2, 100, 100, image[0]);
+	LoadDivGraph("images/Player/ÉèÉìÉpÉìÉ}ÉìâÊëúäÁñ≥ÇµÉ`ÉáÉL.png", 10, 5, 2, 100, 100, image[1]);
+	LoadDivGraph("images/Player/ÉèÉìÉpÉìÉ}ÉìâÊëúäÁñ≥ÇµÉpÅ[.png", 10, 5, 2, 100, 100, image[2]);
 
 	//ÉOÅ[ÇÃéûÇÃÉWÉÉÉìÉv
-	image[0][4] = LoadGraph("images/ÉèÉìÉpÉìÉ}ÉìÉWÉÉÉìÉvâÊëúòrñ≥ÇµâEÉOÅ[.png");
-	image[0][9] = LoadGraph("images/ÉèÉìÉpÉìÉ}ÉìÉWÉÉÉìÉvâÊëúòrñ≥Çµç∂ÉOÅ[.png");
+	image[0][4] = LoadGraph("images/Player/ÉèÉìÉpÉìÉ}ÉìÉWÉÉÉìÉvâÊëúòrñ≥ÇµâEÉOÅ[.png");
+	image[0][9] = LoadGraph("images/Player/ÉèÉìÉpÉìÉ}ÉìÉWÉÉÉìÉvâÊëúòrñ≥Çµç∂ÉOÅ[.png");
 
 	//É`ÉáÉLÇÃéûÇÃÉWÉÉÉìÉv
-	image[1][4] = LoadGraph("images/ÉèÉìÉpÉìÉ}ÉìÉWÉÉÉìÉvâÊëúòrñ≥ÇµâEÉ`ÉáÉL.png");
-	image[1][9] = LoadGraph("images/ÉèÉìÉpÉìÉ}ÉìÉWÉÉÉìÉvâÊëúòrñ≥Çµç∂É`ÉáÉL.png");
+	image[1][4] = LoadGraph("images/Player/ÉèÉìÉpÉìÉ}ÉìÉWÉÉÉìÉvâÊëúòrñ≥ÇµâEÉ`ÉáÉL.png");
+	image[1][9] = LoadGraph("images/Player/ÉèÉìÉpÉìÉ}ÉìÉWÉÉÉìÉvâÊëúòrñ≥Çµç∂É`ÉáÉL.png");
 
 	//ÉpÅ[ÇÃéûÇÃÉWÉÉÉìÉv
-	image[2][4] = LoadGraph("images/ÉèÉìÉpÉìÉ}ÉìÉWÉÉÉìÉvâÊëúòrñ≥ÇµâEÉpÅ[.png");
-	image[2][9] = LoadGraph("images/ÉèÉìÉpÉìÉ}ÉìÉWÉÉÉìÉvâÊëúòrñ≥Çµç∂ÉpÅ[.png");
+	image[2][4] = LoadGraph("images/Player/ÉèÉìÉpÉìÉ}ÉìÉWÉÉÉìÉvâÊëúòrñ≥ÇµâEÉpÅ[.png");
+	image[2][9] = LoadGraph("images/Player/ÉèÉìÉpÉìÉ}ÉìÉWÉÉÉìÉvâÊëúòrñ≥Çµç∂ÉpÅ[.png");
 
 	//ÉOÅ[ÇÃòr
-	armL_Image[0] = LoadGraph("images/òrÇÃÇ›ÇÆÅ[hç∂.png");
-	armR_Image[0] = LoadGraph("images/òrÇÃÇ›ÇÆÅ[hâE.png");
+	armL_Image[0] = LoadGraph("images/Player/òrÇÃÇ›ÇÆÅ[hç∂.png");
+	armR_Image[0] = LoadGraph("images/Player/òrÇÃÇ›ÇÆÅ[hâE.png");
 
 	//É`ÉáÉLÇÃòr
-	armL_Image[1] = LoadGraph("images/òrÇÃÇ›ÇøÇÂÇ´ç∂.png");
-	armR_Image[1] = LoadGraph("images/òrÇÃÇ›ÇøÇÂÇ´âE.png");
+	armL_Image[1] = LoadGraph("images/Player/òrÇÃÇ›ÇøÇÂÇ´ç∂.png");
+	armR_Image[1] = LoadGraph("images/Player/òrÇÃÇ›ÇøÇÂÇ´âE.png");
 
 	//ÉpÅ[ÇÃòr
-	armL_Image[2] = LoadGraph("images/òrÇÃÇ›ÇœÅ[ç∂.png");
-	armR_Image[2] = LoadGraph("images/òrÇÃÇ›ÇœÅ[âE.png");
+	armL_Image[2] = LoadGraph("images/Player/òrÇÃÇ›ÇœÅ[ç∂.png");
+	armR_Image[2] = LoadGraph("images/Player/òrÇÃÇ›ÇœÅ[âE.png");
 
 	//éÄñSéû
-	image_death = LoadGraph("images/ÉèÉìÉpÉìÉ}ÉìäÁÇÃÇ›ç∂é„.png");
+	image_death = LoadGraph("images/Player/ÉèÉìÉpÉìÉ}ÉìäÁÇÃÇ›ç∂é„.png");
 
 	image_setsumei = LoadGraph("images/Setumei.png");
 	LoadDivGraph("images/Jangeki_Test2.png", 3, 3, 1, 100, 100, image_JanType);  //Ç∂Ç·ÇÒåÇâÊëú
@@ -102,6 +102,7 @@ Player::Player(float x, float y) : CharaBase(x, y, 57.0f, 100.0f)  //äÓíÍÉNÉâÉXÇ
 //ÉfÉXÉgÉâÉNÉ^
 Player::~Player()
 {
+
 }
 
 //çXêV
@@ -113,13 +114,13 @@ void Player::Update()
 	//ëOâÒÇÃç¿ïWÇòÇï€ë∂
 	old_x = x;
 
-	//ÉXÉRÉA1000ñàÇ…HPâÒïú
-	int _score = GameData::Get_MaxScore();
-	if (_score % 300 == 0 && _score != Prev_recoveryScore)
+	//ä—í âÒêî6(3)âÒÇ≈âÒïú  1ä—í Ç…Ç¬Ç´2,1Ç†Ç¢Ç±Ç…Ç¬Ç´1â¡éZ
+	if (GameData::Get_PierceCount() >= 6)
 	{
-		Prev_recoveryScore = _score;
-		Recover_HP(20);
+		//ä—í âÒêîÉäÉZÉbÉg
+		GameData::Add_PierceCount(0);
 
+		Recover_HP(20);
 		if (obj_effect == nullptr) obj_effect = new Effect_Player(x, y);
 		Create_SEPlayer(SE_PLAYER::RECOVERY);  //se
 	}
@@ -137,6 +138,7 @@ void Player::Update()
 			obj_effect = nullptr;
 		}
 	}
+
 	//ÉGÉtÉFÉNÉg
 	if (obj_effectchange != nullptr)
 	{
@@ -234,7 +236,6 @@ void Player::Update()
 		if (y_add > static_cast<float>(MAX_LENGTH)) y_add = static_cast<float>(MAX_LENGTH);
 	}
 
-
 	old_y = y;                    //1ÉtÉåÅ[ÉÄëOÇÃÇôç¿ïW
 	y += y_add;                   //óéâ∫ãóó£ÇÇôç¿ïWÇ…â¡éZÇ∑ÇÈ
 	g_add = _GRAVITY;              //èdóÕâ¡ë¨ìxÇèâä˙âªÇ∑ÇÈ
@@ -242,8 +243,6 @@ void Player::Update()
 	if (y > old_y) land_flg = false;
 
 	/**********************************************************/
-
-
 
 //Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å@è∆èÄÅ@Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`Å`
 	//âEÉXÉeÉBÉbÉNÇÃÉAÉiÉçÉOì¸óÕÇéÊìæ
@@ -1238,6 +1237,71 @@ void Player::PlayerDrawUI(int hp) const
 		//HP
 		DrawBoxAA(draw_x, draw_y, (draw_x + hp), draw_y + 10, bar_color, TRUE);
 	}
+
+	//ñºëOï\é¶
+	const char* name = sortSave.getRankingData(9).name;
+	int str_w = GetDrawStringWidthToHandle(name, static_cast<int>(strlen(name)), name_font);
+	DrawStringToHandle((static_cast<int>(x) - (str_w / 2)), static_cast<int>(y) - 80, name, 0x00ff00, name_font);
+
+	//ÉeÉXÉg 110
+	int circle_x = 0;
+	switch (select_JanType)
+	{
+	case Jan_Type::ROCK:
+		circle_x = 2;
+		break;
+	case Jan_Type::SCISSORS:
+		circle_x = 1;
+		break;
+	case Jan_Type::PAPER:
+		circle_x = 0;
+		break;
+	default:
+		circle_x = 0;
+		break;
+	}
+
+	DrawGraph(40, 40, image_setsumei, TRUE);
+	DrawGraph(50 + (circle_x * 60), 50, image_set_circle, TRUE);
+	DrawGraph(13, 10, image_set_LTRT, TRUE);
+	DrawGraph(55, 100, image_set_GPT, TRUE);
+
+	//ëIëÇÃââèo XYB
+	if (KeyManager::OnPadPressed(PAD_INPUT_3))      //X
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ADD, 100);
+		DrawCircle(75, 120, 15, 0xffffff, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+	else if (KeyManager::OnPadPressed(PAD_INPUT_4))  //Y
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ADD, 120);
+		DrawCircle(135, 120, 15, 0xffffff, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+	else if (KeyManager::OnPadPressed(PAD_INPUT_B))  //B
+	{
+		SetDrawBlendMode(DX_BLENDMODE_ADD, 120);
+		DrawCircle(195, 120, 15, 0xffffff, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+	else {}
+
+	// LT RT
+	if (KeyManager::GetValue_LT() > 30)
+	{
+		//SetDrawBlendMode(DX_BLENDMODE_ADD, 30);
+		DrawTriangleAA(33.f, 17.f, 33.f, 39.f, 23.f, 28.f, 0xffa500, TRUE);
+		DrawBoxAA(33.f, 24.f, 60.f, 32.f, 0xffa500, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
+	else if (KeyManager::GetValue_RT() > 30)
+	{
+		//SetDrawBlendMode(DX_BLENDMODE_ADD, 30);
+		DrawTriangleAA(234.f, 17.f, 234.f, 39.f, 244.f, 28.f, 0xffa500, TRUE);
+		DrawBoxAA(207.f, 24.f, 234.f, 32.f, 0xffa500, TRUE);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+	}
 }
 
 //ï`âÊ
@@ -1307,72 +1371,7 @@ void Player::Draw() const
 		DrawRotaGraphF(x, y, 1, 0, image_death, TRUE);
 	}
 
-	PlayerDrawUI(GetHP());
-
-	//ñºëOï\é¶
-	const char* name = sortSave.getRankingData(9).name;
-	int str_w = GetDrawStringWidthToHandle(name, static_cast<int>(sizeof(name)), name_font);
-	DrawStringToHandle((static_cast<int>(x) - (str_w / 2)), static_cast<int>(y) - 80, name, 0x00ff00, name_font);
-
-	//ÉeÉXÉg 110
-	int circle_x = 0;
-	switch (select_JanType)
-	{
-	case Jan_Type::ROCK:
-		circle_x = 2;
-		break;
-	case Jan_Type::SCISSORS:
-		circle_x = 1;
-		break;
-	case Jan_Type::PAPER:
-		circle_x = 0;
-		break;
-	default:
-		circle_x = 0;
-		break;
-	}
-
-	DrawGraph(40, 40,  image_setsumei, TRUE);
-	DrawGraph(50 + (circle_x * 60), 50, image_set_circle, TRUE);
-	DrawGraph(13, 10, image_set_LTRT, TRUE);
-	DrawGraph(55, 100, image_set_GPT, TRUE);
-
-	//ëIëÇÃââèo XYB
-	if (KeyManager::OnPadPressed(PAD_INPUT_3))      //X
-	{
-		SetDrawBlendMode(DX_BLENDMODE_ADD, 100);
-		DrawCircle(75, 120, 15, 0xffffff, TRUE);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	}
-	else if (KeyManager::OnPadPressed(PAD_INPUT_4))  //Y
-	{
-		SetDrawBlendMode(DX_BLENDMODE_ADD, 120);
-		DrawCircle(135, 120, 15, 0xffffff, TRUE);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	}
-	else if (KeyManager::OnPadPressed(PAD_INPUT_B))  //B
-	{
-		SetDrawBlendMode(DX_BLENDMODE_ADD, 120);
-		DrawCircle(195, 120, 15, 0xffffff, TRUE);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	}
-	else {}
-
-	// LT RT
-	if (KeyManager::GetValue_LT() > 30)
-	{
-		//SetDrawBlendMode(DX_BLENDMODE_ADD, 30);
-		DrawTriangleAA(33.f, 17.f, 33.f, 39.f, 23.f, 28.f, 0xffa500, TRUE);
-		DrawBoxAA(33.f, 24.f, 60.f, 32.f, 0xffa500, TRUE);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	}
-	else if (KeyManager::GetValue_RT() > 30)
-	{
-		//SetDrawBlendMode(DX_BLENDMODE_ADD, 30);
-		DrawTriangleAA(234.f, 17.f, 234.f, 39.f, 244.f, 28.f, 0xffa500, TRUE);
-		DrawBoxAA(207.f, 24.f, 234.f, 32.f, 0xffa500, TRUE);
-		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-	}
+	if (isHelp == 0)PlayerDrawUI(GetHP());
 }
 
 /*âÊëúÇÃïœçXéÊìæ*/

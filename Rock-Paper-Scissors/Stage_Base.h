@@ -24,7 +24,7 @@ public:
 	void DrawUI(Jan_Type type, int hp) const;
 
 	//敵の上にUI描画
-	void DrawUI_ON_Enemy(const EnemyBase* enemy) const;
+	void DrawUI_ON_Enemy(const EnemyBase* enemy,const int& notDraw = 0) const;
 
 	//床・壁の準備　　STAGE_XX_FLOOR を引数に
 	void Init_Floor(const int floor_MAX);
@@ -75,7 +75,11 @@ protected:
 private:
 	short nhit_time = 0;                      //衝突判定なし時間
 
-	static int font;         //結果(WIN or LOSE or ONEMORE) 用フォント 
+	static int font;                          //結果(WIN or LOSE or ONEMORE) 用フォント 
+	static int font_score;                    //Score描画用フォント
+	static int name_font;                     //名前描画用フォント
+
+	int stage_number;                         //ステージ（派生クラス）識別番号
 
 	Jan_State j_state = Jan_State::BEFORE;    //じゃんけんの状態
 	Jan_Result bf_result;                     //あいこの時
@@ -91,7 +95,6 @@ private:
 	int image_clock;                          //時計
 	int image_clockhand;                      //時計の針
 	int image_clockchar;                      //時計の文字盤
-	static int font_score;                    //Score描画用フォント
 
 	Sound_Jangeki** obj_sejan;                //SE
 	Sound_Janken* se_Janken;                  //SEじゃんけん

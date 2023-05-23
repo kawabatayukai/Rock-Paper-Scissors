@@ -101,12 +101,10 @@ void Enemy_09::Update_Jangeki()
 		//配列の jan_count 番目がnullptr（空要素）ならそれ以上処理しない
 		if (obj_jangeki[jan_count] == nullptr) break;
 
-		obj_jangeki[jan_count]->Update();
-
 		//ホーミングじゃん撃であればプレイヤーの座標をセットする
 		obj_jangeki[jan_count]->SetTargetLocation(player_x, player_y);
 		reflection->SetTargetLocation(player_x, player_y);
-
+		obj_jangeki[jan_count]->Update();
 		if (obj_jangeki[jan_count]->CheckScreenOut() == true)
 		{
 			DeleteJangeki(jan_count);
@@ -122,7 +120,7 @@ void Enemy_09::Update_Jangeki()
 
 	{
 		float radius = 35.5f;   //半径
-		float speed = 4.5f;     //スピード
+		float speed = 5.5f;     //スピード
 
 		//if (GetHP() <= 51)speed=4.5f;
 
@@ -398,7 +396,7 @@ void Enemy_09::SpecialMoveEnmey()
 
 void Enemy_09::frameUP()
 {
-	if (janFrame >= 25)
+	if (janFrame > 25)
 	{
 		janFrame = janFrame - 10;
 	}

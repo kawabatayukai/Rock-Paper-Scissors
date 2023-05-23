@@ -6,6 +6,7 @@
 #include<sstream>
 #include"KeyManager.h"
 #include "SortSave.h"
+#include"Scene_NextStage.h"
 
 int Scene_Story::font_text = 0;      //テキスト用フォント
 int Scene_Story::font_skip = 0;      //"skip"用フォント
@@ -25,6 +26,9 @@ Scene_Story::Scene_Story() :
 	isLoadFailed(false), str_end(false)
 	, scroll_y(0), scroll_speed(_C_STORY::MIN_SPEED), skipflash_count(0)
 {
+
+	story_bgm = LoadSoundMem("Sound/Story.wav");
+
 	//ファイルストリーム
 	std::ifstream read_file;
 
@@ -56,18 +60,27 @@ Scene_Story::Scene_Story() :
 	if (font_skip == 0)
 		font_skip = CreateFontToHandle("メイリオ", 20, 10, DX_FONTTYPE_ANTIALIASING);
 
-	image_back = LoadGraph("images/Story/Story_Back.png");
+	image_back = LoadGraph("images/Story/Story_Back2.png");
+	
+
 }
 
 //デストラクタ
 Scene_Story::~Scene_Story()
 {
+
+	StopSoundMem(story_bgm);
+
 	//テキストを削除
 	delete text;
 }
 
 void Scene_Story::Update()
 {
+
+	//StoryBGM
+	if (CheckSoundMem(story_bgm) == 0) PlaySoundMem(story_bgm, DX_PLAYTYPE_LOOP);
+
 	using namespace _C_STORY;
 
 	DrawGraph(0, 0, image_back, TRUE);
@@ -144,7 +157,8 @@ void Scene_Story::Draw() const
 AbstractScene* Scene_Story::ChangeScene()
 {
 	if(str_end == true && KeyManager::OnPadClicked(PAD_INPUT_A))
-		return dynamic_cast<AbstractScene*> (new Scene_Stage01());
+		//return dynamic_cast<AbstractScene*> (new Scene_Stage01());
+		return dynamic_cast<AbstractScene*> (new Scene_NextStage(1));
 
 	//テキストファイル読み込み失敗でステージ1へ
 	if (isLoadFailed == true)  
