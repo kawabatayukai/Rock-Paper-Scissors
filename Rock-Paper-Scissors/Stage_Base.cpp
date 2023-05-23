@@ -176,7 +176,7 @@ void Stage_Base::DrawUI_ON_Enemy(const EnemyBase* enemy, const int& notDraw) con
 	{
 		std::string name = Enemy_Name[stage_number > 0 ? stage_number - 1 : 0];
 		int str_w = GetDrawStringWidthToHandle(name.c_str(), name.length(), name_font);
-		DrawStringToHandle((static_cast<int>(enemy->GetX()) - (str_w / 2)), static_cast<int>(enemy->GetY()) - 80, name.c_str(), 0x00ff00, name_font);
+		DrawStringToHandle((static_cast<int>(enemy->GetX()) - (str_w / 2)), static_cast<int>(enemy->GetY()) - 130, name.c_str(), 0x00ff00, name_font);
 	}
 }
 

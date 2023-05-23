@@ -28,7 +28,7 @@ Scene_Stage08::Scene_Stage08(const Player* player) : damage(5)
 	}
 
 	//敵を生成
-	obj_enemy = new Enemy_08(1200, 360, Jan_Type::SCISSORS);
+	obj_enemy = new Enemy_08(1170, 360, Jan_Type::SCISSORS);
 	obj_cannon = new Enemy_Cannon(120, 360, Jan_Type::SCISSORS);
 	cannon = new Enemy_Cannon * [2];
 	
@@ -371,7 +371,7 @@ void Scene_Stage08::Update()
 			if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 			{
 				//ダメージを受ける（プレイヤー）
-				obj_player->ReceiveDamage(5);
+				obj_player->ReceiveDamage(4);
 
 				//あたったじゃん撃を削除
 				cannon[a]->DeleteJangeki(i);
