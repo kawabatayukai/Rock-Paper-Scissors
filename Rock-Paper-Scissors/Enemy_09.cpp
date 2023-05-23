@@ -5,6 +5,7 @@
 #include"Scene_Stage09.h"
 #include"Jangeki_Homing.h"
 #include"Jangeki_whole.h"
+#include"Jangeki_Bounds.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include "SoundSystem.h"
@@ -234,10 +235,18 @@ void Enemy_09::Jan_40degrees()
 		for (int i = jan_count; i < (jan_count + 8); i++)
 		{
 
-			if (GetHP() <= 51)type = static_cast<Jan_Type>(GetRand(2));
 			double angle = static_cast<double>((270.0 * i) * (M_PI / 120));
 
-			obj_jangeki[i] = new Jangeki_Base(x, y, radius, speed, angle, type);
+			
+			if (GetHP() <= 51)
+			{
+				type = static_cast<Jan_Type>(GetRand(2));
+				obj_jangeki[i] = new Jangeki_Bounds(x, y, radius, speed, angle, type);
+			}
+			else
+			{
+				obj_jangeki[i] = new Jangeki_Base(x, y, radius, speed, angle, type);
+			}
 
 		}
 	}
