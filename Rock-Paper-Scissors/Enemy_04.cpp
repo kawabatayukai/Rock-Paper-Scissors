@@ -177,10 +177,7 @@ void Enemy_04::Draw() const
 	Draw_Jangeki();
 
 	//残りHP50以下の時に表示
-	if (hp <= 50) DrawFormatString((int)(x - 60), (int)(y - 130), GetColor(30, 30, 255), "スピードUP↑", hp);
-
-	//特殊効果時に表示
-	if (specialFlg == true) DrawFormatString((int)(x - 50), (int)(y - 160), GetColor(255, 30, 30), "特殊効果", hp);
+	if (hp <= 50) DrawFormatString((int)(x - 60), (int)(y - 155), GetColor(30, 30, 255), "スピードUP↑", hp);
 }
 
 //じゃん撃生成・更新
@@ -231,12 +228,13 @@ void Enemy_04::Update_Jangeki()
 			if (frame_count % 60 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 
 			//if (frame_count % 89 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius * 0.7, speed * 0, type, player_x, player_y);
+
 		}
 		else if (specialFlg == true)
 		{
 			if (frame_count % 60 == 0)
 			{
-				Jan_360degrees(jan_count, radius * 0.8, speed * 0.7, type);
+				Jan_360degrees(jan_count, radius * 0.8, speed * 0.8, type);
 				SoundSystem::PlaySE(SE::ENEMY_SPECIAL_ATTACK);
 			}
 		}
