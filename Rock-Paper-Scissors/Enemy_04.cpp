@@ -177,10 +177,7 @@ void Enemy_04::Draw() const
 	Draw_Jangeki();
 
 	//残りHP50以下の時に表示
-	if (hp <= 50) DrawFormatString((int)(x - 60), (int)(y - 130), GetColor(30, 30, 255), "スピードUP↑", hp);
-
-	//特殊効果時に表示
-	if (specialFlg == true) DrawFormatString((int)(x - 50), (int)(y - 160), GetColor(255, 30, 30), "特殊効果", hp);
+	if (hp <= 50) DrawFormatString((int)(x - 60), (int)(y - 155), GetColor(30, 30, 255), "スピードUP↑", hp);
 }
 
 //じゃん撃生成・更新
