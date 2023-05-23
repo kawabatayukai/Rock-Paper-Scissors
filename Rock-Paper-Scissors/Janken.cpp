@@ -22,7 +22,7 @@ Janken::Janken(Jan_Type enemy_jan, const int stage_num)
 
 	image_hand = LoadGraph("images/Janken_Hand2.png");
 
-	LoadDivGraph("images/ワンパンマンALL画像.png", 1, 1, 1, 100, 100, &image_player);
+	LoadDivGraph("images/Player/ワンパンマンALL画像.png", 1, 1, 1, 100, 100, &image_player);
 
 	switch (stage_num)
 	{

@@ -49,8 +49,8 @@ Scene_Stage10::Scene_Stage10(const Player* player)
 	reflection = new Jangeki_Reflection(0, 0, 0, 0, Jan_Type::ROCK);
 
 	//BGMロード
-	bgm[0] = LoadSoundMem("Sound/音源データ2.mp3");
-	bgm[1] = LoadSoundMem("Sound/sento.mp3");
+	bgm[0] = LoadSoundMem("Sound/stage10/stage10.wav");
+	bgm[1] = LoadSoundMem("Sound/stage10/stage10_2.wav");
 }
 
 //デストラクタ

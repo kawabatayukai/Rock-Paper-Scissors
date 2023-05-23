@@ -27,9 +27,9 @@ Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	images[7]  = LoadGraph("images/stage06/黄NINJA_跳3.png");    //チョキ属性
 	images[8]  = LoadGraph("images/stage06/青NINJA_跳3.png");      //パー属性
 
-	images[9]  = LoadGraph("images/stage06/赤頭.png");             //グー属性
-	images[10] = LoadGraph("images/stage06/黄頭.png");           //チョキ属性
-	images[11] = LoadGraph("images/stage06/青頭.png");             //パー属性
+	images[9]  = LoadGraph("images/stage06/赤NINJA.png");             //グー属性
+	images[10] = LoadGraph("images/stage06/黄NINJA.png");           //チョキ属性
+	images[11] = LoadGraph("images/stage06/青NINJA.png");             //パー属性
 
 	//煙エフェクト読み込み
 	LoadDivGraph("images/stage06/pipo-btleffect059.png", 10, 10, 1, 120, 120, smokeImage);
@@ -159,6 +159,11 @@ void Enemy_06::Draw() const
 				//中心から描画
 				DrawRotaGraphF(x, y, 4.2, 0, images[3], TRUE, dir == -1 ? 0 : 1);
 			}
+			else if (speed == 8.0f)
+			{
+				//中心から描画
+				DrawRotaGraphF(x, y, 4.2, 0, images[9], TRUE, dir == -1 ? 0 : 1);
+			}
 			else
 			{
 				//中心から描画
@@ -178,6 +183,11 @@ void Enemy_06::Draw() const
 			{
 				//中心から描画
 				DrawRotaGraphF(x, y, 4.2, 0, images[4], TRUE, dir == -1 ? 0 : 1);
+			}
+			else if (speed == 8.0f)
+			{
+				//中心から描画
+				DrawRotaGraphF(x, y, 4.2, 0, images[10], TRUE, dir == -1 ? 0 : 1);
 			}
 			else
 			{
@@ -199,6 +209,11 @@ void Enemy_06::Draw() const
 				//中心から描画
 				DrawRotaGraphF(x, y, 4.2, 0, images[5], TRUE, dir == -1 ? 0 : 1);
 			}
+			else if (speed == 8.0f)
+			{
+				//中心から描画
+				DrawRotaGraphF(x, y, 4.2, 0, images[11], TRUE, dir == -1 ? 0 : 1);
+			}
 			else
 			{
 				//中心から描画
@@ -208,12 +223,15 @@ void Enemy_06::Draw() const
 
 		if (speed == 8.0f)
 		{
-			DrawString((int)(x - 80), (int)(y - 75), "スピードアップ", GetColor(255, 0, 0));
+			DrawString((int)(x - 80), (int)(y - 125), "スピードアップ", GetColor(255, 0, 0));
 		}
 	}
 
 	//じゃん撃描画
 	Draw_Jangeki();
+
+	////テスト
+	//DrawFormatString(600, 600, 0xffffff, "%f", player_y);
 }
 
 //じゃん撃生成・更新
@@ -279,6 +297,14 @@ void Enemy_06::Update_Jangeki()
 				if (frame_count % 65 == 0) obj_jangeki[jan_count] =
 					new Jangeki_Coming(x, y, radius, speed + 2.0f, type, player_x, player_y);
 			}
+
+			//特殊行動時の弾(speed = 10.0f  frame_count % 50)
+			if (attack_pattern == 2 && GetSpeed() == 8.0f)
+			{
+				//プレイヤー方向に向かって発射されるジャン撃の生成
+				if (frame_count % 50 == 0) obj_jangeki[jan_count] =
+					new Jangeki_Coming(x, y, radius, speed + 10.0f, type, player_x, player_y);
+			}
 		}
 	}
 }
@@ -310,7 +336,11 @@ void Enemy_06::AttackPattern_1()
 	}
 
 	//着地してから次の行動を開始
-	if (jump_cnt == 2 && land_flg == true)
+	if (jump_cnt == 2 && y > 101.f && land_flg == true)
+	{
+		jump_cnt--;
+	}
+	else if (jump_cnt == 2 && land_flg == true)
 	{
 		jump_cnt++;
 	}
@@ -680,6 +710,10 @@ void Enemy_06::AttackPattern_3()
 		if (x >= 393)
 		{
 			floor = 2;
+			if (speed == 8.0f)
+			{
+				ChangeCnt++;
+			}
 			decision_Direction();
 			jump_Direction();
 		}
@@ -709,11 +743,19 @@ void Enemy_06::AttackPattern_3()
 		{
 			floor = 1;
 			dir = 1;
+			if (speed == 8.0f)
+			{
+				ChangeCnt++;
+			}
 			jump_Direction();
 		}
 		if (x >= 645)
 		{
 			floor = 3;
+			if (speed == 8.0f)
+			{
+				ChangeCnt++;
+			}
 			decision_Direction();
 			jump_Direction();
 		}
@@ -752,12 +794,20 @@ void Enemy_06::AttackPattern_3()
 		if (x <= 393)
 		{
 			floor = 2;
+			if (speed == 8.0f)
+			{
+				ChangeCnt++;
+			}
 			decision_Direction();
 			jump_Direction();
 		}
 		if (x >= 897)
 		{
 			floor = 4;
+			if (speed == 8.0f)
+			{
+				ChangeCnt++;
+			}
 			decision_Direction();
 			jump_Direction();
 		}
@@ -787,6 +837,10 @@ void Enemy_06::AttackPattern_3()
 		{
 			floor = 3;
 			jump_cnt = 0;
+			if (speed == 8.0f)
+			{
+				ChangeCnt++;
+			}
 			decision_Direction();
 			jump_Direction();
 		}
@@ -828,6 +882,10 @@ void Enemy_06::AttackPattern_3()
 		if (x <= 897)
 		{
 			floor = 4;
+			if (speed == 8.0f)
+			{
+				ChangeCnt++;
+			}
 			decision_Direction();
 			jump_Direction();
 		}
@@ -871,10 +929,6 @@ void Enemy_06::AttackPattern_3()
 			smokeFlg = true;
 			attack1_InitFlg = true;
 			attack_pattern = 0;
-			//jump_cnt = 0;
-			//dir = 1;
-			//x = 1200;
-			//y = 360;
 		}
 		else if (hp > 40)
 		{
@@ -1048,4 +1102,10 @@ float Enemy_06::Get_Y()
 int Enemy_06::Get_smokeflg()
 {
 	return smokeFlg;
+}
+
+//スピード取得
+float Enemy_06::GetSpeed()
+{
+	return speed;
 }

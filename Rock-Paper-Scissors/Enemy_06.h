@@ -30,6 +30,7 @@ public:
 	float Get_OldY();                   //old_yの取得関数
 	float Get_Y();                      //yの取得
 	int   Get_smokeflg();               //煙エフェクトのフラグの取得
+	float GetSpeed();                   //スピード取得
 
 private:
 	/********************   ジャンプ関係   ********************/
