@@ -231,7 +231,7 @@ void Enemy_04::Update_Jangeki()
 		{
 			if (frame_count % 60 == 0)
 			{
-				Jan_360degrees(jan_count, radius * 0.8, speed * 0.8, type);
+				Jan_360degrees(jan_count, radius * 0.8, speed * 0.7, type);
 				SoundSystem::PlaySE(SE::ENEMY_SPECIAL_ATTACK);
 			}
 		}
