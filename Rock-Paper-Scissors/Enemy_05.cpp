@@ -75,6 +75,8 @@ void Enemy_05::Update()
 		mob[1]->Init_Jangeki();
 		mob[2]->Init_Jangeki();
 
+		
+
 		Movetimer++;
 		//“G‚ÌˆÚ“®
 		switch (Movepattern)
@@ -365,4 +367,10 @@ void Enemy_05::MoveReset()
 {
 	Movepattern = 1;
 	Movetimer = 0;
+}
+
+void Enemy_05::AnimReset()
+{
+	runanimfragL = FALSE;
+	runanimfragR = FALSE;
 }

@@ -636,5 +636,6 @@ void Scene_Stage05::AfterJanken_LOSE()
 	obj_player->SetX(200);
 	obj_enemy->MoveReset();
 	obj_enemy->SetX(1000);
-	obj_enemy->SetY(140);
+	obj_enemy->SetY(300);
+	obj_enemy->AnimReset();
 }
