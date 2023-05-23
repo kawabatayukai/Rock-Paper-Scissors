@@ -33,7 +33,7 @@ namespace _CONSTANTS_SB
 		"KAERU",        //2
 		"SHIELD/MASTER",           //3
 		"RED EYE",       //4
-		"METAL",         //5
+		"BOSSMETAL",         //5
 		"JAN NINJA",      //6
 		"JHO",            //7
 		"TWIN AVATAR",     //8
