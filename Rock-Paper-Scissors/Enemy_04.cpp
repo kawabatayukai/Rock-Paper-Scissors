@@ -231,12 +231,13 @@ void Enemy_04::Update_Jangeki()
 			if (frame_count % 60 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 
 			//if (frame_count % 89 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius * 0.7, speed * 0, type, player_x, player_y);
+
 		}
 		else if (specialFlg == true)
 		{
 			if (frame_count % 60 == 0)
 			{
-				Jan_360degrees(jan_count, radius * 0.8, speed * 0.7, type);
+				Jan_360degrees(jan_count, radius * 0.8, speed * 0.8, type);
 				SoundSystem::PlaySE(SE::ENEMY_SPECIAL_ATTACK);
 			}
 		}
