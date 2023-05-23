@@ -25,8 +25,6 @@ public:
 	void Change_JanType();
 
 	void MoveReset();
-	void AnimReset();
-
 
 	Jangeki_Reflection* reflection;
 
