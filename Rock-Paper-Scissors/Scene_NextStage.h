@@ -14,8 +14,8 @@ public:
 
 private:
 	int Next;
-	int nextImage[10];
-	int next_se;
+	int nextImage[11];
+	int next_se[2];
 
 	int frameCount;
 };
