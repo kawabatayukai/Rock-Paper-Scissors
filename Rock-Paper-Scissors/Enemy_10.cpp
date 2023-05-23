@@ -417,18 +417,7 @@ void  Enemy_10::Move()
 /*‘æ“ñŒ`‘Ô‚Ö‚ÌˆÚs‚Ü‚Å‚ÌŠÔ‚Ìˆ—*/
 void Enemy_10::Interval()
 {
-	//“_–Å
-	static int counter;
-
-	if (KeyManager::OnPadClicked(PAD_INPUT_A) == false)
-	{
-		if (counter++ < 30)
-		{
-			DrawString(550, 350, "-- Press  A  Button --", 0xffffffff);
-		}
-		else if (counter > 60)  counter = 0;
-	}
-	else
+	if (KeyManager::OnPadClicked(PAD_INPUT_A))
 	{
 		enemy_state = ENEMY_STATE10::ALIVE;
 		hp = 100;

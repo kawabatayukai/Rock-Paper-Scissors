@@ -51,6 +51,8 @@ Scene_Stage10::Scene_Stage10(const Player* player)
 	//BGMƒ[ƒh
 	bgm[0] = LoadSoundMem("Sound/stage10/stage10.wav");
 	bgm[1] = LoadSoundMem("Sound/stage10/stage10_2.wav");
+
+	back_image = LoadGraph("images/Œš•¨.png");
 }
 
 //ƒfƒXƒgƒ‰ƒNƒ^
@@ -434,8 +436,29 @@ void Scene_Stage10::Update()
 //•`‰æ
 void Scene_Stage10::Draw() const
 {
-	//”wŒi‚Ì•`‰æ
-	DrawGraph(0, 0, 0, FALSE);
+	if (obj_enemy->Get_Enemy10Form() == 1)
+	{
+		//ƒXƒe[ƒW”wŒi•`‰æ
+		DrawRotaGraph(640, 360, 1, 0, back_image, FALSE);
+	}
+
+	if (obj_enemy->Get_Enemy10Form() == 2)
+	{
+		//”wŒi‚Ì•`‰æ
+		DrawGraph(0, 0, 0, FALSE);
+	}
+
+	if (obj_enemy->Get_Enemy10Form() == 1 && obj_enemy->IsDeathEnemy10() == true) //‘æˆêŒ`‘Ô
+	{
+		//“_–Å
+		static int counter;
+
+		if (counter++ < 30)
+		{
+			DrawString(550, 350, "-- Press  A  Button --", 0xffffffff);
+		}
+		else if (counter > 60)  counter = 0;
+	}
 
 	//UI‚Ì•`‰æ
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
