@@ -23,7 +23,8 @@
 GameOverScene::GameOverScene(int again):again(again)
 {
 	SetFontSize(50);
-	image_back = LoadGraph("images/Gameover2.png");
+	image_back[0] = LoadGraph("images/Gameover2.png");
+	image_back[1] = LoadGraph("images/GameoverHARD.png");
 	gameover_se = LoadSoundMem("Sound/GameOver.mp3");
 
 }
@@ -31,7 +32,8 @@ GameOverScene::GameOverScene(int again):again(again)
 GameOverScene::GameOverScene() :again(11)
 {
 	SetFontSize(50);
-	image_back = LoadGraph("images/Gameover2.png");
+	image_back[0] = LoadGraph("images/Gameover2.png");
+	image_back[1] = LoadGraph("images/GameoverHARD.png");
 	gameover_se = LoadSoundMem("Sound/GameOver.mp3");
 }
 
@@ -48,14 +50,23 @@ void GameOverScene::Update()
 {
 	//GameOverSE
 	if (CheckSoundMem(gameover_se) == 0) PlaySoundMem(gameover_se, DX_PLAYTYPE_BACK);
-
 }
 
 //描画
 void GameOverScene::Draw() const
 {
-	//背景
-	DrawGraph(0, 0, image_back, TRUE);
+	/*通常モード*/
+	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::NORMAL)
+	{
+		//背景
+		DrawGraph(0, 0, image_back[0], TRUE);
+	}
+	/*即死モード*/
+	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
+	{
+		//背景
+		DrawGraph(0, 0, image_back[1], TRUE);
+	}
 }
 
 //シーンの変更
@@ -129,19 +140,22 @@ AbstractScene* GameOverScene::ChangeScene()
 	/*即死モード*/
 	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
 	{
-		/*スコア順*/
-		sortSave.setScore(9, 10);	// ランキングデータの１０番目にスコアを登録
-		sortSave.SortRanking();		// ランキング並べ替え
-		sortSave.SaveRanking();		// ランキングデータの保存
+		if (KeyManager::OnPadClicked(PAD_INPUT_B))
+		{
+			/*スコア順*/
+			sortSave.setScore(9, 10);	// ランキングデータの１０番目にスコアを登録
+			sortSave.SortRanking();		// ランキング並べ替え
+			sortSave.SaveRanking();		// ランキングデータの保存
 
-		/*時間順*/
-		sortSaveTime.setTimerMin(9, 10); // ランキングデータの１０番目に時間：分を登録
-		sortSaveTime.setTimerSec(9, 10); // ランキングデータの１０番目に時間：秒を登録
-		sortSaveTime.SortRanking();		// ランキング並べ替え
-		sortSaveTime.SaveRanking();		// ランキングデータの保存
+			/*時間順*/
+			sortSaveTime.setTimerMin(9, 10); // ランキングデータの１０番目に時間：分を登録
+			sortSaveTime.setTimerSec(9, 10); // ランキングデータの１０番目に時間：秒を登録
+			sortSaveTime.SortRanking();		// ランキング並べ替え
+			sortSaveTime.SaveRanking();		// ランキングデータの保存
 
-		/*ランキング画面へ*/
-		return new Scene_Ranking();
+			/*ランキング画面へ*/
+			return new Scene_Ranking();
+		}
 	}
 	return this;
 }
