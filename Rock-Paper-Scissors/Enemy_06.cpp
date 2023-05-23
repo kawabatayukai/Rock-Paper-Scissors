@@ -27,9 +27,9 @@ Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	images[7]  = LoadGraph("images/stage06/黄NINJA_跳3.png");    //チョキ属性
 	images[8]  = LoadGraph("images/stage06/青NINJA_跳3.png");      //パー属性
 
-	images[9]  = LoadGraph("images/stage06/赤頭.png");             //グー属性
-	images[10] = LoadGraph("images/stage06/黄頭.png");           //チョキ属性
-	images[11] = LoadGraph("images/stage06/青頭.png");             //パー属性
+	images[9]  = LoadGraph("images/stage06/赤NINJA.png");             //グー属性
+	images[10] = LoadGraph("images/stage06/黄NINJA.png");           //チョキ属性
+	images[11] = LoadGraph("images/stage06/青NINJA.png");             //パー属性
 
 	//煙エフェクト読み込み
 	LoadDivGraph("images/stage06/pipo-btleffect059.png", 10, 10, 1, 120, 120, smokeImage);
@@ -159,6 +159,11 @@ void Enemy_06::Draw() const
 				//中心から描画
 				DrawRotaGraphF(x, y, 4.2, 0, images[3], TRUE, dir == -1 ? 0 : 1);
 			}
+			else if (speed == 8.0f)
+			{
+				//中心から描画
+				DrawRotaGraphF(x, y, 4.2, 0, images[9], TRUE, dir == -1 ? 0 : 1);
+			}
 			else
 			{
 				//中心から描画
@@ -178,6 +183,11 @@ void Enemy_06::Draw() const
 			{
 				//中心から描画
 				DrawRotaGraphF(x, y, 4.2, 0, images[4], TRUE, dir == -1 ? 0 : 1);
+			}
+			else if (speed == 8.0f)
+			{
+				//中心から描画
+				DrawRotaGraphF(x, y, 4.2, 0, images[10], TRUE, dir == -1 ? 0 : 1);
 			}
 			else
 			{
@@ -199,6 +209,11 @@ void Enemy_06::Draw() const
 				//中心から描画
 				DrawRotaGraphF(x, y, 4.2, 0, images[5], TRUE, dir == -1 ? 0 : 1);
 			}
+			else if (speed == 8.0f)
+			{
+				//中心から描画
+				DrawRotaGraphF(x, y, 4.2, 0, images[11], TRUE, dir == -1 ? 0 : 1);
+			}
 			else
 			{
 				//中心から描画
@@ -214,6 +229,9 @@ void Enemy_06::Draw() const
 
 	//じゃん撃描画
 	Draw_Jangeki();
+
+	////テスト
+	//DrawFormatString(600, 600, 0xffffff, "%f", player_y);
 }
 
 //じゃん撃生成・更新
@@ -318,7 +336,11 @@ void Enemy_06::AttackPattern_1()
 	}
 
 	//着地してから次の行動を開始
-	if (jump_cnt == 2 && land_flg == true)
+	if (jump_cnt == 2 && y > 101.f && land_flg == true)
+	{
+		jump_cnt--;
+	}
+	else if (jump_cnt == 2 && land_flg == true)
 	{
 		jump_cnt++;
 	}
