@@ -39,6 +39,8 @@ Scene_NextStage::Scene_NextStage(int Next) :Next(Next), frameCount(0)
 	nextImage[7] = LoadGraph("images/Rounds/Round8.png");
 	nextImage[8] = LoadGraph("images/Rounds/Round9.png");
 	nextImage[9] = LoadGraph("images/Rounds/Round10.png");
+	nextImage[10] = LoadGraph("images/GameClearALL.png");
+
 
 	next_se = LoadSoundMem("Sound/˜a‘¾ŒÛ‚Åƒhƒhƒ“.mp3");
 	PlaySoundMem(next_se, DX_PLAYTYPE_BACK);
@@ -62,6 +64,10 @@ void Scene_NextStage::Draw() const
 	if (Next <= 10)
 	{
 		DrawGraph(0, 0, nextImage[Next - 1], TRUE);
+	}
+	else if (Next == 11)
+	{
+		DrawGraph(0, 0, nextImage[10], TRUE);
 	}
 }
 
