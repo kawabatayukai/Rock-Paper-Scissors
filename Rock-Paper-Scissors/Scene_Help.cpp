@@ -10,7 +10,7 @@ int HelpScene::font_help = 0;
 //コンストラクタ
 HelpScene::HelpScene() : helpTime(0)
 {
-	HelpImage = LoadGraph("images/help/help3.png");
+	HelpImage = LoadGraph("images/help/help4.png");
 	image_back = LoadGraph("images/Story/starback.png");
 	help_bgm = LoadSoundMem("Sound/Help/helpbgm.wav");
 
