@@ -411,6 +411,7 @@ void Scene_Stage03::Update()
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
 			if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD){
+
 				//エネミーのHPが45以下の場合25ダメージ食らう
 				if (obj_enemy->GetHP() <= 45) {
 
@@ -422,6 +423,24 @@ void Scene_Stage03::Update()
 						obj_player->ReceiveDamage(25 - PlayerCutDamege) ;
 					}
 				}
+
+				if (obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 45) {
+
+					//半径が25.5fの場合のダメージ
+					float radius = 25.5f;
+
+					if (radius >= 25.5f) {
+
+						obj_player->ReceiveDamage(15 - PlayerCutDamege);
+
+					}
+				}
+
+					//それ以外
+					//通常時のダメージを受ける（プレイヤー）
+					else obj_player->ReceiveDamage(15 - PlayerCutDamege);
+
+				
 			}
 			else if(GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::NORMAL){
 
@@ -436,22 +455,27 @@ void Scene_Stage03::Update()
 						obj_player->ReceiveDamage(17 - PlayerCutDamege);
 					}
 				}
-			}
-		
-			else if (obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 45) {
+				
+				if(obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 45 ){
 
-				//半径が25.5fの場合のダメージ
-				float radius = 25.5f;
+					//半径が25.5fの場合のダメージ
+					float radius = 25.5f;
 
-				if (radius >= 25.5f) {
+					if (radius >= 25.5f) {
 
-					obj_player->ReceiveDamage(15 - PlayerCutDamege);
+						obj_player->ReceiveDamage(15 - PlayerCutDamege);
+						
+					}
 				}
 
+				//それ以外
+				//通常時のダメージを受ける（プレイヤー）
+				else obj_player->ReceiveDamage(15 - PlayerCutDamege);
+
+					
 			}
-			//それ以外
-			//通常時のダメージを受ける（プレイヤー）
-			else obj_player->ReceiveDamage(15 - PlayerCutDamege);
+		
+			
 
 			
 			//あたったじゃん撃を削除
