@@ -73,6 +73,11 @@ Scene_Stage05::~Scene_Stage05()
 //XV
 void Scene_Stage05::Update()
 {
+	if (obj_enemy->GetY() < 0)
+	{
+		obj_enemy->SetY(30);
+	}
+
 	//BGMÄ¶
 	if (CheckSoundMem(bgm) == 0) PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
 
