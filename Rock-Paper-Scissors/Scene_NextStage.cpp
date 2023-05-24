@@ -41,16 +41,23 @@ Scene_NextStage::Scene_NextStage(int Next) :Next(Next), frameCount(0)
 	nextImage[9] = LoadGraph("images/Rounds/Round10.png");
 	nextImage[10] = LoadGraph("images/GameClearALL.png");
 
-
-	next_se = LoadSoundMem("Sound/和太鼓でドドン.mp3");
-	PlaySoundMem(next_se, DX_PLAYTYPE_BACK);
+	if (Next <= 10)
+	{
+		next_se[0] = LoadSoundMem("Sound/和太鼓でドドン.mp3");
+		PlaySoundMem(next_se[0], DX_PLAYTYPE_BACK);
+	}
+	else if (Next == 11)
+	{
+		next_se[1] = LoadSoundMem("Sound/banzai.mp3");
+		PlaySoundMem(next_se[1], DX_PLAYTYPE_BACK);
+	}
 }
 
 //デストラクタ
 Scene_NextStage::~Scene_NextStage()
 {
-	StopSoundMem(next_se);
-	SetFontSize(20);
+	StopSoundMem(next_se[0]);
+	StopSoundMem(next_se[1]);
 }
 
 //更新

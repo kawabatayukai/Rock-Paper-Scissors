@@ -26,7 +26,7 @@ Scene_Stage04::Scene_Stage04(const Player* player)
 	else
 	{
 		//ƒvƒŒƒCƒ„[‚ğ¶¬
-		obj_player = new Player(260, 670);
+		obj_player = new Player(260, 650);
 	}
 
 	first_Type = GetRand(2);

@@ -18,9 +18,10 @@
 int TitleScene::font_title;   //フォントハンドル
 
 //コンストラクタ
-TitleScene::TitleScene()
+TitleScene::TitleScene() : frame(0)
 {
-	TitleImage = LoadGraph("images/JankenWorldTitle.png");
+	TitleImage = LoadGraph("images/Title/Title.png");
+	image_Eye = LoadGraph("images/Title/Eye.png");
 
 	//フォントデータを作成
 	if (font_title == 0)
@@ -62,15 +63,16 @@ void TitleScene::Update()
 		T_selectnum--;
 
 		if (T_selectnum < 0) T_selectnum = 3;
-
 	}
 
+	if (frame++ > 180) frame = 0;
 }
 
 //描画
 void TitleScene::Draw() const
 {
 	DrawGraph(0, 0, TitleImage, FALSE);
+	if (frame >= 170 && frame < 180) DrawGraph(384, 300, image_Eye, TRUE);
 
 	DrawStringToHandle(70, 250, "START", 0xf, font_title);
 	DrawStringToHandle(70, 295, "HELP", 0xf, font_title);

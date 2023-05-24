@@ -26,7 +26,7 @@ Scene_Stage09::Scene_Stage09(const Player* player)
 	else
 	{
 		//ƒvƒŒƒCƒ„[‚ğ¶¬
-		obj_player = new Player(640, 360);
+		obj_player = new Player(100, 600);
 	}
 
 	//“G‚ğ¶¬
@@ -424,7 +424,7 @@ void Scene_Stage09::AfterJanken_WIN()
 		}
 	}
 	obj_player->SetX(100);
-	obj_player->SetY(700);
+	obj_player->SetY(600);
 	obj_enemy->SetX(1110);
 	obj_enemy->frameDown();
 	obj_enemy->Tflg();

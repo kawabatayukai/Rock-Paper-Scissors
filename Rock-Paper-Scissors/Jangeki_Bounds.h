@@ -7,6 +7,7 @@ class Jangeki_Bounds : public Jangeki_Base
 public:
 	//コンストラクタ  ｘ　　　　ｙ　　　半径　　スピード　　　タイプ
 	Jangeki_Bounds(float x, float y, float r, float speed, Jan_Type type);
+	Jangeki_Bounds(float x, float y, float r, float speed,float angle, Jan_Type type);
 
 	~Jangeki_Bounds() {};
 

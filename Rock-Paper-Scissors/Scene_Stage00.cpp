@@ -3,6 +3,7 @@
 #include "Scene_Stage00.h"
 #include"Scene_GameMain.h"
 #include"Janken.h"
+#include"GameData.h"
 
 //デバッグモード
 #include"Debug_Manager.h"
@@ -32,6 +33,15 @@ Scene_Stage00::Scene_Stage00(const Player* player) : frame_count(0)
 	hand_rock = LoadGraph("images/腕のみぐーh左.png");
 	hand_scissors = LoadGraph("images/腕のみちょき左.png");
 	hand_paper = LoadGraph("images/腕のみぱー左.png");
+
+	//制限時間をセット
+	GameData::Set_TimeLimit(10800);
+	//プレイヤーを生成
+	obj_player = new Player(640, 300,1);
+	Init_Floor(1);
+	//画像読み込み
+	image_back = LoadGraph("images/stage01/Tutorial_Back.png");
+	obj_floor[0] = new Floor(0, 500, 1280, 20);        //床
 }
 
 //デストラクタ
@@ -45,35 +55,41 @@ void Scene_Stage00::Update()
 	frame_count++;
 	if (frame_count > 120) frame_count = 0;
 
+	obj_player->Update();    // プレイヤー更新・操作可能
+	obj_player->Hit_Floor(obj_floor[0]);
+
 	return;
 }
 
 //描画
 void Scene_Stage00::Draw() const
 {
-	DrawBox(0, 0, 1280, 720, 0xffffff, TRUE);
+	//DrawBox(0, 0, 1280, 720, 0xffffff, TRUE);
 
-	//すべてのキャラを描画
-	DrawGraph(50, 0, player_image, TRUE);
-	DrawGraph(200, 0, enemy_02, TRUE);
-	DrawGraph(350, 0, enemy_03, TRUE);
-	DrawGraph(500, 0, enemy_04, TRUE);
-	DrawGraph(650, 0, enemy_05, TRUE);
-	DrawRotaGraphF(125, 200, 4.2, 0, enemy_06, TRUE, 0);
-	DrawGraph(200, 150, enemy_07, TRUE);
-	DrawGraph(350, 150, enemy_08, TRUE);
-	DrawGraph(500, 150, enemy_09, TRUE);
-	DrawGraph(650, 150, enemy_10, TRUE);
+	////すべてのキャラを描画
+	//DrawGraph(50, 0, player_image, TRUE);
+	//DrawGraph(200, 0, enemy_02, TRUE);
+	//DrawGraph(350, 0, enemy_03, TRUE);
+	//DrawGraph(500, 0, enemy_04, TRUE);
+	//DrawGraph(650, 0, enemy_05, TRUE);
+	//DrawRotaGraphF(125, 200, 4.2, 0, enemy_06, TRUE, 0);
+	//DrawGraph(200, 150, enemy_07, TRUE);
+	//DrawGraph(350, 150, enemy_08, TRUE);
+	//DrawGraph(500, 150, enemy_09, TRUE);
+	//DrawGraph(650, 150, enemy_10, TRUE);
 
-	DrawGraph(50, 350, player_all, TRUE);
+	//DrawGraph(50, 350, player_all, TRUE);
 
-	DrawGraph(800, 0, enemy_05_mob, TRUE);
+	//DrawGraph(800, 0, enemy_05_mob, TRUE);
 
-	DrawGraph(50, 550, hand_rock, TRUE);
-	DrawGraph(150, 550, hand_scissors, TRUE);
-	DrawGraph(250, 550, hand_paper, TRUE);
+	//DrawGraph(50, 550, hand_rock, TRUE);
+	//DrawGraph(150, 550, hand_scissors, TRUE);
+	//DrawGraph(250, 550, hand_paper, TRUE);
 
-	if (frame_count < 60) DrawString(350, 670, "Press A Button To SelectScene", 0x006400);
+	//if (frame_count < 60) DrawString(350, 670, "Press A Button To SelectScene", 0x006400);
+
+	DrawGraph(0, 0, image_back, FALSE);
+	obj_player->Draw();
 }
 
 
