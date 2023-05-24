@@ -410,17 +410,34 @@ void Scene_Stage03::Update()
 		//じゃん撃との当たり判定
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
-			//エネミーのHPが45以下の場合25ダメージ食らう
-			if (obj_enemy->GetHP() <= 45) {
+			if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD){
+				//エネミーのHPが45以下の場合25ダメージ食らう
+				if (obj_enemy->GetHP() <= 45) {
 
-				//半径が50.0fの場合のダメージ
-				float radius = 50.0f;
+					//半径が50.0fの場合のダメージ
+					float radius = 50.0f;
 
-				if (radius >= 50.0f) {
+					if (radius >= 50.0f) {
 
-					obj_player->ReceiveDamage(25 - PlayerCutDamege) ;
+						obj_player->ReceiveDamage(25 - PlayerCutDamege) ;
+					}
 				}
 			}
+			else if(GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::NORMAL){
+
+				//エネミーのHPが45以下の場合25ダメージ食らう
+				if (obj_enemy->GetHP() <= 45) {
+
+					//半径が50.0fの場合のダメージ
+					float radius = 35.5f;
+
+					if (radius >= 35.5f) {
+
+						obj_player->ReceiveDamage(17 - PlayerCutDamege);
+					}
+				}
+			}
+		
 			else if (obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 45) {
 
 				//半径が25.5fの場合のダメージ
