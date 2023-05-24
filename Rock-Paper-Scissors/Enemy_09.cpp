@@ -201,7 +201,7 @@ void Enemy_09::Jan_360degrees()
 			Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 			double angle = static_cast<double>((30.0 * i) * (M_PI / 70));
 
-			obj_jangeki[i] = new Jangeki_Base(x, y, radius, speed, angle, type);
+			obj_jangeki[i] = new Jangeki_Bounds(x, y, radius, speed, angle, type);
 
 			if (Rand() == SPcount)
 			{
