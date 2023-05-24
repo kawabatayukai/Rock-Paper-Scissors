@@ -223,7 +223,7 @@ void Enemy_06::Draw() const
 
 		if (speed == 8.0f)
 		{
-			DrawString((int)(x - 80), (int)(y - 85), "スピードアップ", GetColor(255, 0, 0));
+			DrawFormatString((int)(x - 60), (int)(y - 155), GetColor(30, 30, 255), "スピードUP↑", hp);
 		}
 	}
 
