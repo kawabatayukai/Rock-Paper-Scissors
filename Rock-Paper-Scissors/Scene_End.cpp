@@ -39,7 +39,7 @@ void EndScene::Draw() const
 	SetFontSize(50);
 	DrawString(350, 110 + PosY, "タイトル　JankenWorld", 0xFFFFFF);
 	SetFontSize(24);
-	DrawString(400, 200 + PosY, "最終更新日　　2023年xx月xx日", 0xFFFFFF);
+	DrawString(400, 200 + PosY, "最終更新日　　2023年05月26日", 0xFFFFFF);
 	DrawString(550, 230 + PosY, "素材利用", 0xFFFFFF);
 	DrawString(300, 260 + PosY, "画像  ぴぽや倉庫 https://pipoya.net/sozai/", 0xFFFFFF);
 	DrawString(300, 290 + PosY, "画像  OKUMONO URL https://sozaino.site/", 0xFFFFFF);

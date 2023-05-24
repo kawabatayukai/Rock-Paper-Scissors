@@ -41,6 +41,9 @@ public:
 
 	int GetWalkSE()const;//•à‚­SEŽæ“¾
 
+	/*360“x”­ŽË*/
+	void Jan_360degrees(int count, float rad, float speed, Jan_Type type);
+
 
 private:
 	/********************   ƒWƒƒƒ“ƒvŠÖŒW   ********************/

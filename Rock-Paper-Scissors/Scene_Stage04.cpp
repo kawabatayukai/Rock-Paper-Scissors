@@ -26,7 +26,7 @@ Scene_Stage04::Scene_Stage04(const Player* player)
 	else
 	{
 		//ƒvƒŒƒCƒ„[‚ð¶¬
-		obj_player = new Player(260, 670);
+		obj_player = new Player(260, 650);
 	}
 
 	first_Type = GetRand(2);
@@ -348,4 +348,5 @@ void Scene_Stage04::AfterJanken_LOSE()
 	obj_player->SetX(260);
 	obj_player->SetY(670);
 	obj_enemy->SetX(1180);
+	obj_enemy->Init_Jangeki();
 }

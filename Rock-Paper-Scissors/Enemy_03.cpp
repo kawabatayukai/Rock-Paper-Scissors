@@ -4,8 +4,15 @@
 #include"Jangeki_Base.h"
 #include"Jangeki_Coming.h"
 #include"Jangeki_Bounds.h"
+#include "Jangeki_whole.h"
+#include <math.h>
+#include <corecrt_math_defines.h>
 #include <typeinfo>
+#include "GameData.h"
 #include "SoundSystem.h"
+
+
+
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
@@ -20,7 +27,7 @@ Enemy_03::Enemy_03(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	LoadDivGraph("images/stage03/stage03ShieldEnduranse1.png", 6, 6, 1, 100, 100, enemyimage1);
 	LoadDivGraph("images/stage03/stage03ShieldEnduranse2.png", 6, 6, 1, 100, 100, enemyimage2);
 	LoadDivGraph("images/stage03/stage03ShieldEnduranse3.png", 6, 6, 1, 100, 100, enemyimage3);
-	LoadDivGraph("images/stage03/stage03ShieldEnduranse4.png", 6, 6, 1, 100, 100, enemyimage4);
+	LoadDivGraph("images/stage03/stage03ShieldEnduranse4Cry.png", 6, 6, 1, 100, 100, enemyimage4);
 	LoadDivGraph("images/stage03/BreakShieldAnim.png", 8, 8, 1, 220, 220, ShieldBreakAnim);
 
 	Init_Jangeki();       //じゃん撃を用意
@@ -156,16 +163,16 @@ void Enemy_03::Update()
 
 	}
 
-	if (hp <= 45){
+	//if (hp <= 45){
 
-		if (land_flg == true /*&& moveinfo[current].enemywaitTime == 0 && moveinfo[current].jumpflg == 0*/)    //GetRand(30) == 3　のところがジャンプの条件
-		{
-			g_add = -18.f;    //初期-21.5f,重力加速度をマイナス値に　　下げるほどジャンプ力アップ
-			land_flg = false;  //地面についていない
-			SoundSystem::PlaySE(SE::PLAYER_JUMP);//JUMP時SE鳴らす
-			speed = 2.8f;
-		}
-	}
+	//	if (land_flg == true /*&& moveinfo[current].enemywaitTime == 0 && moveinfo[current].jumpflg == 0*/)    //GetRand(30) == 3　のところがジャンプの条件
+	//	{
+	//		g_add = -18.f;    //初期-21.5f,重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+	//		land_flg = false;  //地面についていない
+	//		SoundSystem::PlaySE(SE::PLAYER_JUMP);//JUMP時SE鳴らす
+	//		speed = 2.8f;
+	//	}
+	//}
 	//じゃん撃更新・生成
 	Update_Jangeki();
 
@@ -225,44 +232,98 @@ void Enemy_03::Update()
 
 	}
 	else {
-
-		//enemyのxが475以下の時
-		if ( x <= 280 && x >= 50 ) {
-			
-
-			//前回より加速する
-			speed = 4.3f;
-
-		}
-		//enemyのxが950以下で475以上の時
-		else if (x >= 70 && x <= 1130) {
-
-
-			//前回より減速する
-			speed = 10.5f;
-			
-
-		}
-
-		//enemyのxが950以上の時
-		else if (x <= 1150 && x >= 970) {
-
-
-			//前回より加速する
-			speed = 4.3f;
-
-		}
-		
-		//それ以外は普通の動き
-		else
+		/*即死モード*/
+		if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
 		{
-			
-			speed = 2.8f;
+			if (hp <= 45) {
+
+				if (land_flg == true /*&& moveinfo[current].enemywaitTime == 0 && moveinfo[current].jumpflg == 0*/)    //GetRand(30) == 3　のところがジャンプの条件
+				{
+					g_add = -18.f;    //初期-21.5f,重力加速度をマイナス値に　　下げるほどジャンプ力アップ
+					land_flg = false;  //地面についていない
+					SoundSystem::PlaySE(SE::PLAYER_JUMP);//JUMP時SE鳴らす
+					speed = 2.8f;
+				}
+			}
+
+			//enemyのxが475以下の時
+			if (x <= 280 && x >= 50) {
+
+
+				//前回より加速する
+				speed = 4.3f;
+
+			}
+			//enemyのxが950以下で475以上の時
+			else if (x >= 70 && x <= 1130) {
+
+
+				//前回より減速する
+				speed = 10.5f;
+
+
+			}
+
+			//enemyのxが950以上の時
+			else if (x <= 1150 && x >= 970) {
+
+
+				//前回より加速する
+				speed = 4.3f;
+
+			}
+
+			//それ以外は普通の動き
+			else
+			{
+
+				speed = 2.8f;
+
+
+			}
+		}
+		////////////////
+		//ノーマルモード
+		////////////////
+		else {
+
+			//enemyのxが475以下の時
+			if (x <= 280 && x >= 50) {
+
+
+				//前回より加速する
+				speed = 4.3f;
+
+			}
+			//enemyのxが950以下で475以上の時
+			else if (x >= 70 && x <= 1130) {
+
+
+				//前回より減速する
+				speed = 10.5f;
+
+
+			}
+
+			//enemyのxが950以上の時
+			else if (x <= 1150 && x >= 970) {
+
+
+				//前回より加速する
+				speed = 4.3f;
+
+			}
+			//それ以外は普通の動き
+			else
+			{
+
+				speed = 2.8f;
+
+
+			}
 
 
 		}
-		
-	
 		//目標座標
 		static float target_x = 0;
 		static float target_y = 0;
@@ -296,18 +357,29 @@ void Enemy_03::Update()
 		float move_y = y;
 		//moveinfo[current].jumpflg = 1;
 
+
+
 		//x座標が目標と不一致
 		if (x != target_x)
 		{
 
-			//ジャンプしているとき
-			if (moveinfo[current].jumpflg == 0) {
+			/*即死モード*/
+			if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
+			{
+			
+				//ジャンプしているとき
+				if (moveinfo[current].jumpflg == 0) {
 
-				//speedがup,足場に乗せるための調整
-				speed = 4.3f;
+					//speedがup,足場に乗せるための調整
+					speed = 4.3f;
+
+				}
+			}
+			else {
+
+				moveinfo[current].jumpflg = 1;
 
 			}
-
 			//目標の方が大きい（目標は右方向）
 			if (x < target_x)
 			{
@@ -365,14 +437,18 @@ void Enemy_03::Update()
 		y = move_y;
 
 		//前回いたxと今のxが一致したら目標座標をランダムに+する
-		if (old_x == x  )
+		if (old_x == x )
 		{
 			//target_x = GetRand(1170) + 70;
 
 
 			target_x = GetRand(60) + 100;
 			target_x = GetRand(1130) + 100;
-			speed = 2.8f;
+
+			if(GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD){
+
+				speed = 2.8f;
+			}
 
 		}
 
@@ -688,41 +764,98 @@ void Enemy_03::Update_Jangeki()
 		//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Base(x, y, radius, speed, type);
 	 
 		//攻撃UP時のジャン撃
-		//HP45以下の時	
-		 if (hp <= 45) {
+		/*即死モード*/
+		if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
+		{
 
-			float radius = 50.0f;
-			float speed = 4.5f;
+			//HP45以下の時	
+			if (hp <= 45) {
 
-			//尾行弾
-			if (frame_count % 85 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+				float radius = 50.0f;
+				float speed = 4.5f;
 
-			//追加,属性を生成//
-			Jan_Type type = static_cast<Jan_Type>(GetRand(0));//グーのみ
+				//尾行弾
+				if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 
-			//バウンド弾
-			if (frame_count % 45 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
-			
-		 }
-		//HPが85以下で46以上の時
-		else if (hp <= 85 && hp >= 46){
+				//追加,属性を生成//
+				Jan_Type type = static_cast<Jan_Type>(GetRand(1));//グーのみ
 
-			//尾行弾
-			if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+				//バウンド弾
+				if (frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
 
-			float radius = 25.5f;
-			float speed = 5.5f;
-			//バウンド弾
-			if(frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
+			}
+			//HPが85以下で46以上の時
+			else if (hp <= 85 && hp >= 46) {
+
+				//尾行弾
+				if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+
+				float radius = 25.5f;
+				float speed = 5.5f;
+				//バウンド弾
+				if (frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
+			}
+
+			//それ以外
+		   //プレイヤー方向へのジャン撃生成
+			else {//(hp <= 86 && hp >= 71)
+
+				//尾行弾
+				if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+
+			}
+
 		}
-		
-		 //それ以外
-		//プレイヤー方向へのジャン撃生成
-		else  {//(hp <= 86 && hp >= 71)
+		//ノーマルモード
+		else {
+			//HP45以下の時	
+			 if (hp <= 45) {
 
-			//尾行弾
-			if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+				float radius = 50.0f;
+				float speed = 4.5f;
+
+				//尾行弾
+				if (frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+
+				
+
+				if(x >= 70 && x <= 1130){
+
+					float radius = 35.5f;
+					float speed = 4.5f;
+
+					//追加,属性を生成//
+					Jan_Type type = static_cast<Jan_Type>(GetRand(1));//グーのみ
+
+					//円弾
+					if (frame_count % 200 == 0)
+					{
+						Jan_360degrees(jan_count, radius, speed, type); //360度発射
+					}
+				
+				}
 			
+			 }
+			//HPが85以下で46以上の時
+			else if (hp <= 85 && hp >= 46){
+
+				//尾行弾
+				if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+
+				float radius = 25.5f;
+				float speed = 5.5f;
+				//バウンド弾
+				if(frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
+			}
+		
+			 //それ以外
+			//プレイヤー方向へのジャン撃生成
+			else  {//(hp <= 86 && hp >= 71)
+
+				//尾行弾
+				if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+			
+			}
 		}
 	}
 }
@@ -802,6 +935,16 @@ void Enemy_03::Move_Pattern() {
 	x = move_x;
 	y = move_y;
 
+}
+
+void Enemy_03::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
+{
+	for (int i = count; i < (count + 18); i++)
+	{
+		double angle = static_cast<double>((35 * i) * (M_PI / 180));
+
+		obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
+	}
 }
 
 //enemywaitTime継承

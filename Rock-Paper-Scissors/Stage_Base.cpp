@@ -361,7 +361,10 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 				
 
 				//じゃん撃を初期化する
-				enemy->Init_Jangeki();
+				if (my_StageNum != 4)
+				{
+					enemy->Init_Jangeki();
+				}
 
 				bf_result = Jan_Result::ONEMORE;
 				delete obj_janken;
@@ -388,7 +391,10 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 	else if (j_state == Jan_State::END)
     {
 		//じゃん撃を初期化する
-		enemy->Init_Jangeki();
+		if (my_StageNum != 4) 
+		{
+			enemy->Init_Jangeki();
+		}
 		//あたり判定なし時間をセット
 		nhit_time = NOT_COLLISION_TIME;
 
@@ -435,6 +441,7 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 	{
 		if (enemy->GetHP() <= 0 && obj_death == nullptr)
 		{
+
 			enemy->Init_Jangeki();
 			//死亡演出用オブジェクト
 			obj_death = new Enemy_Death(enemy->GetX(), enemy->GetY(), my_StageNum, enemy->GetType());
