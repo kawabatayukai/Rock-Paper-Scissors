@@ -348,4 +348,5 @@ void Scene_Stage04::AfterJanken_LOSE()
 	obj_player->SetX(260);
 	obj_player->SetY(670);
 	obj_enemy->SetX(1180);
+	obj_enemy->Init_Jangeki();
 }
