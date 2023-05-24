@@ -223,15 +223,12 @@ void Enemy_06::Draw() const
 
 		if (speed == 8.0f)
 		{
-			DrawString((int)(x - 80), (int)(y - 125), "スピードアップ", GetColor(255, 0, 0));
+			DrawFormatString((int)(x - 60), (int)(y - 155), GetColor(30, 30, 255), "スピードUP↑", hp);
 		}
 	}
 
 	//じゃん撃描画
 	Draw_Jangeki();
-
-	////テスト
-	//DrawFormatString(600, 600, 0xffffff, "%f", player_y);
 }
 
 //じゃん撃生成・更新
@@ -933,6 +930,7 @@ void Enemy_06::AttackPattern_3()
 		else if (hp > 40)
 		{
 			attack_pattern = 1;
+			attack2_Flg = false;
 		}
 	}
 }
