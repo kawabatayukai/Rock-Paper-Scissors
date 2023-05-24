@@ -12,6 +12,7 @@
 #include "SoundSystem.h"
 #include"Jangeki_Bounds.h"
 #include"Jangeki_Guard.h"
+#include"GameData.h"
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_10::Enemy_10(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
@@ -416,18 +417,7 @@ void  Enemy_10::Move()
 /*第二形態への移行までの間の処理*/
 void Enemy_10::Interval()
 {
-	//点滅
-	static int counter;
-
-	if (KeyManager::OnPadClicked(PAD_INPUT_A) == false)
-	{
-		if (counter++ < 30)
-		{
-			DrawString(550, 350, "-- Press  A  Button --", 0xffffffff);
-		}
-		else if (counter > 60)  counter = 0;
-	}
-	else
+	if (KeyManager::OnPadClicked(PAD_INPUT_A))
 	{
 		enemy_state = ENEMY_STATE10::ALIVE;
 		hp = 100;
@@ -815,8 +805,12 @@ void Enemy_10::Update_Jangeki()
 
 				/*********************** ↓↓ 生成( 飛び跳ね弾 ) ↓↓ ***********************/
 
-				//飛び跳ねじゃん撃生成
-				//if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
+				/*即死モード*/
+				if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
+				{
+					//飛び跳ねじゃん撃生成
+					if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
+				}
 
 				/************************************************************************/
 
@@ -851,30 +845,50 @@ void Enemy_10::Update_Jangeki()
 			//            生成速度
 			if (frame_count % 300 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //追跡弾 
 
+			/*即死モード*/
+			if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
+			{
+				//            生成速度
+				if (frame_count % 200 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //追跡弾 
+			}
+
 			/************************************************************************/
 
 			/*********************** ↓↓ 生成( プレイヤー向き通常弾 ) ↓↓ ***********************/
 
-			//            生成速度
-			if (frame_count % 50 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+				//            生成速度
+				if (frame_count % 50 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 
 			/************************************************************************/
 
 			/*********************** ↓↓ 生成( 中心円型拡散弾 ) ↓↓ ***********************/
 
+			if (frame_count % 400 == 0)
+			{
+				Jan_360degrees(jan_count, radius, speed, type); //360度発射
+			}
+			
+			/*即死モード*/
+			if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
+			{
 				if (frame_count % 200 == 0)
 				{
 					Jan_360degrees(jan_count, radius, speed, type); //360度発射
 				}
-
-				//            生成速度
-				//if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_whole(x, y, radius, speed, type);
+			}
 				/************************************************************************/
 
 				/*********************** ↓↓ 生成( 飛び跳ね弾 ) ↓↓ ***********************/
 
 				//飛び跳ねじゃん撃生成
-				//if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
+				if (frame_count % 200 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
+
+				/*即死モード*/
+				if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
+				{
+					//飛び跳ねじゃん撃生成
+					if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
+				}
 
 				/************************************************************************/
 
