@@ -8,6 +8,7 @@
 #include "Jangeki_Zigzag.h" 
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include"GameData.h"
 
 MobEnemy_05::MobEnemy_05(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
 , effect_count(0)
@@ -275,6 +276,13 @@ void MobEnemy_05::Effect_MobEnemy(const Player* player)
 
 					obj_effect[effect_count] = new Effect_Jangeki(jan_x, jan_y, e_jan[e]->GetType(), _CHAR_TYPE::NOT_CHARA);
 					
+					GameData::Add_PierceCount(1); //貫通回数加算
+					GameData::Add_Score(100 / 2); //スコア加算
+				}
+				else if (p_jan[p]->CheckAdvantage(e_jan[e]) == 1)
+				{
+					GameData::Add_PierceCount(2); //貫通回数加算
+					GameData::Add_Score(100);     //スコア加算
 				}
 			}
 		}

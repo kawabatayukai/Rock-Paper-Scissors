@@ -44,5 +44,7 @@ private:
 	int hand_rock;
 	int hand_scissors;
 	int hand_paper;
+
+	int image_back;
 };
 
