@@ -23,9 +23,9 @@ Enemy_10::Enemy_10(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 
 	form = 1;
 
-	ded_Image = LoadGraph("images/ステージ10敵の倒れ顔だけ画像.png");
+	ded_Image = LoadGraph("images/Stage10/ステージ10敵の倒れ顔だけ画像.png");
 
-	if (LoadDivGraph("images/ステージ10敵の画像.png", 10, 5, 2, 100, 100, image) == -1);
+	if (LoadDivGraph("images/Stage10/ステージ10敵の画像.png", 10, 5, 2, 100, 100, image) == -1);
 
 	/*テレポートのエフェクト*/
 	LoadDivGraph("images/stage09/teleport2.png", 15, 15, 1, 120, 150, img_teleport);

@@ -91,7 +91,11 @@ void Enemy_04::Update()
 	}
 	else if (hp <= 50)
 	{
-		speed = 2.7f;
+		speed = 2.6f;
+	}
+	else if (player_y >= 650)
+	{
+		speed = 2.3f;
 	}
 	else
 	{
