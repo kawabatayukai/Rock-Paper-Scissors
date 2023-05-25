@@ -41,7 +41,7 @@ Scene_Stage00::Scene_Stage00(const Player* player) : frame_count(0)
 	Init_Floor(1);
 	//画像読み込み
 	image_back = LoadGraph("images/stage01/Tutorial_Back.png");
-	obj_floor[0] = new Floor(0, 500, 1280, 20);        //床
+	obj_floor[0] = new Floor(-100, 685, 1480, 15, 0);
 }
 
 //デストラクタ
@@ -57,6 +57,9 @@ void Scene_Stage00::Update()
 
 	obj_player->Update();    // プレイヤー更新・操作可能
 	obj_player->Hit_Floor(obj_floor[0]);
+
+	if (obj_player->GetX() > 1330.0f) obj_player->SetX(-40.0f, true);
+	else if (obj_player->GetX() < -50.0f) obj_player->SetX(1320.0f);
 
 	return;
 }
