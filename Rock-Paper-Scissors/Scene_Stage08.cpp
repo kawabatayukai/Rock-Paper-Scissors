@@ -371,7 +371,7 @@ void Scene_Stage08::Update()
 			if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 			{
 				//ダメージを受ける（プレイヤー）
-				obj_player->ReceiveDamage(3);
+				obj_player->ReceiveDamage(5);
 
 				//あたったじゃん撃を削除
 				cannon[a]->DeleteJangeki(i);
@@ -388,7 +388,7 @@ void Scene_Stage08::Update()
 		if (obj_player->Hit_Jangeki(Item[i]) == true)
 		{
 			//当たった時
-			damage += 3;
+			damage += 5;
 
 			delete Item[i];
 			Item[i] = nullptr;
