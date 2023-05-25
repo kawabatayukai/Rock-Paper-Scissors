@@ -63,7 +63,7 @@ Scene_Stage06::Scene_Stage06(const Player* player)
 	GameData::Set_TimeLimit(10800);
 
 	//BGMロード
-	bgm = LoadSoundMem("Sound/stage06/RPG_Battle_03.mp3");
+	bgm = LoadSoundMem("Sound/stage06/RPG_Battle_03.wav");
 }
 
 //デストラクタ

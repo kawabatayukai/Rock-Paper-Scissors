@@ -65,7 +65,7 @@ void Enemy_04::Update()
 			if (specialFlg == true)
 			{
 				enemy_x = GetRand(1080) + 100;
-				enemy_y = GetRand(340) + 100;
+				enemy_y = GetRand(390) + 150;
 			}
 			waitTime = 0;
 			current = moveinfo[current].next_index;
