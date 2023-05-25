@@ -316,13 +316,15 @@ void Scene_Stage06::Draw_Janken() const
 
 void Scene_Stage06::AfterJanken_WIN()
 {
-	obj_player->SetX(100, 600);     //プレイヤーを指定座標に生成
-	obj_player->Recover_HP(100);
+
+	obj_player = new Player(100, 600);     //プレイヤーを指定座標に生成
 }
 
 void Scene_Stage06::AfterJanken_LOSE()
 {
-	obj_player->SetX(100, 600);                            //プレイヤーを指定座標に生成
+	//ここが悪さしてたみたい→//obj_player = new Player(100, 600);  //プレイヤーを指定座標に生成
+	obj_player->SetX(100);
+	obj_player->SetY(600);
 	obj_enemy->SpeedUp();                                         //敵の特殊行動1
 }
 
