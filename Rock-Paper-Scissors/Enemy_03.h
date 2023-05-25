@@ -42,7 +42,7 @@ public:
 	int GetWalkSE()const;//•à‚­SEŽæ“¾
 
 	/*45“x”­ŽË*/
-	void Jan_120degrees(int count, float rad, float speed, Jan_Type type);
+	void Jan_180degrees(int count, float rad, float speed, Jan_Type type);
 
 	//void Jan_120degrees();//120“x’e
 

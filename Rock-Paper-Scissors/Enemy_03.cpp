@@ -832,7 +832,7 @@ void Enemy_03::Update_Jangeki()
 					//‰~’e
 					if (frame_count % 200 == 0)
 					{
-						Jan_120degrees(jan_count, radius, speed, type); //360“x”­ŽË
+						Jan_180degrees(jan_count, radius, speed, type); //180“x”­ŽË
 						
 					}
 				
@@ -863,7 +863,7 @@ void Enemy_03::Update_Jangeki()
 	}
 }
 //”½ŽË’e
-void Enemy_03::Jan_120degrees(int count, float rad, float speed, Jan_Type type)
+void Enemy_03::Jan_180degrees(int count, float rad, float speed, Jan_Type type)
 {
 	for (int i = 0; i <  5; i++)
 	{
@@ -874,19 +874,6 @@ void Enemy_03::Jan_120degrees(int count, float rad, float speed, Jan_Type type)
 	}
 }
 
-
-
-//void Enemy_03::Jan_120degrees(int count, float rad, float speed, Jan_Type type)
-//{
-//	for (int i = count; i < (count + 8); i++)
-//	{
-//		double angle = static_cast<double>((50 * i) * (M_PI / 180));
-//
-//		obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
-//	}
-//
-//
-//}
 
 void Enemy_03::Move_Pattern() {
 
