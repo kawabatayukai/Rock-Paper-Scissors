@@ -1,5 +1,6 @@
 #pragma once
 #include"AbstractScene.h"
+#include"Enemy_Death.h"
 
 //タイトルシーン
 class TitleScene : public AbstractScene
@@ -27,5 +28,9 @@ private:
 	int bgm;
 
 	int image_Eye;
+	int image_head;
 	int frame;
+
+	//生首
+	Enemy_Death* obj_death;
 };

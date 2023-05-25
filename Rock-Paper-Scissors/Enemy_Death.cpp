@@ -52,6 +52,10 @@ Enemy_Death::Enemy_Death(const float& x, const float& y, const int& stage_num,co
 		se_death = LoadSoundMem("Sound/Janken/「ぐああーーっ！」.mp3");
 		break;
 
+	case 99: //タイトル
+		image_death = LoadGraph("images/Title/Death.png");
+		break;
+
 	default:
 		image_death = LoadGraph("images/ワンパンマン顔のみ左.png");
 		break;

@@ -335,8 +335,8 @@ void Scene_Stage07::Draw_Janken() const
 //じゃんけん終了後の挙動（プレイヤー勝ち）
 void Scene_Stage07::AfterJanken_WIN()
 {
-	//obj_player->SetX(100);
-	//obj_enemy->SetX(900);
+
+	obj_player->Recover_HP(100);
 
 	obj_enemy->Init_MoveAndAction();
 
