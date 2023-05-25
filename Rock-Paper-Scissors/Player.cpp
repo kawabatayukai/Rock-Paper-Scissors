@@ -38,8 +38,8 @@ Player::Player(float x, float y, int isHelp) : CharaBase(x, y, 57.0f, 100.0f)  /
 	//目
 	eye_ImageR[0] = LoadGraph("images/Player/ワンパンマン目のみ右.png");
 	eye_ImageL[0] = LoadGraph("images/Player/ワンパンマン目のみ左.png");
-	eye_ImageR[1] = LoadGraph("images/Player/ワンパンマン目つむし右.png");
-	eye_ImageL[1] = LoadGraph("images/Player/ワンパンマン目つむし左.png");
+	eye_ImageR[1] = LoadGraph("images/Player/ワンパンマン目つむし右改良.png");
+	eye_ImageL[1] = LoadGraph("images/Player/ワンパンマン目つむし左改良.png");
 
 	//体
 	LoadDivGraph("images/Player/ワンパンマン画像顔無しグー.png", 10, 5, 2, 100, 100, image[0]);
