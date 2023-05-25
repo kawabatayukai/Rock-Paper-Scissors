@@ -372,6 +372,9 @@
     <ClCompile Include="Scene_NextStage.cpp">
       <Filter>ソース ファイル\Scene\ゲームクリア画面</Filter>
     </ClCompile>
+    <ClCompile Include="ranking.cpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractScene.h">
@@ -607,6 +610,9 @@
     </ClInclude>
     <ClInclude Include="Scene_NextStage.h">
       <Filter>ソース ファイル\Scene\ゲームクリア画面</Filter>
+    </ClInclude>
+    <ClInclude Include="ranking.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

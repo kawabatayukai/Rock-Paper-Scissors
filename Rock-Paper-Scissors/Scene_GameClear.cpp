@@ -16,7 +16,7 @@
 //コンストラクタ
 GameClearScene::GameClearScene(int Next):Next(Next)
 {
-	clearImage = LoadGraph("images/GameClear2.png");
+	clearImage = LoadGraph("images/GameClear3_1.png");
 	clear_se = LoadSoundMem("Sound/GameClear.mp3");
 	//clear_se
 	if (CheckSoundMem(clear_se) == 0) PlaySoundMem(clear_se, DX_PLAYTYPE_BACK);
@@ -43,7 +43,9 @@ void GameClearScene::Draw() const
 	DrawGraph(0, 0, clearImage, TRUE);
 
 	SetFontSize(50);
-	DrawFormatString(200,500, 0x000000,"スコア：%d ・ 残り時間：%d分%d秒", GameData::Get_Score(), GameData::Get_Each_Time_Min(), GameData::Get_Each_Time_Sec());
+	//DrawFormatString(200,500, 0x000000,"スコア：%d ・ 残り時間：%d分%d秒", GameData::Get_Score(), GameData::Get_Each_Time_Min(), GameData::Get_Each_Time_Sec());
+	DrawFormatString(520, 320, 0x000000, "ス コ ア ： %d ", GameData::Get_Score());
+	DrawFormatString(520, 420, 0x000000, "残り時間 ： %d分 %d秒", GameData::Get_Each_Time_Min(), GameData::Get_Each_Time_Sec());
 	SetFontSize(20);
 }
 

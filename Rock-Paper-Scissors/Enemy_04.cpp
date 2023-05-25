@@ -65,7 +65,7 @@ void Enemy_04::Update()
 			if (specialFlg == true)
 			{
 				enemy_x = GetRand(1080) + 100;
-				enemy_y = GetRand(390) + 150;
+				enemy_y = GetRand(340) + 150;
 			}
 			waitTime = 0;
 			current = moveinfo[current].next_index;
@@ -231,7 +231,7 @@ void Enemy_04::Update_Jangeki()
 		{
 			if (frame_count % 60 == 0)
 			{
-				Jan_360degrees(jan_count, radius * 0.8, speed * 0.7, type);
+				Jan_360degrees(jan_count, radius * 0.8, speed * 0.6, type);
 				SoundSystem::PlaySE(SE::ENEMY_SPECIAL_ATTACK);
 			}
 		}
@@ -360,10 +360,10 @@ void Enemy_04::Special_Action()
 //360ìxî≠éÀ
 void Enemy_04::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
 {
-	//20ìxÇ∏Ç¬18å¬ê∂ê¨
-	for (int i = count; i < (count + 18); i++)
+	//24ìxÇ∏Ç¬15å¬ê∂ê¨
+	for (int i = count; i < (count + 15); i++)
 	{
-		double angle = static_cast<double>((20.0 * i) * (M_PI / 180));
+		double angle = static_cast<double>((24.0 * i) * (M_PI / 180));
 
 		obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
 	}
