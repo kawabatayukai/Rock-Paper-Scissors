@@ -10,12 +10,15 @@ Jangeki_Bounds::Jangeki_Bounds(float x, float y, float r, float speed, Jan_Type 
 	count = 0;
 }
 
-Jangeki_Bounds::Jangeki_Bounds(float x, float y, float r, float speed,float angle,Jan_Type type)
+Jangeki_Bounds::Jangeki_Bounds(float x, float y, float r, float speed,float angle,Jan_Type type, int i)
 	:Jangeki_Base(x, y, r, speed, type), move_x(0), move_y(0)
 {
 	speed_y = speed;
 
-	count = 3;
+	if (i == 0)
+	{
+		count = 3;
+	}
 
 	//x,y方向のスピードを決める
 	this->speed = fabsf(speed) * cosf(static_cast<float>(angle));
@@ -25,7 +28,7 @@ Jangeki_Bounds::Jangeki_Bounds(float x, float y, float r, float speed,float angl
 void Jangeki_Bounds::Update()
 {
 	x += speed;
-	y += speed_y;
+	y -= speed_y;
 
 	if (x <= 20 + r)
 	{
@@ -38,7 +41,7 @@ void Jangeki_Bounds::Update()
 		speed = speed * -1;
 	}
 
-	if (y <= r)
+	else if (y <= r)
 	{
 		count += 1;
 		speed_y = speed_y * -1;

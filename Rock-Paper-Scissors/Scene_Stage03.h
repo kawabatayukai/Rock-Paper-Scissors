@@ -43,5 +43,5 @@ private:
 	int SlightlyBrokenSE;//少し壊れているとき
 	int Enemy_Janwin ;//エネミーのじゃんけん結果用
 	int Player_Janwin;//プレイヤーのじゃんけん結果用
-	int bgm;
+	int st03_bgm;
 };

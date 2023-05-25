@@ -65,20 +65,20 @@ Scene_Stage03::Scene_Stage03(const Player* player)
 	GameData::Set_TimeLimit(10860); //3分　//2分 ←　7200 % 3600
 
 	//BGMロード
-	bgm = LoadSoundMem("Sound/st03/St03BGM.wav");
+	st03_bgm = LoadSoundMem("Sound/st03/St03BGM.wav");
 }
 
 //デストラクタ
 Scene_Stage03::~Scene_Stage03()
 {
-	StopSoundMem(bgm);
+	StopSoundMem(st03_bgm);
 }
 
 //更新
 void Scene_Stage03::Update()
 {
 	//BGMを鳴らす
-	if (CheckSoundMem(bgm) == 0) PlaySoundMem(bgm, DX_PLAYTYPE_LOOP);
+	if (CheckSoundMem(st03_bgm) == 0) PlaySoundMem(st03_bgm, DX_PLAYTYPE_LOOP);
 
 
 	//接触じゃんけん開始前
