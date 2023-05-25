@@ -1,6 +1,5 @@
 #include"DxLib.h"
 #include"KeyManager.h"
-#include"Debug_Manager.h"
 #include"Scene_Title.h"
 #include"Scene_GameMain.h"
 #include"Scene_End.h"
@@ -8,7 +7,6 @@
 #include "Scene_Ranking.h"
 #include "Scene_Help.h"
 #include"GameData.h"
-#include"SoundSystem.h"
 #include"Scene_Story.h"
 #include "Scene_Title_GameLevel.h"
 #include"Scene_Ranking_GameLevel.h"
@@ -18,10 +16,11 @@
 int TitleScene::font_title;   //フォントハンドル
 
 //コンストラクタ
-TitleScene::TitleScene() : frame(0)
+TitleScene::TitleScene() : frame(0), obj_death(nullptr)
 {
-	TitleImage = LoadGraph("images/Title/Title.png");
+	TitleImage = LoadGraph("images/Title/TitleNoHead.png");
 	image_Eye = LoadGraph("images/Title/Eye.png");
+	image_head = LoadGraph("images/Title/Head.png");
 
 	//フォントデータを作成
 	if (font_title == 0)
@@ -40,6 +39,7 @@ TitleScene::TitleScene() : frame(0)
 TitleScene::~TitleScene()
 {
 	StopSoundMem(bgm);
+	delete obj_death;
 	
 }
 
@@ -65,6 +65,12 @@ void TitleScene::Update()
 		if (T_selectnum < 0) T_selectnum = 3;
 	}
 
+	if (KeyManager::OnPadClicked(PAD_INPUT_8))
+	{
+		if (obj_death == nullptr) obj_death = new Enemy_Death((366 + 102), (250 + 110), 99);
+	}
+	if (obj_death != nullptr) obj_death->Update();
+
 	if (frame++ > 180) frame = 0;
 }
 
@@ -72,7 +78,18 @@ void TitleScene::Update()
 void TitleScene::Draw() const
 {
 	DrawGraph(0, 0, TitleImage, FALSE);
-	if (frame >= 170 && frame < 180) DrawGraph(384, 300, image_Eye, TRUE);
+
+	//生首でない
+	if (obj_death == nullptr)
+	{
+		//通常ヘッド
+		DrawGraph(366, 250, image_head, TRUE);
+		if (frame >= 170 && frame < 180) DrawGraph(384, 300, image_Eye, TRUE);
+	}
+	else
+	{
+		obj_death->Draw();
+	}
 
 	DrawStringToHandle(70, 250, "START", 0xf, font_title);
 	DrawStringToHandle(70, 295, "HELP", 0xf, font_title);
@@ -81,9 +98,6 @@ void TitleScene::Draw() const
 
 	//メニューカーソル
 	DrawTriangle(40, 255 + (T_selectnum * 50), 60, 270 + (T_selectnum * 50), 40, 285 + (T_selectnum * 50), GetColor(255, 0, 0), TRUE);
-
-	//デバッグ
-	//DrawStringToHandle(10, 650, "RT + A で選択画面(開発)", 0xf, font_title);
 }
 
 //シーンの変更
