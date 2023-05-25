@@ -72,7 +72,7 @@ Janken::Janken(Jan_Type enemy_jan, const int stage_num)
 		break;
 
 	case 10:
-		image_enemy = LoadGraph("images/ステージ10敵の画像単体.png");
+		image_enemy = LoadGraph("images/stage10/ステージ10敵の画像単体.png");
 		image_back = 0;
 		break;
 
