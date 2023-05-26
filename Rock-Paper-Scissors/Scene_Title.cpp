@@ -21,6 +21,7 @@ TitleScene::TitleScene() : frame(0), obj_death(nullptr)
 	TitleImage = LoadGraph("images/Title/TitleNoHead.png");
 	image_Eye = LoadGraph("images/Title/Eye2.png");
 	image_head = LoadGraph("images/Title/Head.png");
+	image_death = LoadGraph("images/Title/Death.png");
 
 	//フォントデータを作成
 	if (font_title == 0)
@@ -84,7 +85,8 @@ void TitleScene::Draw() const
 	if (obj_death == nullptr)
 	{
 		//通常ヘッド
-		DrawGraph(366, 250, image_head, TRUE);
+		if(T_selectnum == 3) DrawGraph(366, 250, image_death, TRUE);
+		else DrawGraph(366, 250, image_head, TRUE);
 		if (frame >= 170 && frame < 180) DrawGraph(384, 300, image_Eye, TRUE);
 	}
 	else

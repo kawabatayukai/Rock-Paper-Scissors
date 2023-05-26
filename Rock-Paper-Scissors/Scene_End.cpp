@@ -4,18 +4,15 @@
 #include"Scene_GameMain.h"
 
 //コンストラクタ
-EndScene::EndScene() : framecount(0)
+EndScene::EndScene() : framecount(0), PosY(0)
 {
-
+	font = CreateFontToHandle("Yu Gothic UI", 24, 5, DX_FONTTYPE_ANTIALIASING_EDGE, -1, 2);
 }
 
 //デストラクタ
 EndScene::~EndScene()
 {
-	////エンド画像表示
-	//DrawGraph(0, 0, g_EndImage, FALSE);
-	 
-	
+	DeleteFontToHandle(font);
 }
 
 //更新
@@ -39,23 +36,23 @@ void EndScene::Draw() const
 	SetFontSize(70);
 	DrawString(220, 100 + PosY, "J A N K E N  W O R L D", 0xFFFFFF);
 	SetFontSize(24);
-	DrawString(300, 200 + PosY, "最終更新日　　2023年05月26日", 0xFFFFFF);
-	DrawString(550, 230 + PosY, "素材利用", 0xFFFFFF);
-	DrawString(300, 260 + PosY, "画像  ぴぽや倉庫 https://pipoya.net/sozai/", 0xFFFFFF);
-	DrawString(300, 290 + PosY, "画像  OKUMONO URL https://sozaino.site/", 0xFFFFFF);
-	DrawString(300, 320 + PosY, "画像  illustAC URL https://www.ac-illust.com/", 0xFFFFFF);
-	DrawString(300, 350 + PosY, "画像  いらすとや URL https://www.irasutoya.com/", 0xFFFFFF);
-	DrawString(300, 380 + PosY, "画像  Unishar-ユニシャー URL https://miyagame.net/wallpaper/", 0xFFFFFF);
-	DrawString(300, 410 + PosY, "画像  ぐったりにゃんこ URL http://guttari8.sakura.ne.jp/", 0xFFFFFF);
-	DrawString(300, 440 + PosY, "BGM/SE　MusMus URL https://musmus.main.jp", 0xFFFFFF);
-	DrawString(300, 470 + PosY, "BGM/SE　効果音ラボ URL https://soundeffect-lab.info/sound/battle/", 0xFFFFFF);
-	DrawString(300, 500 + PosY, "BGM/SE　springin URL https://www.springin.org/", 0xFFFFFF);
-	DrawString(300, 530 + PosY, "BGM/SE　無料効果音で遊ぼう！ URL https://taira-komori.jpn.org/index.html", 0xFFFFFF);
-	DrawString(300, 560 + PosY, "BGM/SE　魔王魂 URL https://maou.audio/", 0xFFFFFF);
-	DrawString(300, 590 + PosY, "BGM/SE　甘茶の音楽工房 URL https://amachamusic.chagasi.com/", 0xFFFFFF);
-	DrawString(300, 620 + PosY, "BGM/SE　ハシマミ URL https://hashimamiweb.com/", 0xFFFFFF);
-	DrawString(300, 650 + PosY, "BGM/SE　FREE BGM URL https://ucchii0artist.wixsite.com/ucchii0", 0xFFFFFF);
-	DrawString(300, 680 + PosY, "BGM/SE　DOVA-SYNDROME URL https://dova-s.jp/", 0xFFFFFF);
+	DrawStringToHandle(300, 200 + PosY, "最終更新日　　2023年05月26日", 0xFFFFFF,font);
+	DrawStringToHandle(550, 230 + PosY, "素材利用", 0xFFFFFF,font);
+	DrawStringToHandle(200, 260 + PosY, "画像  ぴぽや倉庫 https://pipoya.net/sozai/", 0xFFFFFF,font);
+	DrawStringToHandle(200, 290 + PosY, "画像  OKUMONO URL https://sozaino.site/", 0xFFFFFF,font);
+	DrawStringToHandle(200, 320 + PosY, "画像  illustAC URL https://www.ac-illust.com/", 0xFFFFFF,font);
+	DrawStringToHandle(200, 350 + PosY, "画像  いらすとや URL https://www.irasutoya.com/", 0xFFFFFF,font);
+	DrawStringToHandle(200, 380 + PosY, "画像  Unishar-ユニシャー URL https://miyagame.net/wallpaper/", 0xFFFFFF,font);
+	DrawStringToHandle(200, 410 + PosY, "画像  ぐったりにゃんこ URL http://guttari8.sakura.ne.jp/", 0xFFFFFF,font);
+	DrawStringToHandle(200, 440 + PosY, "BGM/SE　MusMus URL https://musmus.main.jp", 0xFFFFFF,font);
+	DrawStringToHandle(200, 470 + PosY, "BGM/SE　効果音ラボ URL https://soundeffect-lab.info/sound/battle/", 0xFFFFFF,font);
+	DrawStringToHandle(200, 500 + PosY, "BGM/SE　springin URL https://www.springin.org/", 0xFFFFFF,font);
+	DrawStringToHandle(200, 530 + PosY, "BGM/SE　無料効果音で遊ぼう！ URL https://taira-komori.jpn.org/index.html", 0xFFFFFF,font);
+	DrawStringToHandle(200, 560 + PosY, "BGM/SE　魔王魂 URL https://maou.audio/", 0xFFFFFF,font);
+	DrawStringToHandle(200, 590 + PosY, "BGM/SE　甘茶の音楽工房 URL https://amachamusic.chagasi.com/", 0xFFFFFF,font);
+	DrawStringToHandle(200, 620 + PosY, "BGM/SE　ハシマミ URL https://hashimamiweb.com/", 0xFFFFFF,font);
+	DrawStringToHandle(200, 650 + PosY, "BGM/SE　FREE BGM URL https://ucchii0artist.wixsite.com/ucchii0", 0xFFFFFF,font);
+	DrawStringToHandle(200, 680 + PosY, "BGM/SE　DOVA-SYNDROME URL https://dova-s.jp/", 0xFFFFFF,font);
 
 
 	//DrawFormatString(100, 600, 0xFFFFFF, "%f", framecount);

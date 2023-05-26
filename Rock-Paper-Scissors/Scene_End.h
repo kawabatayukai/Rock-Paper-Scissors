@@ -20,4 +20,6 @@ private:
 	int GameState = 0;
 	int WaitTime = 0;
 	int PosY;
+
+	int font;
 };
