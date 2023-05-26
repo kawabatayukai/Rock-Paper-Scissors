@@ -86,9 +86,10 @@ Scene_Stage08::Scene_Stage08(const Player* player) : damage(5)
 	Item[2] = new Item_st8(490, 260, 30);
 	Item[3] = new Item_st8(645, 550, 30);
 	Item[4] = new Item_st8(1190, 500, 30);
-
-	//BGMロード
+	
+	////BGMロード
 	bgm = LoadSoundMem("Sound/Stege8/technophobia.mp3");
+	ItemSound = LoadSoundMem("Sound/Stege8/stage8_Item.mp3");
 }
 
 //デストラクタ
@@ -399,6 +400,7 @@ void Scene_Stage08::Update()
 
 		if (obj_player->Hit_Jangeki(Item[i]) == true)
 		{
+			PlaySoundMem(ItemSound,DX_PLAYTYPE_BACK);
 			//当たった時
 			damage += 5;
 			item_ui = true;
@@ -466,7 +468,7 @@ void Scene_Stage08::Draw() const
 		{
 			float p_x = obj_player->GetX();
 			float p_y = obj_player->GetY();
-
+			//stage8_Item.mp3
 			DrawString(p_x, p_y - 55, "攻撃力UP↑", 0xff0000);
 		}
 
