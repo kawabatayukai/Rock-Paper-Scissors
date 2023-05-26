@@ -20,7 +20,7 @@
 #include"Scene_GameOver.h"
 
 #include"Scene_InputNameRanking.h"
-
+//#include "GameData.h"
 
 //コンストラクタ
 GameMainScene::GameMainScene()
@@ -111,6 +111,7 @@ AbstractScene* GameMainScene::ChangeScene()
 			break;
 
 		case 3:
+			//GameData::Set_DIFFICULTY(GAME_DIFFICULTY::HARD);
 			return dynamic_cast<AbstractScene*> (new Scene_Stage03());
 			break;
 
