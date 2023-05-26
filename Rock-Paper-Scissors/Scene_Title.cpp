@@ -65,9 +65,10 @@ void TitleScene::Update()
 		if (T_selectnum < 0) T_selectnum = 3;
 	}
 
-	if (KeyManager::OnPadClicked(PAD_INPUT_8))
+	//エンド画面
+	if (KeyManager::OnPadClicked(PAD_INPUT_A) && T_selectnum == 3 && obj_death == nullptr)
 	{
-		if (obj_death == nullptr) obj_death = new Enemy_Death((366 + 102), (250 + 110), 99);
+		obj_death = new Enemy_Death((366 + 102), (250 + 110), 99);
 	}
 	if (obj_death != nullptr) obj_death->Update();
 
@@ -122,14 +123,20 @@ AbstractScene* TitleScene::ChangeScene()
 		case 2: //ランキング画面
 			return dynamic_cast<AbstractScene*> (new Scene_Ranking_GameLevel());
 			break;
-		case 3: //エンド画面
-			return dynamic_cast<AbstractScene*> (new EndScene());
+		case 3: 
+			//
 			break;
 
 
 		default:
 			break;
 		}
+	}
+
+	//生首落下でエンド画面
+	if (obj_death != nullptr && obj_death->IsDeathEnd() == true)
+	{
+		return dynamic_cast<AbstractScene*> (new EndScene());
 	}
 
 	return this;  //更新なし
