@@ -108,6 +108,12 @@ Player::~Player()
 //更新
 void Player::Update()
 {
+	/*HPが0だったら0*/
+	if (this->hp < 0 || player_state == PLAYER_STATE::DEATH)
+	{
+		hp = 0;
+	}
+
 	//プレイヤーのHPが0以下の時または時間切れ、"死んだ"状態に
 	if (this->hp <= 0 || GameData::Get_Each_Time() <= 0) player_state = PLAYER_STATE::DEATH;
 
