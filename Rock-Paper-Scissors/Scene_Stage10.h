@@ -38,5 +38,9 @@ private:
 	int bgm[2];
 
 	int back_image;
+
+	int time;
+
+	int pushu_font;
 };
 

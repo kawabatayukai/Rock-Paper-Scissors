@@ -23,6 +23,11 @@ Scene_Stage10::Scene_Stage10(const Player* player)
 	//制限時間をセット
 	GameData::Set_TimeLimit(10800);
 
+	time = 0;
+
+	//フォントを作成
+	pushu_font = CreateFontToHandle("メイリオ", 40, 4, DX_FONTTYPE_ANTIALIASING_EDGE_4X4, -1, 1);
+
 	//プレイヤー情報が渡されていれば
 	if (player != nullptr)
 	{
@@ -67,6 +72,21 @@ Scene_Stage10::~Scene_Stage10()
 //更新
 void Scene_Stage10::Update()
 {
+	/*通常モード*/
+	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::NORMAL)
+	{
+		if (obj_enemy->Get_Enemy10Form() == 1) //第一形態
+		{
+			//制限時間をセット
+			time = GameData::Get_Each_Time();
+		}
+		if (obj_enemy->Get_Enemy10Form() == 1 && obj_enemy->IsDeathEnemy10() == true)
+		{
+			//制限時間をセット
+			GameData::Set_TimeLimit(time);
+		}
+	}
+
 	switch (obj_enemy->Get_Enemy10Form())
 	{
 		/***********
@@ -455,7 +475,7 @@ void Scene_Stage10::Draw() const
 
 		if (counter++ < 30)
 		{
-			DrawString(550, 350, "-- Press  A  Button --", 0xffffffff);
+			DrawStringToHandle(400, 350, "-- Press  A  Button --", 0xffffff, pushu_font);
 		}
 		else if (counter > 60)  counter = 0;
 	}
