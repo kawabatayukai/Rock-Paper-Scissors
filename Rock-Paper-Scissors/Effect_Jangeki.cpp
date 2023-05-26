@@ -3,15 +3,14 @@
 
 //コンストラクタ
 Effect_Jangeki::Effect_Jangeki(float play_x, float play_y, Jan_Type type, _CHAR_TYPE character)
-	: play_x(play_x), play_y(play_y), character(character)
-	, frame_count(0), index_effect(0), index_max(0), image_effect(nullptr), finish_effect(false)
+	: play_x(play_x), play_y(play_y), character(character), image_sub(0), image_effect{}
+	, frame_count(0), index_effect(0), index_max(0),  finish_effect(false)
 	, rotation(0.0)
 {
 	if (character != _CHAR_TYPE::NOT_CHARA)
 	{
 		//最大数セット
 		index_max = 10;
-		image_effect = new int[index_max];
 		int image_size = 120;
 
 		//エフェクト
@@ -46,7 +45,7 @@ Effect_Jangeki::Effect_Jangeki(float play_x, float play_y, Jan_Type type, _CHAR_
 			break;
 
 		case Jan_Type::NONE:
-			LoadDivGraph("images/Effect/janeffectYellow.png", 10, 10, 1, image_size, image_size, image_effect);
+			//LoadDivGraph("images/Effect/janeffectYellow.png", 10, 10, 1, image_size, image_size, image_effect);
 			break;
 
 		default:
@@ -57,7 +56,6 @@ Effect_Jangeki::Effect_Jangeki(float play_x, float play_y, Jan_Type type, _CHAR_
 	{ 
 		//最大数セット
 		index_max = 10;
-		image_effect = new int[index_max];
 		int image_size = 192;
 
 		switch (type)
@@ -83,13 +81,15 @@ Effect_Jangeki::Effect_Jangeki(float play_x, float play_y, Jan_Type type, _CHAR_
 //デストラクタ
 Effect_Jangeki::~Effect_Jangeki()
 {
-	delete[] image_effect;
 }
 
 //更新
 void Effect_Jangeki::Update()
 {
-	int pct = character == _CHAR_TYPE::NOT_CHARA ? 2 : 3;
+	int pct = 2;
+
+	if (character == _CHAR_TYPE::NOT_CHARA) pct = 2;
+	else pct = 3;
 
 	if (++frame_count % pct == 0)
 	{
