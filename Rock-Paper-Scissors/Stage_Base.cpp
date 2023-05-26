@@ -258,6 +258,7 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 			obj_janken = new Janken(enemy_janken, my_StageNum);
 
 			//SE初期化
+
 			se_Janken = nullptr;
 			se_count = 0;
 		}
@@ -296,7 +297,11 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 			else if (result == Jan_Result::LOSE)
 				se_Janken = new Sound_Janken(SE_JANKEN::JANKEN_LOSE);
 			else if (result == Jan_Result::ONEMORE)
+			{
 				se_Janken = new Sound_Janken(SE_JANKEN::JANKEN_AIKO);
+				se_Janken->Play();
+			}
+				
 			else {}
 			se_count++;
 		}
@@ -374,9 +379,16 @@ void Stage_Base::Touch_Janken(EnemyBase* enemy, Stage_Base* stage_ptr, int my_St
 
 				//じゃんけんオブジェクト生成
 				obj_janken = new Janken(enemy_janken, my_StageNum);
+				
 
 				//じゃんけん開始
 				j_state = Jan_State::PROGRESS;
+				if (se_Janken != nullptr)
+				{
+					delete se_Janken;
+					se_Janken = nullptr;
+				}
+				se_count = 0;
 
 				break;
 			}

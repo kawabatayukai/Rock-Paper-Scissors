@@ -37,20 +37,18 @@ Sound_Janken::Sound_Janken(const SE_JANKEN& se_type)
 	default:
 		break;
 	}
+
+	PlaySoundMem(play_se, DX_PLAYTYPE_BACK);
 }
 
 Sound_Janken::~Sound_Janken()
 {
-	DeleteSoundMem(play_se);
+	StopSoundMem(play_se);
 }
 
 //Update
 void Sound_Janken::Play()
 {
-	if (CheckSoundMem(play_se) == 0)
-	{
-		PlaySoundMem(play_se, DX_PLAYTYPE_BACK);
-	}
 	time_count++;
 }
 
