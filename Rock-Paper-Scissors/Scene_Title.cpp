@@ -19,7 +19,7 @@ int TitleScene::font_title;   //フォントハンドル
 TitleScene::TitleScene() : frame(0), obj_death(nullptr)
 {
 	TitleImage = LoadGraph("images/Title/TitleNoHead.png");
-	image_Eye = LoadGraph("images/Title/Eye.png");
+	image_Eye = LoadGraph("images/Title/Eye2.png");
 	image_head = LoadGraph("images/Title/Head.png");
 
 	//フォントデータを作成

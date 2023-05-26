@@ -1,4 +1,5 @@
 #pragma once
+#include<iostream>
 
 #define RANKING_DATA_COLUMN 10
 #define RANKING_DATA_ROW 5
@@ -60,6 +61,12 @@ public:
 	//難易度セット
 	static void Set_DIFFICULTY(GAME_DIFFICULTY game_diff);
 
+	//プレイヤー名取得
+	static std::string GetPlayerName();
+
+	//プレイヤー名セット
+	static void SetPlayerName(const std::string& name);
+
 private:
 	GameData();     //オブジェクトは作れない
 
@@ -73,4 +80,6 @@ private:
 
 	static int each_stage_time;        //各ステージの制限時間
 	static int c_time_limit;           //制限時間（最大）
+
+	static std::string player_name;    //プレイヤー名前
 };
