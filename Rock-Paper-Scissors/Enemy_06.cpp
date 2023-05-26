@@ -300,7 +300,7 @@ void Enemy_06::Update_Jangeki()
 			if (attack_pattern == 2 && GetSpeed() == 8.0f && GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
 			{
 				//プレイヤー方向に向かって発射されるジャン撃の生成
-				if (frame_count % 30 == 0) obj_jangeki[jan_count] =
+				if (frame_count % 50 == 0) obj_jangeki[jan_count] =
 					new Jangeki_Coming(x, y, radius, speed + 10.0f, type, player_x, player_y);
 			}
 			//特殊行動時の弾(speed = 10.0f  frame_count % 50)
