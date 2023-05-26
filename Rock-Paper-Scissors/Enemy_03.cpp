@@ -783,7 +783,7 @@ void Enemy_03::Update_Jangeki()
 				Jan_Type type = static_cast<Jan_Type>(GetRand(0));//グーのみ
 
 				//バウンド弾
-				if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
+				if (frame_count % 95 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
 
 			}
 			//HPが85以下で46以上の時
