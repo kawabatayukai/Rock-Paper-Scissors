@@ -43,6 +43,7 @@ private:
 	bool Player_Janwin = false;
 	bool item_ui = false;
 	int count = 0;
+	int ItemSound;
 
 };
 
