@@ -410,60 +410,69 @@ void Scene_Stage03::Update()
 		//じゃん撃との当たり判定
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
+			///////////
+			//ハード///
+			///////////
 			if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD){
 
 				//エネミーのHPが45以下の場合25ダメージ食らう
+				//追尾弾
 				if (obj_enemy->GetHP() <= 45) {
 
 					//半径が50.0fの場合のダメージ
 					float radius = 50.0f;
 
-					if (radius >= 50.0f) {
+					if (radius == 50.0f) {
 
-						obj_player->ReceiveDamage(25 - PlayerCutDamege) ;
+						obj_player->ReceiveDamage(20 - PlayerCutDamege) ;
 					}
 				}
 
 				if (obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 45) {
-
+					//反射弾
 					//半径が25.5fの場合のダメージ
 					float radius = 25.5f;
 
-					if (radius >= 25.5f) {
+					if (radius == 25.5f) {
 
 						obj_player->ReceiveDamage(15 - PlayerCutDamege);
 
 					}
 				}
 
-					//それ以外
-					//通常時のダメージを受ける（プレイヤー）
-					else obj_player->ReceiveDamage(15 - PlayerCutDamege);
+				//それ以外
+				//通常時のダメージを受ける（プレイヤー）
+				else obj_player->ReceiveDamage(15 - PlayerCutDamege);	
 
 				
 			}
+			///////////
+			//ノーマル
+			///////////
 			else if(GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::NORMAL){
 
 				//エネミーのHPが45以下の場合25ダメージ食らう
+				//バウンド弾
 				if (obj_enemy->GetHP() <= 45) {
 
 					//半径が50.0fの場合のダメージ
 					float radius = 35.5f;
 
-					if (radius >= 35.5f) {
+					if (radius == 35.5f) {
 
-						obj_player->ReceiveDamage(13 - PlayerCutDamege);
+						obj_player->ReceiveDamage(5 - PlayerCutDamege);
 					}
 				}
 				
 				if(obj_enemy->GetHP() <= 85 && obj_enemy->GetHP() >= 45 ){
 
 					//半径が25.5fの場合のダメージ
+					//反射
 					float radius = 25.5f;
 
-					if (radius >= 25.5f) {
+					if (radius == 25.5f) {
 
-						obj_player->ReceiveDamage(15 - PlayerCutDamege);
+						obj_player->ReceiveDamage(12 - PlayerCutDamege);
 						
 					}
 				}
@@ -475,9 +484,7 @@ void Scene_Stage03::Update()
 					
 			}
 		
-			
-
-			
+		
 			//あたったじゃん撃を削除
 			obj_enemy->DeleteJangeki(i);
 			i--;
@@ -633,9 +640,17 @@ void Scene_Stage03::AfterJanken_WIN()
 	Player_Janwin = 1;
 
 
+	//エネミーのHPが45以下の場合25ダメージ食らう
+	if (obj_enemy->GetHP() <= 45) {
+
+		//じゃんけん勝利時
+		PlayerCutDamege = 3;
+
+
+	}
 	//じゃんけん勝利時
-	PlayerCutDamege = 10;
-	
+	else PlayerCutDamege = 10;
+
 	obj_player->SetX(200);
 	
 	
