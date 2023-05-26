@@ -49,6 +49,7 @@ Enemy_09::~Enemy_09()
 //更新
 void Enemy_09::Update()
 {
+	
 	//じゃん撃更新・生成
 	Update_Jangeki();
 	reflection->Update_reflection();
@@ -56,6 +57,19 @@ void Enemy_09::Update()
 	if (Spflg == false)MoveEnmey_09();
 	else  SpecialMoveEnmey();
 
+	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
+	{
+		if (hp == 40 && a == 0)
+		{
+			Spflg = true;
+			a = 1;
+		}
+		if (hp ==1 && a == 1)
+		{
+			Spflg = true;
+			a = 2;
+		}
+	}
 
 }
 
@@ -201,7 +215,10 @@ void Enemy_09::Jan_360degrees()
 			Jan_Type type = static_cast<Jan_Type>(GetRand(2));
 			double angle = static_cast<double>((30.0 * i) * (M_PI / 70));
 
+			if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
 			obj_jangeki[i] = new Jangeki_Bounds(x, y, radius, speed, angle, type);
+			else 
+			obj_jangeki[i] = new Jangeki_Base(x, y, radius, speed, angle, type);
 
 			if (Rand() == SPcount)
 			{
@@ -241,11 +258,17 @@ void Enemy_09::Jan_40degrees()
 			if (GetHP() <= 51)
 			{
 				type = static_cast<Jan_Type>(GetRand(2));
+				if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
 				obj_jangeki[i] = new Jangeki_Bounds(x, y, radius, speed, angle, type);
+
+				else obj_jangeki[i] = new Jangeki_Base(x, y, radius, speed, angle, type);
 			}
 			else
 			{
-				obj_jangeki[i] = new Jangeki_Base(x, y, radius, speed, angle, type);
+				if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
+				obj_jangeki[i] = new Jangeki_Bounds(x, y, radius, speed, angle, type);
+
+				else obj_jangeki[i] = new Jangeki_Base(x, y, radius, speed, angle, type);
 			}
 
 		}

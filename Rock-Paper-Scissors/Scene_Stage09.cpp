@@ -97,6 +97,8 @@ void Scene_Stage09::Update()
 	Touch_Janken(obj_enemy, this, 9, no_hit);
 	Effect_Update_HitJangeki(obj_enemy, obj_enemy->reflection);
 
+	
+
 
 	//player‚Ì‚¶‚á‚ñŒ‚‚ð‚Æ‚Á‚Ä‚­‚é
 	Jangeki_Base** player_jangeki = obj_player->GetJangeki();
