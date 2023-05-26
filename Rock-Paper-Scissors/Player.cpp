@@ -350,14 +350,13 @@ void Player::HeadDrawMove() const
 
 	int x = static_cast<int>(this->x);
 	int y = static_cast<int>(this->y);
+
 	/*HPが半分以上の時*/
 	if (this->hp > 50)
 	{
 		/*右向き*/
 		if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 0)
 		{
-			//DrawRotaGraph(x + 3, y - 22, 1.0f, M_PI, head_Image[0], TRUE);
-
 			/*躍動感*/
 			static int st = 0;
 			switch (st)
@@ -396,10 +395,6 @@ void Player::HeadDrawMove() const
 		{
 			DrawRotaGraph(x + 5, y - 17, 1.0f, M_PI, head_Image[0], TRUE);
 		}
-		/*else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == false) //ジャンプの時
-		{
-			DrawRotaGraph(x + 3, y - 22, 1.0f, M_PI, head_Image[0], TRUE);
-		}*/
 
 		/*左向き*/
 		if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 5)
@@ -444,10 +439,6 @@ void Player::HeadDrawMove() const
 		{
 			DrawRotaGraph(x - 5, y - 17, 1.0f, 0, head_Image[1], TRUE);
 		}
-		/*else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == false) //ジャンプの時
-		{
-			DrawRotaGraph(x - 3, y - 22, 1.0f, 0, head_Image[1], TRUE);
-		}*/
 	}
 	/*HPが半分以下の時*/
 	else if (this->hp <= 50)
@@ -536,56 +527,6 @@ void Player::HeadDrawMove() const
 			DrawRotaGraph(x - 5, y - 17, 1.0f, 0, head_Image[3], TRUE);
 		}
 	}
-
-	///*********************
-	//*                    *
-	//*   頭の描画・動き   *
-	//*                    *
-	//*********************/
-
-	/*右向き*/
-	/*if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 0)
-	{
-		DrawRotaGraph(x + 3, y - 22, 1.0f, M_PI - jan_angle, head_Image[0], TRUE);
-	}
-	 if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 1)
-	{
-		DrawRotaGraph(x + 3, y - 19, 1.0f, M_PI - jan_angle, head_Image[0], TRUE);
-	}
-	 if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 2)
-	{
-		DrawRotaGraph(x - 7, y - 19, 1.0f, M_PI - jan_angle, head_Image[0], TRUE);
-	}
-	 if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 3)
-	{
-		DrawRotaGraph(x + 5, y - 17, 1.0f, M_PI - jan_angle, head_Image[0], TRUE);
-	}*/
-	/*if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == false) //ジャンプの時
-	{
-		DrawRotaGraph(x + 3, y - 22, 1.0f, M_PI, head_Image[0], TRUE);
-	}*/
-
-	/*左向き*/
-	/*if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 5)
-	{
-		DrawRotaGraph(x - 3, y - 22, 1.0f, M_PI - jan_angle, head_Image[1], TRUE);
-	}
-	 if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 6)
-	{
-		DrawRotaGraph(x - 3, y - 19, 1.0f, M_PI - jan_angle, head_Image[1], TRUE);
-	}
-	 if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 7)
-	{
-		DrawRotaGraph(x + 7, y - 19, 1.0f, M_PI - jan_angle, head_Image[1], TRUE);
-	}
-	 if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 8)
-	{
-		DrawRotaGraph(x - 5, y - 17, 1.0f, M_PI - jan_angle, head_Image[1], TRUE);
-	}*/
-	/*if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == false) //ジャンプの時
-	{
-		DrawRotaGraph(x - 3, y - 22, 1.0f, 0, head_Image[1], TRUE);
-	}*/
 }
 
 /*目の描画・動き*/
@@ -677,31 +618,7 @@ void Player::EyeDrawMove() const
 	else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 1)
 	{
 		DrawRotaGraph(x + 6, y - 25, 1.0f, M_PI, eye_ImageR[0], TRUE);
-		/*瞬き感*/
-		//static int st = 0;
-		//switch (st)
-		//{
-		//case 0:
-		//	if (playerCount % 100 != 0) //10フレーム毎の処理
-		//	{
-		//		DrawRotaGraph(x + 6, y - 25, 1.0f, M_PI, eye_ImageR[0], TRUE);
-		//	}
-		//	else
-		//	{
-		//		st = 1;
-		//	}
-		//	break;
-		//case 1:
-		//	if (playerCount % 10 != 0) //10フレーム毎の処理
-		//	{
-		//		DrawRotaGraph(x + 6, y - 25, 1.0f, M_PI, eye_ImageR[1], TRUE);
-		//	}
-		//	else
-		//	{
-		//		st = 0;
-		//	}
-		//	break;
-		//}
+	
 	}
 	else if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 2)
 	{
@@ -798,263 +715,6 @@ void Player::EyeDrawMove() const
 	{
 		DrawRotaGraph(x - 9, y - 23, 1.0f, 0, eye_ImageL[0], TRUE);
 	}
-
-	///*********************
-	//*                    *
-	//*       瞬きこみ     *
-	//*                    *
-	//*********************/
-
-	/*static int st = 0;
-	static int stk = 0;
-	static int stky = 0;*/
-
-	/*右向き*/
-	//if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true)
-	//{
-	//	//static int st = 0;
-	//	//static int stk = 0;
-	//	if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 0)
-	//	{
-	//		/*瞬き感*/
-	//		switch (st)
-	//		{
-	//		case 0:
-	//			if (playerCount % 200 != 0) //頭フレームの処理
-	//			{
-	//				switch (stk)
-	//				{
-	//				case 0:
-	//					if (playerCount % 120 != 0) //目フレームの処理
-	//					{
-	//						DrawRotaGraph(x + 6, y - 28, 1.0f, M_PI, eye_ImageR[0], TRUE);
-	//					}
-	//					else
-	//					{
-	//						stk = 1;
-	//					}
-	//					break;
-	//				case 1:
-	//					if (playerCount % 10 != 0) //目フレームの処理
-	//					{
-	//						DrawRotaGraph(x + 6, y - 28, 1.0f, M_PI, eye_ImageR[1], TRUE);
-	//					}
-	//					else
-	//					{
-	//						stk = 0;
-	//					}
-	//					break;
-	//				}
-	//			}
-	//			else
-	//			{
-	//				st = 1;
-	//			}
-	//			break;
-	//		case 1:
-	//			if (playerCount % 50 != 0) //頭フレームの処理
-	//			{
-	//				switch (stk)
-	//				{
-	//				case 0:
-	//					if (playerCount % 120 != 0) //目フレームの処理
-	//					{
-	//						DrawRotaGraph(x + 6, y - 24, 1.0f, M_PI, eye_ImageR[0], TRUE);
-	//					}
-	//					else
-	//					{
-	//						stk = 1;
-	//					}
-	//					break;
-	//				case 1:
-	//					if (playerCount % 10 != 0) //目フレームの処理
-	//					{
-	//						DrawRotaGraph(x + 6, y - 24, 1.0f, M_PI, eye_ImageR[1], TRUE);
-	//					}
-	//					else
-	//					{
-	//						stk = 0;
-	//					}
-	//					break;
-	//				}
-	//			}
-	//			else
-	//			{
-	//				st = 0;
-	//			}
-	//			break;
-	//		}
-	//	}
-	//	switch (stky)
-	//	{
-	//	case 0:
-	//		if (playerCount2 % 120 != 0) //目フレームの処理
-	//		{
-	//			if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 1)
-	//			{
-	//				DrawRotaGraph(x + 6, y - 25, 1.0f, M_PI, eye_ImageR[0], TRUE);
-	//			}
-	//			if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 2)
-	//			{
-	//				DrawRotaGraph(x - 3, y - 25, 1.0f, M_PI, eye_ImageR[0], TRUE);
-	//			}
-	//			if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 3)
-	//			{
-	//				DrawRotaGraph(x + 9, y - 23, 1.0f, M_PI, eye_ImageR[0], TRUE);
-	//			}
-	//		}
-	//		else
-	//		{
-	//			stky = 1;
-	//		}
-	//		break;
-	//	case 1:
-	//		if (playerCount2 % 10 != 0) //目フレームの処理
-	//		{
-	//			if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 1)
-	//			{
-	//				DrawRotaGraph(x + 6, y - 25, 1.0f, M_PI, eye_ImageR[1], TRUE);
-	//			}
-	//			if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 2)
-	//			{
-	//				DrawRotaGraph(x - 3, y - 25, 1.0f, M_PI, eye_ImageR[1], TRUE);
-	//			}
-	//			if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && player_Image == 3)
-	//			{
-	//				DrawRotaGraph(x + 9, y - 23, 1.0f, M_PI, eye_ImageR[1], TRUE);
-	//			}
-	//		}
-	//		else
-	//		{
-	//			stky = 0;
-	//		}
-	//		break;
-	//	}
-	//}
-	///*左向き*/
-	//if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true)
-	//{
-	//	//static int st = 0;
-	//	//static int stk = 0;
-	//	if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 5)
-	//	{
-	//		/*瞬き感*/
-	//		static int st = 0;
-	//		static int stk = 0;
-	//		switch (st)
-	//		{
-	//		case 0:
-	//			if (playerCount % 200 != 0) //頭フレームの処理
-	//			{
-	//				switch (stk)
-	//				{
-	//				case 0:
-	//					if (playerCount % 120 != 0) //目フレームの処理
-	//					{
-	//						DrawRotaGraph(x - 6, y - 28, 1.0f, 0, eye_ImageL[0], TRUE);
-	//					}
-	//					else
-	//					{
-	//						stk = 1;
-	//					}
-	//					break;
-	//				case 1:
-	//					if (playerCount % 10 != 0) //目フレームの処理
-	//					{
-	//						DrawRotaGraph(x - 6, y - 28, 1.0f, 0, eye_ImageL[1], TRUE);
-	//					}
-	//					else
-	//					{
-	//						stk = 0;
-	//					}
-	//					break;
-	//				}
-	//			}
-	//			else
-	//			{
-	//				st = 1;
-	//			}
-	//			break;
-	//		case 1:
-	//			if (playerCount % 50 != 0) //頭フレームの処理
-	//			{
-	//				switch (stk)
-	//				{
-	//				case 0:
-	//					if (playerCount % 120 != 0) //目フレームの処理
-	//					{
-	//						DrawRotaGraph(x - 6, y - 24, 1.0f, 0, eye_ImageL[0], TRUE);
-	//					}
-	//					else
-	//					{
-	//						stk = 1;
-	//					}
-	//					break;
-	//				case 1:
-	//					if (playerCount % 10 != 0) //目フレームの処理
-	//					{
-	//						DrawRotaGraph(x - 6, y - 24, 1.0f, 0, eye_ImageL[1], TRUE);
-	//					}
-	//					else
-	//					{
-	//						stk = 0;
-	//					}
-	//					break;
-	//				}
-	//			}
-	//			else
-	//			{
-	//				st = 0;
-	//			}
-	//			break;
-	//		}
-	//	}
-	//	switch (stky)
-	//	{
-	//	case 0:
-	//		if (playerCount2 % 120 != 0) //目フレームの処理
-	//		{
-	//			if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 6)
-	//			{
-	//				DrawRotaGraph(x - 6, y - 25, 1.0f, 0, eye_ImageL[0], TRUE);
-	//			}
-	//			if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 7)
-	//			{
-	//				DrawRotaGraph(x + 3, y - 25, 1.0f, 0, eye_ImageL[0], TRUE);
-	//			}
-	//			if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 8)
-	//			{
-	//				DrawRotaGraph(x - 9, y - 23, 1.0f, 0, eye_ImageL[0], TRUE);
-	//			}
-	//		}
-	//		else
-	//		{
-	//			stky = 1;
-	//		}
-	//		break;
-	//	case 1:
-	//		if (playerCount2 % 10 != 0) //目フレームの処理
-	//		{
-	//			if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 6)
-	//			{
-	//				DrawRotaGraph(x - 6, y - 25, 1.0f, 0, eye_ImageL[1], TRUE);
-	//			}
-	//			if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 7)
-	//			{
-	//				DrawRotaGraph(x + 3, y - 25, 1.0f, 0, eye_ImageL[1], TRUE);
-	//			}
-	//			if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && player_Image == 8)
-	//			{
-	//				DrawRotaGraph(x - 9, y - 23, 1.0f, 0, eye_ImageL[1], TRUE);
-	//			}
-	//		}
-	//		else
-	//		{
-	//			stky = 0;
-	//		}
-	//		break;
-	//	}
-	//}
 }
 
 /*腕の描画・動き*/
@@ -1406,26 +1066,6 @@ void  Player::PlayerSwitch()
 			playerChange_Image = 0; //動いてないとき用
 			break;
 		}
-
-		/*自動画像変更*/
-		//if (dir == static_cast<int>(DIRECTION::RIGHT) && land_flg == true && x > old_x)
-		//{
-		//	playerGetMove = 1;      //画像を取得
-		//	playerCount++;          //フレームカウントを増やす
-		//	PlayerChangeMoveimg();  //画像変更へ
-		//	pCount = 0;             //動いてないとき用
-		//	playerChange_Image = 0; //動いてないとき用
-		//	break;
-		//}
-		//else if (dir == static_cast<int>(DIRECTION::LEFT) && land_flg == true && x > old_x)
-		//{
-		//	playerGetMove = 6;      //画像を取得
-		//	playerCount++;          //フレームカウントを増やす
-		//	PlayerChangeMoveimg();  //画像変更へ
-		//	pCount = 5;             //動いてないとき用
-		//	playerChange_Image = 0; //動いてないとき用
-		//	break;
-		//}
 
 		/*ジャンプの時*/
 		/*         右向き         非接地     */
