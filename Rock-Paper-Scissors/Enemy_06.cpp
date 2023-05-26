@@ -4,6 +4,7 @@
 #include"Jangeki_Base.h"
 #include"Jangeki_Coming.h"
 #include"SoundSystem.h"
+#include "GameData.h"
 
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_06::Enemy_06(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 100.0f, type)
@@ -295,8 +296,15 @@ void Enemy_06::Update_Jangeki()
 					new Jangeki_Coming(x, y, radius, speed + 2.0f, type, player_x, player_y);
 			}
 
+			//ExtraJankenモード時の弾(speed = 10.0f  frame_count % 30)
+			if (attack_pattern == 2 && GetSpeed() == 8.0f && GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
+			{
+				//プレイヤー方向に向かって発射されるジャン撃の生成
+				if (frame_count % 30 == 0) obj_jangeki[jan_count] =
+					new Jangeki_Coming(x, y, radius, speed + 10.0f, type, player_x, player_y);
+			}
 			//特殊行動時の弾(speed = 10.0f  frame_count % 50)
-			if (attack_pattern == 2 && GetSpeed() == 8.0f)
+			else if (attack_pattern == 2 && GetSpeed() == 8.0f)
 			{
 				//プレイヤー方向に向かって発射されるジャン撃の生成
 				if (frame_count % 50 == 0) obj_jangeki[jan_count] =
@@ -676,6 +684,11 @@ void Enemy_06::AttackPattern_2()
 //行動ループ3
 void Enemy_06::AttackPattern_3()
 {
+	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
+	{
+		speed = 8.0f;
+	}
+
 	//床ごとの処理
 	switch (floor)
 	{
