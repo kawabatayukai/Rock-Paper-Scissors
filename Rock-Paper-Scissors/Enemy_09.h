@@ -33,6 +33,8 @@ public:
 	int Rand();
 
 	bool Spflg = true;  //特殊行動フラグ
+	int a = 0;
+
 	bool animflg = false;	//アニメーションフラグ
 	bool ranimflg = false; //反射アニメーション
 	bool Ranimflg = false;	//再再生用
