@@ -44,7 +44,7 @@ void  SoundSystem::LoadSounds_SE()
 	/*ステージ7*/
 
 	/*ステージ8*/
-	se_sounds.push_back(LoadSoundMem("Sound/stage08/technophobia.mp3"));
+	//se_sounds.push_back(LoadSoundMem("Sound/Stage8/stage8_Item.mp3"));
 	/*ステージ9*/
 	se_sounds.push_back(LoadSoundMem("Sound/stage09/teleport.mp3"));
 	se_sounds.push_back(LoadSoundMem("Sound/stage09/reflection.mp3"));
