@@ -39,6 +39,11 @@ private:
 
 	int damage;
 	int bgm;
+
+	bool Player_Janwin = false;
+	bool item_ui = false;
+	int count = 0;
+
 };
 
 

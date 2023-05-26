@@ -12,6 +12,8 @@ int GameData::total_time;        //総合時間
 int GameData::each_stage_time;   //各ステージの制限時間
 int GameData::c_time_limit;      //制限時間（固定）
 
+std::string GameData::player_name = "NoName";
+
 GAME_DIFFICULTY GameData::game_Diff;
 
 //初期化
@@ -19,7 +21,11 @@ void GameData::Init_Data()
 {
 	g_score = 0;
 	max_score = 0;
+	pierced_count = 0;
 	total_time = 0;
+	c_time_limit = 0;
+	player_name = "NoName";
+	game_Diff = GAME_DIFFICULTY::NORMAL;
 }
 
 //スコア加算
@@ -145,9 +151,20 @@ void GameData::Set_DIFFICULTY(GAME_DIFFICULTY game_diff)
 {
 	game_Diff = game_diff;
 }
-
 /*難易度*/
 GAME_DIFFICULTY GameData::Get_DIFFICULTY()
 {
 	return game_Diff;
+}
+
+//プレイヤー名取得
+std::string GameData::GetPlayerName()
+{
+	return player_name;
+}
+
+//プレイヤー名セット
+void GameData::SetPlayerName(const std::string& name)
+{
+	player_name = name;
 }

@@ -114,6 +114,18 @@ void Scene_Stage08::Update()
 			cannon[a]->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());	//プレイヤーの座標を取得
 		}	
 
+		if(Player_Janwin==true)
+		{
+			count++;
+			if (count % 120 == 0)Player_Janwin = false;
+		}
+			
+		if (item_ui == true)
+		{
+			count++;
+			if (count % 120 == 0)item_ui = false;
+		}
+
 		//cannon[a]->SetPlayerLocation(obj_player->GetX(), obj_player->GetY());	//プレイヤーの座標を取得
 		GameData::Time_Update();
 	}
@@ -371,7 +383,7 @@ void Scene_Stage08::Update()
 			if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 			{
 				//ダメージを受ける（プレイヤー）
-				obj_player->ReceiveDamage(3);
+				obj_player->ReceiveDamage(5);
 
 				//あたったじゃん撃を削除
 				cannon[a]->DeleteJangeki(i);
@@ -388,7 +400,8 @@ void Scene_Stage08::Update()
 		if (obj_player->Hit_Jangeki(Item[i]) == true)
 		{
 			//当たった時
-			damage += 3;
+			damage += 5;
+			item_ui = true;
 
 			delete Item[i];
 			Item[i] = nullptr;
@@ -425,7 +438,6 @@ void Scene_Stage08::Draw() const
 	DrawUI(obj_enemy->GetType(), obj_enemy->GetHP());
 	DrawUI_ON_Enemy(obj_enemy);
 
-
 	//接触じゃんけんでない時
 	if (GetJanState() == Jan_State::START || GetJanState() == Jan_State::BEFORE)
 	{
@@ -449,6 +461,25 @@ void Scene_Stage08::Draw() const
 
 			Item[i]->Draw();
 		}
+
+		if (item_ui == true)
+		{
+			float p_x = obj_player->GetX();
+			float p_y = obj_player->GetY();
+
+			DrawString(p_x, p_y - 55, "攻撃力UP↑", 0xff0000);
+		}
+
+
+		//じゃんけん負けた時
+		if (Player_Janwin == true)
+		{
+			float p_x = obj_player->GetX();
+			float p_y = obj_player->GetY();
+
+			DrawString(p_x, p_y - 55, "攻撃力UP↑", 0xff0000);
+		}
+
 
 		//接触した瞬間の演出
 		if (GetJanState() == Jan_State::START) Draw_JankenStart();
@@ -502,6 +533,7 @@ void Scene_Stage08::AfterJanken_WIN()
 {
 	obj_player->SetX(100);
 	damage += 2;
+	Player_Janwin = true;
 }
 
 //じゃんけん終了後の挙動（プレイヤー負け）

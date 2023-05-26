@@ -52,7 +52,7 @@ Scene_Stage10::Scene_Stage10(const Player* player)
 	bgm[0] = LoadSoundMem("Sound/stage10/stage10.wav");
 	bgm[1] = LoadSoundMem("Sound/stage10/stage10_2.wav");
 
-	back_image = LoadGraph("images/建物.png");
+	back_image = LoadGraph("images/Stage10/建物.png");
 }
 
 //デストラクタ
