@@ -29,7 +29,7 @@ protected:
 	unsigned int index_effect;     //配列操作
 	unsigned int index_max;        //画像最大数
 	
-	int* image_effect;             //エフェクト画像
+	int image_effect[10];          //エフェクト画像
 	int image_sub;                 //サブエフェクト
 	double rotation;               //回転率
 

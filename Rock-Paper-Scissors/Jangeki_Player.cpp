@@ -17,7 +17,7 @@ Jangeki_Player::Jangeki_Player(float x, float y, float r, float speed, double an
 	 frame_count(0), index_jangeki(1), rate_pct(200.0), index_effect(0), index_max(0), turn_effect(0.0)
 {
 	//エフェクトを読み込んでおく
-	index_max = 12;     //3
+	index_max = 11;     //3
 }
 
 //デストラクタ
