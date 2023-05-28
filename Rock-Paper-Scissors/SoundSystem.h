@@ -43,7 +43,7 @@ enum class SE
 
 
 	/*ステージ8*/
-
+	//ENEMY08_Item,
 
 	/*ステージ9*/
 	ENEMY09_Teleprot,

@@ -23,7 +23,7 @@
 GameOverScene::GameOverScene(int again):again(again)
 {
 	SetFontSize(50);
-	image_back[0] = LoadGraph("images/Gameover2.png");
+	image_back[0] = LoadGraph("images/Gameover3.png");
 	image_back[1] = LoadGraph("images/GameoverHARD.png");
 	gameover_se = LoadSoundMem("Sound/GameOver.mp3");
 	//GameOverSE

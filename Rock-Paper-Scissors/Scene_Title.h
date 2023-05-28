@@ -29,6 +29,7 @@ private:
 
 	int image_Eye;
 	int image_head;
+	int image_death;
 	int frame;
 
 	//¶ñ

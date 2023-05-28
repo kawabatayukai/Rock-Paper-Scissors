@@ -14,7 +14,7 @@ Jangeki_Base::Jangeki_Base(float x, float y, float r, float speed, Jan_Type type
 	//反射じゃん撃
 	if (ref == true) LoadDivGraph("images/stage09/Reflection_Jangeki.png", 3, 3, 1, 100, 100, reflection_image);
 
-	index_max = 12;
+	index_max = 11;
 }
 
 //コンストラクタ（角度あり）
@@ -26,7 +26,7 @@ Jangeki_Base::Jangeki_Base(float x, float y, float r, float speed, double angle,
 	//反射じゃん撃
 	if (ref == true) LoadDivGraph("images/stage09/Reflection_Jangeki.png", 3, 3, 1, 100, 100, reflection_image);
 
-	index_max = 12;
+	index_max = 11;
 
 	//x,y方向のスピードを決める
 	this->speed = fabsf(speed) * cosf(static_cast<float>(angle));

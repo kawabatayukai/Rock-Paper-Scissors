@@ -343,7 +343,7 @@ void Enemy_04::Change_JanType()
 		break;
 
 	case Jan_Type::PAPER:
-
+		
 		e_type = GetRand(1) == 1 ? Jan_Type::ROCK : Jan_Type::SCISSORS;
 		break;
 

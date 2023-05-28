@@ -296,8 +296,8 @@ void Enemy_03::Update()
 			else if (x >= 70 && x <= 1130) {
 
 
-				//前回より減速する
-				speed = 10.5f;
+				//前回より加速する
+				speed = 8.5f;
 
 
 			}
@@ -723,7 +723,7 @@ void Enemy_03::Draw() const
 	if (hp <= 45) DrawFormatString((int)(x - 50), (int)(y - 70), GetColor(255, 0, 0), " 攻撃UP↑", hp);
 
 	if (hp <= 0)DrawString((int)(x - 100), (int)(y - 120), "death!", 0xff0000);
-	
+
 }
 
 //じゃん撃生成・更新
@@ -777,17 +777,19 @@ void Enemy_03::Update_Jangeki()
 				float speed = 4.5f;
 
 				//尾行弾
-				if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+				if (frame_count % 110 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 
 				//追加,属性を生成//
-				Jan_Type type = static_cast<Jan_Type>(GetRand(1));//グーのみ
+				Jan_Type type = static_cast<Jan_Type>(GetRand(0));//グーのみ
 
 				//バウンド弾
-				if (frame_count % 90 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
+				if (frame_count % 95 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
 
 			}
 			//HPが85以下で46以上の時
 			else if (hp <= 85 && hp >= 46) {
+
+
 
 				//尾行弾
 				if (frame_count % 120 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
@@ -814,23 +816,23 @@ void Enemy_03::Update_Jangeki()
 			 if (hp <= 45) {
 
 				float radius = 50.0f;
-				float speed = 4.5f;
+				float speed = 3.5f;
 
 				//尾行弾
-				if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
+				if (frame_count % 150 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
 
 				
 				//xが70以上で1130以下の時半円攻撃
 				if(x >= 70 && x <= 1130){
 
 					float radius = 35.5f;
-					float speed = 4.5f;
+					float speed = 2.5f;
 
 					//追加,属性を生成//
-					Jan_Type type = static_cast<Jan_Type>(GetRand(2));//グーまたはチョキ
+					Jan_Type type = static_cast<Jan_Type>(GetRand(1));//グーまたはチョキ
 				
 					//円弾
-					if (frame_count % 200 == 0)
+					if (frame_count % 300 == 0)//200
 					{
 						Jan_180degrees(jan_count, radius, speed, type); //180度発射
 						
@@ -854,6 +856,8 @@ void Enemy_03::Update_Jangeki()
 			 //それ以外
 			//プレイヤー方向へのジャン撃生成
 			else  {//(hp <= 86 && hp >= 71)
+
+
 
 				//尾行弾
 				if (frame_count % 100 == 0) obj_jangeki[jan_count] = new Jangeki_Coming(x, y, radius, speed, type, player_x, player_y);
