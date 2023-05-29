@@ -7,11 +7,9 @@
 //コンストラクタ　   基底クラスのコンストラクタを呼ぶ　　　　 ｘ　ｙ　幅　　　高さ    属性
 Enemy_08::Enemy_08(float x, float y, Jan_Type type) : EnemyBase(x, y, 90.0f, 90.0f, type)
 {	
-	speed = 12.0f;
+	speed = 8.0f;
 	dir = 1;
 	hp = 100;
-
-	image = LoadGraph("images/tyokitest.png");
 
 	Init_Jangeki();       //じゃん撃を用意
 

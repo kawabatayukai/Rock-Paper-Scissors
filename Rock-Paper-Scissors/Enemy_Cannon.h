@@ -7,7 +7,7 @@ class Enemy_Cannon : public EnemyBase
 {
 public:
 	//コンストラクタ 座標・属性を設定
-	Enemy_Cannon(float x, float y, Jan_Type type);
+	Enemy_Cannon(float x, float y, Jan_Type type, int cannnonType = 1);
 
 	~Enemy_Cannon();                     //デストラクタ
 

@@ -34,8 +34,8 @@ Scene_Stage08::Scene_Stage08(const Player* player) : damage(5)
 	
 	for (int a = 0; a < 2; a++)cannon[a] = nullptr;
 
-	cannon[0] = new Enemy_Cannon(1210, 100, Jan_Type::ROCK);
-	cannon[1] = new Enemy_Cannon(110, 100, Jan_Type::ROCK);
+	cannon[0] = new Enemy_Cannon(1210, 100, Jan_Type::ROCK, 1);
+	cannon[1] = new Enemy_Cannon(110, 100, Jan_Type::ROCK, 2);
 
 	//床・壁の用意
 	Init_Floor(STAGE_08_FLOOR);
@@ -362,7 +362,7 @@ void Scene_Stage08::Update()
 		if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 		{
 			//ダメージを受ける（プレイヤー）
-			obj_player->ReceiveDamage(30);
+			obj_player->ReceiveDamage(10);
 
 			//あたったじゃん撃を削除
 			obj_enemy->DeleteJangeki(i);
@@ -384,7 +384,7 @@ void Scene_Stage08::Update()
 			if (obj_player->Hit_Jangeki(enemy_jangeki[i]) == true)
 			{
 				//ダメージを受ける（プレイヤー）
-				obj_player->ReceiveDamage(5);
+				obj_player->ReceiveDamage(3);
 
 				//あたったじゃん撃を削除
 				cannon[a]->DeleteJangeki(i);
