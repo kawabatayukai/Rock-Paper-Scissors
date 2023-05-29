@@ -10,6 +10,7 @@
 
 int Scene_Story::font_text = 0;      //テキスト用フォント
 int Scene_Story::font_skip = 0;      //"skip"用フォント
+int Scene_Story::font_Press = 0;
 
 //定数
 namespace _C_STORY
@@ -56,9 +57,11 @@ Scene_Story::Scene_Story() :
 
 	//フォントを作成
 	if (font_text == 0)
-		font_text = CreateFontToHandle("メイリオ", 30, 10, DX_FONTTYPE_ANTIALIASING, -1, 0);
+		font_text = CreateFontToHandle("メイリオ", 30, 10, DX_FONTTYPE_ANTIALIASING_EDGE, -1, 0);
 	if (font_skip == 0)
 		font_skip = CreateFontToHandle("メイリオ", 20, 10, DX_FONTTYPE_ANTIALIASING);
+	if (font_Press == 0)
+		font_Press = CreateFontToHandle("メイリオ", 50, 10, DX_FONTTYPE_ANTIALIASING_EDGE, -1, 2);
 
 	image_back = LoadGraph("images/Story/Story_Back2.png");
 	
@@ -106,8 +109,12 @@ void Scene_Story::Update()
 		//テキストの最終行まで終了
 		if (i >= text->size() - 1 && str_y < 0) str_end = true;
 	}
-	if (str_end == true) DrawStringToHandle(100, 100, "Press A To Start", 0xffffff, font_text);
-
+	if (str_end == true)
+	{
+		const char* str = "Press A Button To Start";
+		int draw_w = GetDrawStringWidthToHandle(str, static_cast<int>(strlen(str)), font_Press);
+		DrawStringToHandle((640 - (draw_w / 2)), 360, str, 0xffffff, font_Press,0x000000);
+	}
 
 
 	//Bボタンで加速 / リセット
