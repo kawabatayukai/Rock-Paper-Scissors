@@ -27,6 +27,7 @@ private:
 	bool isLoadFailed;      //読み込み失敗!
 	static int font_text;   //テキスト用フォント
 	static int font_skip;   //"skip"用フォント
+	static int font_Press;  //"Press～"用フォント
 
 	int scroll_y;       //スクロール(テキスト描画y座標に減算する)
 	int scroll_speed;   //スクロール速度(Aボタンで増加)
