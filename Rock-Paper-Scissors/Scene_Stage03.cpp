@@ -399,7 +399,7 @@ void Scene_Stage03::Update()
 			}
 		}
 	}
-
+	////ƒRƒƒ“ƒg
 
 	//enemy‚¶‚á‚ñŒ‚‚Æplayer‚Ì“–‚½‚è”»’è
 	for (int i = 0; i < JANGEKI_MAX; i++)
