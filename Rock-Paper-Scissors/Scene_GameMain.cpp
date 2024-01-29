@@ -20,7 +20,7 @@
 #include"Scene_GameOver.h"
 
 #include"Scene_InputNameRanking.h"
-//#include "GameData.h"
+#include "GameData.h"
 
 //コンストラクタ
 GameMainScene::GameMainScene()
@@ -37,6 +37,7 @@ GameMainScene::GameMainScene()
 
 	//フォントのサイズ設定
 	SetFontSize(40);
+	GameData::Set_TimeLimit();
 }
 
 //デストラクタ

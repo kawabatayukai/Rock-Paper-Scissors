@@ -1,10 +1,16 @@
 #pragma once
 
+enum class P_EFFECT_TYPE
+{
+	RECOVERY,  //回復
+	CHANGE,    //じゃん撃チェンジ
+};
+
 //プレイヤーエフェクト
 class Effect_Player
 {
 public:
-	Effect_Player(const float& x = 0.f, const float& y = 0.f);
+	Effect_Player(float x, float y, const P_EFFECT_TYPE& type);
 	~Effect_Player();
 
 	void Update();

@@ -2,7 +2,7 @@
 #include"DxLib.h"
 
 //コンストラクタ
-Effect_Player::Effect_Player(const float& x, const float& y)
+Effect_Player::Effect_Player(float x, float y, const P_EFFECT_TYPE& type)
 	:index_effect(0), max_index(15), effect_x(x), effect_y(y), frame_count(0)
 {
 	image_effect = new int[max_index];

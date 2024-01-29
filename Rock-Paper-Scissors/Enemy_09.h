@@ -32,7 +32,7 @@ public:
 	void Fflg();
 	int Rand();
 
-	bool Spflg = true;  //特殊行動フラグ
+	bool Spflg;  //特殊行動フラグ
 	int a = 0;
 
 	bool animflg = false;	//アニメーションフラグ

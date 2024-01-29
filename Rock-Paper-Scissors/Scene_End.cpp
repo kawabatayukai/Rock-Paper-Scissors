@@ -36,7 +36,7 @@ void EndScene::Draw() const
 	SetFontSize(70);
 	DrawString(220, 100 + PosY, "J A N K E N  W O R L D", 0xFFFFFF);
 	SetFontSize(24);
-	DrawStringToHandle(300, 200 + PosY, "最終更新日　　2023年05月26日", 0xFFFFFF,font);
+	//DrawStringToHandle(300, 200 + PosY, "最終更新日　　2023年05月26日", 0xFFFFFF,font);
 	DrawStringToHandle(550, 230 + PosY, "素材利用", 0xFFFFFF,font);
 	DrawStringToHandle(200, 260 + PosY, "画像  ぴぽや倉庫 https://pipoya.net/sozai/", 0xFFFFFF,font);
 	DrawStringToHandle(200, 290 + PosY, "画像  OKUMONO URL https://sozaino.site/", 0xFFFFFF,font);
@@ -53,6 +53,7 @@ void EndScene::Draw() const
 	DrawStringToHandle(200, 620 + PosY, "BGM/SE　ハシマミ URL https://hashimamiweb.com/", 0xFFFFFF,font);
 	DrawStringToHandle(200, 650 + PosY, "BGM/SE　FREE BGM URL https://ucchii0artist.wixsite.com/ucchii0", 0xFFFFFF,font);
 	DrawStringToHandle(200, 680 + PosY, "BGM/SE　DOVA-SYNDROME URL https://dova-s.jp/", 0xFFFFFF,font);
+	DrawStringToHandle(200, 710 + PosY, "動画用合成音声  バズ読 URL https://buzzdoku.itl-portal.com/", 0xFFFFFF, font);
 
 
 	//DrawFormatString(100, 600, 0xFFFFFF, "%f", framecount);

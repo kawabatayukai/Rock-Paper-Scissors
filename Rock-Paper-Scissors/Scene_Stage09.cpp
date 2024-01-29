@@ -26,7 +26,7 @@ Scene_Stage09::Scene_Stage09(const Player* player)
 	else
 	{
 		//プレイヤーを生成
-		obj_player = new Player(100, 600);
+		obj_player = new Player(400, 600);
 	}
 
 	//敵を生成
@@ -120,7 +120,7 @@ void Scene_Stage09::Update()
 
 		for (int e_count = 0; e_count < JANGEKI_MAX; e_count++)
 		{
-			if (enemy_jangeki[e_count] == nullptr) break;         //じゃん撃がない時は処理しないuuuuuuuuuuuuuuuuuuuuuuu
+			if (enemy_jangeki[e_count] == nullptr) break;         //じゃん撃がない時は処理しない
 
 			if (player_jangeki[p_count]->Hit_Jangeki(enemy_jangeki[e_count]) == true)
 			{
@@ -132,7 +132,10 @@ void Scene_Stage09::Update()
 				case 0:             //playerのじゃん撃が不利
 
 					//player側のじゃん撃を削除
-					delete_player = true;
+					if (player_jangeki[p_count]->GetR() != 35.f)
+					{
+						delete_player = true;
+					}
 
 					break;
 
@@ -150,11 +153,11 @@ void Scene_Stage09::Update()
 					if (player_jangeki[p_count]->GetR() != 35.f)
 					{
 						delete_player = true;
-					}
 
-					//enemy側のじゃん撃を削除
-					obj_enemy->DeleteJangeki(e_count);
-					e_count--;
+						//enemy側のじゃん撃を削除
+						obj_enemy->DeleteJangeki(e_count);
+						e_count--;
+					}
 
 					break;
 
@@ -386,7 +389,7 @@ AbstractScene* Scene_Stage09::ChangeScene()
 #ifdef DEBUG_OFF_09
 
 	//敵のHPが0以下
-	if (clearFlg == true)
+	if (obj_enemy->GetHP() <= 1)
 	{
 		GetStage09IsClear(true);
 	}

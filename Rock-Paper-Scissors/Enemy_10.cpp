@@ -516,10 +516,6 @@ void Enemy_10::Draw() const
 			if (anim_count == 0) DrawGraph(before_x - 65, before_y - 50, img_teleport[animtimer / 3 % 15], TRUE);
 			else DrawGraph(x - 50, y - 50, img_teleport2[animtimer / 2 % 15], TRUE);
 		}
-
-		//テスト
-		if (hp > 0) DrawFormatString((int)(x - 100), (int)(y - 100), 0xffffff, "HP : %d", hp);
-		else DrawString((int)(x - 100), (int)(y - 100), "death!", 0xffffff);
 	}
 	else
 	{
@@ -780,9 +776,14 @@ void Enemy_10::Update_Jangeki()
 
 				/*********************** ↓↓ 生成( 追跡弾 ) ↓↓ ***********************/
 
-				//            生成速度
-				if (frame_count % 50 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //追跡弾 
+				if (frame_count % 75 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //追跡弾 
 
+				/*即死モード*/
+				if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
+				{
+					//            生成速度
+					if (frame_count % 50 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //追跡弾 
+				}
 				/************************************************************************/
 
 				/*********************** ↓↓ 生成( プレイヤー向き通常弾 ) ↓↓ ***********************/
@@ -824,7 +825,10 @@ void Enemy_10::Update_Jangeki()
 
 				/*********************** ↓↓ 生成( ATフィールド ) ↓↓ ***********************/
 
-				if (jan_count < 2)Jan_360Guard(jan_count, radius, type);
+				if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
+				{
+					if (jan_count < 2)Jan_360Guard(jan_count, radius, type);
+				}
 
 				/************************************************************************/
 				break;
@@ -843,7 +847,7 @@ void Enemy_10::Update_Jangeki()
 			/*********************** ↓↓ 生成( 追跡弾 ) ↓↓ ***********************/
 
 			//            生成速度
-			if (frame_count % 300 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //追跡弾 
+			if (frame_count % 900 == 0) obj_jangeki[jan_count] = new Jangeki_Homing(x, y, radius, speed, type); //追跡弾 
 
 			/*即死モード*/
 			if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
@@ -863,7 +867,7 @@ void Enemy_10::Update_Jangeki()
 
 			/*********************** ↓↓ 生成( 中心円型拡散弾 ) ↓↓ ***********************/
 
-			if (frame_count % 400 == 0)
+			if (frame_count % 800 == 0)
 			{
 				Jan_360degrees(jan_count, radius, speed, type); //360度発射
 			}
@@ -881,7 +885,7 @@ void Enemy_10::Update_Jangeki()
 				/*********************** ↓↓ 生成( 飛び跳ね弾 ) ↓↓ ***********************/
 
 				//飛び跳ねじゃん撃生成
-				if (frame_count % 200 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
+				if (frame_count % 900 == 0) obj_jangeki[jan_count] = new Jangeki_Bounds(x, y, radius, speed, type);
 
 				/*即死モード*/
 				if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
@@ -902,7 +906,10 @@ void Enemy_10::Update_Jangeki()
 
 				/*********************** ↓↓ 生成( ATフィールド ) ↓↓ ***********************/
 
-				if (jan_count < 3)Jan_360Guard(jan_count, radius, type);
+				if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
+				{
+					if (jan_count < 3)Jan_360Guard(jan_count, radius, type);
+				}
 
 				/************************************************************************/
 				break;
@@ -924,11 +931,24 @@ int Enemy_10::Get_Enemy10Form()
 /*360度発射*/
 void Enemy_10::Jan_360degrees(int count, float rad, float speed, Jan_Type type)
 {
-	for (int i = count; i < (count + 18); i++)
+	/*即死モード*/
+	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::HARD)
 	{
-		double angle = static_cast<double>((20.0 * i) * (M_PI / 180));
+		for (int i = count; i < (count + 18); i++)
+		{
+			double angle = static_cast<double>((20.0 * i) * (M_PI / 180));
 
-		obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
+			obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
+		}
+	}
+	else
+	{
+		for (int i = count; i < (count + 10); i++)
+		{
+			double angle = static_cast<double>((36.0 * i) * (M_PI / 180));
+
+			obj_jangeki[i] = new Jangeki_Base(x, y, rad, speed, angle, type);
+		}
 	}
 }
 

@@ -37,6 +37,8 @@ Enemy_09::Enemy_09(float x, float y, Jan_Type type) : EnemyBase(x, y, 100.0f, 10
 	SE_Teleport = LoadSoundMem("Sound/stage09/teleport.mp3");
 	SE_Reflection = LoadSoundMem("Sound/stage09/reflection.mp3");
 
+	if (GameData::Get_DIFFICULTY() == GAME_DIFFICULTY::NORMAL) Spflg = false;
+	else Spflg = true;
 }
 
 //デストラクタ
@@ -193,7 +195,7 @@ void Enemy_09::Update_Jangeki()
 				if (reflection->GetFlg() == true)
 				{
 					if (CheckSoundMem(SE_Reflection) == 0)PlaySoundMem(SE_Reflection, DX_PLAYTYPE_BACK);
-					reflection->obj_reflection[reflection->jan_count_reflection] = new Jangeki_Homing(x, y, radius, speed - 0.3, type, true);
+					reflection->obj_reflection[reflection->jan_count_reflection] = new Jangeki_Homing(x, y, radius, 3 - 0.3, type, true);
 					reflection->falseFlg();
 				}
 			}

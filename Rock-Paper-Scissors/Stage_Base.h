@@ -14,8 +14,6 @@
 //ステージのベース
 class Stage_Base : public AbstractScene
 {
-private:
-	int typeImage[3];
 public:
 	Stage_Base();
 	~Stage_Base();
@@ -32,7 +30,6 @@ public:
 	//床・壁とのあたり判定
 	void HitCtrl_Floor(CharaBase* character, const int floor_MAX);
 
-
 	//"接触時じゃんけん"処理   player(引数１番目　の勝敗結果を返す)
 	Jan_Result Get_JankenResult(Jan_Type player, Jan_Type enemy);
 
@@ -41,7 +38,7 @@ public:
 
 	//じゃん撃ヒット時エフェクト 処理
 	void Effect_Update_HitJangeki(const EnemyBase* enemy, const Jangeki_Reflection* ref = nullptr);
-
+	
 	//じゃん撃ヒット時エフェクト 描画
 	void Effect_Draw_HitJangeki() const;
 
@@ -103,5 +100,6 @@ private:
 	Enemy_Death* obj_death;                   //死亡時に生成する
 	bool stage09_isclear = false;
 	bool isHard_Win = false;
+	int typeImage[3];
 };
 

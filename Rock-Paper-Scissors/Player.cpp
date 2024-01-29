@@ -120,15 +120,18 @@ void Player::Update()
 	//前回の座標ｘを保存
 	old_x = x;
 
-	//貫通回数6(3)回で回復  1貫通につき2,1あいこにつき1加算
+
+
+	//貫通回数6(3)回で回復 
 	if (GameData::Get_PierceCount() >= 6)
 	{
 		//貫通回数リセット
 		GameData::Add_PierceCount(0);
-
+		//回復
 		Recover_HP(20);
-		if (obj_effect == nullptr) obj_effect = new Effect_Player(x, y);
-		Create_SEPlayer(SE_PLAYER::RECOVERY);  //se
+
+		//エフェクト生成
+		if (obj_effect == nullptr) obj_effect = new Effect_Player(x, y, P_EFFECT_TYPE::RECOVERY);
 	}
 
 	//エフェクト

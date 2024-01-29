@@ -34,6 +34,7 @@ TitleScene::TitleScene() : frame(0), obj_death(nullptr)
 
 	//BGMロード
 	bgm = LoadSoundMem("Sound/Title/titlebgm.wav");
+
 }
 
 //デストラクタ
@@ -74,6 +75,7 @@ void TitleScene::Update()
 	if (obj_death != nullptr) obj_death->Update();
 
 	if (frame++ > 180) frame = 0;
+	
 }
 
 //描画
@@ -98,7 +100,7 @@ void TitleScene::Draw() const
 	DrawStringToHandle(70, 295, "HELP", 0xf, font_title);
 	DrawStringToHandle(70, 345, "RANKING", 0xf, font_title);
 	DrawStringToHandle(70, 395, "END", 0xf, font_title);
-
+	
 	//メニューカーソル
 	DrawTriangle(40, 255 + (T_selectnum * 50), 60, 270 + (T_selectnum * 50), 40, 285 + (T_selectnum * 50), GetColor(255, 0, 0), TRUE);
 }
@@ -109,6 +111,11 @@ AbstractScene* TitleScene::ChangeScene()
 	// RT + A でセレクト画面
 	if (KeyManager::GetValue_RT() >= 40 && KeyManager::OnPadClicked(PAD_INPUT_A) == true)
 	{
+		return dynamic_cast<AbstractScene*> (new GameMainScene());
+	}
+	else if (KeyManager::GetValue_RT() >= 40 && KeyManager::OnPadClicked(PAD_INPUT_B) == true)
+	{
+		GameData::Set_DIFFICULTY(GAME_DIFFICULTY::HARD);
 		return dynamic_cast<AbstractScene*> (new GameMainScene());
 	}
 	//Aボタンで決定

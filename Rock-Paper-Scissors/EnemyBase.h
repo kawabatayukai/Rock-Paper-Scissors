@@ -25,18 +25,16 @@ public:
 	//追跡対象の座標をセット　 基本プレイヤー
 	void SetPlayerLocation(const float player_x, const float player_y);
 
+	//向きをセット
 	void SetPlayerDirection(const int player_dir);
-
-	//画像を削除
-
 
 protected:
 	Jan_Type e_type;         //属性（グー　チョキ　パー　のいずれか）
 	int image = 0;           //画像
 	
 
-	float player_x = 0.0f;   //プレイヤーの座標
-	float player_y = 0.0f;   //プレイヤーの座標
-	int player_dir = 0;      //プレイヤーの向き
+	float player_x;   //プレイヤーの座標
+	float player_y;   //プレイヤーの座標
+	int player_dir;   //プレイヤーの向き
 };
 
